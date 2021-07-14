@@ -53,6 +53,51 @@ fragment UpdatedMessage on UpdatedMessage {
         messageId
     }
 
+    referencedMessage {
+        id
+        content
+        type
+        flags
+        editedAt
+        isGuest
+
+        author {
+            avatar
+            bot
+            discrim
+            color
+            id
+            flags
+            name
+        }
+
+        attachments {
+            size
+        }
+
+        stickers {
+            name
+        }
+
+        messageReference {
+            guildId
+        }
+
+        embeds {
+            type
+        }
+
+        mentions {
+            id
+            type
+            name
+        }
+
+        interaction {
+            name
+        }
+    }
+
     application {
         id
         name

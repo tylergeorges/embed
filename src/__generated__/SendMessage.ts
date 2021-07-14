@@ -53,6 +53,66 @@ export interface SendMessage_sendMessage_messageReference {
   messageId: string | null;
 }
 
+export interface SendMessage_sendMessage_referencedMessage_author {
+  __typename: "User";
+  avatar: string;
+  bot: boolean;
+  discrim: string;
+  color: number;
+  id: string;
+  flags: number | null;
+  name: string;
+}
+
+export interface SendMessage_sendMessage_referencedMessage_attachments {
+  __typename: "Attachment";
+  size: number;
+}
+
+export interface SendMessage_sendMessage_referencedMessage_stickers {
+  __typename: "Sticker";
+  name: string;
+}
+
+export interface SendMessage_sendMessage_referencedMessage_messageReference {
+  __typename: "MessageReference";
+  guildId: string | null;
+}
+
+export interface SendMessage_sendMessage_referencedMessage_embeds {
+  __typename: "Embed";
+  type: string | null;
+}
+
+export interface SendMessage_sendMessage_referencedMessage_mentions {
+  __typename: "Mention";
+  id: string;
+  type: MentionType;
+  name: string;
+}
+
+export interface SendMessage_sendMessage_referencedMessage_interaction {
+  __typename: "MessageInteraction";
+  name: string;
+}
+
+export interface SendMessage_sendMessage_referencedMessage {
+  __typename: "Message";
+  id: string;
+  content: string;
+  type: MessageType;
+  flags: number | null;
+  editedAt: any | null;
+  isGuest: boolean;
+  author: SendMessage_sendMessage_referencedMessage_author;
+  attachments: SendMessage_sendMessage_referencedMessage_attachments[];
+  stickers: SendMessage_sendMessage_referencedMessage_stickers[];
+  messageReference: SendMessage_sendMessage_referencedMessage_messageReference | null;
+  embeds: SendMessage_sendMessage_referencedMessage_embeds[];
+  mentions: SendMessage_sendMessage_referencedMessage_mentions[];
+  interaction: SendMessage_sendMessage_referencedMessage_interaction | null;
+}
+
 export interface SendMessage_sendMessage_application {
   __typename: "Application";
   id: string;
@@ -159,6 +219,7 @@ export interface SendMessage_sendMessage {
   attachments: SendMessage_sendMessage_attachments[];
   stickers: SendMessage_sendMessage_stickers[];
   messageReference: SendMessage_sendMessage_messageReference | null;
+  referencedMessage: SendMessage_sendMessage_referencedMessage | null;
   application: SendMessage_sendMessage_application | null;
   embeds: SendMessage_sendMessage_embeds[];
   mentions: SendMessage_sendMessage_mentions[];

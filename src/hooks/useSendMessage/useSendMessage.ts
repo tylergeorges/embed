@@ -40,6 +40,7 @@ export const useSendMessage = () => {
           attachments: [],
           stickers: [],
           messageReference: null,
+          referencedMessage: null,
           application: null,
           embeds: [],
           mentions: [],

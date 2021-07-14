@@ -52,6 +52,66 @@ export interface NewMessage_message_messageReference {
   messageId: string | null;
 }
 
+export interface NewMessage_message_referencedMessage_author {
+  __typename: "User";
+  avatar: string;
+  bot: boolean;
+  discrim: string;
+  color: number;
+  id: string;
+  flags: number | null;
+  name: string;
+}
+
+export interface NewMessage_message_referencedMessage_attachments {
+  __typename: "Attachment";
+  size: number;
+}
+
+export interface NewMessage_message_referencedMessage_stickers {
+  __typename: "Sticker";
+  name: string;
+}
+
+export interface NewMessage_message_referencedMessage_messageReference {
+  __typename: "MessageReference";
+  guildId: string | null;
+}
+
+export interface NewMessage_message_referencedMessage_embeds {
+  __typename: "Embed";
+  type: string | null;
+}
+
+export interface NewMessage_message_referencedMessage_mentions {
+  __typename: "Mention";
+  id: string;
+  type: MentionType;
+  name: string;
+}
+
+export interface NewMessage_message_referencedMessage_interaction {
+  __typename: "MessageInteraction";
+  name: string;
+}
+
+export interface NewMessage_message_referencedMessage {
+  __typename: "Message";
+  id: string;
+  content: string;
+  type: MessageType;
+  flags: number | null;
+  editedAt: any | null;
+  isGuest: boolean;
+  author: NewMessage_message_referencedMessage_author;
+  attachments: NewMessage_message_referencedMessage_attachments[];
+  stickers: NewMessage_message_referencedMessage_stickers[];
+  messageReference: NewMessage_message_referencedMessage_messageReference | null;
+  embeds: NewMessage_message_referencedMessage_embeds[];
+  mentions: NewMessage_message_referencedMessage_mentions[];
+  interaction: NewMessage_message_referencedMessage_interaction | null;
+}
+
 export interface NewMessage_message_application {
   __typename: "Application";
   id: string;
@@ -158,6 +218,7 @@ export interface NewMessage_message {
   attachments: NewMessage_message_attachments[];
   stickers: NewMessage_message_stickers[];
   messageReference: NewMessage_message_messageReference | null;
+  referencedMessage: NewMessage_message_referencedMessage | null;
   application: NewMessage_message_application | null;
   embeds: NewMessage_message_embeds[];
   mentions: NewMessage_message_mentions[];

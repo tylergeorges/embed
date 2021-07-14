@@ -52,6 +52,66 @@ export interface UpdatedMessage_messageReference {
   messageId: string | null;
 }
 
+export interface UpdatedMessage_referencedMessage_author {
+  __typename: "User";
+  avatar: string;
+  bot: boolean;
+  discrim: string;
+  color: number;
+  id: string;
+  flags: number | null;
+  name: string;
+}
+
+export interface UpdatedMessage_referencedMessage_attachments {
+  __typename: "Attachment";
+  size: number;
+}
+
+export interface UpdatedMessage_referencedMessage_stickers {
+  __typename: "Sticker";
+  name: string;
+}
+
+export interface UpdatedMessage_referencedMessage_messageReference {
+  __typename: "MessageReference";
+  guildId: string | null;
+}
+
+export interface UpdatedMessage_referencedMessage_embeds {
+  __typename: "Embed";
+  type: string | null;
+}
+
+export interface UpdatedMessage_referencedMessage_mentions {
+  __typename: "Mention";
+  id: string;
+  type: MentionType;
+  name: string;
+}
+
+export interface UpdatedMessage_referencedMessage_interaction {
+  __typename: "MessageInteraction";
+  name: string;
+}
+
+export interface UpdatedMessage_referencedMessage {
+  __typename: "Message";
+  id: string;
+  content: string;
+  type: MessageType;
+  flags: number | null;
+  editedAt: any | null;
+  isGuest: boolean;
+  author: UpdatedMessage_referencedMessage_author;
+  attachments: UpdatedMessage_referencedMessage_attachments[];
+  stickers: UpdatedMessage_referencedMessage_stickers[];
+  messageReference: UpdatedMessage_referencedMessage_messageReference | null;
+  embeds: UpdatedMessage_referencedMessage_embeds[];
+  mentions: UpdatedMessage_referencedMessage_mentions[];
+  interaction: UpdatedMessage_referencedMessage_interaction | null;
+}
+
 export interface UpdatedMessage_application {
   __typename: "Application";
   id: string;
@@ -157,6 +217,7 @@ export interface UpdatedMessage {
   attachments: UpdatedMessage_attachments[] | null;
   stickers: UpdatedMessage_stickers[] | null;
   messageReference: UpdatedMessage_messageReference | null;
+  referencedMessage: UpdatedMessage_referencedMessage | null;
   application: UpdatedMessage_application | null;
   embeds: UpdatedMessage_embeds[] | null;
   mentions: UpdatedMessage_mentions[] | null;

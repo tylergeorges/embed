@@ -53,6 +53,66 @@ export interface Message_messageReference {
   messageId: string | null;
 }
 
+export interface Message_referencedMessage_author {
+  __typename: "User";
+  avatar: string;
+  bot: boolean;
+  discrim: string;
+  color: number;
+  id: string;
+  flags: number | null;
+  name: string;
+}
+
+export interface Message_referencedMessage_attachments {
+  __typename: "Attachment";
+  size: number;
+}
+
+export interface Message_referencedMessage_stickers {
+  __typename: "Sticker";
+  name: string;
+}
+
+export interface Message_referencedMessage_messageReference {
+  __typename: "MessageReference";
+  guildId: string | null;
+}
+
+export interface Message_referencedMessage_embeds {
+  __typename: "Embed";
+  type: string | null;
+}
+
+export interface Message_referencedMessage_mentions {
+  __typename: "Mention";
+  id: string;
+  type: MentionType;
+  name: string;
+}
+
+export interface Message_referencedMessage_interaction {
+  __typename: "MessageInteraction";
+  name: string;
+}
+
+export interface Message_referencedMessage {
+  __typename: "Message";
+  id: string;
+  content: string;
+  type: MessageType;
+  flags: number | null;
+  editedAt: any | null;
+  isGuest: boolean;
+  author: Message_referencedMessage_author;
+  attachments: Message_referencedMessage_attachments[];
+  stickers: Message_referencedMessage_stickers[];
+  messageReference: Message_referencedMessage_messageReference | null;
+  embeds: Message_referencedMessage_embeds[];
+  mentions: Message_referencedMessage_mentions[];
+  interaction: Message_referencedMessage_interaction | null;
+}
+
 export interface Message_application {
   __typename: "Application";
   id: string;
@@ -159,6 +219,7 @@ export interface Message {
   attachments: Message_attachments[];
   stickers: Message_stickers[];
   messageReference: Message_messageReference | null;
+  referencedMessage: Message_referencedMessage | null;
   application: Message_application | null;
   embeds: Message_embeds[];
   mentions: Message_mentions[];

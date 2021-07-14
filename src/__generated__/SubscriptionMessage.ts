@@ -52,6 +52,66 @@ export interface SubscriptionMessage_messageReference {
   messageId: string | null;
 }
 
+export interface SubscriptionMessage_referencedMessage_author {
+  __typename: "User";
+  avatar: string;
+  bot: boolean;
+  discrim: string;
+  color: number;
+  id: string;
+  flags: number | null;
+  name: string;
+}
+
+export interface SubscriptionMessage_referencedMessage_attachments {
+  __typename: "Attachment";
+  size: number;
+}
+
+export interface SubscriptionMessage_referencedMessage_stickers {
+  __typename: "Sticker";
+  name: string;
+}
+
+export interface SubscriptionMessage_referencedMessage_messageReference {
+  __typename: "MessageReference";
+  guildId: string | null;
+}
+
+export interface SubscriptionMessage_referencedMessage_embeds {
+  __typename: "Embed";
+  type: string | null;
+}
+
+export interface SubscriptionMessage_referencedMessage_mentions {
+  __typename: "Mention";
+  id: string;
+  type: MentionType;
+  name: string;
+}
+
+export interface SubscriptionMessage_referencedMessage_interaction {
+  __typename: "MessageInteraction";
+  name: string;
+}
+
+export interface SubscriptionMessage_referencedMessage {
+  __typename: "Message";
+  id: string;
+  content: string;
+  type: MessageType;
+  flags: number | null;
+  editedAt: any | null;
+  isGuest: boolean;
+  author: SubscriptionMessage_referencedMessage_author;
+  attachments: SubscriptionMessage_referencedMessage_attachments[];
+  stickers: SubscriptionMessage_referencedMessage_stickers[];
+  messageReference: SubscriptionMessage_referencedMessage_messageReference | null;
+  embeds: SubscriptionMessage_referencedMessage_embeds[];
+  mentions: SubscriptionMessage_referencedMessage_mentions[];
+  interaction: SubscriptionMessage_referencedMessage_interaction | null;
+}
+
 export interface SubscriptionMessage_application {
   __typename: "Application";
   id: string;
@@ -158,6 +218,7 @@ export interface SubscriptionMessage {
   attachments: SubscriptionMessage_attachments[];
   stickers: SubscriptionMessage_stickers[];
   messageReference: SubscriptionMessage_messageReference | null;
+  referencedMessage: SubscriptionMessage_referencedMessage | null;
   application: SubscriptionMessage_application | null;
   embeds: SubscriptionMessage_embeds[];
   mentions: SubscriptionMessage_mentions[];

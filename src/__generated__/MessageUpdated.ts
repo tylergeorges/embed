@@ -52,6 +52,66 @@ export interface MessageUpdated_messageUpdate_messageReference {
   messageId: string | null;
 }
 
+export interface MessageUpdated_messageUpdate_referencedMessage_author {
+  __typename: "User";
+  avatar: string;
+  bot: boolean;
+  discrim: string;
+  color: number;
+  id: string;
+  flags: number | null;
+  name: string;
+}
+
+export interface MessageUpdated_messageUpdate_referencedMessage_attachments {
+  __typename: "Attachment";
+  size: number;
+}
+
+export interface MessageUpdated_messageUpdate_referencedMessage_stickers {
+  __typename: "Sticker";
+  name: string;
+}
+
+export interface MessageUpdated_messageUpdate_referencedMessage_messageReference {
+  __typename: "MessageReference";
+  guildId: string | null;
+}
+
+export interface MessageUpdated_messageUpdate_referencedMessage_embeds {
+  __typename: "Embed";
+  type: string | null;
+}
+
+export interface MessageUpdated_messageUpdate_referencedMessage_mentions {
+  __typename: "Mention";
+  id: string;
+  type: MentionType;
+  name: string;
+}
+
+export interface MessageUpdated_messageUpdate_referencedMessage_interaction {
+  __typename: "MessageInteraction";
+  name: string;
+}
+
+export interface MessageUpdated_messageUpdate_referencedMessage {
+  __typename: "Message";
+  id: string;
+  content: string;
+  type: MessageType;
+  flags: number | null;
+  editedAt: any | null;
+  isGuest: boolean;
+  author: MessageUpdated_messageUpdate_referencedMessage_author;
+  attachments: MessageUpdated_messageUpdate_referencedMessage_attachments[];
+  stickers: MessageUpdated_messageUpdate_referencedMessage_stickers[];
+  messageReference: MessageUpdated_messageUpdate_referencedMessage_messageReference | null;
+  embeds: MessageUpdated_messageUpdate_referencedMessage_embeds[];
+  mentions: MessageUpdated_messageUpdate_referencedMessage_mentions[];
+  interaction: MessageUpdated_messageUpdate_referencedMessage_interaction | null;
+}
+
 export interface MessageUpdated_messageUpdate_application {
   __typename: "Application";
   id: string;
@@ -157,6 +217,7 @@ export interface MessageUpdated_messageUpdate {
   attachments: MessageUpdated_messageUpdate_attachments[] | null;
   stickers: MessageUpdated_messageUpdate_stickers[] | null;
   messageReference: MessageUpdated_messageUpdate_messageReference | null;
+  referencedMessage: MessageUpdated_messageUpdate_referencedMessage | null;
   application: MessageUpdated_messageUpdate_application | null;
   embeds: MessageUpdated_messageUpdate_embeds[] | null;
   mentions: MessageUpdated_messageUpdate_mentions[] | null;

@@ -95,11 +95,10 @@ class Message extends React.PureComponent<Props, any> {
     const { messages, allMessages } = this.props;
     const [firstMessage] = messages;
     
-    let repliedMessage: Messages_channel_messages
+    let repliedMessage = firstMessage.referencedMessage
 
-    if (firstMessage.type === MessageType.Reply) {
+    if (firstMessage.type === MessageType.Reply && !repliedMessage)
       repliedMessage = allMessages.find(m => m.id === firstMessage.messageReference.messageId)
-    }
 
     return (
       <Group style={this.props.style} className="group">

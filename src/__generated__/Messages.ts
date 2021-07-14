@@ -53,6 +53,66 @@ export interface Messages_channel_messages_messageReference {
   messageId: string | null;
 }
 
+export interface Messages_channel_messages_referencedMessage_author {
+  __typename: "User";
+  avatar: string;
+  bot: boolean;
+  discrim: string;
+  color: number;
+  id: string;
+  flags: number | null;
+  name: string;
+}
+
+export interface Messages_channel_messages_referencedMessage_attachments {
+  __typename: "Attachment";
+  size: number;
+}
+
+export interface Messages_channel_messages_referencedMessage_stickers {
+  __typename: "Sticker";
+  name: string;
+}
+
+export interface Messages_channel_messages_referencedMessage_messageReference {
+  __typename: "MessageReference";
+  guildId: string | null;
+}
+
+export interface Messages_channel_messages_referencedMessage_embeds {
+  __typename: "Embed";
+  type: string | null;
+}
+
+export interface Messages_channel_messages_referencedMessage_mentions {
+  __typename: "Mention";
+  id: string;
+  type: MentionType;
+  name: string;
+}
+
+export interface Messages_channel_messages_referencedMessage_interaction {
+  __typename: "MessageInteraction";
+  name: string;
+}
+
+export interface Messages_channel_messages_referencedMessage {
+  __typename: "Message";
+  id: string;
+  content: string;
+  type: MessageType;
+  flags: number | null;
+  editedAt: any | null;
+  isGuest: boolean;
+  author: Messages_channel_messages_referencedMessage_author;
+  attachments: Messages_channel_messages_referencedMessage_attachments[];
+  stickers: Messages_channel_messages_referencedMessage_stickers[];
+  messageReference: Messages_channel_messages_referencedMessage_messageReference | null;
+  embeds: Messages_channel_messages_referencedMessage_embeds[];
+  mentions: Messages_channel_messages_referencedMessage_mentions[];
+  interaction: Messages_channel_messages_referencedMessage_interaction | null;
+}
+
 export interface Messages_channel_messages_application {
   __typename: "Application";
   id: string;
@@ -159,6 +219,7 @@ export interface Messages_channel_messages {
   attachments: Messages_channel_messages_attachments[];
   stickers: Messages_channel_messages_stickers[];
   messageReference: Messages_channel_messages_messageReference | null;
+  referencedMessage: Messages_channel_messages_referencedMessage | null;
   application: Messages_channel_messages_application | null;
   embeds: Messages_channel_messages_embeds[];
   mentions: Messages_channel_messages_mentions[];
