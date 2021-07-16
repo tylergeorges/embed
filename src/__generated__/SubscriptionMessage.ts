@@ -40,7 +40,6 @@ export interface SubscriptionMessage_stickers {
   __typename: "Sticker";
   id: string;
   name: string;
-  icon: string;
   formatType: FormatType;
   lottieData: string | null;
 }
