@@ -125,8 +125,8 @@ const EmbedThumbnail = ({url, height, width, type}: { height: number | null, wid
                 src={url}
                 height={height}
                 width={width}
-                maxWidth={/^Article|Image$/.test(type) ? 400 : 80}
-                maxHeight={/^Article|Image$/.test(type) ? 300 : 80}
+                maxWidth={/^article|image$/i.test(type) ? 400 : 80}
+                maxHeight={/^article|image$/i.test(type) ? 300 : 80}
             />
         ) : null
 
@@ -191,19 +191,19 @@ const Embed = ({
    users,
    ...embed
 }: Message_embeds & {users: Map<string, Message_author>}) =>
-    embed.type === 'GifV' ? (
+    embed.type.toLowerCase() === 'gifv' ? (
         <Gifv autoPlay loop muted
               src={video.url}
               width={+video.width}
               height={+video.height}
         />
-    ) : embed.type === 'Image' ? (
+    ) : embed.type.toLowerCase() === 'image' ? (
         <Image
             src={thumbnail.url}
             width={+thumbnail.width}
             height={+thumbnail.height}
         />
-    ) : embed.type === 'Video' && !thumbnail ? (
+    ) : embed.type.toLowerCase() === 'video' && !thumbnail ? (
         <Video controls
                src={video.url}
                width={+video.width}
@@ -223,7 +223,7 @@ const Embed = ({
                             <EmbedProvider {...provider}/>
                             <EmbedAuthor {...author} />
                             <EmbedTitle title={title} url={url}/>
-                            {embed.type === 'Video' ?
+                            {embed.type.toLowerCase() === 'video' ?
                                 <EmbedVideo {...video} /> :
                                 <EmbedDescription content={description} users={users}/>}
                             <EmbedFields fields={fields} users={users}/>
