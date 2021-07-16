@@ -58,6 +58,7 @@ fragment SubscriptionMessage on Message {
         content
         type
         flags
+        createdAt
         editedAt
         isGuest
 

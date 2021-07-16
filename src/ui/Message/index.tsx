@@ -117,9 +117,11 @@ class Message extends React.PureComponent<Props, any> {
               <ReplySpine/>
               {repliedMessage ? 
                 <RepliedMessage>
-                  <RepliedAvatar src={getAvatar(repliedMessage.author)} />
-                  <span style={{verticalAlign: 'sub'}}>{tags({author: repliedMessage.author, crosspost: !!(repliedMessage.flags & 1 << 1), referenceGuild: repliedMessage.messageReference?.guildId, guest: repliedMessage.isGuest})}</span>
-                  <RepliedUser nameColor={repliedMessage.author.color}>{repliedMessage.author.name}</RepliedUser>
+                  {repliedMessage.type !== MessageType.GuildMemberJoin ? <>
+                    <RepliedAvatar src={getAvatar(repliedMessage.author)} />
+                    <span style={{verticalAlign: 'sub'}}>{tags({author: repliedMessage.author, crosspost: !!(repliedMessage.flags & 1 << 1), referenceGuild: repliedMessage.messageReference?.guildId, guest: repliedMessage.isGuest})}</span>
+                    <RepliedUser nameColor={repliedMessage.author.color}>{repliedMessage.author.name}</RepliedUser>
+                  </> : <svg width="12" height="12" viewBox="0 0 18 18" style={{marginRight: '.25rem'}}><path fill="#3ba55c" d="M0 8h14.2l-3.6-3.6L12 3l6 6-6 6-1.4-1.4 3.6-3.6H0"></path></svg>}
                   {repliedMessage.content
                     ? <RepliedText>
                         <Markdown mentions={repliedMessage.mentions}>{repliedMessage.content}</Markdown>
@@ -139,6 +141,8 @@ class Message extends React.PureComponent<Props, any> {
                       ? <ReplySystemText>Command</ReplySystemText>
                     : repliedMessage.stickers.length > 0
                       ? <ReplySystemText>{repliedMessage.stickers[0].name} sticker</ReplySystemText>
+                    : repliedMessage.type === MessageType.GuildMemberJoin
+                      ? <RepliedText>{joinMessageBeginning(repliedMessage)}{repliedMessage.author.name}{joinMessageEnd(repliedMessage)}</RepliedText>
                     : <ReplySystemText>Attachment</ReplySystemText>}
                   {repliedMessage.interaction ? 
                     <ReplyImageIcon aria-hidden="false" width="20" height="20" viewBox="0 0 24 24"><path fill="rgba(255,255,255,.66)" fillRule="evenodd" clipRule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H5ZM16.8995 8.41419L15.4853 6.99998L7 15.4853L8.41421 16.8995L16.8995 8.41419Z"></path></ReplyImageIcon>

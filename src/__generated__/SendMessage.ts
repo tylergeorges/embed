@@ -101,6 +101,7 @@ export interface SendMessage_sendMessage_referencedMessage {
   content: string;
   type: MessageType;
   flags: number | null;
+  createdAt: any;
   editedAt: any | null;
   isGuest: boolean;
   author: SendMessage_sendMessage_referencedMessage_author;

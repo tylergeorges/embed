@@ -100,6 +100,7 @@ export interface UpdatedMessage_referencedMessage {
   content: string;
   type: MessageType;
   flags: number | null;
+  createdAt: any;
   editedAt: any | null;
   isGuest: boolean;
   author: UpdatedMessage_referencedMessage_author;

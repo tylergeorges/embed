@@ -100,6 +100,7 @@ export interface SubscriptionMessage_referencedMessage {
   content: string;
   type: MessageType;
   flags: number | null;
+  createdAt: any;
   editedAt: any | null;
   isGuest: boolean;
   author: SubscriptionMessage_referencedMessage_author;

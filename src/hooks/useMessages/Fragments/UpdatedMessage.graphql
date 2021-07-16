@@ -57,6 +57,7 @@ fragment UpdatedMessage on UpdatedMessage {
         content
         type
         flags
+        createdAt
         editedAt
         isGuest
 
