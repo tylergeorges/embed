@@ -17,6 +17,7 @@ import categorise from "@ui/Sidebar/Channels/categorise";
 import {autorun} from "mobx";
 import {Util} from '@lib/Util';
 
+const formatter = new Intl.NumberFormat('en', { notation: 'compact' })
 
 @observer
 export class Header extends React.Component {
@@ -89,10 +90,10 @@ export class Header extends React.Component {
 										<Tooltip
 											placement="bottom"
 											overlay={
-												`${data.guild.memberCount === 1 ? Locale.translate('frontend.membercount.one.tooltip') : Locale.translate('frontend.membercount.tooltip', {COUNT: String(data.guild.memberCount)})}`
+												`${data.guild.memberCount === 1 ? Locale.translate('frontend.membercount.one.tooltip') : Locale.translate('frontend.membercount.tooltip', {COUNT: data.guild.memberCount.toLocaleString()})}`
 											}
 										>
-											<Count className="count">{data.guild.memberCount}</Count>
+											<Count className="count">{formatter.format(data.guild.memberCount)}</Count>
 										</Tooltip>
 										<Close onClick={store.sidebar.toggle}/>
 									</BannerRoot>
@@ -116,10 +117,10 @@ export class Header extends React.Component {
 									<Tooltip
 										placement="bottom"
 										overlay={
-											`${data.guild.memberCount === 1 ? `${data.guild.memberCount} member in this server.` : `${data.guild.memberCount} members in this server.`}`
+											`${data.guild.memberCount === 1 ? Locale.translate('frontend.membercount.one.tooltip') : Locale.translate('frontend.membercount.tooltip', {COUNT: data.guild.memberCount.toLocaleString()})}`
 										}
 									>
-										<Count className="count">{data.guild.memberCount}</Count>
+										<Count className="count">{formatter.format(data.guild.memberCount)}</Count>
 									</Tooltip>
 									<Close onClick={store.sidebar.toggle}/>
 								</Root>
