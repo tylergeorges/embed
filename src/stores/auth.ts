@@ -95,7 +95,7 @@ export class AuthStore {
       const x: number = screen.width / 2 - 840 / 2;
       const y: number = screen.height / 2 - 700 / 2;
 
-      const newWindow = window.open(`${API_URL}${Endpoints.auth.discord.split(' ')[1]}`, 'Login to WidgetBot with Discord!', `menubar=no,width=840,height=700,location=no,resizable=no,scrollbars=yes,status=no,left=${x},top=${y}`);
+      const newWindow = window.open(`${API_URL}${Endpoints.auth.discord.split(' ')[1]}`, 'Login to WidgetBot with Discord!', `menubar=no,width=905,height=752,location=no,resizable=no,scrollbars=yes,status=no,left=${x},top=${y}`);
 
       const timer = setInterval(() => {
         if ((newWindow as Window).closed) {
