@@ -58,7 +58,7 @@
     "graphql.macro": "^1.4.2",
     "highlight.js": "^9.15.8",
     "husky": "^0.14.3",
-    "immer": "^2.0.0",
+    "immer": "^8.0.1",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
     "lottie-react-web": "^2.2.2",
