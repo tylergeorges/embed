@@ -23,6 +23,7 @@ export interface Settings_guild_settings_theme {
 export interface Settings_guild_settings {
   __typename: "GuildSettings";
   guestMode: boolean;
+  invite: string | null;
   singleChannel: string | null;
   readonly: boolean;
   theme: Settings_guild_settings_theme | null;

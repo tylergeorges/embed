@@ -27,7 +27,7 @@ export const Header = observer(({ channel, guild }: HeaderProps) => {
         cData = {}
     }
 
-    const invite = generalStore.guild?.invite;
+    const invite = generalStore.settings?.invite;
 
     return (
         <Root>
@@ -70,7 +70,7 @@ export const Header = observer(({ channel, guild }: HeaderProps) => {
 });
 
 export function onClick()  {
-    generalStore.guestEnabled
+    generalStore.settings?.guestMode
         ? (authStore.user ? logout() : generalStore.toggleMenu(true))
         : (authStore.user ? logout() : login())
 }

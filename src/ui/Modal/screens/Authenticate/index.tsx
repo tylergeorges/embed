@@ -56,7 +56,7 @@ class Authenticate extends React.Component<{}, State> {
 
   render() {
     const { awaiting } = this.state;
-    return !generalStore.menuOpen ? null : (generalStore.guestEnabled ? (
+    return !generalStore.menuOpen ? null : (generalStore.settings?.guestMode ? (
         <Overlay>
           <Root loading={awaiting}>
             <Close onClick={() => generalStore.toggleMenu(false)} />

@@ -1,5 +1,5 @@
 import {action, autorun, observable} from "mobx";
-import {GuildInfo_guild} from "@generated";
+import {GuildInfo_guild, Settings_guild_settings} from "@generated";
 import {ICategory} from "@ui/Sidebar/Channels/categorise";
 
 export class GeneralStore {
@@ -9,11 +9,9 @@ export class GeneralStore {
   @observable loading?: boolean;
   @observable fetchGuild?: Function;
   @observable guild?: GuildInfo_guild;
+  @observable settings?: Settings_guild_settings;
   @observable channels: ICategory[] = [];
-
   @observable menuOpen: boolean = false;
-  @observable guestEnabled: boolean = false;
-  @observable readOnly: boolean = false;
 
   constructor() {
     autorun(() => {
@@ -28,16 +26,12 @@ export class GeneralStore {
     this.menuOpen = res
   }
 
-  @action toggleGuest(res: boolean = !this.guestEnabled) {
-    this.guestEnabled = res;
-  }
-
-  @action toggleRead(res: boolean = !this.readOnly) {
-    this.readOnly = res;
-  }
-
   @action setGuild(guild: GuildInfo_guild) {
     this.guild = guild
+  }
+
+  @action setSettings(settings: Settings_guild_settings) {
+    this.settings = settings
   }
 
   @action setChannels(channels: ICategory[]) {

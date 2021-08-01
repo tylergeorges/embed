@@ -3,7 +3,6 @@ query GuildInfo($guild: String!) {
         id
         name
         icon
-        invite
         memberCount
         rulesChannelId
         banner

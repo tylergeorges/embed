@@ -39,9 +39,7 @@ export const ThemeProvider = ({ children }) => {
     css: data.guild?.settings.theme?.css || ``
   };
 
-  // if (data.guild?.theme) _.merge(theme, data.guild.theme);
-  generalStore.toggleGuest(data.guild?.settings.guestMode);
-  generalStore.toggleRead(data.guild?.settings.readonly);
+  generalStore.setSettings(data.guild?.settings)
   
   if (getQueryParam('username')) {
     const name = decodeURIComponent(getQueryParam('username'))

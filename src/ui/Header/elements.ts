@@ -26,6 +26,7 @@ export const Inner = styled('div')`
   display: flex;
   flex-shrink: 1;
   flex-grow: 1;
+  max-width: 100%;
   height: 47px;
   padding: 10px 0;
   @media (max-width: 270px), (max-height: 300px) {
@@ -38,7 +39,7 @@ export const Stretch = styled('div')`
   display: flex;
   flex-grow: 1;
   overflow: hidden;
-  flex-shrink: 0
+  flex-shrink: 1;
 `
 
 const name = (hash: typeof Hash) => styled(hash)`
@@ -120,6 +121,7 @@ const JoinLink = Button.withComponent('a')
 export const Join = styled(JoinLink)`
   background: ${({ theme }) => theme.colors._accent.fade(0.6).string()};
   margin-right: 20px;
+  flex-shrink: 0;
 `;
 
 export const SingleChannelAuthWrapper = styled('div')`
