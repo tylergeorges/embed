@@ -120,7 +120,7 @@ class Message extends React.PureComponent<Props, any> {
                   {repliedMessage.type !== MessageType.GuildMemberJoin ? <>
                     <RepliedAvatar src={getAvatar(repliedMessage.author)} />
                     <span style={{verticalAlign: 'sub'}}>{tags({author: repliedMessage.author, crosspost: !!(repliedMessage.flags & 1 << 1), referenceGuild: repliedMessage.messageReference?.guildId, guest: repliedMessage.isGuest})}</span>
-                    <RepliedUser nameColor={repliedMessage.author.color}>{repliedMessage.author.name}</RepliedUser>
+                    <RepliedUser nameColor={repliedMessage.author.color}>{firstMessage.mentions.some(m => m.id === repliedMessage.author.id) && '@'}{repliedMessage.author.name}</RepliedUser>
                   </> : <svg width="12" height="12" viewBox="0 0 18 18" style={{marginRight: '.25rem'}}><path fill="#3ba55c" d="M0 8h14.2l-3.6-3.6L12 3l6 6-6 6-1.4-1.4 3.6-3.6H0"></path></svg>}
                   {repliedMessage.content
                     ? <RepliedText>
