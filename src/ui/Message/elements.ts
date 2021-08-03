@@ -156,15 +156,15 @@ export namespace Secondary {
   `
 
   export const Boost = styled(Message)`
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' name='PremiumGuildSubscriberBadge' class='icon-360yEu' aria-hidden='false' width='24' height='24' viewBox='0 0 8 12'%3E%3Cpath d='M4 0L0 4V8L4 12L8 8V4L4 0ZM7 7.59L4 10.59L1 7.59V4.41L4 1.41L7 4.41V7.59Z' fill='%23ff73fa'%3E%3C/path%3E%3Cpath d='M2 4.83V7.17L4 9.17L6 7.17V4.83L4 2.83L2 4.83Z' fill='%23ff73fa'%3E%3C/path%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='false' width='24' height='24' viewBox='0 0 8 12'%3E%3Cpath d='M4 0L0 4V8L4 12L8 8V4L4 0ZM7 7.59L4 10.59L1 7.59V4.41L4 1.41L7 4.41V7.59Z' fill='%23ff73fa'%3E%3C/path%3E%3Cpath d='M2 4.83V7.17L4 9.17L6 7.17V4.83L4 2.83L2 4.83Z' fill='%23ff73fa'%3E%3C/path%3E%3C/svg%3E");
   `
 
   export const X = styled(Message)`
-    background-image: url("https://discord.com/assets/46db4c8d56c169f418cc5c0f0d4ddf70.svg");
+    background-image: url("https://discord.com/assets/c7078943fc392e7dede27a20e6cfdcfb.svg");
   `
 
   export const Check = styled(Message)`
-    background-image: url("https://discord.com/assets/286a546022f1e3cbe45b41090f8d6e97.svg");
+    background-image: url("https://discord.com/assets/86b5987e685f72352730d56690393fc8.svg");
   `
 
   export const Warning = styled(Message)`
