@@ -22,7 +22,8 @@ const baseRules = {
   },
   blockQuote: {
     ...defaultRules.blockQuote,
-    match: inlineRegex(/^( *>[^\n]+(\n[^\n]+)*\n*)/),
+    match: (source, {prevCapture}) => /^$|\n *$/.test(prevCapture ?? '') ? /^( *>>> +([\s\S]*))|^( *>(?!>>) +[^\n]*(\n *>(?!>>) +[^\n]*)*\n?)/.exec(source) : null,
+    parse: (capture, parse, state) => ({content: parse(capture[0].replace(/^ *>(?:>>)? ?/gm, ''), state)})
   },
   emoticon: {
     order: defaultRules.text.order,
