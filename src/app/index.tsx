@@ -1,4 +1,3 @@
-import * as React from 'react'
 import Modal from '@ui/Modal'
 import Sidebar from '@ui/Sidebar'
 import ChooseChannel from '@views/ChooseChannel'
@@ -22,16 +21,14 @@ const App = observer(() => {
       <ThemeProvider>
         <Switch>
           <Route path="/:guild">
-            <React.Fragment>
-              <Authenticate />
-              <Modal />
-              <Notifications />
-              <Sidebar />
-              <Switch>
-                <Route path="/:guild/:channel" component={MessagesView} />
-                <Route component={ChooseChannel} />
-              </Switch>
-            </React.Fragment>
+            <Authenticate />
+            <Modal />
+            <Notifications />
+            <Sidebar />
+            <Switch>
+              <Route path="/:guild/:channel" component={MessagesView} />
+              <Route component={ChooseChannel} />
+            </Switch>
           </Route>
 
           <Redirect to="/299881420891881473" />

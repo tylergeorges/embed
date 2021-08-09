@@ -69,7 +69,7 @@ export const Info = styled(Emoji.withComponent('div'))`
 export const Wrap = function<T>(wrapper: T): T {
   const Component: any = wrapper
   return observer(({ children, ...props }) => (
-    <Root {...props} squashed={store.sidebar.isOpen}>
+    <Root {...props} squashed={store.sidebar.isOpen} className="overlay">
       {children ? (
         <Container>
           <Component />
