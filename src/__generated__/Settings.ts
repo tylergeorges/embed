@@ -7,36 +7,30 @@
 // GraphQL query operation: Settings
 // ====================================================
 
-export interface Settings_guild_settings_theme_colors {
+export interface Settings_settings_theme_colors {
   __typename: "ThemeColorSettings";
   primary: string | null;
   accent: string | null;
   background: string | null;
 }
 
-export interface Settings_guild_settings_theme {
+export interface Settings_settings_theme {
   __typename: "ThemeSettings";
   css: string | null;
-  colors: Settings_guild_settings_theme_colors;
+  colors: Settings_settings_theme_colors;
 }
 
-export interface Settings_guild_settings {
+export interface Settings_settings {
   __typename: "GuildSettings";
   guestMode: boolean;
   invite: string | null;
   singleChannel: string | null;
   readonly: boolean;
-  theme: Settings_guild_settings_theme | null;
-}
-
-export interface Settings_guild {
-  __typename: "Guild";
-  id: string;
-  settings: Settings_guild_settings;
+  theme: Settings_settings_theme | null;
 }
 
 export interface Settings {
-  guild: Settings_guild;
+  settings: Settings_settings;
 }
 
 export interface SettingsVariables {

@@ -995,25 +995,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "GuildCategory",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildNews",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildText",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Unknown",
+            "name": "GroupDm",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -1025,19 +1007,37 @@
             "deprecationReason": null
           },
           {
+            "name": "GuildText",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "GuildVoice",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "GroupDm",
+            "name": "GuildStore",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "GuildStore",
+            "name": "GuildCategory",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Unknown",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildNews",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -1885,74 +1885,6 @@
             "deprecationReason": null
           },
           {
-            "name": "channelWhitelist",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "channelBlacklist",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "LIST",
-              "name": null,
-              "ofType": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "String",
-                  "ofType": null
-                }
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "patreonDonator",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "manualPatreon",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "Int",
-                "ofType": null
-              }
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "invite",
             "description": null,
             "args": [],
@@ -1983,18 +1915,6 @@
             "type": {
               "kind": "OBJECT",
               "name": "ThemeSettings",
-              "ofType": null
-            },
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "errorChannelID",
-            "description": null,
-            "args": [],
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
               "ofType": null
             },
             "isDeprecated": false,
@@ -2508,13 +2428,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "UserPremiumGuildTier3",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildDiscoveryGracePeriodInitialWarning",
+            "name": "UserPremiumGuildTier1",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -2526,7 +2440,13 @@
             "deprecationReason": null
           },
           {
-            "name": "GuildMemberJoin",
+            "name": "GuildDiscoveryGracePeriodInitialWarning",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "RecipientRemove",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -2538,7 +2458,25 @@
             "deprecationReason": null
           },
           {
-            "name": "UserPremiumGuildTier1",
+            "name": "ChannelNameChange",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UserPremiumGuildSubscription",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Unknown",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ApplicationCommand",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -2550,25 +2488,25 @@
             "deprecationReason": null
           },
           {
-            "name": "ChannelIconChange",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelPinnedMessage",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelFollowAdd",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "Call",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildDiscoveryRequalified",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildMemberJoin",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UserPremiumGuildTier3",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -2586,25 +2524,7 @@
             "deprecationReason": null
           },
           {
-            "name": "Unknown",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildDiscoveryRequalified",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "RecipientRemove",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UserPremiumGuildSubscription",
+            "name": "ChannelPinnedMessage",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -2616,13 +2536,13 @@
             "deprecationReason": null
           },
           {
-            "name": "ChannelNameChange",
+            "name": "ChannelFollowAdd",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "ApplicationCommand",
+            "name": "ChannelIconChange",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -2755,6 +2675,37 @@
               "ofType": {
                 "kind": "OBJECT",
                 "name": "Guild",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "settings",
+            "description": null,
+            "args": [
+              {
+                "name": "id",
+                "description": null,
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "GuildSettings",
                 "ofType": null
               }
             },

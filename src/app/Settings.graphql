@@ -1,18 +1,15 @@
 query Settings($guild: String!) {
-  guild(id: $guild) {
-    id
-    settings {
-      guestMode
-      invite
-      singleChannel
-      readonly
-      theme {
-        css
-        colors {
-          primary
-          accent
-          background
-        }
+  settings(id: $guild) {
+    guestMode
+    invite
+    singleChannel
+    readonly
+    theme {
+      css
+      colors {
+        primary
+        accent
+        background
       }
     }
   }

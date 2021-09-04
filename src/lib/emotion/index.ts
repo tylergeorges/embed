@@ -2,11 +2,11 @@ import Color from 'color'
 import styled, { ThemedReactEmotionInterface } from 'react-emotion'
 
 import { ParsedUrl } from '../../types/url'
-import { Settings_guild_settings_theme } from '@generated'
+import { Settings_settings_theme } from '@generated'
 
 export * from 'react-emotion'
 
-export interface Theme extends Settings_guild_settings_theme {
+export interface Theme extends Settings_settings_theme {
   readonly: boolean,
   guestMode: boolean,
   singleChannel?: string,
