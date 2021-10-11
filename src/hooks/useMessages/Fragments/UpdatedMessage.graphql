@@ -11,7 +11,7 @@ fragment UpdatedMessage on UpdatedMessage {
     editedAt
 
     author {
-        avatar
+        avatarUrl
         bot
         discrim
         id
@@ -62,7 +62,7 @@ fragment UpdatedMessage on UpdatedMessage {
         isGuest
 
         author {
-            avatar
+            avatarUrl
             bot
             discrim
             color
@@ -120,7 +120,7 @@ fragment UpdatedMessage on UpdatedMessage {
             id
             username
             discriminator
-            avatar
+            avatarUrl
         }
     }
 }

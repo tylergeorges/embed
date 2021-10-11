@@ -60,20 +60,11 @@ interface Props {
   style?
 }
 
-const defaultAvatar = (discriminator: string) => `https://cdn.discordapp.com/embed/avatars/${Number(discriminator) % 5}.png`
-
 const gifCheck = (url: string) => {
   return url.includes('/a_') ? url.replace('webp', 'gif') : url
 }
 
-const getAvatar = (user: Pick<Message_author, 'id' | 'discrim' | 'avatar'>) =>
-  user.avatar
-  ? webpCheck(gifCheck(
-      !user.avatar.startsWith('http')
-      ? Util.craftAvatarUrl(user.id, user.avatar)
-      : user.avatar
-    ))
-  : defaultAvatar(user.discrim)
+const getAvatar = (user: Pick<Message_author, 'avatarUrl'>) => webpCheck(gifCheck(user.avatarUrl))
 
 const shouldShowAuthor = (message: Messages_channel_messages) =>
   [MessageType.Default, MessageType.Reply].includes(message.type) ||
@@ -153,7 +144,7 @@ class Message extends React.PureComponent<Props, any> {
                 </RepliedMessage>
                 : firstMessage.type === MessageType.ApplicationCommand && firstMessage.interaction ? 
                   <RepliedMessage>
-                    <RepliedAvatar src={getAvatar({discrim: firstMessage.interaction.user.discriminator, ...firstMessage.interaction.user})} />
+                    <RepliedAvatar src={getAvatar(firstMessage.interaction.user)} />
                     <RepliedUser nameColor={allMessages.find(m => m.author.id === firstMessage.interaction.user.id)?.author.color}>{firstMessage.interaction.user.username}</RepliedUser>
                     <InteractionText>used <Command>/{firstMessage.interaction.name}</Command></InteractionText>
                   </RepliedMessage>

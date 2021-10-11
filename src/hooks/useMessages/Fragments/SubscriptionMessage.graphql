@@ -12,7 +12,7 @@ fragment SubscriptionMessage on Message {
     isGuest
 
     author {
-        avatar
+        avatarUrl
         bot
         discrim
         id
@@ -63,7 +63,7 @@ fragment SubscriptionMessage on Message {
         isGuest
 
         author {
-            avatar
+            avatarUrl
             bot
             discrim
             color
@@ -121,7 +121,7 @@ fragment SubscriptionMessage on Message {
             id
             username
             discriminator
-            avatar
+            avatarUrl
         }
     }
 }
