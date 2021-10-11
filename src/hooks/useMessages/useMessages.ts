@@ -24,6 +24,8 @@ export const useMessages = (channel: string, guild: string) => {
     before?: string;
     limit?: number;
   }) {
+    console.log('FETCHMORE')
+
     if(!channel) return;
     if (!options) {
       const [firstMessage] = messages;
@@ -76,7 +78,7 @@ export const useMessages = (channel: string, guild: string) => {
       );
     }
   });
-  
+
   useSubscription<MessageDeleted>(MESSAGE_DELETED, {
     variables: { channel, guild },
     onSubscriptionData({ subscriptionData }) {
@@ -97,7 +99,7 @@ export const useMessages = (channel: string, guild: string) => {
       query.updateQuery(prev =>
         produce(prev, ({ channel }: { channel: Messages_channel }) => {
           const { ids } = subscriptionData.data.messageDeleteBulk
-  
+
           channel.messages = channel.messages.filter(
             message => !ids.includes(message.id)
           );

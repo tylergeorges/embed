@@ -13,6 +13,7 @@ import { observer, useObservable } from "mobx-react-lite";
 import Message from "@ui/Message";
 import {Locale} from "@lib/Locale";
 import { addNotification } from "notify";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 type MessagesProps = {
   guild: string;
@@ -69,88 +70,120 @@ export const Messages = observer(({ guild, channel }: MessagesProps) => {
 
   return (
     <MessagesWrapper stale={stale} className="messages">
+
       <MessageList>
         {({ width, height }) => {
           scroller.width = width;
 
           return (
-            <InfiniteLoader
-              isRowLoaded={({ index }) => {
-                const loadMore = [0].includes(index) ;
-
-                if (loadMore) {
-                  if (scroller.readyToLoadMore) return false;
-                  scroller.readyToLoadMore = true;
-                }
-
-                return true;
+            <div
+              id="scrollableDiv"
+              style={{
+                height: height - 50,
+                overflow: 'auto',
+                display: 'flex',
+                flexDirection: 'column-reverse',
               }}
-              loadMoreRows={async () => {
-                if (scroller.isLoadingMore) return;
-
-                scroller.isLoadingMore = true;
-                await fetchMore();
-                scroller.isLoadingMore = false;
-
-                // Clear the cache for the message at the top
-                // could be a message added into its group
-                cache.clear(2, 0);
-              }}
-              rowCount={Infinity}
-              threshold={1}
             >
-              {({ onRowsRendered, registerChild }) => {
-                return (
-                    <Scroller
-                        width={width}
-                        height={height}
-                        onRowsRendered={(data) => {
-                          const diff = groupedMessages.length - scroller.count
-                          if (groupedMessages.length !== scroller.count) {
-                            if (scroller.count !== -1) {
-                              scroller.scrollToIndex = diff === 1
-                                ? groupedMessages.length
-                                : diff
-                            }
+              <InfiniteScroll
+                dataLength={groupedMessages.length}
+                next={fetchMore}
+                // style={{ display: 'flex', flexDirection: 'column-reverse' }}
+                inverse={true}
+                hasMore={true}
+                loader={<>Loading</>}
+                scrollableTarget={"scrollableDiv"}
 
-                            scroller.count = groupedMessages.length
-                          }
+                height={height}
+              >
+                {groupedMessages.map((g, idx) => (
+                  <Message
+                    key={idx}
+                    // style={style}
+                    messages={g}
+                    allMessages={messages}
+                  />
+                ))}
+              </InfiniteScroll>
+            </div>
 
-                          onRowsRendered(data)
-                        }}
-                        willUnmount={() => {
-                          scroller.count = -1
-                          scroller.scrollToIndex = -1
-                          scroller.readyToLoadMore = false
-                          scroller.isLoadingMore = false
-                        }}
-                        listRef={registerChild}
-                        deferredMeasurementCache={cache}
-                        rowHeight={cache.rowHeight}
-                        rowRenderer={({ index, key, style, parent }) =>
-                            groupedMessages[index] ? (
-                                <CellMeasurer
-                                    key={key}
-                                    cache={cache}
-                                    parent={parent}
-                                    rowIndex={index}
-                                >
-                                  <Message
-                                      style={style}
-                                      messages={groupedMessages[index]}
-                                      allMessages={messages}
-                                  />
-                                </CellMeasurer>
-                            ) : null
-                        }
-                        rowCount={groupedMessages.length + 1}
-                        scrollToIndex={index}
-                        scrollToAlignment="start"
-                        overscanRowCount={0}
-                    />
-                )
-              }}
-            </InfiniteLoader>
+            // <InfiniteLoader
+            //   isRowLoaded={({ index }) => {
+            //     const loadMore = [0].includes(index) ;
+            //
+            //     if (loadMore) {
+            //       if (scroller.readyToLoadMore) return false;
+            //       scroller.readyToLoadMore = true;
+            //     }
+            //
+            //     return true;
+            //   }}
+            //   loadMoreRows={async () => {
+            //     if (scroller.isLoadingMore) return;
+            //
+            //     scroller.isLoadingMore = true;
+            //     await fetchMore();
+            //     scroller.isLoadingMore = false;
+            //
+            //     // Clear the cache for the message at the top
+            //     // could be a message added into its group
+            //     cache.clear(2, 0);
+            //   }}
+            //   rowCount={Infinity}
+            //   threshold={1}
+            // >
+            //   {({ onRowsRendered, registerChild }) => {
+            //     return (
+            //         <Scroller
+            //             width={width}
+            //             height={height}
+            //             onRowsRendered={(data) => {
+            //               const diff = groupedMessages.length - scroller.count
+            //               if (groupedMessages.length !== scroller.count) {
+            //                 if (scroller.count !== -1) {
+            //                   scroller.scrollToIndex = diff === 1
+            //                     ? groupedMessages.length
+            //                     : diff
+            //                 }
+            //
+            //                 scroller.count = groupedMessages.length
+            //               }
+            //
+            //               onRowsRendered(data)
+            //             }}
+            //             willUnmount={() => {
+            //               scroller.count = -1
+            //               scroller.scrollToIndex = -1
+            //               scroller.readyToLoadMore = false
+            //               scroller.isLoadingMore = false
+            //             }}
+            //             listRef={registerChild}
+            //             deferredMeasurementCache={cache}
+            //             rowHeight={cache.rowHeight}
+            //             rowRenderer={({ index, key, style, parent }) =>
+            //                 groupedMessages[index] ? (
+            //                     <CellMeasurer
+            //                         key={key}
+            //                         cache={cache}
+            //                         parent={parent}
+            //                         rowIndex={index}
+            //                     >
+            //                       <Message
+            //                           style={style}
+            //                           messages={groupedMessages[index]}
+            //                           allMessages={messages}
+            //                       />
+            //                     </CellMeasurer>
+            //                 ) : null
+            //             }
+            //             rowCount={groupedMessages.length + 1}
+            //             scrollToIndex={index}
+            //             scrollToAlignment="start"
+            //             overscanRowCount={0}
+            //         />
+            //     )
+            //   }}
+            // </InfiniteLoader>
           );
         }}
       </MessageList>
