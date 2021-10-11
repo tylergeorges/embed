@@ -471,7 +471,8 @@ class Message extends React.PureComponent<Props, any> {
               }
 
               default:
-                return `Unknown Message Type: ${message.type}`
+                console.warn(`WidgetBot: Unknown message type: ${message.type} (message ID: ${message.id})`)
+                return null
             }
           })}
         </Messages>
