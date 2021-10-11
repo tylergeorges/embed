@@ -67,12 +67,10 @@ const gifCheck = (url: string) => {
 const getAvatar = (user: Pick<Message_author, 'avatarUrl'>) => webpCheck(gifCheck(user.avatarUrl))
 
 const shouldShowAuthor = (message: Messages_channel_messages) =>
-  [MessageType.Default, MessageType.Reply].includes(message.type) ||
-  message.type === MessageType.ApplicationCommand && !!message.interaction
+  [MessageType.Default, MessageType.Reply].includes(message.type) || !!message.interaction
 
 const shouldShowContext = (message: Messages_channel_messages) =>
-  message.type === MessageType.Reply ||
-  message.type === MessageType.ApplicationCommand && !!message.interaction
+  message.type === MessageType.Reply || !!message.interaction
 
 const getUsers = (messages: Messages_channel_messages[]) => new Map(messages.map(m => [m.author.id, m.author]))
 
@@ -142,11 +140,11 @@ class Message extends React.PureComponent<Props, any> {
                   : (repliedMessage.attachments.length > 0 || repliedMessage.embeds.length > 0) &&
                     <ReplyImageIcon aria-hidden="false" width="20" height="20" viewBox="0 0 64 64"><path fill="rgba(255,255,255,.66)" d="M56 50.6667V13.3333C56 10.4 53.6 8 50.6667 8H13.3333C10.4 8 8 10.4 8 13.3333V50.6667C8 53.6 10.4 56 13.3333 56H50.6667C53.6 56 56 53.6 56 50.6667ZM22.6667 36L29.3333 44.0267L38.6667 32L50.6667 48H13.3333L22.6667 36Z"></path></ReplyImageIcon>}
                 </RepliedMessage>
-                : firstMessage.type === MessageType.ApplicationCommand && firstMessage.interaction ? 
+                : firstMessage.interaction ? 
                   <RepliedMessage>
                     <RepliedAvatar src={getAvatar(firstMessage.interaction.user)} />
                     <RepliedUser nameColor={allMessages.find(m => m.author.id === firstMessage.interaction.user.id)?.author.color}>{firstMessage.interaction.user.username}</RepliedUser>
-                    <InteractionText>used <Command>/{firstMessage.interaction.name}</Command></InteractionText>
+                    <InteractionText>used <Command>{firstMessage.type === MessageType.ApplicationCommand && '/'}{firstMessage.interaction.name}</Command></InteractionText>
                   </RepliedMessage>
                 :
                 <RepliedMessage>
@@ -207,7 +205,8 @@ class Message extends React.PureComponent<Props, any> {
 
               case MessageType.Default:
               case MessageType.Reply: 
-              case MessageType.ApplicationCommand: {
+              case MessageType.ApplicationCommand:
+              case MessageType.ContextMenuCommand: {
                 return (
                   <ThemeProvider key={message.id} theme={this.theme(message)}>
                     <Root className="message" id={message.id}>
