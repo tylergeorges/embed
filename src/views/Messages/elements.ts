@@ -21,7 +21,11 @@ export interface MessagesWrapperProps {
   stale: boolean
 }
 
-export const MessageList = styled(AutoSizer)``
+export const MessageList = styled('div')`
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+`
 
 export const MessagesWrapper = styled('div')<MessagesWrapperProps>`
   overflow: auto;

@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useMessages } from "@hooks";
 import { formatError, groupMessages } from "./utils";
 import ErrorAhoy from "@ui/Overlays/ErrorAhoy";
@@ -7,13 +6,15 @@ import { MessageList, MessagesWrapper, Scroller } from "./elements";
 import {
   CellMeasurer,
   CellMeasurerCache,
-  InfiniteLoader
 } from "react-virtualized";
 import { observer, useObservable } from "mobx-react-lite";
 import Message from "@ui/Message";
 import {Locale} from "@lib/Locale";
 import { addNotification } from "notify";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { createRef, useState } from "react";
+import { Simulate } from "react-dom/test-utils";
+import scroll = Simulate.scroll;
 
 type MessagesProps = {
   guild: string;
@@ -30,6 +31,29 @@ export const Messages = observer(({ guild, channel }: MessagesProps) => {
     count: -1,
     scrollToIndex: -1
   });
+
+  const [readyToLoadMore, setReadyToLoadMore] = useState(true);
+  const scrollableTarget = createRef<HTMLDivElement>();
+
+  const fetchMoreMessages = async (...params: any[]) => {
+    if (!readyToLoadMore) return console.log(`unready to load`);
+
+    const currentScrollHeight = scrollableTarget.current?.scrollHeight;
+
+    setReadyToLoadMore(false);
+    await fetchMore(...params);
+
+    setTimeout(() => {
+      console.log('Ready to load again');
+      setReadyToLoadMore(true);
+    }, 150);
+
+    const newScrollableTarget = document.getElementById('scrollableDiv');
+    const newScrollHeight = newScrollableTarget?.scrollHeight;
+    console.log(`Loaded more - currentScrollHeight: ${currentScrollHeight} - newScrollHeight: ${newScrollHeight} - should supposedly scroll to ${newScrollHeight - currentScrollHeight} on Y axis`);
+
+    return true;
+  }
 
   const getKey = (rowIndex: number) => {
     const group = groupedMessages[rowIndex];
@@ -70,122 +94,27 @@ export const Messages = observer(({ guild, channel }: MessagesProps) => {
 
   return (
     <MessagesWrapper stale={stale} className="messages">
+      <MessageList innerRef={scrollableTarget} id="scrollableDiv">
+        <InfiniteScroll
+          dataLength={groupedMessages.length}
+          next={fetchMoreMessages}
+          // style={{ display: 'flex', flexDirection: 'column-reverse' }}
+          inverse={true}
+          hasMore={true}
+          loader={<>Loading</>}
+          scrollableTarget={'scrollableDiv'}
 
-      <MessageList>
-        {({ width, height }) => {
-          scroller.width = width;
-
-          return (
-            <div
-              id="scrollableDiv"
-              style={{
-                height: height - 50,
-                overflow: 'auto',
-                display: 'flex',
-                flexDirection: 'column-reverse',
-              }}
-            >
-              <InfiniteScroll
-                dataLength={groupedMessages.length}
-                next={fetchMore}
-                // style={{ display: 'flex', flexDirection: 'column-reverse' }}
-                inverse={true}
-                hasMore={true}
-                loader={<>Loading</>}
-                scrollableTarget={"scrollableDiv"}
-
-                height={height}
-              >
-                {groupedMessages.map((g, idx) => (
-                  <Message
-                    key={idx}
-                    // style={style}
-                    messages={g}
-                    allMessages={messages}
-                  />
-                ))}
-              </InfiniteScroll>
-            </div>
-
-            // <InfiniteLoader
-            //   isRowLoaded={({ index }) => {
-            //     const loadMore = [0].includes(index) ;
-            //
-            //     if (loadMore) {
-            //       if (scroller.readyToLoadMore) return false;
-            //       scroller.readyToLoadMore = true;
-            //     }
-            //
-            //     return true;
-            //   }}
-            //   loadMoreRows={async () => {
-            //     if (scroller.isLoadingMore) return;
-            //
-            //     scroller.isLoadingMore = true;
-            //     await fetchMore();
-            //     scroller.isLoadingMore = false;
-            //
-            //     // Clear the cache for the message at the top
-            //     // could be a message added into its group
-            //     cache.clear(2, 0);
-            //   }}
-            //   rowCount={Infinity}
-            //   threshold={1}
-            // >
-            //   {({ onRowsRendered, registerChild }) => {
-            //     return (
-            //         <Scroller
-            //             width={width}
-            //             height={height}
-            //             onRowsRendered={(data) => {
-            //               const diff = groupedMessages.length - scroller.count
-            //               if (groupedMessages.length !== scroller.count) {
-            //                 if (scroller.count !== -1) {
-            //                   scroller.scrollToIndex = diff === 1
-            //                     ? groupedMessages.length
-            //                     : diff
-            //                 }
-            //
-            //                 scroller.count = groupedMessages.length
-            //               }
-            //
-            //               onRowsRendered(data)
-            //             }}
-            //             willUnmount={() => {
-            //               scroller.count = -1
-            //               scroller.scrollToIndex = -1
-            //               scroller.readyToLoadMore = false
-            //               scroller.isLoadingMore = false
-            //             }}
-            //             listRef={registerChild}
-            //             deferredMeasurementCache={cache}
-            //             rowHeight={cache.rowHeight}
-            //             rowRenderer={({ index, key, style, parent }) =>
-            //                 groupedMessages[index] ? (
-            //                     <CellMeasurer
-            //                         key={key}
-            //                         cache={cache}
-            //                         parent={parent}
-            //                         rowIndex={index}
-            //                     >
-            //                       <Message
-            //                           style={style}
-            //                           messages={groupedMessages[index]}
-            //                           allMessages={messages}
-            //                       />
-            //                     </CellMeasurer>
-            //                 ) : null
-            //             }
-            //             rowCount={groupedMessages.length + 1}
-            //             scrollToIndex={index}
-            //             scrollToAlignment="start"
-            //             overscanRowCount={0}
-            //         />
-            //     )
-            //   }}
-            // </InfiniteLoader>
-          );
-        }}
+          // height={height}
+        >
+          {groupedMessages.map((g, idx) => (
+            <Message
+              key={idx}
+              // style={style}
+              messages={g}
+              allMessages={messages}
+            />
+          ))}
+        </InfiniteScroll>
       </MessageList>
       {stale && <Loading />}
     </MessagesWrapper>
