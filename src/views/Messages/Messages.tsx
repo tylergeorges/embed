@@ -36,9 +36,9 @@ export const Messages = observer(({ guild, channel }: MessagesProps) => {
   const scrollableTarget = createRef<HTMLDivElement>();
 
   const fetchMoreMessages = async (...params: any[]) => {
-    if (!readyToLoadMore) return console.log(`unready to load`);
+    if (!readyToLoadMore) return console.log(`Unready to load`);
 
-    const currentScrollHeight = scrollableTarget.current?.scrollHeight;
+    const currentScrollHeight = scrollableTarget.current?.scrollTop;
 
     setReadyToLoadMore(false);
     await fetchMore(...params);
@@ -49,8 +49,10 @@ export const Messages = observer(({ guild, channel }: MessagesProps) => {
     }, 150);
 
     const newScrollableTarget = document.getElementById('scrollableDiv');
-    const newScrollHeight = newScrollableTarget?.scrollHeight;
-    console.log(`Loaded more - currentScrollHeight: ${currentScrollHeight} - newScrollHeight: ${newScrollHeight} - should supposedly scroll to ${newScrollHeight - currentScrollHeight} on Y axis`);
+
+    console.log(`Loaded more - scrolling to ${currentScrollHeight}`);
+
+    newScrollableTarget.scrollTop = currentScrollHeight;
 
     return true;
   }
