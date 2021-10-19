@@ -11,7 +11,7 @@ import { MessageType, FormatType, MentionType } from "./globalTypes";
 
 export interface Message_author {
   __typename: "User";
-  avatar: string;
+  avatarUrl: string;
   bot: boolean;
   color: number;
   discrim: string;
@@ -54,7 +54,7 @@ export interface Message_messageReference {
 
 export interface Message_referencedMessage_author {
   __typename: "User";
-  avatar: string;
+  avatarUrl: string;
   bot: boolean;
   discrim: string;
   color: number;
@@ -196,7 +196,7 @@ export interface Message_interaction_user {
   id: string;
   username: string;
   discriminator: string;
-  avatar: string | null;
+  avatarUrl: string;
 }
 
 export interface Message_interaction {

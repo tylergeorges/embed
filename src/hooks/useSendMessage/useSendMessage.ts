@@ -28,7 +28,7 @@ export const useSendMessage = () => {
           isGuest: true,
           author: {
             __typename: 'User',
-            avatar: 'avatar' in authStore.user && authStore.user.avatar,
+            avatarUrl: 'avatar' in authStore.user && Util.craftAvatarUrl(authStore.user._id, authStore.user.avatar),
             bot: true,
             color: 0,
             discrim: '0000',
