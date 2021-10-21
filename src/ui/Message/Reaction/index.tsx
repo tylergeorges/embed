@@ -10,8 +10,8 @@ type Props = Message_reactions
 
 class Reaction extends React.Component<Props> {
   render() {
-    const { emojiName, emojiId, count } = this.props
-    const url: string = emojiId && webpCheck(`https://cdn.discordapp.com/emojis/${emojiId}.webp?v=1`)
+    const { emojiName, emojiId, count, animated } = this.props
+    const url: string = emojiId && webpCheck(`https://cdn.discordapp.com/emojis/${emojiId}.${animated ? 'gif' : 'webp'}?v=1`)
 
     return (
       <Tooltip
