@@ -7,22 +7,41 @@
 // GraphQL query operation: GuildInfo
 // ====================================================
 
-export interface GuildInfo_guild_channels_category {
+export interface GuildInfo_guild_channels_TextChannel_category {
   __typename: "Category";
   name: string;
   position: number;
 }
 
-export interface GuildInfo_guild_channels {
+export interface GuildInfo_guild_channels_TextChannel {
   __typename: "TextChannel";
   name: string;
   id: string;
   position: number;
+  category: GuildInfo_guild_channels_TextChannel_category | null;
   topic: string | null;
   canSend: boolean;
   nsfw: boolean;
-  category: GuildInfo_guild_channels_category | null;
 }
+
+export interface GuildInfo_guild_channels_AnnouncementChannel_category {
+  __typename: "Category";
+  name: string;
+  position: number;
+}
+
+export interface GuildInfo_guild_channels_AnnouncementChannel {
+  __typename: "AnnouncementChannel";
+  name: string;
+  id: string;
+  position: number;
+  category: GuildInfo_guild_channels_AnnouncementChannel_category | null;
+  topic: string | null;
+  canSend: boolean;
+  nsfw: boolean;
+}
+
+export type GuildInfo_guild_channels = GuildInfo_guild_channels_TextChannel | GuildInfo_guild_channels_AnnouncementChannel;
 
 export interface GuildInfo_guild_roles {
   __typename: "Role";

@@ -1,7 +1,7 @@
 import produce from "immer";
 import { MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Messages_channel_messages, MessageUpdated, NewMessage, UpdatedMessage } from "@generated";
+import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message, MessageUpdated, NewMessage, UpdatedMessage } from "@generated";
 
 /**
  * Fetches the messages for a channel
@@ -50,7 +50,7 @@ export const useMessages = (channel: string, guild: string) => {
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, ({ channel: { messages } }: { channel: Messages_channel }) => {
-          const message = subscriptionData.data.message as Messages_channel_messages
+          const message = subscriptionData.data.message as Message
           message.author.color = messages.find(m => m.author.id === message.author.id)?.author.color || 0xffffff
           if (!messages.find(m => m.id === message.id)) messages.push(message);
         })
@@ -66,7 +66,7 @@ export const useMessages = (channel: string, guild: string) => {
           const index = messages.findIndex(m => m.id === message.id);
 
           if (index > -1) {
-            const updatedProps = Object.fromEntries(Object.entries(message).filter(([_, v]) => v !== null)) as Partial<Messages_channel_messages>
+            const updatedProps = Object.fromEntries(Object.entries(message).filter(([_, v]) => v !== null)) as Partial<Message>
             updatedProps.author.color = messages.find(m => m.author.id === message.author?.id)?.author.color || 0xffffff
             delete updatedProps.__typename
 

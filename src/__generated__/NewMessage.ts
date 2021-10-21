@@ -19,14 +19,6 @@ export interface NewMessage_message_author {
   name: string;
 }
 
-export interface NewMessage_message_reactions {
-  __typename: "Reaction";
-  count: number;
-  emojiName: string | null;
-  emojiId: string | null;
-  me: boolean;
-}
-
 export interface NewMessage_message_attachments {
   __typename: "Attachment";
   url: string;
@@ -42,6 +34,14 @@ export interface NewMessage_message_stickers {
   name: string;
   formatType: FormatType;
   lottieData: string | null;
+}
+
+export interface NewMessage_message_reactions {
+  __typename: "Reaction";
+  count: number;
+  emojiId: string | null;
+  emojiName: string | null;
+  animated: boolean | null;
 }
 
 export interface NewMessage_message_messageReference {
@@ -164,6 +164,7 @@ export interface NewMessage_message_embeds_video {
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface NewMessage_message_embeds {
@@ -214,9 +215,9 @@ export interface NewMessage_message {
   editedAt: any | null;
   isGuest: boolean;
   author: NewMessage_message_author;
-  reactions: NewMessage_message_reactions[] | null;
   attachments: NewMessage_message_attachments[];
   stickers: NewMessage_message_stickers[];
+  reactions: NewMessage_message_reactions[] | null;
   messageReference: NewMessage_message_messageReference | null;
   referencedMessage: NewMessage_message_referencedMessage | null;
   application: NewMessage_message_application | null;

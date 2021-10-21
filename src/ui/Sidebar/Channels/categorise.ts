@@ -1,6 +1,6 @@
 import {ChannelInfo_channel_category, GuildInfo_guild_channels} from '@generated'
 
-interface Channel extends GuildInfo_guild_channels {
+type Channel = GuildInfo_guild_channels & {
   pings?: number
 }
 

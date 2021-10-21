@@ -52,6 +52,7 @@ export interface Embed_video {
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface Embed {

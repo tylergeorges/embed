@@ -19,14 +19,6 @@ export interface SubscriptionMessage_author {
   name: string;
 }
 
-export interface SubscriptionMessage_reactions {
-  __typename: "Reaction";
-  count: number;
-  emojiName: string | null;
-  emojiId: string | null;
-  me: boolean;
-}
-
 export interface SubscriptionMessage_attachments {
   __typename: "Attachment";
   url: string;
@@ -42,6 +34,14 @@ export interface SubscriptionMessage_stickers {
   name: string;
   formatType: FormatType;
   lottieData: string | null;
+}
+
+export interface SubscriptionMessage_reactions {
+  __typename: "Reaction";
+  count: number;
+  emojiId: string | null;
+  emojiName: string | null;
+  animated: boolean | null;
 }
 
 export interface SubscriptionMessage_messageReference {
@@ -164,6 +164,7 @@ export interface SubscriptionMessage_embeds_video {
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface SubscriptionMessage_embeds {
@@ -214,9 +215,9 @@ export interface SubscriptionMessage {
   editedAt: any | null;
   isGuest: boolean;
   author: SubscriptionMessage_author;
-  reactions: SubscriptionMessage_reactions[] | null;
   attachments: SubscriptionMessage_attachments[];
   stickers: SubscriptionMessage_stickers[];
+  reactions: SubscriptionMessage_reactions[] | null;
   messageReference: SubscriptionMessage_messageReference | null;
   referencedMessage: SubscriptionMessage_referencedMessage | null;
   application: SubscriptionMessage_application | null;

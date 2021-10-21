@@ -20,11 +20,6 @@ fragment SubscriptionMessage on Message {
         name
     }
 
-    reactions {
-        count
-        emojiName
-    }
-
     attachments {
         url
         height
@@ -44,7 +39,7 @@ fragment SubscriptionMessage on Message {
         count
         emojiId
         emojiName
-        me
+        animated
     }
 
     messageReference {
