@@ -31,6 +31,7 @@ export const MessagesWrapper = styled('div')<MessagesWrapperProps>`
   overflow: auto;
   display: flex;
   flex-direction: column-reverse;
+  padding-bottom: 1rem;
   
   flex-grow: 1;
 

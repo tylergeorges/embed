@@ -11,7 +11,6 @@ export const Wrapper = styled('div')<Props>`
   height: 100%;
   width: 100%;
   transition: margin 0.3s ease, width 0.3s ease;
-  padding-bottom: 1rem;
 
   &::after {
     content: '';
