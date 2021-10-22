@@ -35,27 +35,28 @@ jobs:
       - name: Docker push tag latest
         run: docker push ghcr.io/widgetbot-io/embed:${GITHUB_REF#refs/tags/}
   kubernetes-deploy:
-      name: Deploy to Kubernetes
-      needs: docker
-      runs-on: ubuntu-latest
-      steps:
-        - name: Use actions/checkout@v2
-          uses: actions/checkout@v2
-        - name: Submodules
-          run: git submodule update --init --recursive --remote
-        - name: Kubernetes install
-          run: |
-            curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-            chmod +x kubectl
-            sudo mv kubectl /bin/kubectl
-        - name: Kubernetes setup
-          run: |
-            mkdir ~/.kube
-            echo "${{ secrets.KUBE_CLUSTER_CONFIG }}" > ~/.kube/config
-        - name: Update docker image
-          run: kubectl set image deployment/widgetbot-embed embed=ghcr.io/widgetbot-io/embed:${GITHUB_REF#refs/tags/}
-        - name: Verify Kubernetes deployment
-          run: kubectl rollout status deployment/widgetbot-embed
-        - name: Rollback failed deployment
-          if: failure()
-          run: kubectl rollout undo deployment/widgetbot-embed
+    if: "!github.event.release.prerelease"
+    name: Deploy to Kubernetes
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Use actions/checkout@v2
+        uses: actions/checkout@v2
+      - name: Submodules
+        run: git submodule update --init --recursive --remote
+      - name: Kubernetes install
+        run: |
+          curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+          chmod +x kubectl
+          sudo mv kubectl /bin/kubectl
+      - name: Kubernetes setup
+        run: |
+          mkdir ~/.kube
+          echo "${{ secrets.KUBE_CLUSTER_CONFIG }}" > ~/.kube/config
+      - name: Update docker image
+        run: kubectl set image deployment/widgetbot-embed embed=ghcr.io/widgetbot-io/embed:${GITHUB_REF#refs/tags/}
+      - name: Verify Kubernetes deployment
+        run: kubectl rollout status deployment/widgetbot-embed
+      - name: Rollback failed deployment
+        if: failure()
+        run: kubectl rollout undo deployment/widgetbot-embed
