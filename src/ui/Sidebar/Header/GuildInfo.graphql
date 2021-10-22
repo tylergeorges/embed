@@ -17,24 +17,22 @@ query GuildInfo($guild: String!) {
             name
             id
             position
+
+            category {
+                name
+                position
+            }
+
             ... on TextChannel {
                 topic
                 canSend
                 nsfw
-                category {
-                    name
-                    position
-                }
             }
-            #      ... on NewsChannel {
-            #        topic
-            #        canSend
-            #        nsfw
-            #        category {
-            #          name
-            #          position
-            #        }
-            #      }
+            ... on AnnouncementChannel {
+                topic
+                canSend
+                nsfw
+            }
         }
 
         roles {

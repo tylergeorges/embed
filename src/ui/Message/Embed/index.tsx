@@ -3,7 +3,7 @@ import {parseAllowLinks, parseEmbedTitle} from '@ui/shared/markdown/render'
 import {ThemeProvider} from 'emotion-theming'
 import * as Moment from 'moment'
 
-import {Content, Root, Title, Wrapper, Provider, VideoIframe, Gifv} from './elements'
+import {Content, Root, Title, Wrapper, Provider, VideoIframe, Gifv, ProxiedVideo} from './elements'
 import {Author, AuthorIcon, AuthorName} from './elements/author'
 import {Description} from './elements/description'
 import {Field, FieldName, Fields, FieldValue} from './elements/fields'
@@ -11,7 +11,7 @@ import {Footer, FooterIcon, FooterText} from './elements/footer'
 import {Image} from './elements/media'
 import {Thumbnail} from './elements/thumbnail'
 import {Video} from '@ui/Message/elements'
-import {Embed_author, Embed_footer, Embed_image, Embed_thumbnail, Message_author, Message_embeds} from "@generated";
+import {Embed_author, Embed_footer, Embed_image, Embed_thumbnail, Embed_video, Message_author, Message_embeds} from "@generated";
 
 // TODO: Refactor / cleanup
 
@@ -66,8 +66,10 @@ const EmbedDescription = ({content, users}) =>
         <Description>{parseEmojis(parseAllowLinks(content, undefined, {users}))}</Description>
     ) : null
 
-const EmbedVideo = ({url, height, width}) =>
-    url ? (
+const EmbedVideo = ({url, height, width, proxyUrl, thumbnail}: Embed_video & {thumbnail?: Embed_thumbnail['url']}) =>
+    proxyUrl ? (
+        <ProxiedVideo src={proxyUrl} height={height} width={width} controls poster={thumbnail} preload="metadata" />
+    ) : url ? (
         <VideoIframe src={url} height={height} width={width}/>
     ) : null
 
@@ -224,7 +226,7 @@ const Embed = ({
                             <EmbedAuthor {...author} />
                             <EmbedTitle title={title} url={url}/>
                             {embed.type.toLowerCase() === 'video' ?
-                                <EmbedVideo {...video} /> :
+                                <EmbedVideo {...video} thumbnail={thumbnail.url} /> :
                                 <EmbedDescription content={description} users={users}/>}
                             <EmbedFields fields={fields} users={users}/>
                         </div>

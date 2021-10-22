@@ -1,4 +1,4 @@
-import {Messages_channel_messages_author} from '@generated'
+import { Message_author } from '@generated'
 import Moment from 'moment'
 import * as React from 'react'
 
@@ -8,7 +8,7 @@ import { Locale } from '@lib/Locale';
 import Tooltip from 'rc-tooltip';
 
 interface Props {
-  author: Messages_channel_messages_author
+  author: Message_author
   time: number
   crosspost: boolean
   referenceGuild: string

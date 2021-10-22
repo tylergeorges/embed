@@ -19,14 +19,6 @@ export interface MessageUpdated_messageUpdate_author {
   name: string;
 }
 
-export interface MessageUpdated_messageUpdate_reactions {
-  __typename: "Reaction";
-  count: number;
-  emojiName: string | null;
-  emojiId: string | null;
-  me: boolean;
-}
-
 export interface MessageUpdated_messageUpdate_attachments {
   __typename: "Attachment";
   url: string;
@@ -42,6 +34,14 @@ export interface MessageUpdated_messageUpdate_stickers {
   name: string;
   formatType: FormatType;
   lottieData: string | null;
+}
+
+export interface MessageUpdated_messageUpdate_reactions {
+  __typename: "Reaction";
+  count: number;
+  emojiId: string | null;
+  emojiName: string | null;
+  animated: boolean | null;
 }
 
 export interface MessageUpdated_messageUpdate_messageReference {
@@ -164,6 +164,7 @@ export interface MessageUpdated_messageUpdate_embeds_video {
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface MessageUpdated_messageUpdate_embeds {
@@ -213,9 +214,9 @@ export interface MessageUpdated_messageUpdate {
   createdAt: any | null;
   editedAt: any | null;
   author: MessageUpdated_messageUpdate_author | null;
-  reactions: MessageUpdated_messageUpdate_reactions[] | null;
   attachments: MessageUpdated_messageUpdate_attachments[] | null;
   stickers: MessageUpdated_messageUpdate_stickers[] | null;
+  reactions: MessageUpdated_messageUpdate_reactions[] | null;
   messageReference: MessageUpdated_messageUpdate_messageReference | null;
   referencedMessage: MessageUpdated_messageUpdate_referencedMessage | null;
   application: MessageUpdated_messageUpdate_application | null;

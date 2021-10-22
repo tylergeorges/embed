@@ -19,11 +19,6 @@ fragment UpdatedMessage on UpdatedMessage {
         name
     }
 
-    reactions {
-        count
-        emojiName
-    }
-
     attachments {
         url
         height
@@ -43,7 +38,7 @@ fragment UpdatedMessage on UpdatedMessage {
         count
         emojiId
         emojiName
-        me
+        animated
     }
 
     messageReference {

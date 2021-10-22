@@ -77,6 +77,13 @@ export const VideoIframe = styled('iframe')`
   max-width: 100%;
 `
 
+export const ProxiedVideo = styled.video`
+  margin-top: 8px;
+  max-height: 300px;
+  width: 400px;
+  max-width: 100%;
+`
+
 export const Gifv = styled('video')`
   max-height: 300px;
   width: 400px;

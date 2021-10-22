@@ -5,5 +5,8 @@ query ChannelHeader($channel: String!) {
     ... on TextChannel {
       topic
     }
+    ... on AnnouncementChannel {
+      topic
+    }
   }
 }

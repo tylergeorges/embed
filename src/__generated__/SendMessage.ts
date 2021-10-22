@@ -20,14 +20,6 @@ export interface SendMessage_sendMessage_author {
   name: string;
 }
 
-export interface SendMessage_sendMessage_reactions {
-  __typename: "Reaction";
-  count: number;
-  emojiName: string | null;
-  emojiId: string | null;
-  me: boolean;
-}
-
 export interface SendMessage_sendMessage_attachments {
   __typename: "Attachment";
   url: string;
@@ -43,6 +35,14 @@ export interface SendMessage_sendMessage_stickers {
   name: string;
   formatType: FormatType;
   lottieData: string | null;
+}
+
+export interface SendMessage_sendMessage_reactions {
+  __typename: "Reaction";
+  count: number;
+  emojiId: string | null;
+  emojiName: string | null;
+  animated: boolean | null;
 }
 
 export interface SendMessage_sendMessage_messageReference {
@@ -165,6 +165,7 @@ export interface SendMessage_sendMessage_embeds_video {
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface SendMessage_sendMessage_embeds {
@@ -215,9 +216,9 @@ export interface SendMessage_sendMessage {
   editedAt: any | null;
   isGuest: boolean;
   author: SendMessage_sendMessage_author;
-  reactions: SendMessage_sendMessage_reactions[] | null;
   attachments: SendMessage_sendMessage_attachments[];
   stickers: SendMessage_sendMessage_stickers[];
+  reactions: SendMessage_sendMessage_reactions[] | null;
   messageReference: SendMessage_sendMessage_messageReference | null;
   referencedMessage: SendMessage_sendMessage_referencedMessage | null;
   application: SendMessage_sendMessage_application | null;

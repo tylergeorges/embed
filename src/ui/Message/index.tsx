@@ -1,4 +1,4 @@
-import { Messages_channel_messages, Message_author } from '@generated'
+import { Message as MessageData, Message_author } from '@generated'
 import Markdown, {LinkMarkdown} from '@ui/shared/markdown/render'
 import { ThemeProvider } from 'emotion-theming'
 import Moment from 'moment'
@@ -55,8 +55,8 @@ import { generalStore } from '@store'
 import webpCheck from '@ui/shared/webpCheck'
 
 interface Props {
-  messages: Messages_channel_messages[],
-  allMessages: Messages_channel_messages[],
+  messages: MessageData[],
+  allMessages: MessageData[],
   style?
 }
 
@@ -66,13 +66,13 @@ const gifCheck = (url: string) => {
 
 const getAvatar = (user: Pick<Message_author, 'avatarUrl'>) => webpCheck(gifCheck(user.avatarUrl))
 
-const shouldShowAuthor = (message: Messages_channel_messages) =>
+const shouldShowAuthor = (message: MessageData) =>
   [MessageType.Default, MessageType.Reply].includes(message.type) || !!message.interaction
 
-const shouldShowContext = (message: Messages_channel_messages) =>
+const shouldShowContext = (message: MessageData) =>
   message.type === MessageType.Reply || !!message.interaction
 
-const getUsers = (messages: Messages_channel_messages[]) => new Map(messages.map(m => [m.author.id, m.author]))
+const getUsers = (messages: MessageData[]) => new Map(messages.map(m => [m.author.id, m.author]))
 
 class Message extends React.PureComponent<Props, any> {
   theme = message => theme => ({

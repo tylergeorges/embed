@@ -7,13 +7,23 @@
 // GraphQL query operation: ChannelName
 // ====================================================
 
-export interface ChannelName_channel {
+export interface ChannelName_channel_TextChannel {
   __typename: "TextChannel";
   name: string;
   id: string;
   nsfw: boolean;
   canSend: boolean;
 }
+
+export interface ChannelName_channel_AnnouncementChannel {
+  __typename: "AnnouncementChannel";
+  name: string;
+  id: string;
+  nsfw: boolean;
+  canSend: boolean;
+}
+
+export type ChannelName_channel = ChannelName_channel_TextChannel | ChannelName_channel_AnnouncementChannel;
 
 export interface ChannelName {
   channel: ChannelName_channel;

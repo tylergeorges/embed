@@ -20,14 +20,6 @@ export interface Message_author {
   name: string;
 }
 
-export interface Message_reactions {
-  __typename: "Reaction";
-  count: number;
-  emojiName: string | null;
-  emojiId: string | null;
-  me: boolean;
-}
-
 export interface Message_attachments {
   __typename: "Attachment";
   url: string;
@@ -43,6 +35,14 @@ export interface Message_stickers {
   name: string;
   formatType: FormatType;
   lottieData: string | null;
+}
+
+export interface Message_reactions {
+  __typename: "Reaction";
+  count: number;
+  emojiId: string | null;
+  emojiName: string | null;
+  animated: boolean | null;
 }
 
 export interface Message_messageReference {
@@ -165,6 +165,7 @@ export interface Message_embeds_video {
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface Message_embeds {
@@ -215,9 +216,9 @@ export interface Message {
   editedAt: any | null;
   isGuest: boolean;
   author: Message_author;
-  reactions: Message_reactions[] | null;
   attachments: Message_attachments[];
   stickers: Message_stickers[];
+  reactions: Message_reactions[] | null;
   messageReference: Message_messageReference | null;
   referencedMessage: Message_referencedMessage | null;
   application: Message_application | null;
