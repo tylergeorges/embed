@@ -26,7 +26,7 @@ export const Inner = styled('div')`
   display: flex;
   flex-shrink: 1;
   flex-grow: 1;
-  max-width: 100%;
+  min-width: 0;
   height: 47px;
   padding: 10px 0;
   @media (max-width: 270px), (max-height: 300px) {
