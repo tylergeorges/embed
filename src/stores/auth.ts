@@ -23,9 +23,12 @@ interface DiscordUser {
 
 interface GuestUser {
   username: string
+  avatarUrl: string | null
 }
 
 type User = DiscordUser | GuestUser;
+
+const queryParams = new URLSearchParams(location.search)
 
 const loginError = (msg: string) => addNotification({
   level: 'warning',
@@ -66,17 +69,15 @@ export class AuthStore {
   }
 
   @action async setGuestUser(username: string) {
-    window.localStorage.setItem('user', JSON.stringify({
-      username
-    }));
-
-    this.user = {
-      username
-    };
-
-    return {
-      username
+    const user: GuestUser = {
+      username,
+      avatarUrl: queryParams.get('avatar')
     }
+    window.localStorage.setItem('user', JSON.stringify(user))
+
+    this.user = user
+
+    return user
   }
 
   @action logout() {
@@ -145,7 +146,10 @@ export class AuthStore {
       this.inProgress = true;
       this.errors = undefined;
 
-      const { data } = await APIRequest(Endpoints.auth.guest, {payload: {username}})
+      const { data } = await APIRequest(Endpoints.auth.guest, { payload: {
+        username,
+        avatar: queryParams.get('avatar')
+      } })
 
       switch (data.type) {
         case 'AUTH_SUCCESS': {
