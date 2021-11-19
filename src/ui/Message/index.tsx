@@ -64,7 +64,7 @@ const gifCheck = (url: string) => {
   return url.includes('/a_') ? url.replace('webp', 'gif') : url
 }
 
-const getAvatar = (user: Pick<Message_author, 'avatarUrl'>) => webpCheck(gifCheck(user.avatarUrl))
+const getAvatar = (user: Pick<Message_author, 'avatarUrl'>) => user.avatarUrl ? webpCheck(gifCheck(user.avatarUrl)) : 'https://cdn.discordapp.com/embed/avatars/0.png'
 
 const shouldShowAuthor = (message: MessageData) =>
   [MessageType.Default, MessageType.Reply].includes(message.type) || !!message.interaction
