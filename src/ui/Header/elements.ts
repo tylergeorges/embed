@@ -125,7 +125,7 @@ export const Join = styled(JoinLink)`
 `;
 
 export const SingleChannelAuthWrapper = styled('div')`
-  ${({theme}) => !!theme.singleChannel ? null : 'display: none'};
+  ${({theme}) => theme.singleChannel ? null : 'display: none'};
   margin-right: 10px;
   > a {
     display: block;

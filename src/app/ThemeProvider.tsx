@@ -51,7 +51,7 @@ export const ThemeProvider = ({ children }) => {
     ...theme,
     readonly: settings?.readonly || false,
     guestMode: settings?.guestMode || false,
-    singleChannel: settings?.singleChannel || '',
+    singleChannel: !!settings?.singleChannel || settings?.hideSidebar || false,
     colors: {
       ...theme.colors,
       _primary: Color(theme.colors.primary),
