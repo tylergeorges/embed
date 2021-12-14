@@ -12,6 +12,7 @@ export class GeneralStore {
   @observable settings?: Settings_settings;
   @observable channels: ICategory[] = [];
   @observable menuOpen: boolean = false;
+  @observable activeThreadId?: string;
 
   constructor() {
     autorun(() => {
@@ -36,6 +37,10 @@ export class GeneralStore {
 
   @action setChannels(channels: ICategory[]) {
     this.channels = channels
+  }
+
+  @action setActiveThread(id?: string) {
+    this.activeThreadId = id;
   }
 }
 

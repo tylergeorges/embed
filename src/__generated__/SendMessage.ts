@@ -206,6 +206,15 @@ export interface SendMessage_sendMessage_interaction {
   user: SendMessage_sendMessage_interaction_user;
 }
 
+export interface SendMessage_sendMessage_thread {
+  __typename: "Thread";
+  id: string;
+  name: string;
+  archivedAt: any | null;
+  locked: boolean;
+  messageCount: number;
+}
+
 export interface SendMessage_sendMessage {
   __typename: "Message";
   id: string;
@@ -225,6 +234,7 @@ export interface SendMessage_sendMessage {
   embeds: SendMessage_sendMessage_embeds[];
   mentions: SendMessage_sendMessage_mentions[];
   interaction: SendMessage_sendMessage_interaction | null;
+  thread: SendMessage_sendMessage_thread | null;
 }
 
 export interface SendMessage {

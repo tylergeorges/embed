@@ -44,7 +44,8 @@ export const useSendMessage = () => {
           application: null,
           embeds: [],
           mentions: [],
-          interaction: null
+          interaction: null,
+          thread: null,
         }
       } as SendMessage, update: (store, { data: { sendMessage: newMessage } }) => {
         const data = store.readQuery<Messages>({ query: MESSAGES, variables: {channel} })
@@ -59,7 +60,7 @@ export const useSendMessage = () => {
           const optimisticIndex = data.channel.messages.findIndex(m => m.content.replace(/ /g, '') === newMessage.content.replace(/ /g, '') && m.flags & 1 << 4)
           if (optimisticIndex > -1) data.channel.messages.splice(optimisticIndex, 1)
         }
-        
+
         store.writeQuery({query: MESSAGES, variables: {channel}, data})
       }
     }).catch(error => addNotification({

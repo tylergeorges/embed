@@ -206,6 +206,15 @@ export interface Messages_channel_TextChannel_messages_interaction {
   user: Messages_channel_TextChannel_messages_interaction_user;
 }
 
+export interface Messages_channel_TextChannel_messages_thread {
+  __typename: "Thread";
+  id: string;
+  name: string;
+  archivedAt: any | null;
+  locked: boolean;
+  messageCount: number;
+}
+
 export interface Messages_channel_TextChannel_messages {
   __typename: "Message";
   id: string;
@@ -225,6 +234,7 @@ export interface Messages_channel_TextChannel_messages {
   embeds: Messages_channel_TextChannel_messages_embeds[];
   mentions: Messages_channel_TextChannel_messages_mentions[];
   interaction: Messages_channel_TextChannel_messages_interaction | null;
+  thread: Messages_channel_TextChannel_messages_thread | null;
 }
 
 export interface Messages_channel_TextChannel {
@@ -430,6 +440,15 @@ export interface Messages_channel_AnnouncementChannel_messages_interaction {
   user: Messages_channel_AnnouncementChannel_messages_interaction_user;
 }
 
+export interface Messages_channel_AnnouncementChannel_messages_thread {
+  __typename: "Thread";
+  id: string;
+  name: string;
+  archivedAt: any | null;
+  locked: boolean;
+  messageCount: number;
+}
+
 export interface Messages_channel_AnnouncementChannel_messages {
   __typename: "Message";
   id: string;
@@ -449,6 +468,7 @@ export interface Messages_channel_AnnouncementChannel_messages {
   embeds: Messages_channel_AnnouncementChannel_messages_embeds[];
   mentions: Messages_channel_AnnouncementChannel_messages_mentions[];
   interaction: Messages_channel_AnnouncementChannel_messages_interaction | null;
+  thread: Messages_channel_AnnouncementChannel_messages_thread | null;
 }
 
 export interface Messages_channel_AnnouncementChannel {

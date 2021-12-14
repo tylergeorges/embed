@@ -11,6 +11,7 @@ import { addNotification } from "notify";
 import { Locale } from '@lib/Locale'
 import {authStore} from "@store";
 import { ChannelName } from '@generated'
+import Emoji from "@ui/shared/Emoji";
 
 export interface ChatProps {}
 
@@ -67,7 +68,7 @@ export const Chat: FunctionComponent<ChatProps> = (props) => {
           }}
         />
 
-        {/* <Emoji /> */}
+         {/*<Emoji />*/}
       </Field>
     </Root>
   )

@@ -13,6 +13,7 @@ import { observer, useObservable } from "mobx-react-lite";
 import Message from "@ui/Message";
 import {Locale} from "@lib/Locale";
 import { addNotification } from "notify";
+import { generalStore } from "@store";
 
 type MessagesProps = {
   guild: string;
@@ -20,7 +21,7 @@ type MessagesProps = {
 };
 
 export const Messages = observer(({ guild, channel }: MessagesProps) => {
-  const { messages, error, ready, stale, fetchMore } = useMessages(channel, guild);
+  const { messages, error, ready, stale, fetchMore } = useMessages(channel, guild, generalStore.activeThreadId);
   const groupedMessages = groupMessages(messages);
   const scroller = useObservable({
     isLoadingMore: false,

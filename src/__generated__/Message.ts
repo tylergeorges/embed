@@ -206,6 +206,15 @@ export interface Message_interaction {
   user: Message_interaction_user;
 }
 
+export interface Message_thread {
+  __typename: "Thread";
+  id: string;
+  name: string;
+  archivedAt: any | null;
+  locked: boolean;
+  messageCount: number;
+}
+
 export interface Message {
   __typename: "Message";
   id: string;
@@ -225,4 +234,5 @@ export interface Message {
   embeds: Message_embeds[];
   mentions: Message_mentions[];
   interaction: Message_interaction | null;
+  thread: Message_thread | null;
 }

@@ -118,4 +118,12 @@ fragment Message on Message {
             avatarUrl
         }
     }
+
+    thread {
+        id
+        name
+        archivedAt
+        locked
+        messageCount
+    }
 }

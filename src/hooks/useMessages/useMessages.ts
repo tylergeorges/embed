@@ -6,9 +6,9 @@ import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message, Message
 /**
  * Fetches the messages for a channel
  */
-export const useMessages = (channel: string, guild: string) => {
+export const useMessages = (channel: string, guild: string, thread?: string) => {
   const query = useQuery(MESSAGES, {
-    variables: { channel },
+    variables: { channel, thread },
     fetchPolicy: 'network-only'
   });
 
@@ -34,7 +34,7 @@ export const useMessages = (channel: string, guild: string) => {
 
     await query.fetchMore({
       query: MESSAGES,
-      variables: { channel, ...options },
+      variables: { channel, thread, ...options },
       updateQuery: (prev, { fetchMoreResult }) =>
         produce(prev, draftState => {
           draftState.channel.messages = [
@@ -76,7 +76,7 @@ export const useMessages = (channel: string, guild: string) => {
       );
     }
   });
-  
+
   useSubscription<MessageDeleted>(MESSAGE_DELETED, {
     variables: { channel, guild },
     onSubscriptionData({ subscriptionData }) {
@@ -97,7 +97,7 @@ export const useMessages = (channel: string, guild: string) => {
       query.updateQuery(prev =>
         produce(prev, ({ channel }: { channel: Messages_channel }) => {
           const { ids } = subscriptionData.data.messageDeleteBulk
-  
+
           channel.messages = channel.messages.filter(
             message => !ids.includes(message.id)
           );
