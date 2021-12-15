@@ -1,5 +1,5 @@
 import {action, autorun, observable} from "mobx";
-import {GuildInfo_guild, Settings_settings} from "@generated";
+import { GuildInfo_guild, Message_thread, Settings_settings } from "@generated";
 import {ICategory} from "@ui/Sidebar/Channels/categorise";
 
 export class GeneralStore {
@@ -12,7 +12,7 @@ export class GeneralStore {
   @observable settings?: Settings_settings;
   @observable channels: ICategory[] = [];
   @observable menuOpen: boolean = false;
-  @observable activeThreadId?: string;
+  @observable activeThread?: Omit<Message_thread, '__typename'>;
 
   constructor() {
     autorun(() => {
@@ -39,8 +39,8 @@ export class GeneralStore {
     this.channels = channels
   }
 
-  @action setActiveThread(id?: string) {
-    this.activeThreadId = id;
+  @action setActiveThread(data?: Omit<Message_thread, '__typename'>) {
+    this.activeThread = data;
   }
 }
 

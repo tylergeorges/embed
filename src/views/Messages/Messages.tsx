@@ -18,10 +18,11 @@ import { generalStore } from "@store";
 type MessagesProps = {
   guild: string;
   channel: string;
+  thread?: boolean;
 };
 
-export const Messages = observer(({ guild, channel }: MessagesProps) => {
-  const { messages, error, ready, stale, fetchMore } = useMessages(channel, guild, generalStore.activeThreadId);
+export const Messages = observer(({ guild, channel, thread = false }: MessagesProps) => {
+  const { messages, error, ready, stale, fetchMore } = useMessages(channel, guild, thread ? generalStore.activeThread.id : null);
   const groupedMessages = groupMessages(messages);
   const scroller = useObservable({
     isLoadingMore: false,

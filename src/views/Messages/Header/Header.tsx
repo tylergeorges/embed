@@ -1,6 +1,18 @@
 import Tooltip from 'rc-tooltip'
 import CHANNEL from './Channel.graphql'
-import { Name, NewsName, NSFWName, NSFWNewsName, Emoji, Topic, Join, Stretch, SingleChannelAuthWrapper, RulesName } from '@ui/Header'
+import {
+  Name,
+  NewsName,
+  NSFWName,
+  NSFWNewsName,
+  Emoji,
+  Topic,
+  Join,
+  Stretch,
+  SingleChannelAuthWrapper,
+  RulesName,
+  ThreadName
+} from '@ui/Header'
 
 import { Root } from './elements'
 import { Locale } from "@lib/Locale"
@@ -16,10 +28,11 @@ import {generalStore} from "@store";
 export interface HeaderProps {
   channel: string,
   guild: string,
+  thread?: boolean,
   AuthStore?: AuthStore
 }
 
-export const Header = observer(({ channel, guild }: HeaderProps) => {
+export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
     let cData;
     try {
         cData = generalStore.guild.channels.find(c => c.id === channel) || {};
@@ -28,6 +41,7 @@ export const Header = observer(({ channel, guild }: HeaderProps) => {
     }
 
     const invite = generalStore.settings?.invite;
+    const threadData = thread && generalStore.activeThread;
 
     return (
         <Root>
@@ -40,8 +54,9 @@ export const Header = observer(({ channel, guild }: HeaderProps) => {
                     <RulesName><Emoji>{cData?.name}</Emoji></RulesName>
                 : cData.nsfw ?
                     <NSFWName><Emoji>{cData?.name}</Emoji></NSFWName>
-                :
-                    <Name><Emoji>{cData?.name}</Emoji></Name>}
+                : thread ?
+                    <ThreadName><Emoji>{threadData.name}</Emoji></ThreadName>
+                : <Name><Emoji>{cData?.name}</Emoji></Name>}
                 {window.innerWidth < 520 ? null : (
                         <Topic
                             onClick={() => store.modal.openTopic(cData?.topic, cData.name)}
