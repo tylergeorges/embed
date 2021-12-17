@@ -485,6 +485,7 @@ export interface Messages {
 
 export interface MessagesVariables {
   channel: string;
+  thread?: string | null;
   around?: string | null;
   before?: string | null;
   after?: string | null;
