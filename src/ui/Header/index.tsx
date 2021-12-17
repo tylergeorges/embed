@@ -16,18 +16,16 @@ const Header = observer(({ children, thread = false }: Props) => (
       <ServerInfo />
     </SingleChannel>
     <Inner>
-      {thread ? (
-        // TODO: actual close button
-        <p onClick={() => generalStore.setActiveThread(null)}>x</p>
-      ) : (
-        <Hamburger
-          onClick={e => {
-            e.stopPropagation();
-            store.sidebar.toggle();
-          }}
-          open={store.sidebar.isOpen}
-        />
-      )}
+      <Hamburger
+        onClick={e => {
+          e.stopPropagation();
+          thread
+            ? generalStore.setActiveThread(null)
+            : store.sidebar.toggle();
+        }}
+        open={store.sidebar.isOpen}
+        thread={thread}
+      />
 
       {children}
     </Inner>

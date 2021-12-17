@@ -2,6 +2,7 @@ import styled, { css } from '@lib/emotion'
 
 interface Props {
   open: boolean
+  thread: boolean
 }
 
 export const Ham = styled('button')<Props>`
@@ -41,7 +42,7 @@ export const Ham = styled('button')<Props>`
   }
 
   @media (min-width: 521px) {
-    ${({ open }) =>
+    ${({ theme, open, thread }) =>
       open
         ? css`
             transform: rotate(-180deg);
@@ -63,6 +64,19 @@ export const Ham = styled('button')<Props>`
                 right: -3px;
               }
             }
+            ${thread
+                ? css`
+                  color: transparent;
+                  div {
+                    &::before, &::after {
+                      color: ${theme.colors.accent};
+                      width: inherit;
+                      right: -1px;
+                      top: 0;
+                    }
+                  }
+                `
+                : null}
           `
         : null};
   }
