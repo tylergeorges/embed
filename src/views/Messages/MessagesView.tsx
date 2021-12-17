@@ -12,7 +12,7 @@ interface Props {
     match: {
         params: {
             channel: string,
-            guild: string // TODO: lmao
+            guild: string
         }
     }
 }

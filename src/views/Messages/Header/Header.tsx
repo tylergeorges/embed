@@ -44,7 +44,7 @@ export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
     const threadData = thread && generalStore.activeThread;
 
     return (
-        <Root>
+        <Root thread={thread}>
             <Stretch>
                 { cData.nsfw && cData.__typename === 'NewsChannel' ?
                     <NSFWNewsName><Emoji>{cData?.name}</Emoji></NSFWNewsName>
