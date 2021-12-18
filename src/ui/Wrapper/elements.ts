@@ -2,6 +2,7 @@ import styled, { css } from '@lib/emotion'
 
 interface Props {
   squashed: boolean
+  hideOnMobile: boolean;
   factorSidebar: boolean;
   onClick?: any
 }
@@ -28,6 +29,14 @@ export const Wrapper = styled('div')<Props>`
     opacity: 0;
   }
 
+  ${({ hideOnMobile }) => 
+    hideOnMobile ? css`
+      @media only screen and (max-width: 520px) {
+        display: none
+      }
+    ` : null
+  }
+  
   ${({ squashed, factorSidebar, theme }) =>
     squashed && !theme.singleChannel
       ? css`

@@ -35,7 +35,7 @@ const MessagesView = observer((props: Props) => {
   return (
     <div style={{ display: 'flex', height: '100%' }}>
       {!(generalStore.activeThread && generalStore.threadFullscreen) && (
-        <Wrapper>
+        <Wrapper hideOnMobile={!!generalStore.activeThread}>
           <React.Suspense fallback={<Fallback />}>
             <Header channel={props.match.params.channel} guild={props.match.params.guild}/>
           </React.Suspense>
