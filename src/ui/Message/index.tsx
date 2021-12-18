@@ -1,5 +1,5 @@
 import { Message as MessageData, Message_author } from '@generated'
-import Markdown, {LinkMarkdown} from '@ui/shared/markdown/render'
+import Markdown, { LinkMarkdown } from '@ui/shared/markdown/render'
 import { ThemeProvider } from 'emotion-theming'
 import Moment from 'moment'
 import Tooltip from 'rc-tooltip'
@@ -8,16 +8,8 @@ import Lottie from 'lottie-react-web'
 
 import Author, { tags, Timestamp } from './Author'
 import {
-  Avatar,
-  Content,
-  Edited,
-  Group,
-  Member,
-  Secondary,
-  Messages,
-  Reactions,
-  Root,
-  Video,
+  ApplicationIcon,
+  ApplicationName,
   Attachment,
   AttachmentIcon,
   AttachmentInner,
@@ -25,34 +17,42 @@ import {
   Audio,
   AudioMetadata,
   AudioPlayer,
+  Avatar,
   Command,
-  ApplicationIcon,
-  ApplicationName,
   CommandArgs,
   CommandArgsSpine,
-  RepliedMessage,
-  ReplySpine,
-  RepliedAvatar,
-  RepliedUser,
-  RepliedText,
-  ReplyImageIcon,
-  UnknownReplyIconWrapper,
-  ReplySystemText,
-  StickerTooltipIcon,
-  LottieStickerWrapper,
-  InteractionText,
+  Content,
+  Edited,
+  Group,
+  InteractionFailed,
   InteractionLoading,
-  InteractionFailed, ThreadBox, Archived, ThreadName, MessageCount
+  InteractionText,
+  LottieStickerWrapper,
+  Member,
+  Messages,
+  Reactions,
+  RepliedAvatar,
+  RepliedMessage,
+  RepliedText,
+  RepliedUser,
+  ReplyImageIcon,
+  ReplySpine,
+  ReplySystemText,
+  Root,
+  Secondary,
+  StickerTooltipIcon,
+  UnknownReplyIconWrapper,
+  Video
 } from './elements'
 import { Image } from './Embed/elements/media'
 import Reaction from './Reaction'
 import Embed from './Embed'
 import AttachmentSpoiler from '@ui/shared/markdown/render/elements/AttachmentSpoiler'
 import { Locale } from '@lib/Locale'
-import {Util} from '@lib/Util';
 import { MessageType } from '@generated/globalTypes'
 import { generalStore } from '@store'
 import webpCheck from '@ui/shared/webpCheck'
+import Thread from "@ui/Message/Thread";
 
 interface Props {
   messages: MessageData[],
@@ -205,7 +205,7 @@ class Message extends React.PureComponent<Props, any> {
 
               case MessageType.Default:
               case MessageType.Reply:
-              case MessageType.ChatInputCommand:
+              // case MessageType.ThreadStarterMessage:
               case MessageType.ContextMenuCommand: {
                 return (
                   <ThemeProvider key={message.id} theme={this.theme(message)}>
@@ -350,22 +350,34 @@ class Message extends React.PureComponent<Props, any> {
                       )}
 
                       {message.thread && (
-                        <ThreadBox onClick={() => generalStore.setActiveThread(message.thread)}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <ThreadName>{message.thread.name}</ThreadName>
-                            <MessageCount>{message.thread.messageCount} messages</MessageCount>
-                          </div>
-
-                          {message.thread.archivedAt && (
-                            <Archived>
-                              <i>This thread is archived</i>
-                            </Archived>
-                          )}
-                        </ThreadBox>
+                        <Thread thread={message.thread} />
                       )}
                     </Root>
                   </ThemeProvider>
                 )
+              }
+
+              case MessageType.ThreadCreated: {
+                const member = (
+                  <Member id={message.author.id} color={message.author.color}>
+                    {message.author.name}
+                  </Member>
+                );
+
+                const openThread = () => generalStore.setActiveThread({
+                  id: message.id,
+                  name: message.content,
+                  messageCount: 0,
+                  archivedAt: null,
+                  locked: false
+                });
+
+                return <React.Fragment key={message.id}>
+                  <Secondary.Thread onClick={openThread}>
+                    {member} {Locale.translate('frontend.messages.threadcreated')} <span>{message.content}</span>
+                  </Secondary.Thread>
+                  <Timestamp time={message.createdAt} />
+                </React.Fragment>;
               }
 
               case MessageType.ChannelPinnedMessage: {

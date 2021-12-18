@@ -48,7 +48,7 @@ export const useSendMessage = (thread?: string) => {
           thread: null,
         }
       } as SendMessage, update: (store, { data: { sendMessage: newMessage } }) => {
-        const data = store.readQuery<Messages>({ query: MESSAGES, variables: {channel} })
+        const data = store.readQuery<Messages>({ query: MESSAGES, variables: {channel, thread } })
 
         newMessage.isGuest = true
 
@@ -61,7 +61,7 @@ export const useSendMessage = (thread?: string) => {
           if (optimisticIndex > -1) data.channel.messages.splice(optimisticIndex, 1)
         }
 
-        store.writeQuery({query: MESSAGES, variables: {channel}, data})
+        store.writeQuery({query: MESSAGES, variables: {channel, thread}, data})
       }
     }).catch(error => addNotification({
       level: 'error',
