@@ -42,7 +42,7 @@ import {
   LottieStickerWrapper,
   InteractionText,
   InteractionLoading,
-  InteractionFailed
+  InteractionFailed, ThreadBox, Archived, ThreadName, MessageCount
 } from './elements'
 import { Image } from './Embed/elements/media'
 import Reaction from './Reaction'
@@ -347,6 +347,21 @@ class Message extends React.PureComponent<Props, any> {
                             <Reaction key={i} {...reaction} />
                           ))}
                         </Reactions>
+                      )}
+
+                      {message.thread && (
+                        <ThreadBox onClick={() => generalStore.setActiveThread(message.thread)}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <ThreadName>{message.thread.name}</ThreadName>
+                            <MessageCount>{message.thread.messageCount} messages</MessageCount>
+                          </div>
+
+                          {message.thread.archivedAt && (
+                            <Archived>
+                              <i>This thread is archived</i>
+                            </Archived>
+                          )}
+                        </ThreadBox>
                       )}
                     </Root>
                   </ThemeProvider>
