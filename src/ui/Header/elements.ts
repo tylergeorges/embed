@@ -133,3 +133,12 @@ export const SingleChannelAuthWrapper = styled('div')`
     display: block;
   }
 `
+
+export const Fullscreen = styled('svg')`
+  margin-right: 1rem;
+  cursor: pointer;
+  
+  path {
+    color: ${({theme}) => theme.colors._primary.fade(0.6).string()};
+  }
+`;

@@ -8,10 +8,10 @@ interface Props {
   thread?: boolean
 }
 
-const Hamburger = ({ onClick, open, thread }: Props) => (
+const Hamburger = ({ onClick, open = false, thread = false }: Props) => (
   <Ham
-    open={open || false}
-    thread={thread || false}
+    open={open}
+    thread={thread}
     onClick={onClick ? onClick.bind(this) : null}
     className="hamburger"
   >
