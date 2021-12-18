@@ -49,7 +49,7 @@ const MessagesView = observer((props: Props) => {
 
       {generalStore.activeThread && (
         // TODO: I should use a context here realistically, rather than passing thread deep down various components
-        <Wrapper factorSidebar={generalStore.threadFullscreen}>
+        <Wrapper threadFullscreen={generalStore.threadFullscreen}>
           <React.Suspense fallback={<Fallback />}>
             <Header channel={props.match.params.channel} guild={props.match.params.guild} thread />
           </React.Suspense>

@@ -3,7 +3,7 @@ import styled, { css } from '@lib/emotion'
 interface Props {
   squashed: boolean
   hideOnMobile: boolean;
-  factorSidebar: boolean;
+  threadFullscreen: boolean;
   onClick?: any
 }
 
@@ -37,11 +37,17 @@ export const Wrapper = styled('div')<Props>`
     ` : null
   }
   
-  ${({ squashed, factorSidebar, theme }) =>
+  ${({ threadFullscreen }) =>
+    !threadFullscreen ? css`
+      border-left: 8px solid #202225;
+    ` : null
+  }
+  
+  ${({ squashed, threadFullscreen, theme }) =>
     squashed && !theme.singleChannel
       ? css`
       
-      ${factorSidebar ? css`
+      ${threadFullscreen ? css`
         @media (min-width: 521px) {
           margin-left: 200px;
           width: calc(100% - 200px);
