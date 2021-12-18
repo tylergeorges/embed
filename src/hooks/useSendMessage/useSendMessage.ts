@@ -8,13 +8,13 @@ import { MessageType } from '@generated/globalTypes';
 import { Util } from '@lib/Util';
 import { authStore } from '@store';
 
-export const useSendMessage = () => {
+export const useSendMessage = (threadId?: string) => {
   const { channel } = useRouter()
   const sendMessage = useMutation<SendMessage>(SEND_MESSAGE);
 
   return async (content: string) =>
     await sendMessage({
-      variables: { channel, content },
+      variables: { channel, content, threadId },
       optimisticResponse: {
         __typename: 'Mutation',
         sendMessage: {

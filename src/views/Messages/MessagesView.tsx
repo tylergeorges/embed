@@ -51,7 +51,7 @@ const MessagesView = observer((props: Props) => {
           <React.Suspense fallback={<Loading />}>
             <Messages guild={props.match.params.guild} channel={props.match.params.channel} thread />
           </React.Suspense>
-          <Chat />
+          <Chat thread />
         </Wrapper>
       )}
     </div>

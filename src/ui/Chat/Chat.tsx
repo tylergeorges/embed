@@ -9,15 +9,17 @@ import { formatError } from "@views/Messages/utils";
 import { Loading } from "@ui/Overlays";
 import { addNotification } from "notify";
 import { Locale } from '@lib/Locale'
-import {authStore} from "@store";
+import { authStore, generalStore } from "@store";
 import { ChannelName } from '@generated'
 import Emoji from "@ui/shared/Emoji";
 
-export interface ChatProps {}
+export interface ChatProps {
+  thread?: boolean;
+}
 
 export const Chat: FunctionComponent<ChatProps> = (props) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const sendMessage = useSendMessage();
+  const sendMessage = useSendMessage(props.thread ? generalStore.activeThread.id : null);
   const [rows, setRows] = useState(1);
   const { channel } = useRouter();
   const { data, error, errors, networkStatus, loading } = useQuery<ChannelName>(GET_CHANNEL_NAME, { variables: { channel } });
@@ -42,8 +44,7 @@ export const Chat: FunctionComponent<ChatProps> = (props) => {
   });
   if (error) return <ErrorAhoy message={formatError(error)} />;
 
-
-  const channelName = data.channel?.name;
+  const channelName = props.thread ? generalStore.activeThread.name : data.channel?.name;
 
   return (
     <Root className="chat">
