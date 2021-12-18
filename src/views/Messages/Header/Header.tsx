@@ -57,7 +57,7 @@ export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
                 : thread ?
                     <ThreadName><Emoji>{threadData.name}</Emoji></ThreadName>
                 : <Name><Emoji>{cData?.name}</Emoji></Name>}
-                {window.innerWidth < 520 ? null : (
+                {window.innerWidth < 520 || !cData.topic || thread ? null : (
                         <Topic
                             onClick={() => store.modal.openTopic(cData?.topic, cData.name)}
                             className="topic"
@@ -80,6 +80,11 @@ export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
                         {Locale.translate('frontend.opendiscord')}
                     </Join>
                 </Tooltip> : null}
+
+          {thread && (
+            // TODO: Open in fullscreen button
+            <p onClick={() => generalStore.setThreadFullscreen(true)}>+</p>
+          )}
         </Root>
     )
 });

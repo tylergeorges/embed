@@ -20,7 +20,7 @@ const Header = observer(({ children, thread = false }: Props) => (
         onClick={e => {
           e.stopPropagation();
           thread
-            ? generalStore.setActiveThread(null)
+            ? generalStore.clearThread()
             : store.sidebar.toggle();
         }}
         open={store.sidebar.isOpen}

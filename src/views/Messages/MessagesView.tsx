@@ -19,31 +19,36 @@ interface Props {
 
 const MessagesView = observer((props: Props) => {
   useEffect(() => {
-    // TODO: Set to null, this is hardcoded for testing
-    generalStore.setActiveThread({ // Channel changed, cant be looking at a thread anymore
-      id: '919704634589851698',
+    // TODO: use clearThread & delete below once thread opening is implemented
+    // generalStore.clearThread(); // Channel changed, cant be looking at a thread anymore
+
+    generalStore.setActiveThread({
+      id: '919704456059297812',
       name: 'TODO: Dynamic thread name',
       archivedAt: null,
       locked: false,
       messageCount: 10,
     });
+    generalStore.setThreadFullscreen(false);
   },[props.match.params.channel]);
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
-      <Wrapper>
-        <React.Suspense fallback={<Fallback />}>
-          <Header channel={props.match.params.channel} guild={props.match.params.guild}/>
-        </React.Suspense>
+      {!(generalStore.activeThread && generalStore.threadFullscreen) && (
+        <Wrapper>
+          <React.Suspense fallback={<Fallback />}>
+            <Header channel={props.match.params.channel} guild={props.match.params.guild}/>
+          </React.Suspense>
 
-        <React.Suspense fallback={<Loading />}>
-          <Messages guild={props.match.params.guild} channel={props.match.params.channel} />
-        </React.Suspense>
-        <Chat />
-      </Wrapper>
+          <React.Suspense fallback={<Loading />}>
+            <Messages guild={props.match.params.guild} channel={props.match.params.channel} />
+          </React.Suspense>
+          <Chat />
+        </Wrapper>
+      )}
 
       {generalStore.activeThread && (
-        <Wrapper factorSidebar={false}>
+        <Wrapper factorSidebar={generalStore.threadFullscreen}>
           <React.Suspense fallback={<Fallback />}>
             <Header channel={props.match.params.channel} guild={props.match.params.guild} thread />
           </React.Suspense>

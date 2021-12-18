@@ -13,6 +13,7 @@ export class GeneralStore {
   @observable channels: ICategory[] = [];
   @observable menuOpen: boolean = false;
   @observable activeThread?: Omit<Message_thread, '__typename'>;
+  @observable threadFullscreen: boolean = false;
 
   constructor() {
     autorun(() => {
@@ -39,8 +40,18 @@ export class GeneralStore {
     this.channels = channels
   }
 
-  @action setActiveThread(data?: Omit<Message_thread, '__typename'>) {
+  @action setActiveThread(data: Omit<Message_thread, '__typename'>) {
     this.activeThread = data;
+  }
+
+  @action setThreadFullscreen(fullscreen: boolean) {
+    this.threadFullscreen = fullscreen;
+  }
+
+  @action clearThread() {
+    // TODO: Set activeThread to null - this is for testing
+    this.activeThread = null;
+    this.threadFullscreen = false;
   }
 }
 
