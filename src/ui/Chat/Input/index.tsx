@@ -52,7 +52,22 @@ class MagicTextarea extends React.Component<Props> {
 
   render() {
     const user = authStore.user;
-    return (authStore.user && this.props.channel.canSend) ? (
+
+    if (!(user && this.props.channel.canSend)) return (
+      <NoPerms
+        onClick={!authStore.user && (generalStore.settings?.guestMode ? (() => generalStore.toggleMenu(true)).bind({ props: { GeneralStore: generalStore }}) : login.bind({ props: { AuthStore: authStore }}))}
+      >
+        { !user ? Locale.translate('frontend.input.login') : Locale.translate('frontend.input.noperms') }
+      </NoPerms>
+    );
+
+    if (this.props.thread && (generalStore.activeThread?.locked || generalStore.activeThread?.archivedAt)) return (
+      <NoPerms>
+        { generalStore.activeThread.locked ? Locale.translate('frontend.input.threadlocked') : Locale.translate('frontend.input.threadarchived') }
+      </NoPerms>
+    );
+
+    return (
       <Root>
         <Textarea
           {...this.props.innerProps}
@@ -148,12 +163,6 @@ class MagicTextarea extends React.Component<Props> {
           />
         )}
       </Root>
-    ) : (
-      <NoPerms
-        onClick={!authStore.user && (generalStore.settings?.guestMode ? (() => generalStore.toggleMenu(true)).bind({ props: { GeneralStore: generalStore }}) : login.bind({ props: { AuthStore: authStore }}))}
-      >
-        { !user ? Locale.translate('frontend.input.login') : Locale.translate('frontend.input.noperms') }
-      </NoPerms>
     );
   }
 }

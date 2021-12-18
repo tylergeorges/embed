@@ -12,6 +12,7 @@ import { Locale } from '@lib/Locale'
 import { authStore, generalStore } from "@store";
 import { ChannelName } from '@generated'
 import Emoji from "@ui/shared/Emoji";
+import thread from "@ui/Message/Thread";
 
 export interface ChatProps {
   thread?: boolean;
@@ -51,6 +52,7 @@ export const Chat: FunctionComponent<ChatProps> = (props) => {
       <Field rows={rows} canSend={authStore.user && data.channel.canSend} className="field">
         <Input
           channel={data.channel}
+          thread={props.thread}
           onChange={(value: string) => {
             const rows = value.split(/\r\n|\r|\n/).length;
             setRows(rows)
