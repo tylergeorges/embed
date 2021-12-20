@@ -119,4 +119,12 @@ fragment SubscriptionMessage on Message {
             avatarUrl
         }
     }
+
+    thread {
+        id
+        name
+        archivedAt
+        locked
+        messageCount
+    }
 }

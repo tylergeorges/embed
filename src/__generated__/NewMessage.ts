@@ -205,6 +205,15 @@ export interface NewMessage_message_interaction {
   user: NewMessage_message_interaction_user;
 }
 
+export interface NewMessage_message_thread {
+  __typename: "Thread";
+  id: string;
+  name: string;
+  archivedAt: any | null;
+  locked: boolean;
+  messageCount: number;
+}
+
 export interface NewMessage_message {
   __typename: "Message";
   id: string;
@@ -224,6 +233,7 @@ export interface NewMessage_message {
   embeds: NewMessage_message_embeds[];
   mentions: NewMessage_message_mentions[];
   interaction: NewMessage_message_interaction | null;
+  thread: NewMessage_message_thread | null;
 }
 
 export interface NewMessage {

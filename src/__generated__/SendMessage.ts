@@ -244,4 +244,5 @@ export interface SendMessage {
 export interface SendMessageVariables {
   channel: string;
   content: string;
+  thread?: string | null;
 }

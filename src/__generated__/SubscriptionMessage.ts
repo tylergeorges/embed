@@ -205,6 +205,15 @@ export interface SubscriptionMessage_interaction {
   user: SubscriptionMessage_interaction_user;
 }
 
+export interface SubscriptionMessage_thread {
+  __typename: "Thread";
+  id: string;
+  name: string;
+  archivedAt: any | null;
+  locked: boolean;
+  messageCount: number;
+}
+
 export interface SubscriptionMessage {
   __typename: "Message";
   id: string;
@@ -224,4 +233,5 @@ export interface SubscriptionMessage {
   embeds: SubscriptionMessage_embeds[];
   mentions: SubscriptionMessage_mentions[];
   interaction: SubscriptionMessage_interaction | null;
+  thread: SubscriptionMessage_thread | null;
 }
