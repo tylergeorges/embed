@@ -198,6 +198,15 @@ export interface MessageUpdated_messageUpdate_interaction {
   user: MessageUpdated_messageUpdate_interaction_user;
 }
 
+export interface MessageUpdated_messageUpdate_thread {
+  __typename: "Thread";
+  id: string;
+  name: string;
+  archivedAt: any | null;
+  locked: boolean;
+  messageCount: number;
+}
+
 export interface MessageUpdated_messageUpdate {
   __typename: "UpdatedMessage";
   id: string;
@@ -215,6 +224,7 @@ export interface MessageUpdated_messageUpdate {
   embeds: MessageUpdated_messageUpdate_embeds[] | null;
   mentions: MessageUpdated_messageUpdate_mentions[] | null;
   interaction: MessageUpdated_messageUpdate_interaction | null;
+  thread: MessageUpdated_messageUpdate_thread | null;
 }
 
 export interface MessageUpdated {
