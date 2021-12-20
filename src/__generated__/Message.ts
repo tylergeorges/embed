@@ -113,13 +113,6 @@ export interface Message_referencedMessage {
   interaction: Message_referencedMessage_interaction | null;
 }
 
-export interface Message_application {
-  __typename: "Application";
-  id: string;
-  name: string;
-  icon: string;
-}
-
 export interface Message_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
@@ -230,7 +223,6 @@ export interface Message {
   reactions: Message_reactions[] | null;
   messageReference: Message_messageReference | null;
   referencedMessage: Message_referencedMessage | null;
-  application: Message_application | null;
   embeds: Message_embeds[];
   mentions: Message_mentions[];
   interaction: Message_interaction | null;

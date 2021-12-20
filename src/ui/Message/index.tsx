@@ -8,8 +8,6 @@ import Lottie from 'lottie-react-web'
 
 import Author, { tags, Timestamp } from './Author'
 import {
-  ApplicationIcon,
-  ApplicationName,
   Attachment,
   AttachmentIcon,
   AttachmentInner,
@@ -170,7 +168,7 @@ class Message extends React.PureComponent<Props, any> {
             switch (message.type) {
               // type 20 is at the top so it can fallback to normal rendering for the new ui, this is for the legacy ui
               case MessageType.ChatInputCommand: {
-                if (message.application) {
+                if (!message.interaction) {
                   const member =
                     <Member id={message.author.id} color={message.author.color}>
                       {message.author.name}
@@ -181,15 +179,10 @@ class Message extends React.PureComponent<Props, any> {
                       {message.content.split(':')[0].substring(1)}
                     </Command>
 
-                  const application =
-                    <span>
-                      <ApplicationIcon src={webpCheck(`https://cdn.discordapp.com/app-icons/${message.application.id}/${message.application.icon}.webp?size=64`)}></ApplicationIcon> <ApplicationName>{message.application.name}</ApplicationName>
-                    </span>
-
                   return (
                     <React.Fragment key={message.id}>
                       <Secondary.Command>
-                        {member} used {command} with {application}
+                        {member} used {command}
                       </Secondary.Command>
                       <Timestamp time={message.createdAt} />
                       {!message.content.endsWith('> ') &&

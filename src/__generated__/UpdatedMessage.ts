@@ -112,13 +112,6 @@ export interface UpdatedMessage_referencedMessage {
   interaction: UpdatedMessage_referencedMessage_interaction | null;
 }
 
-export interface UpdatedMessage_application {
-  __typename: "Application";
-  id: string;
-  name: string;
-  icon: string;
-}
-
 export interface UpdatedMessage_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
@@ -219,7 +212,6 @@ export interface UpdatedMessage {
   reactions: UpdatedMessage_reactions[] | null;
   messageReference: UpdatedMessage_messageReference | null;
   referencedMessage: UpdatedMessage_referencedMessage | null;
-  application: UpdatedMessage_application | null;
   embeds: UpdatedMessage_embeds[] | null;
   mentions: UpdatedMessage_mentions[] | null;
   interaction: UpdatedMessage_interaction | null;

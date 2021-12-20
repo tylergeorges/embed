@@ -93,12 +93,6 @@ fragment UpdatedMessage on UpdatedMessage {
         }
     }
 
-    application {
-        id
-        name
-        icon
-    }
-
     embeds {
         ...Embed
     }

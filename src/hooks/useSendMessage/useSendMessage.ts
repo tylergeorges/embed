@@ -41,7 +41,6 @@ export const useSendMessage = (thread?: string) => {
           stickers: [],
           messageReference: null,
           referencedMessage: null,
-          application: null,
           embeds: [],
           mentions: [],
           interaction: null,

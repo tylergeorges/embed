@@ -112,13 +112,6 @@ export interface NewMessage_message_referencedMessage {
   interaction: NewMessage_message_referencedMessage_interaction | null;
 }
 
-export interface NewMessage_message_application {
-  __typename: "Application";
-  id: string;
-  name: string;
-  icon: string;
-}
-
 export interface NewMessage_message_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
@@ -229,7 +222,6 @@ export interface NewMessage_message {
   reactions: NewMessage_message_reactions[] | null;
   messageReference: NewMessage_message_messageReference | null;
   referencedMessage: NewMessage_message_referencedMessage | null;
-  application: NewMessage_message_application | null;
   embeds: NewMessage_message_embeds[];
   mentions: NewMessage_message_mentions[];
   interaction: NewMessage_message_interaction | null;

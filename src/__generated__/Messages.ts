@@ -113,13 +113,6 @@ export interface Messages_channel_TextChannel_messages_referencedMessage {
   interaction: Messages_channel_TextChannel_messages_referencedMessage_interaction | null;
 }
 
-export interface Messages_channel_TextChannel_messages_application {
-  __typename: "Application";
-  id: string;
-  name: string;
-  icon: string;
-}
-
 export interface Messages_channel_TextChannel_messages_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
@@ -230,7 +223,6 @@ export interface Messages_channel_TextChannel_messages {
   reactions: Messages_channel_TextChannel_messages_reactions[] | null;
   messageReference: Messages_channel_TextChannel_messages_messageReference | null;
   referencedMessage: Messages_channel_TextChannel_messages_referencedMessage | null;
-  application: Messages_channel_TextChannel_messages_application | null;
   embeds: Messages_channel_TextChannel_messages_embeds[];
   mentions: Messages_channel_TextChannel_messages_mentions[];
   interaction: Messages_channel_TextChannel_messages_interaction | null;
@@ -347,13 +339,6 @@ export interface Messages_channel_AnnouncementChannel_messages_referencedMessage
   interaction: Messages_channel_AnnouncementChannel_messages_referencedMessage_interaction | null;
 }
 
-export interface Messages_channel_AnnouncementChannel_messages_application {
-  __typename: "Application";
-  id: string;
-  name: string;
-  icon: string;
-}
-
 export interface Messages_channel_AnnouncementChannel_messages_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
@@ -464,7 +449,6 @@ export interface Messages_channel_AnnouncementChannel_messages {
   reactions: Messages_channel_AnnouncementChannel_messages_reactions[] | null;
   messageReference: Messages_channel_AnnouncementChannel_messages_messageReference | null;
   referencedMessage: Messages_channel_AnnouncementChannel_messages_referencedMessage | null;
-  application: Messages_channel_AnnouncementChannel_messages_application | null;
   embeds: Messages_channel_AnnouncementChannel_messages_embeds[];
   mentions: Messages_channel_AnnouncementChannel_messages_mentions[];
   interaction: Messages_channel_AnnouncementChannel_messages_interaction | null;

@@ -94,12 +94,6 @@ fragment SubscriptionMessage on Message {
         }
     }
 
-    application {
-        id
-        name
-        icon
-    }
-
     embeds {
         ...Embed
     }

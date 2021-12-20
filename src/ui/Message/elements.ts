@@ -187,17 +187,6 @@ export const Command = styled.span`
   opacity: .64;
 `
 
-export const ApplicationIcon = styled.img`
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  vertical-align: text-top;
-`
-
-export const ApplicationName = styled.span`
-  font-weight: 500;
-`
-
 export const CommandArgs = styled.div`
   margin-left: 60px;
   background-color: rgba(0, 0, 0, 9%);

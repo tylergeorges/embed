@@ -112,13 +112,6 @@ export interface MessageUpdated_messageUpdate_referencedMessage {
   interaction: MessageUpdated_messageUpdate_referencedMessage_interaction | null;
 }
 
-export interface MessageUpdated_messageUpdate_application {
-  __typename: "Application";
-  id: string;
-  name: string;
-  icon: string;
-}
-
 export interface MessageUpdated_messageUpdate_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
@@ -219,7 +212,6 @@ export interface MessageUpdated_messageUpdate {
   reactions: MessageUpdated_messageUpdate_reactions[] | null;
   messageReference: MessageUpdated_messageUpdate_messageReference | null;
   referencedMessage: MessageUpdated_messageUpdate_referencedMessage | null;
-  application: MessageUpdated_messageUpdate_application | null;
   embeds: MessageUpdated_messageUpdate_embeds[] | null;
   mentions: MessageUpdated_messageUpdate_mentions[] | null;
   interaction: MessageUpdated_messageUpdate_interaction | null;

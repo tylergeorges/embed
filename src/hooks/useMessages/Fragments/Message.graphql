@@ -96,12 +96,6 @@ fragment Message on Message {
         }
     }
 
-    application {
-        id
-        name
-        icon
-    }
-
     embeds {
         ...Embed
     }

@@ -113,13 +113,6 @@ export interface SendMessage_sendMessage_referencedMessage {
   interaction: SendMessage_sendMessage_referencedMessage_interaction | null;
 }
 
-export interface SendMessage_sendMessage_application {
-  __typename: "Application";
-  id: string;
-  name: string;
-  icon: string;
-}
-
 export interface SendMessage_sendMessage_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
@@ -230,7 +223,6 @@ export interface SendMessage_sendMessage {
   reactions: SendMessage_sendMessage_reactions[] | null;
   messageReference: SendMessage_sendMessage_messageReference | null;
   referencedMessage: SendMessage_sendMessage_referencedMessage | null;
-  application: SendMessage_sendMessage_application | null;
   embeds: SendMessage_sendMessage_embeds[];
   mentions: SendMessage_sendMessage_mentions[];
   interaction: SendMessage_sendMessage_interaction | null;
