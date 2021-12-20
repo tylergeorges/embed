@@ -39,6 +39,7 @@ import {
   Root,
   Secondary,
   StickerTooltipIcon,
+  ThreadSpine,
   UnknownReplyIconWrapper,
   Video
 } from './elements'
@@ -342,9 +343,10 @@ class Message extends React.PureComponent<Props, any> {
                         </Reactions>
                       )}
 
-                      {message.thread && (
+                      {message.thread && <>
+                        <ThreadSpine />
                         <Thread thread={message.thread} />
-                      )}
+                      </>}
                     </Root>
                   </ThemeProvider>
                 )

@@ -197,15 +197,23 @@ export const CommandArgs = styled.div`
   display: table;
 `
 
-export const CommandArgsSpine = styled.div`
+const BottomSpine = styled.div`
   position: absolute;
   width: 33px;
-  height: 1.5rem;
-  bottom: 15px;
   left: 40px;
   border-left: 2px solid #4f545c;
   border-bottom: 2px solid #4f545c;
   border-bottom-left-radius: 6px;
+`
+
+export const CommandArgsSpine = styled(BottomSpine)`
+  height: 1.5rem;
+  bottom: 15px;
+`
+
+export const ThreadSpine = styled(BottomSpine)`
+  height: calc(100% - 6rem);
+  bottom: 30px;
 `
 
 // Username
