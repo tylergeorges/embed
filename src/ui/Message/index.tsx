@@ -344,7 +344,7 @@ class Message extends React.PureComponent<Props, any> {
                       )}
 
                       {message.thread && <>
-                        <ThreadSpine />
+                        <ThreadSpine boxHeight={message.thread.archivedAt ? 60 : 38} />
                         <Thread thread={message.thread} />
                       </>}
                     </Root>

@@ -211,9 +211,12 @@ export const CommandArgsSpine = styled(BottomSpine)`
   bottom: 15px;
 `
 
-export const ThreadSpine = styled(BottomSpine)`
+interface ThreadSpineProps {
+  boxHeight: number
+}
+export const ThreadSpine = styled(BottomSpine)<ThreadSpineProps>`
   height: calc(100% - 6rem);
-  bottom: 30px;
+  bottom: ${({ boxHeight }) => boxHeight / 2}px;
 `
 
 // Username
