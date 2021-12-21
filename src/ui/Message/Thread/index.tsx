@@ -9,6 +9,11 @@ interface Props {
 }
 
 class Thread extends React.PureComponent<Props, any> {
+  constructor(props) {
+    super(props)
+    this.state = { hover: false }
+  }
+
   theme = message => theme => ({
     ...theme,
     message
@@ -18,13 +23,19 @@ class Thread extends React.PureComponent<Props, any> {
     const thread = this.props.thread;
 
     return (
-      <ThreadBox onClick={() => generalStore.setActiveThread(thread)}>
+      <ThreadBox
+        onClick={() => generalStore.setActiveThread(thread)}
+        onMouseEnter={() => this.setState({ hover: true })}
+        onMouseLeave={() => this.setState({ hover: false })}
+      >
         <ThreadBoxHeader>
           <ThreadName>{thread.name}</ThreadName>
-          <MessageCount>{thread.messageCount === 0
-            ? 'See Thread'
-            : `${thread.messageCount} Message${thread.messageCount === 1 ? '' : 's'}`
-          } ›</MessageCount>
+          <MessageCount hover={this.state.hover}>
+            {thread.messageCount === 0
+              ? 'See Thread'
+              : `${thread.messageCount} Message${thread.messageCount === 1 ? '' : 's'}`
+            } ›
+          </MessageCount>
         </ThreadBoxHeader>
 
         {thread.archivedAt

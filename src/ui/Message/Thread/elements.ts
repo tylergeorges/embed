@@ -22,8 +22,12 @@ export const ThreadName = styled.span`
   margin-right: 8px
 `;
 
-export const MessageCount = styled.span`
+interface MessageCountProps {
+  hover: boolean
+}
+export const MessageCount = styled.span<MessageCountProps>`
   color: #00b0f4;
+  ${({ hover }) => hover && `text-decoration: underline;`}
 `;
 
 export const ThreadText = styled.div`
