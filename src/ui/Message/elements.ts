@@ -1,5 +1,7 @@
 import webpCheck from '@ui/shared/webpCheck'
 import { MemberLink } from '@ui/shared/Member'
+import { Message } from '@generated';
+import { MessageType } from '@generated/globalTypes';
 
 import styled from './ThemeContext'
 
@@ -212,11 +214,11 @@ export const CommandArgsSpine = styled(BottomSpine)`
 `
 
 interface ThreadSpineProps {
-  boxHeight: number
+  message: Message
 }
 export const ThreadSpine = styled(BottomSpine)<ThreadSpineProps>`
-  height: calc(100% - 6rem);
-  bottom: ${({ boxHeight }) => boxHeight / 2}px;
+  top: ${({ message }) => message.type === MessageType.ThreadCreated ? 2.5 : 3.8}rem;
+  bottom: ${({ message }) => message.thread.archivedAt ? 30 : 19}px;
 `
 
 // Username

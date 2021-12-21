@@ -52,6 +52,7 @@ import { MessageType } from '@generated/globalTypes'
 import { generalStore } from '@store'
 import webpCheck from '@ui/shared/webpCheck'
 import Thread from "@ui/Message/Thread";
+import { compareGroupability } from '@views/Messages/utils'
 
 interface Props {
   messages: MessageData[],
@@ -64,9 +65,6 @@ const gifCheck = (url: string) => {
 }
 
 const getAvatar = (user: Pick<Message_author, 'avatarUrl'>) => user.avatarUrl ? webpCheck(gifCheck(user.avatarUrl)) : 'https://cdn.discordapp.com/embed/avatars/0.png'
-
-const shouldShowAuthor = (message: MessageData) =>
-  [MessageType.Default, MessageType.Reply].includes(message.type) || !!message.interaction
 
 const shouldShowContext = (message: MessageData) =>
   message.type === MessageType.Reply || !!message.interaction
@@ -88,10 +86,17 @@ class Message extends React.PureComponent<Props, any> {
     if (firstMessage.type === MessageType.Reply && !repliedMessage)
       repliedMessage = allMessages.find(m => m.id === firstMessage.messageReference.messageId)
 
+    const prevMessage = allMessages[allMessages.findIndex(m => m.id === firstMessage.id) - 1]
+
+    const shouldShowAuthor = shouldShowContext(firstMessage) ||
+      firstMessage.type === MessageType.Default && (!prevMessage || compareGroupability(prevMessage, firstMessage) || !prevMessage.thread)
+      // when the previous message has a thread, it should be the end of its group to position the thread spine correctly
+      // but the next group should appear connected by hiding author
+
     return (
       <Group style={this.props.style} className="group">
 
-        {shouldShowAuthor(firstMessage) &&
+        {shouldShowAuthor &&
           <Avatar
             url={getAvatar(firstMessage.author)}
             className="avatar"
@@ -99,7 +104,7 @@ class Message extends React.PureComponent<Props, any> {
           />
         }
 
-        <Messages className="messages">
+        <Messages className="messages" style={firstMessage.type === MessageType.Default && !shouldShowAuthor ? { marginLeft:  '60px', marginTop: '-17px' } : {}}>
           {shouldShowContext(firstMessage) &&
             <React.Fragment>
               <ReplySpine/>
@@ -155,7 +160,7 @@ class Message extends React.PureComponent<Props, any> {
               }
             </React.Fragment>}
 
-          {shouldShowAuthor(firstMessage) &&
+          {shouldShowAuthor &&
             <Author
               author={firstMessage.author}
               time={firstMessage.createdAt}
@@ -344,7 +349,7 @@ class Message extends React.PureComponent<Props, any> {
                       )}
 
                       {message.thread && <>
-                        <ThreadSpine boxHeight={message.thread.archivedAt ? 60 : 38} />
+                        <ThreadSpine message={message} />
                         <Thread thread={message.thread} />
                       </>}
                     </Root>
@@ -372,6 +377,10 @@ class Message extends React.PureComponent<Props, any> {
                     {member} {Locale.translate('frontend.messages.threadcreated')} <span>{message.content}</span>
                   </Secondary.Thread>
                   <Timestamp time={message.createdAt} />
+                  {message.thread && <div style={{ marginLeft: '60px' }}>
+                    <ThreadSpine message={message} />
+                    <Thread thread={message.thread} />
+                  </div>}
                 </React.Fragment>;
               }
 
