@@ -218,7 +218,7 @@ interface ThreadSpineProps {
 }
 export const ThreadSpine = styled(BottomSpine)<ThreadSpineProps>`
   top: ${({ message }) => message.type === MessageType.ThreadCreated ? 2.5 : 3.8}rem;
-  bottom: ${({ message }) => message.thread.archivedAt ? 30 : 19}px;
+  bottom: ${({ message }) => message.thread.archivedAt || message.thread.messageCount === 0 ? 30 : 19}px;
 `
 
 // Username
