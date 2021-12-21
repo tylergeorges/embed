@@ -67,7 +67,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
           if (index > -1) {
             const updatedProps = Object.fromEntries(Object.entries(message).filter(([_, v]) => v !== null)) as Partial<Message>
-            updatedProps.author.color = messages.find(m => m.author.id === message.author?.id)?.author.color || 0xffffff
+            if (updatedProps.author) updatedProps.author.color = messages.find(m => m.author.id === message.author?.id)?.author.color || 0xffffff
             delete updatedProps.__typename
 
             Object.assign(messages[index], updatedProps)
