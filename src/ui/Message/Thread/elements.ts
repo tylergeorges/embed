@@ -26,7 +26,7 @@ interface MessageCountProps {
   hover: boolean
 }
 export const MessageCount = styled.span<MessageCountProps>`
-  color: #00b0f4;
+  color: #00b0f4 !important;
   ${({ hover }) => hover && `text-decoration: underline;`}
 `;
 
