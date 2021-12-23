@@ -19,17 +19,7 @@ interface Props {
 
 const MessagesView = observer((props: Props) => {
   useEffect(() => {
-    // TODO: use clearThread & delete below once thread opening is implemented
     generalStore.clearThread(); // Channel changed, cant be looking at a thread anymore
-
-    // generalStore.setActiveThread({
-    //   id: '921795543024406568',
-    //   name: 'TODO: Dynamic thread name',
-    //   archivedAt: null,
-    //   locked: false,
-    //   messageCount: 10,
-    // });
-    // generalStore.setThreadFullscreen(false);
   },[props.match.params.channel]);
 
   return (
