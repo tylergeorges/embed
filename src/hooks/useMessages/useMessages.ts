@@ -46,7 +46,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
   }
 
   useSubscription<NewMessage>(NEW_MESSAGE, {
-    variables: { channel, guild },
+    variables: { channel: thread ?? channel, guild },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, ({ channel: { messages } }: { channel: Messages_channel }) => {
@@ -58,7 +58,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
   });
 
   useSubscription<MessageUpdated>(MESSAGE_UPDATED, {
-    variables: { channel, guild },
+    variables: { channel: thread ?? channel, guild },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, ({ channel: { messages } }: { channel: Messages_channel }) => {
@@ -78,7 +78,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
   });
 
   useSubscription<MessageDeleted>(MESSAGE_DELETED, {
-    variables: { channel, guild },
+    variables: { channel: thread ?? channel, guild },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, ({ channel: { messages } }: { channel: Messages_channel }) => {
@@ -92,7 +92,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
   });
 
   useSubscription<MessagesBulkDeleted>(MESSAGES_BULK_DELETED, {
-    variables: { channel, guild },
+    variables: { channel: thread ?? channel, guild },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, ({ channel }: { channel: Messages_channel }) => {
