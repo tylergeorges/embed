@@ -79,6 +79,10 @@ class Message extends React.PureComponent<Props, any> {
 
   render() {
     const { messages, allMessages } = this.props;
+
+    if (messages[0].type === MessageType.ThreadStarterMessage)
+      messages[0] = { ...messages[0].referencedMessage, referencedMessage: null, thread: null }
+
     const [firstMessage] = messages;
 
     let repliedMessage = firstMessage.referencedMessage
@@ -204,7 +208,6 @@ class Message extends React.PureComponent<Props, any> {
 
               case MessageType.Default:
               case MessageType.Reply:
-              // case MessageType.ThreadStarterMessage:
               case MessageType.ContextMenuCommand: {
                 return (
                   <ThemeProvider key={message.id} theme={this.theme(message)}>

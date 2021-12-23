@@ -1,3 +1,4 @@
+export * from './BaseMessage'
 export * from './ChannelHeader'
 export * from './ChannelInfo'
 export * from './ChannelName'
