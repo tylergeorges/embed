@@ -66,7 +66,7 @@ const gifCheck = (url: string) => {
 
 const getAvatar = (user: Pick<Message_author, 'avatarUrl'>) => user.avatarUrl ? webpCheck(gifCheck(user.avatarUrl)) : 'https://cdn.discordapp.com/embed/avatars/0.png'
 
-const shouldShowContext = (message: MessageData) =>
+export const shouldShowContext = (message: MessageData) =>
   message.type === MessageType.Reply || !!message.interaction
 
 const getUsers = (messages: MessageData[]) => new Map(messages.map(m => [m.author.id, m.author]))

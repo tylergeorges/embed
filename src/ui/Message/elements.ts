@@ -1,4 +1,5 @@
 import webpCheck from '@ui/shared/webpCheck'
+import { shouldShowContext } from '.';
 import { MemberLink } from '@ui/shared/Member'
 import { Message } from '@generated';
 import { MessageType } from '@generated/globalTypes';
@@ -217,7 +218,10 @@ interface ThreadSpineProps {
   message: Message
 }
 export const ThreadSpine = styled(BottomSpine)<ThreadSpineProps>`
-  top: ${({ message }) => message.type === MessageType.ThreadCreated ? 2.5 : 3.8}rem;
+  top: ${({ message }) => 
+    message.type === MessageType.ThreadCreated ? 2.5
+    : shouldShowContext(message) ? 5.3
+    : 3.8}rem;
   bottom: ${({ message }) => message.thread.archivedAt || message.thread.messageCount === 0 ? 30 : 19}px;
 `
 
