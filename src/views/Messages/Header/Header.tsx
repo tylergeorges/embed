@@ -46,9 +46,9 @@ export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
     return (
         <Root thread={thread}>
             <Stretch>
-                { cData.nsfw && cData.__typename === 'NewsChannel' ?
+                { cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
                     <NSFWNewsName><Emoji>{cData?.name}</Emoji></NSFWNewsName>
-                : cData.__typename === 'NewsChannel' ?
+                : cData.__typename === 'AnnouncementChannel' ?
                     <NewsName><Emoji>{cData?.name}</Emoji></NewsName>
                 : cData.id === generalStore.guild?.rulesChannelId ?
                     <RulesName><Emoji>{cData?.name}</Emoji></RulesName>
