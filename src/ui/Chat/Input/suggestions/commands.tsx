@@ -41,7 +41,7 @@ const Commands: Suggestion<Command> = {
   toString: ({ name }) => `/${name}`,
 
   description: query => (
-    <Description>
+    <Description className="description">
       Commands
       {query ? (
         <React.Fragment>
@@ -57,7 +57,7 @@ const Commands: Suggestion<Command> = {
       <Icon>
         <Hash />
       </Icon>
-      <Name>{name}</Name>
+      <Name className="name">{name}</Name>
     </React.Fragment>
   )
 }
