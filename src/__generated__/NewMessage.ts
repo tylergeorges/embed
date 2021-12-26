@@ -235,4 +235,5 @@ export interface NewMessage {
 export interface NewMessageVariables {
   channel: string;
   guild: string;
+  threadId?: string | null;
 }
