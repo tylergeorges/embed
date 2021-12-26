@@ -20,10 +20,11 @@ const Thread = ({ thread }: Props) => {
       <ThreadBoxHeader>
         <ThreadName>{thread.name}</ThreadName>
         <MessageCount hover={hover}>
-          {thread.messageCount === 0
+          {/* {thread.messageCount === 0
             ? 'See Thread'
             : `${thread.messageCount} Message${thread.messageCount === 1 ? '' : 's'}`
-          } ›
+          } › */}
+          See Thread ›
         </MessageCount>
       </ThreadBoxHeader>
 
