@@ -113,14 +113,14 @@ class Message extends React.PureComponent<Props, any> {
             <React.Fragment>
               <ReplySpine/>
               {repliedMessage ?
-                <RepliedMessage>
+                <RepliedMessage className="replied-message">
                   {repliedMessage.type !== MessageType.GuildMemberJoin ? <>
-                    <RepliedAvatar src={getAvatar(repliedMessage.author)} />
+                    <RepliedAvatar src={getAvatar(repliedMessage.author)} className="avatar" />
                     <span style={{verticalAlign: 'sub'}}>{tags({author: repliedMessage.author, crosspost: !!(repliedMessage.flags & 1 << 1), referenceGuild: repliedMessage.messageReference?.guildId, guest: repliedMessage.isGuest})}</span>
-                    <RepliedUser nameColor={repliedMessage.author.color}>{firstMessage.mentions.some(m => m.id === repliedMessage.author.id) && '@'}{repliedMessage.author.name}</RepliedUser>
+                    <RepliedUser nameColor={repliedMessage.author.color} className="user">{firstMessage.mentions.some(m => m.id === repliedMessage.author.id) && '@'}{repliedMessage.author.name}</RepliedUser>
                   </> : <svg width="12" height="12" viewBox="0 0 18 18" style={{marginRight: '.25rem'}}><path fill="#3ba55c" d="M0 8h14.2l-3.6-3.6L12 3l6 6-6 6-1.4-1.4 3.6-3.6H0"></path></svg>}
                   {repliedMessage.content
-                    ? <RepliedText>
+                    ? <RepliedText className="text">
                         <Markdown mentions={repliedMessage.mentions}>{repliedMessage.content}</Markdown>
                         {repliedMessage.editedAt && (
                           <Tooltip
@@ -149,13 +149,13 @@ class Message extends React.PureComponent<Props, any> {
                     <ReplyImageIcon aria-hidden="false" width="20" height="20" viewBox="0 0 64 64"><path fill="rgba(255,255,255,.66)" d="M56 50.6667V13.3333C56 10.4 53.6 8 50.6667 8H13.3333C10.4 8 8 10.4 8 13.3333V50.6667C8 53.6 10.4 56 13.3333 56H50.6667C53.6 56 56 53.6 56 50.6667ZM22.6667 36L29.3333 44.0267L38.6667 32L50.6667 48H13.3333L22.6667 36Z"></path></ReplyImageIcon>}
                 </RepliedMessage>
                 : firstMessage.interaction ?
-                  <RepliedMessage>
-                    <RepliedAvatar src={getAvatar(firstMessage.interaction.user)} />
-                    <RepliedUser nameColor={allMessages.find(m => m.author.id === firstMessage.interaction.user.id)?.author.color}>{firstMessage.interaction.user.username}</RepliedUser>
-                    <InteractionText>used <Command>{firstMessage.type === MessageType.ChatInputCommand && '/'}{firstMessage.interaction.name}</Command></InteractionText>
+                  <RepliedMessage className="replied-message">
+                    <RepliedAvatar src={getAvatar(firstMessage.interaction.user)} className="avatar" />
+                    <RepliedUser nameColor={allMessages.find(m => m.author.id === firstMessage.interaction.user.id)?.author.color} className="user">{firstMessage.interaction.user.username}</RepliedUser>
+                    <InteractionText className="interaction">used <Command className="command">{firstMessage.type === MessageType.ChatInputCommand && '/'}{firstMessage.interaction.name}</Command></InteractionText>
                   </RepliedMessage>
                 :
-                <RepliedMessage>
+                <RepliedMessage className="replied-message">
                   <UnknownReplyIconWrapper>
                     <svg width="12" height="8" viewBox="0 0 12 8"><path d="M0.809739 3.59646L5.12565 0.468433C5.17446 0.431163 5.23323 0.408043 5.2951 0.401763C5.35698 0.395482 5.41943 0.406298 5.4752 0.432954C5.53096 0.45961 5.57776 0.50101 5.61013 0.552343C5.64251 0.603676 5.65914 0.662833 5.6581 0.722939V2.3707C10.3624 2.3707 11.2539 5.52482 11.3991 7.21174C11.4028 7.27916 11.3848 7.34603 11.3474 7.40312C11.3101 7.46021 11.2554 7.50471 11.1908 7.53049C11.1262 7.55626 11.0549 7.56204 10.9868 7.54703C10.9187 7.53201 10.857 7.49695 10.8104 7.44666C8.72224 5.08977 5.6581 5.63359 5.6581 5.63359V7.28135C5.65831 7.34051 5.64141 7.39856 5.60931 7.44894C5.5772 7.49932 5.53117 7.54004 5.4764 7.5665C5.42163 7.59296 5.3603 7.60411 5.29932 7.59869C5.23834 7.59328 5.18014 7.57151 5.13128 7.53585L0.809739 4.40892C0.744492 4.3616 0.691538 4.30026 0.655067 4.22975C0.618596 4.15925 0.599609 4.08151 0.599609 4.00269C0.599609 3.92386 0.618596 3.84612 0.655067 3.77562C0.691538 3.70511 0.744492 3.64377 0.809739 3.59646Z" fill="#b9bbbe"></path></svg>
                   </UnknownReplyIconWrapper>
