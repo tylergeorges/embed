@@ -13,6 +13,7 @@ const Thread = ({ thread }: Props) => {
 
   return (
     <ThreadBox
+      className="thread-box"
       onClick={() => generalStore.setActiveThread(thread)}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
