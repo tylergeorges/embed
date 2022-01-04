@@ -14,6 +14,7 @@ export class GeneralStore {
   @observable menuOpen: boolean = false;
   @observable activeThread?: Omit<Message_thread, '__typename'>;
   @observable threadFullscreen: boolean = false;
+  @observable file?: File;
 
   constructor() {
     autorun(() => {
@@ -52,6 +53,10 @@ export class GeneralStore {
     // TODO: Set activeThread to null - this is for testing
     this.activeThread = null;
     this.threadFullscreen = false;
+  }
+
+  @action setFile(file: File) {
+    this.file = file;
   }
 }
 

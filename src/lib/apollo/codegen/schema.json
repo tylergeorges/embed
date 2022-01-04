@@ -125,6 +125,42 @@
                 "deprecationReason": null
               },
               {
+                "name": "fileAlt",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "fileName",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "fileData",
+                "description": null,
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "content",
                 "description": null,
                 "type": {
@@ -1389,7 +1425,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "GuildStore",
+            "name": "GuildText",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -1401,7 +1437,7 @@
             "deprecationReason": null
           },
           {
-            "name": "GuildNews",
+            "name": "DM",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -1413,19 +1449,19 @@
             "deprecationReason": null
           },
           {
-            "name": "GuildText",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "GuildCategory",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "DM",
+            "name": "GuildNews",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildStore",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -2875,43 +2911,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "ThreadCreated",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChatInputCommand",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelFollowAdd",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelNameChange",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Default",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Call",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildDiscoveryGracePeriodInitialWarning",
+            "name": "UserPremiumGuildSubscription",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -2923,85 +2923,13 @@
             "deprecationReason": null
           },
           {
-            "name": "UserPremiumGuildTier2",
+            "name": "ChannelNameChange",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "RecipientAdd",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UserPremiumGuildSubscription",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildDiscoveryRequalified",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Reply",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildDiscoveryDisqualified",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelPinnedMessage",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UserPremiumGuildTier1",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UserPremiumGuildTier3",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ContextMenuCommand",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildInviteReminder",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Unknown",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "RecipientRemove",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildMemberJoin",
+            "name": "ChatInputCommand",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -3013,7 +2941,115 @@
             "deprecationReason": null
           },
           {
+            "name": "UserPremiumGuildTier1",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildInviteReminder",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Reply",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ChannelIconChange",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Unknown",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ThreadCreated",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildDiscoveryGracePeriodInitialWarning",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Call",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildMemberJoin",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildDiscoveryRequalified",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ChannelFollowAdd",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UserPremiumGuildTier2",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "RecipientRemove",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "RecipientAdd",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ChannelPinnedMessage",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ContextMenuCommand",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Default",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UserPremiumGuildTier3",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildDiscoveryDisqualified",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

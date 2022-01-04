@@ -334,4 +334,7 @@ export interface SendMessageVariables {
   channel: string;
   content: string;
   thread?: string | null;
+  fileData?: string | null;
+  fileName?: string | null;
+  fileAlt?: string | null;
 }

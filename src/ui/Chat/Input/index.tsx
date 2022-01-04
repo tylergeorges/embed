@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Root, Textarea, NoPerms } from "./elements";
+import { Root, Textarea, NoPerms, UploadButton } from "./elements";
 import Suggestions from "./Suggestions";
 import Channels from "./suggestions/channels";
 import Commands from "./suggestions/commands";
@@ -13,6 +13,7 @@ import { inject, observer } from "mobx-react";
 import { generalStore, authStore } from "@store";
 import { login } from "@views/Messages/Header";
 import { Locale } from "@lib/Locale";
+import { store } from "@models";
 
 interface Props extends ChatProps {
   innerRef?: (textarea: HTMLTextAreaElement) => void,
@@ -50,6 +51,14 @@ class MagicTextarea extends React.Component<Props> {
     onChange?.(value);
   }
 
+  upload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files[0]) return
+    generalStore.setFile(event.target.files[0])
+    store.modal.openUpload(this.props.channel.name, this.props.thread, this.textarea.value)
+    event.target.value = null
+    this.textarea.value = ''
+  }
+
   render() {
     const user = authStore.user;
 
@@ -69,6 +78,10 @@ class MagicTextarea extends React.Component<Props> {
 
     return (
       <Root>
+        <UploadButton className="upload-button">
+          <input type="file" onChange={this.upload} hidden />
+          <svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.00098C6.486 2.00098 2 6.48698 2 12.001C2 17.515 6.486 22.001 12 22.001C17.514 22.001 22 17.515 22 12.001C22 6.48698 17.514 2.00098 12 2.00098ZM17 13.001H13V17.001H11V13.001H7V11.001H11V7.00098H13V11.001H17V13.001Z"></path></svg>
+        </UploadButton>
         <Textarea
           {...this.props.innerProps}
           innerRef={ref => {

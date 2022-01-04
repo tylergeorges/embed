@@ -12,9 +12,9 @@ export const useSendMessage = (thread?: string) => {
   const { channel } = useRouter()
   const sendMessage = useMutation<SendMessage>(SEND_MESSAGE);
 
-  return async (content: string) =>
+  return async (content: string, fileName?: string, fileData?: string, fileAlt?: string) =>
     await sendMessage({
-      variables: { channel, content, thread },
+      variables: { channel, content, fileName, fileData, fileAlt, thread },
       optimisticResponse: {
         __typename: 'Mutation',
         sendMessage: {
