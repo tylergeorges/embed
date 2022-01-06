@@ -14,6 +14,7 @@ import { generalStore, authStore } from "@store";
 import { login } from "@views/Messages/Header";
 import { Locale } from "@lib/Locale";
 import { store } from "@models";
+import EmojiButton from "./EmojiButton";
 
 interface Props extends ChatProps {
   innerRef?: (textarea: HTMLTextAreaElement) => void,
@@ -162,6 +163,8 @@ class MagicTextarea extends React.Component<Props> {
             }
           }}
         />
+
+        <EmojiButton />
 
         {this.state.showSuggestions && (
           <Suggestions

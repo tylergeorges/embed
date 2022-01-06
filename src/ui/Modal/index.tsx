@@ -26,6 +26,7 @@ const Modal = observer(() => {
           e.target === e.currentTarget ? store.modal.close() : null
         }
         open={store.modal.isOpen}
+        dim={store.modal.dim}
         className="modal"
       >
         <Screen modal={store.modal} close={store.modal.close} />
