@@ -1,5 +1,7 @@
-import { useEffect } from 'react';
-import { Root, Container, Sidebar } from './elements/emojipicker'
+import { Fragment, useEffect, useMemo } from 'react';
+import { Root, Container, Sidebar, Content } from './elements/emojipicker'
+import { Twemoji } from '@ui/shared/Emoji/emoji'
+import { defaultEmojis } from '@services/Emoji/defaultEmojis'
 
 interface Props {
   button: HTMLButtonElement
@@ -18,6 +20,13 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [picker])
 
+  const emojiCategories = useMemo(() => {
+    return defaultEmojis.reduce((obj, emoji) => ({
+      ...obj,
+      ...({ [emoji.category]: [...(obj[emoji.category] || []), emoji] })
+    }), {});
+  }, [defaultEmojis]);
+
   return (
     <Root className="emoji-picker" innerRef={ref => picker = ref}>
       <Container>
@@ -25,7 +34,21 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
           h
         </Sidebar>
 
-        <p onClick={() => onSelect('test')}>Hello world</p>
+        <Content>
+          {Object.entries(emojiCategories).map(([categoryName, emojis]) =>
+            <>
+              <p>{categoryName}</p>
+
+              <div>
+                {(emojis as any[]).map(eData =>
+                <span onClick={() => onSelect(`:${eData.keywords[0]}:`)}>
+                  <Twemoji>{eData.emoji}</Twemoji>
+                </span>
+                )}
+              </div>
+            </>
+          )}
+        </Content>
       </Container>
     </Root>
   )
