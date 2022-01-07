@@ -27,6 +27,6 @@ export default ({ pickerIsOpen, setPickerState, setElement }: Props) => {
       active={hover || pickerIsOpen}
       innerRef={ref => setElement(ref)}
       className="emoji-button"
-    ></EmojiButton>
+    />
   )
 }

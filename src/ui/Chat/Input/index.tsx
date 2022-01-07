@@ -176,8 +176,18 @@ class MagicTextarea extends React.Component<Props> {
 
         {this.state.showEmojiPicker && (
           <EmojiPicker
-            close={() => this.setState({ showEmojiPicker: false })}
             button={this.emojiButton}
+            close={() => this.setState({ showEmojiPicker: false })}
+            onSelect={emoji => {
+              const text = `${this.textarea.value}${emoji} `;
+              this.textarea.value = text;
+
+              this.textarea.focus();
+              this.textarea.setSelectionRange(text.length, text.length)
+
+              this.setState({ showEmojiPicker: false })
+              this.onChange(text);
+            }}
           />
         )}
 
