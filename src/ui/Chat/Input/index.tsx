@@ -15,6 +15,7 @@ import { login } from "@views/Messages/Header";
 import { Locale } from "@lib/Locale";
 import { store } from "@models";
 import EmojiButton from "./EmojiButton";
+import EmojiPicker from "./EmojiPicker";
 
 interface Props extends ChatProps {
   innerRef?: (textarea: HTMLTextAreaElement) => void,
@@ -34,6 +35,8 @@ class MagicTextarea extends React.Component<Props> {
     caretPosition: -1,
 
     showSuggestions: false,
+    showEmojiPicker: false,
+
     handler: null,
 
     query: null
@@ -45,6 +48,7 @@ class MagicTextarea extends React.Component<Props> {
   getValue = () => this.textarea.value;
   textarea: HTMLTextAreaElement;
   suggestions: Suggestions;
+  emojiButton: HTMLButtonElement;
 
   onChange(value) {
     const { onChange } = this.props;
@@ -164,7 +168,18 @@ class MagicTextarea extends React.Component<Props> {
           }}
         />
 
-        <EmojiButton />
+        <EmojiButton
+          pickerIsOpen={this.state.showEmojiPicker}
+          setPickerState={state => this.setState({ showEmojiPicker: state })}
+          setElement={element => this.emojiButton = element}
+        />
+
+        {this.state.showEmojiPicker && (
+          <EmojiPicker
+            close={() => this.setState({ showEmojiPicker: false })}
+            button={this.emojiButton}
+          />
+        )}
 
         {this.state.showSuggestions && (
           <Suggestions

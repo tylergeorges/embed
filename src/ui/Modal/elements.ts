@@ -1,6 +1,5 @@
 import focusable from '@ui/shared/focusable'
 import styled, { css, keyframes } from 'react-emotion'
-import { store } from '@models'
 
 const bounceIn = keyframes`
   from {
@@ -13,7 +12,6 @@ const bounceIn = keyframes`
 
 interface IRoot {
   open: boolean
-  dim: boolean
 }
 export const Root = styled('dialog')<IRoot>`
   display: flex;
@@ -28,7 +26,7 @@ export const Root = styled('dialog')<IRoot>`
   left: 0;
 
   z-index: 10;
-  background: ${({ dim }) => dim ? 'rgba(0, 0, 0, 0.85)' : 'none'};
+  background-color: rgba(0, 0, 0, 0.85);
   border: none;
   opacity: 0;
   transition: opacity 0.1s ease;

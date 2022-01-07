@@ -1,9 +1,13 @@
-import { store } from '@models';
-import { observer } from 'mobx-react';
 import { useState } from 'react'
 import { EmojiButton } from './elements'
 
-export default observer(() => {
+interface Props {
+  pickerIsOpen: boolean
+  setPickerState: (state: boolean) => void
+  setElement: (element: HTMLButtonElement) => void
+}
+
+export default ({ pickerIsOpen, setPickerState, setElement }: Props) => {
   const [pos, setPos] = useState(null)
   const [hover, setHover] = useState(false)
 
@@ -11,15 +15,18 @@ export default observer(() => {
     <EmojiButton
       style={{ backgroundPosition: pos }}
       onMouseEnter={() => {
-        const x = Math.floor(Math.random() * 11)
-        const y = Math.floor(Math.random() * (x <= 5 ? 5 : 4))
-        setPos(`-${x * 22}px -${y * 22}px`)
         setHover(true)
+        if (!pickerIsOpen) {
+          const x = Math.floor(Math.random() * 11)
+          const y = Math.floor(Math.random() * (x <= 5 ? 5 : 4))
+          setPos(`-${x * 22}px -${y * 22}px`)
+        }
       }}
       onMouseLeave={() => setHover(false)}
-      onClick={() => store.modal.openEmojiPicker()}
-      active={hover || store.modal.isOpen && store.modal.type === 'emojipicker'}
+      onClick={() => setPickerState(!pickerIsOpen)}
+      active={hover || pickerIsOpen}
+      innerRef={ref => setElement(ref)}
       className="emoji-button"
     ></EmojiButton>
   )
-})
+}
