@@ -25,13 +25,13 @@ export const Sidebar = styled.div`
   height: 100%;
   width: 40px;
   padding-top: 8px;
-  position: fixed;
+  position: absolute;
   background: #202225;
 `;
 
 export const Content = styled.div`
   height: 100%;
-  margin-left: 3rem;
+  margin-left: 40px;
   padding: 0 0.5rem 0 0.5rem;
 `;
 
