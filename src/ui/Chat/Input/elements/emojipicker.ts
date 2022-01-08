@@ -1,4 +1,4 @@
-import styled, { css } from 'react-emotion'
+import styled, { css } from '@lib/emotion'
 import * as Modal from '@ui/Modal'
 
 export const Root = styled(Modal.Content)`
@@ -11,7 +11,7 @@ export const Root = styled(Modal.Content)`
   bottom: 50px;
   overflow: hidden;
   border-radius: 8px;
-  background: #2f3136;
+  background: ${({ theme }) => theme.colors._background.toString()};
   box-shadow: rgba(4, 4, 5, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.24) 0px 8px 16px 0px;
 `;
 
@@ -26,7 +26,7 @@ export const Sidebar = styled.div`
   width: 40px;
   padding-top: 8px;
   position: absolute;
-  background: #202225;
+  background: ${({ theme }) => theme.colors._background.darken(0.5).toString()};
 `;
 
 export const Content = styled.div`
@@ -57,14 +57,15 @@ export const NameDisplay = styled.h2`
 export const EmojiDisplay = styled.span`
   padding: 4px;
   
-  &:hover {
-    background: #2f3136;
-    cursor: pointer;
-  }
-  
   img {
     width: 32px !important;
     height: 32px !important;
+
+    &:hover {
+      background: ${({ theme }) => theme.colors._primary.fade(0.7).toString()};
+      border-radius: 4px;
+      cursor: pointer;
+    }
   }
 `;
 
