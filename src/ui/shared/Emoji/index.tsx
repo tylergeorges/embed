@@ -72,7 +72,7 @@ class Emoji extends React.PureComponent<Props> {
       )
     })
 
-    return this.jumbofy(resolved)
+    return resolved // this.jumbofy(resolved)
   }
 
   getText() {
@@ -114,32 +114,32 @@ class Emoji extends React.PureComponent<Props> {
     }
   }
 
-  jumbofy(fragment: any[]) {
-    const { onlyEmojiClassName } = this.props
+  // jumbofy(fragment: any[]) {
+  //   const { onlyEmojiClassName } = this.props
 
-    if (onlyEmojiClassName) {
-      // Iterate through all fragment elements
-      // until a either the fragment is not an object
-      // and it's string contains characters other than
-      // a space (or line break)
-      const onlyEmoji = !fragment.find(
-        fragment => !(fragment instanceof Object || !/\S/.test(fragment))
-      )
+  //   if (onlyEmojiClassName) {
+  //     // Iterate through all fragment elements
+  //     // until a either the fragment is not an object
+  //     // and it's string contains characters other than
+  //     // a space (or line break)
+  //     const onlyEmoji = !fragment.find(
+  //       fragment => !(fragment instanceof Object || !/\S/.test(fragment))
+  //     )
 
-      if (onlyEmoji) {
-        return fragment.map(
-          piece =>
-            piece instanceof Object
-              ? React.cloneElement(piece, {
-                  className: cx(onlyEmojiClassName, piece.props.className)
-                })
-              : piece
-        )
-      }
-    }
+  //     if (onlyEmoji) {
+  //       return fragment.map(
+  //         piece =>
+  //           piece instanceof Object
+  //             ? React.cloneElement(piece, {
+  //                 className: cx(onlyEmojiClassName, piece.props.className)
+  //               })
+  //             : piece
+  //       )
+  //     }
+  //   }
 
-    return fragment
-  }
+  //   return fragment
+  // }
 }
 
 export default Emoji
