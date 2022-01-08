@@ -21,9 +21,10 @@ export const Container = styled.div`
 `;
 
 export const Sidebar = styled.div`
+  justify-content: center;
   height: 100%;
-  width: 3rem;
-  padding: 0.5rem;
+  width: 40px;
+  padding-top: 8px;
   position: fixed;
   background: #202225;
 `;
@@ -70,14 +71,20 @@ export const EmojiDisplay = styled.span`
 // Category icons
 export namespace Icons {
   export interface IconProps {
-    enlarged?: boolean;
+    sidebar?: boolean;
   }
 
   const iconStyle = (props: IconProps) => css`
     background-color: #b9bbbe;
     
-    width: ${props.enlarged ? 24 : 16}px;
-    height: ${props.enlarged ? 24 : 16}px;
+    width: ${props.sidebar ? 28 : 16}px;
+    height: ${props.sidebar ? 28 : 16}px;
+    
+    ${props.sidebar ? css`
+      display: block;
+      
+      margin: 0.5rem auto 0.5rem auto;
+    ` : null}
   `;
 
   export const People = styled.div`

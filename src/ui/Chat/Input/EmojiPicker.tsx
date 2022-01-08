@@ -52,18 +52,12 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
     <Root className="emoji-picker" innerRef={ref => picker = ref}>
       <Container>
         <Sidebar>
-          <div>
-            h
-          </div>
-          <div>
-            a
-          </div>
-          <div>
-            h
-          </div>
-          <div>
-            a
-          </div>
+          {Object.keys(emojiCategories).map(category => {
+            const CategoryIcon = Icons.mapped[category] || Icons.People;
+
+            // TODO: onClick to scroll to category
+            return <CategoryIcon sidebar />
+          })}
         </Sidebar>
 
         <Content>
