@@ -68,6 +68,15 @@ export const EmojiDisplay = styled.span`
   }
 `;
 
+export const SidebarEmojiDisplay = styled.span`
+  width: 28px;
+  height: 28px;
+  cursor: pointer;
+  
+  display: block;
+  margin: 0.5rem auto 0.5rem auto;
+`;
+
 // Category icons
 export namespace Icons {
   export interface IconProps {
@@ -79,12 +88,6 @@ export namespace Icons {
     
     width: ${props.sidebar ? 28 : 16}px;
     height: ${props.sidebar ? 28 : 16}px;
-    
-    ${props.sidebar ? css`
-      display: block;
-      
-      margin: 0.5rem auto 0.5rem auto;
-    ` : null}
   `;
 
   export const People = styled.div`

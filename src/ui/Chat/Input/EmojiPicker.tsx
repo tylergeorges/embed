@@ -1,7 +1,17 @@
-import { useEffect, useMemo, useState } from 'react';
+import { createRef, useEffect, useMemo, useState } from 'react';
 import { AutoSizer } from 'react-virtualized';
 import { FixedSizeList as List } from 'react-window';
-import { Root, Container, Sidebar, Content, EmojiDisplay, RowContainer, NameDisplay, Icons } from './elements/emojipicker'
+import {
+  Root,
+  Container,
+  Sidebar,
+  Content,
+  EmojiDisplay,
+  RowContainer,
+  NameDisplay,
+  Icons,
+  SidebarEmojiDisplay
+} from './elements/emojipicker'
 import { Twemoji } from '@ui/shared/Emoji/emoji'
 import { defaultEmojis } from '@services/Emoji/defaultEmojis'
 import _ from 'lodash'
@@ -14,6 +24,7 @@ interface Props {
 
 const EmojiPicker = ({ button, close, onSelect }: Props) => {
   let picker: HTMLDivElement
+  let list = createRef<List>();
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (![picker, button].some(e => e?.contains(event.target as Node))) close();
@@ -46,7 +57,11 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
     return categories
   }, [defaultEmojis, rowWidth]) as Record<string, [number, any[][]]>
 
-  console.log(emojiCategories)
+  const scrollToCategory = (category: string) => {
+    const rowIdx = emojiCategories[category][0];
+
+    list.current.scrollToItem(rowIdx, 'start');
+  }
 
   return (
     <Root className="emoji-picker" innerRef={ref => picker = ref}>
@@ -55,19 +70,24 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
           {Object.keys(emojiCategories).map(category => {
             const CategoryIcon = Icons.mapped[category] || Icons.People;
 
-            // TODO: onClick to scroll to category
-            return <CategoryIcon sidebar />
+            return (
+              <SidebarEmojiDisplay key={category} onClick={() => scrollToCategory(category)}>
+                <CategoryIcon sidebar />
+              </SidebarEmojiDisplay>
+            );
           })}
         </Sidebar>
 
         <Content>
-          <AutoSizer>
+          <AutoSizer innerRef={ref => list = ref}>
             {({ width, height }) => {
               if (!width || !height) return null
 
               setRowWidth(Math.floor((width - 10) / 40))
 
               return <List
+                ref={list}
+                className="emoji-list"
                 width={width}
                 height={height}
                 itemSize={40}
