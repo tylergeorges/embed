@@ -8,6 +8,7 @@ export const Root = styled(Modal.Content)`
   text-align: center;
   user-select: none;
   width: 500px;
+  max-width: 95%;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%,-50%);
