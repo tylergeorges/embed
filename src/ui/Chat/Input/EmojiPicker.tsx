@@ -66,7 +66,7 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
   return (
     <Root className="emoji-picker" innerRef={ref => picker = ref}>
       <Container>
-        <Sidebar>
+        <Sidebar className="emoji-picker-sidebar">
           {Object.keys(emojiCategories).map(category => {
             const CategoryIcon = Icons.mapped[category] || Icons.People;
 
@@ -78,7 +78,7 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
           })}
         </Sidebar>
 
-        <Content>
+        <Content className="emoji-picker-content">
           <AutoSizer innerRef={ref => list = ref}>
             {({ width, height }) => {
               if (!width || !height) return null
@@ -102,7 +102,7 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
                     return (
                       // @ts-expect-error
                       <RowContainer style={style}>
-                        <NameDisplay>
+                        <NameDisplay className="emoji-picker-name">
                           <CategoryIcon />
                           {name}
                         </NameDisplay>
@@ -117,7 +117,7 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
                   return (
                     // @ts-expect-error
                     <RowContainer style={style}>
-                      <EmojiDisplay>
+                      <EmojiDisplay className="emoji-picker-row">
                         {emojis.map(emoji => (
                           <EmojiDisplay key={emoji.keywords[0]} onClick={() => onSelect(`:${emoji.keywords[0]}:`)}>
                             <Twemoji>{emoji.emoji}</Twemoji>

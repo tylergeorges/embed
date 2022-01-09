@@ -1,4 +1,4 @@
-import styled, { css } from '@lib/emotion'
+import styled, { css, Theme } from '@lib/emotion'
 import * as Modal from '@ui/Modal'
 
 export const Root = styled(Modal.Content)`
@@ -11,7 +11,7 @@ export const Root = styled(Modal.Content)`
   bottom: 50px;
   overflow: hidden;
   border-radius: 8px;
-  background: ${({ theme }) => theme.colors._background.toString()};
+  background: ${({ theme }) => theme.colors.background};
   box-shadow: rgba(4, 4, 5, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.24) 0px 8px 16px 0px;
 `;
 
@@ -44,14 +44,10 @@ export const NameDisplay = styled.h2`
   column-gap: 0.5rem;
   align-items: center;
   text-transform: uppercase;
-  color: #b9bbbe;
+  color: ${({ theme }) => theme.colors._primary.fade(0.3).toString()};
   padding-left: 0.5rem;
   margin: 0.5rem 0 0.5rem 0;
   font-size: unset;
-
-  &:hover {
-    color: #d9dadc;
-  }
 `;
 
 export const EmojiDisplay = styled.span`
@@ -76,16 +72,21 @@ export const SidebarEmojiDisplay = styled.span`
   
   display: block;
   margin: 0.5rem auto 0.5rem auto;
+
+  div:hover {
+    background: ${({ theme }) => theme.colors._primary.fade(0.1).toString()};
+  }
 `;
 
 // Category icons
 export namespace Icons {
   export interface IconProps {
     sidebar?: boolean;
+    theme: Theme
   }
 
   const iconStyle = (props: IconProps) => css`
-    background-color: #b9bbbe;
+    background-color: ${props.theme.colors._primary.fade(0.3).toString()};
     
     width: ${props.sidebar ? 28 : 16}px;
     height: ${props.sidebar ? 28 : 16}px;
