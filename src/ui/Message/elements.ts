@@ -59,7 +59,7 @@ export const RepliedUser = styled.span<RepliedUserProps>`
 `
 
 export const RepliedText = styled.div`
-  color: rgba(255, 255, 255, .66);
+  color: ${({ theme }) => theme.colors._primary.fade(0.34).string()};
   display: inline-block;
 
   * {
@@ -92,12 +92,12 @@ export const UnknownReplyIconWrapper = styled.div`
 `
 
 export const ReplySystemText = styled.span`
-  color: rgba(255, 255, 255, .66);
+  color: ${({ theme }) => theme.colors._primary.fade(0.34).string()};
   font-style: italic;
 `
 
 export const InteractionText = styled.span`
-  color: rgba(255, 255, 255, .66);
+  color: ${({ theme }) => theme.colors._primary.fade(0.34).string()};
 `
 
 export const ReplyImageIcon = styled.svg`
@@ -193,7 +193,7 @@ export const Command = styled.span`
 export const CommandArgs = styled.div`
   margin-left: 60px;
   background-color: rgba(0, 0, 0, 9%);
-  color: rgba(255, 255, 255, 70%);
+  color: ${({ theme }) => theme.colors._primary.fade(0.3).string()};
   padding: .5rem;
   border-radius: .25rem;
   margin-top: .25rem;
