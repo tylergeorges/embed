@@ -4,6 +4,11 @@ import { MemberLink } from '@ui/shared/Member'
 import { Message } from '@generated';
 import { MessageType } from '@generated/globalTypes';
 
+import pin from '@images/discordAssets/5da4cdab01d4d89c593c48c62ae0d937.svg'
+import join from '@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg'
+import x from '@images/discordAssets/c7078943fc392e7dede27a20e6cfdcfb.svg'
+import check from '@images/discordAssets/86b5987e685f72352730d56690393fc8.svg'
+
 import styled from './ThemeContext'
 
 export const Group = styled('div')`
@@ -151,11 +156,11 @@ export namespace Secondary {
   `
 
   export const Pinned = styled(Message)`
-    background-image: url("https://discord.com/assets/5da4cdab01d4d89c593c48c62ae0d937.svg");
+    background-image: url("${pin}");
   `
 
   export const Join = styled(Message)`
-    background-image: url("https://discord.com/assets/e06a573355c490f7ce6e3125ac01db81.svg");
+    background-image: url("${join}");
   `
 
   export const Boost = styled(Message)`
@@ -163,11 +168,11 @@ export namespace Secondary {
   `
 
   export const X = styled(Message)`
-    background-image: url("https://discord.com/assets/c7078943fc392e7dede27a20e6cfdcfb.svg");
+    background-image: url("${x}");
   `
 
   export const Check = styled(Message)`
-    background-image: url("https://discord.com/assets/86b5987e685f72352730d56690393fc8.svg");
+    background-image: url("${check}");
   `
 
   export const Warning = styled(Message)`

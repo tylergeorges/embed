@@ -54,6 +54,19 @@ import webpCheck from '@ui/shared/webpCheck'
 import Thread from "@ui/Message/Thread";
 import { compareGroupability } from '@views/Messages/utils'
 
+// attachment icons
+import audio from '@images/discordAssets/7674eb0d869afebca7b1f3a5202506c6.svg'
+import acrobat from '@images/discordAssets/aee87e981ef9acae845ef397c7a034c5.svg'
+import ae from '@images/discordAssets/f8e80ba7587764ddfa27aa1e02c6ed54.svg'
+import sketch from '@images/discordAssets/318ce2f97a8bd1d7a693938d9aff5f08.svg'
+import ai from '@images/discordAssets/f1141359084b3b61f3a41adbe541fdbb.svg'
+import archive from '@images/discordAssets/4f27cbf7f975daa32fe7c8dec19ce2de.svg'
+import code from '@images/discordAssets/d6bb78c1d64640ad06cc8cdd1c61b67d.svg'
+import document from '@images/discordAssets/3c2ce4428c2c44824b07162f648524f5.svg'
+import spreadsheet from '@images/discordAssets/1939fe07993a754364bf3fee5223428d.svg'
+import webcode from '@images/discordAssets/557b6b6b982a8c2b2c97048b86e2e6c3.svg'
+import unknown from '@images/discordAssets/66084381f55f4238d69e5cbe3b8dc42e.svg'
+
 interface Props {
   messages: MessageData[],
   allMessages: MessageData[],
@@ -270,7 +283,7 @@ class Message extends React.PureComponent<Props, any> {
                           if(/\.(?:mp3|ogg|wav|flac)$/.test(attachment.filename)) {
                             return <Audio key={attachment.url}>
                                 <AudioMetadata>
-                                  <AttachmentIcon src="https://discord.com/assets/7674eb0d869afebca7b1f3a5202506c6.svg"/>
+                                  <AttachmentIcon src={audio}/>
                                   <AttachmentInner>
                                     <div><a href={attachment.url}>{attachment.filename}</a></div>
                                     <AttachmentSize>{attachment.size} bytes</AttachmentSize>
@@ -284,16 +297,16 @@ class Message extends React.PureComponent<Props, any> {
                           } else {
                             return <Attachment key={attachment.url}>
                                 <AttachmentIcon
-                                  src={ /\.pdf$/.test(attachment.filename) ? 'https://discord.com/assets/aee87e981ef9acae845ef397c7a034c5.svg' // acrobat
-                                      : /\.ae/.test(attachment.filename) ? 'https://discord.com/assets/f8e80ba7587764ddfa27aa1e02c6ed54.svg' // ae
-                                      : /\.sketch$/.test(attachment.filename) ? 'https://discord.com/assets/318ce2f97a8bd1d7a693938d9aff5f08.svg' // sketch
-                                      : /\.ai$/.test(attachment.filename) ? 'https://discord.com/assets/f1141359084b3b61f3a41adbe541fdbb.svg' // ai
-                                      : /\.(?:rar|zip|7z|tar|tar\.gz)$/.test(attachment.filename) ? 'https://discord.com/assets/4f27cbf7f975daa32fe7c8dec19ce2de.svg' // archive
-                                      : /\.(?:c\+\+|cpp|cc|c|h|hpp|mm|m|json|js|rb|rake|py|asm|fs|pyc|dtd|cgi|bat|rss|java|graphml|idb|lua|o|gml|prl|sls|conf|cmake|make|sln|vbe|cxx|wbf|vbs|r|wml|php|bash|applescript|fcgi|yaml|ex|exs|sh|ml|actionscript)$/.test(attachment.url) ? 'https://discord.com/assets/d6bb78c1d64640ad06cc8cdd1c61b67d.svg' // code
-                                      : /\.(?:txt|rtf|doc|docx|md|pages|ppt|pptx|pptm|key|log)$/.test(attachment.filename) ? 'https://discord.com/assets/3c2ce4428c2c44824b07162f648524f5.svg' // document
-                                      : /\.(?:xls|xlsx|numbers|csv)$/.test(attachment.filename) ? 'https://discord.com/assets/1939fe07993a754364bf3fee5223428d.svg' // spreadsheet
-                                      : /\.(?:html|xhtml|htm|js|xml|xls|xsd|css|styl)$/.test(attachment.filename) ? 'https://discord.com/assets/557b6b6b982a8c2b2c97048b86e2e6c3.svg' // webcode
-                                      : 'https://discord.com/assets/66084381f55f4238d69e5cbe3b8dc42e.svg' // unknown
+                                  src={ /\.pdf$/.test(attachment.filename) ? acrobat
+                                      : /\.ae/.test(attachment.filename) ? ae
+                                      : /\.sketch$/.test(attachment.filename) ? sketch
+                                      : /\.ai$/.test(attachment.filename) ? ai
+                                      : /\.(?:rar|zip|7z|tar|tar\.gz)$/.test(attachment.filename) ? archive
+                                      : /\.(?:c\+\+|cpp|cc|c|h|hpp|mm|m|json|js|rb|rake|py|asm|fs|pyc|dtd|cgi|bat|rss|java|graphml|idb|lua|o|gml|prl|sls|conf|cmake|make|sln|vbe|cxx|wbf|vbs|r|wml|php|bash|applescript|fcgi|yaml|ex|exs|sh|ml|actionscript)$/.test(attachment.url) ? code
+                                      : /\.(?:txt|rtf|doc|docx|md|pages|ppt|pptx|pptm|key|log)$/.test(attachment.filename) ? document
+                                      : /\.(?:xls|xlsx|numbers|csv)$/.test(attachment.filename) ? spreadsheet
+                                      : /\.(?:html|xhtml|htm|js|xml|xls|xsd|css|styl)$/.test(attachment.filename) ? webcode
+                                      : unknown
                                       }/>
                                 <AttachmentInner>
                                   <div><a href={attachment.url}>{attachment.filename}</a></div>
