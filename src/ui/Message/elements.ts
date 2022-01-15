@@ -4,8 +4,10 @@ import { MemberLink } from '@ui/shared/Member'
 import { Message } from '@generated';
 import { MessageType } from '@generated/globalTypes';
 
+import add from '@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg'
+import remove from '@images/discordAssets/f772d3d7eddcf3c84f710c10999479f0.svg'
+import pencil from '@images/discordAssets/1688a01d0e6f27bead9ae6ca9e51dd32.svg'
 import pin from '@images/discordAssets/5da4cdab01d4d89c593c48c62ae0d937.svg'
-import join from '@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg'
 import x from '@images/discordAssets/c7078943fc392e7dede27a20e6cfdcfb.svg'
 import check from '@images/discordAssets/86b5987e685f72352730d56690393fc8.svg'
 
@@ -155,12 +157,21 @@ export namespace Secondary {
     color: ${({ theme }) => theme.colors._primary.fade(0.6).string()};
   `
 
-  export const Pinned = styled(Message)`
-    background-image: url("${pin}");
+  export const Add = styled(Message)`
+    background-image: url("${add}");
   `
 
-  export const Join = styled(Message)`
-    background-image: url("${join}");
+  export const Remove = styled(Message)`
+    background-image: url("${remove}");
+  `
+
+  export const Changed = styled(Message)`
+    color: ${({ theme }) => theme.colors.primary};
+    background-image: url("${pencil}");
+  `
+
+  export const Pinned = styled(Message)`
+    background-image: url("${pin}");
   `
 
   export const Boost = styled(Message)`
@@ -180,7 +191,7 @@ export namespace Secondary {
   `
 
   export const Command = styled(Message)`
-    color: white;
+    color: ${({ theme }) => theme.colors.primary};
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' aria-hidden='false' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%238e9297' fill-rule='evenodd' clip-rule='evenodd' d='M5 3C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H5ZM16.8995 8.41419L15.4853 6.99998L7 15.4853L8.41421 16.8995L16.8995 8.41419Z'%3E%3C/path%3E%3C/svg%3E");
   `
 
@@ -232,10 +243,10 @@ export const ThreadSpine = styled(BottomSpine)<ThreadSpineProps>`
 
 // Username
 interface NameProps {
-  color: number
+  color?: number
 }
 export const Member = styled(MemberLink)<NameProps>`
-  color: ${({ color }) => (color ? '#'+color.toString(16).padStart(6, '0') : null)};
+  color: ${({ theme, color }) => (color ? '#'+color.toString(16).padStart(6, '0') : theme.colors.primary)};
   font-weight: 500;
   /*cursor: pointer;
 

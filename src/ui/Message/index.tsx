@@ -219,9 +219,9 @@ class Message extends React.PureComponent<Props, any> {
                 }
               }
 
-              case MessageType.Default:
-              case MessageType.Reply:
-              case MessageType.ContextMenuCommand: {
+              case MessageType.Default: // 0
+              case MessageType.Reply: // 19
+              case MessageType.ContextMenuCommand: { // 23
                 return (
                   <ThemeProvider key={message.id} theme={this.theme(message)}>
                     <Root className="message" id={message.id}>
@@ -373,34 +373,70 @@ class Message extends React.PureComponent<Props, any> {
                 )
               }
 
-              case MessageType.ThreadCreated: {
+              case MessageType.RecipientAdd: { // 1
                 const member = (
                   <Member id={message.author.id} color={message.author.color}>
                     {message.author.name}
                   </Member>
                 );
 
-                const openThread = () => generalStore.setActiveThread({
-                  id: message.id,
-                  name: message.content,
-                  messageCount: 0,
-                  archivedAt: null,
-                  locked: false
-                });
+                const target = (
+                  <Member id={message.mentions[0].id} color={allMessages.find(m => m.author.id === message.mentions[0].id)?.author.color}>
+                    {message.mentions[0].name}
+                  </Member>
+                );
 
-                return <React.Fragment key={message.id}>
-                  <Secondary.Thread onClick={openThread}>
-                    {member} {Locale.translate('frontend.messages.threadcreated')} <span>{message.content}</span>
-                  </Secondary.Thread>
-                  <Timestamp time={message.createdAt} />
-                  {message.thread && <div style={{ marginLeft: '60px' }}>
-                    <ThreadSpine message={message} />
-                    <Thread thread={message.thread} />
-                  </div>}
-                </React.Fragment>;
+                return (
+                  <React.Fragment key={message.id}>
+                    <Secondary.Add>
+                      {member} added {target} to the thread.
+                    </Secondary.Add>
+                    <Timestamp time={message.createdAt} />
+                  </React.Fragment>
+                )
               }
 
-              case MessageType.ChannelPinnedMessage: {
+              case MessageType.RecipientRemove: { // 2
+                const member = (
+                  <Member id={message.author.id} color={message.author.color}>
+                    {message.author.name}
+                  </Member>
+                );
+
+                const target = (
+                  <Member id={message.mentions[0].id} color={allMessages.find(m => m.author.id === message.mentions[0].id)?.author.color}>
+                    {message.mentions[0].name}
+                  </Member>
+                );
+
+                return (
+                  <React.Fragment key={message.id}>
+                    <Secondary.Remove>
+                      {member} removed {target} from the thread.
+                    </Secondary.Remove>
+                    <Timestamp time={message.createdAt} />
+                  </React.Fragment>
+                )
+              }
+
+              case MessageType.ChannelNameChange: { // 4
+                const member = (
+                  <Member id={message.author.id} color={message.author.color}>
+                    {message.author.name}
+                  </Member>
+                );
+
+                return (
+                  <React.Fragment key={message.id}>
+                    <Secondary.Changed>
+                      {member} changed the channel name: <strong>{message.content}</strong>
+                    </Secondary.Changed>
+                    <Timestamp time={message.createdAt} />
+                  </React.Fragment>
+                )
+              }
+
+              case MessageType.ChannelPinnedMessage: { // 6
                 const member = (
                   <Member id={message.author.id} color={message.author.color}>
                     {message.author.name}
@@ -417,7 +453,7 @@ class Message extends React.PureComponent<Props, any> {
                 )
               }
 
-              case MessageType.GuildMemberJoin: {
+              case MessageType.GuildMemberJoin: { // 7
                 const member = (
                   <Member id={message.author.id} color={message.author.color}>
                     {message.author.name}
@@ -426,18 +462,18 @@ class Message extends React.PureComponent<Props, any> {
 
                 return (
                   <React.Fragment key={message.id}>
-                    <Secondary.Join>
+                    <Secondary.Add>
                       {joinMessageBeginning(message)}{member}{joinMessageEnd(message)}
-                    </Secondary.Join>
+                    </Secondary.Add>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
                 )
               }
 
-              case MessageType.UserPremiumGuildSubscription:
-              case MessageType.UserPremiumGuildTier1:
-              case MessageType.UserPremiumGuildTier2:
-              case MessageType.UserPremiumGuildTier3: {
+              case MessageType.UserPremiumGuildSubscription: // 8
+              case MessageType.UserPremiumGuildTier1: // 9
+              case MessageType.UserPremiumGuildTier2: // 10
+              case MessageType.UserPremiumGuildTier3: { // 11
                 const member = (
                   <Member id={message.author.id} color={message.author.color}>
                     {message.author.name}
@@ -465,7 +501,7 @@ class Message extends React.PureComponent<Props, any> {
                 }
               }
 
-              case MessageType.ChannelFollowAdd: {
+              case MessageType.ChannelFollowAdd: { // 12
                 const member = (
                   <Member id={message.author.id} color={message.author.color}>
                     {message.author.name}
@@ -474,15 +510,15 @@ class Message extends React.PureComponent<Props, any> {
 
                 return (
                   <React.Fragment key={message.id}>
-                    <Secondary.Join>
+                    <Secondary.Add>
                       {member} {Locale.translate('frontend.messages.follow', {HOOK: message.content})}
-                    </Secondary.Join>
+                    </Secondary.Add>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
                 )
               }
 
-              case MessageType.GuildDiscoveryDisqualified: {
+              case MessageType.GuildDiscoveryDisqualified: { // 14
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.X>
@@ -493,7 +529,7 @@ class Message extends React.PureComponent<Props, any> {
                 )
               }
 
-              case MessageType.GuildDiscoveryRequalified: {
+              case MessageType.GuildDiscoveryRequalified: { // 15
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Check>
@@ -504,7 +540,7 @@ class Message extends React.PureComponent<Props, any> {
                 )
               }
 
-              case MessageType.GuildDiscoveryGracePeriodInitialWarning: {
+              case MessageType.GuildDiscoveryGracePeriodInitialWarning: { // 16
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Warning>
@@ -515,7 +551,7 @@ class Message extends React.PureComponent<Props, any> {
                 )
               }
 
-              case MessageType.GuildDiscoveryGracePeriodFinalWarning: {
+              case MessageType.GuildDiscoveryGracePeriodFinalWarning: { // 17
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Warning>
@@ -524,6 +560,33 @@ class Message extends React.PureComponent<Props, any> {
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
                 )
+              }
+
+              case MessageType.ThreadCreated: { // 18
+                const member = (
+                  <Member id={message.author.id} color={message.author.color}>
+                    {message.author.name}
+                  </Member>
+                );
+
+                const openThread = () => generalStore.setActiveThread({
+                  id: message.id,
+                  name: message.content,
+                  messageCount: 0,
+                  archivedAt: null,
+                  locked: false
+                });
+
+                return <React.Fragment key={message.id}>
+                  <Secondary.Thread onClick={openThread}>
+                    {member} {Locale.translate('frontend.messages.threadcreated')} <span>{message.content}</span>
+                  </Secondary.Thread>
+                  <Timestamp time={message.createdAt} />
+                  {message.thread && <div style={{ marginLeft: '60px' }}>
+                    <ThreadSpine message={message} />
+                    <Thread thread={message.thread} />
+                  </div>}
+                </React.Fragment>;
               }
 
               default:
