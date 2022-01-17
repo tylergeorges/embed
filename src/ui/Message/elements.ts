@@ -134,7 +134,7 @@ export const Avatar = styled('div')<AvatarProps>`
   height: 40px;
   width: 40px;
   margin-right: 20px;
-  ${props => props.reply && 'margin-top: 24px;'}
+  margin-top: ${props => props.reply ? 24 : 2}px;
 
   @media (max-width: 400px), (max-height: 370px) {
     height: 35px;
@@ -287,7 +287,7 @@ export const Root = styled('div')`
 
   font-size: 1rem;
   line-height: 1.375rem;
-  margin-top: 4px;
+  padding: 2px 0;
   white-space: pre-wrap;
   word-wrap: break-word;
 
@@ -315,7 +315,6 @@ interface ContentProps {
   sending?: boolean
 }
 export const Content = styled('div')<ContentProps>`
-  margin-bottom: .25rem;
   ${props => props.sending && 'opacity: .5'}
 `
 
