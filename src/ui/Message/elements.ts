@@ -40,6 +40,15 @@ export const ReplySpine = styled.div`
   border-left: 2px solid #4f545c;
   border-top: 2px solid #4f545c;
   border-top-left-radius: 6px;
+
+  @media (max-width: 500px), (max-height: 370px) {
+    top: 20px;
+    left: 35px;
+  }
+
+  @media (max-width: 260px) {
+    left: 30px;
+  }
 `
 
 export const RepliedMessage = styled.div`
@@ -223,11 +232,23 @@ const BottomSpine = styled.div`
   border-left: 2px solid #4f545c;
   border-bottom: 2px solid #4f545c;
   border-bottom-left-radius: 6px;
+
+  @media (max-width: 500px), (max-height: 370px) {
+    left: 35px;
+  }
+
+  @media (max-width: 260px) {
+    left: 30px;
+  }
 `
 
 export const CommandArgsSpine = styled(BottomSpine)`
   height: 1.5rem;
   bottom: 15px;
+
+  @media (max-width: 500px), (max-height: 370px) {
+    bottom: 20px;
+  }
 `
 
 interface ThreadSpineProps {
@@ -239,6 +260,10 @@ export const ThreadSpine = styled(BottomSpine)<ThreadSpineProps>`
     : shouldShowContext(message) ? 5.3
     : 3.8}rem;
   bottom: ${({ message }) => message.thread.archivedAt || message.thread.messageCount === 0 ? 30 : 19}px;
+
+  @media (max-width: 500px), (max-height: 370px) {
+    bottom: ${({ message }) => message.thread.archivedAt || message.thread.messageCount === 0 ? 35 : 24}px;
+  }
 `
 
 // Username
