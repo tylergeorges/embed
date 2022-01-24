@@ -60,6 +60,24 @@ export const Chat: FunctionComponent<ChatProps> = (props) => {
           onSubmit={async (content: string) => {
             if (content.length === 0) return
 
+            if (content.startsWith('/')) {
+              const words = content.split(' ')
+              const command = words.shift().substring(1)
+              if (['shrug', 'tableflip', 'unflip', 'me', 'spoiler'].includes(command)) {
+                content = words.join(' ')
+
+                if (['me', 'spoiler'].includes(command) && !content) return
+
+                switch (command) {
+                  case 'shrug':     content += ' ¯\\_(ツ)_/¯';     break;
+                  case 'tableflip': content += ' (╯°□°）╯︵ ┻━┻';  break;
+                  case 'unflip':    content += ' ┬─┬ ノ( ゜-゜ノ)'; break;
+                  case 'me':        content  = `_${content}_`;     break;
+                  case 'spoiler':   content  = `||${content}||`;   break;
+                }
+              }
+            }
+
             // TODO: Clear the input field only when the user is signed in, otherwise they lose their message
             inputRef.current.value = ''
 

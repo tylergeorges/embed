@@ -54,6 +54,19 @@ import webpCheck from '@ui/shared/webpCheck'
 import Thread from "@ui/Message/Thread";
 import { compareGroupability } from '@views/Messages/utils'
 
+// attachment icons
+import audio from '@images/discordAssets/7674eb0d869afebca7b1f3a5202506c6.svg'
+import acrobat from '@images/discordAssets/aee87e981ef9acae845ef397c7a034c5.svg'
+import ae from '@images/discordAssets/f8e80ba7587764ddfa27aa1e02c6ed54.svg'
+import sketch from '@images/discordAssets/318ce2f97a8bd1d7a693938d9aff5f08.svg'
+import ai from '@images/discordAssets/f1141359084b3b61f3a41adbe541fdbb.svg'
+import archive from '@images/discordAssets/4f27cbf7f975daa32fe7c8dec19ce2de.svg'
+import code from '@images/discordAssets/d6bb78c1d64640ad06cc8cdd1c61b67d.svg'
+import document from '@images/discordAssets/3c2ce4428c2c44824b07162f648524f5.svg'
+import spreadsheet from '@images/discordAssets/1939fe07993a754364bf3fee5223428d.svg'
+import webcode from '@images/discordAssets/557b6b6b982a8c2b2c97048b86e2e6c3.svg'
+import unknown from '@images/discordAssets/66084381f55f4238d69e5cbe3b8dc42e.svg'
+
 interface Props {
   messages: MessageData[],
   allMessages: MessageData[],
@@ -206,9 +219,9 @@ class Message extends React.PureComponent<Props, any> {
                 }
               }
 
-              case MessageType.Default:
-              case MessageType.Reply:
-              case MessageType.ContextMenuCommand: {
+              case MessageType.Default: // 0
+              case MessageType.Reply: // 19
+              case MessageType.ContextMenuCommand: { // 23
                 return (
                   <ThemeProvider key={message.id} theme={this.theme(message)}>
                     <Root className="message" id={message.id}>
@@ -224,7 +237,7 @@ class Message extends React.PureComponent<Props, any> {
                                 ? `${message.author.name} is thinking...`
                                 : <InteractionFailed>
                                   <svg aria-hidden="false" width="16" height="16" viewBox="0 0 20 20"><path d="M10 0C4.486 0 0 4.486 0 10C0 15.515 4.486 20 10 20C15.514 20 20 15.515 20 10C20 4.486 15.514 0 10 0ZM9 4H11V11H9V4ZM10 15.25C9.31 15.25 8.75 14.691 8.75 14C8.75 13.31 9.31 12.75 10 12.75C10.69 12.75 11.25 13.31 11.25 14C11.25 14.691 10.69 15.25 10 15.25Z" fill-rule="evenodd" clip-rule="evenodd" fill="currentColor"></path></svg>
-                                  <span>This interaction failed</span>
+                                  <span>The application did not respond</span>
                                 </InteractionFailed>
                             }</InteractionLoading>
                           : null
@@ -270,7 +283,7 @@ class Message extends React.PureComponent<Props, any> {
                           if(/\.(?:mp3|ogg|wav|flac)$/.test(attachment.filename)) {
                             return <Audio key={attachment.url}>
                                 <AudioMetadata>
-                                  <AttachmentIcon src="https://discord.com/assets/7674eb0d869afebca7b1f3a5202506c6.svg"/>
+                                  <AttachmentIcon src={audio}/>
                                   <AttachmentInner>
                                     <div><a href={attachment.url}>{attachment.filename}</a></div>
                                     <AttachmentSize>{attachment.size} bytes</AttachmentSize>
@@ -284,16 +297,16 @@ class Message extends React.PureComponent<Props, any> {
                           } else {
                             return <Attachment key={attachment.url}>
                                 <AttachmentIcon
-                                  src={ /\.pdf$/.test(attachment.filename) ? 'https://discord.com/assets/aee87e981ef9acae845ef397c7a034c5.svg' // acrobat
-                                      : /\.ae/.test(attachment.filename) ? 'https://discord.com/assets/f8e80ba7587764ddfa27aa1e02c6ed54.svg' // ae
-                                      : /\.sketch$/.test(attachment.filename) ? 'https://discord.com/assets/318ce2f97a8bd1d7a693938d9aff5f08.svg' // sketch
-                                      : /\.ai$/.test(attachment.filename) ? 'https://discord.com/assets/f1141359084b3b61f3a41adbe541fdbb.svg' // ai
-                                      : /\.(?:rar|zip|7z|tar|tar\.gz)$/.test(attachment.filename) ? 'https://discord.com/assets/4f27cbf7f975daa32fe7c8dec19ce2de.svg' // archive
-                                      : /\.(?:c\+\+|cpp|cc|c|h|hpp|mm|m|json|js|rb|rake|py|asm|fs|pyc|dtd|cgi|bat|rss|java|graphml|idb|lua|o|gml|prl|sls|conf|cmake|make|sln|vbe|cxx|wbf|vbs|r|wml|php|bash|applescript|fcgi|yaml|ex|exs|sh|ml|actionscript)$/.test(attachment.url) ? 'https://discord.com/assets/d6bb78c1d64640ad06cc8cdd1c61b67d.svg' // code
-                                      : /\.(?:txt|rtf|doc|docx|md|pages|ppt|pptx|pptm|key|log)$/.test(attachment.filename) ? 'https://discord.com/assets/3c2ce4428c2c44824b07162f648524f5.svg' // document
-                                      : /\.(?:xls|xlsx|numbers|csv)$/.test(attachment.filename) ? 'https://discord.com/assets/1939fe07993a754364bf3fee5223428d.svg' // spreadsheet
-                                      : /\.(?:html|xhtml|htm|js|xml|xls|xsd|css|styl)$/.test(attachment.filename) ? 'https://discord.com/assets/557b6b6b982a8c2b2c97048b86e2e6c3.svg' // webcode
-                                      : 'https://discord.com/assets/66084381f55f4238d69e5cbe3b8dc42e.svg' // unknown
+                                  src={ /\.pdf$/.test(attachment.filename) ? acrobat
+                                      : /\.ae/.test(attachment.filename) ? ae
+                                      : /\.sketch$/.test(attachment.filename) ? sketch
+                                      : /\.ai$/.test(attachment.filename) ? ai
+                                      : /\.(?:rar|zip|7z|tar|tar\.gz)$/.test(attachment.filename) ? archive
+                                      : /\.(?:c\+\+|cpp|cc|c|h|hpp|mm|m|json|js|rb|rake|py|asm|fs|pyc|dtd|cgi|bat|rss|java|graphml|idb|lua|o|gml|prl|sls|conf|cmake|make|sln|vbe|cxx|wbf|vbs|r|wml|php|bash|applescript|fcgi|yaml|ex|exs|sh|ml|actionscript)$/.test(attachment.url) ? code
+                                      : /\.(?:txt|rtf|doc|docx|md|pages|ppt|pptx|pptm|key|log)$/.test(attachment.filename) ? document
+                                      : /\.(?:xls|xlsx|numbers|csv)$/.test(attachment.filename) ? spreadsheet
+                                      : /\.(?:html|xhtml|htm|js|xml|xls|xsd|css|styl)$/.test(attachment.filename) ? webcode
+                                      : unknown
                                       }/>
                                 <AttachmentInner>
                                   <div><a href={attachment.url}>{attachment.filename}</a></div>
@@ -360,34 +373,70 @@ class Message extends React.PureComponent<Props, any> {
                 )
               }
 
-              case MessageType.ThreadCreated: {
+              case MessageType.RecipientAdd: { // 1
                 const member = (
                   <Member id={message.author.id} color={message.author.color}>
                     {message.author.name}
                   </Member>
                 );
 
-                const openThread = () => generalStore.setActiveThread({
-                  id: message.id,
-                  name: message.content,
-                  messageCount: 0,
-                  archivedAt: null,
-                  locked: false
-                });
+                const target = (
+                  <Member id={message.mentions[0].id} color={allMessages.find(m => m.author.id === message.mentions[0].id)?.author.color}>
+                    {message.mentions[0].name}
+                  </Member>
+                );
 
-                return <React.Fragment key={message.id}>
-                  <Secondary.Thread onClick={openThread}>
-                    {member} {Locale.translate('frontend.messages.threadcreated')} <span>{message.content}</span>
-                  </Secondary.Thread>
-                  <Timestamp time={message.createdAt} />
-                  {message.thread && <div style={{ marginLeft: '60px' }}>
-                    <ThreadSpine message={message} />
-                    <Thread thread={message.thread} />
-                  </div>}
-                </React.Fragment>;
+                return (
+                  <React.Fragment key={message.id}>
+                    <Secondary.Add>
+                      {member} added {target} to the thread.
+                    </Secondary.Add>
+                    <Timestamp time={message.createdAt} />
+                  </React.Fragment>
+                )
               }
 
-              case MessageType.ChannelPinnedMessage: {
+              case MessageType.RecipientRemove: { // 2
+                const member = (
+                  <Member id={message.author.id} color={message.author.color}>
+                    {message.author.name}
+                  </Member>
+                );
+
+                const target = (
+                  <Member id={message.mentions[0].id} color={allMessages.find(m => m.author.id === message.mentions[0].id)?.author.color}>
+                    {message.mentions[0].name}
+                  </Member>
+                );
+
+                return (
+                  <React.Fragment key={message.id}>
+                    <Secondary.Remove>
+                      {member} removed {target} from the thread.
+                    </Secondary.Remove>
+                    <Timestamp time={message.createdAt} />
+                  </React.Fragment>
+                )
+              }
+
+              case MessageType.ChannelNameChange: { // 4
+                const member = (
+                  <Member id={message.author.id} color={message.author.color}>
+                    {message.author.name}
+                  </Member>
+                );
+
+                return (
+                  <React.Fragment key={message.id}>
+                    <Secondary.Changed>
+                      {member} changed the channel name: <strong>{message.content}</strong>
+                    </Secondary.Changed>
+                    <Timestamp time={message.createdAt} />
+                  </React.Fragment>
+                )
+              }
+
+              case MessageType.ChannelPinnedMessage: { // 6
                 const member = (
                   <Member id={message.author.id} color={message.author.color}>
                     {message.author.name}
@@ -404,7 +453,7 @@ class Message extends React.PureComponent<Props, any> {
                 )
               }
 
-              case MessageType.GuildMemberJoin: {
+              case MessageType.GuildMemberJoin: { // 7
                 const member = (
                   <Member id={message.author.id} color={message.author.color}>
                     {message.author.name}
@@ -413,18 +462,18 @@ class Message extends React.PureComponent<Props, any> {
 
                 return (
                   <React.Fragment key={message.id}>
-                    <Secondary.Join>
+                    <Secondary.Add>
                       {joinMessageBeginning(message)}{member}{joinMessageEnd(message)}
-                    </Secondary.Join>
+                    </Secondary.Add>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
                 )
               }
 
-              case MessageType.UserPremiumGuildSubscription:
-              case MessageType.UserPremiumGuildTier1:
-              case MessageType.UserPremiumGuildTier2:
-              case MessageType.UserPremiumGuildTier3: {
+              case MessageType.UserPremiumGuildSubscription: // 8
+              case MessageType.UserPremiumGuildTier1: // 9
+              case MessageType.UserPremiumGuildTier2: // 10
+              case MessageType.UserPremiumGuildTier3: { // 11
                 const member = (
                   <Member id={message.author.id} color={message.author.color}>
                     {message.author.name}
@@ -452,7 +501,7 @@ class Message extends React.PureComponent<Props, any> {
                 }
               }
 
-              case MessageType.ChannelFollowAdd: {
+              case MessageType.ChannelFollowAdd: { // 12
                 const member = (
                   <Member id={message.author.id} color={message.author.color}>
                     {message.author.name}
@@ -461,15 +510,15 @@ class Message extends React.PureComponent<Props, any> {
 
                 return (
                   <React.Fragment key={message.id}>
-                    <Secondary.Join>
+                    <Secondary.Add>
                       {member} {Locale.translate('frontend.messages.follow', {HOOK: message.content})}
-                    </Secondary.Join>
+                    </Secondary.Add>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
                 )
               }
 
-              case MessageType.GuildDiscoveryDisqualified: {
+              case MessageType.GuildDiscoveryDisqualified: { // 14
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.X>
@@ -480,7 +529,7 @@ class Message extends React.PureComponent<Props, any> {
                 )
               }
 
-              case MessageType.GuildDiscoveryRequalified: {
+              case MessageType.GuildDiscoveryRequalified: { // 15
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Check>
@@ -491,7 +540,7 @@ class Message extends React.PureComponent<Props, any> {
                 )
               }
 
-              case MessageType.GuildDiscoveryGracePeriodInitialWarning: {
+              case MessageType.GuildDiscoveryGracePeriodInitialWarning: { // 16
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Warning>
@@ -502,7 +551,7 @@ class Message extends React.PureComponent<Props, any> {
                 )
               }
 
-              case MessageType.GuildDiscoveryGracePeriodFinalWarning: {
+              case MessageType.GuildDiscoveryGracePeriodFinalWarning: { // 17
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Warning>
@@ -511,6 +560,33 @@ class Message extends React.PureComponent<Props, any> {
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
                 )
+              }
+
+              case MessageType.ThreadCreated: { // 18
+                const member = (
+                  <Member id={message.author.id} color={message.author.color}>
+                    {message.author.name}
+                  </Member>
+                );
+
+                const openThread = () => generalStore.setActiveThread({
+                  id: message.id,
+                  name: message.content,
+                  messageCount: 0,
+                  archivedAt: null,
+                  locked: false
+                });
+
+                return <React.Fragment key={message.id}>
+                  <Secondary.Thread onClick={openThread}>
+                    {member} {Locale.translate('frontend.messages.threadcreated')} <span>{message.content}</span>
+                  </Secondary.Thread>
+                  <Timestamp time={message.createdAt} />
+                  {message.thread && <div style={{ marginLeft: '60px' }}>
+                    <ThreadSpine message={message} />
+                    <Thread thread={message.thread} />
+                  </div>}
+                </React.Fragment>;
               }
 
               default:
