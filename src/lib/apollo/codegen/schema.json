@@ -1425,31 +1425,19 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "GuildVoice",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "GuildText",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "Unknown",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "DM",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GroupDm",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildCategory",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -1467,7 +1455,19 @@
             "deprecationReason": null
           },
           {
-            "name": "GuildVoice",
+            "name": "Unknown",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GroupDm",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildCategory",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -1988,6 +1988,82 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "Emoji",
+        "description": null,
+        "specifiedByUrl": null,
+        "fields": [
+          {
+            "name": "id",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "animated",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "available",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "ENUM",
         "name": "FormatType",
         "description": null,
@@ -2264,6 +2340,30 @@
                 "kind": "OBJECT",
                 "name": "GuildSettings",
                 "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "emojis",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Emoji",
+                    "ofType": null
+                  }
+                }
               }
             },
             "isDeprecated": false,
@@ -2911,19 +3011,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "UserPremiumGuildSubscription",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ThreadStarterMessage",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelNameChange",
+            "name": "UserPremiumGuildTier1",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -2935,31 +3023,31 @@
             "deprecationReason": null
           },
           {
-            "name": "GuildDiscoveryGracePeriodFinalWarning",
+            "name": "RecipientAdd",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "UserPremiumGuildTier1",
+            "name": "GuildDiscoveryGracePeriodInitialWarning",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "GuildInviteReminder",
+            "name": "GuildMemberJoin",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "Reply",
+            "name": "Call",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "ChannelIconChange",
+            "name": "ChannelNameChange",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -2977,61 +3065,25 @@
             "deprecationReason": null
           },
           {
-            "name": "GuildDiscoveryGracePeriodInitialWarning",
+            "name": "GuildInviteReminder",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "Call",
+            "name": "GuildDiscoveryGracePeriodFinalWarning",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "GuildMemberJoin",
+            "name": "UserPremiumGuildSubscription",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "GuildDiscoveryRequalified",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelFollowAdd",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UserPremiumGuildTier2",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "RecipientRemove",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "RecipientAdd",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelPinnedMessage",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ContextMenuCommand",
+            "name": "GuildDiscoveryDisqualified",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -3049,7 +3101,55 @@
             "deprecationReason": null
           },
           {
-            "name": "GuildDiscoveryDisqualified",
+            "name": "ThreadStarterMessage",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ChannelIconChange",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildDiscoveryRequalified",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UserPremiumGuildTier2",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "RecipientRemove",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ChannelPinnedMessage",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ContextMenuCommand",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Reply",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ChannelFollowAdd",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null

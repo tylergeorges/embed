@@ -13,7 +13,7 @@ import {
   SidebarEmojiDisplay
 } from './elements/emojipicker'
 import { Twemoji } from '@ui/shared/Emoji/emoji'
-import { defaultEmojis } from '@services/Emoji/defaultEmojis'
+import { generalStore } from '@store'
 import _ from 'lodash'
 
 interface Props {
@@ -39,7 +39,7 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
   let rowCount: number
 
   const emojiCategories = useMemo(() => {
-    const categories = defaultEmojis.reduce((obj, emoji) => ({
+    const categories = generalStore.emojis.reduce((obj, emoji) => ({
       ...obj,
       ...({ [emoji.category]: [...(obj[emoji.category] || []), emoji] })
     }), {});
@@ -55,7 +55,7 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
     })
 
     return categories
-  }, [defaultEmojis, rowWidth]) as Record<string, [number, any[][]]>
+  }, [generalStore.emojis, rowWidth]) as Record<string, [number, any[][]]>
 
   const scrollToCategory = (category: string) => {
     const rowIdx = emojiCategories[category][0];
@@ -116,14 +116,15 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
 
                   return (
                     // @ts-expect-error
-                    <RowContainer style={style}>
-                      <EmojiDisplay className="emoji-picker-row">
-                        {emojis.map(emoji => (
-                          <EmojiDisplay key={emoji.keywords[0]} onClick={() => onSelect(`:${emoji.keywords[0]}:`)}>
-                            <Twemoji>{emoji.emoji}</Twemoji>
-                          </EmojiDisplay>
-                        ))}
-                      </EmojiDisplay>
+                    <RowContainer style={style} className="emoji-picker-row">
+                      {emojis.map(emoji => (
+                        <EmojiDisplay key={emoji.keywords[0]} onClick={() => onSelect(`:${emoji.keywords[0]}:`)}>
+                          {emoji.category === 'custom'
+                            ? <img src={`https://cdn.discordapp.com/emojis/${emoji.emoji}.${emoji.animated ? 'gif' : 'png'}`} />
+                            : <Twemoji>{emoji.emoji}</Twemoji>
+                          }
+                        </EmojiDisplay>
+                      ))}
                     </RowContainer>
                   )
                 }}

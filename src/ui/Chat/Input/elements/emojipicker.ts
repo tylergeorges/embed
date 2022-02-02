@@ -37,6 +37,7 @@ export const Content = styled.div`
 
 export const RowContainer = styled.div`
   display: flex;
+  padding: 4px;
 `;
 
 export const NameDisplay = styled.h2`
@@ -51,17 +52,20 @@ export const NameDisplay = styled.h2`
 `;
 
 export const EmojiDisplay = styled.span`
+  width: 40px;
+  height: 40px;
   padding: 4px;
+
+  &:hover {
+    background: ${({ theme }) => theme.colors._primary.fade(0.7).toString()};
+    border-radius: 4px;
+    cursor: pointer;
+  }
   
   img {
-    width: 32px !important;
-    height: 32px !important;
-
-    &:hover {
-      background: ${({ theme }) => theme.colors._primary.fade(0.7).toString()};
-      border-radius: 4px;
-      cursor: pointer;
-    }
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
   }
 `;
 

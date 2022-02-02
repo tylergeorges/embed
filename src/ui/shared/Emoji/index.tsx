@@ -4,7 +4,7 @@ import memoize from 'memoizee'
 import * as React from 'react'
 import emoji from 'react-easy-emoji'
 import { Base, Emote } from '@ui/shared/Emoji/elements'
-import { emojis } from '@services/Emoji'
+import { generalStore } from '@store'
 import Tooltip from 'rc-tooltip'
 
 interface Props {
@@ -45,7 +45,8 @@ class Emoji extends React.PureComponent<Props> {
     if (resolveNames) text = this.resolve(text)
 
     const resolved = emoji(text, (code, string, key) => {
-      const emoji = emojis.get(string)
+      let emoji = generalStore.emojis.get(string)
+      if (emoji?.category === 'guild') emoji = null
 
       const emote = (
         <Emote
@@ -82,7 +83,7 @@ class Emoji extends React.PureComponent<Props> {
 
   resolve = memoize((text: string) => {
     const parsed = text.replace(/:([^\s:]+?):/g, (match, name) => {
-      const result = emojis.get(name)
+      const result = generalStore.emojis.get(name)
       return result ? result.emoji : match
     })
 
