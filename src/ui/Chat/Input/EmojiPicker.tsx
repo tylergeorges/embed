@@ -10,11 +10,15 @@ import {
   RowContainer,
   NameDisplay,
   Icons,
-  SidebarEmojiDisplay
+  SidebarEmojiDisplay,
+  ServerIcon
 } from './elements/emojipicker'
 import { Twemoji } from '@ui/shared/Emoji/emoji'
 import { generalStore } from '@store'
 import _ from 'lodash'
+import { Util } from '@lib/Util'
+import { observer } from 'mobx-react'
+import Tooltip from 'rc-tooltip'
 
 interface Props {
   button: HTMLButtonElement
@@ -22,7 +26,7 @@ interface Props {
   onSelect: (emoji: string) => void
 }
 
-const EmojiPicker = ({ button, close, onSelect }: Props) => {
+const EmojiPicker = observer(({ button, close, onSelect }: Props) => {
   let picker: HTMLDivElement
   let list = createRef<List>();
   useEffect(() => {
@@ -50,7 +54,7 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
 
     Object.keys(categories).forEach(category => {
       categories[category] = [index, categories[category]]
-      index += categories[category][1].length
+      index += categories[category][1].length + 1
       rowCount = index
     })
 
@@ -72,7 +76,9 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
 
             return (
               <SidebarEmojiDisplay key={category} onClick={() => scrollToCategory(category)}>
-                <CategoryIcon sidebar />
+                 {category === 'custom'
+                    ? generalStore.guild?.icon && <ServerIcon sidebar src={Util.craftServerUrl(generalStore.guild.id, generalStore.guild.icon)} />
+                    : <CategoryIcon sidebar/>}
               </SidebarEmojiDisplay>
             );
           })}
@@ -103,8 +109,16 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
                       // @ts-expect-error
                       <RowContainer style={style}>
                         <NameDisplay className="emoji-picker-name">
-                          <CategoryIcon />
-                          {name}
+                          {name === 'custom'
+                            ? <>
+                                {generalStore.guild?.icon && <ServerIcon src={Util.craftServerUrl(generalStore.guild.id, generalStore.guild.icon)} />}
+                                {generalStore.guild?.name}
+                              </>
+                            : <>
+                                <CategoryIcon />
+                                {name}
+                              </>
+                          }
                         </NameDisplay>
                       </RowContainer>
                     )
@@ -120,7 +134,14 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
                       {emojis.map(emoji => (
                         <EmojiDisplay key={emoji.keywords[0]} onClick={() => onSelect(`:${emoji.keywords[0]}:`)}>
                           {emoji.category === 'custom'
-                            ? <img src={`https://cdn.discordapp.com/emojis/${emoji.emoji}.${emoji.animated ? 'gif' : 'png'}`} />
+                            ? <Tooltip
+                                placement="top"
+                                overlay={`:${emoji.keywords[0]}:`}
+                                mouseEnterDelay={0.6}
+                                mouseLeaveDelay={0}
+                              >
+                                <img src={`https://cdn.discordapp.com/emojis/${emoji.emoji}.${emoji.animated ? 'gif' : 'png'}`} />
+                              </Tooltip>
                             : <Twemoji>{emoji.emoji}</Twemoji>
                           }
                         </EmojiDisplay>
@@ -135,6 +156,6 @@ const EmojiPicker = ({ button, close, onSelect }: Props) => {
       </Container>
     </Root>
   )
-}
+})
 
 export default EmojiPicker

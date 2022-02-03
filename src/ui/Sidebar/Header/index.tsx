@@ -21,6 +21,8 @@ import { defaultEmojis } from '@services/Emoji/defaultEmojis'
 
 const formatter = new Intl.NumberFormat('en', { notation: 'compact' })
 
+const { compare } = new Intl.Collator()
+
 @observer
 export class Header extends React.Component {
 	render() {
@@ -61,7 +63,7 @@ export class Header extends React.Component {
 							}
 
 							generalStore.setEmojis(new EmojiStore(
-								...generalStore.guild?.emojis.map(e => ({
+								...generalStore.guild?.emojis.sort((a, b) => compare(a.name, b.name)).map(e => ({
 									category: 'custom',
 									emoji: e.id,
 									keywords: [e.name],

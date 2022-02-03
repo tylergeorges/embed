@@ -47,7 +47,7 @@ export const NameDisplay = styled.h2`
   text-transform: uppercase;
   color: ${({ theme }) => theme.colors._primary.fade(0.3).toString()};
   padding-left: 0.5rem;
-  margin: 0.5rem 0 0.5rem 0;
+  margin: 0.75rem 0 0 -4px;
   font-size: unset;
 `;
 
@@ -57,7 +57,7 @@ export const EmojiDisplay = styled.span`
   padding: 4px;
 
   &:hover {
-    background: ${({ theme }) => theme.colors._primary.fade(0.7).toString()};
+    background: ${({ theme }) => theme.colors._primary.fade(0.8).toString()};
     border-radius: 4px;
     cursor: pointer;
   }
@@ -81,6 +81,21 @@ export const SidebarEmojiDisplay = styled.span`
     background: ${({ theme }) => theme.colors._primary.fade(0.1).toString()};
   }
 `;
+
+export interface ServerIconProps {
+  sidebar?: boolean
+}
+export const ServerIcon = styled.img<ServerIconProps>`
+  ${({ sidebar }) => css`
+    border-radius: ${sidebar ? '50%' : '4px'};
+    width: ${sidebar ? 28 : 16}px;
+    height: ${sidebar ? 28 : 16}px;
+  `}
+
+  &:hover {
+    border-radius: 4px;
+  }
+`
 
 // Category icons
 export namespace Icons {

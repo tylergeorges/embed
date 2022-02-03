@@ -46,7 +46,6 @@ class Emoji extends React.PureComponent<Props> {
 
     const resolved = emoji(text, (code, string, key) => {
       let emoji = generalStore.emojis.get(string)
-      if (emoji?.category === 'guild') emoji = null
 
       const emote = (
         <Emote

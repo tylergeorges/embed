@@ -60,6 +60,15 @@ export const Chat: FunctionComponent<ChatProps> = (props) => {
           onSubmit={async (content: string) => {
             if (content.length === 0) return
 
+            content = content.replace(/:([^\s:]+?):/g, (match, name) => {
+              const result = generalStore.emojis.get(name)
+              return result 
+                ? result.category === 'custom' 
+                  ? `<${result.animated ? 'a' : ''}:${result.keywords[0]}:${result.emoji}>`
+                  : result.emoji
+                : match
+            })
+
             if (content.startsWith('/')) {
               const words = content.split(' ')
               const command = words.shift().substring(1)

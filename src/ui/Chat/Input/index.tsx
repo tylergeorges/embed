@@ -15,7 +15,8 @@ import { login } from "@views/Messages/Header";
 import { Locale } from "@lib/Locale";
 import { store } from "@models";
 import EmojiButton from "./EmojiButton";
-import EmojiPicker from "./EmojiPicker";
+import Spinner from 'react-spinkit'
+import Loadable from 'react-loadable'
 
 interface Props extends ChatProps {
   innerRef?: (textarea: HTMLTextAreaElement) => void,
@@ -25,6 +26,13 @@ interface Props extends ChatProps {
   onSubmit?: Function,
   channel?: any
 }
+
+const EmojiPicker = Loadable({
+  loader: () =>
+    import('./EmojiPicker'),
+  loading: props =>
+    props.pastDelay ? <Spinner name="ball-clip-rotate-multiple" /> : null
+})
 
 export const handlers = [Emojis, Mentions, Commands, Channels];
 
