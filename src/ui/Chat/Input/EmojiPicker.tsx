@@ -38,7 +38,6 @@ const EmojiPicker = observer(({ button, close, onSelect }: Props) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [picker])
 
-  const [rowWidth, setRowWidth] = useState(9) // # of emojis in a row, 9 on desktop
 
   let rowCount: number
 
@@ -48,7 +47,7 @@ const EmojiPicker = observer(({ button, close, onSelect }: Props) => {
       ...({ [emoji.category]: [...(obj[emoji.category] || []), emoji] })
     }), {});
 
-    Object.keys(categories).forEach(category => categories[category] = _.chunk(categories[category], rowWidth));
+    Object.keys(categories).forEach(category => categories[category] = _.chunk(categories[category], 9));
 
     let index = 0
 
@@ -59,7 +58,7 @@ const EmojiPicker = observer(({ button, close, onSelect }: Props) => {
     })
 
     return categories
-  }, [generalStore.emojis, rowWidth]) as Record<string, [number, any[][]]>
+  }, [generalStore.emojis]) as Record<string, [number, any[][]]>
 
   const scrollToCategory = (category: string) => {
     const rowIdx = emojiCategories[category][0];
@@ -88,8 +87,6 @@ const EmojiPicker = observer(({ button, close, onSelect }: Props) => {
           <AutoSizer innerRef={ref => list = ref}>
             {({ width, height }) => {
               if (!width || !height) return null
-
-              setRowWidth(Math.floor((width - 10) / 40))
 
               return <List
                 ref={list}

@@ -72,6 +72,7 @@ export const EmojiButton = styled.div<EmojiButtonProps>`
   transition: filter .1s, transform .1s;
   cursor: pointer;
   margin: 10px;
+  ${({ theme }) => theme.url.preset === 'crate' ? 'margin-right: 50px;' : ''}
 
   ${({ active }) => active
     ? 'transform: scale(1.14);'
