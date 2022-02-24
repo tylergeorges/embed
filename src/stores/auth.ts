@@ -12,11 +12,7 @@ import {generalStore} from "@store/general";
 
 interface DiscordUser {
   avatar: string
-  banned: boolean
-  bannedFrom: string[]
   discriminator: null
-  ipAddresses: string[]
-  provider: any
   username: string
   _id: string
 }
