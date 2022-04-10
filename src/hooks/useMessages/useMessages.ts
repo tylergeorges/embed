@@ -1,7 +1,8 @@
 import produce from "immer";
-import { MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
+import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
 import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message, MessageUpdated, NewMessage, UpdatedMessage } from "@generated";
+import { generalStore } from "@store";
 
 /**
  * Fetches the messages for a channel
@@ -18,13 +19,15 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
   const messages = ready ? query.data.channel.messageBunch.messages : [];
 
+  generalStore.setPins(ready ? query.data.channel.messageBunch.pinnedMessages : null)
+
   async function fetchMore(options?: {
     around?: string;
     after?: string;
     before?: string;
     limit?: number;
   }) {
-    if(!channel) return;
+    if (!channel) return;
     if (!options) {
       const [firstMessage] = messages;
       if (!firstMessage) return;
@@ -33,7 +36,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     }
 
     await query.fetchMore({
-      query: MESSAGES,
+      query: MORE_MESSAGES,
       variables: { channel, thread, ...options },
       updateQuery: (prev, { fetchMoreResult }) =>
         produce(prev, draftState => {

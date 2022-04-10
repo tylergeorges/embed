@@ -10,12 +10,12 @@ export const UploadButton = styled.label`
   cursor: pointer;
 
   path {
-    color: ${({ theme }) => theme.colors._primary.fade(0.4).string()} !important;
+    color: ${({ theme }) => theme.colors._primary.fade(0.335).string()} !important;
   }
 
   &:hover {
     path {
-      color: ${({ theme }) => theme.colors._primary.fade(0.2).string()} !important;
+      color: ${({ theme }) => theme.colors._primary.fade(0.17).string()} !important;
     }
   }
 `

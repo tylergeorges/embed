@@ -1,5 +1,5 @@
 import {action, autorun, observable} from "mobx";
-import { GuildInfo_guild, Message_thread, Settings_settings } from "@generated";
+import { GuildInfo_guild, Message, Message_thread, Settings_settings } from "@generated";
 import {ICategory} from "@ui/Sidebar/Channels/categorise";
 
 export class GeneralStore {
@@ -15,6 +15,7 @@ export class GeneralStore {
   @observable activeThread?: Omit<Message_thread, '__typename'>;
   @observable threadFullscreen: boolean = false;
   @observable file?: File;
+  @observable pins?: Message[];
 
   constructor() {
     autorun(() => {
@@ -57,6 +58,10 @@ export class GeneralStore {
 
   @action setFile(file: File) {
     this.file = file;
+  }
+
+  @action setPins(pins: Message[]) {
+    this.pins = pins;
   }
 }
 
