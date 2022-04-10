@@ -11,13 +11,17 @@ query Messages(
     channel(id: $channel) {
         id
         ... on TextChannel {
-            messages(id: $thread, limit: $limit, after: $after, before: $before, around: $around) {
-                ...Message
+            messageBunch(id: $thread, limit: $limit, after: $after, before: $before, around: $around) {
+                messages {
+                    ...Message
+                }
             }
         }
         ... on AnnouncementChannel {
-            messages(id: $thread, limit: $limit, after: $after, before: $before, around: $around) {
-            ...Message
+            messageBunch(id: $thread, limit: $limit, after: $after, before: $before, around: $around) {
+                messages {
+                    ...Message
+                }
             }
         }
     }
