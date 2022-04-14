@@ -1,4 +1,5 @@
 import styled from '@lib/emotion'
+import emojiSprite from '../../../../app/res/images/discordAssets/15e026451fd814e2d1a13e49c8076978.png'
 
 export const Root = styled('div')`
   display: flex;
@@ -58,6 +59,24 @@ export const Textarea = styled('textarea')`
   ::-webkit-scrollbar-corner {
     background-color: transparent;
   }
+`
+
+interface EmojiButtonProps {
+  active: boolean
+}
+export const EmojiButton = styled.div<EmojiButtonProps>`
+  background-image: url(${emojiSprite});
+  background-size: 242px 110px;
+  min-width: 22px;
+  height: 22px;
+  transition: filter .1s, transform .1s;
+  cursor: pointer;
+  margin: 10px;
+  ${({ theme }) => theme.url.preset === 'crate' ? 'margin-right: 50px;' : ''}
+
+  ${({ active }) => active
+    ? 'transform: scale(1.14);'
+    : 'filter: grayscale(100%);'}
 `
 
 export * from './suggestion'
