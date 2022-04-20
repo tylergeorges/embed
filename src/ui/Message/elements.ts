@@ -46,6 +46,11 @@ export const ReplySpine = styled.div`
     left: 35px;
   }
 
+  @media (max-width: 400px), (max-height: 340px) {
+    width: 25.5px;
+    left: 32.5px;
+  }
+
   @media (max-width: 260px) {
     left: 30px;
   }
@@ -54,6 +59,9 @@ export const ReplySpine = styled.div`
 export const RepliedMessage = styled.div`
   font-size: 14px;
   margin-bottom: 4px;
+  white-space: nowrap;
+  display: inline-flex;
+  max-width: 100%;
 `
 
 export const RepliedAvatar = styled.img`
@@ -77,6 +85,12 @@ export const RepliedUser = styled.span<RepliedUserProps>`
 export const RepliedText = styled.div`
   color: ${({ theme }) => theme.colors._primary.fade(0.34).string()};
   display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.primary};
+  }
 
   * {
     color: inherit
@@ -85,14 +99,15 @@ export const RepliedText = styled.div`
   a {
     color: #00b0f4;
     text-decoration: none;
-    &:hover {
-      text-decoration: underline;
-    }
   }
 
   strong {
     font-weight: 700;
     color: inherit;
+  }
+
+  .codeblock {
+    display: inline;
   }
 `
 
@@ -119,6 +134,13 @@ export const InteractionText = styled.span`
 export const ReplyImageIcon = styled.svg`
   vertical-align: text-bottom;
   margin-left: 6px;
+  flex-shrink: 0;
+`
+
+export const ReplyPopup = styled.div`
+  .group {
+    padding: 5px;
+  }
 `
 
 interface AvatarProps {
@@ -145,6 +167,7 @@ export const Avatar = styled('div')<AvatarProps>`
 
 export const Messages = styled('div')`
   flex-grow: 1;
+  overflow: hidden;
 `
 
 export const Edited = styled('span')`
