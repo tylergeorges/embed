@@ -28,6 +28,7 @@ import {
   LottieStickerWrapper,
   Member,
   Messages,
+  Link,
   Reactions,
   RepliedAvatar,
   RepliedMessage,
@@ -457,10 +458,12 @@ class Message extends React.PureComponent<Props, any> {
                   </Member>
                 );
 
+                const pinLink = <Link onClick={() => generalStore.togglePins(true)}>pinned messages</Link>
+
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Pinned>
-                      {member} {Locale.translate('messages.pinned')}
+                      {member} {Locale.translate('messages.pinned')} See all {pinLink}.
                     </Secondary.Pinned>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>

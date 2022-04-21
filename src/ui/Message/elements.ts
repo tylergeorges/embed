@@ -62,6 +62,7 @@ export const RepliedMessage = styled.div`
   white-space: nowrap;
   display: inline-flex;
   max-width: 100%;
+  align-items: center;
 `
 
 export const RepliedAvatar = styled.img`
@@ -186,7 +187,7 @@ export namespace Secondary {
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 18px;
-    color: ${({ theme }) => theme.colors._primary.fade(0.6).string()};
+    color: ${({ theme }) => theme.colors._primary.fade(0.52).string()};
   `
 
   export const Add = styled(Message)`
@@ -301,6 +302,15 @@ export const Member = styled(MemberLink)<NameProps>`
   &:hover {
     text-decoration: underline;
   }*/
+`
+
+export const Link = styled.a`
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
 `
 
 export const Root = styled('div')`

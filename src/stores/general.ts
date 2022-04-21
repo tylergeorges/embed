@@ -19,6 +19,7 @@ export class GeneralStore {
   @observable file?: File;
   @observable emojis = new EmojiStore(...defaultEmojis);
   @observable pins?: Message[];
+  @observable pinsOpen: boolean = false;
 
   constructor() {
     autorun(() => {
@@ -69,6 +70,10 @@ export class GeneralStore {
 
   @action setPins(pins: Message[]) {
     this.pins = pins;
+  }
+
+  @action togglePins(res: boolean = !this.pinsOpen) {
+    this.pinsOpen = res
   }
 }
 
