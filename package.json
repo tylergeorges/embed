@@ -89,6 +89,7 @@
     "react-notification-system": "^0.2.17",
     "react-router-dom": "^5.2.0",
     "react-spinkit": "^3.0.0",
+    "react-string-replace": "^1.0.0",
     "react-transition-group": "^2.5.3",
     "react-use": "^5.3.1",
     "react-virtualized": "^9.21.0",

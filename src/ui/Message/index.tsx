@@ -5,6 +5,7 @@ import Moment from 'moment'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import Lottie from 'lottie-react-web'
+import reactStringReplace from 'react-string-replace'
 
 import Author, { tags, Timestamp } from './Author'
 import {
@@ -43,7 +44,8 @@ import {
   StickerTooltipIcon,
   ThreadSpine,
   UnknownReplyIconWrapper,
-  Video
+  Video,
+  Name
 } from './elements'
 import { Image } from './Embed/elements/media'
 import Reaction from './Reaction'
@@ -166,7 +168,7 @@ class Message extends React.PureComponent<Props, any> {
                       : repliedMessage.stickers.length > 0
                         ? <ReplySystemText>{repliedMessage.stickers[0].name} sticker</ReplySystemText>
                       : repliedMessage.type === MessageType.GuildMemberJoin
-                        ? <RepliedText>{joinMessageBeginning(repliedMessage)}{repliedMessage.author.name}{joinMessageEnd(repliedMessage)}</RepliedText>
+                        ? <RepliedText>{joinMessage(repliedMessage).replace('{member}', repliedMessage.author.name)}</RepliedText>
                       : <ReplySystemText>Attachment</ReplySystemText>}
                     {repliedMessage.interaction ?
                       <ReplyImageIcon aria-hidden="false" width="20" height="20" viewBox="0 0 24 24"><path fill="rgba(255,255,255,.66)" fillRule="evenodd" clipRule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H5ZM16.8995 8.41419L15.4853 6.99998L7 15.4853L8.41421 16.8995L16.8995 8.41419Z"></path></ReplyImageIcon>
@@ -480,7 +482,7 @@ class Message extends React.PureComponent<Props, any> {
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Add>
-                      {joinMessageBeginning(message)}{member}{joinMessageEnd(message)}
+                      {reactStringReplace(joinMessage(message), '{member}', () => member)}
                     </Secondary.Add>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
@@ -528,7 +530,7 @@ class Message extends React.PureComponent<Props, any> {
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Add>
-                      {member} {Locale.translate('messages.follow', {HOOK: message.content})}
+                      {member} {reactStringReplace(Locale.translate('messages.follow'), '{HOOK}', () => <Name>{message.content}</Name>)}
                     </Secondary.Add>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
@@ -620,47 +622,24 @@ class Message extends React.PureComponent<Props, any> {
 
 export default Message
 
+// Join messages: https://github.com/Discord-Datamining/Discord-Datamining/commit/c79bf619ca341d97af219fe127efac2b31d0dde5#comments
 
-// Join messages: https://github.com/DJScias/Discord-Datamining/commit/c79bf619ca341d97af219fe127efac2b31d0dde5#comments
-
-function joinMessageBeginning(message: { createdAt: number }): string {
-  const messages: string[] = [
-      '',
-      '',
-      'Welcome, ',
-      'A wild ',
-      '',
-      '',
-      '',
-      'Welcome ',
-      '',
-      'Everyone welcome ',
-      'Glad you\'re here, ',
-      'Good to see you, ',
-      'Yay you made it, '
+function joinMessage(message: { createdAt: number }): string {
+  const messages = [
+      '{member} joined the party.',
+      '{member} is here.',
+      'Welcome, {member}. We hope you brought pizza.',
+      'A wild {member} appeared.',
+      '{member} just landed.',
+      '{member} just slid into the server.',
+      '{member} just showed up!',
+      'Welcome {member}. Say hi!',
+      '{member} hopped into the server.',
+      'Everyone welcome {member}!',
+      "Glad you're here, {member}.",
+      'Good to see you, {member}.',
+      'Yay you made it, {member}!'
   ];
-
-
-  return messages[(Number(new Date(message.createdAt))) % messages.length]
-}
-
-function joinMessageEnd(message: { createdAt: number }): string {
-  const messages: string[] = [
-      ' joined the party.',
-      ' is here.',
-      '. We hope you brought pizza.',
-      ' appeared.',
-      ' just landed.',
-      ' just slid into the server.',
-      ' just showed up!',
-      '. Say hi!',
-      ' hopped into the server.',
-      '!',
-      '.',
-      '.',
-      '!'
-  ];
-
 
   return messages[(Number(new Date(message.createdAt))) % messages.length]
 }

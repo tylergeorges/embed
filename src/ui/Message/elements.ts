@@ -304,6 +304,10 @@ export const Member = styled(MemberLink)<NameProps>`
   }*/
 `
 
+export const Name = styled.span`
+  font-weight: 500;
+`
+
 export const Link = styled.a`
   font-weight: 500;
 
