@@ -40,9 +40,8 @@ export const ThemeProvider = ({ children }) => {
   
   if (queryParams.has('username')) {
     const name = decodeURIComponent(queryParams.get('username'))
-    const avatar = queryParams.has('avatar') && decodeURIComponent(queryParams.get('avatar'))
     if (name !== authStore.user?.username)
-      authStore.guestLogin(name, avatar).then(async () => {
+      authStore.guestLogin(name).then(async () => {
         await authStore.setGuestUser(name);
         generalStore.needsUpdate = true;
       })

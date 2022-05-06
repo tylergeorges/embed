@@ -64,10 +64,10 @@ export class AuthStore {
     return data;
   }
 
-  @action async setGuestUser(username: string, avatar?: string) {
+  @action async setGuestUser(username: string) {
     const user: GuestUser = {
       username,
-      avatarUrl: avatar
+      avatarUrl: queryParams.get('avatar')
     }
     window.localStorage.setItem('user', JSON.stringify(user))
 
@@ -137,14 +137,14 @@ export class AuthStore {
     })
   }
 
-  @action guestLogin(username: string, avatar?: string) {
+  @action guestLogin(username: string) {
     return new Promise<void>(async (resolve, reject) => {
       this.inProgress = true;
       this.errors = undefined;
 
       const { data } = await APIRequest(Endpoints.auth.guest, { payload: {
         username,
-        avatar
+        avatar: queryParams.get('avatar')
       } })
 
       switch (data.type) {
