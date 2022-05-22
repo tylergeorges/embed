@@ -14,15 +14,20 @@ import Message from "@ui/Message";
 import {Locale} from "@lib/Locale";
 import { addNotification } from "notify";
 import { generalStore } from "@store";
+import { useChatMessages } from "src/hooks/useMessages/useChatMessages";
 
 type MessagesProps = {
   guild: string;
-  channel: string;
+  channel?: string;
+  chatUser?: string;
   thread?: boolean;
 };
 
-export const Messages = observer(({ guild, channel, thread = false }: MessagesProps) => {
-  const { messages, error, ready, stale, fetchMore } = useMessages(channel, guild, thread ? generalStore.activeThread.id : null);
+export const Messages = observer(({ guild, channel, chatUser, thread = false }: MessagesProps) => {
+  // both of these call the same hooks, so react won't complain about using them conditionally
+  const { messages, error, ready, stale, fetchMore } = channel ?
+    useMessages(channel, guild, thread ? generalStore.activeThread.id : null) :
+    useChatMessages(chatUser, guild)
   const groupedMessages = groupMessages(messages);
   const scroller = useObservable({
     isLoadingMore: false,

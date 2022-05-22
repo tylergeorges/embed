@@ -12,50 +12,25 @@ import { Locale } from '@lib/Locale'
 import { authStore, generalStore } from "@store";
 import { ChannelName } from '@generated'
 import Emoji from "@ui/shared/Emoji";
-import thread from "@ui/Message/Thread";
 import { observer } from 'mobx-react'
 
-export interface ChatProps {
-  thread?: boolean;
-}
+// this is a copy of Chat.tsx for direct chats
 
-// Edits should typically be done in DirectChat.tsx too
-
-export const Chat: FunctionComponent<ChatProps> = observer((props) => {
+export const DirectChat: FunctionComponent = observer((props) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const sendMessage = useSendMessage(props.thread ? generalStore.activeThread.id : null);
+  const sendMessage = useSendMessage();
   const [rows, setRows] = useState(1);
   const { channel } = useRouter();
-  const { data, error, errors, networkStatus, loading } = useQuery<ChannelName>(GET_CHANNEL_NAME, { variables: { channel } });
 
-  if (loading) return <Loading />;
-  if (!data || !data.channel) {
-    addNotification({
-      level: 'error',
-      title: Locale.translate('notif.channelunavailable'),
-      message: Locale.translate('notif.channelunavailable.desc'),
-      autoDismiss: 0,
+  const chat = generalStore.chats?.find(c => c.recipient.id === channel.substring(1))
 
-    });
-    return null;
-  }
-  if (error) addNotification({
-    level: 'warning',
-    title: Locale.translate('notif.loaderror.chat'),
-    message: formatError(error),
-    autoDismiss: 0,
-
-  });
-  if (error) return <ErrorAhoy message={formatError(error)} />;
-
-  const channelName = props.thread ? generalStore.activeThread.name : data.channel?.name;
+  if (!chat) return null
 
   return (
     <Root className="chat">
-      <Field rows={rows} canSend={authStore.user && data.channel.canSend} className="field">
+      <Field rows={rows} canSend={true} className="field">
         <Input
-          channel={data.channel}
-          thread={props.thread}
+          channel={{name: chat.recipient.name, canSend: true}}
           onChange={(value: string) => {
             const rows = value.split(/\r\n|\r|\n/).length;
             setRows(rows)
@@ -97,7 +72,7 @@ export const Chat: FunctionComponent<ChatProps> = observer((props) => {
           }}
           innerRef={ref => (inputRef.current = ref)}
           innerProps={{
-            placeholder: channelName ? Locale.translate('input.message', {CHANNEL: channelName}) : null
+            placeholder: `Message @${chat.recipient.name}`
           }}
         />
 

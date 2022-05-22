@@ -1,5 +1,5 @@
 import Button from '@ui/shared/button'
-import { Hash, NSFW, News, NSFWNews, Rules, ThreadHash } from '@ui/shared/Channel'
+import { Hash, NSFW, News, NSFWNews, Rules, ThreadHash, User } from '@ui/shared/Channel'
 import Markdown from '@ui/shared/markdown/render'
 import styled from '@lib/emotion'
 import { Twemoji } from '@ui/shared/Emoji/emoji'
@@ -81,6 +81,8 @@ export const NSFWName = name(NSFW)
 export const NSFWNewsName = name(NSFWNews)
 
 export const RulesName = name(Rules)
+
+export const UserName = name(User)
 
 export const Emoji = styled(Twemoji)`
   width: 18px !important;

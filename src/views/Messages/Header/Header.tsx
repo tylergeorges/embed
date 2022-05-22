@@ -11,7 +11,7 @@ import {
   Stretch,
   SingleChannelAuthWrapper,
   RulesName,
-  ThreadName, Fullscreen
+  ThreadName, Fullscreen, UserName
 } from '@ui/Header'
 
 import { Root } from './elements'
@@ -27,16 +27,17 @@ import {generalStore} from "@store";
 import Pins from './Pins'
 
 export interface HeaderProps {
-  channel: string,
-  guild: string,
+  channel?: string,
+  chatUser?: string,
   thread?: boolean,
   AuthStore?: AuthStore
 }
 
-export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
+export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
     let cData;
     try {
-        cData = generalStore.guild.channels.find(c => c.id === channel) || {};
+        if (channel) cData = generalStore.guild.channels.find(c => c.id === channel) || {};
+        if (chatUser) cData = generalStore.chats.find(c => c.recipient.id === chatUser) || {};
     } catch (_) {
         cData = {}
     }
@@ -47,7 +48,9 @@ export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
     return (
         <Root thread={thread}>
             <Stretch>
-                { cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
+                { chatUser ?
+                    <UserName>{cData.recipient?.name}#{cData.recipient?.discrim}</UserName>
+                :cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
                     <NSFWNewsName><Emoji>{cData?.name}</Emoji></NSFWNewsName>
                 : cData.__typename === 'AnnouncementChannel' ?
                     <NewsName><Emoji>{cData?.name}</Emoji></NewsName>

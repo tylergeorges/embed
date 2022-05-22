@@ -1,0 +1,14 @@
+#import "./Fragments/Message.graphql"
+
+query ChatMessages(
+    $guild: String!
+    $user: String!
+    # $around: String
+    # $before: String
+    # $after: String
+    # $limit: Int
+) {
+    getMessagesForChat(guild: $guild, id: $user) {
+        ...Message
+    }
+}

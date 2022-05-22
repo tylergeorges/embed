@@ -3,7 +3,9 @@ import { Twemoji } from '@ui/shared/Emoji/emoji'
 import { FaAngleDown, FaAngleRight } from 'react-icons/fa'
 
 export const Root = styled('div')`
-  padding-top: 20px;
+  &:not(:last-child) {
+    padding-bottom: 20px;
+  }
 `
 
 export const Name = styled('div')`

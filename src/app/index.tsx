@@ -30,6 +30,7 @@ const App = observer(() => {
             <Main>
               <Sidebar />
               <Switch>
+                <Route path="/:guild/@:user" component={MessagesView} />
                 <Route path="/:guild/:channel" component={MessagesView} />
                 <Route component={ChooseChannel} />
               </Switch>

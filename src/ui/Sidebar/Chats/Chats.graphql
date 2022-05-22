@@ -1,0 +1,14 @@
+query Chats($guild: String!) {
+  getChats(guild: $guild) {
+    recipient {
+      id
+      name
+      discrim
+      avatarUrl
+      color
+      bot
+      flags
+    }
+    content
+  }
+}

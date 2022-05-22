@@ -17,7 +17,7 @@ import {Loading} from "@ui/Overlays";
 
 export const ITEM_ID = 'channel';
 
-export const ChannelSwitcher = observer(() => (
+export const ChannelSwitcher = observer(({visible}) => visible ? (
 	<Route path="/:guild/:channel?">
 		{({
 			  match: {
@@ -56,7 +56,7 @@ export const ChannelSwitcher = observer(() => (
 			)
 		}}
 	</Route>
-));
+) : null);
 
 
 export default ChannelSwitcher

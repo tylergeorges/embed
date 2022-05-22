@@ -96,3 +96,25 @@ export const Close = styled('button')`
           ${focusable};
     }
 `;
+
+export const ViewSwitcher = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  margin: 10px 0;
+`
+
+interface ButtonProps {
+  selected: boolean
+}
+export const Button = styled.button<ButtonProps>`
+  padding: 2px 5px;
+  border-radius: 3px;
+
+  ${({ selected, theme }) => selected ? css`
+    background-color: ${theme.colors._primary.fade(.9).toString()} !important;
+  ` : ''}
+
+  &:hover {
+    background-color: ${({ theme }) =>  theme.colors._primary.fade(.95).toString()};
+  }
+`

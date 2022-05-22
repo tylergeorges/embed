@@ -5,6 +5,8 @@ import MESSAGE_UPDATED from './MessageUpdated.graphql'
 import MESSAGE_DELETED from './MessageDeleted.graphql'
 import MESSAGES_BULK_DELETED from './MessagesBulkDeleted.graphql'
 
-export { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED }
+import CHAT_MESSAGES from './ChatMessages.graphql'
+
+export { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED, CHAT_MESSAGES }
 
 export * from './useMessages'
