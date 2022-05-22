@@ -70,7 +70,7 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
                         </Topic>
                     )}
             </Stretch>
-            <Pins />
+            {channel && <Pins />}
             <SingleChannelAuthWrapper>
                 <SingleChannelAuth />
             </SingleChannelAuthWrapper>

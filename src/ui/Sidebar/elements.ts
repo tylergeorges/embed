@@ -107,7 +107,7 @@ interface ButtonProps {
   selected: boolean
 }
 export const Button = styled.button<ButtonProps>`
-  padding: 2px 5px;
+  padding: 2px 20px;
   border-radius: 3px;
 
   ${({ selected, theme }) => selected ? css`

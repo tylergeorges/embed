@@ -15,7 +15,7 @@ interface ChatProps {
 }
 export const Chat = styled.div<ChatProps>`
     display: flex;
-    padding: 3px 0;
+    padding: 3px 8px;
     margin: 2px 8px;
     align-items: center;
     border-radius: 3px;
