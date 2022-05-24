@@ -1,4 +1,4 @@
-import styled from '@lib/emotion'
+import styled, { css } from '@lib/emotion'
 import emojiSprite from '../../../../app/res/images/discordAssets/15e026451fd814e2d1a13e49c8076978.png'
 
 export const Root = styled('div')`
@@ -21,7 +21,10 @@ export const UploadButton = styled.label`
   }
 `
 
-export const Textarea = styled('textarea')`
+interface TextareaProps {
+  upload?: boolean
+}
+export const Textarea = styled.textarea<TextareaProps>`
   width: 100%;
   height: 100%;
   padding: 10px 16px 10px 0;
@@ -34,6 +37,10 @@ export const Textarea = styled('textarea')`
   letter-spacing: -0.025rem;
   line-height: 1.25rem;
   color: ${({ theme }) => theme.colors._primary.fade(0.3).string()};
+
+  ${({ upload }) => upload || css`
+    padding-left: 15px;
+  `}
 
   &::placeholder {
     color: ${({ theme }) => theme.colors._primary.fade(0.7).string()};

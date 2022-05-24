@@ -5,6 +5,7 @@ query Settings($guild: String!) {
     singleChannel
     hideSidebar
     readonly
+    directEnabled
     theme {
       css
       colors {

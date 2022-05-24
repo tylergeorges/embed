@@ -24,13 +24,11 @@ export const DirectChat: FunctionComponent = observer((props) => {
 
   const chat = generalStore.chats?.find(c => c.recipient.id === channel.substring(1))
 
-  if (!chat) return null
-
   return (
     <Root className="chat">
       <Field rows={rows} canSend={true} className="field">
         <Input
-          channel={{name: chat.recipient.name, canSend: true}}
+          channel={{name: chat?.recipient.name, canSend: true, direct: true}}
           onChange={(value: string) => {
             const rows = value.split(/\r\n|\r|\n/).length;
             setRows(rows)
@@ -72,7 +70,7 @@ export const DirectChat: FunctionComponent = observer((props) => {
           }}
           innerRef={ref => (inputRef.current = ref)}
           innerProps={{
-            placeholder: `Message @${chat.recipient.name}`
+            placeholder: `Message @${chat?.recipient.name ?? 'User'}`
           }}
         />
 

@@ -10,6 +10,8 @@ export interface Theme extends Settings_settings_theme {
   readonly: boolean,
   guestMode: boolean,
   singleChannel: boolean,
+  directEnabled: boolean,
+  loggedIn: boolean,
   colors: {
     __typename: 'ThemeColorSettings'
     _primary: Color

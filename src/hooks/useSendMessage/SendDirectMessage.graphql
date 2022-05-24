@@ -1,0 +1,7 @@
+#import "../useMessages/Fragments/Message.graphql"
+
+mutation SendDirectMessage($guild: String!, $user: String!, $content: String!) {
+  sendChat(guild: $guild, id: $user, content: $content) {
+    ...Message
+  }
+}

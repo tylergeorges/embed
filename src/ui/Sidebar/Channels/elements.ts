@@ -1,12 +1,16 @@
-import styled from '@lib/emotion'
+import styled, { css } from '@lib/emotion'
 import { ScrollOverlay } from '@ui/shared/scrollable'
 import Button from "@ui/shared/button";
 
 export const Root = styled(ScrollOverlay)`
-  & > div:nth-child(1) {
+  & > div:first-child {
     & > *:last-child {
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
+
+    ${({ theme }) => theme.directEnabled && theme.loggedIn || css`
+      padding-top: 20px;
+    `}
   }
 `;
 

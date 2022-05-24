@@ -27,6 +27,7 @@ export interface Settings_settings {
   singleChannel: string | null;
   hideSidebar: boolean | null;
   readonly: boolean;
+  directEnabled: boolean;
   theme: Settings_settings_theme | null;
 }
 
