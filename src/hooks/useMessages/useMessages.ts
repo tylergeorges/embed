@@ -52,7 +52,13 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     variables: { channel, guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
-        produce(prev, ({ channel: { messageBunch: { messages } } }: { channel: Messages_channel }) => {
+        produce(prev, (data?: { channel: Messages_channel }) => {
+          const messages = data?.channel.messageBunch.messages;
+          if (!messages) {
+            console.warn('NEW_MESSAGE received empty initial state within subscription', subscriptionData, data);
+            return;
+          }
+
           const message = subscriptionData.data.message as Message
           message.author.color = messages.find(m => m.author.id === message.author.id)?.author.color || 0xffffff
           if (!messages.find(m => m.id === message.id)) messages.push(message);
@@ -64,7 +70,13 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     variables: { channel, guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
-        produce(prev, ({ channel: { messageBunch: { messages } } }: { channel: Messages_channel }) => {
+        produce(prev, (data?: { channel: Messages_channel }) => {
+          const messages = data?.channel.messageBunch.messages;
+          if (!messages) {
+            console.warn('MESSAGE_UPDATED received empty initial state within subscription', subscriptionData, data);
+            return;
+          }
+
           const message = subscriptionData.data.messageUpdate
           const index = messages.findIndex(m => m.id === message.id);
 
@@ -84,7 +96,13 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     variables: { channel, guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
-        produce(prev, ({ channel: { messageBunch: { messages } } }: { channel: Messages_channel }) => {
+        produce(prev, (data?: { channel: Messages_channel }) => {
+          const messages = data?.channel.messageBunch.messages;
+          if (!messages) {
+            console.warn('MESSAGE_DELETED received empty initial state within subscription', subscriptionData, data);
+            return;
+          }
+
           const { id } = subscriptionData.data.messageDelete
           const index = messages.findIndex(m => m.id === id)
 
@@ -98,7 +116,13 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     variables: { channel, guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
-        produce(prev, ({ channel }: { channel: Messages_channel }) => {
+        produce(prev, (data?: { channel: Messages_channel }) => {
+          const channel = data?.channel;
+          if (!channel) {
+            console.warn('MESSAGES_BULK_DELETED received empty initial state within subscription', subscriptionData, data);
+            return;
+          }
+
           const { ids } = subscriptionData.data.messageDeleteBulk
 
           channel.messageBunch.messages = channel.messageBunch.messages.filter(
