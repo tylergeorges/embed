@@ -78,7 +78,7 @@ interface Props {
   style?
 }
 
-const gifCheck = (url: string) => {
+export const gifCheck = (url: string) => {
   return url.includes('/a_') ? url.replace('webp', 'gif') : url
 }
 
@@ -115,6 +115,8 @@ class Message extends React.PureComponent<Props, any> {
       // when the previous message has a thread, it should be the end of its group to position the thread spine correctly
       // but the next group should appear connected by hiding author
 
+    let avatar: HTMLDivElement
+
     return (
       <Group style={this.props.style} className="group">
 
@@ -123,6 +125,18 @@ class Message extends React.PureComponent<Props, any> {
             url={getAvatar(firstMessage.author)}
             className="avatar"
             reply={shouldShowContext(firstMessage)}
+            innerRef={ref => avatar = ref}
+            onClick={() => store.modal.openProfile(
+              firstMessage.author.id,
+              firstMessage.author.name,
+              firstMessage.author.discrim,
+              firstMessage.author.avatarUrl,
+              firstMessage.author.bot,
+              firstMessage.author.flags,
+              firstMessage.isGuest,
+              avatar.getBoundingClientRect().right + 10,
+              Math.min(avatar.getBoundingClientRect().y, innerHeight - 250)
+            )}
           />
         }
 

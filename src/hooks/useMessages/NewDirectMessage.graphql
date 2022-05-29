@@ -1,0 +1,8 @@
+#import "./Fragments/SubscriptionMessage.graphql"
+
+
+subscription NewDirectMessage($guild: String!) {
+  directMessage(guild: $guild) {
+    ...SubscriptionMessage
+  }
+}

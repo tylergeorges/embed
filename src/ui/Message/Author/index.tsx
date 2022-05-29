@@ -6,12 +6,13 @@ import { Sysadmin, Tag, Verified } from "./Badges";
 import { Name, Root, Time, VerifiedBot } from './elements'
 import { Locale } from '@lib/Locale';
 import Tooltip from 'rc-tooltip';
+import { store } from '@models';
 
 interface Props {
   author: Message_author
   time: number
-  crosspost: boolean
-  referenceGuild: string
+  crosspost?: boolean
+  referenceGuild?: string
   guest: boolean
 }
 
@@ -53,7 +54,7 @@ const verified =
     <VerifiedBot aria-label="Verified Bot" aria-hidden="false" width="16" height="16" viewBox="0 0 16 15.2"><path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" fill="currentColor"></path></VerifiedBot>
   </Tooltip>
 
-export const tags = ({author, crosspost, referenceGuild, guest}: Omit<Props, 'time'>) => 
+export const tags = ({author, crosspost, referenceGuild, guest}: Omit<Props, 'time' | 'author'> & { author: Pick<Message_author, 'bot' | 'flags'>}) => 
   <React.Fragment>
     {author.bot &&
       ( guest ? <Tag className="guest">Guest</Tag>
@@ -63,7 +64,6 @@ export const tags = ({author, crosspost, referenceGuild, guest}: Omit<Props, 'ti
       : author.flags & 1 << 16 ? <Tag className="verified bot">{verified} {Locale.translate('tag.bot')}</Tag>
       : <Tag className="bot">{Locale.translate('tag.bot')}</Tag>
       )}
-    {author.id === 'aaaa' && <Tag className="guest">Guest</Tag>}
   </React.Fragment>
 
 class Author extends React.PureComponent<Props> {
@@ -72,9 +72,26 @@ class Author extends React.PureComponent<Props> {
 
     const hexColor = '#'+ (author.color.toString(16).padStart(6, '0') || 'fff')
 
+    let name: HTMLDivElement
+
     return (
       <Root className="author">
-        <Name color={hexColor} className="name">
+        <Name
+          color={hexColor}
+          className="name"
+          innerRef={ref => name = ref}
+          onClick={() => store.modal.openProfile(
+            author.id,
+            author.name,
+            author.discrim,
+            author.avatarUrl,
+            author.bot,
+            author.flags,
+            this.props.guest,
+            name.getBoundingClientRect().right + 10,
+            Math.min(name.getBoundingClientRect().y, innerHeight - 250)
+          )}
+        >
           {author.name}
         </Name>
         {tags(this.props)}

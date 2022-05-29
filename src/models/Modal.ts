@@ -7,6 +7,15 @@ export const Modal = types
     channel: types.maybeNull(types.string),
     thread: false,
     content: types.maybeNull(types.string),
+    id: types.maybeNull(types.string),
+    username: types.maybeNull(types.string),
+    discrim: types.maybeNull(types.string),
+    avatarUrl: types.maybeNull(types.string),
+    bot: false,
+    flags: types.maybeNull(types.number),
+    guest: false,
+    x: types.maybeNull(types.number),
+    y: types.maybeNull(types.number),
     isOpen: false
   })
   .actions(self => ({
@@ -32,6 +41,19 @@ export const Modal = types
       self.channel = channel
       self.thread = thread
       self.content = content
+    },
+    openProfile(id, username, discrim, avatarUrl, bot, flags, guest, x, y) {
+      self.isOpen = true
+      self.type = 'profile'
+      self.id = id
+      self.username = username
+      self.discrim = discrim
+      self.avatarUrl = avatarUrl
+      self.bot = bot
+      self.flags = flags
+      self.guest = guest
+      self.x = x
+      self.y = y
     },
     close() {
       self.isOpen = false

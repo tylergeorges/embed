@@ -159,6 +159,11 @@ export const Avatar = styled('div')<AvatarProps>`
   margin-right: 20px;
   margin-top: ${props => props.reply ? 24 : 2}px;
 
+  &:hover {
+    filter: drop-shadow(0 4px 4px rgba(0,0,0,0.16));
+    cursor: pointer;
+  }
+
   @media (max-width: 400px), (max-height: 370px) {
     height: 35px;
     width: 35px;

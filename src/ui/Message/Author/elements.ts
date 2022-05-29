@@ -21,9 +21,10 @@ export const Name = styled('strong')<NameProps>`
   font-weight: 500;
   letter-spacing: 0;
 
-  /*&:hover {
+  &:hover {
     text-decoration: underline;
-  }*/
+    cursor: pointer;
+  }
 
   @media (max-width: 340px), (max-height: 370px) {
     font-size: 14px;
