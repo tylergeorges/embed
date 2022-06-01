@@ -16,5 +16,6 @@ function getEnvVar(envVarStr: string): string {
     // is true when running: npm run build
     const isProd = process.env.NODE_ENV === 'production'
     const envVar = envVarStr.replace(/[{}]/g, '')
+
     return isProd ? (envVarStr || overrides[envVar]) : (overrides[envVar] || process.env[envVar])
 }
