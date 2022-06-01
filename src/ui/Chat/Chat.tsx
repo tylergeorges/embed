@@ -14,12 +14,13 @@ import { ChannelName } from '@generated'
 import Emoji from "@ui/shared/Emoji";
 import thread from "@ui/Message/Thread";
 import { observer } from 'mobx-react'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 export interface ChatProps {
   thread?: boolean;
 }
 
-export const Chat: FunctionComponent<ChatProps> = observer((props) => {
+export const Chat = withRouter(observer((props: ChatProps & RouteComponentProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const sendMessage = useSendMessage(props.thread ? generalStore.activeThread.id : null);
   const [rows, setRows] = useState(1);
@@ -103,4 +104,4 @@ export const Chat: FunctionComponent<ChatProps> = observer((props) => {
       </Field>
     </Root>
   )
-})
+}))
