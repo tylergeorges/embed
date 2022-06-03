@@ -20,6 +20,7 @@ export interface ChatProps {
   thread?: boolean;
 }
 
+// Edits should typically be done in DirectChat.tsx too
 export const Chat = withRouter(observer((props: ChatProps & RouteComponentProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const sendMessage = useSendMessage(props.thread ? generalStore.activeThread.id : null);
@@ -64,8 +65,8 @@ export const Chat = withRouter(observer((props: ChatProps & RouteComponentProps)
 
             content = content.replace(/:([^\s:]+?):/g, (match, name) => {
               const result = generalStore.emojis.get(name)
-              return result 
-                ? result.category === 'custom' 
+              return result
+                ? result.category === 'custom'
                   ? `<${result.animated ? 'a' : ''}:${result.keywords[0]}:${result.emoji}>`
                   : result.emoji
                 : match
