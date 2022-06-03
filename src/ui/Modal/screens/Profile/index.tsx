@@ -43,7 +43,7 @@ const Profile = () => (
             {store.modal.discrim !== '0000' ? <Discrim>#{store.modal.discrim}</Discrim> : null}
             {tags({ author: store.modal, guest: store.modal.guest })}
         </Tag>
-        {generalStore.settings?.directEnabled && !store.modal.bot && <NavLink
+        {generalStore.settings?.directEnabled && (!store.modal.bot || store.modal.guest) && <NavLink
             to={`./@${store.modal.id}`}
             children={<MessageButton variant="large" onClick={() => store.modal.close()}>Message @{store.modal.username}</MessageButton>}
         />}
