@@ -1,7 +1,5 @@
-import {NavLink, Route} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {observer} from "mobx-react";
-
-import {Selector} from "@ui/SelectItem";
 
 import { Root, Chat, Avatar, Details, Preview } from "./elements";
 import CHATS from "./Chats.graphql";
@@ -10,8 +8,6 @@ import {generalStore} from "@store";
 import { Chats } from "@generated";
 import { Member } from "@ui/Message/elements";
 import { useRouter } from "@hooks";
-
-export const ITEM_ID = 'channel';
 
 export const ChatSwitcher = observer(({visible}) => {
     const { data: {getChats: chats} } = useQuery<Chats>(CHATS, { variables: { guild: generalStore.guild?.id }, fetchPolicy: 'network-only' })

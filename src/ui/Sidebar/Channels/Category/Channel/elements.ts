@@ -26,6 +26,9 @@ export const Root = styled(Link)<Props>`
     unread && `${theme.colors._primary.fade(0.1).string()} !important`};
   /* animation: ${({ order }) => fade(order)} 0.5s ease; */
 
+  background-color: ${({ selected, theme }) =>
+          selected && theme.colors._primary.fade(0.9).string()} !important;
+
   &:hover {
     background-color: ${({ selected, theme }) =>
       !selected && theme.colors._primary.fade(0.96).string()};

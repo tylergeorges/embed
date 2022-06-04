@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { Selector } from './Selector'
 import { Root } from './elements'
 
 export interface ItemProps {
@@ -21,7 +20,6 @@ export class Item extends React.Component<ItemProps> {
 
   render() {
     const { root: Root, children, selected, itemID, ...rest } = this.props
-    if (selected) Selector.store.set(itemID, this)
 
     const captureRef = ref => {
       if (ref instanceof HTMLElement) this.node = ref

@@ -29,21 +29,3 @@ export const Root = styled('button')<IRoot>`
     font-size: 14px;
   }
 `
-
-interface ISelectorRoot {
-  offset: number
-}
-export const SelectorRoot = styled(Root)<ISelectorRoot>`
-  position: absolute;
-  pointer-events: none;
-  top: 0;
-
-  transition: transform 0.3s ease;
-  transform: ${({ offset }) => `translateY(${offset}px)`};
-  z-index: -1;
-
-  background-color: ${({ theme }) =>
-    theme.colors._primary.fade(0.9).string()} !important;
-
-  margin-top: 0 !important;
-`

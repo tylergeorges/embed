@@ -1,19 +1,14 @@
 import {Route} from "react-router-dom";
 import {Query} from "react-apollo";
 import {Channels, ChannelsVariables} from "@generated";
-import {inject, observer} from "mobx-react";
+import {observer} from "mobx-react";
 
-import {Selector} from "@ui/SelectItem";
 
 import {Root} from "./elements";
 import Category from "./Category";
 import categorise from "./categorise";
 import CHANNELS from "./Channels.graphql";
-import {AuthStore} from "@store/auth";
-import {useRouter} from "@hooks";
-import {useSubscription} from "react-apollo-hooks";
 import {generalStore} from "@store";
-import {Loading} from "@ui/Overlays";
 
 export const ITEM_ID = 'channel';
 
@@ -26,7 +21,6 @@ export const ChannelSwitcher = observer(({visible}) => visible ? (
 		  }) => {
 			return (
 				<Root className="channels">
-					<Selector itemID={ITEM_ID}/>
 					{ // if there are no channels in generalStore, do a Channels query to avoid empty channel list
 					(generalStore.channels.length === 0) ? (
 					<Query<Channels, ChannelsVariables>
