@@ -5,27 +5,29 @@ import { Header } from './Header'
 import Panel from './Panel'
 import {observer} from 'mobx-react'
 import {store} from '@models'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from '@hooks'
 import { authStore, generalStore } from '@store'
 
-enum Views {
+export enum Views {
     Channels,
     Chats
 }
 
 const Sidebar = observer(() => {
-    const { channel } = useRouter()
-    const [view, setView] = useState(channel?.startsWith('@') && authStore.user ? Views.Chats : Views.Channels)
+    useEffect(() => {
+        const { channel } = useRouter()
+        generalStore.setSidebarView(channel?.startsWith('@') && authStore.user ? Views.Chats : Views.Channels)
+    }, [])
 
     return <Root visible={store.sidebar.isOpen} className="sidebar">
         <Header />
         {generalStore.settings?.directEnabled && authStore.user && <ViewSwitcher>
-            <Button selected={view === Views.Channels} onClick={() => setView(Views.Channels)}>Channels</Button>
-            <Button selected={view === Views.Chats} onClick={() => setView(Views.Chats)}>Chats</Button>
+            <Button selected={generalStore.sidebarView === Views.Channels} onClick={() => generalStore.setSidebarView(Views.Channels)}>Channels</Button>
+            <Button selected={generalStore.sidebarView === Views.Chats} onClick={() => generalStore.setSidebarView(Views.Chats)}>Chats</Button>
         </ViewSwitcher>}
-        <Channels visible={view === Views.Channels} />
-        <Chats visible={view === Views.Chats} />
+        <Channels visible={generalStore.sidebarView === Views.Channels} />
+        <Chats visible={generalStore.sidebarView === Views.Chats} />
         <Panel />
     </Root>
 });

@@ -6,6 +6,7 @@ import { generalStore } from "@store"
 import { NavLink } from "react-router-dom"
 import { tags } from "@ui/Message/Author"
 import Tooltip from "rc-tooltip"
+import { Views } from "@ui/Sidebar"
 
 // badges
 import staff from '@images/discordAssets/48d5bdcffe9e7848067c2e187f1ef951.svg'
@@ -45,7 +46,10 @@ const Profile = () => (
         </Tag>
         {generalStore.settings?.directEnabled && (!store.modal.bot || store.modal.guest) && <NavLink
             to={`./@${store.modal.id}`}
-            children={<MessageButton variant="large" onClick={() => store.modal.close()}>Message @{store.modal.username}</MessageButton>}
+            children={<MessageButton variant="large" onClick={() => {
+                store.modal.close()
+                generalStore.setSidebarView(Views.Chats)
+            }}>Message @{store.modal.username}</MessageButton>}
         />}
 
         <style>{`

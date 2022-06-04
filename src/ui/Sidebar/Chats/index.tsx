@@ -33,7 +33,7 @@ export const ChatSwitcher = observer(({visible}) => {
                         <Chat selected={channel === '@'+chat.recipient.id}>
                             <Avatar width={32} height={32} src={chat.recipient.avatarUrl} />
                             <Details>
-                                <Member color={chat.recipient.color}>{chat.recipient.name}#{chat.recipient.discrim}</Member>
+                                <Member color={chat.recipient.color}>{chat.recipient.name}{chat.recipient.discrim !== '0000' ? `#${chat.recipient.discrim}` : ''}</Member>
                                 <Preview>{chat.content}</Preview>
                             </Details>
                         </Chat>

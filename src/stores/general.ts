@@ -3,6 +3,7 @@ import { Chats, Chats_getChats, GuildInfo_guild, Message, Message_thread, Settin
 import {ICategory} from "@ui/Sidebar/Channels/categorise";
 import { EmojiStore } from "@services/Emoji";
 import { defaultEmojis } from "@services/Emoji/defaultEmojis";
+import { Views } from "@ui/Sidebar";
 
 export class GeneralStore {
   @observable appName = 'WidgetBot';
@@ -20,7 +21,8 @@ export class GeneralStore {
   @observable emojis = new EmojiStore(...defaultEmojis);
   @observable pins?: Message[];
   @observable pinsOpen: boolean = false;
-  @observable chats: Chats_getChats[];
+  @observable chats: Omit<Chats_getChats, '__typename'>[];
+  @observable sidebarView: Views;
 
   constructor() {
     autorun(() => {
@@ -77,8 +79,12 @@ export class GeneralStore {
     this.pinsOpen = res
   }
 
-  @action setChats(chats: Chats_getChats[]) {
+  @action setChats(chats: Omit<Chats_getChats, '__typename'>[]) {
     this.chats = chats;
+  }
+
+  @action setSidebarView(view: Views) {
+    this.sidebarView = view;
   }
 }
 
