@@ -1,29 +1,29 @@
-import {NavLink} from "react-router-dom";
+import {NavLink, withRouter} from "react-router-dom";
 import {observer} from "mobx-react";
 
-import { Root, Chat, Avatar, Details, Preview } from "./elements";
+import { Root, Chat, Avatar, Details, Preview, LoadingContainer } from "./elements";
 import CHATS from "./Chats.graphql";
-import {useQuery} from "react-apollo-hooks";
 import {generalStore} from "@store";
 import { Chats } from "@generated";
 import { Member } from "@ui/Message/elements";
 import { useRouter } from "@hooks";
+import { Loading } from "@ui/Overlays/Loading/elements";
+import client from "@lib/apollo";
 
-export const ChatSwitcher = observer(({visible}) => {
-    const { data: {getChats: chats} } = useQuery<Chats>(CHATS, { variables: { guild: generalStore.guild?.id }, fetchPolicy: 'network-only' })
+export const ChatSwitcher = withRouter(observer(() => {
+    if (!generalStore.chats)
+        client.query<Chats>({ query: CHATS, variables: { guild: generalStore.guild.id }, fetchPolicy: 'network-only' })
+            .then(({ data: { getChats: chats } }) => generalStore.setChats(chats))
 
     const { guild, channel } = useRouter()
 
-    if (!chats) return null
-
-    generalStore.setChats(chats)
-
-    if (!visible) return null
+    if (!generalStore.chats) return <LoadingContainer><Loading /></LoadingContainer>
 
     return (
-            <Root className="channels">
-                {chats.map((chat) => (
+        <Root className="channels">
+            {generalStore.chats.map((chat) => (
                 <NavLink
+                    key={chat.recipient.id}
                     to={`/${guild}/@${chat.recipient.id}`}
                     children={
                         <Chat selected={channel === '@'+chat.recipient.id}>
@@ -36,10 +36,10 @@ export const ChatSwitcher = observer(({visible}) => {
                     }
                     style={{ textDecoration: 'none' }}
                 />
-                ))}
-            </Root>
-        )
+            ))}
+        </Root>
+    )
 
-});
+}))
 
 export default ChatSwitcher

@@ -1,6 +1,6 @@
 import Channels from './Channels'
 import Chats from './Chats'
-import {Root, Close, ViewSwitcher, Button} from './elements'
+import {Root, ViewSwitcher, Button} from './elements'
 import { Header } from './Header'
 import Panel from './Panel'
 import {observer} from 'mobx-react'
@@ -26,8 +26,8 @@ const Sidebar = observer(() => {
             <Button selected={generalStore.sidebarView === Views.Channels} onClick={() => generalStore.setSidebarView(Views.Channels)}>Channels</Button>
             <Button selected={generalStore.sidebarView === Views.Chats} onClick={() => generalStore.setSidebarView(Views.Chats)}>Chats</Button>
         </ViewSwitcher>}
-        <Channels visible={generalStore.sidebarView === Views.Channels} />
-        <Chats visible={generalStore.sidebarView === Views.Chats} />
+        {generalStore.sidebarView === Views.Channels ? <Channels /> : null}
+        {generalStore.sidebarView === Views.Chats && generalStore.guild ? <Chats /> : null}
         <Panel />
     </Root>
 });

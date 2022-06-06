@@ -22,7 +22,7 @@ interface Props {
 const MessagesView = observer((props: Props) => {
   useEffect(() => {
     generalStore.clearThread(); // Channel changed, cant be looking at a thread anymore
-  },[props.match.params.channel]);
+  }, [props.match.params.channel]);
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>

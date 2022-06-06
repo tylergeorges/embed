@@ -21,10 +21,12 @@ import bugHunter2 from '@images/discordAssets/f599063762165e0d23e8b11b684765a8.s
 import earlyVerifiedBotDev from '@images/discordAssets/4441e07fe0f46b3cb41b79366236fca6.svg'
 import earlySupporter from '@images/discordAssets/b802e9af134ff492276d94220e36ec5c.svg'
 
+const resize = (url: string) => url.includes('cdn.discordapp.com') ? url+'?size=256' : url
+
 const Profile = () => (
     <Root x={store.modal.x} y={store.modal.y}>
         <Top>
-            <Avatar height={92} width={92} src={webpCheck(gifCheck(store.modal.avatarUrl))} />
+            <Avatar height={92} width={92} src={resize(webpCheck(gifCheck(store.modal.avatarUrl)))} />
             <Badges>
                 {store.modal.flags & 1 << 0 ? <Tooltip overlay="Discord Staff" placement="top"><Badge src={staff} /></Tooltip> : null}
                 {store.modal.flags & 1 << 1 ? <Tooltip overlay="Partnered Server Owner" placement="top"><Badge src={partner} /></Tooltip> : null}

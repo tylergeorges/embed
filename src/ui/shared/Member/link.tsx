@@ -12,7 +12,7 @@ class MemberLink extends React.PureComponent<Props> {
   render() {
     // const { url } = this.state
     return (
-      <a
+      <span // a
         // href={url}
         {...{
           className: this.props.className,

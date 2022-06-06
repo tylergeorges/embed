@@ -1,0 +1,7 @@
+query UserTag($user: String!) {
+  userData(id: $user) {
+    id
+    name
+    discrim
+  }
+}

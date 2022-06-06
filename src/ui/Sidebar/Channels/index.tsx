@@ -12,7 +12,7 @@ import {generalStore} from "@store";
 
 export const ITEM_ID = 'channel';
 
-export const ChannelSwitcher = observer(({visible}) => visible ? (
+export const ChannelSwitcher = observer(() => (
 	<Route path="/:guild/:channel?">
 		{({
 			  match: {
@@ -50,7 +50,7 @@ export const ChannelSwitcher = observer(({visible}) => visible ? (
 			)
 		}}
 	</Route>
-) : null);
+));
 
 
 export default ChannelSwitcher

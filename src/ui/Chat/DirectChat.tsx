@@ -70,7 +70,7 @@ export const DirectChat: FunctionComponent = observer((props) => {
           }}
           innerRef={ref => (inputRef.current = ref)}
           innerProps={{
-            placeholder: `Message @${chat?.recipient.name ?? 'User'}`
+            placeholder: `Message ${chat?.recipient.name ? '@'+chat.recipient.name : 'user'}`
           }}
         />
 

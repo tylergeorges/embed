@@ -25,6 +25,7 @@ import {observer} from "mobx-react";
 import { SingleChannelAuth } from '@ui/Sidebar/Panel'
 import {generalStore} from "@store";
 import Pins from './Pins'
+import { FetchUser } from './FetchUser'
 
 export interface HeaderProps {
   channel?: string,
@@ -48,8 +49,10 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
     return (
         <Root thread={thread}>
             <Stretch>
-                { chatUser ?
-                    <UserName>{cData.recipient?.name}#{cData.recipient?.discrim}</UserName>
+                { chatUser && cData.recipient ?
+                    <UserName>{cData.recipient.name}{cData.recipient.discrim !== '0000' ? '#'+cData.recipient.discrim : ''}</UserName>
+                : chatUser ?
+                    <FetchUser user={chatUser} />
                 :cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
                     <NSFWNewsName><Emoji>{cData?.name}</Emoji></NSFWNewsName>
                 : cData.__typename === 'AnnouncementChannel' ?
