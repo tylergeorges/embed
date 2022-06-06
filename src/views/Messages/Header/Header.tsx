@@ -51,8 +51,8 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
             <Stretch>
                 { chatUser && cData.recipient ?
                     <UserName>{cData.recipient.name}{cData.recipient.discrim !== '0000' ? '#'+cData.recipient.discrim : ''}</UserName>
-                : chatUser ?
-                    <FetchUser user={chatUser} />
+                : chatUser && generalStore.guild ?
+                    <FetchUser guild={generalStore.guild.id} user={chatUser} />
                 :cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
                     <NSFWNewsName><Emoji>{cData?.name}</Emoji></NSFWNewsName>
                 : cData.__typename === 'AnnouncementChannel' ?

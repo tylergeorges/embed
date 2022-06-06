@@ -19,5 +19,6 @@ export interface UserTag {
 }
 
 export interface UserTagVariables {
+  guild: string;
   user: string;
 }

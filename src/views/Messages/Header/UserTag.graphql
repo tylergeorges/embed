@@ -1,5 +1,5 @@
-query UserTag($user: String!) {
-  userData(id: $user) {
+query UserTag($guild: String!, $user: String!) {
+  userData(guild: $guild, id: $user) {
     id
     name
     discrim
