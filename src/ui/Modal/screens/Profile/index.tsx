@@ -1,5 +1,5 @@
 import { store } from "@models"
-import { Root, Tag, Avatar, MessageButton, Top, Badges, Badge, Discrim } from "./elements"
+import { Root, Tag, Avatar, Top, Badges, Badge, Discrim, ProfileButton } from "./elements"
 import webpCheck from '@ui/shared/webpCheck'
 import { gifCheck } from "@ui/Message"
 import { generalStore } from "@store"
@@ -20,46 +20,72 @@ import bugHunter1 from '@images/discordAssets/8353d89b529e13365c415aef08d1d1f4.s
 import bugHunter2 from '@images/discordAssets/f599063762165e0d23e8b11b684765a8.svg'
 import earlyVerifiedBotDev from '@images/discordAssets/4441e07fe0f46b3cb41b79366236fca6.svg'
 import earlySupporter from '@images/discordAssets/b802e9af134ff492276d94220e36ec5c.svg'
+import { useMutation } from "react-apollo-hooks";
+import BLOCK_USER from './BlockUser.graphql';
 
 const resize = (url: string) => url.includes('cdn.discordapp.com') ? url+'?size=256' : url
 
-const Profile = () => (
-    <Root x={store.modal.x} y={store.modal.y}>
+const Profile = () => {
+  const blockUser = useMutation<boolean>(BLOCK_USER);
+  const unblockUser = useMutation<boolean>(BLOCK_USER); // TODO: Unblock mutation
+
+  const useBlockUser = async (block: boolean) => {
+      await (block ? blockUser : unblockUser)({
+        variables: { user: store.modal.id },
+      });
+
+      // TODO: user.blocked = block; blah blah blah
+  };
+
+  // TODO: Ability to see if user is already blocked (add blocked prop to userData and depend on that for profiles?)
+  //        - if blocked, show unblock button
+
+  return (
+      <Root x={store.modal.x} y={store.modal.y}>
         <Top>
-            <Avatar height={92} width={92} src={resize(webpCheck(gifCheck(store.modal.avatarUrl)))} />
-            <Badges>
-                {store.modal.flags & 1 << 0 ? <Tooltip overlay="Discord Staff" placement="top"><Badge src={staff} /></Tooltip> : null}
-                {store.modal.flags & 1 << 1 ? <Tooltip overlay="Partnered Server Owner" placement="top"><Badge src={partner} /></Tooltip> : null}
-                {store.modal.flags & 1 << 18 ? <Tooltip overlay="Discord Certified Moderator" placement="top"><Badge src={certifiedMod} /></Tooltip> : null}
-                {store.modal.flags & 1 << 2 ? <Tooltip overlay="HypeSquad Events" placement="top"><Badge src={hypesquadEvents} /></Tooltip> : null}
-                {store.modal.flags & 1 << 6 ? <Tooltip overlay="HypeSquad Bravery" placement="top"><Badge src={bravery} /></Tooltip> : null}
-                {store.modal.flags & 1 << 7 ? <Tooltip overlay="HypeSquad Brilliance" placement="top"><Badge src={brilliance} /></Tooltip> : null}
-                {store.modal.flags & 1 << 8 ? <Tooltip overlay="HypeSquad Balance" placement="top"><Badge src={balance} /></Tooltip> : null}
-                {store.modal.flags & 1 << 3 ? <Tooltip overlay="Discord Bug Hunter" placement="top"><Badge src={bugHunter1} /></Tooltip> : null}
-                {store.modal.flags & 1 << 14 ? <Tooltip overlay="Discord Bug Hunter" placement="top"><Badge src={bugHunter2} /></Tooltip> : null}
-                {store.modal.flags & 1 << 17 ? <Tooltip overlay="Early Verified Bot Developer" placement="top"><Badge src={earlyVerifiedBotDev} /></Tooltip> : null}
-                {store.modal.flags & 1 << 9 ? <Tooltip overlay="Early Supporter" placement="top"><Badge src={earlySupporter} /></Tooltip> : null}
-            </Badges>
+          <Avatar height={92} width={92} src={resize(webpCheck(gifCheck(store.modal.avatarUrl)))} />
+          <Badges>
+            {store.modal.flags & 1 << 0 ? <Tooltip overlay="Discord Staff" placement="top"><Badge src={staff} /></Tooltip> : null}
+            {store.modal.flags & 1 << 1 ? <Tooltip overlay="Partnered Server Owner" placement="top"><Badge src={partner} /></Tooltip> : null}
+            {store.modal.flags & 1 << 18 ? <Tooltip overlay="Discord Certified Moderator" placement="top"><Badge src={certifiedMod} /></Tooltip> : null}
+            {store.modal.flags & 1 << 2 ? <Tooltip overlay="HypeSquad Events" placement="top"><Badge src={hypesquadEvents} /></Tooltip> : null}
+            {store.modal.flags & 1 << 6 ? <Tooltip overlay="HypeSquad Bravery" placement="top"><Badge src={bravery} /></Tooltip> : null}
+            {store.modal.flags & 1 << 7 ? <Tooltip overlay="HypeSquad Brilliance" placement="top"><Badge src={brilliance} /></Tooltip> : null}
+            {store.modal.flags & 1 << 8 ? <Tooltip overlay="HypeSquad Balance" placement="top"><Badge src={balance} /></Tooltip> : null}
+            {store.modal.flags & 1 << 3 ? <Tooltip overlay="Discord Bug Hunter" placement="top"><Badge src={bugHunter1} /></Tooltip> : null}
+            {store.modal.flags & 1 << 14 ? <Tooltip overlay="Discord Bug Hunter" placement="top"><Badge src={bugHunter2} /></Tooltip> : null}
+            {store.modal.flags & 1 << 17 ? <Tooltip overlay="Early Verified Bot Developer" placement="top"><Badge src={earlyVerifiedBotDev} /></Tooltip> : null}
+            {store.modal.flags & 1 << 9 ? <Tooltip overlay="Early Supporter" placement="top"><Badge src={earlySupporter} /></Tooltip> : null}
+          </Badges>
         </Top>
         <Tag>
-            {store.modal.username}
-            {store.modal.discrim !== '0000' ? <Discrim>#{store.modal.discrim}</Discrim> : null}
-            {tags({ author: store.modal, guest: store.modal.guest })}
+          {store.modal.username}
+          {store.modal.discrim !== '0000' ? <Discrim>#{store.modal.discrim}</Discrim> : null}
+          {tags({ author: store.modal, guest: store.modal.guest })}
         </Tag>
-        {generalStore.settings?.directEnabled && (!store.modal.bot || store.modal.guest) && <NavLink
-            to={`./@${store.modal.id}`}
-            children={<MessageButton variant="large" onClick={() => {
+        {generalStore.settings?.directEnabled && (!store.modal.bot || store.modal.guest) && (
+          <>
+            <NavLink
+              to={`./@${store.modal.id}`}
+              children={<ProfileButton variant="large" onClick={() => {
                 store.modal.close()
                 generalStore.setSidebarView(Views.Chats)
-            }}>Message @{store.modal.username}</MessageButton>}
-        />}
+              }}>Message @{store.modal.username}</ProfileButton>}
+            />
+
+            <ProfileButton id={'profile-block-button'} variant="large" color={"red"} onClick={() => useBlockUser(true)}>
+              Block @{store.modal.username}
+            </ProfileButton>
+          </>
+        )}
 
         <style>{`
             .modal {
                 background: none;
             }
         `}</style>
-    </Root>
-)
+      </Root>
+    );
+};
 
 export default Profile

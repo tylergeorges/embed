@@ -51,7 +51,7 @@ export const Discrim = styled.span`
     color: ${({ theme }) => theme.colors._primary.fade(0.335).toString()};
 `
 
-export const MessageButton = styled(Button)`
+export const ProfileButton = styled(Button)`
     margin-top: 15px;
     width: 100%;
     height: 40px;
