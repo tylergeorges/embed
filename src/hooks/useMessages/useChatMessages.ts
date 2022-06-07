@@ -48,7 +48,7 @@ export const useChatMessages = (user: string, guild: string) => {
 //   }
 
   useSubscription<NewDirectMessage>(NEW_DIRECT_MESSAGE, {
-    // variables: { channel, guild, threadId: thread },
+    variables: { guild },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, (x) => {
