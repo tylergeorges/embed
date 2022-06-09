@@ -1,4 +1,5 @@
 export * from './BaseMessage'
+export * from './BaseSubscriptionMessage'
 export * from './ChannelHeader'
 export * from './ChannelInfo'
 export * from './ChannelName'

@@ -13,11 +13,11 @@ export interface SendMessage_sendMessage_author {
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface SendMessage_sendMessage_attachments {
@@ -151,11 +151,11 @@ export interface SendMessage_sendMessage_referencedMessage_author {
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface SendMessage_sendMessage_referencedMessage_attachments {

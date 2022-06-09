@@ -13,11 +13,11 @@ export interface Messages_channel_TextChannel_messageBunch_messages_author {
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_messages_attachments {
@@ -151,11 +151,11 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_messages_referencedMessage_attachments {
@@ -330,11 +330,11 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_author
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_attachments {
@@ -468,11 +468,11 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_referencedMessage_attachments {
@@ -659,11 +659,11 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_auth
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_attachments {
@@ -797,11 +797,11 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_referencedMessage_attachments {
@@ -976,11 +976,11 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_attachments {
@@ -1114,11 +1114,11 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_referencedMessage_attachments {

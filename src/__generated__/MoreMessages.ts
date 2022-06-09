@@ -13,11 +13,11 @@ export interface MoreMessages_channel_TextChannel_messageBunch_messages_author {
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface MoreMessages_channel_TextChannel_messageBunch_messages_attachments {
@@ -151,11 +151,11 @@ export interface MoreMessages_channel_TextChannel_messageBunch_messages_referenc
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface MoreMessages_channel_TextChannel_messageBunch_messages_referencedMessage_attachments {
@@ -341,11 +341,11 @@ export interface MoreMessages_channel_AnnouncementChannel_messageBunch_messages_
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface MoreMessages_channel_AnnouncementChannel_messageBunch_messages_attachments {
@@ -479,11 +479,11 @@ export interface MoreMessages_channel_AnnouncementChannel_messageBunch_messages_
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface MoreMessages_channel_AnnouncementChannel_messageBunch_messages_referencedMessage_attachments {
