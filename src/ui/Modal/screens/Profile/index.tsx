@@ -27,11 +27,10 @@ const resize = (url: string) => url.includes('cdn.discordapp.com') ? url+'?size=
 
 const Profile = () => {
   const blockUser = useMutation<boolean>(BLOCK_USER);
-  const unblockUser = useMutation<boolean>(BLOCK_USER); // TODO: Unblock mutation
 
   const useBlockUser = async (block: boolean) => {
-      await (block ? blockUser : unblockUser)({
-        variables: { user: store.modal.id },
+      await blockUser({
+        variables: { user: store.modal.id, active: block },
       });
 
       // TODO: user.blocked = block; blah blah blah
