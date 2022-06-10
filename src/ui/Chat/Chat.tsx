@@ -24,12 +24,28 @@ export interface ChatProps {
 
 moment.relativeTimeThreshold('ss', 0)
 
+const parseTimeRemaining = (timeRemaining: number) => {
+  const h = Math.floor(timeRemaining / 3600)
+  const m = Math.floor(timeRemaining % 3600 / 60).toString().padStart(2, '0')
+  const s = Math.floor(timeRemaining % 60).toString().padStart(2, '0')
+
+  return `${h ? h+':' : ''}${m}:${s}`
+}
+
 export const Chat = withRouter(observer((props: ChatProps & RouteComponentProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const sendMessage = useSendMessage(props.thread ? generalStore.activeThread.id : null);
   const [rows, setRows] = useState(1);
   const { channel } = useRouter();
   const { data, error, errors, networkStatus, loading } = useQuery<ChannelName>(GET_CHANNEL_NAME, { variables: { channel } });
+
+  const [slowmodeTimeRemaining, setSlowmodeTimeRemaining] = useState(-1)
+  const [slowmodeInterval, setSlowmodeInterval] = useState<NodeJS.Timeout | null>(null)
+  const [slowmodeRed, setSlowmodeRed] = useState(false)
+
+  useEffect(() => {
+    if (slowmodeTimeRemaining < 0) clearInterval(slowmodeInterval)
+  }, [slowmodeTimeRemaining])
 
   if (loading) return <Loading />;
   if (!data || !data.channel) {
@@ -53,25 +69,7 @@ export const Chat = withRouter(observer((props: ChatProps & RouteComponentProps)
 
   const channelName = props.thread ? generalStore.activeThread.name : data.channel?.name;
 
-  const [slowmodeTimeRemaining, setSlowmodeTimeRemaining] = useState(-1)
-
-  const parseTimeRemaining = (timeRemaining: number) => {
-    const h = Math.floor(timeRemaining / 3600)
-    const m = Math.floor(timeRemaining % 3600 / 60).toString().padStart(2, '0')
-    const s = Math.floor(timeRemaining % 60).toString().padStart(2, '0')
-    
-    return `${h ? h+':' : ''}${m}:${s}`
-  }
-
-  const [slowmodeInterval, setSlowmodeInterval] = useState<NodeJS.Timeout | null>(null)
-
-  useEffect(() => {
-    if (slowmodeTimeRemaining < 0) clearInterval(slowmodeInterval)
-  }, [slowmodeTimeRemaining])
-
-  const [slowmodeRed, setSlowmodeRed] = useState(false)
-
-  const slowmode = 10 // HARDCODED FOR TESTING
+  const slowmode = data.channel?.rateLimitPerUser || null
 
   return (
     <Root className="chat">
@@ -94,8 +92,8 @@ export const Chat = withRouter(observer((props: ChatProps & RouteComponentProps)
 
             content = content.replace(/:([^\s:]+?):/g, (match, name) => {
               const result = generalStore.emojis.get(name)
-              return result 
-                ? result.category === 'custom' 
+              return result
+                ? result.category === 'custom'
                   ? `<${result.animated ? 'a' : ''}:${result.keywords[0]}:${result.emoji}>`
                   : result.emoji
                 : match
@@ -127,7 +125,7 @@ export const Chat = withRouter(observer((props: ChatProps & RouteComponentProps)
             if (slowmode) {
               setSlowmodeTimeRemaining(slowmode)
 
-              setSlowmodeInterval(setInterval(() => 
+              setSlowmodeInterval(setInterval(() =>
                 setSlowmodeTimeRemaining(time => time - 1)
               , 1000))
             }
