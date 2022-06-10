@@ -16,8 +16,12 @@ import { Locale } from '@lib/Locale'
 import categorise from "@ui/Sidebar/Channels/categorise";
 import {autorun} from "mobx";
 import {Util} from '@lib/Util';
+import { EmojiStore } from '@services/Emoji'
+import { defaultEmojis } from '@services/Emoji/defaultEmojis'
 
 const formatter = new Intl.NumberFormat('en', { notation: 'compact' })
+
+const { compare } = new Intl.Collator()
 
 @observer
 export class Header extends React.Component {
@@ -39,8 +43,8 @@ export class Header extends React.Component {
 							if (!data || !data.guild) {
 								addNotification({
 									level: 'error',
-									title: Locale.translate('frontend.notif.serverunavailable'),
-									message: Locale.translate('frontend.notif.serverunavailable.desc'),
+									title: Locale.translate('notif.serverunavailable'),
+									message: Locale.translate('notif.serverunavailable.desc'),
 									autoDismiss: 0,
 								});
 								return null;
@@ -57,6 +61,17 @@ export class Header extends React.Component {
 							} catch (_) {
 								generalStore.setChannels([]);
 							}
+
+							generalStore.setEmojis(new EmojiStore(
+								...generalStore.guild?.emojis.sort((a, b) => compare(a.name, b.name)).map(e => ({
+									category: 'custom',
+									emoji: e.id,
+									keywords: [e.name],
+									animated: e.animated,
+									available: e.available
+								})),
+								...defaultEmojis
+							))
 
 							if (error) return null;
 
@@ -90,7 +105,7 @@ export class Header extends React.Component {
 										<Tooltip
 											placement="bottom"
 											overlay={
-												`${data.guild.memberCount === 1 ? Locale.translate('frontend.membercount.one.tooltip') : Locale.translate('frontend.membercount.tooltip', {COUNT: data.guild.memberCount.toLocaleString()})}`
+												`${data.guild.memberCount === 1 ? Locale.translate('membercount.one.tooltip') : Locale.translate('membercount.tooltip', {COUNT: data.guild.memberCount.toLocaleString()})}`
 											}
 										>
 											<Count className="count">{formatter.format(data.guild.memberCount)}</Count>
@@ -117,7 +132,7 @@ export class Header extends React.Component {
 									<Tooltip
 										placement="bottom"
 										overlay={
-											`${data.guild.memberCount === 1 ? Locale.translate('frontend.membercount.one.tooltip') : Locale.translate('frontend.membercount.tooltip', {COUNT: data.guild.memberCount.toLocaleString()})}`
+											`${data.guild.memberCount === 1 ? Locale.translate('membercount.one.tooltip') : Locale.translate('membercount.tooltip', {COUNT: data.guild.memberCount.toLocaleString()})}`
 										}
 									>
 										<Count className="count">{formatter.format(data.guild.memberCount)}</Count>

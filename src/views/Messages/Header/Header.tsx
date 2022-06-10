@@ -24,6 +24,7 @@ import {Auth} from "@ui/Sidebar/Panel/elements";
 import {observer} from "mobx-react";
 import { SingleChannelAuth } from '@ui/Sidebar/Panel'
 import {generalStore} from "@store";
+import Pins from './Pins'
 
 export interface HeaderProps {
   channel: string,
@@ -66,10 +67,11 @@ export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
                         </Topic>
                     )}
             </Stretch>
+            <Pins />
             <SingleChannelAuthWrapper>
                 <SingleChannelAuth />
             </SingleChannelAuthWrapper>
-            {invite ? <Tooltip placement="bottom" overlay={Locale.translate('frontend.opendiscord.tooltip')}>
+            {invite ? <Tooltip placement="bottom" overlay={Locale.translate('opendiscord.tooltip')}>
                     <Join
                         className="join"
                         href={invite}
@@ -77,7 +79,7 @@ export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
                         // TODO: Fix join button
                         // onClick={this.join}
                     >
-                        {Locale.translate('frontend.opendiscord')}
+                        {Locale.translate('opendiscord')}
                     </Join>
                 </Tooltip> : null}
 

@@ -15,6 +15,8 @@ import Emoji from "@ui/shared/Emoji";
 import thread from "@ui/Message/Thread";
 import Tooltip from 'rc-tooltip'
 import moment from 'moment'
+import { observer } from 'mobx-react'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 export interface ChatProps {
   thread?: boolean;
@@ -22,7 +24,7 @@ export interface ChatProps {
 
 moment.relativeTimeThreshold('ss', 0)
 
-export const Chat: FunctionComponent<ChatProps> = (props) => {
+export const Chat = withRouter(observer((props: ChatProps & RouteComponentProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const sendMessage = useSendMessage(props.thread ? generalStore.activeThread.id : null);
   const [rows, setRows] = useState(1);
@@ -33,8 +35,8 @@ export const Chat: FunctionComponent<ChatProps> = (props) => {
   if (!data || !data.channel) {
     addNotification({
       level: 'error',
-      title: Locale.translate('frontend.notif.channelunavailable'),
-      message: Locale.translate('frontend.notif.channelunavailable.desc'),
+      title: Locale.translate('notif.channelunavailable'),
+      message: Locale.translate('notif.channelunavailable.desc'),
       autoDismiss: 0,
 
     });
@@ -42,7 +44,7 @@ export const Chat: FunctionComponent<ChatProps> = (props) => {
   }
   if (error) addNotification({
     level: 'warning',
-    title: Locale.translate('frontend.notif.loaderror.chat'),
+    title: Locale.translate('notif.loaderror.chat'),
     message: formatError(error),
     autoDismiss: 0,
 
@@ -90,6 +92,15 @@ export const Chat: FunctionComponent<ChatProps> = (props) => {
               return
             }
 
+            content = content.replace(/:([^\s:]+?):/g, (match, name) => {
+              const result = generalStore.emojis.get(name)
+              return result 
+                ? result.category === 'custom' 
+                  ? `<${result.animated ? 'a' : ''}:${result.keywords[0]}:${result.emoji}>`
+                  : result.emoji
+                : match
+            })
+
             if (content.startsWith('/')) {
               const words = content.split(' ')
               const command = words.shift().substring(1)
@@ -123,7 +134,7 @@ export const Chat: FunctionComponent<ChatProps> = (props) => {
           }}
           innerRef={ref => (inputRef.current = ref)}
           innerProps={{
-            placeholder: channelName ? Locale.translate('frontend.input.message', {CHANNEL: channelName}) : null
+            placeholder: channelName ? Locale.translate('input.message', {CHANNEL: channelName}) : null
           }}
         />
 
@@ -141,4 +152,4 @@ export const Chat: FunctionComponent<ChatProps> = (props) => {
       </Tooltip>}
     </Root>
   )
-}
+}))

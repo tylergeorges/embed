@@ -5,6 +5,7 @@ import Moment from 'moment'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
 import Lottie from 'lottie-react-web'
+import reactStringReplace from 'react-string-replace'
 
 import Author, { tags, Timestamp } from './Author'
 import {
@@ -28,12 +29,14 @@ import {
   LottieStickerWrapper,
   Member,
   Messages,
+  Link,
   Reactions,
   RepliedAvatar,
   RepliedMessage,
   RepliedText,
   RepliedUser,
   ReplyImageIcon,
+  ReplyPopup,
   ReplySpine,
   ReplySystemText,
   Root,
@@ -41,7 +44,8 @@ import {
   StickerTooltipIcon,
   ThreadSpine,
   UnknownReplyIconWrapper,
-  Video
+  Video,
+  Name
 } from './elements'
 import { Image } from './Embed/elements/media'
 import Reaction from './Reaction'
@@ -53,6 +57,7 @@ import { generalStore } from '@store'
 import webpCheck from '@ui/shared/webpCheck'
 import Thread from "@ui/Message/Thread";
 import { compareGroupability } from '@views/Messages/utils'
+import { store } from '@models'
 
 // attachment icons
 import audio from '@images/discordAssets/7674eb0d869afebca7b1f3a5202506c6.svg'
@@ -124,43 +129,55 @@ class Message extends React.PureComponent<Props, any> {
         <Messages className="messages" style={firstMessage.type === MessageType.Default && !shouldShowAuthor ? { marginLeft:  '60px', marginTop: '-17px' } : {}}>
           {shouldShowContext(firstMessage) &&
             <React.Fragment>
-              <ReplySpine/>
+              <ReplySpine />
               {repliedMessage ?
-                <RepliedMessage className="replied-message">
-                  {repliedMessage.type !== MessageType.GuildMemberJoin ? <>
-                    <RepliedAvatar src={getAvatar(repliedMessage.author)} className="avatar" />
-                    <span style={{verticalAlign: 'sub'}}>{tags({author: repliedMessage.author, crosspost: !!(repliedMessage.flags & 1 << 1), referenceGuild: repliedMessage.messageReference?.guildId, guest: repliedMessage.isGuest})}</span>
-                    <RepliedUser nameColor={repliedMessage.author.color} className="user">{firstMessage.mentions.some(m => m.id === repliedMessage.author.id) && '@'}{repliedMessage.author.name}</RepliedUser>
-                  </> : <svg width="12" height="12" viewBox="0 0 18 18" style={{marginRight: '.25rem'}}><path fill="#3ba55c" d="M0 8h14.2l-3.6-3.6L12 3l6 6-6 6-1.4-1.4 3.6-3.6H0"></path></svg>}
-                  {repliedMessage.content
-                    ? <RepliedText className="text">
-                        <Markdown mentions={repliedMessage.mentions}>{repliedMessage.content}</Markdown>
-                        {repliedMessage.editedAt && (
-                          <Tooltip
-                            mouseEnterDelay={1}
-                            placement="top"
-                            overlay={Moment(repliedMessage.editedAt).format('LLLL')}
-                          >
-                            <Edited className="edited">
-                              {Locale.translate('frontend.edited')}
-                            </Edited>
-                          </Tooltip>
-                        )}
-                      </RepliedText>
-                    : repliedMessage.interaction
-                      ? <ReplySystemText>Command</ReplySystemText>
-                    : repliedMessage.stickers.length > 0
-                      ? <ReplySystemText>{repliedMessage.stickers[0].name} sticker</ReplySystemText>
-                    : repliedMessage.type === MessageType.GuildMemberJoin
-                      ? <RepliedText>{joinMessageBeginning(repliedMessage)}{repliedMessage.author.name}{joinMessageEnd(repliedMessage)}</RepliedText>
-                    : <ReplySystemText>Attachment</ReplySystemText>}
-                  {repliedMessage.interaction ?
-                    <ReplyImageIcon aria-hidden="false" width="20" height="20" viewBox="0 0 24 24"><path fill="rgba(255,255,255,.66)" fillRule="evenodd" clipRule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H5ZM16.8995 8.41419L15.4853 6.99998L7 15.4853L8.41421 16.8995L16.8995 8.41419Z"></path></ReplyImageIcon>
-                  : repliedMessage.stickers.length > 0 ?
-                    <ReplyImageIcon width="20" height="20" aria-hidden="false" viewBox="0 0 16 16"><path fillRule="evenodd" clipRule="evenodd" d="M9.20038 2.39762V5.24178C9.20038 6.10455 9.89673 6.80072 10.7597 6.80072H13.6046C13.9558 6.80072 14.1343 6.37826 13.8844 6.12835L9.87292 2.11796C9.62295 1.86806 9.20038 2.04061 9.20038 2.39762ZM10.7461 8.01794C9.22044 8.01794 7.98197 6.77947 7.98197 5.25382V2.03499H3.19561C2.53749 2.03499 1.99902 2.57346 1.99902 3.23158V12.8043C1.99902 13.4624 2.53749 14.0009 3.19561 14.0009H12.7683C13.4265 14.0009 13.9649 13.4624 13.9649 12.8043V8.01794H10.7461ZM9.80015 9C9.80015 9.99411 8.99427 10.8 8.00015 10.8C7.00604 10.8 6.20015 9.99411 6.20015 9H5.00015C5.00015 10.6569 6.3433 12 8.00015 12C9.65701 12 11.0002 10.6569 11.0002 9H9.80015Z" fill="rgba(255,255,255,.66)"></path></ReplyImageIcon>
-                  : (repliedMessage.attachments.length > 0 || repliedMessage.embeds.length > 0) &&
-                    <ReplyImageIcon aria-hidden="false" width="20" height="20" viewBox="0 0 64 64"><path fill="rgba(255,255,255,.66)" d="M56 50.6667V13.3333C56 10.4 53.6 8 50.6667 8H13.3333C10.4 8 8 10.4 8 13.3333V50.6667C8 53.6 10.4 56 13.3333 56H50.6667C53.6 56 56 53.6 56 50.6667ZM22.6667 36L29.3333 44.0267L38.6667 32L50.6667 48H13.3333L22.6667 36Z"></path></ReplyImageIcon>}
-                </RepliedMessage>
+                <Tooltip
+                  trigger={["click"]}
+                  placement="top"
+                  overlay={<ReplyPopup>
+                    <Message
+                      messages={[{...repliedMessage, referencedMessage: null}]}
+                      allMessages={allMessages}
+                    />
+                  </ReplyPopup>}
+                  overlayStyle={store.sidebar.isOpen ? {marginLeft: '200px'} : {}}
+                >
+                  <RepliedMessage className="replied-message">
+                    {repliedMessage.type !== MessageType.GuildMemberJoin ? <>
+                      <RepliedAvatar src={getAvatar(repliedMessage.author)} className="avatar" />
+                      <span style={{verticalAlign: 'sub'}}>{tags({author: repliedMessage.author, crosspost: !!(repliedMessage.flags & 1 << 1), referenceGuild: repliedMessage.messageReference?.guildId, guest: repliedMessage.isGuest})}</span>
+                      <RepliedUser nameColor={repliedMessage.author.color} className="user">{firstMessage.mentions.some(m => m.id === repliedMessage.author.id) && '@'}{repliedMessage.author.name}</RepliedUser>
+                    </> : <svg width="12" height="12" viewBox="0 0 18 18" style={{marginRight: '.25rem'}}><path fill="#3ba55c" d="M0 8h14.2l-3.6-3.6L12 3l6 6-6 6-1.4-1.4 3.6-3.6H0"></path></svg>}
+                    {repliedMessage.content
+                      ? <RepliedText className="text">
+                          <Markdown mentions={repliedMessage.mentions}>{repliedMessage.content}</Markdown>
+                          {repliedMessage.editedAt && (
+                            <Tooltip
+                              mouseEnterDelay={1}
+                              placement="top"
+                              overlay={Moment(repliedMessage.editedAt).format('LLLL')}
+                            >
+                              <Edited className="edited">
+                                {Locale.translate('edited')}
+                              </Edited>
+                            </Tooltip>
+                          )}
+                        </RepliedText>
+                      : repliedMessage.interaction
+                        ? <ReplySystemText>Command</ReplySystemText>
+                      : repliedMessage.stickers.length > 0
+                        ? <ReplySystemText>{repliedMessage.stickers[0].name} sticker</ReplySystemText>
+                      : repliedMessage.type === MessageType.GuildMemberJoin
+                        ? <RepliedText>{joinMessage(repliedMessage).replace('{member}', repliedMessage.author.name)}</RepliedText>
+                      : <ReplySystemText>Attachment</ReplySystemText>}
+                    {repliedMessage.interaction ?
+                      <ReplyImageIcon aria-hidden="false" width="20" height="20" viewBox="0 0 24 24"><path fill="rgba(255,255,255,.66)" fillRule="evenodd" clipRule="evenodd" d="M5 3C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3H5ZM16.8995 8.41419L15.4853 6.99998L7 15.4853L8.41421 16.8995L16.8995 8.41419Z"></path></ReplyImageIcon>
+                    : repliedMessage.stickers.length > 0 ?
+                      <ReplyImageIcon width="20" height="20" aria-hidden="false" viewBox="0 0 16 16"><path fillRule="evenodd" clipRule="evenodd" d="M9.20038 2.39762V5.24178C9.20038 6.10455 9.89673 6.80072 10.7597 6.80072H13.6046C13.9558 6.80072 14.1343 6.37826 13.8844 6.12835L9.87292 2.11796C9.62295 1.86806 9.20038 2.04061 9.20038 2.39762ZM10.7461 8.01794C9.22044 8.01794 7.98197 6.77947 7.98197 5.25382V2.03499H3.19561C2.53749 2.03499 1.99902 2.57346 1.99902 3.23158V12.8043C1.99902 13.4624 2.53749 14.0009 3.19561 14.0009H12.7683C13.4265 14.0009 13.9649 13.4624 13.9649 12.8043V8.01794H10.7461ZM9.80015 9C9.80015 9.99411 8.99427 10.8 8.00015 10.8C7.00604 10.8 6.20015 9.99411 6.20015 9H5.00015C5.00015 10.6569 6.3433 12 8.00015 12C9.65701 12 11.0002 10.6569 11.0002 9H9.80015Z" fill="rgba(255,255,255,.66)"></path></ReplyImageIcon>
+                    : (repliedMessage.attachments.length > 0 || repliedMessage.embeds.length > 0) &&
+                      <ReplyImageIcon aria-hidden="false" width="20" height="20" viewBox="0 0 64 64"><path fill="rgba(255,255,255,.66)" d="M56 50.6667V13.3333C56 10.4 53.6 8 50.6667 8H13.3333C10.4 8 8 10.4 8 13.3333V50.6667C8 53.6 10.4 56 13.3333 56H50.6667C53.6 56 56 53.6 56 50.6667ZM22.6667 36L29.3333 44.0267L38.6667 32L50.6667 48H13.3333L22.6667 36Z"></path></ReplyImageIcon>}
+                  </RepliedMessage>
+                </Tooltip>
                 : firstMessage.interaction ?
                   <RepliedMessage className="replied-message">
                     <RepliedAvatar src={getAvatar(firstMessage.interaction.user)} className="avatar" />
@@ -249,7 +266,7 @@ class Message extends React.PureComponent<Props, any> {
                             overlay={Moment(message.editedAt).format('LLLL')}
                           >
                             <Edited className="edited">
-                              {Locale.translate('frontend.edited')}
+                              {Locale.translate('edited')}
                             </Edited>
                           </Tooltip>
                         )}
@@ -443,10 +460,12 @@ class Message extends React.PureComponent<Props, any> {
                   </Member>
                 );
 
+                const pinLink = <Link onClick={() => generalStore.togglePins(true)}>pinned messages</Link>
+
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Pinned>
-                      {member} {Locale.translate('frontend.messages.pinned')}
+                      {member} {Locale.translate('messages.pinned')} See all {pinLink}.
                     </Secondary.Pinned>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
@@ -463,7 +482,7 @@ class Message extends React.PureComponent<Props, any> {
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Add>
-                      {joinMessageBeginning(message)}{member}{joinMessageEnd(message)}
+                      {reactStringReplace(joinMessage(message), '{member}', () => member)}
                     </Secondary.Add>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
@@ -484,7 +503,7 @@ class Message extends React.PureComponent<Props, any> {
                   return (
                     <React.Fragment key={message.id}>
                       <Secondary.Boost>
-                        {member} {Locale.translate('frontend.messages.boost')} {Locale.translate('frontend.messages.boost.achieved', {GUILD: generalStore.guild.name, TIER: message.type.replace('UserPremiumGuildTier', '')})}
+                        {member} {Locale.translate('messages.boost')} {Locale.translate('messages.boost.achieved', {GUILD: generalStore.guild.name, TIER: message.type.replace('UserPremiumGuildTier', '')})}
                       </Secondary.Boost>
                       <Timestamp time={message.createdAt} />
                     </React.Fragment>
@@ -493,7 +512,7 @@ class Message extends React.PureComponent<Props, any> {
                   return (
                     <React.Fragment key={message.id}>
                       <Secondary.Boost>
-                        {member} {Locale.translate('frontend.messages.boost')}
+                        {member} {Locale.translate('messages.boost')}
                       </Secondary.Boost>
                       <Timestamp time={message.createdAt} />
                     </React.Fragment>
@@ -511,7 +530,7 @@ class Message extends React.PureComponent<Props, any> {
                 return (
                   <React.Fragment key={message.id}>
                     <Secondary.Add>
-                      {member} {Locale.translate('frontend.messages.follow', {HOOK: message.content})}
+                      {member} {reactStringReplace(Locale.translate('messages.follow'), '{HOOK}', () => <Name>{message.content}</Name>)}
                     </Secondary.Add>
                     <Timestamp time={message.createdAt} />
                   </React.Fragment>
@@ -579,7 +598,7 @@ class Message extends React.PureComponent<Props, any> {
 
                 return <React.Fragment key={message.id}>
                   <Secondary.Thread onClick={openThread}>
-                    {member} {Locale.translate('frontend.messages.threadcreated')} <span>{message.content}</span>
+                    {member} {Locale.translate('messages.threadcreated')} <span>{message.content}</span>
                   </Secondary.Thread>
                   <Timestamp time={message.createdAt} />
                   {message.thread && <div style={{ marginLeft: '60px' }}>
@@ -603,47 +622,24 @@ class Message extends React.PureComponent<Props, any> {
 
 export default Message
 
+// Join messages: https://github.com/Discord-Datamining/Discord-Datamining/commit/c79bf619ca341d97af219fe127efac2b31d0dde5#comments
 
-// Join messages: https://github.com/DJScias/Discord-Datamining/commit/c79bf619ca341d97af219fe127efac2b31d0dde5#comments
-
-function joinMessageBeginning(message: { createdAt: number }): string {
-  const messages: string[] = [
-      '',
-      '',
-      'Welcome, ',
-      'A wild ',
-      '',
-      '',
-      '',
-      'Welcome ',
-      '',
-      'Everyone welcome ',
-      'Glad you\'re here, ',
-      'Good to see you, ',
-      'Yay you made it, '
+function joinMessage(message: { createdAt: number }): string {
+  const messages = [
+      '{member} joined the party.',
+      '{member} is here.',
+      'Welcome, {member}. We hope you brought pizza.',
+      'A wild {member} appeared.',
+      '{member} just landed.',
+      '{member} just slid into the server.',
+      '{member} just showed up!',
+      'Welcome {member}. Say hi!',
+      '{member} hopped into the server.',
+      'Everyone welcome {member}!',
+      "Glad you're here, {member}.",
+      'Good to see you, {member}.',
+      'Yay you made it, {member}!'
   ];
-
-
-  return messages[(Number(new Date(message.createdAt))) % messages.length]
-}
-
-function joinMessageEnd(message: { createdAt: number }): string {
-  const messages: string[] = [
-      ' joined the party.',
-      ' is here.',
-      '. We hope you brought pizza.',
-      ' appeared.',
-      ' just landed.',
-      ' just slid into the server.',
-      ' just showed up!',
-      '. Say hi!',
-      ' hopped into the server.',
-      '!',
-      '.',
-      '.',
-      '!'
-  ];
-
 
   return messages[(Number(new Date(message.createdAt))) % messages.length]
 }
