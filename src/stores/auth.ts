@@ -11,15 +11,17 @@ import {Locale} from "@lib/Locale";
 import {generalStore} from "@store/general";
 
 interface DiscordUser {
-  avatar: string
-  discriminator: null
-  username: string
-  _id: string
+  _id: string;
+  username: string;
+  avatar: string;
+  discriminator: number | null;
+  blockedUsers: string[];
 }
 
 interface GuestUser {
-  username: string
-  avatarUrl: string | null
+  username: string;
+  avatarUrl: string | null;
+  blockedUsers?: string[];
 }
 
 type User = DiscordUser | GuestUser;
@@ -46,6 +48,17 @@ export class AuthStore {
       generalStore.needsUpdate = true;
       // localStorage.setItem('lastUpdate', version)
     }
+  }
+
+  get blockedUsers() {
+    return this.user?.blockedUsers || [];
+  }
+
+  @action setBlockedUsers(blockedUsers: string[]) {
+    if (!this.user) return;
+
+    this.user.blockedUsers = blockedUsers;
+    window.localStorage.setItem('user', JSON.stringify(this.user));
   }
 
   @action setLocale(locale: string) {

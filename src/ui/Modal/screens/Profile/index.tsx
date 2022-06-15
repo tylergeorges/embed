@@ -2,7 +2,7 @@ import { store } from "@models"
 import { Root, Tag, Avatar, Top, Badges, Badge, Discrim, ProfileButton } from "./elements"
 import webpCheck from '@ui/shared/webpCheck'
 import { gifCheck } from "@ui/Message"
-import { generalStore } from "@store"
+import { authStore, generalStore } from "@store"
 import { NavLink } from "react-router-dom"
 import { tags } from "@ui/Message/Author"
 import Tooltip from "rc-tooltip"
@@ -22,10 +22,11 @@ import earlyVerifiedBotDev from '@images/discordAssets/4441e07fe0f46b3cb41b79366
 import earlySupporter from '@images/discordAssets/b802e9af134ff492276d94220e36ec5c.svg'
 import { useMutation } from "react-apollo-hooks";
 import BLOCK_USER from './BlockUser.graphql';
+import { observer } from "mobx-react";
 
 const resize = (url: string) => url.includes('cdn.discordapp.com') ? url+'?size=256' : url
 
-const Profile = () => {
+const Profile = observer(() => {
   const blockUser = useMutation<boolean>(BLOCK_USER);
 
   const useBlockUser = async (block: boolean) => {
@@ -33,11 +34,14 @@ const Profile = () => {
         variables: { user: store.modal.id, active: block },
       });
 
-      // TODO: user.blocked = block; blah blah blah
+      const newBlockedUsers = block
+        ? [...authStore.blockedUsers, store.modal.id]
+        : authStore.blockedUsers.filter(r => r !== store.modal.id);
+
+      authStore.setBlockedUsers(newBlockedUsers);
   };
 
-  // TODO: Ability to see if user is already blocked (add blocked prop to userData and depend on that for profiles?)
-  //        - if blocked, show unblock button
+  const isBlocked = authStore.blockedUsers.includes(store.modal.id);
 
   return (
       <Root x={store.modal.x} y={store.modal.y}>
@@ -72,8 +76,8 @@ const Profile = () => {
               }}>Message @{store.modal.username}</ProfileButton>}
             />
 
-            <ProfileButton id={'profile-block-button'} variant="large" color={"red"} onClick={() => useBlockUser(true)}>
-              Block @{store.modal.username}
+            <ProfileButton id={'profile-block-button'} variant="large" color={"red"} onClick={() => useBlockUser(!isBlocked)}>
+              {isBlocked ? 'Unblock' : 'Block'} @{store.modal.username}
             </ProfileButton>
           </>
         )}
@@ -85,6 +89,6 @@ const Profile = () => {
         `}</style>
       </Root>
     );
-};
+});
 
 export default Profile

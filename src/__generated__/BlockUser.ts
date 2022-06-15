@@ -13,4 +13,5 @@ export interface BlockUser {
 
 export interface BlockUserVariables {
   user: string;
+  active: boolean;
 }
