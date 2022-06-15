@@ -1,5 +1,6 @@
 export * from './BaseMessage'
 export * from './BlockUser'
+export * from './BaseSubscriptionMessage'
 export * from './ChannelHeader'
 export * from './ChannelInfo'
 export * from './ChannelName'

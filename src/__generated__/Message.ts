@@ -13,11 +13,11 @@ export interface Message_author {
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface Message_attachments {
@@ -151,11 +151,11 @@ export interface Message_referencedMessage_author {
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface Message_referencedMessage_attachments {

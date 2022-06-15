@@ -6,10 +6,10 @@
 import { MessageType, FormatType, MentionType } from "./globalTypes";
 
 // ====================================================
-// GraphQL fragment: BaseMessage
+// GraphQL fragment: BaseSubscriptionMessage
 // ====================================================
 
-export interface BaseMessage_author {
+export interface BaseSubscriptionMessage_author {
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
@@ -17,10 +17,9 @@ export interface BaseMessage_author {
   id: string;
   flags: number | null;
   name: string;
-  color: number;
 }
 
-export interface BaseMessage_attachments {
+export interface BaseSubscriptionMessage_attachments {
   __typename: "Attachment";
   url: string;
   height: number | null;
@@ -29,7 +28,7 @@ export interface BaseMessage_attachments {
   size: number;
 }
 
-export interface BaseMessage_stickers {
+export interface BaseSubscriptionMessage_stickers {
   __typename: "Sticker";
   id: string;
   name: string;
@@ -37,7 +36,7 @@ export interface BaseMessage_stickers {
   lottieData: string | null;
 }
 
-export interface BaseMessage_reactions {
+export interface BaseSubscriptionMessage_reactions {
   __typename: "Reaction";
   count: number;
   emojiId: string | null;
@@ -45,54 +44,54 @@ export interface BaseMessage_reactions {
   animated: boolean | null;
 }
 
-export interface BaseMessage_messageReference {
+export interface BaseSubscriptionMessage_messageReference {
   __typename: "MessageReference";
   guildId: string | null;
   channelId: string;
   messageId: string | null;
 }
 
-export interface BaseMessage_embeds_author {
+export interface BaseSubscriptionMessage_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
   icon: string | null;
 }
 
-export interface BaseMessage_embeds_fields {
+export interface BaseSubscriptionMessage_embeds_fields {
   __typename: "EmbedField";
   value: string;
   name: string;
   inline: boolean | null;
 }
 
-export interface BaseMessage_embeds_image {
+export interface BaseSubscriptionMessage_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
   width: number | null;
   height: number | null;
 }
 
-export interface BaseMessage_embeds_provider {
+export interface BaseSubscriptionMessage_embeds_provider {
   __typename: "EmbedProvider";
   name: string | null;
   url: string | null;
 }
 
-export interface BaseMessage_embeds_footer {
+export interface BaseSubscriptionMessage_embeds_footer {
   __typename: "EmbedFooter";
   url: string | null;
   text: string;
 }
 
-export interface BaseMessage_embeds_thumbnail {
+export interface BaseSubscriptionMessage_embeds_thumbnail {
   __typename: "EmbedThumbnail";
   height: number | null;
   width: number | null;
   url: string | null;
 }
 
-export interface BaseMessage_embeds_video {
+export interface BaseSubscriptionMessage_embeds_video {
   __typename: "EmbedVideo";
   height: number | null;
   width: number | null;
@@ -100,7 +99,7 @@ export interface BaseMessage_embeds_video {
   proxyUrl: string | null;
 }
 
-export interface BaseMessage_embeds {
+export interface BaseSubscriptionMessage_embeds {
   __typename: "Embed";
   title: string | null;
   description: string | null;
@@ -108,23 +107,23 @@ export interface BaseMessage_embeds {
   timestamp: string | null;
   color: number | null;
   type: string | null;
-  author: BaseMessage_embeds_author | null;
-  fields: BaseMessage_embeds_fields[] | null;
-  image: BaseMessage_embeds_image | null;
-  provider: BaseMessage_embeds_provider | null;
-  footer: BaseMessage_embeds_footer | null;
-  thumbnail: BaseMessage_embeds_thumbnail | null;
-  video: BaseMessage_embeds_video | null;
+  author: BaseSubscriptionMessage_embeds_author | null;
+  fields: BaseSubscriptionMessage_embeds_fields[] | null;
+  image: BaseSubscriptionMessage_embeds_image | null;
+  provider: BaseSubscriptionMessage_embeds_provider | null;
+  footer: BaseSubscriptionMessage_embeds_footer | null;
+  thumbnail: BaseSubscriptionMessage_embeds_thumbnail | null;
+  video: BaseSubscriptionMessage_embeds_video | null;
 }
 
-export interface BaseMessage_mentions {
+export interface BaseSubscriptionMessage_mentions {
   __typename: "Mention";
   id: string;
   type: MentionType;
   name: string;
 }
 
-export interface BaseMessage_interaction_user {
+export interface BaseSubscriptionMessage_interaction_user {
   __typename: "Author";
   id: string;
   username: string;
@@ -132,13 +131,13 @@ export interface BaseMessage_interaction_user {
   avatarUrl: string;
 }
 
-export interface BaseMessage_interaction {
+export interface BaseSubscriptionMessage_interaction {
   __typename: "MessageInteraction";
   name: string;
-  user: BaseMessage_interaction_user;
+  user: BaseSubscriptionMessage_interaction_user;
 }
 
-export interface BaseMessage_thread {
+export interface BaseSubscriptionMessage_thread {
   __typename: "Thread";
   id: string;
   name: string;
@@ -147,7 +146,7 @@ export interface BaseMessage_thread {
   messageCount: number;
 }
 
-export interface BaseMessage {
+export interface BaseSubscriptionMessage {
   __typename: "Message";
   id: string;
   content: string;
@@ -156,13 +155,13 @@ export interface BaseMessage {
   createdAt: any;
   editedAt: any | null;
   isGuest: boolean;
-  author: BaseMessage_author;
-  attachments: BaseMessage_attachments[];
-  stickers: BaseMessage_stickers[];
-  reactions: BaseMessage_reactions[] | null;
-  messageReference: BaseMessage_messageReference | null;
-  embeds: BaseMessage_embeds[];
-  mentions: BaseMessage_mentions[];
-  interaction: BaseMessage_interaction | null;
-  thread: BaseMessage_thread | null;
+  author: BaseSubscriptionMessage_author;
+  attachments: BaseSubscriptionMessage_attachments[];
+  stickers: BaseSubscriptionMessage_stickers[];
+  reactions: BaseSubscriptionMessage_reactions[] | null;
+  messageReference: BaseSubscriptionMessage_messageReference | null;
+  embeds: BaseSubscriptionMessage_embeds[];
+  mentions: BaseSubscriptionMessage_mentions[];
+  interaction: BaseSubscriptionMessage_interaction | null;
+  thread: BaseSubscriptionMessage_thread | null;
 }

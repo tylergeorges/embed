@@ -1,15 +1,16 @@
 #import "./Embed.graphql"
-#import "./BaseSubscriptionMessage.graphql"
 
-# BaseSubscriptionMessage.graphql without isGuest and with referencedMessage
+# BaseMessage.graphql without author.color
+# Updates also need to be done in UpdatedMessage.graphql
 
-fragment UpdatedMessage on UpdatedMessage {
+fragment BaseSubscriptionMessage on Message {
     id
     content
     type
     flags
     createdAt
     editedAt
+    isGuest
 
     author {
         avatarUrl
@@ -46,10 +47,6 @@ fragment UpdatedMessage on UpdatedMessage {
         guildId
         channelId
         messageId
-    }
-
-    referencedMessage {
-        ...BaseSubscriptionMessage
     }
 
     embeds {
