@@ -1,8 +1,7 @@
 import produce from "immer";
-import { CHAT_MESSAGES, MORE_MESSAGES, NEW_DIRECT_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
+import { CHAT_MESSAGES, NEW_DIRECT_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { Messages_channel, Message, NewMessage } from "@generated";
-import { generalStore } from "@store";
+import { Message } from "@generated";
 import { NewDirectMessage } from "@generated/NewDirectMessage";
 
 /**

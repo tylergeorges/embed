@@ -4,20 +4,51 @@ import {observer} from "mobx-react";
 import { Root, Chat, Avatar, Details, Preview, LoadingContainer } from "./elements";
 import CHATS from "./Chats.graphql";
 import {generalStore} from "@store";
-import { Chats } from "@generated";
+import { Chats, UserTag } from "@generated";
 import { Member } from "@ui/Message/elements";
 import { useRouter } from "@hooks";
 import { Loading } from "@ui/Overlays/Loading/elements";
 import client from "@lib/apollo";
+import USER_TAG from "@views/Messages/Header/UserTag.graphql";
 
 export const ChatSwitcher = withRouter(observer(() => {
     if (!generalStore.chats)
         client.query<Chats>({ query: CHATS, variables: { guild: generalStore.guild.id }, fetchPolicy: 'network-only' })
             .then(({ data: { getChats: chats } }) => generalStore.setChats(chats))
 
-    const { guild, channel } = useRouter()
+    const { guild, channel } = useRouter();
 
     if (!generalStore.chats) return <LoadingContainer><Loading /></LoadingContainer>
+
+    const userId = channel.startsWith('@') ? channel.substr(1) : null;
+    if (!generalStore.chats.find(r => r.recipient.id === userId)) {
+        client.query<UserTag>({
+            query: USER_TAG,
+            variables: { guild, user: userId }
+        }).then(({ data: { userData }}) => {
+            if (generalStore.chats.find(r => r.recipient.id === userId)) return; // Could've been added to state in the meantime
+
+            // TODO: server should give avatarUrl, color & flags to set here.
+
+            generalStore.setChats([
+                {
+                    content: "",
+                    recipient: {
+                        __typename: 'User',
+                        id: userData.id,
+                        name: userData.name,
+                        discrim: userData.discrim,
+                        avatarUrl: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
+                        color: 0x0,
+                        flags: 0,
+                        bot: false,
+                    }
+                },
+
+              ...generalStore.chats,
+            ]);
+        });
+    }
 
     return (
         <Root className="channels">
