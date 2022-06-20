@@ -28,8 +28,6 @@ export const ChatSwitcher = withRouter(observer(() => {
         }).then(({ data: { userData }}) => {
             if (generalStore.chats.find(r => r.recipient.id === userId)) return; // Could've been added to state in the meantime
 
-            // TODO: server should give avatarUrl, color & flags to set here.
-
             generalStore.setChats([
                 {
                     content: "",
@@ -38,9 +36,9 @@ export const ChatSwitcher = withRouter(observer(() => {
                         id: userData.id,
                         name: userData.name,
                         discrim: userData.discrim,
-                        avatarUrl: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
-                        color: 0x0,
-                        flags: 0,
+                        avatarUrl: userData.avatarUrl,
+                        color: userData.color,
+                        flags: userData.flags,
                         bot: false,
                     }
                 },

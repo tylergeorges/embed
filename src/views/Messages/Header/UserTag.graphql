@@ -3,5 +3,8 @@ query UserTag($guild: String!, $user: String!) {
     id
     name
     discrim
+    avatarUrl
+    flags
+    color
   }
 }

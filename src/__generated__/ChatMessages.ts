@@ -13,11 +13,11 @@ export interface ChatMessages_getMessagesForChat_author {
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface ChatMessages_getMessagesForChat_attachments {
@@ -151,11 +151,11 @@ export interface ChatMessages_getMessagesForChat_referencedMessage_author {
   __typename: "User";
   avatarUrl: string;
   bot: boolean;
-  color: number;
   discrim: string;
   id: string;
   flags: number | null;
   name: string;
+  color: number;
 }
 
 export interface ChatMessages_getMessagesForChat_referencedMessage_attachments {

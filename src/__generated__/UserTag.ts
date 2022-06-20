@@ -12,6 +12,9 @@ export interface UserTag_userData {
   id: string;
   name: string;
   discrim: string;
+  avatarUrl: string;
+  flags: number | null;
+  color: number;
 }
 
 export interface UserTag {
