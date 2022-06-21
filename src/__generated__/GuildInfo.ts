@@ -49,7 +49,10 @@ export interface GuildInfo_guild_roles {
   __typename: "Role";
   id: string;
   name: string;
+  position: number;
   color: number;
+  icon: string | null;
+  unicodeEmoji: string | null;
 }
 
 export interface GuildInfo_guild_emojis {
