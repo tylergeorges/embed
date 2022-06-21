@@ -18,6 +18,7 @@ export interface GuildInfo_guild_channels_TextChannel {
   name: string;
   id: string;
   position: number;
+  rateLimitPerUser: number | null;
   category: GuildInfo_guild_channels_TextChannel_category | null;
   topic: string | null;
   canSend: boolean;
@@ -35,6 +36,7 @@ export interface GuildInfo_guild_channels_AnnouncementChannel {
   name: string;
   id: string;
   position: number;
+  rateLimitPerUser: number | null;
   category: GuildInfo_guild_channels_AnnouncementChannel_category | null;
   topic: string | null;
   canSend: boolean;
