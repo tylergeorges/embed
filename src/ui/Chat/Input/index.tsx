@@ -89,20 +89,23 @@ class MagicTextarea extends React.Component<Props> {
 
     return (
       <Root>
-        <UploadButton className="upload-button">
-          <input
-            type="file"
-            onChange={event => {
-              if (!event.target.files[0]) return
-              this.upload(event.target.files[0])
-              event.target.value = null
-            }}
-            hidden
-          />
-          <svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.00098C6.486 2.00098 2 6.48698 2 12.001C2 17.515 6.486 22.001 12 22.001C17.514 22.001 22 17.515 22 12.001C22 6.48698 17.514 2.00098 12 2.00098ZM17 13.001H13V17.001H11V13.001H7V11.001H11V7.00098H13V11.001H17V13.001Z"></path></svg>
-        </UploadButton>
+        {generalStore.settings?.filesEnabled ?
+          <UploadButton className="upload-button">
+            <input
+              type="file"
+              onChange={event => {
+                if (!event.target.files[0]) return
+                this.upload(event.target.files[0])
+                event.target.value = null
+              }}
+              hidden
+            />
+            <svg width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.00098C6.486 2.00098 2 6.48698 2 12.001C2 17.515 6.486 22.001 12 22.001C17.514 22.001 22 17.515 22 12.001C22 6.48698 17.514 2.00098 12 2.00098ZM17 13.001H13V17.001H11V13.001H7V11.001H11V7.00098H13V11.001H17V13.001Z"></path></svg>
+          </UploadButton>
+        : null}
         <Textarea
           {...this.props.innerProps}
+          upload={generalStore.settings?.filesEnabled}
           innerRef={ref => {
             const { innerRef } = this.props;
 
@@ -112,7 +115,7 @@ class MagicTextarea extends React.Component<Props> {
           onChange={event => this.onChange(event.target.value)}
           onClick={this.resetState}
           onPaste={event => {
-            if (!event.clipboardData.files[0]) return
+            if (!event.clipboardData.files[0] || !generalStore.settings?.filesEnabled) return
             event.preventDefault()
             this.upload(event.clipboardData.files[0])
           }}
