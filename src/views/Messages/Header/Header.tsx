@@ -67,7 +67,7 @@ export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
                         </Topic>
                     )}
             </Stretch>
-            <Pins />
+            {(!thread || generalStore.threadFullscreen) && <Pins />}
             <SingleChannelAuthWrapper>
                 <SingleChannelAuth />
             </SingleChannelAuthWrapper>
