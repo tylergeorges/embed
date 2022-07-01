@@ -8,7 +8,7 @@ export const Root = styled(Modal.Content)`
   max-width: 100%;
   height: 424px;
   right: 0;
-  bottom: 50px;
+  bottom: 75px;
   overflow: hidden;
   border-radius: 8px;
   background: ${({ theme }) => theme.colors.background};
@@ -33,6 +33,7 @@ export const Content = styled.div`
   height: 100%;
   margin-left: 40px;
   padding: 0 0.5rem 0 0.5rem;
+  background-color: ${({ theme }) => theme.colors._background.darken(0.15).string()};
 `;
 
 export const RowContainer = styled.div`
