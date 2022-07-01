@@ -51,6 +51,15 @@ export const List = styled.div`
     overflow-y: auto;
     background-color: ${({ theme }) => theme.colors._background.darken(0.15).string()};
     padding: 8px;
+
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
+        border-radius: 5px;
+    }
 `
 
 export const Pin = styled.div`

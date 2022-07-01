@@ -32,8 +32,19 @@ export const Sidebar = styled.div`
 export const Content = styled.div`
   height: 100%;
   margin-left: 40px;
-  padding: 0 0.5rem 0 0.5rem;
+  padding: 0 0.2rem 0 0.5rem;
   background-color: ${({ theme }) => theme.colors._background.darken(0.15).string()};
+
+  & > :first-child > :first-child {
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
+      border-radius: 10px;
+    }
+  }
 `;
 
 export const RowContainer = styled.div`
