@@ -48,18 +48,20 @@ export default class Panel extends React.Component<{}> {
 										)
 									}
 									{"guest" in authStore.user && (
-										<Discriminator>GUEST</Discriminator>
+										<Discriminator>Guest</Discriminator>
 									)}
 								</UserTag>
 								<UserButtons>
-									<Tooltip
-										placement="top"
-										overlay={Locale.translate('auth.logout')}
-									>
-										<UserButton onClick={this.onClick.bind(this)}>
-											<LogOutIcon />
-										</UserButton>
-									</Tooltip>
+									{queryParams.has('username') || // disable logout for dynamic usernames
+										<Tooltip
+											placement="top"
+											overlay={Locale.translate('auth.logout')}
+										>
+											<UserButton onClick={this.onClick.bind(this)}>
+												<LogOutIcon />
+											</UserButton>
+										</Tooltip>
+									}
 								</UserButtons>
 							</LoggedInUser>
 						)
@@ -75,10 +77,6 @@ export default class Panel extends React.Component<{}> {
 				<Version
 					href={`https://widgetbot.io`}
 					target="_blank"
-					onClick={e => {
-						e.preventDefault();
-						// openModal({ variables: { type: 'settings', data: null } })
-					}}
 				>
 					WidgetBot {version}
 				</Version>

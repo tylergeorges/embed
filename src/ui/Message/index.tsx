@@ -58,6 +58,7 @@ import webpCheck from '@ui/shared/webpCheck'
 import Thread from "@ui/Message/Thread";
 import { compareGroupability } from '@views/Messages/utils'
 import { store } from '@models'
+import getAvatar from "@utils/getAvatar";
 
 // attachment icons
 import audio from '@images/discordAssets/7674eb0d869afebca7b1f3a5202506c6.svg'
@@ -71,7 +72,6 @@ import document from '@images/discordAssets/3c2ce4428c2c44824b07162f648524f5.svg
 import spreadsheet from '@images/discordAssets/1939fe07993a754364bf3fee5223428d.svg'
 import webcode from '@images/discordAssets/557b6b6b982a8c2b2c97048b86e2e6c3.svg'
 import unknown from '@images/discordAssets/66084381f55f4238d69e5cbe3b8dc42e.svg'
-import getAvatar from "@utils/getAvatar";
 
 interface Props {
   messages: MessageData[],

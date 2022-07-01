@@ -77,6 +77,7 @@ export const Username = styled('div')`
 
 export const Discriminator = styled('div')`
   font-size: 12px;
+  text-transform: uppercase;
   color: ${({ theme }) =>
     theme.colors._primary
       .fade(0.7)
