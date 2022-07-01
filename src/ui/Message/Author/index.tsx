@@ -50,12 +50,12 @@ export const Timestamp = ({ time }: { time: number }) => (
   </Tooltip>
 );
 
-const verified = 
+const verified =
   <Tooltip placement="top" overlay="Verified Bot">
     <VerifiedBot aria-label="Verified Bot" aria-hidden="false" width="16" height="16" viewBox="0 0 16 15.2"><path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" fill="currentColor"></path></VerifiedBot>
   </Tooltip>
 
-export const tags = ({author, crosspost, referenceGuild, guest}: Omit<Props, 'time'>) => 
+export const tags = ({author, crosspost, referenceGuild, guest}: Omit<Props, 'time'>) =>
   <React.Fragment>
     {author.bot &&
       ( guest ? <Tag className="guest">Guest</Tag>
@@ -73,7 +73,7 @@ const roleIcon = (roleIDs: string[]) => {
 
   const roles = roleIDs.map(id => generalStore.guild.roles.find(r => r.id === id)).sort((a, b) => b.position - a.position)
 
-  const role = roles.find(r => r.icon || r.unicodeEmoji)
+  const role = roles.filter(r => r).find(r => r.icon || r.unicodeEmoji)
   if (!role) return null
 
   if (role.icon) return (
@@ -83,7 +83,7 @@ const roleIcon = (roleIDs: string[]) => {
     >
       <RoleIcon className="role-icon role-icon-image" src={webpCheck(`https://cdn.discordapp.com/role-icons/${role.id}/${role.icon}.webp`)} />
     </Tooltip>)
-  
+
   if (role.unicodeEmoji) return (
     <Tooltip
       placement="top"

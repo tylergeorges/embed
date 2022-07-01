@@ -71,18 +71,13 @@ import document from '@images/discordAssets/3c2ce4428c2c44824b07162f648524f5.svg
 import spreadsheet from '@images/discordAssets/1939fe07993a754364bf3fee5223428d.svg'
 import webcode from '@images/discordAssets/557b6b6b982a8c2b2c97048b86e2e6c3.svg'
 import unknown from '@images/discordAssets/66084381f55f4238d69e5cbe3b8dc42e.svg'
+import getAvatar from "@utils/getAvatar";
 
 interface Props {
   messages: MessageData[],
   allMessages: MessageData[],
   style?
 }
-
-const gifCheck = (url: string) => {
-  return url.includes('/a_') ? url.replace('webp', 'gif') : url
-}
-
-const getAvatar = (user: Pick<Message_author, 'avatarUrl'>) => user.avatarUrl ? webpCheck(gifCheck(user.avatarUrl)) : 'https://cdn.discordapp.com/embed/avatars/0.png'
 
 export const shouldShowContext = (message: MessageData) =>
   message.type === MessageType.Reply || !!message.interaction

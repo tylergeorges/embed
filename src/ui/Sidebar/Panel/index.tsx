@@ -1,13 +1,20 @@
 import * as React from 'react'
 
-import {Auth, Developers, Root, Version} from './elements'
-import {inject, observer} from "mobx-react";
-import {authStore, AuthStore} from "@store/auth";
+import {
+	Auth,
+	Avatar, Discriminator, UserButtons,
+	LoggedInUser, LogOutIcon,
+	Root,
+	UserContainer, Username, UserTag,
+	Version, UserButton, NotLoggedIn
+} from './elements'
+import {observer} from "mobx-react";
+import {authStore} from "@store/auth";
 import {onClick} from "@views/Messages/Header";
 import {Locale} from '@lib/Locale';
 import {FiLogOut, FiLogIn} from 'react-icons/fi'
 import Tooltip from 'rc-tooltip';
-import {generalStore} from "@store";
+import getAvatar from "@utils/getAvatar";
 
 const { version } = require('../../../../package.json');
 
@@ -22,27 +29,49 @@ export default class Panel extends React.Component<{}> {
 	};
 
 	render(): React.ReactNode {
-		// const lastUpdate = localStorage.getItem('lastUpdate');
-		// if (!lastUpdate || Semver.newMinorOrMajor(lastUpdate, version)) {
-		// 	localStorage.setItem('lastUpdate', version);
-		// 	authStore.logout();
-		// 	authStore.needsUpdate = true;
-		// }
-		//  <LoginButton AuthStore={authStore}/>
-		//  {window.innerWidth > 520 ? (authStore.user ? `Logged in as ${authStore.user.username}` : undefined) : undefined}
+		const avatar = authStore.user
+			? getAvatar(authStore.user, {animated: false})
+			: null;
+
 		return (
 			<Root className="panel">
-				<Developers>
-					{queryParams.has('username') ||
-						<Auth
-							className="auth"
-							target="_blank"
-							onClick={this.onClick.bind(this)}
-						>
-							{Locale.translate(`auth.${authStore.user ? 'logout' : 'login'}` as const)}
-						</Auth>
+				<UserContainer>
+					{authStore.user
+						? (
+							<LoggedInUser>
+								<Avatar src={avatar} draggable={false} />
+								<UserTag>
+									<Username>{authStore.user.username}</Username>
+									{("discriminator" in authStore.user && authStore.user.discriminator)
+										&& (
+											<Discriminator>#{authStore.user.discriminator}</Discriminator>
+										)
+									}
+									{"guest" in authStore.user && (
+										<Discriminator>GUEST</Discriminator>
+									)}
+								</UserTag>
+								<UserButtons>
+									<Tooltip
+										placement="top"
+										overlay={Locale.translate('auth.logout')}
+									>
+										<UserButton onClick={this.onClick.bind(this)}>
+											<LogOutIcon />
+										</UserButton>
+									</Tooltip>
+								</UserButtons>
+							</LoggedInUser>
+						)
+						: (
+							<NotLoggedIn>
+								<Auth onClick={this.onClick}>
+									{Locale.translate('auth.login')}
+								</Auth>
+							</NotLoggedIn>
+						)
 					}
-				</Developers>
+				</UserContainer>
 				<Version
 					href={`https://widgetbot.io`}
 					target="_blank"
@@ -51,21 +80,8 @@ export default class Panel extends React.Component<{}> {
 						// openModal({ variables: { type: 'settings', data: null } })
 					}}
 				>
-					{`${version}`}
+					WidgetBot {version}
 				</Version>
-				{
-					/* <Tooltip
-					   placement="top"
-					   overlay={<Trans id="Panel.settings">Settings</Trans>}
-					 >
-					   <Settings onClick={store.modal.openSettings} />
-						<Tooltip
-							 placement="top"
-							 overlay={<Trans id="Panel.about">About</Trans>}
-						   >
-
-						   </Tooltip> */
-				}
 			</Root>
 		)
 	}
