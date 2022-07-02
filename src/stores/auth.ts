@@ -20,6 +20,7 @@ interface DiscordUser {
 interface GuestUser {
   username: string
   avatarUrl: string | null
+  guest: true
 }
 
 type User = DiscordUser | GuestUser;
@@ -75,7 +76,8 @@ export class AuthStore {
   @action async setGuestUser(username: string) {
     const user: GuestUser = {
       username,
-      avatarUrl: queryParams.get('avatar')
+      avatarUrl: queryParams.get('avatar'),
+      guest: true
     }
     window.localStorage.setItem('user', JSON.stringify(user))
 
