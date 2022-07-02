@@ -73,7 +73,7 @@ const roleIcon = (roleIDs: string[]) => {
 
   const roles = roleIDs.map(id => generalStore.guild.roles.find(r => r.id === id)).sort((a, b) => b.position - a.position)
 
-  const role = roles.filter(r => r).find(r => r.icon || r.unicodeEmoji)
+  const role = roles.find(r => r.icon || r.unicodeEmoji)
   if (!role) return null
 
   if (role.icon) return (
