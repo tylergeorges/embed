@@ -58,6 +58,7 @@ import webpCheck from '@ui/shared/webpCheck'
 import Thread from "@ui/Message/Thread";
 import { compareGroupability } from '@views/Messages/utils'
 import { store } from '@models'
+import getAvatar from "@utils/getAvatar";
 
 // attachment icons
 import audio from '@images/discordAssets/7674eb0d869afebca7b1f3a5202506c6.svg'
@@ -77,12 +78,6 @@ interface Props {
   allMessages: MessageData[],
   style?
 }
-
-const gifCheck = (url: string) => {
-  return url.includes('/a_') ? url.replace('webp', 'gif') : url
-}
-
-const getAvatar = (user: Pick<Message_author, 'avatarUrl'>) => user.avatarUrl ? webpCheck(gifCheck(user.avatarUrl)) : 'https://cdn.discordapp.com/embed/avatars/0.png'
 
 export const shouldShowContext = (message: MessageData) =>
   message.type === MessageType.Reply || !!message.interaction
