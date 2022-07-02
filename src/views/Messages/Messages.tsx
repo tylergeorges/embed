@@ -14,6 +14,7 @@ import Message from "@ui/Message";
 import {Locale} from "@lib/Locale";
 import { addNotification } from "notify";
 import { generalStore } from "@store";
+import MessageGroup from "@ui/Messages";
 
 type MessagesProps = {
   guild: string;
@@ -52,7 +53,6 @@ export const Messages = observer(({ guild, channel, thread = false }: MessagesPr
     title: Locale.translate('notif.loaderror.messages'),
     message: formatError(error),
     autoDismiss: 0,
-
   });
   if (error) return <ErrorAhoy message={formatError(error)} />;
   if (!ready) return <Loading />;
@@ -137,10 +137,9 @@ export const Messages = observer(({ guild, channel, thread = false }: MessagesPr
                                     parent={parent}
                                     rowIndex={index}
                                 >
-                                  <Message
-                                      style={style}
-                                      messages={groupedMessages[index]}
-                                      allMessages={messages}
+                                  <MessageGroup
+                                    messages={groupedMessages[index]}
+                                    style={style}
                                   />
                                 </CellMeasurer>
                             ) : null
