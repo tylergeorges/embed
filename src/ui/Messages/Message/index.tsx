@@ -1,12 +1,12 @@
 import {PureComponent} from "react";
 import {Message as MessageData} from "@generated";
 import {
-  AuthorBase,
-  MessageBase,
-  UsernameBase
+  MessageBase, MessageHeaderBase, TimestampBase
 } from "@ui/Messages/Message/elements";
 import MessageAuthor from "@ui/Messages/Message/MessageAuthor";
 import Content from "@ui/Messages/Content";
+import Moment from "moment";
+import Tooltip from "rc-tooltip";
 
 interface MessageProps {
   isFirstMessage?: boolean;
@@ -20,7 +20,9 @@ class Message extends PureComponent<MessageProps> {
     if (this.props.isFirstMessage)
       return (
         <MessageBase>
-          <MessageAuthor author={this.props.message.author} />
+          <MessageHeaderBase>
+            <MessageAuthor author={this.props.message.author} />
+          </MessageHeaderBase>
           <Content
             mentions={this.props.message.mentions}
             messageContent={this.props.message.content}
@@ -30,6 +32,15 @@ class Message extends PureComponent<MessageProps> {
 
     return (
       <MessageBase>
+        <Tooltip
+          placement="top"
+          overlay={Moment(this.props.message.createdAt).format("LLLL")}
+          mouseEnterDelay={1}
+        >
+          <TimestampBase dateTime={this.props.message.createdAt} className="short-time">
+            {Moment(this.props.message.createdAt).format("h:mm A")}
+          </TimestampBase>
+        </Tooltip>
         <Content
           mentions={this.props.message.mentions}
           messageContent={this.props.message.content}
