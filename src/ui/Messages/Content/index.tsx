@@ -1,4 +1,4 @@
-import {PureComponent} from "react";
+import {memo} from "react";
 import Markdown from "@ui/shared/markdown/render";
 import {Message_mentions} from "@generated";
 import {ContentBase} from "@ui/Messages/Message/elements";
@@ -9,16 +9,14 @@ interface ContentProps {
   isReplyContent?: boolean;
 }
 
-class Content extends PureComponent<ContentProps> {
-  render() {
-    return (
-      <ContentBase isReplyContent={this.props.isReplyContent}>
-        <Markdown mentions={this.props.mentions}>
-          {this.props.messageContent}
-        </Markdown>
-      </ContentBase>
-    );
-  }
+function Content(props: ContentProps) {
+  return (
+    <ContentBase isReplyContent={props.isReplyContent}>
+      <Markdown mentions={props.mentions}>
+        {props.messageContent}
+      </Markdown>
+    </ContentBase>
+  );
 }
 
-export default Content;
+export default memo(Content);

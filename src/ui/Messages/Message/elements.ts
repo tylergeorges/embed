@@ -11,6 +11,7 @@ import styled from '../ThemeContext'
 import {Twemoji} from "@ui/shared/Emoji/emoji";
 import {css} from "react-emotion";
 import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
+import {memo} from "react";
 
 export const MessageBase = styled('div')`
   position: relative;
@@ -47,11 +48,11 @@ export const SystemMessageContent = styled.span`
   color: ${({theme}) => theme.colors._primary.darken(0.5).string()};
 `;
 
-export const ReplySpine = styled.div`
+export const ReplySpine = memo(styled.div`
   position: absolute;
   width: 33px;
   height: 12px;
-  top: 8px;
+  top: 9px;
   left: 34px;
   border-left: 2px solid #4f545c;
   border-top: 2px solid #4f545c;
@@ -70,7 +71,7 @@ export const ReplySpine = styled.div`
   @media (max-width: 260px) {
     left: 30px;
   }
-`;
+`);
 
 interface ContentBase {
   isReplyContent?: boolean;
@@ -100,11 +101,11 @@ export const ContentBase = styled('span')`
 export const ReplyInfoBase = styled('div')`
   display: flex;
   flex-direction: row;
+  margin-bottom: 4px;
 `
 
-export const ReplyUserBase = styled('span')`
+export const ReplyUserBase = styled.span`
   display: flex;
-  margin-bottom: 4px;
   align-items: center;
 `;
 
@@ -117,7 +118,7 @@ export const MiniUserAvatarBase = styled('img')`
 interface MiniUserNameBaseProps {
   color: string;
 }
-export const MiniUserNameBase = styled('span')<MiniUserNameBaseProps>`
+export const MiniUserNameBase = styled.span<MiniUserNameBaseProps>`
   margin-right: 4px;
   margin-left: 4px;
   font-size: 14px;
@@ -193,7 +194,7 @@ export const AuthorBase = styled.span`
 interface UsernameBaseProps {
   color: string;
 }
-export const UsernameBase = styled.span<UsernameBaseProps>`
+export const UsernameBase = memo(styled.span<UsernameBaseProps>`
   color: ${props => props.color};
   font-weight: 500;
   display: inline;
@@ -203,7 +204,7 @@ export const UsernameBase = styled.span<UsernameBaseProps>`
     cursor: pointer;
     text-decoration: underline;
   }
-`;
+`);
 
 export const AvatarBase = styled.img`
   position: absolute;

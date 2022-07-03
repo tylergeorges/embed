@@ -1,6 +1,7 @@
 import Moment from "moment/moment";
 import {LargeTimestampBase} from "@ui/Messages/Message/elements";
 import Tooltip from "rc-tooltip";
+import {memo} from "react";
 
 function LargeTimestamp({timestamp}: {timestamp: number}) {
   return (
@@ -16,4 +17,4 @@ function LargeTimestamp({timestamp}: {timestamp: number}) {
   );
 }
 
-export default LargeTimestamp;
+export default memo(LargeTimestamp);
