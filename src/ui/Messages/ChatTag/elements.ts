@@ -8,5 +8,13 @@ export const VerifiedBot = styled('svg')`
 `;
 
 export const ChatTagBase = styled('span')`
-
+  margin-left: 4px;
+  font-size: 10px;
+  text-transform: uppercase;
+  height: fit-content;
+  border-radius: 3px;
+  padding: 0 4px;
+  align-self: center;
+  
+  background-color: ${({ theme }) => theme.colors._accent.string()};
 `;

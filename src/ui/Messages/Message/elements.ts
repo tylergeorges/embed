@@ -9,14 +9,23 @@
 
 import styled from '../ThemeContext'
 import {Twemoji} from "@ui/shared/Emoji/emoji";
+import {css} from "react-emotion";
 
 export const MessageBase = styled('div')`
   position: relative;
   padding: 2px 48px 2px 72px;
-  white-space: break-spaces;
 
   & .short-time {
     display: none;
+  }
+
+  a {
+    color: #00b0f4;
+    text-decoration: none;
+    
+    &:hover {
+      text-decoration: underline;
+    }
   }
   
   &:hover {
@@ -28,12 +37,98 @@ export const MessageBase = styled('div')`
   }
 `;
 
+export const ReplySpine = styled.div`
+  position: absolute;
+  width: 33px;
+  height: 12px;
+  top: 8px;
+  left: 34px;
+  border-left: 2px solid #4f545c;
+  border-top: 2px solid #4f545c;
+  border-top-left-radius: 6px;
+
+  @media (max-width: 500px), (max-height: 370px) {
+    top: 20px;
+    left: 35px;
+  }
+
+  @media (max-width: 400px), (max-height: 340px) {
+    width: 25.5px;
+    left: 32.5px;
+  }
+
+  @media (max-width: 260px) {
+    left: 30px;
+  }
+`;
+
+interface ContentBase {
+  isReplyContent?: boolean;
+}
+export const ContentBase = styled('span')`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  
+  ${
+    ({isReplyContent}: ContentBase) => isReplyContent
+        ? css`
+              font-size: 14px;
+              opacity: 0.64;
+              cursor: pointer;
+              white-space: nowrap;
+
+              &:hover {
+                opacity: 1;
+              }
+        `
+        : css`
+              white-space: break-spaces;
+        `
+  }
+`
+
+export const ReplyInfoBase = styled('div')`
+  display: flex;
+  flex-direction: row;
+`
+
+export const ReplyUserBase = styled('span')`
+  display: flex;
+  margin-bottom: 4px;
+  align-items: center;
+`;
+
+export const MiniUserAvatarBase = styled('img')`
+  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+`;
+
+interface MiniUserNameBaseProps {
+  color: string;
+}
+export const MiniUserNameBase = styled('span')<MiniUserNameBaseProps>`
+  margin-right: 4px;
+  margin-left: 4px;
+  font-size: 14px;
+  opacity: 0.64;
+  font-weight: 500;
+  white-space: nowrap;
+
+  color: ${({color}) => color};
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: underline;
+  }
+`;
+
 export const MessageHeaderBase = styled('div')`
   display: flex;
   flex-direction: row;
 `;
 
-export const TimestampBase = styled('time')`
+export const SmallTimestampBase = styled('time')`
   position: absolute;
   left: 0;
   width: 56px;
@@ -41,7 +136,17 @@ export const TimestampBase = styled('time')`
   font-size: 0.6875rem;
   margin-top: 4px;
   user-select: none;
-  
+
+  color: ${({theme}) => theme.colors._primary.fade(0.5).string()};
+`;
+
+export const LargeTimestampBase = styled('time')`
+  font-size: 0.75rem;
+  margin-left: 8px;
+  cursor: default;
+  display: flex;
+  align-items: center;
+
   color: ${({theme}) => theme.colors._primary.fade(0.5).string()};
 `;
 
@@ -67,7 +172,7 @@ export const UsernameBase = styled.span<UsernameBaseProps>`
   font-weight: 500;
   display: inline;
   vertical-align: baseline;
-  
+
   &:hover {
     cursor: pointer;
     text-decoration: underline;

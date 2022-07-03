@@ -10,9 +10,11 @@ import {memoize} from "lodash";
 import ChatTag from "@ui/Messages/ChatTag";
 import {generalStore} from "@store";
 import RoleIcon from "@ui/Messages/Message/RoleIcon";
+import getAvatar from "@utils/getAvatar";
 
 interface MessageAuthorProps {
   author: Message_author;
+  avatarAnimated: boolean;
 }
 
 class MessageAuthor extends PureComponent<MessageAuthorProps> {
@@ -58,9 +60,14 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
     // Gets the dominant role icon
     const dominantRoleIconRole = this.getDominantRoleIconRole(this.props.author.roles);
 
+    console.log(this.props.author.name,  this.props.author.flags, this.props.author.flags & (1 << 16));
+
     return (
       <AuthorBase>
-        <AvatarBase src={this.props.author.avatarUrl} draggable={false} />
+        <AvatarBase
+          src={getAvatar(this.props.author, {animated: this.props.avatarAnimated})}
+          draggable={false}
+        />
         <UsernameBase color={color}>
           {this.props.author.name}
         </UsernameBase>

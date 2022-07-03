@@ -19,23 +19,20 @@ const verified =
     </VerifiedBot>
   </Tooltip>
 
+function Tag({userFlags}: {userFlags: number}) {
+  if (userFlags & UserFlag.VerifiedBot)
+    return <>{verified} {Locale.translate('tag.bot')}</>;
+
+  return <>{Locale.translate('tag.bot')}</>;
+}
+
 class ChatTag extends PureComponent<PureComponentProps> {
   render() {
-    console.log(`%c ${this.props.userFlags}`, "color: cyan; font-size: 16px;");
-
-    let tagContent;
-
-    switch (this.props.userFlags) {
-      case UserFlag.VerifiedBot:
-        tagContent = <>{verified} {Locale.translate('tag.bot')}</>;
-        break;
-      default:
-        return null;
-    }
+    console.log(`%c flags: ${this.props.userFlags}`, "color: cyan; font-size: 16px;");
 
     return (
       <ChatTagBase>
-        {tagContent}
+        <Tag userFlags={this.props.userFlags} />
       </ChatTagBase>
     );
   }
