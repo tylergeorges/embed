@@ -10,6 +10,7 @@
 import styled from '../ThemeContext'
 import {Twemoji} from "@ui/shared/Emoji/emoji";
 import {css} from "react-emotion";
+import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
 
 export const MessageBase = styled('div')`
   position: relative;
@@ -35,6 +36,15 @@ export const MessageBase = styled('div')`
       display: inherit;
     }
   }
+`;
+
+export const SystemMessageBase = styled(MessageBase)`
+  display: flex;
+  align-items: center;
+`;
+
+export const SystemMessageContent = styled.span`
+  color: ${({theme}) => theme.colors._primary.darken(0.5).string()};
 `;
 
 export const ReplySpine = styled.div`
@@ -126,6 +136,7 @@ export const MiniUserNameBase = styled('span')<MiniUserNameBaseProps>`
 export const MessageHeaderBase = styled('div')`
   display: flex;
   flex-direction: row;
+  align-items: center;
 `;
 
 export const SmallTimestampBase = styled('time')`
@@ -144,12 +155,28 @@ export const LargeTimestampBase = styled('time')`
   font-size: 0.75rem;
   margin-left: 8px;
   cursor: default;
-  display: flex;
-  align-items: center;
-
+  height: fit-content;
+  
   color: ${({theme}) => theme.colors._primary.fade(0.5).string()};
 `;
 
+export namespace Icons {
+  const IconBase = styled.div`
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 16px;
+    width: 72px;
+    height: 16px;
+  `
+
+  export const Add = styled(IconBase)`
+    background-image: url("${add}");
+  `;
+}
 
 /*
 ==============================================================
@@ -159,9 +186,8 @@ export const LargeTimestampBase = styled('time')`
 ==============================================================
  */
 
-export const AuthorBase = styled.div`
-  display: flex;
-  flex-direction: row;
+export const AuthorBase = styled.span`
+  display: inline-flex;
 `;
 
 interface UsernameBaseProps {

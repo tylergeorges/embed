@@ -5,7 +5,6 @@ import {
   Message_referencedMessage
 } from "@generated";
 import {
-  LargeTimestampBase,
   MessageBase,
   MessageHeaderBase, MiniUserAvatarBase, MiniUserNameBase,
   ReplyInfoBase,
@@ -21,6 +20,7 @@ import {memoize} from "lodash";
 import {MessageType} from "@generated/globalTypes";
 import getAvatar, {GetAvatarOptions} from "@utils/getAvatar";
 import {generalStore} from "@store";
+import LargeTimestamp from "@ui/Messages/Message/LargeTimestamp";
 
 interface MessageProps {
   isFirstMessage?: boolean;
@@ -149,15 +149,7 @@ class NormalMessage extends PureComponent<MessageProps, MessageState> {
           )}
           <MessageHeaderBase>
             <MessageAuthor author={this.props.message.author} avatarAnimated={this.state.isHovering} />
-            <Tooltip
-              placement="top"
-              overlay={Moment(this.props.message.createdAt).format("LLLL")}
-              mouseEnterDelay={1}
-            >
-              <LargeTimestampBase dateTime={this.props.message.createdAt}>
-                {Moment(this.props.message.createdAt).calendar()}
-              </LargeTimestampBase>
-            </Tooltip>
+            <LargeTimestamp timestamp={this.props.message.createdAt} />
           </MessageHeaderBase>
           <Content
             mentions={this.props.message.mentions}

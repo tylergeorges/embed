@@ -14,7 +14,8 @@ import getAvatar from "@utils/getAvatar";
 
 interface MessageAuthorProps {
   author: Message_author;
-  avatarAnimated: boolean;
+  avatarAnimated?: boolean;
+  onlyShowUsername?: boolean;
 }
 
 class MessageAuthor extends PureComponent<MessageAuthorProps> {
@@ -62,10 +63,19 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
 
     console.log(this.props.author.name,  this.props.author.flags, this.props.author.flags & (1 << 16));
 
+    if (this.props.onlyShowUsername)
+      return (
+        <AuthorBase>
+          <UsernameBase color={color}>
+            {this.props.author.name}
+          </UsernameBase>
+        </AuthorBase>
+      );
+
     return (
       <AuthorBase>
         <AvatarBase
-          src={getAvatar(this.props.author, {animated: this.props.avatarAnimated})}
+          src={getAvatar(this.props.author, {animated: this.props.avatarAnimated ?? false})}
           draggable={false}
         />
         <UsernameBase color={color}>

@@ -2,6 +2,7 @@ import {PureComponent} from "react";
 import {Message as MessageData} from "@generated";
 import {MessageType} from "@generated/globalTypes";
 import NormalMessage from "@ui/Messages/Message/variants/NormalMessage";
+import GuildMemberJoin from "@ui/Messages/Message/variants/GuildMemberJoin";
 
 interface MessageProps {
   isFirstMessage?: boolean;
@@ -11,6 +12,13 @@ interface MessageProps {
 class Message extends PureComponent<MessageProps> {
   render() {
     switch (this.props.message.type) {
+      case MessageType.GuildMemberJoin:
+        return (
+          <GuildMemberJoin
+            createdAt={this.props.message.createdAt}
+            author={this.props.message.author}
+          />
+        );
       case MessageType.Reply:
       case MessageType.Default:
         return <NormalMessage {...this.props} />;
