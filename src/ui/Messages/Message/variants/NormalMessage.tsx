@@ -23,6 +23,7 @@ import {MessageType} from "@generated/globalTypes";
 import getAvatar, {GetAvatarOptions} from "@utils/getAvatar";
 import LargeTimestamp from "@ui/Messages/Message/LargeTimestamp";
 import {Locale} from "@lib/Locale";
+import {authStore} from "@store";
 
 interface ReplyInfoProps {
   referencedMessage: Message_referencedMessage | null;
@@ -129,9 +130,22 @@ function NormalMessage(props: MessageProps) {
   const shouldShowReply = props.message.type === MessageType.Reply
                           || Boolean(props.message.interaction);
 
+  const isUserMentioned = useMemo(() => {
+    const user = authStore.user;
+
+    if (!("_id" in user))
+      return false;
+
+    const userMentioned = props.message.mentions.find(
+      mention => mention.id === user._id
+    );
+
+    return Boolean(userMentioned);
+  }, [props.message.mentions]);
+
   if (props.isFirstMessage)
     return (
-      <MessageBase>
+      <MessageBase isUserMentioned={isUserMentioned}>
         {shouldShowReply && (
           <ReplyInfo
             referencedMessage={props.message.referencedMessage}
@@ -151,7 +165,7 @@ function NormalMessage(props: MessageProps) {
     );
 
   return (
-    <MessageBase>
+    <MessageBase isUserMentioned={isUserMentioned}>
       <Tooltip
         placement="top"
         overlay={Moment(props.message.createdAt).format("LLLL")}

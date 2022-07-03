@@ -13,9 +13,38 @@ import {css} from "react-emotion";
 import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
 import {memo} from "react";
 
-export const MessageBase = styled('div')`
+interface MessageBaseProps {
+  isUserMentioned?: boolean;
+}
+export const MessageBase = styled.div<MessageBaseProps>`
   position: relative;
   padding: 2px 48px 2px 72px;
+
+  &:hover {
+    --background-color: ${({theme}) => theme.colors._background.darken(0.07).string()};
+
+    & .short-time {
+      display: inherit;
+    }
+  }
+  
+  ${({isUserMentioned}) => isUserMentioned && css`
+    --background-color: rgba(250, 168, 26, 0.1);
+    
+    &:hover {
+      --background-color: rgba(250, 168, 26, 0.08);
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background-color: #faa81a;
+    }
+  `}
 
   & .short-time {
     display: none;
@@ -30,13 +59,7 @@ export const MessageBase = styled('div')`
     }
   }
   
-  &:hover {
-    background-color: ${({theme}) => theme.colors._background.darken(0.07).string()};
-    
-    & .short-time {
-      display: inherit;
-    }
-  }
+  background-color: var(--background-color);
 `;
 
 export const SystemMessageBase = styled(MessageBase)`
@@ -216,10 +239,10 @@ export const UsernameBase = memo(styled.span<UsernameBaseProps>`
 export const AvatarBase = styled.img`
   position: absolute;
   left: 16px;
+  margin-top: 1px;
   border-radius: 100%;
   width: 40px;
   height: 40px;
-  margin-top: 2px;
   z-index: 1;
 `;
 
