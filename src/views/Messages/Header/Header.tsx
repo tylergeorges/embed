@@ -94,13 +94,14 @@ export const Header = observer(({ channel, guild, thread }: HeaderProps) => {
     )
 });
 
-export function onClick()  {
+/** Log in or out */
+export function login()  {
     generalStore.settings?.guestMode
         ? (authStore.user ? logout() : generalStore.toggleMenu(true))
-        : (authStore.user ? logout() : login())
+        : (authStore.user ? logout() : discordLogin())
 }
 
-export function login() {
+function discordLogin() {
     let ls: Storage
     try {
         ls = localStorage
