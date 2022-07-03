@@ -89,7 +89,7 @@ class Author extends React.PureComponent<Props> {
             author.flags,
             this.props.guest,
             name.getBoundingClientRect().right + 10,
-            Math.min(name.getBoundingClientRect().y, innerHeight - 250)
+            Math.min(name.getBoundingClientRect().y, innerHeight - 300)
           )}
         >
           {author.name}

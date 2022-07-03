@@ -135,7 +135,7 @@ class Message extends React.PureComponent<Props, any> {
               firstMessage.author.flags,
               firstMessage.isGuest,
               avatar.getBoundingClientRect().right + 10,
-              Math.min(avatar.getBoundingClientRect().y, innerHeight - 250)
+              Math.min(avatar.getBoundingClientRect().y, innerHeight - 300)
             )}
           />
         }

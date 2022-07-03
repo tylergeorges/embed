@@ -7,6 +7,9 @@ import { NavLink } from "react-router-dom"
 import { tags } from "@ui/Message/Author"
 import Tooltip from "rc-tooltip"
 import { Views } from "@ui/Sidebar"
+import { useMutation } from "react-apollo-hooks";
+import BLOCK_USER from './BlockUser.graphql';
+import { observer } from "mobx-react";
 
 // badges
 import staff from '@images/discordAssets/48d5bdcffe9e7848067c2e187f1ef951.svg'
@@ -20,9 +23,6 @@ import bugHunter1 from '@images/discordAssets/8353d89b529e13365c415aef08d1d1f4.s
 import bugHunter2 from '@images/discordAssets/f599063762165e0d23e8b11b684765a8.svg'
 import earlyVerifiedBotDev from '@images/discordAssets/4441e07fe0f46b3cb41b79366236fca6.svg'
 import earlySupporter from '@images/discordAssets/b802e9af134ff492276d94220e36ec5c.svg'
-import { useMutation } from "react-apollo-hooks";
-import BLOCK_USER from './BlockUser.graphql';
-import { observer } from "mobx-react";
 
 const resize = (url: string) => url.includes('cdn.discordapp.com') ? url+'?size=256' : url
 
@@ -76,7 +76,7 @@ const Profile = observer(() => {
               }}>Message @{store.modal.username}</ProfileButton>}
             />
 
-            <ProfileButton id={'profile-block-button'} variant="large" color={"red"} onClick={() => useBlockUser(!isBlocked)}>
+            <ProfileButton id="profile-block-button" variant="large" color="#d83c3e" onClick={() => useBlockUser(!isBlocked)}>
               {isBlocked ? 'Unblock' : 'Block'} @{store.modal.username}
             </ProfileButton>
           </>
