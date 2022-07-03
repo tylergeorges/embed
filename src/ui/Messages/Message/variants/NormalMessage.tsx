@@ -1,4 +1,4 @@
-import {memo, useMemo, useState} from "react";
+import {memo, useMemo} from "react";
 import {
   Message as MessageData,
   Message_interaction,
@@ -103,22 +103,18 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
 interface MessageProps {
   isFirstMessage?: boolean;
   message: MessageData;
+  isHovered?: boolean;
 }
 
 function NormalMessage(props: MessageProps) {
   console.log("%c NormalMessage render", "color: yellow; font-size: 16px;");
-
-  const [isHovering, setIsHovering] = useState(false);
 
   const shouldShowReply = props.message.type === MessageType.Reply
                           || Boolean(props.message.interaction);
 
   if (props.isFirstMessage)
     return (
-      <MessageBase
-        onMouseEnter={() => setIsHovering(true)}
-        onMouseLeave={() => setIsHovering(false)}
-      >
+      <MessageBase>
         {shouldShowReply && (
           <ReplyInfo
             referencedMessage={props.message.referencedMessage}
@@ -126,7 +122,7 @@ function NormalMessage(props: MessageProps) {
           />
         )}
         <MessageHeaderBase>
-          <MessageAuthor author={props.message.author} avatarAnimated={isHovering} />
+          <MessageAuthor author={props.message.author} avatarAnimated={props.isHovered ?? false} />
           <LargeTimestamp timestamp={props.message.createdAt} />
         </MessageHeaderBase>
         <Content
@@ -154,4 +150,5 @@ function NormalMessage(props: MessageProps) {
     </MessageBase>
   );
 }
+
 export default NormalMessage;

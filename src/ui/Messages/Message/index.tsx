@@ -7,6 +7,7 @@ import {memo} from "react";
 interface MessageProps {
   isFirstMessage?: boolean;
   message: MessageData;
+  isHovered?: boolean;
 }
 
 function Message(props: MessageProps) {
@@ -32,6 +33,7 @@ function Message(props: MessageProps) {
         <NormalMessage
           message={errorMessage}
           isFirstMessage={props.isFirstMessage}
+          isHovered={props.isHovered}
         />
       );
     }
