@@ -20,8 +20,8 @@ export const ChatSwitcher = withRouter(observer(() => {
 
     if (!generalStore.chats) return <LoadingContainer><Loading /></LoadingContainer>
 
-    const userId = channel.startsWith('@') ? channel.substr(1) : null;
-    if (!generalStore.chats.find(r => r.recipient.id === userId)) {
+    const userId = channel?.startsWith('@') ? channel.substr(1) : null;
+    if (userId && !generalStore.chats.find(r => r.recipient.id === userId)) {
         client.query<UserTag>({
             query: USER_TAG,
             variables: { guild, user: userId }
