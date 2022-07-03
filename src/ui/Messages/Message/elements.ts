@@ -107,9 +107,6 @@ interface ContentBase {
   isReplyContent?: boolean;
 }
 export const ContentBase = styled('span')`
-  text-overflow: ellipsis;
-  overflow: hidden;
-  
   ${
     ({isReplyContent}: ContentBase) => isReplyContent
         ? css`
@@ -117,6 +114,8 @@ export const ContentBase = styled('span')`
               opacity: 0.64;
               cursor: pointer;
               white-space: nowrap;
+              text-overflow: ellipsis;
+              overflow: hidden;
 
               &:hover {
                 opacity: 1;
@@ -126,7 +125,7 @@ export const ContentBase = styled('span')`
               white-space: break-spaces;
         `
   }
-`
+`;
 
 export const ReplyInfoBase = styled('div')`
   display: flex;
@@ -208,6 +207,63 @@ export namespace Icons {
     background-image: url("${add}");
   `;
 }
+
+/*
+==============================================================
+
+  Message Accessories
+
+==============================================================
+ */
+
+export const MessageAccessoriesBase = styled.div`
+  display: grid;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  grid-auto-flow: row;
+  grid-row-gap: 4px;
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+`;
+
+export const ReactionsBase = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  user-select: none;
+`;
+
+export const ReactionBase = styled.span`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 6px;
+  border-radius: 8px;
+  cursor: not-allowed;
+  
+  background-color: ${({theme}) => theme.colors._background.darken(0.2).string()};
+`;
+
+export const EmojiTooltipBase = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+export const ReactionEmojiBase = styled(Twemoji)`
+  width: 16px;
+  height: 16px;
+`;
+
+export const ReactionCountBase = styled.span`
+  margin-left: 6px;
+  min-width: 9px;
+  font-weight: 500;
+  font-size: 14px;
+  
+  color: ${({theme}) => theme.colors._primary.fade(0.3).string()};
+`;
+
+
 
 /*
 ==============================================================

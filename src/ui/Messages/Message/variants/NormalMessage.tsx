@@ -5,7 +5,6 @@ import {
   Message_referencedMessage
 } from "@generated";
 import {
-  EditedBase,
   MessageBase,
   MessageHeaderBase,
   MiniUserAvatarBase,
@@ -22,7 +21,6 @@ import Tooltip from "rc-tooltip";
 import {MessageType} from "@generated/globalTypes";
 import getAvatar, {GetAvatarOptions} from "@utils/getAvatar";
 import LargeTimestamp from "@ui/Messages/Message/LargeTimestamp";
-import {Locale} from "@lib/Locale";
 import {authStore} from "@store";
 
 interface ReplyInfoProps {
@@ -92,6 +90,8 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
           <Content
             mentions={props.referencedMessage.mentions}
             messageContent={props.referencedMessage.content}
+            editedAt={props.referencedMessage.editedAt}
+            reactions={props.referencedMessage.reactions}
             isReplyContent={true}
           />
         )
@@ -100,21 +100,6 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
         )
       }
     </ReplyInfoBase>
-  );
-});
-
-interface EditedProps {
-  editedAt: number;
-}
-
-const Edited = memo((props: EditedProps) => {
-  return (
-    <Tooltip
-      overlay={Moment(props.editedAt).format("LLLL")}
-      placement="top"
-    >
-    <EditedBase>{Locale.translate("edited")}</EditedBase>
-  </Tooltip>
   );
 });
 
@@ -159,8 +144,9 @@ function NormalMessage(props: MessageProps) {
         <Content
           mentions={props.message.mentions}
           messageContent={props.message.content}
+          editedAt={props.message.editedAt}
+          reactions={props.message.reactions}
         />
-        {props.message.editedAt && <Edited editedAt={props.message.editedAt} />}
       </MessageBase>
     );
 
@@ -178,8 +164,9 @@ function NormalMessage(props: MessageProps) {
       <Content
         mentions={props.message.mentions}
         messageContent={props.message.content}
+        editedAt={props.message.editedAt}
+        reactions={props.message.reactions}
       />
-      {props.message.editedAt && <Edited editedAt={props.message.editedAt} />}
     </MessageBase>
   );
 }
