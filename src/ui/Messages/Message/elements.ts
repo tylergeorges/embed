@@ -73,6 +73,13 @@ export const ReplySpine = memo(styled.div`
   }
 `);
 
+export const EditedBase = styled.span`
+  font-size: 10px;
+  margin-left: 4px;
+  
+  color: ${({theme}) => theme.colors._primary.darken(0.5).string()};
+`;
+
 interface ContentBase {
   isReplyContent?: boolean;
 }

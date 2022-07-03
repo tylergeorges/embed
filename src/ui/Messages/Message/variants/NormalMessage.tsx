@@ -5,6 +5,7 @@ import {
   Message_referencedMessage
 } from "@generated";
 import {
+  EditedBase,
   MessageBase,
   MessageHeaderBase,
   MiniUserAvatarBase,
@@ -21,6 +22,7 @@ import Tooltip from "rc-tooltip";
 import {MessageType} from "@generated/globalTypes";
 import getAvatar, {GetAvatarOptions} from "@utils/getAvatar";
 import LargeTimestamp from "@ui/Messages/Message/LargeTimestamp";
+import {Locale} from "@lib/Locale";
 
 interface ReplyInfoProps {
   referencedMessage: Message_referencedMessage | null;
@@ -100,6 +102,21 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
   );
 });
 
+interface EditedProps {
+  editedAt: number;
+}
+
+const Edited = memo((props: EditedProps) => {
+  return (
+    <Tooltip
+      overlay={Moment(props.editedAt).format("LLLL")}
+      placement="top"
+    >
+    <EditedBase>{Locale.translate("edited")}</EditedBase>
+  </Tooltip>
+  );
+});
+
 interface MessageProps {
   isFirstMessage?: boolean;
   message: MessageData;
@@ -129,6 +146,7 @@ function NormalMessage(props: MessageProps) {
           mentions={props.message.mentions}
           messageContent={props.message.content}
         />
+        {props.message.editedAt && <Edited editedAt={props.message.editedAt} />}
       </MessageBase>
     );
 
@@ -147,6 +165,7 @@ function NormalMessage(props: MessageProps) {
         mentions={props.message.mentions}
         messageContent={props.message.content}
       />
+      {props.message.editedAt && <Edited editedAt={props.message.editedAt} />}
     </MessageBase>
   );
 }
