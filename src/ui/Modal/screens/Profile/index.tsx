@@ -10,6 +10,7 @@ import { Views } from "@ui/Sidebar"
 import { useMutation } from "react-apollo-hooks";
 import BLOCK_USER from './BlockUser.graphql';
 import { observer } from "mobx-react";
+import { onClick as login} from "@views/Messages/Header"
 
 // badges
 import staff from '@images/discordAssets/48d5bdcffe9e7848067c2e187f1ef951.svg'
@@ -67,7 +68,7 @@ const Profile = observer(() => {
           {tags({ author: store.modal, guest: store.modal.guest })}
         </Tag>
         {generalStore.settings?.directEnabled && (!store.modal.bot || store.modal.guest) && (
-          <>
+          authStore.user ? <>
             <NavLink
               to={`./@${store.modal.id}`}
               children={<ProfileButton variant="large" onClick={() => {
@@ -80,6 +81,9 @@ const Profile = observer(() => {
               {isBlocked ? 'Unblock' : 'Block'} @{store.modal.username}
             </ProfileButton>
           </>
+          : <ProfileButton variant="large" onClick={login}>
+            Log in to message
+          </ProfileButton>
         )}
 
         <style>{`
