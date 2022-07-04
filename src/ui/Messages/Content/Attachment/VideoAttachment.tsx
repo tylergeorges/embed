@@ -65,6 +65,20 @@ function VideoAttachment(props: VideoAttachmentProps) {
     setIsFullscreen(document.fullscreenElement !== null);
   }
 
+  const onProgressClick = (e) => {
+    if (videoRef.current === null)
+      return;
+
+    const rect = e.target.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+
+    const duration = videoRef.current?.duration;
+    if (duration === undefined)
+      return;
+
+    videoRef.current.currentTime = x / rect.width * duration;
+  }
+
   useEffect(
     () => {
       document.addEventListener("fullscreenchange", fullScreenChange);
@@ -112,10 +126,11 @@ function VideoAttachment(props: VideoAttachmentProps) {
               {durationPlayedHumanized}
             </VideoAttachmentOverlay.VideoControlsTimeBase>
           )}
-          <VideoAttachmentOverlay.ProgressBarBase>
+          <VideoAttachmentOverlay.ProgressBarBase onClick={onProgressClick}>
             <VideoAttachmentOverlay.ProgressBarFillBase
+              className="progress-bar-fill"
               style={{
-                width: videoRef.current?.currentTime / videoRef.current?.duration * 100 + 2 + "%"
+                width: videoRef.current?.currentTime / videoRef.current?.duration * 100 + "%"
               }}
             />
           </VideoAttachmentOverlay.ProgressBarBase>

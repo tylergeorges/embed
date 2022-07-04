@@ -147,7 +147,20 @@ export namespace VideoAttachmentOverlay {
     height: 6px;
     border-radius: 80px;
     flex: 1 0;
-    overflow: hidden;
+    cursor: pointer;
+
+    &:hover .progress-bar-fill:after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      border-radius: 100%;
+      transform: translateX(50%) translateY(-50%);
+
+      background-color: ${({theme}) => theme.colors._accent.string()};
+    }
     
     background-color: ${({theme}) => theme.colors._primary.fade(0.7).string()};
   `;
@@ -155,6 +168,8 @@ export namespace VideoAttachmentOverlay {
   export const ProgressBarFillBase = styled.div`
     height: 100%;
     transition: width 0.25s linear;
+    position: relative;
+    border-radius: 80px;
     
     background-color: ${({theme}) => theme.colors._accent.string()};
   `;
