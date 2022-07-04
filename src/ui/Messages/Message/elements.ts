@@ -12,6 +12,7 @@ import {Twemoji} from "@ui/shared/Emoji/emoji";
 import {css} from "react-emotion";
 import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
 import {memo} from "react";
+import pin from "@images/discordAssets/5da4cdab01d4d89c593c48c62ae0d937.svg";
 
 interface MessageBaseProps {
   isUserMentioned?: boolean;
@@ -70,6 +71,18 @@ export const SystemMessageBase = styled(MessageBase)`
 export const SystemMessageContent = styled.span`
   color: ${({theme}) => theme.colors._primary.darken(0.5).string()};
 `;
+
+interface PinnedMessageLinkProps {
+  cursor?: string;
+}
+export const PinnedMessageLinkBase = memo(styled.span<PinnedMessageLinkProps>`
+  color: ${({theme}) => theme.colors._primary.string()};
+  
+  &:hover {
+    cursor: ${({cursor}) => cursor !== undefined ? cursor : 'pointer'};
+    text-decoration: underline;
+  }
+`);
 
 export const ReplySpine = memo(styled.div`
   position: absolute;
@@ -203,9 +216,13 @@ export namespace Icons {
     height: 16px;
   `
 
-  export const Add = styled(IconBase)`
+  export const Add = memo(styled(IconBase)`
     background-image: url("${add}");
-  `;
+  `);
+
+  export const Pinned = memo(styled(IconBase)`
+    background-image: url("${pin}");
+  `);
 }
 
 /*

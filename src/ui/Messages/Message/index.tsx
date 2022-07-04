@@ -3,6 +3,8 @@ import {MessageType} from "@generated/globalTypes";
 import NormalMessage from "@ui/Messages/Message/variants/NormalMessage";
 import GuildMemberJoin from "@ui/Messages/Message/variants/GuildMemberJoin";
 import {memo} from "react";
+import ChannelPinnedMessage
+  from "@ui/Messages/Message/variants/ChannelPinnedMessage";
 
 interface MessageProps {
   isFirstMessage?: boolean;
@@ -12,6 +14,13 @@ interface MessageProps {
 
 function Message(props: MessageProps) {
   switch (props.message.type) {
+    case MessageType.ChannelPinnedMessage:
+      return (
+        <ChannelPinnedMessage
+          createdAt={props.message.createdAt}
+          author={props.message.author}
+        />
+      );
     case MessageType.GuildMemberJoin:
       return (
         <GuildMemberJoin
