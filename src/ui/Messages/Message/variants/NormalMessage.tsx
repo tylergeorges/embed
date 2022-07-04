@@ -92,6 +92,7 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
             messageContent={props.referencedMessage.content}
             editedAt={props.referencedMessage.editedAt}
             reactions={props.referencedMessage.reactions}
+            attachments={[]}
             isReplyContent={true}
           />
         )
@@ -146,6 +147,7 @@ function NormalMessage(props: MessageProps) {
           messageContent={props.message.content}
           editedAt={props.message.editedAt}
           reactions={props.message.reactions}
+          attachments={props.message.attachments}
         />
       </MessageBase>
     );
@@ -166,6 +168,7 @@ function NormalMessage(props: MessageProps) {
         messageContent={props.message.content}
         editedAt={props.message.editedAt}
         reactions={props.message.reactions}
+        attachments={props.message.attachments}
       />
     </MessageBase>
   );

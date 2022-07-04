@@ -39,8 +39,8 @@ function GuildMemberJoin(props: GuildMemberJoinProps) {
       <Icons.Add />
       <SystemMessageContent>
         {joinMessage(props.createdAt, props.author)}
+        <LargeTimestamp timestamp={props.createdAt} />
       </SystemMessageContent>
-      <LargeTimestamp timestamp={props.createdAt} />
     </SystemMessageBase>
   )
 }
