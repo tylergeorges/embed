@@ -119,6 +119,9 @@ function NormalMessage(props: MessageProps) {
   const isUserMentioned = useMemo(() => {
     const user = authStore.user;
 
+    if (!user)
+      return false;
+
     if (!("_id" in user))
       return false;
 
