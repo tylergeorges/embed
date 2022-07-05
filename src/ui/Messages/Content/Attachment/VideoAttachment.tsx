@@ -6,6 +6,7 @@ import {
 } from "@ui/Messages/Content/Attachment/elements";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import fileSize from "filesize";
+import Tooltip from "rc-tooltip";
 
 interface VideoAttachmentProps {
   attachment: Message_attachments;
@@ -17,6 +18,7 @@ function VideoAttachment(props: VideoAttachmentProps) {
   const [showPlayOrPauseAnimation, setShowPlayOrPauseAnimation] = useState(false);
   const [durationPlayed, setDurationPlayed] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isSeeking, setIsSeeking] = useState(false);
 
   const videoRef = useRef(null);
   const attachmentRef = useRef(null);
@@ -65,8 +67,8 @@ function VideoAttachment(props: VideoAttachmentProps) {
     setIsFullscreen(document.fullscreenElement !== null);
   }
 
-  const onProgressClick = (e) => {
-    if (videoRef.current === null)
+  const seekVideo = (e) => {
+    if (videoRef.current === null || !isSeeking)
       return;
 
     const rect = e.target.getBoundingClientRect();
@@ -106,7 +108,7 @@ function VideoAttachment(props: VideoAttachmentProps) {
         }}
         onTimeUpdate={({timeStamp}) => setDurationPlayed(timeStamp)}
       />
-      <VideoAttachmentOverlay.Base data-played-once={hasPlayedOnceBefore}>
+      <VideoAttachmentOverlay.Base data-paused={paused} data-played-once={hasPlayedOnceBefore}>
         {showPlayOrPauseAnimation && (
           <VideoAttachmentOverlay.PlayOrPauseButtonAnimation data-paused={paused} />
         )}
@@ -126,7 +128,11 @@ function VideoAttachment(props: VideoAttachmentProps) {
               {durationPlayedHumanized}
             </VideoAttachmentOverlay.VideoControlsTimeBase>
           )}
-          <VideoAttachmentOverlay.ProgressBarBase onClick={onProgressClick}>
+          <VideoAttachmentOverlay.ProgressBarBase
+            onMouseMove={seekVideo}
+            onMouseDown={() => setIsSeeking(true)}
+            onMouseUp={() => setIsSeeking(false)}
+          >
             <VideoAttachmentOverlay.ProgressBarFillBase
               className="progress-bar-fill"
               style={{
@@ -134,12 +140,16 @@ function VideoAttachment(props: VideoAttachmentProps) {
               }}
             />
           </VideoAttachmentOverlay.ProgressBarBase>
-          <VideoAttachmentOverlay.FullscreenButtonBase onClick={() => {
-            if (document.fullscreenElement === null)
-              attachmentRef.current?.requestFullscreen();
-            else
-              document.exitFullscreen();
-          }} />
+          <Tooltip overlay="Warning, bugs be here!" placement="top">
+            <VideoAttachmentOverlay.FullscreenButtonBase
+              onClick={() => {
+                if (document.fullscreenElement === null)
+                  attachmentRef.current?.requestFullscreen();
+                else
+                  document.exitFullscreen();
+              }}
+            />
+          </Tooltip>
         </VideoAttachmentOverlay.VideoControlsBase>
       </VideoAttachmentOverlay.Base>
     </div>

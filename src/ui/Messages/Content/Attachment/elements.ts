@@ -39,7 +39,7 @@ export namespace VideoAttachmentOverlay {
     --overlayControlsTranslateY: 100%;
 
     &[data-paused="true"] {
-      --overlayMetaDataTranslateY: 0;
+      --overlayMetaDataTranslateY: 0 !important;
     }
     
     &:hover {
@@ -91,10 +91,10 @@ export namespace VideoAttachmentOverlay {
     
     animation: state-change ${PlayOrPauseAnimationDuration}ms ease-in-out;
     &[data-paused="true"] {
-      background-image: url(${play});
+      background-image: url(${pause});
     }
     &[data-paused="false"] {
-      background-image: url(${pause});
+      background-image: url(${play});
     }
   `;
 
@@ -170,6 +170,7 @@ export namespace VideoAttachmentOverlay {
     transition: width 0.25s linear;
     position: relative;
     border-radius: 80px;
+    pointer-events: none;
     
     background-color: ${({theme}) => theme.colors._accent.string()};
   `;
