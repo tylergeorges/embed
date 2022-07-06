@@ -19,9 +19,10 @@ interface DiscordUser {
 }
 
 interface GuestUser {
-  username: string;
-  avatarUrl: string | null;
-  blockedUsers?: string[];
+  username: string
+  avatarUrl: string | null
+  blockedUsers?: string[]
+  guest: true
 }
 
 type User = DiscordUser | GuestUser;
@@ -35,18 +36,26 @@ const loginError = (msg: string) => addNotification({
   autoDismiss: 0,
 });
 export class AuthStore {
-  @observable token = window.localStorage.getItem('token');
-  @observable locale = window.localStorage.getItem("locale") || "en";
+  @observable token: string;
+  @observable locale: string;
 
   @observable inProgress: boolean = false;
   @observable errors: string | undefined = undefined;
-  @observable user: User | null = JSON.parse(window.localStorage.getItem('user'));
+  @observable user: User | null;
 
   constructor() {
-    if (!localStorage.getItem('token')) {
-      this.logout();
-      generalStore.needsUpdate = true;
-      // localStorage.setItem('lastUpdate', version)
+    try {
+      this.token = window.localStorage.getItem('token');
+      this.locale = window.localStorage.getItem("locale") || "en";
+      this.user = JSON.parse(window.localStorage.getItem('user'));
+
+      if (!localStorage.getItem('token')) {
+        this.logout();
+        generalStore.needsUpdate = true;
+        // localStorage.setItem('lastUpdate', version)
+      }
+    } catch (e) {
+      console.log('WidgetBot: localStorage is inaccessible so auth is disabled')
     }
   }
 
@@ -80,7 +89,8 @@ export class AuthStore {
   @action async setGuestUser(username: string) {
     const user: GuestUser = {
       username,
-      avatarUrl: queryParams.get('avatar')
+      avatarUrl: queryParams.get('avatar'),
+      guest: true
     }
     window.localStorage.setItem('user', JSON.stringify(user))
 

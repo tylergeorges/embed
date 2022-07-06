@@ -1,13 +1,20 @@
 import * as React from 'react'
 
-import {Auth, Developers, Root, Version} from './elements'
-import {inject, observer} from "mobx-react";
-import {authStore, AuthStore} from "@store/auth";
-import {onClick} from "@views/Messages/Header";
+import {
+	Auth,
+	Avatar, Discriminator, UserButtons,
+	LoggedInUser, LogOutIcon,
+	Root,
+	UserContainer, Username, UserTag,
+	Version, UserButton, NotLoggedIn
+} from './elements'
+import {observer} from "mobx-react";
+import {authStore} from "@store/auth";
+import {login, logout} from "@views/Messages/Header";
 import {Locale} from '@lib/Locale';
 import {FiLogOut, FiLogIn} from 'react-icons/fi'
 import Tooltip from 'rc-tooltip';
-import {generalStore} from "@store";
+import getAvatar from "@utils/getAvatar";
 
 const { version } = require('../../../../package.json');
 
@@ -17,55 +24,58 @@ const queryParams = new URLSearchParams(location.search)
 
 @observer
 export default class Panel extends React.Component<{}> {
-	onClick(e: React.MouseEvent<HTMLAnchorElement>)  {
-		onClick.call({ props: { AuthStore: authStore }}, e)
-	};
-
 	render(): React.ReactNode {
-		// const lastUpdate = localStorage.getItem('lastUpdate');
-		// if (!lastUpdate || Semver.newMinorOrMajor(lastUpdate, version)) {
-		// 	localStorage.setItem('lastUpdate', version);
-		// 	authStore.logout();
-		// 	authStore.needsUpdate = true;
-		// }
-		//  <LoginButton AuthStore={authStore}/>
-		//  {window.innerWidth > 520 ? (authStore.user ? `Logged in as ${authStore.user.username}` : undefined) : undefined}
+		const avatar = authStore.user
+			? getAvatar(authStore.user, {animated: false})
+			: null;
+
 		return (
 			<Root className="panel">
-				<Developers>
-					{queryParams.has('username') ||
-						<Auth
-							className="auth"
-							target="_blank"
-							onClick={this.onClick.bind(this)}
-						>
-							{Locale.translate(`auth.${authStore.user ? 'logout' : 'login'}` as const)}
-						</Auth>
+				<UserContainer>
+					{authStore.user
+						? (
+							<LoggedInUser>
+								<Avatar src={avatar} draggable={false} />
+								<UserTag>
+									<Username>{authStore.user.username}</Username>
+									{("discriminator" in authStore.user && authStore.user.discriminator)
+										&& (
+											<Discriminator>#{authStore.user.discriminator}</Discriminator>
+										)
+									}
+									{"guest" in authStore.user && (
+										<Discriminator>Guest</Discriminator>
+									)}
+								</UserTag>
+								<UserButtons>
+									{queryParams.has('username') || // disable logout for dynamic usernames
+										<Tooltip
+											placement="top"
+											overlay={Locale.translate('auth.logout')}
+										>
+											<UserButton onClick={logout}>
+												<LogOutIcon />
+											</UserButton>
+										</Tooltip>
+									}
+								</UserButtons>
+							</LoggedInUser>
+						)
+						: (
+							<NotLoggedIn>
+								<Auth onClick={login}>
+									{Locale.translate('auth.login')}
+								</Auth>
+							</NotLoggedIn>
+						)
 					}
-				</Developers>
+				</UserContainer>
 				<Version
 					href={`https://widgetbot.io`}
 					target="_blank"
-					onClick={e => {
-						e.preventDefault();
-						// openModal({ variables: { type: 'settings', data: null } })
-					}}
 				>
-					{`${version}`}
+					WidgetBot {version}
 				</Version>
-				{
-					/* <Tooltip
-					   placement="top"
-					   overlay={<Trans id="Panel.settings">Settings</Trans>}
-					 >
-					   <Settings onClick={store.modal.openSettings} />
-						<Tooltip
-							 placement="top"
-							 overlay={<Trans id="Panel.about">About</Trans>}
-						   >
-
-						   </Tooltip> */
-				}
 			</Root>
 		)
 	}
@@ -73,10 +83,6 @@ export default class Panel extends React.Component<{}> {
 
 @observer
 export class SingleChannelAuth extends React.Component<{}> {
-	onClick(e: React.MouseEvent<HTMLAnchorElement>)  {
-		onClick()
-	};
-
 	render(): React.ReactNode {
 		if (queryParams.has('username')) return null
 
@@ -85,7 +91,7 @@ export class SingleChannelAuth extends React.Component<{}> {
 				<Auth
 					className="auth"
 					target="_blank"
-					onClick={this.onClick.bind(this)}
+					onClick={login}
 					style={{padding: '2px 0', minWidth: '28px'}}
 				>
 					{authStore.user ? <FiLogOut /> : <FiLogIn />}

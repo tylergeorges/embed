@@ -3,10 +3,12 @@ import Moment from 'moment'
 import * as React from 'react'
 
 import { Sysadmin, Tag, Verified } from "./Badges";
-import { Name, Root, Time, VerifiedBot } from './elements'
+import { Name, RoleIcon, Root, Time, UnicodeEmoji, VerifiedBot } from './elements'
 import { Locale } from '@lib/Locale';
 import Tooltip from 'rc-tooltip';
 import { store } from '@models';
+import { generalStore } from '@store';
+import webpCheck from '@ui/shared/webpCheck'
 
 interface Props {
   author: Message_author
@@ -49,7 +51,7 @@ export const Timestamp = ({ time }: { time: number }) => (
   </Tooltip>
 );
 
-const verified = 
+const verified =
   <Tooltip placement="top" overlay="Verified Bot">
     <VerifiedBot aria-label="Verified Bot" aria-hidden="false" width="16" height="16" viewBox="0 0 16 15.2"><path d="M7.4,11.17,4,8.62,5,7.26l2,1.53L10.64,4l1.36,1Z" fill="currentColor"></path></VerifiedBot>
   </Tooltip>
@@ -65,6 +67,36 @@ export const tags = ({author, crosspost, referenceGuild, guest}: Omit<Props, 'ti
       : <Tag className="bot">{Locale.translate('tag.bot')}</Tag>
       )}
   </React.Fragment>
+
+const roleIcon = (roleIDs: string[]) => {
+  if (!generalStore.guild?.roles?.length || !roleIDs) return null
+
+  const roles = roleIDs
+    .map(id => generalStore.guild.roles.find(r => r.id === id))
+    .filter(r => r)
+    .sort((a, b) => b.position - a.position)
+
+  const role = roles.find(r => r.icon || r.unicodeEmoji)
+  if (!role) return null
+
+  if (role.icon) return (
+    <Tooltip
+      placement="top"
+      overlay={role.name}
+    >
+      <RoleIcon className="role-icon role-icon-image" src={webpCheck(`https://cdn.discordapp.com/role-icons/${role.id}/${role.icon}.webp`)} />
+    </Tooltip>)
+
+  if (role.unicodeEmoji) return (
+    <Tooltip
+      placement="top"
+      overlay={role.name}
+    >
+      <span><UnicodeEmoji className="role-icon" disableTooltip={true}>{role.unicodeEmoji}</UnicodeEmoji></span>
+    </Tooltip>)
+
+  return null
+}
 
 class Author extends React.PureComponent<Props> {
   render() {
@@ -94,6 +126,7 @@ class Author extends React.PureComponent<Props> {
         >
           {author.name}
         </Name>
+        {roleIcon(author.roles)}
         {tags(this.props)}
         {Author.verified({ id: author.id })}
         <Timestamp time={time} />

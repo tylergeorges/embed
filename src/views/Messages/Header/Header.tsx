@@ -73,7 +73,8 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
                         </Topic>
                     )}
             </Stretch>
-            {channel && <Pins />}
+            {/* {(!thread || generalStore.threadFullscreen) && <Pins />} Thread pins are disabled */}
+            {thread || <Pins />}
             <SingleChannelAuthWrapper>
                 <SingleChannelAuth />
             </SingleChannelAuthWrapper>
@@ -99,14 +100,22 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
     )
 });
 
-export function onClick()  {
+/** Log in or out */
+export function login()  {
     generalStore.settings?.guestMode
         ? (authStore.user ? logout() : generalStore.toggleMenu(true))
-        : (authStore.user ? logout() : login())
+        : (authStore.user ? logout() : discordLogin())
 }
 
-export function login() {
-    authStore.discordLogin().then(async () => {
+function discordLogin() {
+    let ls: Storage
+    try {
+        ls = localStorage
+    } catch (e) {
+        generalStore.toggleMenu(true)
+    }
+
+    if (ls) authStore.discordLogin().then(async () => {
         await authStore.fetchDiscordUser();
         generalStore.needsUpdate = true;
         // await authStore.refreshChannels();
