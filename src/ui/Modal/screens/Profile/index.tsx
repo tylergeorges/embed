@@ -1,7 +1,5 @@
 import { store } from "@models"
 import { Root, Tag, Avatar, Top, Badges, Badge, Discrim, ProfileButton } from "./elements"
-import webpCheck from '@ui/shared/webpCheck'
-import { gifCheck } from "@ui/Message"
 import { authStore, generalStore } from "@store"
 import { NavLink } from "react-router-dom"
 import { tags } from "@ui/Message/Author"
@@ -10,7 +8,8 @@ import { Views } from "@ui/Sidebar"
 import { useMutation } from "react-apollo-hooks";
 import BLOCK_USER from './BlockUser.graphql';
 import { observer } from "mobx-react";
-import { onClick as login} from "@views/Messages/Header"
+import { login } from "@views/Messages/Header"
+import getAvatar from "@utils/getAvatar"
 
 // badges
 import staff from '@images/discordAssets/48d5bdcffe9e7848067c2e187f1ef951.svg'
@@ -24,8 +23,6 @@ import bugHunter1 from '@images/discordAssets/8353d89b529e13365c415aef08d1d1f4.s
 import bugHunter2 from '@images/discordAssets/f599063762165e0d23e8b11b684765a8.svg'
 import earlyVerifiedBotDev from '@images/discordAssets/4441e07fe0f46b3cb41b79366236fca6.svg'
 import earlySupporter from '@images/discordAssets/b802e9af134ff492276d94220e36ec5c.svg'
-
-const resize = (url: string) => url.includes('cdn.discordapp.com') ? url+'?size=256' : url
 
 const Profile = observer(() => {
   const blockUser = useMutation<boolean>(BLOCK_USER);
@@ -47,7 +44,7 @@ const Profile = observer(() => {
   return (
       <Root x={store.modal.x} y={store.modal.y}>
         <Top>
-          <Avatar height={92} width={92} src={resize(webpCheck(gifCheck(store.modal.avatarUrl)))} />
+          <Avatar height={92} width={92} src={getAvatar({ avatarUrl: store.modal.avatarUrl }, { size: 256 })} />
           <Badges>
             {store.modal.flags & 1 << 0 ? <Tooltip overlay="Discord Staff" placement="top"><Badge src={staff} /></Tooltip> : null}
             {store.modal.flags & 1 << 1 ? <Tooltip overlay="Partnered Server Owner" placement="top"><Badge src={partner} /></Tooltip> : null}
