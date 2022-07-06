@@ -1,7 +1,7 @@
 import {NavLink, withRouter} from "react-router-dom";
 import {observer} from "mobx-react";
 
-import { Root, Chat, Avatar, Details, Preview, LoadingContainer } from "./elements";
+import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton } from "./elements";
 import CHATS from "./Chats.graphql";
 import {generalStore} from "@store";
 import { Chats, UserTag } from "@generated";
@@ -10,6 +10,8 @@ import { useRouter } from "@hooks";
 import { Loading } from "@ui/Overlays/Loading/elements";
 import client from "@lib/apollo";
 import USER_TAG from "@views/Messages/Header/UserTag.graphql";
+import { FaPlus } from "react-icons/fa";
+import { store } from "@models";
 
 export const ChatSwitcher = withRouter(observer(() => {
     if (!generalStore.chats)
@@ -20,7 +22,7 @@ export const ChatSwitcher = withRouter(observer(() => {
 
     if (!generalStore.chats) return <LoadingContainer><Loading /></LoadingContainer>
 
-    const userId = channel?.startsWith('@') ? channel.substr(1) : null;
+    const userId = channel?.startsWith('@') ? channel.substring(1) : null;
     if (userId && !generalStore.chats.find(r => r.recipient.id === userId)) {
         client.query<UserTag>({
             query: USER_TAG,
@@ -50,6 +52,7 @@ export const ChatSwitcher = withRouter(observer(() => {
 
     return (
         <Root className="channels">
+            <NewChatButton onClick={store.modal.openNewChat}><FaPlus /> New Chat</NewChatButton>
             {generalStore.chats.map((chat) => (
                 <NavLink
                     key={chat.recipient.id}

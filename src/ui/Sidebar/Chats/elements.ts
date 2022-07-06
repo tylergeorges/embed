@@ -12,7 +12,7 @@ export const Root = styled(ScrollOverlay)`
 `;
 
 interface ChatProps {
-    selected: boolean
+    selected?: boolean
 }
 export const Chat = styled.div<ChatProps>`
     display: flex;
@@ -51,4 +51,11 @@ export const Preview = styled.span`
 
 export const LoadingContainer = styled.div`
     height: 100%;
+`
+
+export const NewChatButton = styled(Button)`
+    display: flex;
+    margin: 0 auto 10px;
+    align-items: center;
+    gap: 5px;
 `

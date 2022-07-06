@@ -55,6 +55,10 @@ export const Modal = types
       self.x = x
       self.y = y
     },
+    openNewChat() {
+      self.isOpen = true
+      self.type = 'newchat'
+    },
     close() {
       self.isOpen = false
     }
