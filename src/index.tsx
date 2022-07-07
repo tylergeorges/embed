@@ -6,7 +6,7 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 
 import * as ReactDOM from 'react-dom'
-import { BrowserRouter, Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 
 import App from './app'
 
@@ -19,7 +19,7 @@ if (!window.location.hostname.includes(`127.0.0.1`) && !window.location.hostname
 ReactDOM.render(
   <ApolloProvider client={client}>
     <ApolloHooksProvider client={client}>
-      <BrowserRouter basename="/channels">
+      <BrowserRouter>
         <App />
       </BrowserRouter>
     </ApolloHooksProvider>

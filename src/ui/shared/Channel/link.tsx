@@ -15,9 +15,9 @@ class ChannelLink extends React.PureComponent<Props> {
     const { id, $ref, children, className } = this.props;
     return (
       <NavLink
-        to={`/${generalStore.guild?.id}/${id}`}
+        to={`/channels/${generalStore.guild?.id}/${id}`}
         data-channel={id}
-        innerRef={$ref}
+        ref={$ref}
         onClick={toggle}
         children={children}
         className={className}

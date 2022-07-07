@@ -1,4 +1,4 @@
-import { useRouteMatch } from 'react-router-dom';
+import { useMatch } from 'react-router-dom';
 
 interface Params {
   guild: string
@@ -6,7 +6,7 @@ interface Params {
 }
 
 export const useRouter = () => {
-  let params = useRouteMatch<Params>({path: '/:guild/:channel'})?.params
-  if (!params) params = useRouteMatch<Params>({path: '/:guild'})?.params
-  return params
+  const channelParams = useMatch({path: '/channels/:guild/:channel'})?.params
+  const guildParams = useMatch({path: '/channels/:guild'})?.params
+  return (channelParams ?? guildParams) as Params
 }

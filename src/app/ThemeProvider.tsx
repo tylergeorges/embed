@@ -14,7 +14,7 @@ import {generalStore, authStore} from '@store';
 const queryParams = new URLSearchParams(location.search)
 
 export const ThemeProvider = ({ children }) => {
-  const guild = useRouter()?.guild
+  const guild = useRouter()?.guild ?? '299881420891881473'
   const { data: {settings} } = useQuery<Settings>(GET_SETTINGS, { variables: { guild }, fetchPolicy: 'network-only' })
 
   let theme: Settings_settings_theme = {
