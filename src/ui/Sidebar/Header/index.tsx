@@ -60,7 +60,7 @@ export const Header = observer(() => {
 				}
 
 				generalStore.setEmojis(new EmojiStore(
-					...generalStore.guild?.emojis.sort((a, b) => compare(a.name, b.name)).map(e => ({
+					...generalStore.guild?.emojis.slice().sort((a, b) => compare(a.name, b.name)).map(e => ({
 						category: 'custom',
 						emoji: e.id,
 						keywords: [e.name],
