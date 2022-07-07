@@ -1,19 +1,12 @@
-import { useMatch } from '@hooks'
+import { useRouteMatch } from 'react-router-dom';
+
+interface Params {
+  guild: string
+  channel?: string
+}
 
 export const useRouter = () => {
-  let match: {guild: string, channel?: string};
-
-  match = useMatch<{ guild: string; channel: string }>(
-    '/:guild/:channel',
-    { relative: false }
-  );
-
-  if (!match) {
-    match = useMatch<{ guild: string }>(
-        '/:guild',
-        { relative: false }
-    );
-  }
-
-  return match
-};
+  let params = useRouteMatch<Params>({path: '/:guild/:channel'})?.params
+  if (!params) params = useRouteMatch<Params>({path: '/:guild'})?.params
+  return params
+}

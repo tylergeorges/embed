@@ -30,13 +30,17 @@ const App = observer(() => {
             <Main>
               <Sidebar />
               <Switch>
-                <Route path="/:guild/:channel" component={MessagesView} />
-                <Route component={ChooseChannel} />
+                <Route path="/:guild/:channel">
+                  <MessagesView />
+                </Route>
+                <Route>
+                  <ChooseChannel />
+                </Route>
               </Switch>
             </Main>
           </Route>
 
-          <Redirect to="/299881420891881473" />
+         <Route render={() => <Redirect to="/299881420891881473" />} />
         </Switch>
       </ThemeProvider>
     </Locale>
