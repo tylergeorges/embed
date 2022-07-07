@@ -1,5 +1,6 @@
 import {Message_attachments} from "@generated";
 import {
+  MaxAttachmentWidth,
   VideoAttachmentBase,
   VideoAttachmentContainerBase,
   VideoAttachmentOverlay
@@ -56,10 +57,10 @@ function VideoAttachment(props: VideoAttachmentProps) {
     setTimeout(() => setShowPlayOrPauseAnimation(false), VideoAttachmentOverlay.PlayOrPauseAnimationDuration);
   }, [])
 
-  const height = !isFullscreen ? Math.min(props.attachment.height, 300) : undefined;
+  const height = !isFullscreen ? Math.min(props.attachment.height, MaxAttachmentWidth) : undefined;
   const width = !isFullscreen
     ? Math.floor(
-      Math.min(props.attachment.height, 300) / props.attachment.height * props.attachment.width
+      Math.min(props.attachment.height, MaxAttachmentWidth) / props.attachment.height * props.attachment.width
     )
     : undefined;
 
@@ -93,7 +94,7 @@ function VideoAttachment(props: VideoAttachmentProps) {
   );
 
   return (
-    <div className={VideoAttachmentContainerBase} style={{width}} ref={attachmentRef}>
+    <div className={VideoAttachmentContainerBase} style={{width, height}} ref={attachmentRef}>
       <video
         className={VideoAttachmentBase}
         preload="metadata"

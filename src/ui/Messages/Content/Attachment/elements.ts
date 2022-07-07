@@ -24,6 +24,51 @@ export const VideoAttachmentContainerBase = css`
   display: flex;
 `;
 
+export const MaxAttachmentWidth = 300;
+
+export const SpoilerBase = styled.div`
+  overflow: hidden;
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 3px;
+  
+  & > * {
+    transition: filter 0.2s ease-in-out;
+    
+    filter: blur(44px);
+  }
+  
+  &[data-show="true"] > * {
+    filter: blur(0);
+  }
+  
+  &[data-show="false"] {
+    cursor: pointer;
+
+    & > * {
+      pointer-events: none;
+    }
+    
+    &:after {
+      content: "SPOILER";
+      border-radius: 100px;
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 8px 12px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: 600;
+      font-size: 15px;
+    }
+
+    &:hover:after {
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+  }
+`;
+
 export namespace VideoAttachmentOverlay {
   export const Base = styled.div`
     position: absolute;

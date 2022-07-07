@@ -1,15 +1,13 @@
 import {Message_attachments} from "@generated";
 import VideoAttachment from "@ui/Messages/Content/Attachment/VideoAttachment";
-import {memo} from "react";
+import {memo, useState} from "react";
+import {SpoilerBase} from "@ui/Messages/Content/Attachment/elements";
 
 interface AttachmentProps {
   attachment: Message_attachments;
 }
 
-function Attachment(props: AttachmentProps) {
-  console.log("%cAttachment", "color: teal; font-size: 14px;");
-  console.log(props.attachment);
-
+function AttachmentBase(props: AttachmentProps) {
   if (/\.(?:mp4|webm|mov)$/.test(props.attachment.filename)) {
     return (
       <VideoAttachment attachment={props.attachment} />
@@ -17,8 +15,35 @@ function Attachment(props: AttachmentProps) {
   }
 
   return (
-    <img src="https://via.placeholder.com/150" alt={props.attachment.filename} />
+    <img
+      src={`https://via.placeholder.com/${props.attachment.width}x${props.attachment.height}`}
+      alt={props.attachment.filename}
+    />
   );
+}
+
+function AttachmentContainer(props: AttachmentProps) {
+  const [showSpoiler, setShowSpoiler] = useState(false);
+
+  if (props.attachment.filename.startsWith('SPOILER_'))
+    return (
+      <SpoilerBase
+        data-show={showSpoiler}
+        onClick={() => setShowSpoiler(true)}
+      >
+        <AttachmentBase attachment={props.attachment} />
+      </SpoilerBase>
+    );
+
+  return (
+    <AttachmentBase attachment={props.attachment} />
+  );
+}
+
+function Attachment(props: AttachmentProps) {
+  console.log("%cAttachment", "color: teal; font-size: 14px;");
+
+  return <AttachmentContainer attachment={props.attachment} />;
 }
 
 export default memo(Attachment);
