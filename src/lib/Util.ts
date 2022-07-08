@@ -54,4 +54,9 @@ export class Util {
 	
 		return dec;
 	}
+
+	// https://stackoverflow.com/a/7180095
+	static moveToTop<T>(array: T[], element: T) {
+		array.splice(0, 0, array.splice(array.indexOf(element), 1)[0]);
+	}
 }

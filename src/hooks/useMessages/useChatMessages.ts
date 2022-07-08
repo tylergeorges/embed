@@ -1,8 +1,10 @@
 import produce from "immer";
 import { CHAT_MESSAGES, NEW_DIRECT_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { Message } from "@generated";
+import { ChatMessages, Message } from "@generated";
 import { NewDirectMessage } from "@generated/NewDirectMessage";
+import { generalStore } from "@store";
+import { Util } from "@lib/Util";
 
 /**
  * Fetches the messages for a DM chat
@@ -50,11 +52,22 @@ export const useChatMessages = (user: string, guild: string) => {
     variables: { guild },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
-        produce(prev, (x) => {
-          console.log(x)
+        produce(prev, (data?: ChatMessages) => {
+          const messages = data?.getMessagesForChat;
+          if (!messages) {
+            console.warn('NEW_DIRECT_MESSAGE received empty initial state within subscription', subscriptionData, data);
+            return;
+          }
+
           const message = subscriptionData.data.directMessage as Message
-          message.author.color = messages.find(m => m.author.id === message.author.id)?.author.color || 0xffffff
-          if (!messages.find(m => m.id === message.id)) messages.push(message);
+
+          const chat = generalStore.chats.find(c => c.recipient.id === message.author.id)
+          if (chat) {
+            chat.content = message.content
+            Util.moveToTop(generalStore.chats, chat)
+          } else generalStore.chats.unshift({ recipient: message.author, content: message.content })
+          
+          if (message.author.id === user && !messages.find(m => m.id === message.id)) messages.push(message);
         })
       )}
   });

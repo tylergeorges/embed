@@ -3,18 +3,17 @@ import SEND_MESSAGE from './SendMessage.graphql'
 import SEND_DIRECT_MESSAGE from './SendDirectMessage.graphql'
 import { CHAT_MESSAGES, MESSAGES } from '../useMessages'
 import { useRouter } from '@hooks'
-import { ChatMessages, Messages, SendMessage, SendMessage_sendMessage } from '@generated';
-import { addNotification } from "notify";
-import { MessageType } from '@generated/globalTypes';
-import { Util } from '@lib/Util';
-import { authStore } from '@store';
-import { SendDirectMessage } from '@generated/SendDirectMessage';
-import { DataProxy } from 'apollo-cache';
+import { ChatMessages, Messages, SendMessage } from '@generated'
+import { addNotification } from "notify"
+import { MessageType } from '@generated/globalTypes'
+import { Util } from '@lib/Util'
+import { authStore, generalStore } from '@store'
+import { SendDirectMessage } from '@generated/SendDirectMessage'
 
 export const useSendMessage = (thread?: string) => {
   const { guild, channel } = useRouter()
-  const sendMessage = useMutation<SendMessage>(SEND_MESSAGE);
-  const sendDirectMessage = useMutation<SendDirectMessage>(SEND_DIRECT_MESSAGE);
+  const sendMessage = useMutation<SendMessage>(SEND_MESSAGE)
+  const sendDirectMessage = useMutation<SendDirectMessage>(SEND_DIRECT_MESSAGE)
 
   return async (content: string, fileName?: string, fileData?: string, fileAlt?: string) => {
     const optimisticData = {
@@ -105,6 +104,10 @@ export const useSendMessage = (thread?: string) => {
         message: error.toString().replace('GraphQL error: ', ''),
         autoDismiss: 0
       }))
+
+      const chat = generalStore.chats.find(c => c.recipient.id === user)
+      chat.content = content
+      Util.moveToTop(generalStore.chats, chat)
     }
   }
 }
