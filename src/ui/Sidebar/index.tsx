@@ -15,8 +15,9 @@ export enum Views {
 }
 
 const Sidebar = observer(() => {
+    const { channel } = useRouter()
+
     useEffect(() => {
-        const { channel } = useRouter()
         generalStore.setSidebarView(channel?.startsWith('@') && authStore.user ? Views.Chats : Views.Channels)
     }, [])
 

@@ -10,12 +10,6 @@ import { useEffect } from "react";
 import { generalStore } from "@store";
 import { useParams } from 'react-router-dom'
 
-interface Params {
-  guild: string
-  channel?: string
-  user?: string
-}
-
 const MessagesView = observer(() => {
   const { guild, channel, user } = useParams()
 

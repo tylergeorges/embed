@@ -1,4 +1,4 @@
-import {NavLink, withRouter} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {observer} from "mobx-react";
 
 import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton } from "./elements";
@@ -13,7 +13,7 @@ import USER_TAG from "@views/Messages/Header/UserTag.graphql";
 import { FaPlus } from "react-icons/fa";
 import { store } from "@models";
 
-export const ChatSwitcher = withRouter(observer(() => {
+export const ChatSwitcher = observer(() => {
     if (!generalStore.chats)
         client.query<Chats>({ query: CHATS, variables: { guild: generalStore.guild.id }, fetchPolicy: 'network-only' })
             .then(({ data: { getChats: chats } }) => generalStore.setChats(chats))
@@ -56,7 +56,7 @@ export const ChatSwitcher = withRouter(observer(() => {
             {generalStore.chats.map((chat) => (
                 <NavLink
                     key={chat.recipient.id}
-                    to={`/${guild}/@${chat.recipient.id}`}
+                    to={`/channels/${guild}/@${chat.recipient.id}`}
                     children={
                         <Chat selected={channel === '@'+chat.recipient.id}>
                             <Avatar width={32} height={32} src={chat.recipient.avatarUrl} />
@@ -72,6 +72,6 @@ export const ChatSwitcher = withRouter(observer(() => {
         </Root>
     )
 
-}))
+})
 
 export default ChatSwitcher

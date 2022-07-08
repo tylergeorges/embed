@@ -28,7 +28,7 @@ const NewChat = () => {
           <UserWrapper>
             <NavLink
               key={chat.recipient.id}
-              to={`/${guild}/@${chat.recipient.id}`}
+              to={`/channels/${guild}/@${chat.recipient.id}`}
               onClick={store.modal.close}
               children={
                 <User>
