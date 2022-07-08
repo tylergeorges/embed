@@ -195,7 +195,7 @@ const Embed = ({
 }: Message_embeds & {users: Map<string, Message_author>}) =>
     embed.type.toLowerCase() === 'gifv' ? (
         <Gifv autoPlay loop muted
-              src={video.url}
+              src={video.proxyUrl ?? video.url}
               width={+video.width}
               height={+video.height}
         />
@@ -207,7 +207,7 @@ const Embed = ({
         />
     ) : embed.type.toLowerCase() === 'video' && !thumbnail ? (
         <Video controls
-               src={video.url}
+               src={video.proxyUrl ?? video.url}
                width={+video.width}
                height={+video.height}
         />

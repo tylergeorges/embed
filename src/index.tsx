@@ -6,10 +6,9 @@ import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 
 import * as ReactDOM from 'react-dom'
-import { Router } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
 
 import App from './app'
-import { history } from '@lib/history'
 
 import register, { unregister } from './registerServiceWorker'
 
@@ -20,9 +19,9 @@ if (!window.location.hostname.includes(`127.0.0.1`) && !window.location.hostname
 ReactDOM.render(
   <ApolloProvider client={client}>
     <ApolloHooksProvider client={client}>
-      <Router history={history}>
+      <BrowserRouter>
         <App />
-      </Router>
+      </BrowserRouter>
     </ApolloHooksProvider>
   </ApolloProvider>,
   document.getElementById('root')
