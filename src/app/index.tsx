@@ -3,7 +3,7 @@ import Sidebar from '@ui/Sidebar'
 import ChooseChannel from '@views/ChooseChannel'
 import { MessagesView } from '@views/Messages'
 import Notifications from 'notify'
-import { Redirect, Route, Switch } from 'react-router-dom'
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 
 import { ThemeProvider } from './ThemeProvider'
 import { observer } from 'mobx-react'
@@ -21,27 +21,31 @@ const App = observer(() => {
   return (
     <Locale>
       <ThemeProvider>
-        <Switch>
-          <Route path="/:guild">
-            <Loading id="loading" />
-            <Authenticate />
-            <Modal />
-            <Notifications />
-            <Main>
-              <Sidebar />
-              <Switch>
-                <Route path="/:guild/:channel" component={MessagesView} />
-                <Route component={ChooseChannel} />
-              </Switch>
-            </Main>
+        <Routes>
+          <Route path="/channels/:guild" element={
+            <>
+              <Loading id="loading" />
+              <Authenticate />
+              <Modal />
+              <Notifications />
+              <Main>
+                <Sidebar />
+                <Outlet />
+              </Main>
+            </>
+          }>
+            <Route path=":channel" element={<MessagesView />} />
+            <Route path="" element={<ChooseChannel />} />
           </Route>
 
-          <Redirect to="/299881420891881473" />
-        </Switch>
+          <Route path="*" element={<Navigate replace to="/channels/299881420891881473" />} />
+        </Routes>
       </ThemeProvider>
     </Locale>
   )
 });
+
+
 // class App extends React.PureComponent<
 //   ChildProps<RouteComponentProps<any>, Locale>
 // > {

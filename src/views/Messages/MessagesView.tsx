@@ -7,31 +7,25 @@ import { Loading } from '@ui/Overlays'
 import { observer } from "mobx-react";
 import { useEffect } from "react";
 import { generalStore } from "@store";
+import { useRouter } from '@hooks'
 
-interface Props {
-    match: {
-        params: {
-            channel: string,
-            guild: string
-        }
-    }
-}
+const MessagesView = observer(() => {
+  const { guild, channel } = useRouter()
 
-const MessagesView = observer((props: Props) => {
   useEffect(() => {
     generalStore.clearThread(); // Channel changed, cant be looking at a thread anymore
-  },[props.match.params.channel]);
+  }, [channel]);
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
       {!(generalStore.activeThread && generalStore.threadFullscreen) && (
         <Wrapper hideOnMobile={!!generalStore.activeThread}>
           <React.Suspense fallback={<Fallback />}>
-            <Header channel={props.match.params.channel} guild={props.match.params.guild}/>
+            <Header channel={channel} guild={guild}/>
           </React.Suspense>
 
           <React.Suspense fallback={<Loading />}>
-            <Messages guild={props.match.params.guild} channel={props.match.params.channel} />
+            <Messages guild={guild} channel={channel} />
           </React.Suspense>
           <Chat />
         </Wrapper>
@@ -41,11 +35,11 @@ const MessagesView = observer((props: Props) => {
         // TODO: I should use a context here realistically, rather than passing thread deep down various components
         <Wrapper threadFullscreen={generalStore.threadFullscreen}>
           <React.Suspense fallback={<Fallback />}>
-            <Header channel={props.match.params.channel} guild={props.match.params.guild} thread />
+            <Header channel={channel} guild={guild} thread />
           </React.Suspense>
 
           <React.Suspense fallback={<Loading />}>
-            <Messages guild={props.match.params.guild} channel={props.match.params.channel} thread />
+            <Messages guild={guild} channel={channel} thread />
           </React.Suspense>
           <Chat thread />
         </Wrapper>

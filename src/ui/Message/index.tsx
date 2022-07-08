@@ -4,7 +4,7 @@ import { ThemeProvider } from 'emotion-theming'
 import Moment from 'moment'
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
-import Lottie from 'lottie-react-web'
+import { Lottie } from './Lottie'
 import reactStringReplace from 'react-string-replace'
 
 import Author, { tags, Timestamp } from './Author'
@@ -348,11 +348,9 @@ class Message extends React.PureComponent<Props, any> {
                           {s.formatType === 'LOTTIE' ?
                             <LottieStickerWrapper>
                               <Lottie
-                                height={160}
+                                data={s.lottieData}
                                 width={160}
-                                options={{
-                                  animationData: JSON.parse(s.lottieData)
-                                }}
+                                height={160}
                               />
                             </LottieStickerWrapper>
                           : <img
