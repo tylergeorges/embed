@@ -245,5 +245,5 @@ export namespace VideoAttachmentOverlay {
 
   export const FullscreenButtonBase = styled(ButtonBase)`
     background-image: url(${fullscreen});
-  `
+  `;
 }

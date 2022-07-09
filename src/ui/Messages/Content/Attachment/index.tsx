@@ -2,6 +2,7 @@ import {Message_attachments} from "@generated";
 import VideoAttachment from "@ui/Messages/Content/Attachment/VideoAttachment";
 import {memo, useState} from "react";
 import {SpoilerBase} from "@ui/Messages/Content/Attachment/elements";
+import ImageAttachment from "@ui/Messages/Content/Attachment/ImageAttachment";
 
 interface AttachmentProps {
   attachment: Message_attachments;
@@ -9,17 +10,10 @@ interface AttachmentProps {
 
 function AttachmentBase(props: AttachmentProps) {
   if (/\.(?:mp4|webm|mov)$/.test(props.attachment.filename)) {
-    return (
-      <VideoAttachment attachment={props.attachment} />
-    );
+    return <VideoAttachment attachment={props.attachment} />;
   }
 
-  return (
-    <img
-      src={`https://via.placeholder.com/${props.attachment.width}x${props.attachment.height}`}
-      alt={props.attachment.filename}
-    />
-  );
+  return <ImageAttachment attachment={props.attachment} />;
 }
 
 function AttachmentContainer(props: AttachmentProps) {

@@ -1,6 +1,5 @@
 import {Message_attachments} from "@generated";
 import {
-  MaxAttachmentWidth,
   VideoAttachmentBase,
   VideoAttachmentContainerBase,
   VideoAttachmentOverlay
@@ -8,6 +7,7 @@ import {
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import fileSize from "filesize";
 import Tooltip from "rc-tooltip";
+import useSize from "@ui/Messages/Content/Attachment/useSize";
 
 interface VideoAttachmentProps {
   attachment: Message_attachments;
@@ -57,12 +57,7 @@ function VideoAttachment(props: VideoAttachmentProps) {
     setTimeout(() => setShowPlayOrPauseAnimation(false), VideoAttachmentOverlay.PlayOrPauseAnimationDuration);
   }, [])
 
-  const height = !isFullscreen ? Math.min(props.attachment.height, MaxAttachmentWidth) : undefined;
-  const width = !isFullscreen
-    ? Math.floor(
-      Math.min(props.attachment.height, MaxAttachmentWidth) / props.attachment.height * props.attachment.width
-    )
-    : undefined;
+  const { width, height } = useSize(props.attachment.width, props.attachment.height, isFullscreen);
 
   const fullScreenChange = () => {
     setIsFullscreen(document.fullscreenElement !== null);
