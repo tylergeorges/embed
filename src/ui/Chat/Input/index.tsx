@@ -74,9 +74,7 @@ class MagicTextarea extends React.Component<Props> {
     const user = authStore.user;
 
     if (!(user && this.props.channel.canSend)) return (
-      <NoPerms
-        onClick={!authStore.user && (generalStore.settings?.guestMode ? (() => generalStore.toggleMenu(true)).bind({ props: { GeneralStore: generalStore }}) : login.bind({ props: { AuthStore: authStore }}))}
-      >
+      <NoPerms onClick={login}>
         { !user ? Locale.translate('input.login') : Locale.translate('input.noperms') }
       </NoPerms>
     );

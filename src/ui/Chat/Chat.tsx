@@ -16,7 +16,6 @@ import thread from "@ui/Message/Thread";
 import Tooltip from 'rc-tooltip'
 import moment from 'moment'
 import { observer } from 'mobx-react'
-import { RouteComponentProps, withRouter } from 'react-router-dom'
 
 export interface ChatProps {
   thread?: boolean;
@@ -32,7 +31,7 @@ const parseTimeRemaining = (timeRemaining: number) => {
   return `${h ? h+':' : ''}${m}:${s}`
 }
 
-export const Chat = withRouter(observer((props: ChatProps & RouteComponentProps) => {
+export const Chat = observer((props: ChatProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const sendMessage = useSendMessage(props.thread ? generalStore.activeThread.id : null);
   const [rows, setRows] = useState(1);
@@ -150,4 +149,4 @@ export const Chat = withRouter(observer((props: ChatProps & RouteComponentProps)
       </Tooltip>}
     </Root>
   )
-}))
+})

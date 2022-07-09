@@ -10,7 +10,7 @@ import {
 } from './elements'
 import {observer} from "mobx-react";
 import {authStore} from "@store/auth";
-import {onClick} from "@views/Messages/Header";
+import {login, logout} from "@views/Messages/Header";
 import {Locale} from '@lib/Locale';
 import {FiLogOut, FiLogIn} from 'react-icons/fi'
 import Tooltip from 'rc-tooltip';
@@ -24,10 +24,6 @@ const queryParams = new URLSearchParams(location.search)
 
 @observer
 export default class Panel extends React.Component<{}> {
-	onClick(e: React.MouseEvent<HTMLAnchorElement>)  {
-		onClick.call({ props: { AuthStore: authStore }}, e)
-	};
-
 	render(): React.ReactNode {
 		const avatar = authStore.user
 			? getAvatar(authStore.user, {animated: false})
@@ -57,7 +53,7 @@ export default class Panel extends React.Component<{}> {
 											placement="top"
 											overlay={Locale.translate('auth.logout')}
 										>
-											<UserButton onClick={this.onClick.bind(this)}>
+											<UserButton onClick={logout}>
 												<LogOutIcon />
 											</UserButton>
 										</Tooltip>
@@ -67,7 +63,7 @@ export default class Panel extends React.Component<{}> {
 						)
 						: (
 							<NotLoggedIn>
-								<Auth onClick={this.onClick}>
+								<Auth onClick={login}>
 									{Locale.translate('auth.login')}
 								</Auth>
 							</NotLoggedIn>
@@ -87,10 +83,6 @@ export default class Panel extends React.Component<{}> {
 
 @observer
 export class SingleChannelAuth extends React.Component<{}> {
-	onClick(e: React.MouseEvent<HTMLAnchorElement>)  {
-		onClick()
-	};
-
 	render(): React.ReactNode {
 		if (queryParams.has('username')) return null
 
@@ -99,7 +91,7 @@ export class SingleChannelAuth extends React.Component<{}> {
 				<Auth
 					className="auth"
 					target="_blank"
-					onClick={this.onClick.bind(this)}
+					onClick={login}
 					style={{padding: '2px 0', minWidth: '28px'}}
 				>
 					{authStore.user ? <FiLogOut /> : <FiLogIn />}
