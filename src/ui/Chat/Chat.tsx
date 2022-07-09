@@ -2,7 +2,7 @@ import GET_CHANNEL_NAME from './ChannelName.graphql'
 import { useRouter, useSendMessage } from '@hooks'
 import { useQuery } from 'react-apollo-hooks'
 import Input from './Input'
-import { Field, Root, Slowmode } from './elements'
+import { CrateSlowmodeContainer, Field, PushDown, Root, Slowmode } from './elements'
 import { useState, useRef, FunctionComponent, useEffect } from 'react'
 import ErrorAhoy from "@ui/Overlays/ErrorAhoy";
 import { formatError } from "@views/Messages/utils";
@@ -20,6 +20,9 @@ import { observer } from 'mobx-react'
 export interface ChatProps {
   thread?: boolean;
 }
+
+const queryParams = new URLSearchParams(location.search)
+const crate = queryParams.get('preset') === 'crate'
 
 moment.relativeTimeThreshold('ss', 0)
 
@@ -70,7 +73,21 @@ export const Chat = observer((props: ChatProps) => {
 
   const slowmode = data.channel?.rateLimitPerUser || null
 
-  return (
+  const slowmodeElement = (
+    <Tooltip
+      placement="top"
+      overlay={<>Slowmode is enabled.<br />Members can send one<br />message every {moment.duration(slowmode * 1000).humanize()}.</>}
+    >
+      <Slowmode red={slowmodeRed}>
+        {slowmodeTimeRemaining < 0 ? 'Slowmode is enabled.' : parseTimeRemaining(slowmodeTimeRemaining)}
+        <svg width="16" height="16" viewBox="0 0 24 24"><g fill="none" fillRule="evenodd"><path fill="currentColor" fillRule="nonzero" d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"></path></g></svg>
+      </Slowmode>
+    </Tooltip>
+  )
+
+  return <>
+    <PushDown />
+    {(slowmode && crate) ? <CrateSlowmodeContainer>{slowmodeElement}</CrateSlowmodeContainer> : null}
     <Root className="chat">
       <Field rows={rows} canSend={authStore.user && data.channel.canSend} className="field">
         <Input
@@ -138,15 +155,7 @@ export const Chat = observer((props: ChatProps) => {
          {/*<Emoji />*/}
       </Field>
 
-      {slowmode && <Tooltip
-        placement="top"
-        overlay={<>Slowmode is enabled.<br />Members can send one<br />message every {moment.duration(slowmode * 1000).humanize()}.</>}
-      >
-        <Slowmode red={slowmodeRed}>
-          {slowmodeTimeRemaining < 0 ? 'Slowmode is enabled.' : parseTimeRemaining(slowmodeTimeRemaining)}
-          <svg width="16" height="16" viewBox="0 0 24 24"><g fill="none" fillRule="evenodd"><path fill="currentColor" fillRule="nonzero" d="M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"></path></g></svg>
-        </Slowmode>
-      </Tooltip>}
+      {(slowmode && !crate) ? slowmodeElement : null}
     </Root>
-  )
+  </>
 })

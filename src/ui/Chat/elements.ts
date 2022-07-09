@@ -11,9 +11,10 @@ export const Root = styled('form')`
   ${({ theme }) =>
     theme.url.preset === 'crate' &&
     css`
-      margin: auto 0 0;
+      margin: 0;
       padding: 6px;
       background-color: ${theme.colors._primary.fade(0.9).string()};
+      height: auto;
 
       border-top: 1px solid ${theme.colors._primary.fade(0.9).string()};
       box-shadow: 0 0 100px 0 rgba(0, 0, 0, 0.1);
@@ -59,4 +60,14 @@ export const Slowmode = styled.div<SlowmodeProps>`
   * {
     color: inherit;
   }
+`
+
+export const CrateSlowmodeContainer = styled.div`
+  display: flex;
+  padding-right: 10px;
+  background-color: rgba(0, 0, 0, 0.1);
+`
+
+export const PushDown = styled.div`
+  margin: auto 0 0;
 `
