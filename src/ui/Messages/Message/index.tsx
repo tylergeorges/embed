@@ -62,6 +62,11 @@ function Message(props: MessageProps) {
   const buttonOptions: MessageButtonListOption[] = [
     {
       icon: linkIcon,
+      onClick: () => window.open(`discord:///channels/${guildId}/${channelId}/${props.message.id}`),
+      actionDescription: "Open in Discord"
+    },
+    {
+      icon: linkIcon,
       onClick: () => {
         const messageLink = `https://discord.com/channels/${guildId}/${channelId}/${props.message.id}`;
 
