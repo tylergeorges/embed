@@ -5,14 +5,21 @@ import GuildMemberJoin from "@ui/Messages/Message/variants/GuildMemberJoin";
 import {memo} from "react";
 import ChannelPinnedMessage
   from "@ui/Messages/Message/variants/ChannelPinnedMessage";
+import MessageContainer, {
+  MessageButtonListOption
+} from "@ui/Messages/Message/MessageContainer";
+import copyIdIcon from "@images/discordAssets/3fef4f31f944477f5f3e9643cbcaab7a.svg"
+import linkIcon from "@images/discordAssets/a4c2ef2964ee9977baf61a2f6017b93d.svg";
+import {useRouter} from "@hooks";
 
 interface MessageProps {
   isFirstMessage?: boolean;
   message: MessageData;
   isHovered?: boolean;
+  showButtons?: boolean;
 }
 
-function Message(props: MessageProps) {
+function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
   switch (props.message.type) {
     case MessageType.ChannelPinnedMessage:
       return (
@@ -47,6 +54,36 @@ function Message(props: MessageProps) {
       );
     }
   }
+}
+
+function Message(props: MessageProps) {
+  const {channel: channelId, guild: guildId} = useRouter();
+
+  const buttonOptions: MessageButtonListOption[] = [
+    {
+      icon: linkIcon,
+      onClick: () => {
+        const messageLink = `https://discord.com/channels/${guildId}/${channelId}/${props.message.id}`;
+
+        navigator.clipboard.writeText(messageLink);
+      },
+      actionDescription: "Copy Message Link"
+    },
+    {
+      icon: copyIdIcon,
+      onClick: () => navigator.clipboard.writeText(props.message.id),
+      actionDescription: "Copy Message ID"
+    }
+  ];
+
+  if (props.showButtons)
+    return (
+      <MessageContainer buttons={buttonOptions}>
+        <MessageTypeSwitch {...props} />
+      </MessageContainer>
+    );
+
+  return <MessageTypeSwitch {...props} />;
 }
 
 export default memo(Message);

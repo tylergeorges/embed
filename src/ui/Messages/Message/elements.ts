@@ -14,6 +14,54 @@ import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
 import {memo} from "react";
 import pin from "@images/discordAssets/5da4cdab01d4d89c593c48c62ae0d937.svg";
 
+export namespace MessageContainerStyle {
+  export const Base = styled.div`
+    position: relative;
+    margin-right: 14px;
+    
+    &:hover {
+      --background-color: ${({theme}) => theme.colors._background.darken(0.07).string()};
+      
+      .buttons {
+        display: flex;
+      }
+    }
+  `;
+
+  export const Buttons = styled.div`
+    position: absolute;
+    right: 14px;
+    top: 0;
+    transform: translateY(-50%);
+    display: none;
+    flex-direction: row;
+    box-shadow: 0 0 0 1px rgba(4, 4, 5, 0.15);
+    background-color: ${props => props.theme.colors.background};
+    z-index: 1;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: box-shadow 0.1s ease-in-out;
+    
+    &:hover {
+      cursor: pointer;
+      box-shadow: 0 0 0 1px rgba(4, 4, 5, 0.15), 0 4px 4px rgba(0, 0, 0, 0.16);
+    }
+  `;
+
+  export const Button = styled.button`
+    border: none;
+    border-radius: 0;
+    display: flex;
+    padding: 6px;
+    opacity: 0.7;
+    
+    &:hover {
+      background-color: ${props => props.theme.colors._primary.fade(0.9).string()};
+      opacity: 1;
+    }
+  `;
+}
+
 interface MessageBaseProps {
   isUserMentioned?: boolean;
 }
@@ -21,12 +69,8 @@ export const MessageBase = styled.div<MessageBaseProps>`
   position: relative;
   padding: 2px 48px 2px 72px;
 
-  &:hover {
-    --background-color: ${({theme}) => theme.colors._background.darken(0.07).string()};
-
-    & .short-time {
-      display: inherit;
-    }
+  &:hover  .short-time {
+    display: inherit;
   }
   
   ${({isUserMentioned}) => isUserMentioned && css`
