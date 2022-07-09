@@ -6,7 +6,7 @@ import {
 	LoggedInUser, LogOutIcon,
 	Root,
 	UserContainer, Username, UserTag,
-	Version, UserButton, NotLoggedIn
+	Version, UserButton, NotLoggedIn, SettingsIcon
 } from './elements'
 import {observer} from "mobx-react";
 import {authStore} from "@store/auth";
@@ -15,6 +15,7 @@ import {Locale} from '@lib/Locale';
 import {FiLogOut, FiLogIn} from 'react-icons/fi'
 import Tooltip from 'rc-tooltip';
 import getAvatar from "@utils/getAvatar";
+import { store } from '@models';
 
 const { version } = require('../../../../package.json');
 
@@ -31,12 +32,12 @@ export default class Panel extends React.Component<{}> {
 
 		return (
 			<Root className="panel">
-				<UserContainer>
+				<UserContainer className="user-container">
 					{authStore.user
 						? (
-							<LoggedInUser>
+							<LoggedInUser className="logged-in-user">
 								<Avatar src={avatar} draggable={false} />
-								<UserTag>
+								<UserTag className="user-tag">
 									<Username>{authStore.user.username}</Username>
 									{("discriminator" in authStore.user && authStore.user.discriminator)
 										&& (
@@ -47,13 +48,22 @@ export default class Panel extends React.Component<{}> {
 										<Discriminator>Guest</Discriminator>
 									)}
 								</UserTag>
-								<UserButtons>
+								<UserButtons className="user-buttons">
+									<Tooltip
+										placement="top"
+										overlay="Settings"
+									>
+										<UserButton onClick={store.modal.openSettings} className="settings-button">
+											<SettingsIcon />
+										</UserButton>
+									</Tooltip>
+
 									{queryParams.has('username') || // disable logout for dynamic usernames
 										<Tooltip
 											placement="top"
 											overlay={Locale.translate('auth.logout')}
 										>
-											<UserButton onClick={logout}>
+											<UserButton onClick={logout} className="logout-button">
 												<LogOutIcon />
 											</UserButton>
 										</Tooltip>
@@ -73,6 +83,7 @@ export default class Panel extends React.Component<{}> {
 				<Version
 					href={`https://widgetbot.io`}
 					target="_blank"
+					className="version"
 				>
 					WidgetBot {version}
 				</Version>

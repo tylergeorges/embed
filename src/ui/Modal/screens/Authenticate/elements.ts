@@ -11,6 +11,7 @@ export const Root = styled(Content)<Props>`
   text-align: center;
   user-select: none;
   width: auto;
+  max-width: 100%;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%,-50%);

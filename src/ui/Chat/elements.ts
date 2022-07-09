@@ -6,7 +6,7 @@ export const Root = styled('form')`
   flex-shrink: 0;
   position: relative;
   margin: auto 15px 0;
-  height: 66px;
+  min-height: 66px;
 
   ${({ theme }) =>
     theme.url.preset === 'crate' &&
@@ -14,7 +14,7 @@ export const Root = styled('form')`
       margin: 0;
       padding: 6px;
       background-color: ${theme.colors._primary.fade(0.9).string()};
-      height: auto;
+      min-height: auto;
 
       border-top: 1px solid ${theme.colors._primary.fade(0.9).string()};
       box-shadow: 0 0 100px 0 rgba(0, 0, 0, 0.1);
