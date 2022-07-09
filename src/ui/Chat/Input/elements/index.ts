@@ -4,6 +4,8 @@ import emojiSprite from '../../../../app/res/images/discordAssets/15e026451fd814
 export const Root = styled('div')`
   display: flex;
   width: 100%;
+
+  ${({ theme }) => theme.url.preset === 'crate' ? css`margin-right: 40px;` : ''}
 `
 
 export const UploadButton = styled.label`
@@ -79,11 +81,53 @@ export const EmojiButton = styled.div<EmojiButtonProps>`
   transition: filter .1s, transform .1s;
   cursor: pointer;
   margin: 10px;
-  ${({ theme }) => theme.url.preset === 'crate' ? 'margin-right: 50px;' : ''}
 
   ${({ active }) => active
     ? 'transform: scale(1.14);'
     : 'filter: grayscale(100%);'}
+`
+
+interface SendButtonProps {
+  disabled: boolean
+}
+export const SendButton = styled.button<SendButtonProps>`
+  padding: 10px 15px;
+  display: flex;
+  margin: auto;
+  transition: color .25s ease-in-out;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  svg, path {
+    color: inherit;
+  }
+
+  ${({ theme }) => css`
+    color: ${theme.colors._accent.lighten(.2).string()};
+
+    &:hover {
+      color: ${theme.colors._accent.lighten(.09).string()};
+    }
+
+    &:disabled {
+      color: ${theme.colors._primary.fade(.91).string()};
+    }
+  `}
+`
+
+export const SendButtonContainer = styled.div`
+  display: flex;
+  margin-left: 8px;
+  height: 42px;
+
+  &::before {
+    content: "";
+    border-left: 1px solid ${({ theme }) => theme.colors._primary.fade(.91).string()};
+    height: 65%;
+    margin: auto;
+  }
 `
 
 export * from './suggestion'
