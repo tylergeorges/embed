@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import {useRef} from "react";
 import { useMessages } from "@hooks";
 import { formatError, groupMessages } from "./utils";
 import ErrorAhoy from "@ui/Overlays/ErrorAhoy";
@@ -10,7 +10,6 @@ import {
   InfiniteLoader
 } from "react-virtualized";
 import { observer, useObservable } from "mobx-react-lite";
-import Message from "@ui/Message";
 import {Locale} from "@lib/Locale";
 import { addNotification } from "notify";
 import { generalStore } from "@store";
@@ -23,7 +22,8 @@ type MessagesProps = {
 };
 
 export const Messages = observer(({ guild, channel, thread = false }: MessagesProps) => {
-  const { messages, error, ready, stale, fetchMore } = useMessages(channel, guild, thread ? generalStore.activeThread.id : null);
+  const { messages, error, ready, stale } = useMessages(channel, guild, thread ? generalStore.activeThread.id : null);
+  console.log("messages", messages);
   const groupedMessages = groupMessages(messages);
   const scroller = useObservable({
     isLoadingMore: false,
@@ -32,6 +32,7 @@ export const Messages = observer(({ guild, channel, thread = false }: MessagesPr
     count: -1,
     scrollToIndex: -1
   });
+  const scrollerRef = useRef(null);
 
   const getKey = (rowIndex: number) => {
     const group = groupedMessages[rowIndex];
@@ -91,7 +92,7 @@ export const Messages = observer(({ guild, channel, thread = false }: MessagesPr
                 if (scroller.isLoadingMore) return;
 
                 scroller.isLoadingMore = true;
-                await fetchMore();
+                // await fetchMore();
                 scroller.isLoadingMore = false;
 
                 // Clear the cache for the message at the top
@@ -106,6 +107,7 @@ export const Messages = observer(({ guild, channel, thread = false }: MessagesPr
                     <Scroller
                         width={width}
                         height={height}
+                        innerRef={scrollerRef}
                         onRowsRendered={(data) => {
                           const diff = groupedMessages.length - scroller.count
                           if (groupedMessages.length !== scroller.count) {
@@ -140,6 +142,7 @@ export const Messages = observer(({ guild, channel, thread = false }: MessagesPr
                                   <MessageGroup
                                     messages={groupedMessages[index]}
                                     style={style}
+                                    scrollerRef={scrollerRef}
                                   />
                                 </CellMeasurer>
                             ) : null

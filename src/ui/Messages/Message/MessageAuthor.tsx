@@ -61,7 +61,7 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
     // Gets the dominant role icon
     const dominantRoleIconRole = this.getDominantRoleIconRole(this.props.author.roles);
 
-    console.log(this.props.author.name,  this.props.author.flags, this.props.author.flags & (1 << 16));
+    // console.log(this.props.author.name,  this.props.author.flags, this.props.author.flags & (1 << 16));
 
     if (this.props.onlyShowUsername)
       return (

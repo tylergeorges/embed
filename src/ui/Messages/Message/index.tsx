@@ -2,7 +2,7 @@ import {Message as MessageData} from "@generated";
 import {MessageType} from "@generated/globalTypes";
 import NormalMessage from "@ui/Messages/Message/variants/NormalMessage";
 import GuildMemberJoin from "@ui/Messages/Message/variants/GuildMemberJoin";
-import {memo} from "react";
+import {memo, RefObject} from "react";
 import ChannelPinnedMessage
   from "@ui/Messages/Message/variants/ChannelPinnedMessage";
 import MessageContainer, {
@@ -12,11 +12,16 @@ import copyIdIcon from "@images/discordAssets/3fef4f31f944477f5f3e9643cbcaab7a.s
 import linkIcon from "@images/discordAssets/a4c2ef2964ee9977baf61a2f6017b93d.svg";
 import {useRouter} from "@hooks";
 
+export interface MessageDataExtended extends MessageData {
+  highlighted?: boolean;
+}
+
 interface MessageProps {
   isFirstMessage?: boolean;
-  message: MessageData;
+  message: MessageDataExtended;
   isHovered?: boolean;
   showButtons?: boolean;
+  scrollerRef?: RefObject<HTMLDivElement>;
 }
 
 function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
@@ -50,6 +55,7 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
           message={errorMessage}
           isFirstMessage={props.isFirstMessage}
           isHovered={props.isHovered}
+          scrollerRef={props.scrollerRef}
         />
       );
     }

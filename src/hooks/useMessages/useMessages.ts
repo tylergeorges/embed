@@ -1,8 +1,10 @@
 import produce from "immer";
 import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message, MessageUpdated, NewMessage, UpdatedMessage } from "@generated";
+import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message, MessageUpdated, NewMessage } from "@generated";
 import { generalStore } from "@store";
+import { useContext, useEffect } from "react";
+import { MessagesContext } from "@views/Messages/MessagesContext";
 
 /**
  * Fetches the messages for a channel
@@ -17,7 +19,15 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     (query.data?.channel?.id === channel) ||
     false;
 
-  const messages = ready ? query.data.channel.messageBunch.messages : [];
+  const messagesContext = useContext(MessagesContext);
+  const fetchedMessages = ready ? query.data.channel.messageBunch.messages : [];
+  const { messages, setMessages } = messagesContext;
+
+  useEffect(() => {
+    if (!ready) return;
+
+    setMessages(query.data.channel.messageBunch.messages);
+  }, [ready, query.data?.channel?.messageBunch?.messages]);
 
   generalStore.setPins(ready ? query.data.channel.messageBunch.pinnedMessages : null)
 
@@ -28,10 +38,10 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     after?: string;
     before?: string;
     limit?: number;
-  }) {
+  }, cleanSlate: boolean = false) {
     if (!channel || fullyLoaded) return;
     if (!options) {
-      const [firstMessage] = messages;
+      const [firstMessage] = fetchedMessages;
       if (!firstMessage) return;
 
       options = { before: firstMessage.id };
@@ -46,10 +56,27 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
           return
         }
         return produce(prev, draftState => {
-          draftState.channel.messageBunch.messages = [
-            ...fetchMoreResult.channel.messageBunch.messages,
-            ...draftState.channel.messageBunch.messages
-          ];
+          const aroundMessage = fetchMoreResult.channel.messageBunch.messages.find(
+            message => message.id === options?.around
+          );
+
+          const newMessages = aroundMessage !== undefined
+            ? [
+              ...fetchMoreResult.channel.messageBunch.messages.slice(
+                0,
+                fetchMoreResult.channel.messageBunch.messages.indexOf(aroundMessage)
+              ),
+              { ...aroundMessage, highlighted: true },
+              ...fetchMoreResult.channel.messageBunch.messages.slice(
+                fetchMoreResult.channel.messageBunch.messages.indexOf(aroundMessage) + 1
+              ),
+            ]
+            : fetchMoreResult.channel.messageBunch.messages;
+
+          setMessages([
+            ...newMessages,
+            ...(!cleanSlate ? draftState.channel.messageBunch.messages : []),
+          ]);
         })
       }
     })
@@ -68,7 +95,8 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
           const message = subscriptionData.data.message as Message
           message.author.color = messages.find(m => m.author.id === message.author.id)?.author.color || 0xffffff
-          if (!messages.find(m => m.id === message.id)) messages.push(message);
+          if (!messages.find(m => m.id === message.id))
+            setMessages([...messages, message]);
         })
       )}
   });
@@ -92,7 +120,12 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
             if (updatedProps.author) updatedProps.author.color = messages.find(m => m.author.id === message.author?.id)?.author.color || 0xffffff
             delete updatedProps.__typename
 
-            Object.assign(messages[index], updatedProps)
+            // Object.assign(messages[index], updatedProps);
+            setMessages([
+              ...messages.slice(0, index),
+              { ...messages[index], ...updatedProps },
+              ...messages.slice(index + 1)
+            ]);
           }
         })
       );
@@ -113,7 +146,11 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
           const { id } = subscriptionData.data.messageDelete
           const index = messages.findIndex(m => m.id === id)
 
-          if (index > -1) messages.splice(index, 1)
+          if (index > -1)
+            setMessages([
+              ...messages.slice(0, index),
+              ...messages.slice(index + 1),
+            ]);
         })
       );
     }
@@ -132,9 +169,12 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
           const { ids } = subscriptionData.data.messageDeleteBulk
 
-          channel.messageBunch.messages = channel.messageBunch.messages.filter(
+          // channel.messageBunch.messages = channel.messageBunch.messages.filter(
+          //   message => !ids.includes(message.id)
+          // );
+          setMessages(messages.filter(
             message => !ids.includes(message.id)
-          );
+          ));
         })
       );
     }

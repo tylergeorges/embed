@@ -28,7 +28,7 @@ function Tag({userFlags}: {userFlags: number}) {
 
 class ChatTag extends PureComponent<PureComponentProps> {
   render() {
-    console.log(`%c flags: ${this.props.userFlags}`, "color: cyan; font-size: 16px;");
+    // console.log(`%c flags: ${this.props.userFlags}`, "color: cyan; font-size: 16px;");
 
     return (
       <ChatTagBase>

@@ -73,6 +73,20 @@ export const MessageBase = styled.div<MessageBaseProps>`
     display: inherit;
   }
   
+  @keyframes highlighted {
+    from {
+      background-color: ${({theme}) => theme.colors._accent.fade(0.8).string()};
+    }
+    
+    to {
+      background-color: var(--background-color);
+    }
+  }
+  
+  &[data-highlighted="true"] {
+    animation: highlighted 1.5s ease-out;
+  }
+  
   ${({isUserMentioned}) => isUserMentioned && css`
     --background-color: rgba(250, 168, 26, 0.1);
     

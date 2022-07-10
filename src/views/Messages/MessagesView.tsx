@@ -8,6 +8,7 @@ import { observer } from "mobx-react";
 import { useEffect } from "react";
 import { generalStore } from "@store";
 import { useRouter } from '@hooks'
+import {MessagesContextProvider} from "@views/Messages/MessagesContext";
 
 const MessagesView = observer(() => {
   const { guild, channel } = useRouter()
@@ -18,32 +19,34 @@ const MessagesView = observer(() => {
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
-      {!(generalStore.activeThread && generalStore.threadFullscreen) && (
-        <Wrapper hideOnMobile={!!generalStore.activeThread}>
-          <React.Suspense fallback={<Fallback />}>
-            <Header channel={channel} guild={guild}/>
-          </React.Suspense>
+      <MessagesContextProvider>
+        {!(generalStore.activeThread && generalStore.threadFullscreen) && (
+          <Wrapper hideOnMobile={!!generalStore.activeThread}>
+            <React.Suspense fallback={<Fallback />}>
+              <Header channel={channel} guild={guild}/>
+            </React.Suspense>
 
-          <React.Suspense fallback={<Loading />}>
-            <Messages guild={guild} channel={channel} />
-          </React.Suspense>
-          <Chat />
-        </Wrapper>
-      )}
+            <React.Suspense fallback={<Loading />}>
+              <Messages guild={guild} channel={channel} />
+            </React.Suspense>
+            <Chat />
+          </Wrapper>
+        )}
 
-      {generalStore.activeThread && (
-        // TODO: I should use a context here realistically, rather than passing thread deep down various components
-        <Wrapper threadFullscreen={generalStore.threadFullscreen}>
-          <React.Suspense fallback={<Fallback />}>
-            <Header channel={channel} guild={guild} thread />
-          </React.Suspense>
+        {generalStore.activeThread && (
+          // TODO: I should use a context here realistically, rather than passing thread deep down various components
+          <Wrapper threadFullscreen={generalStore.threadFullscreen}>
+            <React.Suspense fallback={<Fallback />}>
+              <Header channel={channel} guild={guild} thread />
+            </React.Suspense>
 
-          <React.Suspense fallback={<Loading />}>
-            <Messages guild={guild} channel={channel} thread />
-          </React.Suspense>
-          <Chat thread />
-        </Wrapper>
-      )}
+            <React.Suspense fallback={<Loading />}>
+              <Messages guild={guild} channel={channel} thread />
+            </React.Suspense>
+            <Chat thread />
+          </Wrapper>
+        )}
+      </MessagesContextProvider>
     </div>
   )
 })

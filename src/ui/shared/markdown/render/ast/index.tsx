@@ -1,10 +1,41 @@
 import { channel, mention, role } from '@ui/shared/markdown/render/ast/mention'
 import text from '@ui/shared/markdown/render/ast/text'
-import { defaultRules, inlineRegex, blockRegex } from 'simple-markdown'
+import { defaultRules, inlineRegex } from 'simple-markdown'
+import { useNavigate } from "react-router-dom";
 
 import { customEmoji } from './customEmoji'
+import {Link} from "@ui/shared/markdown/render/elements";
+import {useMessages} from "@hooks";
 
 const baseRules = {
+  messageLink: {
+    order: defaultRules.url.order,
+    match: inlineRegex(/https:\/\/discord\.com\/channels\/([0-9]+)\/([0-9]+)\/([0-9]+)/),
+    parse: ([whole, guildId, channelId, messageId]) => ({
+      whole,
+      guildId,
+      channelId,
+      messageId,
+    }),
+    react: (node, recurseOutput, state) => {
+      const { fetchMore } = useMessages(node.channelId, node.guildId);
+      const navigate = useNavigate();
+
+      return (
+        <Link
+          key={state.key}
+          href={"javascript:void(0)"}
+          onClick={() => {
+            navigate(`/channels/${node.guildId}/${node.channelId}`);
+            fetchMore({around: node.messageId}, true);
+          }}
+        >
+          {node.whole}
+        </Link>
+      )
+    }
+  },
+
   newline: defaultRules.newline,
   paragraph: defaultRules.paragraph,
   escape: defaultRules.escape,

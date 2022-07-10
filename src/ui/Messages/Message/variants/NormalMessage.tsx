@@ -1,9 +1,5 @@
-import {memo, useMemo} from "react";
-import {
-  Message as MessageData,
-  Message_interaction,
-  Message_referencedMessage
-} from "@generated";
+import {memo, RefObject, useEffect, useMemo, useRef} from "react";
+import {Message_interaction, Message_referencedMessage} from "@generated";
 import {
   MessageBase,
   MessageHeaderBase,
@@ -22,6 +18,7 @@ import {MessageType} from "@generated/globalTypes";
 import getAvatar, {GetAvatarOptions} from "@utils/getAvatar";
 import LargeTimestamp from "@ui/Messages/Message/LargeTimestamp";
 import {authStore} from "@store";
+import {MessageDataExtended} from "@ui/Messages/Message";
 
 interface ReplyInfoProps {
   referencedMessage: Message_referencedMessage | null;
@@ -106,15 +103,30 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
 
 interface MessageProps {
   isFirstMessage?: boolean;
-  message: MessageData;
+  message: MessageDataExtended;
   isHovered?: boolean;
+  scrollerRef?: RefObject<any>;
 }
 
 function NormalMessage(props: MessageProps) {
-  console.log("%c NormalMessage render", "color: yellow; font-size: 16px;");
+  // console.log("%c NormalMessage render", "color: yellow; font-size: 16px;");
 
   const shouldShowReply = props.message.type === MessageType.Reply
                           || Boolean(props.message.interaction);
+
+  const messageRef = useRef(null);
+
+  useEffect(() => {
+    if (
+      !props.message.highlighted
+      || messageRef.current === null
+    )
+      return;
+
+    // TODO: this is way too hacky, fix this
+    // TL;DR: Somehow at the time of this running we can't yet scroll?
+    setTimeout(() => messageRef.current.scrollIntoView({block: 'center'}), 200);
+  }, [messageRef, props.message.highlighted]);
 
   const isUserMentioned = useMemo(() => {
     const user = authStore.user;
@@ -134,17 +146,41 @@ function NormalMessage(props: MessageProps) {
 
   if (props.isFirstMessage)
     return (
-      <MessageBase isUserMentioned={isUserMentioned}>
-        {shouldShowReply && (
-          <ReplyInfo
-            referencedMessage={props.message.referencedMessage}
-            interaction={props.message.interaction}
+      <div ref={messageRef}>
+        <MessageBase isUserMentioned={isUserMentioned} data-highlighted={props.message.highlighted}>
+          {shouldShowReply && (
+            <ReplyInfo
+              referencedMessage={props.message.referencedMessage}
+              interaction={props.message.interaction}
+            />
+          )}
+          <MessageHeaderBase>
+            <MessageAuthor author={props.message.author} avatarAnimated={props.isHovered ?? false} />
+            <LargeTimestamp timestamp={props.message.createdAt} />
+          </MessageHeaderBase>
+          <Content
+            mentions={props.message.mentions}
+            messageContent={props.message.content}
+            editedAt={props.message.editedAt}
+            reactions={props.message.reactions}
+            attachments={props.message.attachments}
           />
-        )}
-        <MessageHeaderBase>
-          <MessageAuthor author={props.message.author} avatarAnimated={props.isHovered ?? false} />
-          <LargeTimestamp timestamp={props.message.createdAt} />
-        </MessageHeaderBase>
+        </MessageBase>
+      </div>
+    );
+
+  return (
+    <div ref={messageRef}>
+      <MessageBase isUserMentioned={isUserMentioned} data-highlighted={props.message.highlighted}>
+        <Tooltip
+          placement="top"
+          overlay={Moment(props.message.createdAt).format("LLLL")}
+          mouseEnterDelay={1}
+        >
+          <SmallTimestampBase dateTime={props.message.createdAt} className="short-time">
+            {Moment(props.message.createdAt).format("h:mm A")}
+          </SmallTimestampBase>
+        </Tooltip>
         <Content
           mentions={props.message.mentions}
           messageContent={props.message.content}
@@ -153,27 +189,7 @@ function NormalMessage(props: MessageProps) {
           attachments={props.message.attachments}
         />
       </MessageBase>
-    );
-
-  return (
-    <MessageBase isUserMentioned={isUserMentioned}>
-      <Tooltip
-        placement="top"
-        overlay={Moment(props.message.createdAt).format("LLLL")}
-        mouseEnterDelay={1}
-      >
-        <SmallTimestampBase dateTime={props.message.createdAt} className="short-time">
-          {Moment(props.message.createdAt).format("h:mm A")}
-        </SmallTimestampBase>
-      </Tooltip>
-      <Content
-        mentions={props.message.mentions}
-        messageContent={props.message.content}
-        editedAt={props.message.editedAt}
-        reactions={props.message.reactions}
-        attachments={props.message.attachments}
-      />
-    </MessageBase>
+    </div>
   );
 }
 
