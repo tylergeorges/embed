@@ -49,7 +49,7 @@ export default observer(() => {
             <List className="pin-list">
                 {pins
                     ? pins.length
-                        ? pins.map(pin => <Pin className="pin"><Message messages={[pin]} allMessages={pins} /></Pin>)
+                        ? pins.map(pin => <Pin key={pin.id} className="pin"><Message messages={[pin]} allMessages={pins} /></Pin>)
                         : <NoPins className="no-pins">
                             <img src={noPins} />
                             <span>This channel doesn't have any <br /> pinned messages... yet.</span>
