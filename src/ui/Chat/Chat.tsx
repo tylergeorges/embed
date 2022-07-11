@@ -28,7 +28,7 @@ moment.relativeTimeThreshold('ss', 0)
 
 const parseTimeRemaining = (timeRemaining: number) => {
   const h = Math.floor(timeRemaining / 3600)
-  const m = Math.floor(timeRemaining % 3600 / 60).toString().padStart(2, '0')
+  const m = Math.floor(timeRemaining % 3600 / 60)
   const s = Math.floor(timeRemaining % 60).toString().padStart(2, '0')
 
   return `${h ? h+':' : ''}${m}:${s}`
