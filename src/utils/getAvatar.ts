@@ -8,15 +8,14 @@ type AvatarSize = 16 | 20 | 22 | 24 | 28 | 32 | 40 | 44 | 48 | 56 | 60 | 64
   | 512 | 600 | 640 | 1024 | 1280 | 1536 | 2048 | 3072 | 4096;
 
 function gifCheck(url: string) {
-  return url.includes('/a_')
+  return url?.includes('/a_')
     ? url.replace('webp', 'gif')
     : url;
 }
 
 function getAvatarProperty(user: User, avatarSize: AvatarSize = 80): string | null {
   if ("avatarUrl" in user) {
-    if (user.avatarUrl === null)
-      return null;
+    if (!user.avatarUrl) return null;
 
     return user.avatarUrl.includes('cdn.discordapp.com') ? `${user.avatarUrl}?size=${avatarSize}` : user.avatarUrl;
   }
