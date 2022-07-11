@@ -21,7 +21,7 @@ interface MessageAuthorProps {
 class MessageAuthor extends PureComponent<MessageAuthorProps> {
   private convertColor = memoize(
     (color: number) =>
-      color > 0 ? `#${color.toString(16).padStart(6, '0')}` : 'fff'
+      color > 0 ? `#${color.toString(16).padStart(6, '0')}` : '#fff'
   );
 
   private getDominantRoleColor = memoize(

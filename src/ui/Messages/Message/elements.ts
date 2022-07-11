@@ -163,7 +163,9 @@ export const EditedBase = styled.span`
 interface ContentBase {
   isReplyContent?: boolean;
 }
-export const ContentBase = styled('span')`
+export const ContentBase = styled.span`
+  color: ${({theme}) => theme.colors._primary.fade(1 - 0.827).string()};
+  
   ${
     ({isReplyContent}: ContentBase) => isReplyContent
         ? css`
@@ -173,6 +175,8 @@ export const ContentBase = styled('span')`
               white-space: nowrap;
               text-overflow: ellipsis;
               overflow: hidden;
+              display: flex;
+              align-items: center;
 
               &:hover {
                 opacity: 1;
@@ -183,6 +187,23 @@ export const ContentBase = styled('span')`
         `
   }
 `;
+
+export namespace SlashCommand {
+  export const Base = styled.span`
+    color: ${({theme}) => theme.colors._primary.fade(1 - 0.64).string()};
+    font-size: 14px;
+    user-select: none;
+  `;
+
+  export const Command = styled.span`
+    color: #00AFF4;
+    
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  `;
+}
 
 export const ReplyInfoBase = styled('div')`
   display: flex;

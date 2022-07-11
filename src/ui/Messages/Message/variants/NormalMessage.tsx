@@ -11,7 +11,7 @@ import {
   MiniUserNameBase,
   ReplyInfoBase,
   ReplySpine,
-  ReplyUserBase,
+  ReplyUserBase, SlashCommand,
   SmallTimestampBase
 } from "@ui/Messages/Message/elements";
 import MessageAuthor from "@ui/Messages/Message/MessageAuthor";
@@ -21,7 +21,7 @@ import Tooltip from "rc-tooltip";
 import {MessageType} from "@generated/globalTypes";
 import getAvatar, {GetAvatarOptions} from "@utils/getAvatar";
 import LargeTimestamp from "@ui/Messages/Message/LargeTimestamp";
-import {authStore} from "@store";
+import {authStore, generalStore} from "@store";
 
 interface ReplyInfoProps {
   referencedMessage: Message_referencedMessage | null;
@@ -63,6 +63,27 @@ function getMiniUserName(
   return null;
 }
 
+function getDominantRoleColor(
+  referencedMessage: Message_referencedMessage | null
+) {
+  console.log("%c-- NormalMessage getDominantRoleColor", "color: yellow; font-size: 14px;");
+
+  if (referencedMessage !== null) {
+    const roleIds = referencedMessage.author.roles ?? [];
+    const [role] = roleIds
+      .map(id => generalStore.guild.roles.find(r => r.id === id))
+      .filter(r => r !== undefined && r.color !== 0)
+      .sort((a, b) => b.position - a.position);
+
+    const colorHex = role?.color ?? null;
+    return colorHex > 0
+      ? `#${colorHex.toString(16).padStart(6, '0')}`
+      : '#fff';
+  }
+
+  return null;
+}
+
 const ReplyInfo = memo((props: ReplyInfoProps) => {
   const miniAvatarUrl = useMemo(
     () => getMiniAvatarUrl(props.referencedMessage, props.interaction),
@@ -74,7 +95,7 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
     [props.referencedMessage, props.interaction]
   );
 
-  const miniUserNameColorHex = "#fff";
+  const miniUserNameColorHex = getDominantRoleColor(props.referencedMessage);
 
   return (
     <ReplyInfoBase>
@@ -92,12 +113,18 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
             messageContent={props.referencedMessage.content}
             editedAt={props.referencedMessage.editedAt}
             reactions={props.referencedMessage.reactions}
-            attachments={[]}
+            attachments={props.referencedMessage.attachments}
+            stickers={props.referencedMessage.stickers}
             isReplyContent={true}
           />
         )
         : (
-          <>used /idk</>
+          <SlashCommand.Base>
+            used{" "}
+            <Tooltip overlay={`/${props.interaction.name}`} placement="top" trigger={["click"]}>
+              <SlashCommand.Command>/{props.interaction.name}</SlashCommand.Command>
+            </Tooltip>
+          </SlashCommand.Base>
         )
       }
     </ReplyInfoBase>
@@ -151,6 +178,7 @@ function NormalMessage(props: MessageProps) {
           editedAt={props.message.editedAt}
           reactions={props.message.reactions}
           attachments={props.message.attachments}
+          stickers={props.message.stickers}
         />
       </MessageBase>
     );
@@ -172,6 +200,7 @@ function NormalMessage(props: MessageProps) {
         editedAt={props.message.editedAt}
         reactions={props.message.reactions}
         attachments={props.message.attachments}
+        stickers={props.message.stickers}
       />
     </MessageBase>
   );

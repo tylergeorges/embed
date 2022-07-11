@@ -37,6 +37,7 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
       );
     case MessageType.Reply:
     case MessageType.Default:
+    case MessageType.ChatInputCommand:
       return <NormalMessage {...props} />;
     default: {
       const errorMessage: MessageData = {
