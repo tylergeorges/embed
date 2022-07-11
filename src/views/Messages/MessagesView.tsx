@@ -7,8 +7,9 @@ import { Messages } from './Messages'
 import { Loading } from '@ui/Overlays'
 import { observer } from "mobx-react";
 import { useEffect } from "react";
-import { generalStore } from "@store";
-import { useParams } from 'react-router-dom'
+import { authStore, generalStore } from "@store";
+import { useNavigate, useParams } from 'react-router-dom'
+import { Views } from '@ui/Sidebar'
 
 const MessagesView = observer(() => {
   const { guild, channel, user } = useParams()
@@ -16,6 +17,14 @@ const MessagesView = observer(() => {
   useEffect(() => {
     generalStore.clearThread(); // Channel changed, cant be looking at a thread anymore
   }, [channel]);
+
+  const navigate = useNavigate()
+  useEffect(() => {
+    if (user && !authStore.user) {
+      navigate('..') // Close DM if not logged in
+      generalStore.setSidebarView(Views.Channels)
+    }
+  }, [user, authStore.user])
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
