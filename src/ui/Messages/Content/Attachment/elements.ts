@@ -19,12 +19,11 @@ export const VideoAttachmentBase = css`
 export const VideoAttachmentContainerBase = css`
   border-radius: 3px;
   overflow: hidden;
+  max-width: min(400px, 100%);
   
   position: relative;
   display: flex;
 `;
-
-export const MaxAttachmentWidth = 300;
 
 export const SpoilerBase = styled.div`
   overflow: hidden;

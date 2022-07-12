@@ -1,4 +1,5 @@
-import {MaxAttachmentWidth} from "@ui/Messages/Content/Attachment/elements";
+const MaxAttachmentWidth = 400;
+const MaxAttachmentHeight = 300;
 
 function useSize(width: number, height: number, disabled?: boolean) {
   if (disabled) {
@@ -8,10 +9,17 @@ function useSize(width: number, height: number, disabled?: boolean) {
     }
   }
 
-  const resultingWidth = Math.floor(
-    Math.min(height, MaxAttachmentWidth) / height * width
+  const resultingWidth = Math.min(
+    Math.floor(
+      Math.min(height, MaxAttachmentHeight) / height * width
+    ),
+    MaxAttachmentWidth
   );
-  const resultingHeight = Math.min(height, MaxAttachmentWidth);
+  const resultingHeight = Math.min(
+    height,
+    MaxAttachmentHeight,
+    resultingWidth / width * height
+  );
 
   return {
       width: resultingWidth,

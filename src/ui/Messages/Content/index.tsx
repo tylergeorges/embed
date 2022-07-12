@@ -22,7 +22,10 @@ import Reactions from "@ui/Messages/Message/Reactions";
 import Attachment from "@ui/Messages/Content/Attachment";
 import StickerIcon from "@images/discordAssets/sticker-icon.svg";
 import AttachmentIcon from "@images/discordAssets/attachment-icon.svg";
-import {ReplyIconBase} from "@ui/Messages/Content/elements";
+import {
+  ContentContainerBase,
+  ReplyIconBase
+} from "@ui/Messages/Content/elements";
 import Sticker from "@ui/Messages/Content/Sticker";
 
 interface EditedProps {
@@ -97,19 +100,21 @@ function Content(props: ContentProps) {
   }, [props.attachments, props.stickers, props.isReplyContent]);
 
   return (
-    <div>
+    <>
       <ContentBase isReplyContent={props.isReplyContent}>
-        {props.messageContent.length > 0
-          ? (
-            <>
-              <Markdown mentions={props.mentions}>
-                {props.messageContent}
-              </Markdown>
-              {props.editedAt && <Edited editedAt={props.editedAt} />}
-            </>
-          )
-          : dominantAccessoryText
-        }
+        <ContentContainerBase data-is-reply-content={props.isReplyContent}>
+          {props.messageContent.length > 0
+            ? (
+              <>
+                <Markdown mentions={props.mentions}>
+                  {props.messageContent}
+                </Markdown>
+                {props.editedAt && <Edited editedAt={props.editedAt} />}
+              </>
+            )
+            : dominantAccessoryText
+          }
+        </ContentContainerBase>
         {props.isReplyContent && (
           <ReplyIcon stickers={props.stickers} attachments={props.attachments} />
         )}
@@ -133,7 +138,7 @@ function Content(props: ContentProps) {
           )}
         </MessageAccessories>
       )}
-    </div>
+    </>
   );
 }
 

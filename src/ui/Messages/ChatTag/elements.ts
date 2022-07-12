@@ -15,6 +15,7 @@ export const ChatTagBase = styled('span')`
   border-radius: 3px;
   padding: 0 4px;
   align-self: center;
+  white-space: nowrap;
   
   background-color: ${({ theme }) => theme.colors._accent.string()};
 `;

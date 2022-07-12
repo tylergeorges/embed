@@ -137,20 +137,6 @@ export const ReplySpine = memo(styled.div`
   border-left: 2px solid #4f545c;
   border-top: 2px solid #4f545c;
   border-top-left-radius: 6px;
-
-  @media (max-width: 500px), (max-height: 370px) {
-    top: 20px;
-    left: 35px;
-  }
-
-  @media (max-width: 400px), (max-height: 340px) {
-    width: 25.5px;
-    left: 32.5px;
-  }
-
-  @media (max-width: 260px) {
-    left: 30px;
-  }
 `);
 
 export const EditedBase = styled.span`
@@ -176,7 +162,7 @@ export const ContentBase = styled.span`
               text-overflow: ellipsis;
               overflow: hidden;
               display: flex;
-              align-items: center;
+              max-width: calc(100% - 72px);
 
               &:hover {
                 opacity: 1;
@@ -233,6 +219,10 @@ export const MiniUserNameBase = styled.span<MiniUserNameBaseProps>`
   font-weight: 500;
   white-space: nowrap;
 
+  overflow: hidden;
+  max-width: 25vw;
+  text-overflow: ellipsis;
+
   color: ${({color}) => color};
 
   &:hover {
@@ -264,6 +254,7 @@ export const LargeTimestampBase = styled('time')`
   margin-left: 8px;
   cursor: default;
   height: fit-content;
+  white-space: nowrap;
   
   color: ${({theme}) => theme.colors._primary.fade(0.5).string()};
 `;
@@ -367,7 +358,8 @@ export const UsernameBase = memo(styled.span<UsernameBaseProps>`
   font-weight: 500;
   display: inline;
   vertical-align: baseline;
-
+  white-space: nowrap;
+  
   &:hover {
     cursor: pointer;
     text-decoration: underline;

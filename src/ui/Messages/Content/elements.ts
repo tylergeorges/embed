@@ -6,6 +6,15 @@ export const ReplyIconBase = styled.img`
   height: 20px;
 `;
 
+export const ContentContainerBase = styled.div`
+  &[data-is-reply-content="true"] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 0 1 auto;
+  }
+`;
+
 export const LottieStickerWrapper = styled.span`
   width: fit-content;
 `
