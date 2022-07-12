@@ -3,9 +3,9 @@ import Tooltip from "rc-tooltip";
 import StickerIcon from "@images/discordAssets/sticker-icon.svg";
 import {
   LottieStickerWrapper,
-  StickerTooltipBase
+  StickerTooltipBase, StickerTooltipIconBase
 } from "@ui/Messages/Content/elements";
-import Lottie from "@ui/Messages/Content/Lottie";
+import Lottie from "@ui/Messages/Content/Sticker/Lottie";
 import webpCheck from "@ui/shared/webpCheck";
 import * as React from "react";
 
@@ -18,7 +18,7 @@ function Sticker(props: StickerProps) {
     <Tooltip
       overlay={
         <StickerTooltipBase>
-          <img src={StickerIcon} alt="" /> {props.sticker.name}
+          <StickerTooltipIconBase src={StickerIcon} alt="" /> {props.sticker.name}
         </StickerTooltipBase>
       }
       placement="top"

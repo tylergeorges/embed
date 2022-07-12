@@ -15,3 +15,7 @@ export const StickerTooltipBase = styled.span`
   align-items: center;
   white-space: break-spaces;
 `;
+
+export const StickerTooltipIconBase = styled.img`
+  margin-right: .25rem;
+`;
