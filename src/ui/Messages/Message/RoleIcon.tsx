@@ -1,6 +1,6 @@
 import {PureComponent} from "react";
 import {GuildInfo_guild_roles} from "@generated";
-import {RoleIconBase, UnicodeEmoji} from "@ui/Messages/Message/elements";
+import {RoleIconBase, UnicodeEmojiBase} from "@ui/Messages/Message/elements";
 import Tooltip from "rc-tooltip";
 import webpCheck from "@ui/shared/webpCheck";
 import {memoize} from "lodash";
@@ -29,9 +29,9 @@ class RoleIcon extends PureComponent<RoleIconProps> {
       return (
         <Tooltip overlay={this.props.role.name} placement="top">
           <span>
-            <UnicodeEmoji disableTooltip={true}>
+            <UnicodeEmojiBase disableTooltip={true}>
               {this.props.role.unicodeEmoji}
-            </UnicodeEmoji>
+            </UnicodeEmojiBase>
           </span>
         </Tooltip>
       );

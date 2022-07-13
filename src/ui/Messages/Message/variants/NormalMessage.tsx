@@ -10,8 +10,8 @@ import {
   MiniUserAvatarBase,
   MiniUserNameBase,
   ReplyInfoBase,
-  ReplySpine,
-  ReplyUserBase, SlashCommand,
+  ReplySpineBase,
+  ReplyUserBase, SlashCommandBase,
   SmallTimestampBase
 } from "@ui/Messages/Message/elements";
 import MessageAuthor from "@ui/Messages/Message/MessageAuthor";
@@ -99,7 +99,7 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
 
   return (
     <ReplyInfoBase>
-      <ReplySpine />
+      <ReplySpineBase />
       <ReplyUserBase>
         <MiniUserAvatarBase src={miniAvatarUrl} />
         <MiniUserNameBase color={miniUserNameColorHex}>
@@ -115,26 +115,31 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
             reactions={props.referencedMessage.reactions}
             attachments={props.referencedMessage.attachments}
             stickers={props.referencedMessage.stickers}
+            messageType={props.referencedMessage.type}
+            thread={null}
             isReplyContent={true}
           />
         )
         : (
-          <SlashCommand.Base>
+          <SlashCommandBase.Base>
             used{" "}
             <Tooltip overlay={`/${props.interaction.name}`} placement="top" trigger={["click"]}>
-              <SlashCommand.Command>/{props.interaction.name}</SlashCommand.Command>
+              <SlashCommandBase.Command>/{props.interaction.name}</SlashCommandBase.Command>
             </Tooltip>
-          </SlashCommand.Base>
+          </SlashCommandBase.Base>
         )
       }
     </ReplyInfoBase>
   );
 });
 
+type Message = Omit<MessageData, "referencedMessage"> & Partial<MessageData>;
+
 interface MessageProps {
   isFirstMessage?: boolean;
-  message: MessageData;
+  message: Message;
   isHovered?: boolean;
+  noThreadButton?: boolean;
 }
 
 function NormalMessage(props: MessageProps) {
@@ -179,6 +184,9 @@ function NormalMessage(props: MessageProps) {
           reactions={props.message.reactions}
           attachments={props.message.attachments}
           stickers={props.message.stickers}
+          thread={props.message.thread}
+          messageType={props.message.type}
+          noThreadButton={props.noThreadButton}
         />
       </MessageBase>
     );
@@ -201,6 +209,9 @@ function NormalMessage(props: MessageProps) {
         reactions={props.message.reactions}
         attachments={props.message.attachments}
         stickers={props.message.stickers}
+        thread={props.message.thread}
+        messageType={props.message.type}
+        noThreadButton={props.noThreadButton}
       />
     </MessageBase>
   );

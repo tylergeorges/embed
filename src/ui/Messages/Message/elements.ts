@@ -1,3 +1,12 @@
+import styled from '../ThemeContext'
+import {Twemoji} from "@ui/shared/Emoji/emoji";
+import {css} from "react-emotion";
+import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
+import {memo} from "react";
+import pin from "@images/discordAssets/5da4cdab01d4d89c593c48c62ae0d937.svg";
+import threadCreated from "@images/discordAssets/thread-created.svg";
+import {MessageType} from "@generated/globalTypes";
+import {ThreadButtonHeight} from "@ui/Messages/Content/elements";
 
 /*
 ==============================================================
@@ -6,13 +15,6 @@
 
 ==============================================================
  */
-
-import styled from '../ThemeContext'
-import {Twemoji} from "@ui/shared/Emoji/emoji";
-import {css} from "react-emotion";
-import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
-import {memo} from "react";
-import pin from "@images/discordAssets/5da4cdab01d4d89c593c48c62ae0d937.svg";
 
 export namespace MessageContainerStyle {
   export const Base = styled.div`
@@ -109,17 +111,18 @@ export const MessageBase = styled.div<MessageBaseProps>`
 
 export const SystemMessageBase = styled(MessageBase)`
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
 `;
 
-export const SystemMessageContent = styled.span`
-  color: ${({theme}) => theme.colors._primary.darken(0.5).string()};
+export const SystemMessageContentBase = styled.span`
+  color: ${({theme}) => theme.colors._primary.darken(0.4).string()};
 `;
 
-interface PinnedMessageLinkProps {
+interface SystemMessageLinkBaseProps {
   cursor?: string;
 }
-export const PinnedMessageLinkBase = memo(styled.span<PinnedMessageLinkProps>`
+export const SystemMessageLinkBase = memo(styled.span<SystemMessageLinkBaseProps>`
   color: ${({theme}) => theme.colors._primary.string()};
   
   &:hover {
@@ -128,7 +131,30 @@ export const PinnedMessageLinkBase = memo(styled.span<PinnedMessageLinkProps>`
   }
 `);
 
-export const ReplySpine = memo(styled.div`
+interface ThreadSpineBaseProps {
+  messageType: MessageType;
+}
+
+export const ThreadSpineBase = memo(styled.div<ThreadSpineBaseProps>`
+  position: absolute;
+  left: calc(72px / 2);
+  border-left: 2px solid #4f545c;
+  border-bottom: 2px solid #4f545c;
+  border-bottom-left-radius: 6px;
+  width: calc(72px / 2 - 4px);
+  
+  ${({messageType}) => messageType === MessageType.ThreadCreated 
+  ? css`
+    top: calc(6px /* thread icon padding */ + 16px /* icon height */ + 4px /* some extra padding */);
+    bottom: calc(${ThreadButtonHeight} / 2);
+  `
+  : css`
+    top: 48px;
+    bottom: calc((${ThreadButtonHeight} + 6px + 4px /* the padding from the thread button */) / 2);
+  `}
+`);
+
+export const ReplySpineBase = memo(styled.div`
   position: absolute;
   width: 33px;
   height: 12px;
@@ -142,18 +168,19 @@ export const ReplySpine = memo(styled.div`
 export const EditedBase = styled.span`
   font-size: 10px;
   margin-left: 4px;
+  white-space: nowrap;
   
   color: ${({theme}) => theme.colors._primary.darken(0.5).string()};
 `;
 
-interface ContentBase {
+interface ContentBaseProps {
   isReplyContent?: boolean;
 }
 export const ContentBase = styled.span`
   color: ${({theme}) => theme.colors._primary.fade(1 - 0.827).string()};
   
   ${
-    ({isReplyContent}: ContentBase) => isReplyContent
+    ({isReplyContent}: ContentBaseProps) => isReplyContent
         ? css`
               font-size: 14px;
               opacity: 0.64;
@@ -174,7 +201,7 @@ export const ContentBase = styled.span`
   }
 `;
 
-export namespace SlashCommand {
+export namespace SlashCommandBase {
   export const Base = styled.span`
     color: ${({theme}) => theme.colors._primary.fade(1 - 0.64).string()};
     font-size: 14px;
@@ -259,12 +286,16 @@ export const LargeTimestampBase = styled('time')`
   color: ${({theme}) => theme.colors._primary.fade(0.5).string()};
 `;
 
-export namespace Icons {
-  const IconBase = styled.div`
+export namespace IconsBase {
+  interface IconBaseProps {
+    centerVertically?: boolean;
+  }
+
+  const IconBase = styled.div<IconBaseProps>`
     position: absolute;
     left: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    top: ${({centerVertically}) => centerVertically ? '50%' : '0'};
+    transform: ${({centerVertically}) => centerVertically ? 'translateY(-50%)' : 'translateY(0)'};
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 16px;
@@ -278,6 +309,11 @@ export namespace Icons {
 
   export const Pinned = memo(styled(IconBase)`
     background-image: url("${pin}");
+  `);
+
+  export const ThreadCreated = memo(styled(IconBase)`
+    margin-top: 6px;
+    background-image: url("${threadCreated}");
   `);
 }
 
@@ -392,7 +428,7 @@ export const RoleIconBase = styled.img`
   height: 20px;
 `
 
-export const UnicodeEmoji = styled(Twemoji)`
+export const UnicodeEmojiBase = styled(Twemoji)`
   margin-left: .25rem;
   width: 20px;
   height: 20px;

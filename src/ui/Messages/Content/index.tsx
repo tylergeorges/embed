@@ -1,14 +1,11 @@
-import {
-  Children,
-  memo,
-  ReactNode,
-  useMemo,
-} from "react";
+import {Children, memo, ReactNode, useMemo,} from "react";
 import Markdown from "@ui/shared/markdown/render";
 import {
   Message_attachments,
   Message_mentions,
-  Message_reactions, Message_stickers
+  Message_reactions,
+  Message_stickers,
+  Message_thread
 } from "@generated";
 import {
   ContentBase,
@@ -27,6 +24,8 @@ import {
   ReplyIconBase
 } from "@ui/Messages/Content/elements";
 import Sticker from "@ui/Messages/Content/Sticker";
+import ThreadButton from "@ui/Messages/Content/Thread/ThreadButton";
+import {MessageType} from "@generated/globalTypes";
 
 interface EditedProps {
   editedAt: number;
@@ -81,8 +80,11 @@ interface ContentProps {
   reactions: Message_reactions[] | null;
   stickers: Message_stickers[] | null;
   messageContent: string;
+  messageType: MessageType;
   isReplyContent?: boolean;
   editedAt: number;
+  thread: Message_thread;
+  noThreadButton?: boolean;
 }
 
 function Content(props: ContentProps) {
@@ -125,6 +127,7 @@ function Content(props: ContentProps) {
             props.reactions !== null
             || props.attachments.length > 0
             || props.stickers.length > 0
+            || props.thread !== null
           }
         >
           {props.attachments.map(attachment => (
@@ -135,6 +138,14 @@ function Content(props: ContentProps) {
           ))}
           {props.reactions && (
             <Reactions reactions={props.reactions} />
+          )}
+          {(!props.noThreadButton && props.thread) && (
+            <ThreadButton
+              thread={props.thread}
+              messageId={props.thread.id}
+              messageContent={props.messageContent}
+              messageType={props.messageType}
+            />
           )}
         </MessageAccessories>
       )}

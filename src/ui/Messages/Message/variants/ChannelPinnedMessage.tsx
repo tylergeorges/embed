@@ -1,4 +1,4 @@
-import {Icons, PinnedMessageLinkBase, SystemMessageBase, SystemMessageContent} from "../elements";
+import {IconsBase, SystemMessageLinkBase, SystemMessageBase, SystemMessageContentBase} from "../elements";
 import {Message_author} from "@generated";
 import MessageAuthor from "@ui/Messages/Message/MessageAuthor";
 import Tooltip from "rc-tooltip";
@@ -17,24 +17,24 @@ function ChannelPinnedMessage(props: ChannelPinnedMessageProps) {
 
   return (
     <SystemMessageBase>
-      <Icons.Pinned />
-      <SystemMessageContent>
+      <IconsBase.Pinned />
+      <SystemMessageContentBase>
         <MessageAuthor author={props.author} onlyShowUsername={true} />{" "}
         pinned{" "}
-        <Tooltip overlay={<>Coming Soon<Twemoji>™</Twemoji></>} placement="top">
-          <PinnedMessageLinkBase cursor="not-allowed">
+        <Tooltip overlay={<>Coming Eventually<Twemoji>™</Twemoji></>} placement="top">
+          <SystemMessageLinkBase cursor="not-allowed">
             a message
-          </PinnedMessageLinkBase>
+          </SystemMessageLinkBase>
         </Tooltip>
         {" "}
         to this channel.
         See all{" "}
-        <PinnedMessageLinkBase onClick={openPinnedMessage}>
+        <SystemMessageLinkBase onClick={openPinnedMessage}>
           pinned messages
-        </PinnedMessageLinkBase>
+        </SystemMessageLinkBase>
         .
         <LargeTimestamp timestamp={props.createdAt} />
-      </SystemMessageContent>
+      </SystemMessageContentBase>
     </SystemMessageBase>
   );
 }

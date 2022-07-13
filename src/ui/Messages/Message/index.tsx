@@ -11,6 +11,7 @@ import MessageContainer, {
 import copyIdIcon from "@images/discordAssets/3fef4f31f944477f5f3e9643cbcaab7a.svg"
 import linkIcon from "@images/discordAssets/a4c2ef2964ee9977baf61a2f6017b93d.svg";
 import {useRouter} from "@hooks";
+import ThreadCreated from "@ui/Messages/Message/variants/ThreadCreated";
 
 interface MessageProps {
   isFirstMessage?: boolean;
@@ -35,10 +36,22 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
           author={props.message.author}
         />
       );
+    case MessageType.ThreadCreated:
+      return (
+        <ThreadCreated
+          createdAt={props.message.createdAt}
+          thread={props.message.thread}
+          author={props.message.author}
+          messageId={props.message.id}
+          messageContent={props.message.content}
+        />
+      );
     case MessageType.Reply:
     case MessageType.Default:
     case MessageType.ChatInputCommand:
       return <NormalMessage {...props} />;
+    case MessageType.ThreadStarterMessage:
+      return <NormalMessage {...props} message={props.message.referencedMessage} noThreadButton={true}/>;
     default: {
       const errorMessage: MessageData = {
         ...props.message,

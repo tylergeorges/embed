@@ -1,7 +1,7 @@
 import {Message_author} from "@generated";
 import {
-  Icons,
-  SystemMessageBase, SystemMessageContent
+  IconsBase,
+  SystemMessageBase, SystemMessageContentBase
 } from "@ui/Messages/Message/elements";
 import MessageAuthor from "@ui/Messages/Message/MessageAuthor";
 import LargeTimestamp from "@ui/Messages/Message/LargeTimestamp";
@@ -36,11 +36,11 @@ function joinMessage(createdAt: number, author: Message_author): JSX.Element {
 function GuildMemberJoin(props: GuildMemberJoinProps) {
   return (
     <SystemMessageBase>
-      <Icons.Add />
-      <SystemMessageContent>
+      <IconsBase.Add />
+      <SystemMessageContentBase>
         {joinMessage(props.createdAt, props.author)}
         <LargeTimestamp timestamp={props.createdAt} />
-      </SystemMessageContent>
+      </SystemMessageContentBase>
     </SystemMessageBase>
   )
 }
