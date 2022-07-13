@@ -45,9 +45,14 @@ export class AuthStore {
     try {
       this.token = window.localStorage.getItem('token');
       this.locale = window.localStorage.getItem("locale") || "en";
-      this.user = JSON.parse(window.localStorage.getItem('user'));
+      try {
+        this.user = JSON.parse(window.localStorage.getItem('user'));
+      } catch (e) {
+        this.logout();
+        generalStore.needsUpdate = true;
+      }
 
-      if (!localStorage.getItem('token')) {
+      if (!this.token || !this.user) {
         this.logout();
         generalStore.needsUpdate = true;
         // localStorage.setItem('lastUpdate', version)
