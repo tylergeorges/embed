@@ -202,6 +202,7 @@ export const ContentBase = styled.span`
         `
         : css`
               white-space: break-spaces;
+              font-size: 16px;
         `
   }
 `;
@@ -406,6 +407,7 @@ interface UsernameBaseProps {
 export const UsernameBase = memo(styled.span<UsernameBaseProps>`
   color: ${props => props.color};
   font-weight: 500;
+  font-size: 16px;
   display: inline;
   vertical-align: baseline;
   white-space: nowrap;

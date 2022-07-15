@@ -19,9 +19,11 @@ import GuildDiscoveryRequalified
 import UserPremiumGuildSubscription
   from "@ui/Messages/Message/variants/UserPremiumGuildSubscription";
 
+type MessageDataModified = Omit<MessageData, "referencedMessage"> & Partial<MessageData>;
+
 interface MessageProps {
   isFirstMessage?: boolean;
-  message: MessageData;
+  message: MessageDataModified;
   isHovered?: boolean;
   showButtons?: boolean;
 }
@@ -80,7 +82,7 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
     case MessageType.ThreadStarterMessage:
       return <NormalMessage {...props} message={props.message.referencedMessage} noThreadButton={true}/>;
     default: {
-      const errorMessage: MessageData = {
+      const errorMessage: MessageDataModified = {
         ...props.message,
         type: MessageType.Default,
         content: `Unknown message type \`${props.message.type}\`\n\n\`\`\`json\n${JSON.stringify(props.message, null, 2)}\n\`\`\``

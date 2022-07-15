@@ -18,6 +18,10 @@ export const ContentContainerBase = styled.div`
   }
 `;
 
+export const ContentMessageTooltipBase = styled.div`
+  max-width: 60vw;
+`;
+
 export const LottieStickerWrapper = styled.span`
   width: fit-content;
 `

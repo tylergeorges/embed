@@ -1,11 +1,10 @@
-import {Children, memo, ReactNode, useMemo,} from "react";
+import {Children, memo, ReactChild, ReactNode, useMemo,} from "react";
 import Markdown from "@ui/shared/markdown/render";
 import {
+  Message as MessageData,
   Message_attachments,
-  Message_mentions,
-  Message_reactions,
-  Message_stickers,
-  Message_thread
+  Message_referencedMessage,
+  Message_stickers
 } from "@generated";
 import {
   ContentBase,
@@ -20,12 +19,12 @@ import Attachment from "@ui/Messages/Content/Attachment";
 import StickerIcon from "@images/discordAssets/sticker-icon.svg";
 import AttachmentIcon from "@images/discordAssets/attachment-icon.svg";
 import {
-  ContentContainerBase,
+  ContentContainerBase, ContentMessageTooltipBase,
   ReplyIconBase
 } from "@ui/Messages/Content/elements";
 import Sticker from "@ui/Messages/Content/Sticker";
 import ThreadButton from "@ui/Messages/Content/Thread/ThreadButton";
-import {MessageType} from "@generated/globalTypes";
+import Message from "../Message";
 
 interface EditedProps {
   editedAt: number;
@@ -74,16 +73,34 @@ function MessageAccessories({children, active}: MessageAccessoriesProps) {
   );
 }
 
+interface ContentCoreProps {
+  children: ReactChild;
+  showTooltip: boolean;
+  referencedMessage: Message_referencedMessage | null;
+}
+
+function ContentCore(props: ContentCoreProps) {
+  if (!props.showTooltip)
+    return <>{props.children}</>;
+
+  return (
+    <Tooltip
+      overlay={
+        <ContentMessageTooltipBase>
+          <Message message={props.referencedMessage} isFirstMessage={true} />
+        </ContentMessageTooltipBase>
+      }
+      placement="top"
+      trigger={["click"]}
+    >
+      {props.children}
+    </Tooltip>
+  );
+}
+
 interface ContentProps {
-  attachments: Message_attachments[];
-  mentions: Message_mentions[];
-  reactions: Message_reactions[] | null;
-  stickers: Message_stickers[] | null;
-  messageContent: string;
-  messageType: MessageType;
+  message: Omit<MessageData, "referencedMessage"> & Partial<MessageData>;
   isReplyContent?: boolean;
-  editedAt: number;
-  thread: Message_thread;
   noThreadButton?: boolean;
 }
 
@@ -92,59 +109,61 @@ function Content(props: ContentProps) {
     if (!props.isReplyContent)
       return null;
 
-    if (props.stickers.length > 0)
+    if (props.message.stickers.length > 0)
       return "Message with sticker(s)";
 
-    if (props.attachments.length > 0)
+    if (props.message.attachments.length > 0)
       return "Message with attachment(s)";
 
     return null;
-  }, [props.attachments, props.stickers, props.isReplyContent]);
+  }, [props.message.attachments, props.message.stickers, props.isReplyContent]);
 
   return (
     <>
       <ContentBase isReplyContent={props.isReplyContent}>
-        <ContentContainerBase data-is-reply-content={props.isReplyContent}>
-          {props.messageContent.length > 0
-            ? (
-              <>
-                <Markdown mentions={props.mentions}>
-                  {props.messageContent}
-                </Markdown>
-                {props.editedAt && <Edited editedAt={props.editedAt} />}
-              </>
-            )
-            : dominantAccessoryText
-          }
-        </ContentContainerBase>
+        <ContentCore referencedMessage={props.message} showTooltip={props.isReplyContent}>
+          <ContentContainerBase data-is-reply-content={props.isReplyContent}>
+            {props.message.content.length > 0
+              ? (
+                <>
+                  <Markdown mentions={props.message.mentions}>
+                    {props.message.content}
+                  </Markdown>
+                  {props.message.editedAt && <Edited editedAt={props.message.editedAt} />}
+                </>
+              )
+              : dominantAccessoryText
+            }
+          </ContentContainerBase>
+        </ContentCore>
         {props.isReplyContent && (
-          <ReplyIcon stickers={props.stickers} attachments={props.attachments} />
+          <ReplyIcon stickers={props.message.stickers} attachments={props.message.attachments} />
         )}
       </ContentBase>
       {!props.isReplyContent && (
         <MessageAccessories
           active={
-            props.reactions !== null
-            || props.attachments.length > 0
-            || props.stickers.length > 0
-            || props.thread !== null
+            props.message.reactions !== null
+            || props.message.attachments.length > 0
+            || props.message.stickers.length > 0
+            || props.message.thread !== null
           }
         >
-          {props.attachments.map(attachment => (
+          {props.message.attachments.map(attachment => (
             <Attachment key={attachment.url} attachment={attachment} />
           ))}
-          {props.stickers.map(sticker => (
+          {props.message.stickers.map(sticker => (
             <Sticker key={sticker.id} sticker={sticker} />
           ))}
-          {props.reactions && (
-            <Reactions reactions={props.reactions} />
+          {props.message.reactions && (
+            <Reactions reactions={props.message.reactions} />
           )}
-          {(!props.noThreadButton && props.thread) && (
+          {(!props.noThreadButton && props.message.thread) && (
             <ThreadButton
-              thread={props.thread}
-              messageId={props.thread.id}
-              messageContent={props.messageContent}
-              messageType={props.messageType}
+              thread={props.message.thread}
+              messageId={props.message.thread.id}
+              messageContent={props.message.content}
+              messageType={props.message.type}
             />
           )}
         </MessageAccessories>

@@ -109,18 +109,11 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
       {props.referencedMessage
         ? (
           <Content
-            mentions={props.referencedMessage.mentions}
-            messageContent={props.referencedMessage.content}
-            editedAt={props.referencedMessage.editedAt}
-            reactions={props.referencedMessage.reactions}
-            attachments={props.referencedMessage.attachments}
-            stickers={props.referencedMessage.stickers}
-            messageType={props.referencedMessage.type}
-            thread={null}
+            message={props.referencedMessage}
             isReplyContent={true}
           />
         )
-        : (
+        : props.interaction && (
           <SlashCommandBase.Base>
             used{" "}
             <Tooltip overlay={`/${props.interaction.name}`} placement="top" trigger={["click"]}>
@@ -145,8 +138,11 @@ interface MessageProps {
 function NormalMessage(props: MessageProps) {
   console.log("%c NormalMessage render", "color: yellow; font-size: 16px;");
 
-  const shouldShowReply = props.message.type === MessageType.Reply
-                          || Boolean(props.message.interaction);
+  const shouldShowReply = (
+      props.message.type === MessageType.Reply
+      && Boolean(props.message.referencedMessage)
+    )
+      || Boolean(props.message.interaction);
 
   const isUserMentioned = useMemo(() => {
     const user = authStore.user;
@@ -178,14 +174,7 @@ function NormalMessage(props: MessageProps) {
           <LargeTimestamp timestamp={props.message.createdAt} />
         </MessageHeaderBase>
         <Content
-          mentions={props.message.mentions}
-          messageContent={props.message.content}
-          editedAt={props.message.editedAt}
-          reactions={props.message.reactions}
-          attachments={props.message.attachments}
-          stickers={props.message.stickers}
-          thread={props.message.thread}
-          messageType={props.message.type}
+          message={props.message}
           noThreadButton={props.noThreadButton}
         />
       </MessageBase>
@@ -203,14 +192,7 @@ function NormalMessage(props: MessageProps) {
         </SmallTimestampBase>
       </Tooltip>
       <Content
-        mentions={props.message.mentions}
-        messageContent={props.message.content}
-        editedAt={props.message.editedAt}
-        reactions={props.message.reactions}
-        attachments={props.message.attachments}
-        stickers={props.message.stickers}
-        thread={props.message.thread}
-        messageType={props.message.type}
+        message={props.message}
         noThreadButton={props.noThreadButton}
       />
     </MessageBase>
