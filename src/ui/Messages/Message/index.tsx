@@ -12,6 +12,12 @@ import copyIdIcon from "@images/discordAssets/3fef4f31f944477f5f3e9643cbcaab7a.s
 import linkIcon from "@images/discordAssets/a4c2ef2964ee9977baf61a2f6017b93d.svg";
 import {useRouter} from "@hooks";
 import ThreadCreated from "@ui/Messages/Message/variants/ThreadCreated";
+import UserPremiumGuildTierUpgrade
+  from "@ui/Messages/Message/variants/UserPremiumGuildTierUpgrade";
+import GuildDiscoveryRequalified
+  from "@ui/Messages/Message/variants/GuildDiscoveryRequalified";
+import UserPremiumGuildSubscription
+  from "@ui/Messages/Message/variants/UserPremiumGuildSubscription";
 
 interface MessageProps {
   isFirstMessage?: boolean;
@@ -34,6 +40,27 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
         <GuildMemberJoin
           createdAt={props.message.createdAt}
           author={props.message.author}
+        />
+      );
+    case MessageType.GuildDiscoveryRequalified:
+      return <GuildDiscoveryRequalified createdAt={props.message.createdAt} />;
+    case MessageType.UserPremiumGuildTier1:
+    case MessageType.UserPremiumGuildTier2:
+    case MessageType.UserPremiumGuildTier3:
+      return (
+        <UserPremiumGuildTierUpgrade
+          content={props.message.content}
+          createdAt={props.message.createdAt}
+          author={props.message.author}
+          type={props.message.type}
+        />
+      );
+    case MessageType.UserPremiumGuildSubscription:
+      return (
+        <UserPremiumGuildSubscription
+          createdAt={props.message.createdAt}
+          author={props.message.author}
+          content={props.message.content}
         />
       );
     case MessageType.ThreadCreated:

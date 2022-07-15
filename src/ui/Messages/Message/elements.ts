@@ -1,10 +1,12 @@
 import styled from '../ThemeContext'
 import {Twemoji} from "@ui/shared/Emoji/emoji";
 import {css} from "react-emotion";
-import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
 import {memo} from "react";
+import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
 import pin from "@images/discordAssets/5da4cdab01d4d89c593c48c62ae0d937.svg";
+import checkmark from "@images/discordAssets/86b5987e685f72352730d56690393fc8.svg";
 import threadCreated from "@images/discordAssets/thread-created.svg";
+import boost from "@images/discordAssets/boost.svg";
 import {MessageType} from "@generated/globalTypes";
 import {ThreadButtonHeight} from "@ui/Messages/Content/elements";
 
@@ -116,7 +118,10 @@ export const SystemMessageBase = styled(MessageBase)`
 `;
 
 export const SystemMessageContentBase = styled.span`
-  color: ${({theme}) => theme.colors._primary.darken(0.4).string()};
+  &,
+  & strong {
+    color: ${({theme}) => theme.colors._primary.darken(0.4).string()};
+  }
 `;
 
 interface SystemMessageLinkBaseProps {
@@ -294,8 +299,9 @@ export namespace IconsBase {
   const IconBase = styled.div<IconBaseProps>`
     position: absolute;
     left: 0;
-    top: ${({centerVertically}) => centerVertically ? '50%' : '0'};
-    transform: ${({centerVertically}) => centerVertically ? 'translateY(-50%)' : 'translateY(0)'};
+    // We're using centerVertically !== false because if centerVertically is undefined, it'll be true.
+    top: ${({centerVertically}) => centerVertically !== false ? '50%' : '0'};
+    transform: ${({centerVertically}) => centerVertically !== false ? 'translateY(-50%)' : 'translateY(0)'};
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 16px;
@@ -314,6 +320,14 @@ export namespace IconsBase {
   export const ThreadCreated = memo(styled(IconBase)`
     margin-top: 6px;
     background-image: url("${threadCreated}");
+  `);
+
+  export const Boost = memo(styled(IconBase)`
+    background-image: url("${boost}");
+  `);
+
+  export const Checkmark = memo(styled(IconBase)`
+    background-image: url("${checkmark}");
   `);
 }
 
