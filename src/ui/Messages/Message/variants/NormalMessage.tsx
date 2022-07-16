@@ -26,6 +26,7 @@ import {authStore, generalStore} from "@store";
 interface ReplyInfoProps {
   referencedMessage: Message_referencedMessage | null;
   interaction: Message_interaction | null;
+  isContextMenuInteraction?: boolean;
 }
 
 function getMiniAvatarUrl(
@@ -116,9 +117,10 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
         : props.interaction && (
           <SlashCommandBase.Base>
             used{" "}
-            <Tooltip overlay={`/${props.interaction.name}`} placement="top" trigger={["click"]}>
-              <SlashCommandBase.Command>/{props.interaction.name}</SlashCommandBase.Command>
-            </Tooltip>
+            <SlashCommandBase.Command>
+              {!props.isContextMenuInteraction ? "/" : ""}
+              {props.interaction.name}
+            </SlashCommandBase.Command>
           </SlashCommandBase.Base>
         )
       }
@@ -133,6 +135,7 @@ interface MessageProps {
   message: Message;
   isHovered?: boolean;
   noThreadButton?: boolean;
+  isContextMenuInteraction?: boolean;
 }
 
 function NormalMessage(props: MessageProps) {
@@ -167,6 +170,7 @@ function NormalMessage(props: MessageProps) {
           <ReplyInfo
             referencedMessage={props.message.referencedMessage}
             interaction={props.message.interaction}
+            isContextMenuInteraction={props.isContextMenuInteraction}
           />
         )}
         <MessageHeaderBase>

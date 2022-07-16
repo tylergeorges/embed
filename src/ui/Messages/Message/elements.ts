@@ -216,11 +216,6 @@ export namespace SlashCommandBase {
 
   export const Command = styled.span`
     color: #00AFF4;
-    
-    &:hover {
-      cursor: pointer;
-      text-decoration: underline;
-    }
   `;
 }
 

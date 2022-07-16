@@ -79,6 +79,8 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
     case MessageType.Default:
     case MessageType.ChatInputCommand:
       return <NormalMessage {...props} />;
+    case MessageType.ContextMenuCommand:
+      return <NormalMessage {...props} isContextMenuInteraction={true} />;
     case MessageType.ThreadStarterMessage:
       return <NormalMessage {...props} message={props.message.referencedMessage} noThreadButton={true}/>;
     default: {

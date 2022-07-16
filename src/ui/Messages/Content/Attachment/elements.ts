@@ -25,6 +25,78 @@ export const VideoAttachmentContainerBase = css`
   display: flex;
 `;
 
+export namespace Attachment {
+  interface ContainerBaseProps {
+    icon: string;
+    hasChildren: boolean;
+  }
+
+  export const ContainerBase = styled.div<ContainerBaseProps>`
+    display: flex;
+    background-color: ${props => props.theme.colors._background.darken(0.2).string()};
+    padding: 10px;
+    border: 1px solid ${props => props.theme.colors._background.darken(0.5).fade(0.5).string()};
+    border-radius: 3px;
+    width: fit-content;
+    flex-wrap: wrap;
+
+    &:before {
+      content: "";
+      width: 24px;
+      height: 32px;
+      background-image: url(${props => props.icon});
+      background-size: 100% auto;
+      background-repeat: no-repeat;
+    }
+    
+    ${props => !props.hasChildren && css`
+      align-items: center;
+    `}
+  `;
+
+  export const MetaBase = styled.div`
+    margin: 0 8px;
+    display: flex;
+    flex-direction: column;
+  `;
+
+  export const FileNameBase = styled.a`
+    color: #00aff4 !important;
+    max-width: 40vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  `;
+
+  export const FileSizeBase = styled.span`
+    color: #72767d;
+    font-size: 12px;
+  `;
+
+  export const DownloadIconBase = styled.a`
+    opacity: 0.8;
+    margin-left: auto;
+    
+    &:hover {
+      opacity: 1;
+    }
+  `;
+
+  export const ExtraUserInterfaceBase = styled.div`
+    flex-basis: 100%;
+    margin-top: 8px;
+    display: flex;
+  `;
+
+  export const AudioBase = styled.audio`
+    flex: 1;
+    height: 32px;
+    outline: 0;
+    border-radius: 3px;
+    max-width: 70vw;
+  ;`
+}
+
 export const SpoilerBase = styled.div`
   overflow: hidden;
   position: relative;
