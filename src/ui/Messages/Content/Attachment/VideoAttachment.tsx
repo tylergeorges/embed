@@ -1,4 +1,4 @@
-import {Message_attachments} from "@generated";
+import {Message_attachments, Message_embeds} from "@generated";
 import {
   VideoAttachmentBase,
   VideoAttachmentContainerBase,
@@ -10,7 +10,7 @@ import Tooltip from "rc-tooltip";
 import useSize from "@ui/Messages/Content/Attachment/useSize";
 
 interface VideoAttachmentProps {
-  attachment: Message_attachments;
+  attachmentOrEmbed: Message_attachments | Message_embeds;
 }
 
 function VideoAttachment(props: VideoAttachmentProps) {
@@ -55,9 +55,11 @@ function VideoAttachment(props: VideoAttachmentProps) {
     setPaused(pauseState);
     setShowPlayOrPauseAnimation(true);
     setTimeout(() => setShowPlayOrPauseAnimation(false), VideoAttachmentOverlay.PlayOrPauseAnimationDuration);
-  }, [])
+  }, []);
 
-  const { width, height } = useSize(props.attachment.width, props.attachment.height, isFullscreen);
+  const {width: extractedWidth, height: extractedHeight} = "width" in props.attachmentOrEmbed ? props.attachmentOrEmbed : props.attachmentOrEmbed.video;
+
+  const { width, height } = useSize(extractedWidth, extractedHeight, isFullscreen);
 
   const fullScreenChange = () => {
     setIsFullscreen(document.fullscreenElement !== null);
@@ -93,7 +95,7 @@ function VideoAttachment(props: VideoAttachmentProps) {
       <video
         className={VideoAttachmentBase}
         preload="metadata"
-        src={props.attachment.url}
+        src={props.attachmentOrEmbed.url}
         height={height}
         width={width}
         ref={videoRef}
@@ -108,17 +110,19 @@ function VideoAttachment(props: VideoAttachmentProps) {
         {showPlayOrPauseAnimation && (
           <VideoAttachmentOverlay.PlayOrPauseButtonAnimation data-paused={paused} />
         )}
-        <VideoAttachmentOverlay.MetadataBase>
-          <VideoAttachmentOverlay.MetadataTitleBase>
-            {props.attachment.filename}
-          </VideoAttachmentOverlay.MetadataTitleBase>
-          <VideoAttachmentOverlay.MetadataFilesizeBase>
-            {fileSize(props.attachment.size, {base: 2})}
-          </VideoAttachmentOverlay.MetadataFilesizeBase>
-        </VideoAttachmentOverlay.MetadataBase>
+        {"filename" in props.attachmentOrEmbed && (
+          <VideoAttachmentOverlay.MetadataBase>
+            <VideoAttachmentOverlay.MetadataTitleBase>
+              {props.attachmentOrEmbed.filename}
+            </VideoAttachmentOverlay.MetadataTitleBase>
+            <VideoAttachmentOverlay.MetadataFilesizeBase>
+              {fileSize(props.attachmentOrEmbed.size, {base: 2})}
+            </VideoAttachmentOverlay.MetadataFilesizeBase>
+          </VideoAttachmentOverlay.MetadataBase>
+        )}
         <VideoAttachmentOverlay.Control onClick={playVideo} />
         <VideoAttachmentOverlay.VideoControlsBase>
-          <VideoAttachmentOverlay.PlayOrPauseButtonBase data-paused={paused} />
+          <VideoAttachmentOverlay.PlayOrPauseButtonBase data-paused={paused} onClick={playVideo} />
           {width > 200 && (
             <VideoAttachmentOverlay.VideoControlsTimeBase>
               {durationPlayedHumanized}

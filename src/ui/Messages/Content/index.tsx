@@ -25,6 +25,7 @@ import {
 import Sticker from "@ui/Messages/Content/Sticker";
 import ThreadButton from "@ui/Messages/Content/Thread/ThreadButton";
 import Message from "../Message";
+import Embed from "@ui/Messages/Content/Embed";
 
 interface EditedProps {
   editedAt: number;
@@ -147,6 +148,7 @@ function Content(props: ContentProps) {
             || props.message.attachments.length > 0
             || props.message.stickers.length > 0
             || props.message.thread !== null
+            || (props.message.embeds !== null && props.message.embeds.length > 0)
           }
         >
           {props.message.attachments.map(attachment => (
@@ -154,6 +156,9 @@ function Content(props: ContentProps) {
           ))}
           {props.message.stickers.map(sticker => (
             <Sticker key={sticker.id} sticker={sticker} />
+          ))}
+          {props.message.embeds !== null && props.message.embeds.map((embed) => (
+            <Embed key={embed.url} embed={embed} />
           ))}
           {props.message.reactions && (
             <Reactions reactions={props.message.reactions} />

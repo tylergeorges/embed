@@ -29,7 +29,7 @@ export interface AttachmentProps {
 function AttachmentBase(props: AttachmentProps) {
   if (props.attachment.width && props.attachment.height) {
     if (/\.(?:mp4|webm|mov)$/.test(props.attachment.filename))
-      return <VideoAttachment attachment={props.attachment} />;
+      return <VideoAttachment attachmentOrEmbed={props.attachment} />;
 
     return <ImageAttachment attachment={props.attachment} />;
   }

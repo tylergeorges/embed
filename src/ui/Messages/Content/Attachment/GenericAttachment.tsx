@@ -21,14 +21,14 @@ function GenericAttachment(props: GenericAttachmentProps) {
       hasChildren={props.children !== undefined}
     >
       <Attachment.MetaBase>
-        <Attachment.FileNameBase href={props.attachment.url}>
+        <Attachment.FileNameBase rel="noreferrer noopener" target="_blank" href={props.attachment.url}>
           {props.attachment.filename}
         </Attachment.FileNameBase>
         <Attachment.FileSizeBase>
           {fileSize(props.attachment.size, {base: 2})}
         </Attachment.FileSizeBase>
       </Attachment.MetaBase>
-      <Attachment.DownloadIconBase href={props.attachment.url}>
+      <Attachment.DownloadIconBase rel="noreferrer noopener" target="_blank" href={props.attachment.url}>
         <img src={downloadIcon} alt="download" />
       </Attachment.DownloadIconBase>
       {props.children && (
