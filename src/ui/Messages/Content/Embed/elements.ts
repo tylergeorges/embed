@@ -7,6 +7,7 @@ export const MediaEmbedBase = css`
 export namespace EmbedStyle {
   interface BaseProps {
     color: string | undefined;
+    thumbnailIsLarge: boolean;
   }
 
   export const Base = styled.article<BaseProps>`
@@ -15,10 +16,14 @@ export namespace EmbedStyle {
     background-color: ${props => props.theme.colors._background.darken(0.2).string()};
     border-radius: 3px;
     width: fit-content;
-    max-width: 520px;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    max-width: 520px;
+
+    ${props => props.thumbnailIsLarge && css`
+      max-width: 432px;
+    `}
   `;
 
   interface ContentAndThumbnailProps {
@@ -80,6 +85,14 @@ export namespace EmbedStyle {
     white-space: nowrap;
     text-overflow: ellipsis;
     display: inline-block;
+    
+    a {
+      color: ${props => props.theme.colors._primary.string()};
+    }
+  `;
+
+  export const Provider = styled.div`
+    font-size: 12px;
   `;
 
   export const Title = styled.div`

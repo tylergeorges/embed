@@ -6,6 +6,7 @@ import {EmbedStyle} from "@ui/Messages/Content/Embed/elements";
 import numberToRgb from "@utils/numberToRgb";
 import {useMemo} from "react";
 import moment from "moment";
+import {LinkMarkdown} from "@ui/shared/markdown/render";
 
 export interface EmbedProps {
   embed: Message_embeds;
@@ -55,19 +56,29 @@ function Embed({embed}: EmbedProps) {
     return { width: imageWidth, height: imageHeight, isLarge: false };
   }, [embed.type, embed.image, embed.thumbnail]);
 
-  // TODO: author url
-  // TODO: provider
-
   return (
-    <EmbedStyle.Base color={embedColor}>
+    <EmbedStyle.Base color={embedColor} thumbnailIsLarge={isLarge}>
       <EmbedStyle.ContentAndThumbnail thumbnailIsLarge={isLarge}>
         <EmbedStyle.Content>
+          {embed.provider && (
+            <EmbedStyle.Provider>
+              {embed.provider.name}
+            </EmbedStyle.Provider>
+          )}
           {embed.author && (
             <EmbedStyle.Author urlPresent={embed.author.url !== null}>
               {embed.author.icon && (
                 <EmbedStyle.AuthorIcon src={embed.author.icon} />
               )}
-              <EmbedStyle.AuthorName>{embed.author.name}</EmbedStyle.AuthorName>
+              <EmbedStyle.AuthorName>
+                {embed.author.url
+                ? (
+                  <a href={embed.author.url} target="_blank">{embed.author.name}</a>
+                )
+                : (
+                  embed.author.name
+                )}
+              </EmbedStyle.AuthorName>
             </EmbedStyle.Author>
           )}
           {embed.title && (
@@ -80,7 +91,11 @@ function Embed({embed}: EmbedProps) {
               )
           )}
           {embed.description && (
-            <EmbedStyle.Description>{embed.description}</EmbedStyle.Description>
+            <EmbedStyle.Description>
+              <LinkMarkdown>
+                {embed.description}
+              </LinkMarkdown>
+            </EmbedStyle.Description>
           )}
           {embed.fields && embed.fields.length > 0 && (
             <EmbedStyle.Fields>
@@ -93,7 +108,9 @@ function Embed({embed}: EmbedProps) {
                     {field.name}
                   </EmbedStyle.FieldName>
                   <EmbedStyle.FieldValue>
-                    {field.value}
+                    <LinkMarkdown>
+                      {field.value}
+                    </LinkMarkdown>
                   </EmbedStyle.FieldValue>
                 </EmbedStyle.Field>
               ))}
