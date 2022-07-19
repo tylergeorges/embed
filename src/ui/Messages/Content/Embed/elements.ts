@@ -108,6 +108,7 @@ export namespace EmbedStyle {
 
   export const Description = styled.div`
     font-size: 14px;
+    color: ${props => props.theme.colors._primary.darken(0.1).string()};
   `;
 
   export const Footer = styled.div`
