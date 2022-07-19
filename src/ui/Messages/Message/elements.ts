@@ -411,11 +411,6 @@ export const UsernameBase = memo(styled.span<UsernameBaseProps>`
   display: inline;
   vertical-align: baseline;
   white-space: nowrap;
-  
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
 `);
 
 export const AvatarBase = styled.img`

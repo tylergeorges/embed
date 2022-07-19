@@ -14,6 +14,11 @@ export const VideoAttachmentBase = css`
     height: 100%;
   }
   outline: none;
+  cursor: pointer;
+`;
+
+export const ImageAttachmentBase = css`
+  cursor: pointer;
 `;
 
 export const VideoAttachmentContainerBase = css`
@@ -21,6 +26,7 @@ export const VideoAttachmentContainerBase = css`
   overflow: hidden;
   max-width: min(400px, 100%);
   background-color: #202225;
+  cursor: pointer;
   
   position: relative;
   display: flex;
@@ -188,6 +194,7 @@ export namespace VideoAttachmentOverlay {
     height: 40px;
     border-radius: 100%;
     padding: 12px;
+    pointer-events: none;
 
     @keyframes state-change {
       from {

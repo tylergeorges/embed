@@ -18,12 +18,7 @@ function ChannelPinnedMessage(props: ChannelPinnedMessageProps) {
       <IconsBase.Pinned />
       <SystemMessageContentBase>
         <MessageAuthor author={props.author} onlyShowUsername={true} />{" "}
-        pinned{" "}
-        <SystemMessageLinkBase cursor="not-allowed">
-          a message
-        </SystemMessageLinkBase>
-        {" "}
-        to this channel.
+        pinned a message to this channel.
         See all{" "}
         <SystemMessageLinkBase onClick={openPinnedMessage}>
           pinned messages

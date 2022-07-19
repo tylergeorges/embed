@@ -48,6 +48,10 @@ export namespace EmbedStyle {
 
   export const Image = styled(ExpandableImage)<{large?: boolean}>`
     border-radius: 3px;
+    cursor: pointer;
+    height: fit-content;
+    width: fit-content;
+    display: flex;
     
     ${props => props.large && css`
       margin-top: 8px;

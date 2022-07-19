@@ -96,6 +96,8 @@ export const Topic = styled(Markdown.withComponent('div'))`
   font-size: 14px;
   font-weight: 500;
   padding: 0 15px;
+  display: flex;
+  align-items: center;
   border-left: 1px solid
     ${({ theme }) => theme.colors._primary.fade(0.9).string()};
   color: ${({ theme }) => theme.colors._primary.fade(0.4).string()};
