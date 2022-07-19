@@ -107,8 +107,8 @@ function VideoAttachment(props: VideoAttachmentProps) {
         onTimeUpdate={({timeStamp}) => setDurationPlayed(timeStamp)}
       />
       <VideoAttachmentOverlay.Base data-paused={paused} data-played-once={hasPlayedOnceBefore}>
-        {showPlayOrPauseAnimation && (
-          <VideoAttachmentOverlay.PlayOrPauseButtonAnimation data-paused={paused} />
+        {(showPlayOrPauseAnimation || !hasPlayedOnceBefore) && (
+          <VideoAttachmentOverlay.PlayOrPauseButtonAnimation data-paused={paused} data-has-played-before={hasPlayedOnceBefore} />
         )}
         {"filename" in props.attachmentOrEmbed && (
           <VideoAttachmentOverlay.MetadataBase>

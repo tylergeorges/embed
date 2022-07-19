@@ -190,7 +190,7 @@ export namespace VideoAttachmentOverlay {
 
     @keyframes state-change {
       from {
-        background-color: #0005;
+        background-color: rgba(0, 0, 0, 0.6);
         transform: translate(-50%, -50%) scale(1.5);
       }
       
@@ -205,10 +205,19 @@ export namespace VideoAttachmentOverlay {
     background-size: 12px 12px;
     background-repeat: no-repeat;
     
-    animation: state-change ${PlayOrPauseAnimationDuration}ms ease-in-out;
-    &[data-paused="true"] {
+    &[data-has-played-before="true"] {
+      animation: state-change ${PlayOrPauseAnimationDuration}ms ease-in-out;
+    }
+    
+    &[data-has-played-before="false"] {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    &[data-has-played-before="true"][data-paused="true"] {
       background-image: url(${pause});
     }
+    
+    &[data-has-played-before="false"],
     &[data-paused="false"] {
       background-image: url(${play});
     }

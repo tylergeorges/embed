@@ -1,4 +1,5 @@
 import styled, {css} from "react-emotion";
+import ExpandableImage from "@ui/shared/ExpandableImage";
 
 export const MediaEmbedBase = css`
   border-radius: 3px;
@@ -45,7 +46,7 @@ export namespace EmbedStyle {
     gap: 8px;
   `;
 
-  export const Image = styled.img<{large?: boolean}>`
+  export const Image = styled(ExpandableImage)<{large?: boolean}>`
     border-radius: 3px;
     
     ${props => props.large && css`
