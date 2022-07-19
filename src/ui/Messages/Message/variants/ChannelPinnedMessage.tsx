@@ -1,8 +1,6 @@
 import {IconsBase, SystemMessageLinkBase, SystemMessageBase, SystemMessageContentBase} from "../elements";
 import {Message_author} from "@generated";
 import MessageAuthor from "@ui/Messages/Message/MessageAuthor";
-import Tooltip from "rc-tooltip";
-import {Twemoji} from "@ui/shared/Emoji/emoji";
 import {generalStore} from "@store";
 import {useCallback} from "react";
 import LargeTimestamp from "@ui/Messages/Message/LargeTimestamp";
@@ -21,11 +19,9 @@ function ChannelPinnedMessage(props: ChannelPinnedMessageProps) {
       <SystemMessageContentBase>
         <MessageAuthor author={props.author} onlyShowUsername={true} />{" "}
         pinned{" "}
-        <Tooltip overlay={<>Coming Eventually<Twemoji>™</Twemoji></>} placement="top">
-          <SystemMessageLinkBase cursor="not-allowed">
-            a message
-          </SystemMessageLinkBase>
-        </Tooltip>
+        <SystemMessageLinkBase cursor="not-allowed">
+          a message
+        </SystemMessageLinkBase>
         {" "}
         to this channel.
         See all{" "}

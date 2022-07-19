@@ -33,8 +33,6 @@ function getMiniAvatarUrl(
   referencedMessage: Message_referencedMessage | null,
   interaction: Message_interaction | null
 ) {
-  console.log("%c-- NormalMessage getMiniAvatarUrl", "color: yellow; font-size: 14px;");
-
   const getAvatarSettings: GetAvatarOptions = {
     size: 16,
     animated: false
@@ -53,8 +51,6 @@ function getMiniUserName(
   referencedMessage: Message_referencedMessage | null,
   interaction: Message_interaction | null
 ) {
-  console.log("%c-- NormalMessage getMiniUserName", "color: yellow; font-size: 14px;");
-
   if (interaction !== null)
     return interaction.user.username;
 
@@ -67,8 +63,6 @@ function getMiniUserName(
 function getDominantRoleColor(
   referencedMessage: Message_referencedMessage | null
 ) {
-  console.log("%c-- NormalMessage getDominantRoleColor", "color: yellow; font-size: 14px;");
-
   if (referencedMessage !== null) {
     const roleIds = referencedMessage.author.roles ?? [];
     const [role] = roleIds
@@ -139,8 +133,6 @@ interface MessageProps {
 }
 
 function NormalMessage(props: MessageProps) {
-  console.log("%c NormalMessage render", "color: yellow; font-size: 16px;");
-
   const shouldShowReply = (
       props.message.type === MessageType.Reply
       && Boolean(props.message.referencedMessage)

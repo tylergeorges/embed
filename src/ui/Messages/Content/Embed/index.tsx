@@ -22,8 +22,6 @@ function Embed({embed}: EmbedProps) {
   if (embed.type.toLowerCase() === 'video' && !embed.thumbnail)
     return <VideoAttachment attachmentOrEmbed={embed} />;
 
-  console.log("Embed", embed);
-
   const embedColor = embed.color !== 0 && embed.color !== null
     ? numberToRgb(embed.color)
     : undefined;

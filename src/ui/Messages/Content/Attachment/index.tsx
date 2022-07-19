@@ -92,8 +92,6 @@ function AttachmentContainer(props: AttachmentProps) {
 }
 
 function Attachment(props: AttachmentProps) {
-  console.log("%cAttachment", "color: teal; font-size: 14px;");
-
   return <AttachmentContainer attachment={props.attachment} />;
 }
 

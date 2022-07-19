@@ -13,8 +13,6 @@ function MessageGroup(props: MessageProps) {
   const [firstMessage, ...otherMessages] = props.messages;
   const [isHovered, setIsHovered] = useState(false);
 
-  console.log("%c MessageGroup render", "color: red; font-size: 20px;");
-
   return (
     <MessageGroupBase
       style={props.style}
