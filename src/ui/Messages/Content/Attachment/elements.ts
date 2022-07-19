@@ -20,6 +20,7 @@ export const VideoAttachmentContainerBase = css`
   border-radius: 3px;
   overflow: hidden;
   max-width: min(400px, 100%);
+  background-color: #202225;
   
   position: relative;
   display: flex;

@@ -11,11 +11,10 @@ export const Root = styled('header')`
   display: flex;
   flex-shrink: 0;
   z-index: 8;
-  line-height: 25px;
   background-color: rgba(0, 0, 0, 0.1);
-  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.1),
-    0px 4px 5px 0px rgba(0, 0, 0, 0.12), 0px 1px 10px 0px rgba(0, 0, 0, 0.09),
-    0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1),
+  0px 4px 5px 0px rgba(0, 0, 0, 0.12), 0px 1px 10px 0px rgba(0, 0, 0, 0.09),
+  0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06);
 `
 
 export const SingleChannel = styled('div')`

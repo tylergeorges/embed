@@ -3,6 +3,7 @@ import {Twemoji} from "@ui/shared/Emoji/emoji";
 import {css} from "react-emotion";
 import {memo} from "react";
 import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
+import warning from "@images/discordAssets/warning.svg";
 import pin from "@images/discordAssets/5da4cdab01d4d89c593c48c62ae0d937.svg";
 import checkmark from "@images/discordAssets/86b5987e685f72352730d56690393fc8.svg";
 import threadCreated from "@images/discordAssets/thread-created.svg";
@@ -307,6 +308,10 @@ export namespace IconsBase {
 
   export const Add = memo(styled(IconBase)`
     background-image: url("${add}");
+  `);
+
+  export const Warning = memo(styled(IconBase)`
+    background-image: url("${warning}");
   `);
 
   export const Pinned = memo(styled(IconBase)`

@@ -19,6 +19,10 @@ import GuildDiscoveryRequalified
 import UserPremiumGuildSubscription
   from "@ui/Messages/Message/variants/UserPremiumGuildSubscription";
 import ChannelFollowAdd from "@ui/Messages/Message/variants/ChannelFollowAdd";
+import GuildDiscoveryGracePeriodInitialWarning
+  from "@ui/Messages/Message/variants/GuildDiscoveryGracePeriodInitialWarning";
+import GuildDiscoveryGracePeriodFinalWarning
+  from "@ui/Messages/Message/variants/GuildDiscoveryGracePeriodFinalWarning";
 
 type MessageDataModified = Omit<MessageData, "referencedMessage"> & Partial<MessageData>;
 
@@ -88,6 +92,10 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
           content={props.message.content}
         />
       );
+    case MessageType.GuildDiscoveryGracePeriodInitialWarning:
+      return <GuildDiscoveryGracePeriodInitialWarning createdAt={props.message.createdAt} />;
+    case MessageType.GuildDiscoveryGracePeriodFinalWarning:
+      return <GuildDiscoveryGracePeriodFinalWarning createdAt={props.message.createdAt} />;
     case MessageType.ContextMenuCommand:
       return <NormalMessage {...props} isContextMenuInteraction={true} />;
     case MessageType.ThreadStarterMessage:

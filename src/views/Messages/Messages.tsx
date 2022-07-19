@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { useMessages } from "@hooks";
 import { formatError, groupMessages } from "./utils";
 import ErrorAhoy from "@ui/Overlays/ErrorAhoy";
@@ -10,7 +9,6 @@ import {
   InfiniteLoader
 } from "react-virtualized";
 import { observer, useObservable } from "mobx-react-lite";
-import Message from "@ui/Message";
 import {Locale} from "@lib/Locale";
 import { addNotification } from "notify";
 import { generalStore } from "@store";

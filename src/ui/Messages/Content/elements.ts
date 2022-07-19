@@ -15,6 +15,12 @@ export const ContentContainerBase = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 0 1 auto;
+    
+    .codeblock {
+      display: inline;
+      padding: 2px;
+      font-size: 12px;
+    }
   }
 `;
 
