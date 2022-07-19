@@ -13,7 +13,7 @@ export namespace EmbedStyle {
   export const Base = styled.article<BaseProps>`
     padding: 16px 16px 16px 12px;
     border-left: 4px solid ${props => props.color ?? props.theme.colors._background.darken(0.7).string()};
-    background-color: ${props => props.theme.colors._background.darken(0.2).string()};
+    background-color: ${props => props.theme.colors._background.darken(0.1).string()};
     border-radius: 3px;
     width: fit-content;
     display: flex;
@@ -93,6 +93,7 @@ export namespace EmbedStyle {
 
   export const Provider = styled.div`
     font-size: 12px;
+    color: ${props => props.theme.colors._primary.darken(0.1).string()};
   `;
 
   export const Title = styled.div`
@@ -113,6 +114,7 @@ export namespace EmbedStyle {
     font-size: 12px;
     display: flex;
     align-items: center;
+    color: ${props => props.theme.colors._primary.darken(0.1).string()};
   `;
 
   export const FooterIcon = styled.img`
@@ -155,5 +157,6 @@ export namespace EmbedStyle {
   export const FieldValue = styled.div`
     font-size: 14px;
     font-weight: 400;
+    color: ${props => props.theme.colors._primary.darken(0.1).string()};
   `;
 }

@@ -8,7 +8,7 @@ export const ReplyIconBase = styled.img`
 
 export const ContentContainerBase = styled.div`
   color: rgba(255, 255, 255, 0.8);
-  font-weight: 300;
+  font-weight: 400;
   
   &[data-is-reply-content="true"] {
     overflow: hidden;
