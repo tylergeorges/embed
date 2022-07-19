@@ -18,6 +18,7 @@ import GuildDiscoveryRequalified
   from "@ui/Messages/Message/variants/GuildDiscoveryRequalified";
 import UserPremiumGuildSubscription
   from "@ui/Messages/Message/variants/UserPremiumGuildSubscription";
+import ChannelFollowAdd from "@ui/Messages/Message/variants/ChannelFollowAdd";
 
 type MessageDataModified = Omit<MessageData, "referencedMessage"> & Partial<MessageData>;
 
@@ -79,6 +80,14 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
     case MessageType.Default:
     case MessageType.ChatInputCommand:
       return <NormalMessage {...props} />;
+    case MessageType.ChannelFollowAdd:
+      return (
+        <ChannelFollowAdd
+          createdAt={props.message.createdAt}
+          author={props.message.author}
+          content={props.message.content}
+        />
+      );
     case MessageType.ContextMenuCommand:
       return <NormalMessage {...props} isContextMenuInteraction={true} />;
     case MessageType.ThreadStarterMessage:
