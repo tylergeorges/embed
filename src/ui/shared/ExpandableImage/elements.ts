@@ -1,7 +1,7 @@
 import { Scale } from '@ui/shared/ScaledImage'
 import styled from '@lib/emotion'
 
-import { Loading } from '../../../ui/Overlays'
+import { Loading } from '@ui/Overlays'
 
 interface Props {
   scale: Scale
@@ -9,13 +9,13 @@ interface Props {
 
 export const Root = styled('div')<Props>`
   position: relative;
-  overflow: hidden;
   ${({ scale }) => scale.css};
 `
 
 export const Image = styled('img')`
   width: 100%;
   height: auto;
+  border-radius: 3px;
 `
 
 export const Loader = styled(Loading)`

@@ -46,11 +46,17 @@ export namespace EmbedStyle {
     gap: 8px;
   `;
 
-  export const Image = styled(ExpandableImage)<{large?: boolean}>`
+  interface ImageProps {
+    large?: boolean;
+    width: number;
+    height: number;
+  }
+
+  export const Image = styled(ExpandableImage)<ImageProps>`
     border-radius: 3px;
     cursor: pointer;
-    height: fit-content;
-    width: fit-content;
+    width: ${props => props.width}px;
+    height: ${props => props.height}px;
     display: flex;
     
     ${props => props.large && css`

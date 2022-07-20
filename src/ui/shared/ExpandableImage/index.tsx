@@ -2,7 +2,7 @@ import optimize from '@ui/shared/ExpandableImage/optimize'
 import { Scale } from '@ui/shared/ScaledImage'
 import { useState, useEffect } from 'react'
 
-import { Image, Loader, Root } from './elements'
+import { Image, Root } from './elements'
 import { store } from '@models'
 
 interface Props {
@@ -40,6 +40,10 @@ const ExpandableImage = (props: Props) => {
           height: scale.height,
           url
         })}
+        style={{
+          width: scale.width,
+          height: scale.height
+        }}
         // onLoad={() => setLoadState('loaded')}
         // onError={() => setLoadState('error')}
       />
