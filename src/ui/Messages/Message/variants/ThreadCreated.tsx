@@ -1,4 +1,8 @@
-import {Message_author, Message_thread} from "@generated";
+import {
+  Message_author,
+  Message_messageReference,
+  Message_thread
+} from "@generated";
 import {
   IconsBase,
   SystemMessageBase,
@@ -15,18 +19,34 @@ interface ThreadCreatedProps {
   createdAt: number;
   thread: Message_thread;
   author: Message_author;
+  messageReference: Message_messageReference;
   messageId: string;
   messageContent: string;
 }
 
 function ThreadCreated(props: ThreadCreatedProps) {
   const openThread = useCallback(() => generalStore.setActiveThread({
-    id: props.messageId,
+    id: props.messageReference.channelId,
     name: props.messageContent,
     messageCount: 0,
     archivedAt: null,
     locked: false
   }), [props.messageId, props.messageContent]);
+
+  if (props.thread === null)
+    return (
+      <SystemMessageBase>
+        <SystemMessageContentBase>
+          <IconsBase.ThreadCreated centerVertically={false} />
+          <MessageAuthor author={props.author} onlyShowUsername={true} />{" "}
+          started a thread:{" "}
+          <SystemMessageLinkBase onClick={openThread}>
+            {props.messageContent}
+          </SystemMessageLinkBase>
+        </SystemMessageContentBase>
+        <LargeTimestamp timestamp={props.createdAt} />
+      </SystemMessageBase>
+    );
 
   return (
     <SystemMessageBase>

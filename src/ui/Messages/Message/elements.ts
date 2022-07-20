@@ -3,9 +3,12 @@ import {Twemoji} from "@ui/shared/Emoji/emoji";
 import {css} from "react-emotion";
 import {memo} from "react";
 import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
+import remove from "@images/discordAssets/f772d3d7eddcf3c84f710c10999479f0.svg";
 import warning from "@images/discordAssets/warning.svg";
+import cross from "@images/discordAssets/c7078943fc392e7dede27a20e6cfdcfb.svg";
 import pin from "@images/discordAssets/5da4cdab01d4d89c593c48c62ae0d937.svg";
 import checkmark from "@images/discordAssets/86b5987e685f72352730d56690393fc8.svg";
+import threadNameChanged from "@images/discordAssets/1688a01d0e6f27bead9ae6ca9e51dd32.svg";
 import threadCreated from "@images/discordAssets/thread-created.svg";
 import boost from "@images/discordAssets/boost.svg";
 import {MessageType} from "@generated/globalTypes";
@@ -118,10 +121,16 @@ export const SystemMessageBase = styled(MessageBase)`
   align-items: center;
 `;
 
-export const SystemMessageContentBase = styled.span`
-  &,
-  & strong {
-    color: ${({theme}) => theme.colors._primary.darken(0.4).string()};
+export const SystemMessageContentBase = styled.span<{fullPrimary?: boolean}>`
+  ${({fullPrimary, theme}) => fullPrimary
+    ? css`
+      color: ${theme.colors._primary.string()};
+    `
+    : css`
+      &,
+      & strong {
+        color: ${theme.colors._primary.darken(0.4).string()};
+    }`
   }
 `;
 
@@ -253,11 +262,6 @@ export const MiniUserNameBase = styled.span<MiniUserNameBaseProps>`
   text-overflow: ellipsis;
 
   color: ${({color}) => color};
-
-  &:hover {
-    cursor: pointer;
-    text-decoration: underline;
-  }
 `;
 
 export const MessageHeaderBase = styled('div')`
@@ -310,12 +314,20 @@ export namespace IconsBase {
     background-image: url("${add}");
   `);
 
+  export const Remove = memo(styled(IconBase)`
+    background-image: url("${remove}");
+  `);
+
   export const Warning = memo(styled(IconBase)`
     background-image: url("${warning}");
   `);
 
   export const Pinned = memo(styled(IconBase)`
     background-image: url("${pin}");
+  `);
+
+  export const Cross = memo(styled(IconBase)`
+    background-image: url("${cross}");
   `);
 
   export const ThreadCreated = memo(styled(IconBase)`
@@ -329,6 +341,10 @@ export namespace IconsBase {
 
   export const Checkmark = memo(styled(IconBase)`
     background-image: url("${checkmark}");
+  `);
+
+  export const ThreadNameChanged = memo(styled(IconBase)`
+    background-image: url("${threadNameChanged}");
   `);
 }
 
@@ -402,10 +418,10 @@ export const AuthorBase = styled.span`
 `;
 
 interface UsernameBaseProps {
-  color: string;
+  color: string | undefined;
 }
 export const UsernameBase = memo(styled.span<UsernameBaseProps>`
-  color: ${props => props.color};
+  color: ${props => props.color ?? props.theme.colors.primary};
   font-weight: 500;
   font-size: 16px;
   display: inline;

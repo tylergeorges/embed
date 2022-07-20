@@ -7,7 +7,7 @@ export const ReplyIconBase = styled.img`
 `;
 
 export const ContentContainerBase = styled.div`
-  color: rgba(255, 255, 255, 0.8);
+  color: ${props => props.theme.colors._primary.fade(0.2).string()};
   font-weight: 400;
   
   &[data-is-reply-content="true"] {

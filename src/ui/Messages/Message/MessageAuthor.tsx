@@ -5,7 +5,10 @@ import {
   AvatarBase,
   UsernameBase
 } from "@ui/Messages/Message/elements";
-import {GuildInfo_guild_roles, Message_author} from "@generated";
+import {
+  GuildInfo_guild_roles,
+  Message_author
+} from "@generated";
 import {memoize} from "lodash";
 import ChatTag from "@ui/Messages/ChatTag";
 import {generalStore} from "@store";
@@ -21,7 +24,7 @@ interface MessageAuthorProps {
 class MessageAuthor extends PureComponent<MessageAuthorProps> {
   private convertColor = memoize(
     (color: number) =>
-      color > 0 ? `#${color.toString(16).padStart(6, '0')}` : '#fff'
+      color > 0 ? `#${color.toString(16).padStart(6, '0')}` : undefined
   );
 
   private getDominantRoleColor = memoize(

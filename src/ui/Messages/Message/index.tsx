@@ -23,6 +23,11 @@ import GuildDiscoveryGracePeriodInitialWarning
   from "@ui/Messages/Message/variants/GuildDiscoveryGracePeriodInitialWarning";
 import GuildDiscoveryGracePeriodFinalWarning
   from "@ui/Messages/Message/variants/GuildDiscoveryGracePeriodFinalWarning";
+import ChannelNameChange from "@ui/Messages/Message/variants/ChannelNameChange";
+import RecipientAdd from "@ui/Messages/Message/variants/RecipientAdd";
+import RecipientRemove from "@ui/Messages/Message/variants/RecipientRemove";
+import GuildDiscoveryDisqualified
+  from "@ui/Messages/Message/variants/GuildDiscoveryDisqualified";
 
 type MessageDataModified = Omit<MessageData, "referencedMessage"> & Partial<MessageData>;
 
@@ -70,6 +75,30 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
           content={props.message.content}
         />
       );
+    case MessageType.RecipientAdd:
+      return (
+        <RecipientAdd
+          createdAt={props.message.createdAt}
+          author={props.message.author}
+          target={props.message.mentions[0]}
+        />
+      );
+    case MessageType.RecipientRemove:
+      return (
+        <RecipientRemove
+          createdAt={props.message.createdAt}
+          author={props.message.author}
+          target={props.message.mentions[0]}
+        />
+      );
+    case MessageType.ChannelNameChange:
+      return (
+        <ChannelNameChange
+          createdAt={props.message.createdAt}
+          author={props.message.author}
+          content={props.message.content}
+        />
+      );
     case MessageType.ThreadCreated:
       return (
         <ThreadCreated
@@ -77,6 +106,7 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
           thread={props.message.thread}
           author={props.message.author}
           messageId={props.message.id}
+          messageReference={props.message.messageReference}
           messageContent={props.message.content}
         />
       );
@@ -96,6 +126,8 @@ function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
       return <GuildDiscoveryGracePeriodInitialWarning createdAt={props.message.createdAt} />;
     case MessageType.GuildDiscoveryGracePeriodFinalWarning:
       return <GuildDiscoveryGracePeriodFinalWarning createdAt={props.message.createdAt} />;
+    case MessageType.GuildDiscoveryDisqualified:
+      return <GuildDiscoveryDisqualified createdAt={props.message.createdAt} />;
     case MessageType.ContextMenuCommand:
       return <NormalMessage {...props} isContextMenuInteraction={true} />;
     case MessageType.ThreadStarterMessage:
