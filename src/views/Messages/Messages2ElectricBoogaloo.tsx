@@ -65,6 +65,14 @@ function Messages2ElectricBoogaloo({ guild, channel, thread = false }: MessagesP
         overscan={30}
         startReached={loadMoreMessages}
         initialTopMostItemIndex={maxMessagesToLoad - 1}
+        followOutput={(isAtBottom: boolean) => {
+          if (isAtBottom) {
+            return 'auto' // can be 'auto' or false to avoid scrolling
+          }
+
+          return false;
+        }}
+        atBottomThreshold={2}
         components={{
           Footer: () => <ScrollerSpacer />
         }}
