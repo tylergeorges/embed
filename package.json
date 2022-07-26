@@ -94,6 +94,7 @@
     "react-transition-group": "^2.5.3",
     "react-use": "^5.3.1",
     "react-virtualized": "^9.21.0",
+    "react-virtuoso": "^2.16.5",
     "react-window": "^1.8.6",
     "recompose": "0.30.0",
     "scroll-into-view-if-needed": "^2.2.20",
