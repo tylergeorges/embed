@@ -8,7 +8,7 @@ import {
 import numberToRgb from "@utils/numberToRgb";
 import {useMemo} from "react";
 import moment from "moment";
-import {LinkMarkdown} from "@ui/shared/markdown/render";
+import {LinkMarkdown, parseEmbedTitle} from "@ui/shared/markdown/render";
 
 export interface EmbedProps {
   embed: Message_embeds;
@@ -88,10 +88,10 @@ function Embed({embed, images}: EmbedProps) {
           {embed.title && (
             embed.url !== null
               ? (
-                <EmbedStyle.TitleWithUrl href={embed.url} target="_blank">{embed.title}</EmbedStyle.TitleWithUrl>
+                <EmbedStyle.TitleWithUrl href={embed.url} target="_blank">{parseEmbedTitle(embed.title)}</EmbedStyle.TitleWithUrl>
               )
               : (
-                <EmbedStyle.Title>{embed.title}</EmbedStyle.Title>
+                <EmbedStyle.Title>{parseEmbedTitle(embed.title)}</EmbedStyle.Title>
               )
           )}
           {embed.description && (
@@ -109,7 +109,7 @@ function Embed({embed, images}: EmbedProps) {
                   inline={field.inline}
                 >
                   <EmbedStyle.FieldName>
-                    {field.name}
+                    {parseEmbedTitle(field.name)}
                   </EmbedStyle.FieldName>
                   <EmbedStyle.FieldValue>
                     <LinkMarkdown>

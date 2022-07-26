@@ -143,7 +143,7 @@ function Content(props: ContentProps) {
             {props.message.content.length > 0
               ? (
                 <>
-                  <Markdown mentions={props.message.mentions}>
+                  <Markdown mentions={props.message.mentions} isAuthorBot={props.message.author.bot}>
                     {props.message.content}
                   </Markdown>
                   {props.message.editedAt && <Edited editedAt={props.message.editedAt} />}
