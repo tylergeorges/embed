@@ -16,6 +16,8 @@ export const ChatTagBase = styled('span')`
   padding: 1px 4px;
   align-self: center;
   white-space: nowrap;
-  
+  display: flex;
+  align-items: center;
+
   background-color: ${({ theme }) => theme.colors._accent.string()};
 `;
