@@ -13,7 +13,7 @@ export const ChatTagBase = styled('span')`
   text-transform: uppercase;
   height: fit-content;
   border-radius: 3px;
-  padding: 0 4px;
+  padding: 1px 4px;
   align-self: center;
   white-space: nowrap;
   

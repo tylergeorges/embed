@@ -46,20 +46,67 @@ export namespace EmbedStyle {
     gap: 8px;
   `;
 
+  interface ImagesProps {
+    amount: number;
+  }
+
+  export const Images = styled.div<ImagesProps>`
+    display: grid;
+    gap: 4px;
+    border-radius: 3px;
+    overflow: hidden;
+    
+    ${props => props.amount === 2 && css`
+      grid-template-columns: 1fr 1fr;
+    `}
+
+    ${props => props.amount === 3 && css`
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: calc((300px - 4px) / 2) calc((300px - 4px) / 2);
+      
+      & > *:first-child {
+        grid-row: span 2;
+      }
+    `}
+    
+    ${props => props.amount === 4 && css`
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: calc((300px - 4px) / 2) calc((300px - 4px) / 2);
+    `}
+    
+    & img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+  `;
+
+  export const MultiImageImageContainer = styled.div`
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `;
+
   interface ImageProps {
     large?: boolean;
-    width: number;
-    height: number;
+    width?: number;
+    height?: number;
+    withMargin?: boolean;
   }
 
   export const Image = styled(ExpandableImage)<ImageProps>`
     border-radius: 3px;
     cursor: pointer;
-    width: ${props => props.width}px;
-    height: ${props => props.height}px;
+    ${props => props.width && css`
+      width: ${props.width}px;
+    `}
+    ${props => props.height && css`
+      height: ${props.height}px;
+    `}
     display: flex;
     
-    ${props => props.large && css`
+    ${props => (props.large && props.withMargin !== false) && css`
       margin-top: 8px;
     `}
   `;

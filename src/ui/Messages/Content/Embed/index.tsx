@@ -2,7 +2,9 @@ import {Message_embeds} from "@generated";
 import GifVEmbed from "@ui/Messages/Content/Embed/GifVEmbed";
   import ImageEmbed from "@ui/Messages/Content/Embed/ImageEmbed";
 import VideoAttachment from "@ui/Messages/Content/Attachment/VideoAttachment";
-import {EmbedStyle} from "@ui/Messages/Content/Embed/elements";
+import {
+  EmbedStyle
+} from "@ui/Messages/Content/Embed/elements";
 import numberToRgb from "@utils/numberToRgb";
 import {useMemo} from "react";
 import moment from "moment";
@@ -10,9 +12,10 @@ import {LinkMarkdown} from "@ui/shared/markdown/render";
 
 export interface EmbedProps {
   embed: Message_embeds;
+  images: string[] | undefined;
 }
 
-function Embed({embed}: EmbedProps) {
+function Embed({embed, images}: EmbedProps) {
   if (embed.type.toLowerCase() === 'gifv')
     return <GifVEmbed embed={embed} />;
 
@@ -27,6 +30,9 @@ function Embed({embed}: EmbedProps) {
     : undefined;
 
   const { width, height, isLarge } = useMemo(() => {
+    if (images?.length > 0)
+      return { width: null, height: null, isLarge: false };
+
     const image = embed.image ?? embed.thumbnail;
 
     if (image === null)
@@ -52,7 +58,7 @@ function Embed({embed}: EmbedProps) {
     const imageWidth = imageHeight / image.height * image.width;
 
     return { width: imageWidth, height: imageHeight, isLarge: false };
-  }, [embed.type, embed.image, embed.thumbnail]);
+  }, [embed.type, embed.image, embed.thumbnail, images]);
 
   return (
     <EmbedStyle.Base color={embedColor} thumbnailIsLarge={isLarge}>
@@ -123,13 +129,28 @@ function Embed({embed}: EmbedProps) {
           />
         )}
       </EmbedStyle.ContentAndThumbnail>
-      {embed.image && (
+      {((images === undefined || images?.length === 0) && embed.image) && (
         <EmbedStyle.Image
           src={embed.image.url}
           width={width}
           height={height}
           large={true}
         />
+      )}
+      {images?.length > 0 && (
+        <EmbedStyle.Images amount={images.length}>
+          {images.map(image => (
+            <EmbedStyle.MultiImageImageContainer>
+              <EmbedStyle.Image
+                fillMaxSize={true}
+                key={image}
+                src={image}
+                large={true}
+                withMargin={false}
+              />
+            </EmbedStyle.MultiImageImageContainer>
+          ))}
+        </EmbedStyle.Images>
       )}
 
       {(embed.footer || embed.timestamp) && (

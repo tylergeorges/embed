@@ -119,6 +119,22 @@ function Content(props: ContentProps) {
     return null;
   }, [props.message.attachments, props.message.stickers, props.isReplyContent]);
 
+  const embedImages = useMemo(() => {
+    if (!props.message.embeds || props.message.embeds.length <= 1)
+      return [];
+
+    if (!props.message.embeds.every(e => props.message.embeds[0].url === e.url))
+      return [];
+
+    const images = props.message.embeds.reduce((acc, embed) => [...acc, embed.image?.url], [])
+      .filter(i => i !== null && i !== undefined);
+
+    if (images.length === 0)
+      return [];
+
+    return images;
+  }, [props.message.embeds]);
+
   return (
     <>
       <ContentBase isReplyContent={props.isReplyContent}>
@@ -157,9 +173,12 @@ function Content(props: ContentProps) {
           {props.message.stickers.map(sticker => (
             <Sticker key={sticker.id} sticker={sticker} />
           ))}
-          {props.message.embeds !== null && props.message.embeds.map((embed) => (
-            <Embed key={embed.url} embed={embed} />
-          ))}
+          {(props.message.embeds !== null && embedImages.length > 0)
+            ? <Embed key={props.message.embeds[0].url} embed={props.message.embeds[0]} images={embedImages} />
+            : props.message.embeds.map((embed) => (
+              <Embed key={embed.url} embed={embed} images={undefined} />
+            )
+          )}
           {props.message.reactions && (
             <Reactions reactions={props.message.reactions} />
           )}

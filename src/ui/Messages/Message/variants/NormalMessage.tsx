@@ -166,7 +166,7 @@ function NormalMessage(props: MessageProps) {
           />
         )}
         <MessageHeaderBase>
-          <MessageAuthor author={props.message.author} avatarAnimated={props.isHovered ?? false} />
+          <MessageAuthor author={props.message.author} avatarAnimated={props.isHovered ?? false} isGuest={props.message.isGuest} />
           <LargeTimestamp timestamp={props.message.createdAt} />
         </MessageHeaderBase>
         <Content

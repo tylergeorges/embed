@@ -1,9 +1,13 @@
-import {EmbedProps} from "@ui/Messages/Content/Embed/index";
 import useSize from "@ui/Messages/Content/Attachment/useSize";
 import {MediaEmbedBase} from "@ui/Messages/Content/Embed/elements";
 import ExpandableImage from "@ui/shared/ExpandableImage";
+import {Message_embeds} from "@generated";
 
-function ImageEmbed({embed}: EmbedProps) {
+export interface GifVEmbedProps {
+  embed: Message_embeds;
+}
+
+function ImageEmbed({embed}: GifVEmbedProps) {
   const size = useSize(embed.thumbnail.width, embed.thumbnail.height);
 
   return (

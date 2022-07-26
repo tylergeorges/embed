@@ -19,6 +19,7 @@ interface MessageAuthorProps {
   author: Message_author;
   avatarAnimated?: boolean;
   onlyShowUsername?: boolean;
+  isGuest?: boolean;
 }
 
 class MessageAuthor extends PureComponent<MessageAuthorProps> {
@@ -64,8 +65,6 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
     // Gets the dominant role icon
     const dominantRoleIconRole = this.getDominantRoleIconRole(this.props.author.roles);
 
-    console.log(this.props.author.name,  this.props.author.flags, this.props.author.flags & (1 << 16));
-
     if (this.props.onlyShowUsername)
       return (
         <AuthorBase>
@@ -88,7 +87,7 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
           <RoleIcon role={dominantRoleIconRole} />
         )}
         {this.props.author.bot && (
-          <ChatTag userFlags={this.props.author.flags} />
+          <ChatTag userFlags={this.props.author.flags} isGuest={this.props.isGuest} />
         )}
       </AuthorBase>
     );

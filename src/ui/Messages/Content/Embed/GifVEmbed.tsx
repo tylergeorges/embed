@@ -1,8 +1,12 @@
-import {EmbedProps} from "@ui/Messages/Content/Embed/index";
 import useSize from "@ui/Messages/Content/Attachment/useSize";
 import {MediaEmbedBase} from "@ui/Messages/Content/Embed/elements";
+import {Message_embeds} from "@generated";
 
-function GifVEmbed({embed}: EmbedProps) {
+export interface GifVEmbedProps {
+  embed: Message_embeds;
+}
+
+function GifVEmbed({embed}: GifVEmbedProps) {
   const size = useSize(embed.video.width, embed.video.height);
 
   return (

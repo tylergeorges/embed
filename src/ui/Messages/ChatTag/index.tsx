@@ -15,7 +15,15 @@ const verified =
     </VerifiedBot>
   </Tooltip>
 
-function Tag({userFlags}: {userFlags: number}) {
+interface TagProps {
+  userFlags: number;
+  isGuest: boolean;
+}
+
+function Tag({userFlags, isGuest}: TagProps) {
+  if (isGuest)
+    return <>GUEST</>;
+
   if (userFlags & UserFlag.VerifiedBot)
     return <>{verified} {Locale.translate('tag.bot')}</>;
 
@@ -25,16 +33,12 @@ function Tag({userFlags}: {userFlags: number}) {
   return <>{Locale.translate('tag.bot')}</>;
 }
 
-interface ChatTagProps {
-  userFlags: number;
-}
-
-function ChatTag({userFlags}: ChatTagProps) {
+function ChatTag({userFlags, isGuest}: TagProps) {
   console.log(`%c flags: ${userFlags}`, "color: cyan; font-size: 16px;");
 
   return (
     <ChatTagBase>
-      <Tag userFlags={userFlags} />
+      <Tag userFlags={userFlags} isGuest={isGuest} />
     </ChatTagBase>
   );
 }
