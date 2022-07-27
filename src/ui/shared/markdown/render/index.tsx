@@ -35,7 +35,7 @@ function parserFor(rules: SimpleMarkdown.ReactRules, returnAst?) {
 }
 
 function createRules(rule: { [key: string]: any }) {
-  const { paragraph, url, link, codeBlock, inlineCode, blockQuote, spoiler, timestamp } = rule
+  const { paragraph, url, link, codeBlock, inlineCode, blockQuote, spoiler, timestamp, command } = rule
 
   return {
     ...rule,
@@ -107,6 +107,10 @@ function createRules(rule: { [key: string]: any }) {
     timestamp: {
       ...timestamp,
       react: data => <Timestamp data={data}></Timestamp>
+    },
+    command: {
+      ...command,
+      react: ({ name }) => '/' + name
     }
   }
 }
