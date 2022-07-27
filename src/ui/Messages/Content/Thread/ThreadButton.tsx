@@ -13,6 +13,7 @@ interface ThreadButtonProps {
   messageType: MessageType;
   messageId: string;
   messageContent: string;
+  hasReply: boolean;
   thread: Message_thread;
 }
 
@@ -27,7 +28,7 @@ function ThreadButton(props: ThreadButtonProps) {
 
   return (
     <ThreadButtonContainerBase>
-      <ThreadSpineBase messageType={props.messageType} />
+      <ThreadSpineBase messageType={props.messageType} hasReply={props.hasReply} />
       <ThreadButtonBase>
         <ThreadButtonTopLineBase>
           <ThreadButtonNameBase>{props.thread.name}</ThreadButtonNameBase>

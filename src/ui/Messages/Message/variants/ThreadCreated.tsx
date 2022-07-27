@@ -64,6 +64,7 @@ function ThreadCreated(props: ThreadCreatedProps) {
         messageId={props.messageId}
         messageContent={props.messageContent}
         messageType={MessageType.ThreadCreated}
+        hasReply={false}
       />
     </SystemMessageBase>
   );

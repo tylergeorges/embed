@@ -184,6 +184,7 @@ function Content(props: ContentProps) {
           )}
           {(!props.noThreadButton && props.message.thread) && (
             <ThreadButton
+              hasReply={props.message.referencedMessage !== null}
               thread={props.message.thread}
               messageId={props.message.thread.id}
               messageContent={props.message.content}

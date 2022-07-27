@@ -48,12 +48,12 @@ export const ThreadButtonContainerBase = styled.div`
   display: block;
 `;
 
-export const ThreadButtonHeight = "34px";
+export const ThreadButtonHeight = 34;
 
 export const ThreadButtonBase = styled.div`
   width: fit-content;
   padding: 8px;
-  height: ${ThreadButtonHeight};
+  height: ${ThreadButtonHeight}px;
   border-radius: 4px;
   background-color: ${({theme}) => theme.colors._background.darken(0.2).string()};
 `;
