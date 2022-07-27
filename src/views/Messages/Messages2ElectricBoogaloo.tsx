@@ -62,9 +62,10 @@ function Messages2ElectricBoogaloo({ guild, channel, thread = false }: MessagesP
       <Virtuoso
         data={groupedMessages}
         firstItemIndex={firstItemIndex}
-        overscan={30}
+        overscan={100}
         startReached={loadMoreMessages}
         initialTopMostItemIndex={maxMessagesToLoad - 1}
+        alignToBottom={true}
         followOutput={(isAtBottom: boolean) => {
           if (isAtBottom) {
             return 'auto' // can be 'auto' or false to avoid scrolling
@@ -74,10 +75,10 @@ function Messages2ElectricBoogaloo({ guild, channel, thread = false }: MessagesP
         }}
         atBottomThreshold={2}
         components={{
-          Footer: () => <ScrollerSpacer />
+          Footer: () => <ScrollerSpacer />,
         }}
         itemContent={(index, messageGroup) => (
-          <MessageGroup messages={messageGroup} key={index} />
+          <MessageGroup messages={messageGroup} key={messageGroup[0].id} />
         )}
       />
     </MessagesWrapper>
