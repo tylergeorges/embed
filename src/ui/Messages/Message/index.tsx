@@ -1,5 +1,5 @@
 import {Message as MessageData} from "@generated";
-import {MessageType} from "@generated/globalTypes";
+import {MentionType, MessageType} from "@generated/globalTypes";
 import NormalMessage from "@ui/Messages/Message/variants/NormalMessage";
 import GuildMemberJoin from "@ui/Messages/Message/variants/GuildMemberJoin";
 import {memo} from "react";
@@ -10,6 +10,7 @@ import MessageContainer, {
 } from "@ui/Messages/Message/MessageContainer";
 import copyIdIcon from "@images/discordAssets/3fef4f31f944477f5f3e9643cbcaab7a.svg"
 import linkIcon from "@images/discordAssets/a4c2ef2964ee9977baf61a2f6017b93d.svg";
+import speakIcon from "@images/discordAssets/speak.svg"
 import {useRouter} from "@hooks";
 import ThreadCreated from "@ui/Messages/Message/variants/ThreadCreated";
 import UserPremiumGuildTierUpgrade
@@ -28,6 +29,8 @@ import RecipientAdd from "@ui/Messages/Message/variants/RecipientAdd";
 import RecipientRemove from "@ui/Messages/Message/variants/RecipientRemove";
 import GuildDiscoveryDisqualified
   from "@ui/Messages/Message/variants/GuildDiscoveryDisqualified";
+import { getChannel } from "@ui/shared/Channel";
+import { generalStore } from "@store";
 
 type MessageDataModified = Omit<MessageData, "referencedMessage"> & Partial<MessageData>;
 
@@ -164,11 +167,46 @@ function Message(props: MessageProps) {
       actionDescription: "Copy Message Link"
     },
     {
+      icon: speakIcon,
+      onClick: () => {
+        const text = props.message.content
+          .replace(/^\|\|([\s\S]+?)\|\|/, "spoiler")
+          .replace(/^<a?:(\w+):\d+>/, "emoji $1")
+          .replace(/^<@!?([0-9]+?)>/, (_, id) => 
+            props.message.mentions?.find(m => m.type === MentionType.Member && m.id === id)?.name 
+            ?? "unknown user"
+          )
+          .replace(/^<@&?([0-9]+?)>/, (_, id) => 
+            props.message.mentions?.find(m => m.type === MentionType.Role && m.id === id)?.name
+            ?? generalStore.guild?.roles.find(r => r.id === id)?.name
+            ?? "deleted role"
+          )
+          .replace(/^<#?([0-9]+?)>/, (_, id) => 
+            props.message.mentions?.find(m => m.type === MentionType.Channel && m.id === id)?.name
+            ?? getChannel(id)?.name
+            ?? "deleted channel"
+          )
+          .replace(/^<\/(.+?):\d{17,19}?>/, "/$1")
+          .replace(/(https?:\/\/[^\s]+)/g, link => {
+            const match = link.match(/^https?:\/\/(?:www\.)?([^/?#]+)(?:[/?#]|$)/i);
+            return match?.[1] ?? "";
+          });
+
+        const action = props.message.referencedMessage ? `replied to ${props.message.referencedMessage.author.name}}` : "said";
+
+        speechSynthesis.speak(new SpeechSynthesisUtterance(`${props.message.author.name} ${action} ${text}`));
+      },
+      actionDescription: "Speak Message"
+    },
+    {
       icon: copyIdIcon,
       onClick: () => navigator.clipboard.writeText(props.message.id),
       actionDescription: "Copy Message ID"
     }
   ];
+
+  // remove speak button if no content
+  if (!props.message.content) buttonOptions.splice(1, 1);
 
   if (props.showButtons)
     return (
