@@ -219,3 +219,7 @@ export namespace EmbedStyle {
     color: ${props => props.theme.colors._primary.darken(0.1).string()};
   `;
 }
+
+export const YouTubeIframe = styled.iframe`
+  border-radius: 3px;
+`;

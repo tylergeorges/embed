@@ -6,9 +6,10 @@ import {
   EmbedStyle
 } from "@ui/Messages/Content/Embed/elements";
 import numberToRgb from "@utils/numberToRgb";
-import {useMemo} from "react";
 import moment from "moment";
 import {LinkMarkdown, parseEmbedTitle} from "@ui/shared/markdown/render";
+import YouTubeEmbed from "@ui/Messages/Content/Embed/YouTubeEmbed";
+import useSize from "@ui/Messages/Content/Embed/useSize";
 
 export interface EmbedProps {
   embed: Message_embeds;
@@ -29,36 +30,17 @@ function Embed({embed, images}: EmbedProps) {
     ? numberToRgb(embed.color)
     : undefined;
 
-  const { width, height, isLarge } = useMemo(() => {
-    if (images?.length > 0)
-      return { width: null, height: null, isLarge: false };
+  console.log(embed);
 
-    const image = embed.image ?? embed.thumbnail;
+  if (embed.video?.url?.match(/^https?:\/\/(www\.)?youtube\.com/))
+    return <YouTubeEmbed embed={embed} />;
 
-    if (image === null)
-      return { width: null, height: null, isLarge: false };
-
-    if (/^article|image|rich$/i.test(embed.type)) {
-      const proposedWidth = 400;
-      const proposedHeight = proposedWidth / image.width * image.height;
-
-      const { width, height } = proposedHeight > proposedWidth
-        ? { width: 300 / image.height * image.width, height: 300 }
-        : { width: proposedWidth, height: proposedHeight };
-
-      return {
-        width,
-        height,
-        isLarge: true
-      };
-    }
-
-    const aspectRatio = image.width / image.height;
-    const imageHeight = 80 / aspectRatio;
-    const imageWidth = imageHeight / image.height * image.width;
-
-    return { width: imageWidth, height: imageHeight, isLarge: false };
-  }, [embed.type, embed.image, embed.thumbnail, images]);
+  const { width, height, isLarge } = useSize(
+    embed.type,
+    embed.image,
+    embed.thumbnail,
+    images?.length > 0
+  );
 
   return (
     <EmbedStyle.Base color={embedColor} thumbnailIsLarge={isLarge}>
@@ -88,7 +70,9 @@ function Embed({embed, images}: EmbedProps) {
           {embed.title && (
             embed.url !== null
               ? (
-                <EmbedStyle.TitleWithUrl href={embed.url} target="_blank">{parseEmbedTitle(embed.title)}</EmbedStyle.TitleWithUrl>
+                <EmbedStyle.TitleWithUrl href={embed.url} target="_blank">
+                  {parseEmbedTitle(embed.title)}
+                </EmbedStyle.TitleWithUrl>
               )
               : (
                 <EmbedStyle.Title>{parseEmbedTitle(embed.title)}</EmbedStyle.Title>
