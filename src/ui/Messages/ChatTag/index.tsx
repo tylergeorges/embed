@@ -34,8 +34,6 @@ function Tag({userFlags, isGuest}: TagProps) {
 }
 
 function ChatTag({userFlags, isGuest}: TagProps) {
-  console.log(`%c flags: ${userFlags}`, "color: cyan; font-size: 16px;");
-
   return (
     <ChatTagBase>
       <Tag userFlags={userFlags} isGuest={isGuest} />

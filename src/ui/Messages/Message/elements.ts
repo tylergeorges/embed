@@ -115,6 +115,51 @@ export const MessageBase = styled.div<MessageBaseProps>`
   background-color: var(--background-color);
 `;
 
+export const DeferredMessage = styled.div`
+  font-size: 14px;
+`;
+
+const typingIndicatorDuration = "1.2s";
+
+export const TypingIndicator = styled.svg`
+  @keyframes typing {
+    0% {
+      transform: scale(0.9);
+      opacity: 0.3;
+    }
+    25% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50%,
+    100% {
+      transform: scale(0.9);
+      opacity: 0.3;
+    }
+  }
+  
+  color: ${({theme}) => theme.colors._primary.string()};
+  
+  .typing-1 {
+    transform-origin: 3.5px center;
+    animation-delay: .1s;
+  }
+  .typing-2 {
+    transform-origin: 12.25px center;
+    animation-delay: .2s;
+  }
+  .typing-3 {
+    transform-origin: 21px center;
+    animation-delay: .3s;
+  }
+  
+  .typing-1,
+  .typing-2,
+  .typing-3 {
+    animation: typing ${typingIndicatorDuration} infinite;
+  }
+;`
+
 export const SystemMessageBase = styled(MessageBase)`
   display: flex;
   flex-wrap: wrap;

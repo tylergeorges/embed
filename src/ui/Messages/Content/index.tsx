@@ -7,9 +7,9 @@ import {
   Message_stickers
 } from "@generated";
 import {
-  ContentBase,
+  ContentBase, DeferredMessage,
   EditedBase,
-  MessageAccessoriesBase
+  MessageAccessoriesBase, TypingIndicator
 } from "@ui/Messages/Message/elements";
 import Tooltip from "rc-tooltip";
 import Moment from "moment/moment";
@@ -134,6 +134,20 @@ function Content(props: ContentProps) {
 
     return images;
   }, [props.message.embeds]);
+
+  if (props.message.flags & 1 << 7)
+    return (
+      <DeferredMessage>
+        <TypingIndicator width={25.5} height={7} style={{marginRight: 5}}>
+          <g>
+            <circle cx="3.5" cy="3.5" r="3.5" className="typing-1" fill="currentColor" />
+            <circle cx="12.25" cy="3.5" r="3.5" className="typing-2" fill="currentColor" />
+            <circle cx="21" cy="3.5" r="3.5" className="typing-3" fill="currentColor" />
+          </g>
+        </TypingIndicator>
+        {props.message.author.name} is thinking...
+      </DeferredMessage>
+    );
 
   return (
     <>

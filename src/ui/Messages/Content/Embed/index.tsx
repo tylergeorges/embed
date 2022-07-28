@@ -30,8 +30,6 @@ function Embed({embed, images}: EmbedProps) {
     ? numberToRgb(embed.color)
     : undefined;
 
-  console.log(embed);
-
   if (embed.video?.url?.match(/^https?:\/\/(www\.)?youtube\.com/))
     return <YouTubeEmbed embed={embed} />;
 
@@ -129,10 +127,9 @@ function Embed({embed, images}: EmbedProps) {
       {images?.length > 0 && (
         <EmbedStyle.Images amount={images.length}>
           {images.map(image => (
-            <EmbedStyle.MultiImageImageContainer>
+            <EmbedStyle.MultiImageImageContainer key={image}>
               <EmbedStyle.Image
                 fillMaxSize={true}
-                key={image}
                 src={image}
                 large={true}
                 withMargin={false}
