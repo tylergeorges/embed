@@ -35,16 +35,21 @@ function Embed({embed, images}: EmbedProps) {
   if (embed.video?.url?.match(/^https?:\/\/(www\.)?youtube\.com/))
     return <YouTubeEmbed embed={embed} />;
 
-  const { width, height, isLarge } = useSize(
+  const { width: widthImage, height: heightImage } = useSize(
     embed.type,
     embed.image,
-    embed.thumbnail,
     images?.length > 0
   );
 
+  const { width: widthThumbnail, height: heightThumbnail, isLarge: isThumbnailLarge } = useSize(
+    embed.type,
+    embed.thumbnail,
+    undefined
+  );
+
   return (
-    <EmbedStyle.Base color={embedColor} thumbnailIsLarge={isLarge}>
-      <EmbedStyle.ContentAndThumbnail thumbnailIsLarge={isLarge}>
+    <EmbedStyle.Base color={embedColor} thumbnailIsLarge={widthImage !== null}>
+      <EmbedStyle.ContentAndThumbnail thumbnailIsLarge={isThumbnailLarge}>
         <EmbedStyle.Content>
           {embed.provider && (
             <EmbedStyle.Provider>
@@ -108,16 +113,16 @@ function Embed({embed, images}: EmbedProps) {
         {embed.thumbnail && (
           <EmbedStyle.Image
             src={embed.thumbnail.url}
-            width={width}
-            height={height}
+            width={widthThumbnail}
+            height={heightThumbnail}
           />
         )}
       </EmbedStyle.ContentAndThumbnail>
       {((images === undefined || images?.length === 0) && embed.image) && (
         <EmbedStyle.Image
           src={embed.image.url}
-          width={width}
-          height={height}
+          width={widthImage}
+          height={heightImage}
           large={true}
         />
       )}
