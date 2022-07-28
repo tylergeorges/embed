@@ -31,7 +31,6 @@ class Authenticate extends React.Component<{}, State> {
       awaiting: true
     });
     authStore.guestLogin(name).then(async () => {
-      await authStore.setGuestUser(name);
       generalStore.needsUpdate = true;
 
       generalStore.toggleMenu(false);

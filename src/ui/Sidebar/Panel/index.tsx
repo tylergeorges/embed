@@ -16,6 +16,7 @@ import {FiLogOut, FiLogIn} from 'react-icons/fi'
 import Tooltip from 'rc-tooltip';
 import getAvatar from "@utils/getAvatar";
 import { store } from '@models';
+import { generalStore } from '@store';
 
 const { version } = require('../../../../package.json');
 
@@ -44,7 +45,7 @@ export default class Panel extends React.Component<{}> {
 											<Discriminator>#{authStore.user.discriminator}</Discriminator>
 										)
 									}
-									{"guest" in authStore.user && (
+									{'provider' in authStore.user && authStore.user.provider === 'Guest' && !queryParams.has('username') && (
 										<Discriminator>Guest</Discriminator>
 									)}
 								</UserTag>
@@ -58,7 +59,7 @@ export default class Panel extends React.Component<{}> {
 										</UserButton>
 									</Tooltip>
 
-									{queryParams.has('username') || // disable logout for dynamic usernames
+									{queryParams.has('username') || queryParams.has('token') || // disable logout for dynamic usernames & guild auth
 										<Tooltip
 											placement="top"
 											overlay={Locale.translate('auth.logout')}

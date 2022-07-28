@@ -41,10 +41,24 @@ export const ThemeProvider = ({ children }) => {
       }
 
       if (ls) authStore.guestLogin(name).then(async () => {
-        await authStore.setGuestUser(name);
         generalStore.needsUpdate = true;
       })
     }
+  }
+
+  if (queryParams.has('token')) {
+    const token = decodeURIComponent(queryParams.get('token'))
+
+    let ls: Storage
+    try {
+      ls = localStorage
+    } catch (e) {
+      generalStore.toggleMenu(true)
+    }
+
+    if (ls) authStore.guildLogin(guild, token).then(async () => {
+      generalStore.needsUpdate = true;
+    })
   }
 
   const themeContext: ThemeContext = {

@@ -15,10 +15,9 @@ function gifCheck(url: string) {
 
 function getAvatarProperty(user: User, avatarSize: AvatarSize = 80): string | null {
   if ("avatarUrl" in user) {
-    if (user.avatarUrl === null)
-      return null;
+    if (!user.avatarUrl) return null;
 
-    return `${user.avatarUrl}?size=${avatarSize}`;
+    return user.avatarUrl.includes('cdn.discordapp.com') ? `${user.avatarUrl}?size=${avatarSize}` : user.avatarUrl;
   }
 
   return `https://cdn.discordapp.com/avatars/${user._id}/${user.avatar}.webp?size=${avatarSize}`;

@@ -18,12 +18,20 @@ interface DiscordUser {
 }
 
 interface GuestUser {
+  avatarUrl: string
+  id: string
+  provider: 'Guest'
   username: string
-  avatarUrl: string | null
-  guest: true
 }
 
-type User = DiscordUser | GuestUser;
+interface GuildUser {
+  avatarUrl: string
+  id: string
+  provider: 'Guild'
+  username: string
+}
+
+type User = DiscordUser | GuestUser | GuildUser;
 
 const queryParams = new URLSearchParams(location.search)
 
@@ -76,19 +84,6 @@ export class AuthStore {
     this.user = data;
 
     return data;
-  }
-
-  @action async setGuestUser(username: string) {
-    const user: GuestUser = {
-      username,
-      avatarUrl: queryParams.get('avatar'),
-      guest: true
-    }
-    window.localStorage.setItem('user', JSON.stringify(user))
-
-    this.user = user
-
-    return user
   }
 
   @action logout() {
@@ -170,13 +165,49 @@ export class AuthStore {
           }
 
           localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
 
           this.token = data.token;
+          this.user = data.user;
           this.inProgress = false;
           return resolve();
         }
         case 'AUTH_FAIL': {
           console.log(data.error);
+          return reject(() => {})
+        }
+      }
+    })
+  }
+
+  @action guildLogin(guild: string, token: string) {
+    return new Promise<void>(async (resolve, reject) => {
+      this.inProgress = true;
+      this.errors = undefined;
+
+      const { data } = await APIRequest(Endpoints.auth.guild, {
+        payload: {
+          guild, token
+        }
+      }).catch(error => error.response)
+
+      switch (data.type) {
+        case 'AUTH_SUCCESS': {
+          if (!data.token) {
+            this.inProgress = false;
+            return reject(() => {});
+          }
+
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('user', JSON.stringify(data.user));
+
+          this.token = data.token;
+          this.user = data.user;
+          this.inProgress = false;
+          return resolve();
+        }
+        case 'AUTH_ERROR': {
+          loginError(data.message)
           return reject(() => {})
         }
       }
