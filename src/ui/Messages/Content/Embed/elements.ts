@@ -3,6 +3,7 @@ import ExpandableImage from "@ui/shared/ExpandableImage";
 
 export const MediaEmbedBase = css`
   border-radius: 3px;
+  cursor: pointer;
 `;
 
 export namespace EmbedStyle {
