@@ -36,7 +36,7 @@ type User = DiscordUser | GuestUser | GuildUser;
 const queryParams = new URLSearchParams(location.search)
 
 const loginError = (msg: string) => addNotification({
-  level: 'warning',
+  level: 'error',
   title: Locale.translate('notif.login.unsuccessful'),
   message: msg.replace('GraphQL error: ', ''),
   autoDismiss: 0,
@@ -155,7 +155,7 @@ export class AuthStore {
       const { data } = await APIRequest(Endpoints.auth.guest, { payload: {
         username,
         avatar: queryParams.get('avatar')
-      } })
+      } }).catch(error => error.response)
 
       switch (data.type) {
         case 'AUTH_SUCCESS': {
@@ -172,8 +172,8 @@ export class AuthStore {
           this.inProgress = false;
           return resolve();
         }
-        case 'AUTH_FAIL': {
-          console.log(data.error);
+        case 'AUTH_ERROR': {
+          loginError(data.message)
           return reject(() => {})
         }
       }

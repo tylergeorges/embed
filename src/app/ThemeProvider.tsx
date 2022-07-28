@@ -10,6 +10,7 @@ import * as Constants from '@constants'
 import { useQuery } from 'react-apollo-hooks'
 import {useCacheLoaded, useRouter} from '@hooks'
 import {generalStore, authStore} from '@store';
+import { useEffect } from 'react'
 
 const queryParams = new URLSearchParams(location.search)
 
@@ -30,9 +31,26 @@ export const ThemeProvider = ({ children }) => {
 
   generalStore.setSettings(settings)
 
-  if (queryParams.has('username')) {
-    const name = decodeURIComponent(queryParams.get('username'))
-    if (name !== authStore.user?.username) {
+  useEffect(() => {
+    if (queryParams.has('username')) {
+      const name = decodeURIComponent(queryParams.get('username'))
+      if (name !== authStore.user?.username) {
+        let ls: Storage
+        try {
+          ls = localStorage
+        } catch (e) {
+          generalStore.toggleMenu(true)
+        }
+
+        if (ls) authStore.guestLogin(name).then(async () => {
+          generalStore.needsUpdate = true;
+        })
+      }
+    }
+
+    if (queryParams.has('token')) {
+      const token = decodeURIComponent(queryParams.get('token'))
+
       let ls: Storage
       try {
         ls = localStorage
@@ -40,26 +58,11 @@ export const ThemeProvider = ({ children }) => {
         generalStore.toggleMenu(true)
       }
 
-      if (ls) authStore.guestLogin(name).then(async () => {
+      if (ls) authStore.guildLogin(guild, token).then(async () => {
         generalStore.needsUpdate = true;
       })
     }
-  }
-
-  if (queryParams.has('token')) {
-    const token = decodeURIComponent(queryParams.get('token'))
-
-    let ls: Storage
-    try {
-      ls = localStorage
-    } catch (e) {
-      generalStore.toggleMenu(true)
-    }
-
-    if (ls) authStore.guildLogin(guild, token).then(async () => {
-      generalStore.needsUpdate = true;
-    })
-  }
+  }, [])
 
   const themeContext: ThemeContext = {
     ...theme,
