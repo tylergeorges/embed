@@ -5,10 +5,11 @@ import { Chat } from '@ui/Chat'
 import { Loading } from '@ui/Overlays'
 import { observer } from "mobx-react";
 import { useEffect } from "react";
-import { generalStore } from "@store";
+import {generalStore, settingsStore} from "@store";
 import { useRouter } from '@hooks'
 import Messages2ElectricBoogaloo
   from "@views/Messages/Messages2ElectricBoogaloo";
+import {Messages} from "@views/Messages/Messages";
 
 const MessagesView = observer(() => {
   const { guild, channel } = useRouter()
@@ -26,7 +27,11 @@ const MessagesView = observer(() => {
           </React.Suspense>
 
           <React.Suspense fallback={<Loading />}>
-            <Messages2ElectricBoogaloo guild={guild} channel={channel} />
+            {settingsStore.messageViewRewriteEnabled ? (
+              <Messages2ElectricBoogaloo guild={guild} channel={channel} />
+            ) : (
+              <Messages guild={guild} channel={channel} />
+            )}
           </React.Suspense>
           <Chat />
         </Wrapper>
@@ -40,7 +45,11 @@ const MessagesView = observer(() => {
           </React.Suspense>
 
           <React.Suspense fallback={<Loading />}>
-            <Messages2ElectricBoogaloo guild={guild} channel={channel} thread />
+            {settingsStore.messageViewRewriteEnabled ? (
+              <Messages2ElectricBoogaloo guild={guild} channel={channel} thread />
+            ) : (
+              <Messages guild={guild} channel={channel} thread />
+            )}
           </React.Suspense>
           <Chat thread />
         </Wrapper>

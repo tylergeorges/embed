@@ -20,6 +20,11 @@ export const Modal = types
       self.type = 'settings'
       self.data = null
     },
+    openExperiments() {
+      self.isOpen = true
+      self.type = 'experiments'
+      self.data = null
+    },
     openTopic(topic, channel) {
       self.isOpen = true
       self.type = 'topic'
