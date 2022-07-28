@@ -119,6 +119,14 @@ export const DeferredMessage = styled.div`
   font-size: 14px;
 `;
 
+export const FailedInteraction = styled(DeferredMessage)`
+  display: flex;
+  padding-top: 4px;
+  align-items: center;
+  gap: 8px;
+  color: #ED4245;
+`;
+
 const typingIndicatorDuration = "1.2s";
 
 export const TypingIndicator = styled.svg`
@@ -140,6 +148,12 @@ export const TypingIndicator = styled.svg`
   
   color: ${({theme}) => theme.colors._primary.string()};
   
+  .typing-1,
+  .typing-2,
+  .typing-3 {
+    animation: typing ${typingIndicatorDuration} infinite;
+  }
+
   .typing-1 {
     transform-origin: 3.5px center;
     animation-delay: .1s;
@@ -151,12 +165,6 @@ export const TypingIndicator = styled.svg`
   .typing-3 {
     transform-origin: 21px center;
     animation-delay: .3s;
-  }
-  
-  .typing-1,
-  .typing-2,
-  .typing-3 {
-    animation: typing ${typingIndicatorDuration} infinite;
   }
 ;`
 
