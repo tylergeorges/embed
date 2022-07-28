@@ -115,6 +115,59 @@ export const MessageBase = styled.div<MessageBaseProps>`
   background-color: var(--background-color);
 `;
 
+export const DeferredMessage = styled.div`
+  font-size: 14px;
+`;
+
+export const FailedInteraction = styled(DeferredMessage)`
+  display: flex;
+  padding-top: 4px;
+  align-items: center;
+  gap: 8px;
+  color: #ED4245;
+`;
+
+const typingIndicatorDuration = "1.2s";
+
+export const TypingIndicator = styled.svg`
+  @keyframes typing {
+    0% {
+      transform: scale(0.9);
+      opacity: 0.3;
+    }
+    25% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    50%,
+    100% {
+      transform: scale(0.9);
+      opacity: 0.3;
+    }
+  }
+  
+  color: ${({theme}) => theme.colors._primary.string()};
+  
+  .typing-1,
+  .typing-2,
+  .typing-3 {
+    animation: typing ${typingIndicatorDuration} infinite;
+  }
+
+  .typing-1 {
+    transform-origin: 3.5px center;
+    animation-delay: .1s;
+  }
+  .typing-2 {
+    transform-origin: 12.25px center;
+    animation-delay: .2s;
+  }
+  .typing-3 {
+    transform-origin: 21px center;
+    animation-delay: .3s;
+  }
+;`
+
 export const SystemMessageBase = styled(MessageBase)`
   display: flex;
   flex-wrap: wrap;
@@ -148,6 +201,7 @@ export const SystemMessageLinkBase = memo(styled.span<SystemMessageLinkBaseProps
 
 interface ThreadSpineBaseProps {
   messageType: MessageType;
+  hasReply: boolean;
 }
 
 export const ThreadSpineBase = memo(styled.div<ThreadSpineBaseProps>`
@@ -158,14 +212,22 @@ export const ThreadSpineBase = memo(styled.div<ThreadSpineBaseProps>`
   border-bottom-left-radius: 6px;
   width: calc(72px / 2 - 4px);
   
-  ${({messageType}) => messageType === MessageType.ThreadCreated 
+  ${({messageType, hasReply}) => messageType === MessageType.ThreadCreated 
   ? css`
-    top: calc(6px /* thread icon padding */ + 16px /* icon height */ + 4px /* some extra padding */);
-    bottom: calc(${ThreadButtonHeight} / 2);
+    top: ${6 /* thread icon padding */ + 16 /* icon height */ + 4 /* some extra padding */}px;
+    bottom: ${ThreadButtonHeight / 2}px;
   `
   : css`
-    top: 48px;
-    bottom: calc((${ThreadButtonHeight} + 6px + 4px /* the padding from the thread button */) / 2);
+    ${hasReply
+      ? css`
+        // check ReplySpineBase for specifics on the 12 and 9 values
+        top: ${48 + 12 + 9 + 4}px;
+      `
+      : css`
+        top: 48px;
+      `
+    }
+    bottom: ${(ThreadButtonHeight + 6 + 4 /* the padding from the thread button */) / 2}px;
   `}
 `);
 

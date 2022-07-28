@@ -7,9 +7,9 @@ import {
   Message_stickers
 } from "@generated";
 import {
-  ContentBase,
-  EditedBase,
-  MessageAccessoriesBase
+  ContentBase, DeferredMessage,
+  EditedBase, FailedInteraction,
+  MessageAccessoriesBase, TypingIndicator
 } from "@ui/Messages/Message/elements";
 import Tooltip from "rc-tooltip";
 import Moment from "moment/moment";
@@ -17,6 +17,7 @@ import {Locale} from "@lib/Locale";
 import Reactions from "@ui/Messages/Message/Reactions";
 import Attachment from "@ui/Messages/Content/Attachment";
 import StickerIcon from "@images/discordAssets/sticker-icon.svg";
+import Danger from "@images/discordAssets/danger.svg";
 import AttachmentIcon from "@images/discordAssets/attachment-icon.svg";
 import {
   ContentContainerBase, ContentMessageTooltipBase,
@@ -135,6 +136,30 @@ function Content(props: ContentProps) {
     return images;
   }, [props.message.embeds]);
 
+  if (props.message.flags & 1 << 7) {
+    const fifteenMinutes = 15 * 60 * 1000;
+
+    if (Date.now() - props.message.createdAt > fifteenMinutes)
+      return (
+        <FailedInteraction>
+          <img src={Danger} alt="" width={16} height={16} /> The application did not respond
+        </FailedInteraction>
+      );
+
+    return (
+      <DeferredMessage>
+        <TypingIndicator width={25.5} height={7} style={{marginRight: 5}}>
+          <g>
+            <circle cx="3.5" cy="3.5" r="3.5" className="typing-1" fill="currentColor" />
+            <circle cx="12.25" cy="3.5" r="3.5" className="typing-2" fill="currentColor" />
+            <circle cx="21" cy="3.5" r="3.5" className="typing-3" fill="currentColor" />
+          </g>
+        </TypingIndicator>
+        {props.message.author.name} is thinking...
+      </DeferredMessage>
+    );
+  }
+
   return (
     <>
       <ContentBase isReplyContent={props.isReplyContent}>
@@ -184,6 +209,7 @@ function Content(props: ContentProps) {
           )}
           {(!props.noThreadButton && props.message.thread) && (
             <ThreadButton
+              hasReply={props.message.referencedMessage !== null}
               thread={props.message.thread}
               messageId={props.message.thread.id}
               messageContent={props.message.content}

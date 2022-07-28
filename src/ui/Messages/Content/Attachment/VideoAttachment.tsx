@@ -65,8 +65,8 @@ function VideoAttachment(props: VideoAttachmentProps) {
     setIsFullscreen(document.fullscreenElement !== null);
   }
 
-  const seekVideo = (e) => {
-    if (videoRef.current === null || !isSeeking)
+  const seekVideo = (e, overrideSeeking?: boolean) => {
+    if (videoRef.current === null || (!isSeeking && !overrideSeeking))
       return;
 
     const rect = e.target.getBoundingClientRect();
@@ -130,6 +130,7 @@ function VideoAttachment(props: VideoAttachmentProps) {
           )}
           <VideoAttachmentOverlay.ProgressBarBase
             onMouseMove={seekVideo}
+            onClick={(e) => seekVideo(e, true)}
             onMouseDown={() => setIsSeeking(true)}
             onMouseUp={() => setIsSeeking(false)}
           >

@@ -3,6 +3,7 @@ import ExpandableImage from "@ui/shared/ExpandableImage";
 
 export const MediaEmbedBase = css`
   border-radius: 3px;
+  cursor: pointer;
 `;
 
 export namespace EmbedStyle {
@@ -166,6 +167,7 @@ export namespace EmbedStyle {
 
   export const Description = styled.div`
     font-size: 14px;
+    white-space: pre-wrap;
     color: ${props => props.theme.colors._primary.darken(0.1).string()};
   `;
 
@@ -216,6 +218,11 @@ export namespace EmbedStyle {
   export const FieldValue = styled.div`
     font-size: 14px;
     font-weight: 400;
+    white-space: pre-wrap;
     color: ${props => props.theme.colors._primary.darken(0.1).string()};
   `;
 }
+
+export const YouTubeIframe = styled.iframe`
+  border-radius: 3px;
+`;

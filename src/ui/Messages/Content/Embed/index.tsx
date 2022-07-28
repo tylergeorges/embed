@@ -6,9 +6,10 @@ import {
   EmbedStyle
 } from "@ui/Messages/Content/Embed/elements";
 import numberToRgb from "@utils/numberToRgb";
-import {useMemo} from "react";
 import moment from "moment";
 import {LinkMarkdown, parseEmbedTitle} from "@ui/shared/markdown/render";
+import YouTubeEmbed from "@ui/Messages/Content/Embed/YouTubeEmbed";
+import useSize from "@ui/Messages/Content/Embed/useSize";
 
 export interface EmbedProps {
   embed: Message_embeds;
@@ -29,40 +30,24 @@ function Embed({embed, images}: EmbedProps) {
     ? numberToRgb(embed.color)
     : undefined;
 
-  const { width, height, isLarge } = useMemo(() => {
-    if (images?.length > 0)
-      return { width: null, height: null, isLarge: false };
+  if (embed.video?.url?.match(/^https?:\/\/(www\.)?youtube\.com/))
+    return <YouTubeEmbed embed={embed} />;
 
-    const image = embed.image ?? embed.thumbnail;
+  const { width: widthImage, height: heightImage } = useSize(
+    embed.type,
+    embed.image,
+    images?.length > 0
+  );
 
-    if (image === null)
-      return { width: null, height: null, isLarge: false };
-
-    if (/^article|image|rich$/i.test(embed.type)) {
-      const proposedWidth = 400;
-      const proposedHeight = proposedWidth / image.width * image.height;
-
-      const { width, height } = proposedHeight > proposedWidth
-        ? { width: 300 / image.height * image.width, height: 300 }
-        : { width: proposedWidth, height: proposedHeight };
-
-      return {
-        width,
-        height,
-        isLarge: true
-      };
-    }
-
-    const aspectRatio = image.width / image.height;
-    const imageHeight = 80 / aspectRatio;
-    const imageWidth = imageHeight / image.height * image.width;
-
-    return { width: imageWidth, height: imageHeight, isLarge: false };
-  }, [embed.type, embed.image, embed.thumbnail, images]);
+  const { width: widthThumbnail, height: heightThumbnail, isLarge: isThumbnailLarge } = useSize(
+    embed.type,
+    embed.thumbnail,
+    undefined
+  );
 
   return (
-    <EmbedStyle.Base color={embedColor} thumbnailIsLarge={isLarge}>
-      <EmbedStyle.ContentAndThumbnail thumbnailIsLarge={isLarge}>
+    <EmbedStyle.Base color={embedColor} thumbnailIsLarge={widthImage !== null}>
+      <EmbedStyle.ContentAndThumbnail thumbnailIsLarge={isThumbnailLarge}>
         <EmbedStyle.Content>
           {embed.provider && (
             <EmbedStyle.Provider>
@@ -88,7 +73,9 @@ function Embed({embed, images}: EmbedProps) {
           {embed.title && (
             embed.url !== null
               ? (
-                <EmbedStyle.TitleWithUrl href={embed.url} target="_blank">{parseEmbedTitle(embed.title)}</EmbedStyle.TitleWithUrl>
+                <EmbedStyle.TitleWithUrl href={embed.url} target="_blank">
+                  {parseEmbedTitle(embed.title)}
+                </EmbedStyle.TitleWithUrl>
               )
               : (
                 <EmbedStyle.Title>{parseEmbedTitle(embed.title)}</EmbedStyle.Title>
@@ -124,26 +111,25 @@ function Embed({embed, images}: EmbedProps) {
         {embed.thumbnail && (
           <EmbedStyle.Image
             src={embed.thumbnail.url}
-            width={width}
-            height={height}
+            width={widthThumbnail}
+            height={heightThumbnail}
           />
         )}
       </EmbedStyle.ContentAndThumbnail>
       {((images === undefined || images?.length === 0) && embed.image) && (
         <EmbedStyle.Image
           src={embed.image.url}
-          width={width}
-          height={height}
+          width={widthImage}
+          height={heightImage}
           large={true}
         />
       )}
       {images?.length > 0 && (
         <EmbedStyle.Images amount={images.length}>
           {images.map(image => (
-            <EmbedStyle.MultiImageImageContainer>
+            <EmbedStyle.MultiImageImageContainer key={image}>
               <EmbedStyle.Image
                 fillMaxSize={true}
-                key={image}
                 src={image}
                 large={true}
                 withMargin={false}
