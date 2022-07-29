@@ -12,7 +12,9 @@ import {
   ReplyInfoBase,
   ReplySpineBase,
   ReplyUserBase, SlashCommandBase,
-  SmallTimestampBase
+  SmallTimestampBase,
+  UnknownReplyIcon,
+  UnknownReplyText
 } from "@ui/Messages/Message/elements";
 import MessageAuthor from "@ui/Messages/Message/MessageAuthor";
 import Content from "@ui/Messages/Content";
@@ -22,9 +24,12 @@ import {MessageType} from "@generated/globalTypes";
 import getAvatar, {GetAvatarOptions} from "@utils/getAvatar";
 import LargeTimestamp from "@ui/Messages/Message/LargeTimestamp";
 import {authStore, generalStore} from "@store";
+import ChatTag from "@ui/Messages/ChatTag";
+import unknownReplyIcon from '@images/discordAssets/unknown-reply.svg';
 
 interface ReplyInfoProps {
   referencedMessage: Message_referencedMessage | null;
+  mentioned?: boolean;
   interaction: Message_interaction | null;
   isContextMenuInteraction?: boolean;
 }
@@ -92,15 +97,29 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
 
   const miniUserNameColorHex = getDominantRoleColor(props.referencedMessage);
 
+  const unknownReply = !props.referencedMessage && !props.interaction;
+
   return (
     <ReplyInfoBase>
       <ReplySpineBase />
-      <ReplyUserBase>
-        <MiniUserAvatarBase src={miniAvatarUrl} />
-        <MiniUserNameBase color={miniUserNameColorHex}>
-          {miniUserName}
-        </MiniUserNameBase>
-      </ReplyUserBase>
+      {unknownReply
+        ? (
+          <>
+            <UnknownReplyIcon><img src={unknownReplyIcon} /></UnknownReplyIcon>
+            <UnknownReplyText>Original message was deleted or is unknown.</UnknownReplyText>
+          </>
+        )
+        : (
+          <ReplyUserBase>
+            <MiniUserAvatarBase src={miniAvatarUrl} />
+            {props.referencedMessage?.author.bot && (
+              <ChatTag userFlags={props.referencedMessage.author.flags} isGuest={props.referencedMessage.isGuest} />
+            )}
+            <MiniUserNameBase color={miniUserNameColorHex}>
+              {props.mentioned && "@"}{miniUserName}
+            </MiniUserNameBase>
+          </ReplyUserBase>
+        )}
       {props.referencedMessage
         ? (
           <Content
@@ -133,11 +152,8 @@ interface MessageProps {
 }
 
 function NormalMessage(props: MessageProps) {
-  const shouldShowReply = (
-      props.message.type === MessageType.Reply
-      && Boolean(props.message.referencedMessage)
-    )
-      || Boolean(props.message.interaction);
+  const shouldShowReply =
+    props.message.type === MessageType.Reply || Boolean(props.message.interaction);
 
   const isUserMentioned = useMemo(() => {
     const user = authStore.user;
@@ -160,7 +176,8 @@ function NormalMessage(props: MessageProps) {
       <MessageBase isUserMentioned={isUserMentioned}>
         {shouldShowReply && (
           <ReplyInfo
-            referencedMessage={props.message.referencedMessage}
+            referencedMessage={props.message.referencedMessage ?? null}
+            mentioned={props.message.mentions.some(m => m.id === props.message.referencedMessage?.author.id)}
             interaction={props.message.interaction}
             isContextMenuInteraction={props.isContextMenuInteraction}
           />
