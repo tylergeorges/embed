@@ -32,22 +32,6 @@ export const ThemeProvider = ({ children }) => {
   generalStore.setSettings(settings)
 
   useEffect(() => {
-    if (queryParams.has('username')) {
-      const name = decodeURIComponent(queryParams.get('username'))
-      if (name !== authStore.user?.username) {
-        let ls: Storage
-        try {
-          ls = localStorage
-        } catch (e) {
-          generalStore.toggleMenu(true)
-        }
-
-        if (ls) authStore.guestLogin(name).then(async () => {
-          generalStore.needsUpdate = true;
-        })
-      }
-    }
-
     if (queryParams.has('token')) {
       const token = decodeURIComponent(queryParams.get('token'))
 
@@ -61,6 +45,20 @@ export const ThemeProvider = ({ children }) => {
       if (ls) authStore.guildLogin(guild, token).then(async () => {
         generalStore.needsUpdate = true;
       })
+    } else if (queryParams.has('username')) {
+      const name = decodeURIComponent(queryParams.get('username'))
+      if (name !== authStore.user?.username) {
+        let ls: Storage
+        try {
+          ls = localStorage
+        } catch (e) {
+          generalStore.toggleMenu(true)
+        }
+
+        if (ls) authStore.guestLogin(name).then(async () => {
+          generalStore.needsUpdate = true;
+        })
+      }
     }
   }, [])
 
