@@ -10,7 +10,7 @@ const Image = observer(() => {
 
       <Root src={store.modal.data} />
       <OpenImage
-        href={store.modal.data}
+        href={store.modal.originalUrl ?? store.modal.data}
         target="_blank"
         onClick={store.modal.close}
       >

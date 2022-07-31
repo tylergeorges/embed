@@ -112,11 +112,7 @@ export namespace EmbedStyle {
     `}
   `;
 
-  interface AuthorProps {
-    urlPresent: boolean;
-  }
-
-  export const Author = styled.div<AuthorProps>`
+  export const Author = styled.div`
     font-size: 14px;
     font-weight: 600;
     display: inline-grid;
@@ -124,13 +120,6 @@ export namespace EmbedStyle {
     align-items: center;
     gap: 8px;
     color: ${props => props.theme.colors._primary.string()};
-    
-    ${props => props.urlPresent && css`
-      &:hover {
-        cursor: pointer;
-        text-decoration: underline;
-      }
-    `}
   `;
 
   export const AuthorIcon = styled.img`

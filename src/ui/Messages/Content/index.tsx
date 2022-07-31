@@ -137,7 +137,7 @@ function Content(props: ContentProps) {
     if (!props.message.embeds.every(e => props.message.embeds[0].url === e.url))
       return [];
 
-    const images = props.message.embeds.reduce((acc, embed) => [...acc, embed.image?.url], [])
+    const images = props.message.embeds.reduce((acc, embed) => [...acc, embed.image], [])
       .filter(i => i !== null && i !== undefined);
 
     if (images.length === 0)

@@ -20,7 +20,7 @@ function YouTubeEmbed({ embed }: YouTubeEmbedProps) {
       <EmbedStyle.Provider>
         {embed.provider.name}
       </EmbedStyle.Provider>
-      <EmbedStyle.Author urlPresent={true}>
+      <EmbedStyle.Author>
         <EmbedStyle.AuthorName>
           <a href={embed.author.url} target="_blank">{embed.author.name}</a>
         </EmbedStyle.AuthorName>

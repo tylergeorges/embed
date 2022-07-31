@@ -57,7 +57,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_embeds_autho
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_messages_embeds_fields {
@@ -70,6 +70,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_embeds_field
 export interface Messages_channel_TextChannel_messageBunch_messages_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -82,7 +83,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_embeds_provi
 
 export interface Messages_channel_TextChannel_messageBunch_messages_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -91,6 +92,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_embeds_thumb
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_messages_embeds_video {
@@ -196,7 +198,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_messages_referencedMessage_embeds_fields {
@@ -209,6 +211,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
 export interface Messages_channel_TextChannel_messageBunch_messages_referencedMessage_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -221,7 +224,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
 
 export interface Messages_channel_TextChannel_messageBunch_messages_referencedMessage_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -230,6 +233,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_messages_referencedMessage_embeds_video {
@@ -376,7 +380,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_embeds
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_embeds_fields {
@@ -389,6 +393,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_embeds
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -401,7 +406,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_embeds
 
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -410,6 +415,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_embeds
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_embeds_video {
@@ -515,7 +521,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_referencedMessage_embeds_fields {
@@ -528,6 +534,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_referencedMessage_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -540,7 +547,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
 
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_referencedMessage_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -549,6 +556,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_referencedMessage_embeds_video {
@@ -707,7 +715,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_embe
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_embeds_fields {
@@ -720,6 +728,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_embe
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -732,7 +741,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_embe
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -741,6 +750,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_embe
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_embeds_video {
@@ -846,7 +856,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_referencedMessage_embeds_fields {
@@ -859,6 +869,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_referencedMessage_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -871,7 +882,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_referencedMessage_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -880,6 +891,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_referencedMessage_embeds_video {
@@ -1026,7 +1038,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_embeds_fields {
@@ -1039,6 +1051,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -1051,7 +1064,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -1060,6 +1073,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_embeds_video {
@@ -1165,7 +1179,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_referencedMessage_embeds_fields {
@@ -1178,6 +1192,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_referencedMessage_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -1190,7 +1205,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_referencedMessage_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -1199,6 +1214,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_referencedMessage_embeds_video {

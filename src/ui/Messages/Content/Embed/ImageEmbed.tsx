@@ -13,7 +13,8 @@ function ImageEmbed({embed}: GifVEmbedProps) {
   return (
     <ExpandableImage
       className={MediaEmbedBase}
-      src={embed.thumbnail.url}
+      src={embed.thumbnail.proxyUrl}
+      originalUrl={embed.thumbnail.url}
       width={size.width}
       height={size.height}
     />
