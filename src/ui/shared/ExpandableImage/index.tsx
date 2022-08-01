@@ -1,8 +1,9 @@
 import optimize from '@ui/shared/ExpandableImage/optimize'
 import { Scale } from '@ui/shared/ScaledImage'
 import { useState, useEffect } from 'react'
+import DiscordImageFailure from "@images/discordAssets/discord-image-failure.svg";
 
-import { Image, Root } from './elements'
+import {Error, Image, Root} from './elements'
 import { store } from '@models'
 
 interface Props {
@@ -18,17 +19,25 @@ interface Props {
 }
 
 const ExpandableImage = (props: Props) => {
-  const { className, src: url } = props
-  const scale = new Scale(props)
+  const { className, src: url } = props;
+  const scale = new Scale(props);
   const [loadState, setLoadState] = useState<'loaded' | 'error' | 'loading'>(
     null
-  )
+  );
 
   useEffect(() => {
     const timer = setTimeout(() => !loadState && setLoadState('loading'), 100)
 
     return () => clearTimeout(timer)
-  }, [])
+  }, []);
+
+  const imageUrl = loadState !== "error"
+    ? optimize({
+      width: scale.width,
+      height: scale.height,
+      url
+    })
+    : DiscordImageFailure;
 
   return (
     <Root
@@ -44,20 +53,17 @@ const ExpandableImage = (props: Props) => {
         rel="noopener"
       >
         <Image
-          src={optimize({
-            width: scale.width,
-            height: scale.height,
-            url
-          })}
+          src={imageUrl}
+          className={loadState === "error" && Error}
           style={{
             width: scale.width,
             height: scale.height
           }}
           // onLoad={() => setLoadState('loaded')}
-          // onError={() => setLoadState('error')}
+          onError={() => setLoadState('error')}
         />
       </a>
-      {/* loadState === 'loading' && <Loader /> */}
+      {/*{loadState === 'loading' && <Loading />}*/}
     </Root>
   )
 }
