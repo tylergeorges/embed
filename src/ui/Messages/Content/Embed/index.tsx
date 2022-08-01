@@ -8,8 +8,8 @@ import {
 import numberToRgb from "@utils/numberToRgb";
 import moment from "moment";
 import {LinkMarkdown, parseEmbedTitle} from "@ui/shared/markdown/render";
-import YouTubeEmbed from "@ui/Messages/Content/Embed/YouTubeEmbed";
 import useSize from "@ui/Messages/Content/Embed/useSize";
+import EmbedVideo from "@ui/Messages/Content/Embed/EmbedVideo";
 
 export interface EmbedProps {
   embed: Message_embeds;
@@ -30,9 +30,6 @@ function Embed({embed, images}: EmbedProps) {
     ? numberToRgb(embed.color)
     : undefined;
 
-  if (embed.video?.url?.match(/^https?:\/\/(www\.)?youtube\.com/))
-    return <YouTubeEmbed embed={embed} />;
-
   const { width: widthImage, height: heightImage } = useSize(
     embed.type,
     embed.image,
@@ -46,7 +43,11 @@ function Embed({embed, images}: EmbedProps) {
   );
 
   return (
-    <EmbedStyle.Base color={embedColor} thumbnailIsLarge={widthImage !== null}>
+    <EmbedStyle.Base
+      color={embedColor}
+      thumbnailIsLarge={widthImage !== null}
+      hasVideoWithThumbnail={embed.type.toLowerCase() === 'video' && embed.thumbnail !== null}
+    >
       <EmbedStyle.ContentAndThumbnail thumbnailIsLarge={isThumbnailLarge}>
         <EmbedStyle.Content>
           {embed.provider && (
@@ -81,13 +82,22 @@ function Embed({embed, images}: EmbedProps) {
                 <EmbedStyle.Title>{parseEmbedTitle(embed.title)}</EmbedStyle.Title>
               )
           )}
-          {embed.description && (
+          {embed.type.toLowerCase() === "video"
+            ? (
+              <EmbedVideo
+                url={embed.video.url}
+                proxyUrl={embed.video.proxyUrl}
+                width={embed.video.width}
+                height={embed.video.height}
+                thumbnail={embed.thumbnail.proxyUrl}
+              />
+            ) : (embed.description && (
             <EmbedStyle.Description>
               <LinkMarkdown>
                 {embed.description}
               </LinkMarkdown>
             </EmbedStyle.Description>
-          )}
+          ))}
           {embed.fields && embed.fields.length > 0 && (
             <EmbedStyle.Fields>
               {embed.fields.map(field => (
@@ -108,7 +118,7 @@ function Embed({embed, images}: EmbedProps) {
             </EmbedStyle.Fields>
           )}
         </EmbedStyle.Content>
-        {embed.thumbnail && (
+        {(embed.thumbnail && embed.type.toLowerCase() !== "video") && (
           <EmbedStyle.Image
             src={embed.thumbnail.proxyUrl}
             originalUrl={embed.thumbnail.url}

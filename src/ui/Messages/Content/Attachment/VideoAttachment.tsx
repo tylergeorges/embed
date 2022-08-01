@@ -10,7 +10,11 @@ import Tooltip from "rc-tooltip";
 import useSize from "@ui/Messages/Content/Attachment/useSize";
 
 interface VideoAttachmentProps {
-  attachmentOrEmbed: Message_attachments | Message_embeds;
+  attachmentOrEmbed: Message_attachments | Message_embeds | {
+    url: string;
+    width: number;
+    height: number;
+  };
 }
 
 function VideoAttachment(props: VideoAttachmentProps) {
