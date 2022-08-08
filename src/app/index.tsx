@@ -7,12 +7,12 @@ import { Navigate, Outlet, Route, Routes } from 'react-router-dom'
 
 import { ThemeProvider } from './ThemeProvider'
 import { observer } from 'mobx-react'
-import { store } from '@models'
 import { useCacheLoaded } from '@hooks'
 import Authenticate from "@ui/Modal/screens/Authenticate";
 import {Locale} from "@lib/Locale";
 import { Loading } from '@ui/Overlays/Loading/elements'
 import { Main } from './elements'
+import Notification from "@ui/Overlays/Notification";
 
 const App = observer(() => {
   const cacheLoaded = useCacheLoaded()
@@ -21,25 +21,27 @@ const App = observer(() => {
   return (
     <Locale>
       <ThemeProvider>
-        <Routes>
-          <Route path="/channels/:guild" element={
-            <>
-              <Loading id="loading" />
-              <Authenticate />
-              <Modal />
-              <Notifications />
-              <Main>
-                <Sidebar />
-                <Outlet />
-              </Main>
-            </>
-          }>
-            <Route path=":channel" element={<MessagesView />} />
-            <Route path="" element={<ChooseChannel />} />
-          </Route>
+        <Notification>
+          <Routes>
+            <Route path="/channels/:guild" element={
+              <>
+                <Loading id="loading" />
+                <Authenticate />
+                <Modal />
+                <Notifications />
+                <Main>
+                  <Sidebar />
+                  <Outlet />
+                </Main>
+              </>
+            }>
+              <Route path=":channel" element={<MessagesView />} />
+              <Route path="" element={<ChooseChannel />} />
+            </Route>
 
-          <Route path="*" element={<Navigate replace to="/channels/299881420891881473" />} />
-        </Routes>
+            <Route path="*" element={<Navigate replace to="/channels/299881420891881473" />} />
+          </Routes>
+          </Notification>
       </ThemeProvider>
     </Locale>
   )
