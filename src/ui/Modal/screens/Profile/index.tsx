@@ -64,7 +64,7 @@ const Profile = observer(() => {
           {store.modal.discrim !== '0000' ? <Discrim>#{store.modal.discrim}</Discrim> : null}
           {tags({ author: store.modal, guest: store.modal.guest })}
         </Tag>
-        {generalStore.settings?.directEnabled && (!store.modal.bot || store.modal.guest) && (
+        {generalStore.settings?.directEnabled && (/* !store.modal.bot || */store.modal.guest) && (
           authStore.user ? <>
             <NavLink
               to={`./@${store.modal.id}`}
