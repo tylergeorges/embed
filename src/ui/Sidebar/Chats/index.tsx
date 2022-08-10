@@ -23,32 +23,32 @@ export const ChatSwitcher = observer(() => {
     if (!generalStore.chats) return <LoadingContainer><Loading /></LoadingContainer>
 
     const userId = channel?.startsWith('@') ? channel.substring(1) : null;
-    if (userId && !generalStore.chats.find(r => r.recipient.id === userId)) {
-        client.query<UserTag>({
-            query: USER_TAG,
-            variables: { guild, user: userId }
-        }).then(({ data: { userData }}) => {
-            if (generalStore.chats.find(r => r.recipient.id === userId)) return; // Could've been added to state in the meantime
-
-            generalStore.setChats([
-                {
-                    content: "",
-                    recipient: {
-                        __typename: 'User',
-                        id: userData.id,
-                        name: userData.name,
-                        discrim: userData.discrim,
-                        avatarUrl: userData.avatarUrl,
-                        color: userData.color,
-                        flags: userData.flags,
-                        bot: false,
-                    }
-                },
-
-              ...generalStore.chats,
-            ]);
-        });
-    }
+    // if (userId && !generalStore.chats.find(r => r.recipient.id === userId)) {
+    //     client.query<UserTag>({
+    //         query: USER_TAG,
+    //         variables: { guild, user: userId }
+    //     }).then(({ data: { userData }}) => {
+    //         // if (generalStore.chats.find(r => r.recipient.id === userId)) return; // Could've been added to state in the meantime
+    //
+    //         generalStore.setChats([
+    //             {
+    //                 content: "...",
+    //                 recipient: {
+    //                     __typename: 'User',
+    //                     id: userData.id,
+    //                     name: userData.name,
+    //                     discrim: userData.discrim,
+    //                     avatarUrl: userData.avatarUrl,
+    //                     color: userData.color,
+    //                     flags: userData.flags,
+    //                     bot: false,
+    //                 }
+    //             },
+    //
+    //           ...generalStore.chats,
+    //         ]);
+    //     });
+    // }
 
     return (
         <Root className="channels">
