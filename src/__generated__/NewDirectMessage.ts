@@ -17,6 +17,7 @@ export interface NewDirectMessage_directMessage_author {
   id: string;
   flags: number | null;
   name: string;
+  roles: string[] | null;
 }
 
 export interface NewDirectMessage_directMessage_attachments {
@@ -154,6 +155,7 @@ export interface NewDirectMessage_directMessage_referencedMessage_author {
   id: string;
   flags: number | null;
   name: string;
+  roles: string[] | null;
 }
 
 export interface NewDirectMessage_directMessage_referencedMessage_attachments {

@@ -3,7 +3,7 @@ import {observer} from "mobx-react";
 
 import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton } from "./elements";
 import CHATS from "./Chats.graphql";
-import {generalStore} from "@store";
+import {authStore, generalStore} from "@store";
 import { Chats, UserTag } from "@generated";
 import { Member } from "@ui/Message/elements";
 import { useRouter } from "@hooks";
@@ -52,7 +52,8 @@ export const ChatSwitcher = observer(() => {
 
     return (
         <Root className="channels">
-            <NewChatButton onClick={store.modal.openNewChat}><FaPlus /> New Chat</NewChatButton>
+            {authStore.user && 'provider' in authStore.user && authStore.user.provider === 'Guild' &&
+                <NewChatButton onClick={store.modal.openNewChat}><FaPlus /> New Chat</NewChatButton>}
             {generalStore.chats.map((chat) => (
                 <NavLink
                     key={chat.recipient.id}

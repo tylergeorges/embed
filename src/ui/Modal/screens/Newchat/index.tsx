@@ -1,4 +1,4 @@
-import { Chats } from '@generated'
+import { DirectUsers } from '@generated'
 import { useRouter } from '@hooks'
 import { store } from '@models'
 import { Member } from '@ui/Message/elements'
@@ -6,35 +6,46 @@ import { Loading } from '@ui/Overlays'
 import { Avatar, Details } from '@ui/Sidebar/Chats/elements'
 import { useQuery } from 'react-apollo-hooks'
 import { NavLink } from 'react-router-dom'
-import CHATS from '../../../Sidebar/Chats/Chats.graphql'
+import DIRECT_USERS from './DirectUsers.graphql'
 import { Close, List, Root, Title, Top, User, UserWrapper } from './elements'
 
 const NewChat = () => {
   const { guild } = useRouter()
 
-  // need to change this to directUsers; for now using Chats for sample data
-  const { data: {getChats: chats}, loading } = useQuery<Chats>(CHATS, { variables: { guild }, fetchPolicy: 'network-only' })
-  
+  const { data: { directUsers }, loading, error } = useQuery<DirectUsers>(DIRECT_USERS, { fetchPolicy: 'network-only' })
+
   if (loading) return <Loading />;
+
+  if (!directUsers) return (
+      <Root>
+        <Top>
+          <Title>Error Fetching Users</Title>
+          <Close onClick={store.modal.close} />
+        </Top>
+        <div style={{ margin: '1rem' }}>
+          {error.message}
+        </div>
+      </Root>
+    )
 
   return (
     <Root>
       <Top>
         <Title>New Chat</Title>
-        <Close onClick={store.modal.close} /> 
+        <Close onClick={store.modal.close} />
       </Top>
       <List>
-        {chats.map((chat) => (
+        {directUsers.map(user => (
           <UserWrapper>
             <NavLink
-              key={chat.recipient.id}
-              to={`/channels/${guild}/@${chat.recipient.id}`}
+              key={user.id}
+              to={`/channels/${guild}/@${user.id}`}
               onClick={store.modal.close}
               children={
                 <User>
-                    <Avatar width={32} height={32} src={chat.recipient.avatarUrl} />
+                    <Avatar width={32} height={32} src={user.avatarUrl} />
                     <Details>
-                        <Member color={chat.recipient.color}>{chat.recipient.name}{chat.recipient.discrim !== '0000' ? `#${chat.recipient.discrim}` : ''}</Member>
+                        <Member color={user.color}>{user.name}{user.discrim !== '0000' ? `#${user.discrim}` : ''}</Member>
                     </Details>
                 </User>
               }

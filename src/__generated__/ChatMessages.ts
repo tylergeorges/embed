@@ -17,6 +17,7 @@ export interface ChatMessages_getMessagesForChat_author {
   id: string;
   flags: number | null;
   name: string;
+  roles: string[] | null;
   color: number;
 }
 
@@ -155,6 +156,7 @@ export interface ChatMessages_getMessagesForChat_referencedMessage_author {
   id: string;
   flags: number | null;
   name: string;
+  roles: string[] | null;
   color: number;
 }
 

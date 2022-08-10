@@ -1,0 +1,9 @@
+query DirectUsers {
+  directUsers {
+    id
+    name
+    discrim
+    avatarUrl
+    color
+  }
+}
