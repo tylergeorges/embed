@@ -24,15 +24,15 @@ interface GuestUser {
   provider: 'Guest'
   username: string;
   blockedUsers?: string[];
-  guest: true;
 }
 
 interface GuildUser {
-  id: string
+  _id: string
   provider: 'Guild'
   username: string
   avatarUrl: string | null
-  blockedUsers?: string[]}
+  blockedUsers?: string[]
+}
 
 type User = DiscordUser | GuestUser | GuildUser;
 

@@ -41,6 +41,8 @@ const Profile = observer(() => {
 
   const isBlocked = authStore.blockedUsers.includes(store.modal.id);
 
+  const userID = authStore.user && ('id' in authStore.user && authStore.user.id || '_id' in authStore.user && authStore.user._id)
+
   return (
       <Root x={store.modal.x} y={store.modal.y}>
         <Top>
@@ -64,7 +66,7 @@ const Profile = observer(() => {
           {store.modal.discrim !== '0000' ? <Discrim>#{store.modal.discrim}</Discrim> : null}
           {tags({ author: store.modal, guest: store.modal.guest })}
         </Tag>
-        {generalStore.settings?.directEnabled && (/* !store.modal.bot || */store.modal.guest) && (
+        {generalStore.settings?.directEnabled && (/* !store.modal.bot || */store.modal.guest) && userID !== store.modal.id && (
           authStore.user ? <>
             <NavLink
               to={`./@${store.modal.id}`}
