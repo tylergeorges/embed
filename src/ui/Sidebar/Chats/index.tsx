@@ -1,4 +1,4 @@
-import {NavLink} from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react";
 
 import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton } from "./elements";
@@ -19,6 +19,7 @@ export const ChatSwitcher = observer(() => {
             .then(({ data: { getChats: chats } }) => generalStore.setChats(chats))
 
     const { guild, channel } = useRouter();
+    const navigate = useNavigate();
 
     if (!generalStore.chats) return <LoadingContainer><Loading /></LoadingContainer>
 
@@ -28,22 +29,17 @@ export const ChatSwitcher = observer(() => {
             query: USER_TAG,
             variables: { guild, user: userId }
         }).then(({ data: { userData }}) => {
-            if (generalStore.chats.find(r => r.recipient.id === userId)) return; // Could've been added to state in the meantime
             if (!userData) return
+
+            // If an external ID was passed in, change url to the WidgetBot id
+            if (userId !== userData.id) navigate('@' + userData.id, { replace: true });
+
+            if (generalStore.chats.find(r => r.recipient.id === userData.id)) return
 
             generalStore.setChats([
                 {
                     content: "",
-                    recipient: {
-                        __typename: 'User',
-                        id: userData.id,
-                        name: userData.name,
-                        discrim: userData.discrim,
-                        avatarUrl: userData.avatarUrl,
-                        color: userData.color,
-                        flags: userData.flags,
-                        bot: false,
-                    }
+                    recipient: { ...userData, bot: false }
                 },
 
               ...generalStore.chats,
