@@ -11,6 +11,8 @@ import { authStore, generalStore } from "@store";
 import { useNavigate, useParams } from 'react-router-dom'
 import { Views } from '@ui/Sidebar'
 
+const queryParams = new URLSearchParams(location.search)
+
 const MessagesView = observer(() => {
   const { guild, channel, user } = useParams()
 
@@ -20,11 +22,14 @@ const MessagesView = observer(() => {
 
   const navigate = useNavigate()
   useEffect(() => {
-    if (user && !authStore.user) {
+    if (user && !authStore.user && !queryParams.has('username') && !queryParams.has('token')) {
       navigate('..') // Close DM if not logged in
       generalStore.setSidebarView(Views.Channels)
     }
   }, [user, authStore.user])
+
+  // for DMs, if dynamic usernames or guild auth are being used, we might need to wait until the user is logged in
+  if (user && !authStore.user && (queryParams.has('username') || queryParams.has('token'))) return null
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
