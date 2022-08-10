@@ -74,7 +74,7 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
                     )}
             </Stretch>
             {/* {(!thread || generalStore.threadFullscreen) && <Pins />} Thread pins are disabled */}
-            {thread || <Pins />}
+            {!thread && !chatUser && <Pins />}
             <SingleChannelAuthWrapper>
                 <SingleChannelAuth />
             </SingleChannelAuthWrapper>
