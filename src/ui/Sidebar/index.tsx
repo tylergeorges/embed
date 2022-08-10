@@ -19,7 +19,7 @@ const Sidebar = observer(() => {
 
     useEffect(() => {
         generalStore.setSidebarView(channel?.startsWith('@') && authStore.user ? Views.Chats : Views.Channels)
-    }, [])
+    }, [!!authStore.user])
 
     return <Root visible={store.sidebar.isOpen} className="sidebar">
         <Header />

@@ -2,13 +2,16 @@ import styled, { css } from '@lib/emotion'
 import { ScrollOverlay } from '@ui/shared/scrollable'
 import Button from "@ui/shared/button";
 
-export const Root = styled(ScrollOverlay)`
+interface Props {
+  loggedIn: boolean
+}
+export const Root = styled(ScrollOverlay)<Props>`
   & > div:first-child {
     & > *:last-child {
       margin-bottom: 20px;
     }
 
-    ${({ theme }) => theme.directEnabled && theme.loggedIn || css`
+    ${({ theme, loggedIn }) => theme.directEnabled && loggedIn || css`
       padding-top: 20px;
     `}
   }

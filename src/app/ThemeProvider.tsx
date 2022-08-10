@@ -68,7 +68,6 @@ export const ThemeProvider = ({ children }) => {
     guestMode: settings?.guestMode || false,
     singleChannel: !!settings?.singleChannel || settings?.hideSidebar || false,
     directEnabled: settings?.directEnabled || false,
-    loggedIn: !!authStore.user,
     colors: {
       ...theme.colors,
       _primary: Color(theme.colors.primary),

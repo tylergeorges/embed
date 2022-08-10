@@ -7,7 +7,7 @@ import {Root} from "./elements";
 import Category from "./Category";
 import categorise from "./categorise";
 import CHANNELS from "./Channels.graphql";
-import {generalStore} from "@store";
+import {authStore, generalStore} from "@store";
 import { useRouter } from "@hooks";
 
 export const ITEM_ID = 'channel';
@@ -16,7 +16,7 @@ export const ChannelSwitcher = observer(() => {
 	const { guild, channel } = useRouter()
 
 	return (
-		<Root className="channels">
+		<Root className="channels" loggedIn={!!authStore.user} >
 			{ // if there are no channels in generalStore, do a Channels query to avoid empty channel list
 			(generalStore.channels.length === 0) ? (
 			<Query<Channels, ChannelsVariables>

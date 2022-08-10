@@ -28,6 +28,7 @@ export class GeneralStore {
     autorun(() => {
       if (this.needsUpdate) {
         this.fetchGuild?.();
+        this.setChats(null);
         this.needsUpdate = false;
       }
     })
