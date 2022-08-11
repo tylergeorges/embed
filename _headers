@@ -1,0 +1,5 @@
+# This file is for Cloudflare Pages
+# Headers should also be set in .docker/nginx.conf
+
+/*
+  Cross-Origin-Resource-Policy: cross-origin
