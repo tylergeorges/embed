@@ -68,13 +68,13 @@ const Profile = observer(() => {
         </Tag>
         {generalStore.settings?.directEnabled && (/* !store.modal.bot || */store.modal.guest) && userID !== store.modal.id && (
           authStore.user ? <>
-            <NavLink
+            {!isBlocked && <NavLink
               to={`./@${store.modal.id}`}
               children={<ProfileButton variant="large" onClick={() => {
                 store.modal.close()
                 generalStore.setSidebarView(Views.Chats)
               }}>Message @{store.modal.username}</ProfileButton>}
-            />
+            />}
 
             <ProfileButton id="profile-block-button" variant="large" color="#d83c3e" onClick={() => useBlockUser(!isBlocked)}>
               {isBlocked ? 'Unblock' : 'Block'} @{store.modal.username}
