@@ -22,9 +22,9 @@ const NewChat = () => {
           <Title>Error Fetching Users</Title>
           <Close onClick={store.modal.close} />
         </Top>
-        <div style={{ margin: '1rem' }}>
+        {error && <div style={{ margin: '1rem' }}>
           {error.message}
-        </div>
+        </div>}
       </Root>
     )
 
@@ -36,7 +36,7 @@ const NewChat = () => {
       </Top>
       <List>
         {directUsers.map(user => (
-          <UserWrapper>
+          <UserWrapper key={user.id}>
             <NavLink
               key={user.id}
               to={`/channels/${guild}/@${user.id}`}
