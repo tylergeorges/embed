@@ -68,6 +68,23 @@ export const CrateSlowmodeContainer = styled.div`
   background-color: rgba(0, 0, 0, 0.1);
 `
 
+
 export const PushDown = styled.div`
   margin: auto 0 0;
 `
+
+export const Blocked = styled.div`
+  background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
+  border-radius: 10px;
+  padding: 0 12px;
+  display: flex;
+  justify-content: space-between;
+`;
+
+export const UnblockButton = styled.button`
+  background: ${({ theme }) => theme.colors._background.string()};
+  padding: 4px 12px;
+  margin: 8px 0;
+  border-radius: 10px;
+  font-size: medium;
+`;
