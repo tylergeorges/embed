@@ -8,6 +8,7 @@ export const Root = styled(Modal.Content)`
   user-select: none;
   width: 250px;
   max-width: 95%;
+  max-height: 95%;
   top: 50%;
   left: 50%;
   -webkit-transform: translate(-50%,-50%);
@@ -37,6 +38,16 @@ export const List = styled.div`
   flex-direction: column;
   gap: 2.5px;
   margin-bottom: 15px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
+    border-radius: 5px;
+  }
 `
 
 export const UserWrapper = styled.div`

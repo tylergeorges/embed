@@ -29,12 +29,12 @@ const NewChat = () => {
     )
 
   return (
-    <Root>
-      <Top>
+    <Root className="new-chat">
+      <Top className="top">
         <Title>New Chat</Title>
         <Close onClick={store.modal.close} />
       </Top>
-      <List>
+      <List className="list">
         {directUsers.map(user => (
           <UserWrapper key={user.id}>
             <NavLink
