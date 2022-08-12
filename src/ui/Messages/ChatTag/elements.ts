@@ -8,7 +8,8 @@ export const VerifiedBot = styled('svg')`
 `;
 
 export const ChatTagBase = styled('span')`
-  margin-left: 4px;
+  margin-left: 6px;
+  line-height: normal;
   font-size: 10px;
   text-transform: uppercase;
   height: fit-content;

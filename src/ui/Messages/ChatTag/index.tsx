@@ -33,7 +33,7 @@ function Tag({userFlags, isGuest}: TagProps) {
   return <>{Locale.translate('tag.bot')}</>;
 }
 
-function ChatTag({userFlags, isGuest}: TagProps) {
+function ChatTag({ userFlags, isGuest }: TagProps) {
   return (
     <ChatTagBase>
       <Tag userFlags={userFlags} isGuest={isGuest} />
