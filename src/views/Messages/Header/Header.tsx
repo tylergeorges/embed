@@ -1,28 +1,26 @@
 import Tooltip from 'rc-tooltip'
-import CHANNEL from './Channel.graphql'
 import {
+  Emoji,
+  Join,
   Name,
   NewsName,
   NSFWName,
   NSFWNewsName,
-  Emoji,
-  Topic,
-  Join,
-  Stretch,
-  SingleChannelAuthWrapper,
   RulesName,
-  ThreadName, Fullscreen, UserName
+  Fullscreen,
+  UserName,
+  SingleChannelAuthWrapper,
+  Stretch,
+  ThreadName,
+  Topic
 } from '@ui/Header'
 
-import { Root } from './elements'
-import { Locale } from "@lib/Locale"
-import { store } from '@models'
-import { useQuery } from 'react-apollo-hooks'
-import GET_INFO from "@ui/Sidebar/Header/GuildInfo.graphql";
+import {Root} from './elements'
+import {Locale} from "@lib/Locale"
+import {store} from '@models'
 import {authStore, AuthStore} from "@store/auth";
-import {Auth} from "@ui/Sidebar/Panel/elements";
 import {observer} from "mobx-react";
-import { SingleChannelAuth } from '@ui/Sidebar/Panel'
+import {SingleChannelAuth} from '@ui/Sidebar/Panel'
 import {generalStore} from "@store";
 import Pins from './Pins'
 import { FetchUser } from './FetchUser'
@@ -68,6 +66,7 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
                         <Topic
                             onClick={() => store.modal.openTopic(cData?.topic, cData.name)}
                             className="topic"
+                            codeBlocksInline={false}
                         >
                             {cData?.topic}
                         </Topic>

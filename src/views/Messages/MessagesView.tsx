@@ -7,6 +7,11 @@ import { Messages } from './Messages'
 import { Loading } from '@ui/Overlays'
 import { observer } from "mobx-react";
 import { useEffect } from "react";
+import {generalStore, settingsStore} from "@store";
+import { useRouter } from '@hooks'
+import Messages2ElectricBoogaloo
+  from "@views/Messages/Messages2ElectricBoogaloo";
+import {Messages} from "@views/Messages/Messages";
 import { authStore, generalStore } from "@store";
 import { useNavigate, useParams } from 'react-router-dom'
 import { Views } from '@ui/Sidebar'
@@ -34,13 +39,17 @@ const MessagesView = observer(() => {
   return (
     <div style={{ display: 'flex', height: '100%' }}>
       {!(generalStore.activeThread && generalStore.threadFullscreen) && (
-        <Wrapper hideOnMobile={!!generalStore.activeThread}>
+        <Wrapper hideOnMobile={Boolean(generalStore.activeThread)}>
           <React.Suspense fallback={<Fallback />}>
             <Header channel={channel} chatUser={user}/>
           </React.Suspense>
 
           <React.Suspense fallback={<Loading />}>
-            <Messages guild={guild} channel={channel} chatUser={user} />
+            {settingsStore.messageViewRewriteEnabled ? (
+              <Messages2ElectricBoogaloo guild={guild} channel={channel} chatUser={user} />
+            ) : (
+              <Messages guild={guild} channel={channel} chatUser={user} />
+            )}
           </React.Suspense>
           {user ? <DirectChat /> : <Chat />}
         </Wrapper>
@@ -54,7 +63,11 @@ const MessagesView = observer(() => {
           </React.Suspense>
 
           <React.Suspense fallback={<Loading />}>
-            <Messages guild={guild} channel={channel} chatUser={user} thread />
+            {settingsStore.messageViewRewriteEnabled ? (
+              <Messages2ElectricBoogaloo guild={guild} channel={channel} thread />
+            ) : (
+              <Messages guild={guild} channel={channel} thread />
+            )}
           </React.Suspense>
           <Chat thread />
         </Wrapper>

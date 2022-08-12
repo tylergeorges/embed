@@ -1,15 +1,15 @@
 import { Theme as ThemeContext } from '@lib/emotion'
 import Color from 'color'
 import { ThemeProvider as Provider } from 'emotion-theming'
-import * as _ from 'lodash'
 import { GlobalStyles } from './elements'
 import GET_SETTINGS from './Settings.graphql'
 
 import { Settings, Settings_settings_theme } from '@generated'
 import * as Constants from '@constants'
 import { useQuery } from 'react-apollo-hooks'
-import {useCacheLoaded, useRouter} from '@hooks'
+import {useRouter} from '@hooks'
 import {generalStore, authStore} from '@store';
+import {Loading} from "@ui/Overlays";
 import { useEffect } from 'react'
 
 const queryParams = new URLSearchParams(location.search)
@@ -17,6 +17,8 @@ const queryParams = new URLSearchParams(location.search)
 export const ThemeProvider = ({ children }) => {
   const guild = useRouter()?.guild ?? '299881420891881473'
   const { data: {settings} } = useQuery<Settings>(GET_SETTINGS, { variables: { guild }, fetchPolicy: 'network-only' })
+
+  if (!settings) return <Loading />;
 
   let theme: Settings_settings_theme = {
     __typename: 'ThemeSettings',

@@ -23,7 +23,7 @@ function getAvatarProperty(user: User, avatarSize: AvatarSize = 80): string | nu
   return `https://cdn.discordapp.com/avatars/${user._id}/${user.avatar}.webp?size=${avatarSize}`;
 }
 
-interface GetAvatarOptions {
+export interface GetAvatarOptions {
   animated?: boolean;
   size?: AvatarSize;
 }

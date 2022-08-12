@@ -9,7 +9,6 @@ export const Root = styled(Modal.Content)`
   max-width: 95%;
   top: 50%;
   left: 50%;
-  -webkit-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
   overflow: visible;
 `
@@ -30,3 +29,10 @@ export const Title = styled.h1`
 export const Close = styled(Modal.Close)`
   margin: 15px;
 `
+
+export const ExperimentsButton = styled.button`
+  background-color: ${props => props.theme.colors.accent};
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: ${props => props.theme.colors.primary};
+`;
