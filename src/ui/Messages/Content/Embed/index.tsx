@@ -1,6 +1,6 @@
-import {Message_embeds} from "@generated";
+import {Embed_image, Message_embeds} from "@generated";
 import GifVEmbed from "@ui/Messages/Content/Embed/GifVEmbed";
-  import ImageEmbed from "@ui/Messages/Content/Embed/ImageEmbed";
+import ImageEmbed from "@ui/Messages/Content/Embed/ImageEmbed";
 import VideoAttachment from "@ui/Messages/Content/Attachment/VideoAttachment";
 import {
   EmbedStyle
@@ -8,12 +8,12 @@ import {
 import numberToRgb from "@utils/numberToRgb";
 import moment from "moment";
 import {LinkMarkdown, parseEmbedTitle} from "@ui/shared/markdown/render";
-import YouTubeEmbed from "@ui/Messages/Content/Embed/YouTubeEmbed";
 import useSize from "@ui/Messages/Content/Embed/useSize";
+import EmbedVideo from "@ui/Messages/Content/Embed/EmbedVideo";
 
 export interface EmbedProps {
   embed: Message_embeds;
-  images: string[] | undefined;
+  images: Embed_image[] | undefined;
 }
 
 function Embed({embed, images}: EmbedProps) {
@@ -30,9 +30,6 @@ function Embed({embed, images}: EmbedProps) {
     ? numberToRgb(embed.color)
     : undefined;
 
-  if (embed.video?.url?.match(/^https?:\/\/(www\.)?youtube\.com/))
-    return <YouTubeEmbed embed={embed} />;
-
   const { width: widthImage, height: heightImage } = useSize(
     embed.type,
     embed.image,
@@ -46,7 +43,11 @@ function Embed({embed, images}: EmbedProps) {
   );
 
   return (
-    <EmbedStyle.Base color={embedColor} thumbnailIsLarge={widthImage !== null}>
+    <EmbedStyle.Base
+      color={embedColor}
+      thumbnailIsLarge={widthImage !== null}
+      hasVideoWithThumbnail={embed.type.toLowerCase() === 'video' && embed.thumbnail !== null}
+    >
       <EmbedStyle.ContentAndThumbnail thumbnailIsLarge={isThumbnailLarge}>
         <EmbedStyle.Content>
           {embed.provider && (
@@ -55,9 +56,9 @@ function Embed({embed, images}: EmbedProps) {
             </EmbedStyle.Provider>
           )}
           {embed.author && (
-            <EmbedStyle.Author urlPresent={embed.author.url !== null}>
-              {embed.author.icon && (
-                <EmbedStyle.AuthorIcon src={embed.author.icon} />
+            <EmbedStyle.Author>
+              {embed.author.proxyIconUrl && (
+                <EmbedStyle.AuthorIcon src={embed.author.proxyIconUrl} />
               )}
               <EmbedStyle.AuthorName>
                 {embed.author.url
@@ -81,13 +82,22 @@ function Embed({embed, images}: EmbedProps) {
                 <EmbedStyle.Title>{parseEmbedTitle(embed.title)}</EmbedStyle.Title>
               )
           )}
-          {embed.description && (
+          {embed.type.toLowerCase() === "video"
+            ? (
+              <EmbedVideo
+                url={embed.video.url}
+                proxyUrl={embed.video.proxyUrl}
+                width={embed.video.width}
+                height={embed.video.height}
+                thumbnail={embed.thumbnail.proxyUrl}
+              />
+            ) : (embed.description && (
             <EmbedStyle.Description>
               <LinkMarkdown>
                 {embed.description}
               </LinkMarkdown>
             </EmbedStyle.Description>
-          )}
+          ))}
           {embed.fields && embed.fields.length > 0 && (
             <EmbedStyle.Fields>
               {embed.fields.map(field => (
@@ -108,9 +118,10 @@ function Embed({embed, images}: EmbedProps) {
             </EmbedStyle.Fields>
           )}
         </EmbedStyle.Content>
-        {embed.thumbnail && (
+        {(embed.thumbnail && embed.type.toLowerCase() !== "video") && (
           <EmbedStyle.Image
-            src={embed.thumbnail.url}
+            src={embed.thumbnail.proxyUrl}
+            originalUrl={embed.thumbnail.url}
             width={widthThumbnail}
             height={heightThumbnail}
           />
@@ -118,7 +129,8 @@ function Embed({embed, images}: EmbedProps) {
       </EmbedStyle.ContentAndThumbnail>
       {((images === undefined || images?.length === 0) && embed.image) && (
         <EmbedStyle.Image
-          src={embed.image.url}
+          src={embed.image.proxyUrl}
+          originalUrl={embed.image.url}
           width={widthImage}
           height={heightImage}
           large={true}
@@ -127,10 +139,11 @@ function Embed({embed, images}: EmbedProps) {
       {images?.length > 0 && (
         <EmbedStyle.Images amount={images.length}>
           {images.map(image => (
-            <EmbedStyle.MultiImageImageContainer key={image}>
+            <EmbedStyle.MultiImageImageContainer key={image.url}>
               <EmbedStyle.Image
                 fillMaxSize={true}
-                src={image}
+                src={image.proxyUrl}
+                originalUrl={image.url}
                 large={true}
                 withMargin={false}
               />
@@ -141,8 +154,8 @@ function Embed({embed, images}: EmbedProps) {
 
       {(embed.footer || embed.timestamp) && (
         <EmbedStyle.Footer>
-          {embed.footer?.url && (
-            <EmbedStyle.FooterIcon src={embed.footer.url} />
+          {embed.footer?.proxyIconUrl && (
+            <EmbedStyle.FooterIcon src={embed.footer.proxyIconUrl} />
           )}
           {embed.footer?.text}
           {embed.timestamp && (

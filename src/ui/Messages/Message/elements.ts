@@ -267,6 +267,7 @@ export const ContentBase = styled.span`
               overflow: hidden;
               display: flex;
               max-width: calc(100% - 72px);
+              align-items: center;
 
               &:hover {
                 opacity: 1;
@@ -307,6 +308,21 @@ export const MiniUserAvatarBase = styled('img')`
   width: 16px;
   height: 16px;
 `;
+
+export const UnknownReplyIcon = styled.div`
+  background-color: #202225;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  align-items: center;
+  justify-content: center;
+  display: inline-flex;
+  margin-right: .25rem;
+`
+
+export const UnknownReplyText = styled(SlashCommandBase.Base)`
+  font-style: italic;
+`
 
 interface MiniUserNameBaseProps {
   color: string;

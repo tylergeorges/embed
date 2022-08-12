@@ -3,6 +3,8 @@ import Markdown from "@ui/shared/markdown/render";
 import {
   Message as MessageData,
   Message_attachments,
+  Message_embeds,
+  Message_interaction,
   Message_referencedMessage,
   Message_stickers
 } from "@generated";
@@ -19,8 +21,10 @@ import Attachment from "@ui/Messages/Content/Attachment";
 import StickerIcon from "@images/discordAssets/sticker-icon.svg";
 import Danger from "@images/discordAssets/danger.svg";
 import AttachmentIcon from "@images/discordAssets/attachment-icon.svg";
+import CommandIcon from "@images/discordAssets/command-icon.svg";
 import {
   ContentContainerBase, ContentMessageTooltipBase,
+  ReplyAccessoryText,
   ReplyIconBase
 } from "@ui/Messages/Content/elements";
 import Sticker from "@ui/Messages/Content/Sticker";
@@ -44,16 +48,19 @@ const Edited = memo((props: EditedProps) => {
   );
 });
 
+
 interface ReplyIconProps {
-  attachments: Message_attachments[];
-  stickers: Message_stickers[];
+  message: ContentProps["message"]
 }
 
-function ReplyIcon(props: ReplyIconProps) {
-  if (props.stickers.length > 0)
+function ReplyIcon({ message }: ReplyIconProps) {
+  if (message.interaction)
+    return <ReplyIconBase src={CommandIcon} alt="command" />;
+
+  if (message.stickers.length > 0)
     return <ReplyIconBase src={StickerIcon} alt="sticker" />;
 
-  if (props.attachments.length > 0)
+  if (message.attachments.length > 0 || message.embeds.length > 0)
     return <ReplyIconBase src={AttachmentIcon} alt="attachment" />;
 
   return null;
@@ -111,11 +118,14 @@ function Content(props: ContentProps) {
     if (!props.isReplyContent)
       return null;
 
-    if (props.message.stickers.length > 0)
-      return "Message with sticker(s)";
+    if (props.message.interaction)
+      return "Click to see command"
 
-    if (props.message.attachments.length > 0)
-      return "Message with attachment(s)";
+    if (props.message.stickers.length > 0)
+      return "Click to see sticker";
+
+    if (props.message.attachments.length > 0 || props.message.embeds.length > 0)
+      return "Click to see attachment";
 
     return null;
   }, [props.message.attachments, props.message.stickers, props.isReplyContent]);
@@ -127,7 +137,7 @@ function Content(props: ContentProps) {
     if (!props.message.embeds.every(e => props.message.embeds[0].url === e.url))
       return [];
 
-    const images = props.message.embeds.reduce((acc, embed) => [...acc, embed.image?.url], [])
+    const images = props.message.embeds.reduce((acc, embed) => [...acc, embed.image], [])
       .filter(i => i !== null && i !== undefined);
 
     if (images.length === 0)
@@ -174,12 +184,12 @@ function Content(props: ContentProps) {
                   {props.message.editedAt && <Edited editedAt={props.message.editedAt} />}
                 </>
               )
-              : dominantAccessoryText
+              : <ReplyAccessoryText>{dominantAccessoryText}</ReplyAccessoryText>
             }
           </ContentContainerBase>
         </ContentCore>
         {props.isReplyContent && (
-          <ReplyIcon stickers={props.message.stickers} attachments={props.message.attachments} />
+          <ReplyIcon message={props.message} />
         )}
       </ContentBase>
       {!props.isReplyContent && (

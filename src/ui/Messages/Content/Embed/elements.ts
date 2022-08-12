@@ -1,5 +1,6 @@
 import styled, {css} from "react-emotion";
 import ExpandableImage from "@ui/shared/ExpandableImage";
+import play from "../../../../app/res/images/discordAssets/play.svg";
 
 export const MediaEmbedBase = css`
   border-radius: 3px;
@@ -10,6 +11,7 @@ export namespace EmbedStyle {
   interface BaseProps {
     color: string | undefined;
     thumbnailIsLarge: boolean;
+    hasVideoWithThumbnail: boolean;
   }
 
   export const Base = styled.article<BaseProps>`
@@ -23,7 +25,7 @@ export namespace EmbedStyle {
     gap: 8px;
     max-width: 520px;
 
-    ${props => props.thumbnailIsLarge && css`
+    ${props => (props.thumbnailIsLarge || props.hasVideoWithThumbnail) && css`
       max-width: 432px;
     `}
   `;
@@ -112,11 +114,7 @@ export namespace EmbedStyle {
     `}
   `;
 
-  interface AuthorProps {
-    urlPresent: boolean;
-  }
-
-  export const Author = styled.div<AuthorProps>`
+  export const Author = styled.div`
     font-size: 14px;
     font-weight: 600;
     display: inline-grid;
@@ -124,13 +122,6 @@ export namespace EmbedStyle {
     align-items: center;
     gap: 8px;
     color: ${props => props.theme.colors._primary.string()};
-    
-    ${props => props.urlPresent && css`
-      &:hover {
-        cursor: pointer;
-        text-decoration: underline;
-      }
-    `}
   `;
 
   export const AuthorIcon = styled.img`
@@ -223,6 +214,32 @@ export namespace EmbedStyle {
   `;
 }
 
-export const YouTubeIframe = styled.iframe`
+export const VideoIframe = styled.iframe`
   border-radius: 3px;
+  border: none;
+`;
+
+export const VideoThumbnail = styled.div<{src: string}>`
+  border-radius: 3px;
+  background-image: url(${props => props.src});
+  background-size: cover;
+  position: relative;
+  cursor: pointer;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    background-position: center;
+    background-size: 12px 12px;
+    background-repeat: no-repeat;
+    border-radius: 100%;
+    pointer-events: none;
+    background-image: url(${play});
+  }
 `;

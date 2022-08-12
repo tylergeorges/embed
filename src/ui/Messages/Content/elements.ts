@@ -24,6 +24,10 @@ export const ContentContainerBase = styled.div`
   }
 `;
 
+export const ReplyAccessoryText = styled.span`
+  font-style: italic;
+`
+
 export const ContentMessageTooltipBase = styled.div`
   max-width: 60vw;
 `;

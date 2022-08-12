@@ -4,16 +4,18 @@ export const Modal = types
   .model('Modal', {
     type: types.maybeNull(types.string),
     data: types.maybeNull(types.string),
+    originalUrl: types.maybeNull(types.string),
     channel: types.maybeNull(types.string),
     thread: false,
     content: types.maybeNull(types.string),
     isOpen: false
   })
   .actions(self => ({
-    openImage(url: string) {
+    openImage(url: string, originalUrl?: string) {
       self.isOpen = true
       self.type = 'image'
       self.data = url
+      self.originalUrl = originalUrl
     },
     openSettings() {
       self.isOpen = true
