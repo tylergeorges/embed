@@ -1,7 +1,6 @@
 import styled, { css } from '@lib/emotion'
 import { ScrollOverlay } from '@ui/shared/scrollable'
 import Button from "@ui/shared/button";
-import { Member } from '@ui/Message/elements';
 
 export const Root = styled(ScrollOverlay)`
     & > div:nth-child(1) {

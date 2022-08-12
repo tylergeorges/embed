@@ -7,12 +7,9 @@ import { Messages } from './Messages'
 import { Loading } from '@ui/Overlays'
 import { observer } from "mobx-react";
 import { useEffect } from "react";
-import {generalStore, settingsStore} from "@store";
-import { useRouter } from '@hooks'
+import {authStore, generalStore, settingsStore} from "@store";
 import Messages2ElectricBoogaloo
   from "@views/Messages/Messages2ElectricBoogaloo";
-import {Messages} from "@views/Messages/Messages";
-import { authStore, generalStore } from "@store";
 import { useNavigate, useParams } from 'react-router-dom'
 import { Views } from '@ui/Sidebar'
 

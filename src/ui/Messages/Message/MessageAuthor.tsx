@@ -14,6 +14,7 @@ import ChatTag from "@ui/Messages/ChatTag";
 import {generalStore} from "@store";
 import RoleIcon from "@ui/Messages/Message/RoleIcon";
 import getAvatar from "@utils/getAvatar";
+import { store } from "@models";
 
 interface MessageAuthorProps {
   author: Message_author;
@@ -65,12 +66,30 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
     // Gets the dominant role icon
     const dominantRoleIconRole = this.getDominantRoleIconRole(this.props.author.roles);
 
+    let nameRef: HTMLDivElement;
+
+    const username = <UsernameBase
+      color={color}
+      innerRef={ref => nameRef = ref}
+      onClick={() => store.modal.openProfile(
+        this.props.author.id,
+        this.props.author.name,
+        this.props.author.discrim,
+        this.props.author.avatarUrl,
+        this.props.author.bot,
+        this.props.author.flags,
+        this.props.isGuest,
+        nameRef.getBoundingClientRect().right + 10,
+        Math.min(nameRef.getBoundingClientRect().y, innerHeight - 250)
+      )}
+    >
+      {this.props.author.name}
+    </UsernameBase>
+
     if (this.props.onlyShowUsername)
       return (
         <AuthorBase>
-          <UsernameBase color={color}>
-            {this.props.author.name}
-          </UsernameBase>
+          {username}
         </AuthorBase>
       );
 
@@ -80,9 +99,7 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
           src={getAvatar(this.props.author, {animated: this.props.avatarAnimated ?? false})}
           draggable={false}
         />
-        <UsernameBase color={color}>
-          {this.props.author.name}
-        </UsernameBase>
+        {username}
         {dominantRoleIconRole !== null && (
           <RoleIcon role={dominantRoleIconRole} />
         )}

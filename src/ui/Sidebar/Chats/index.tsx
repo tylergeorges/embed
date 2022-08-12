@@ -5,7 +5,7 @@ import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton }
 import CHATS from "./Chats.graphql";
 import {authStore, generalStore} from "@store";
 import { Chats, UserTag } from "@generated";
-import { Member } from "@ui/Message/elements";
+import { Member } from "@ui/Messages/elements";
 import { useRouter } from "@hooks";
 import { Loading } from "@ui/Overlays/Loading/elements";
 import client from "@lib/apollo";

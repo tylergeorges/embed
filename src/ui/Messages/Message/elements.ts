@@ -505,6 +505,7 @@ export const UsernameBase = memo(styled.span<UsernameBaseProps>`
   display: inline;
   vertical-align: baseline;
   white-space: nowrap;
+  cursor: pointer;
 `);
 
 export const AvatarBase = styled.img`
@@ -537,4 +538,4 @@ export const UnicodeEmojiBase = styled(Twemoji)`
   margin-left: .25rem;
   width: 20px;
   height: 20px;
-`
+`;

@@ -1,7 +1,7 @@
 import { DirectUsers } from '@generated'
 import { useRouter } from '@hooks'
 import { store } from '@models'
-import { Member } from '@ui/Message/elements'
+import { Member } from '@ui/Messages/elements'
 import { Loading } from '@ui/Overlays'
 import { Avatar, Details } from '@ui/Sidebar/Chats/elements'
 import { useQuery } from 'react-apollo-hooks'

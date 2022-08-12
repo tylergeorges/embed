@@ -9,25 +9,28 @@ import {useCallback, useMemo, useState} from "react";
 import {MessagesWrapper, ScrollerSpacer} from "@views/Messages/elements";
 import { Virtuoso } from "react-virtuoso";
 import MessageGroup from "@ui/Messages";
+import { useChatMessages } from "../../hooks/useMessages/useChatMessages";
 
 const maxMessagesToLoad = 30;
 
 interface MessagesProps {
   guild: string;
-  channel: string;
+  channel?: string;
+  chatUser?: string;
   thread?: boolean;
 }
 
-function Messages2ElectricBoogaloo({ guild, channel, thread = false }: MessagesProps) {
-  const { messages, error, ready, stale, fetchMore } = useMessages(
-    channel,
-    guild,
-    thread ? generalStore.activeThread.id : null
-  );
+function Messages2ElectricBoogaloo({ guild, channel, chatUser, thread = false }: MessagesProps) {
+  const { messages, error, ready, stale, fetchMore } = channel ?
+    useMessages(channel, guild, thread ? generalStore.activeThread.id : null) :
+    useChatMessages(chatUser, guild);
 
   const groupedMessages = useMemo(() => groupMessages(messages), [messages]);
   const [firstItemIndex, setFirstItemIndex] = useState(100000);
   const loadMoreMessages = useCallback(async () => {
+    // DM's are currently not paginated.
+    if (chatUser) return;
+
     const { data } = await fetchMore({
       limit: maxMessagesToLoad,
       before: messages[0].id
