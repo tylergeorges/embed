@@ -1,5 +1,7 @@
 import { Message } from '@generated';
 import { MessageType } from '@generated/globalTypes';
+import _ from "lodash";
+import moment from "moment/moment";
 
 /**
  * Compares whether a message should go in a group
@@ -51,4 +53,37 @@ export function groupMessages<
   }
 
   return result;
+}
+
+type DayGroupedMessageType = "DATE_SEPARATOR" | "MESSAGE_GROUP";
+type DayGroupedMessage<Group, Type extends DayGroupedMessageType> = {
+  type: Type;
+} &
+  (
+    Type extends "DATE_SEPARATOR"
+    ? {
+      date: number;
+    }
+    : {
+      group: Group;
+    }
+  );
+
+type DayGroupedMessages<Group> = Array<{[Type in DayGroupedMessageType]: DayGroupedMessage<Group, Type>}[DayGroupedMessageType]>;
+
+export function groupMessagesByDay<
+  Group extends Message[]
+>(messages: Group): DayGroupedMessages<Group> {
+  const grouped = groupMessages(messages);
+
+  const momentFormat = "MMMM D, YYYY";
+  return _(grouped)
+    .groupBy((m) => moment(m[0].createdAt).format(momentFormat))
+    .sortBy(([m]) => m[0].createdAt)
+    .value()
+    .map((grouped) => ([
+      { type: "DATE_SEPARATOR", date: grouped[0][0].createdAt } as DayGroupedMessage<Group, "DATE_SEPARATOR">,
+      ...grouped.map((g) => ({ type: "MESSAGE_GROUP", group: g } as DayGroupedMessage<Group, "MESSAGE_GROUP" >))
+    ]))
+    .reduce((a, b) => [...a, ...b], []) as DayGroupedMessages<Group>;
 }

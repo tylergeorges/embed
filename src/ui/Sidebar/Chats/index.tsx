@@ -5,7 +5,7 @@ import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton }
 import CHATS from "./Chats.graphql";
 import {authStore, generalStore} from "@store";
 import { Chats, UserTag } from "@generated";
-import { Member } from "@ui/Messages/elements";
+import { MemberBase } from "@ui/Messages/elements";
 import { useRouter } from "@hooks";
 import { Loading } from "@ui/Overlays/Loading/elements";
 import client from "@lib/apollo";
@@ -59,7 +59,7 @@ export const ChatSwitcher = observer(() => {
             <Chat selected={channel === '@'+chat.recipient.id}>
               <Avatar width={32} height={32} src={chat.recipient.avatarUrl} />
               <Details>
-                <Member color={chat.recipient.color}>{chat.recipient.name}{chat.recipient.discrim !== '0000' ? `#${chat.recipient.discrim}` : ''}</Member>
+                <MemberBase color={chat.recipient.color}>{chat.recipient.name}{chat.recipient.discrim !== '0000' ? `#${chat.recipient.discrim}` : ''}</MemberBase>
                 <Preview>{chat.content}</Preview>
               </Details>
             </Chat>

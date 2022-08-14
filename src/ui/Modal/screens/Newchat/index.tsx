@@ -1,7 +1,7 @@
 import { DirectUsers } from '@generated'
 import { useRouter } from '@hooks'
 import { store } from '@models'
-import { Member } from '@ui/Messages/elements'
+import { MemberBase } from '@ui/Messages/elements'
 import { Loading } from '@ui/Overlays'
 import { Avatar, Details } from '@ui/Sidebar/Chats/elements'
 import { useQuery } from 'react-apollo-hooks'
@@ -45,7 +45,7 @@ const NewChat = () => {
                 <User>
                     <Avatar width={32} height={32} src={user.avatarUrl} />
                     <Details>
-                        <Member color={user.color}>{user.name}{user.discrim !== '0000' ? `#${user.discrim}` : ''}</Member>
+                        <MemberBase color={user.color}>{user.name}{user.discrim !== '0000' ? `#${user.discrim}` : ''}</MemberBase>
                     </Details>
                 </User>
               }
