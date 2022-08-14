@@ -28,8 +28,9 @@ function useSize(
       };
     }
 
-    const imageHeight = 80;
-    const imageWidth = imageHeight / image.height * image.width;
+    const { imageHeight, imageWidth } = image.width > image.height
+      ? { imageWidth: 80, imageHeight: 80 / image.width * image.height }
+      : { imageWidth: 80 * image.width / image.height, imageHeight: 80 };
 
     return { width: imageWidth, height: imageHeight, isLarge: false };
   }, [type, image, image, cancel]);
