@@ -67,14 +67,7 @@ export const Pin = styled.div`
     margin-bottom: 6px;
     border: 1px solid ${({ theme }) => theme.colors._background.darken(0.41).string()};
     border-radius: 4px;
-
-    .group {
-        padding: 12px 16px;
-    }
-
-    .message div {
-        height: auto;
-    }
+    padding: 8px;
 `
 
 export const NoPins = styled.div`

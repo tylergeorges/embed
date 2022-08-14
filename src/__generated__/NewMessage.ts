@@ -56,7 +56,7 @@ export interface NewMessage_message_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface NewMessage_message_embeds_fields {
@@ -69,6 +69,7 @@ export interface NewMessage_message_embeds_fields {
 export interface NewMessage_message_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -81,7 +82,7 @@ export interface NewMessage_message_embeds_provider {
 
 export interface NewMessage_message_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -90,6 +91,7 @@ export interface NewMessage_message_embeds_thumbnail {
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface NewMessage_message_embeds_video {
@@ -194,7 +196,7 @@ export interface NewMessage_message_referencedMessage_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface NewMessage_message_referencedMessage_embeds_fields {
@@ -207,6 +209,7 @@ export interface NewMessage_message_referencedMessage_embeds_fields {
 export interface NewMessage_message_referencedMessage_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -219,7 +222,7 @@ export interface NewMessage_message_referencedMessage_embeds_provider {
 
 export interface NewMessage_message_referencedMessage_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -228,6 +231,7 @@ export interface NewMessage_message_referencedMessage_embeds_thumbnail {
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface NewMessage_message_referencedMessage_embeds_video {

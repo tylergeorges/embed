@@ -4,16 +4,26 @@ import { MessageType } from '@generated/globalTypes';
 /**
  * Compares whether a message should go in a group
  */
-export const compareGroupability = (
-  a: Message,
+export function compareGroupability(
+  a: Message | undefined,
   b: Message
-) => {
-  const nonGroupable = ![MessageType.Default, MessageType.Reply].includes(a.type) || b.type !== MessageType.Default || !!b.thread;
-  const differentAuthor = (!(b.flags & 1 << 4) && a.author.id !== b.author.id) || a.author.name !== b.author.name || a.author.bot !== b.author.bot;
-  const staleGroup = (Number(new Date(b.createdAt)) - Number(new Date(a.createdAt))) > 5 * 60 * 1000;
+) {
+  const nonGroupable =
+    ![MessageType.Default, MessageType.Reply].includes(a.type)
+    || b.type !== MessageType.Default
+    || b.thread !== null;
+  const differentAuthor = (
+    (b.flags & 1 << 4) === 0
+    && a?.author?.id !== b.author.id
+  )
+    || a?.author?.name !== b.author.name
+    || a?.author?.bot !== b.author.bot;
+  const staleGroup = (
+    Number(new Date(b.createdAt)) - Number(new Date(a?.createdAt))
+  ) > 5 * 60 * 1000;
 
   return nonGroupable || differentAuthor || staleGroup
-};
+}
 
 /**
  * Groups messages into an array
@@ -23,22 +33,22 @@ export const compareGroupability = (
  * [[{ id: 1 }], [{ id: 2 }], [{ id: 1 }, { id: 1 }]]
  * @param messages The messages to group
  */
-export const groupMessages = <
+export function groupMessages<
   Group extends Message[]
 >(
   messages: Group
-): Group[] => {
-  const result = new Array<Group>()
-  let group = null
-  let previous: Message
+): Group[] {
+  const result = new Array<Group>();
+  let group = null;
+  let previous: Message = undefined;
 
   for (const message of messages) {
     if (group === null || compareGroupability(previous, message) || previous.thread) {
       group = result.push([] as Group) - 1
     }
     result[group].push(message);
-    previous = message
+    previous = message;
   }
 
-  return result
-};
+  return result;
+}

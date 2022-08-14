@@ -3,7 +3,7 @@ import { useRouter, useSendMessage } from '@hooks'
 import { useQuery } from 'react-apollo-hooks'
 import Input from './Input'
 import { CrateSlowmodeContainer, Field, PushDown, Root, Slowmode } from './elements'
-import { useState, useRef, FunctionComponent, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import ErrorAhoy from "@ui/Overlays/ErrorAhoy";
 import { formatError } from "@views/Messages/utils";
 import { Loading } from "@ui/Overlays";
@@ -11,8 +11,6 @@ import { addNotification } from "notify";
 import { Locale } from '@lib/Locale'
 import { authStore, generalStore } from "@store";
 import { ChannelName } from '@generated'
-import Emoji from "@ui/shared/Emoji";
-import thread from "@ui/Message/Thread";
 import Tooltip from 'rc-tooltip'
 import moment from 'moment'
 import { observer } from 'mobx-react'
@@ -39,7 +37,7 @@ export const Chat = observer((props: ChatProps) => {
   const sendMessage = useSendMessage(props.thread ? generalStore.activeThread.id : null);
   const [rows, setRows] = useState(1);
   const { channel } = useRouter();
-  const { data, error, errors, networkStatus, loading } = useQuery<ChannelName>(GET_CHANNEL_NAME, { variables: { channel } });
+  const { data, error, loading } = useQuery<ChannelName>(GET_CHANNEL_NAME, { variables: { channel } });
 
   const [slowmodeTimeRemaining, setSlowmodeTimeRemaining] = useState(-1)
   const [slowmodeInterval, setSlowmodeInterval] = useState<NodeJS.Timeout | null>(null)

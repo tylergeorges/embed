@@ -57,7 +57,7 @@ export interface BaseMessage_embeds_author {
   __typename: "EmbedAuthor";
   url: string | null;
   name: string | null;
-  icon: string | null;
+  proxyIconUrl: string | null;
 }
 
 export interface BaseMessage_embeds_fields {
@@ -70,6 +70,7 @@ export interface BaseMessage_embeds_fields {
 export interface BaseMessage_embeds_image {
   __typename: "EmbedImage";
   url: string | null;
+  proxyUrl: string | null;
   width: number | null;
   height: number | null;
 }
@@ -82,7 +83,7 @@ export interface BaseMessage_embeds_provider {
 
 export interface BaseMessage_embeds_footer {
   __typename: "EmbedFooter";
-  url: string | null;
+  proxyIconUrl: string | null;
   text: string;
 }
 
@@ -91,6 +92,7 @@ export interface BaseMessage_embeds_thumbnail {
   height: number | null;
   width: number | null;
   url: string | null;
+  proxyUrl: string | null;
 }
 
 export interface BaseMessage_embeds_video {
