@@ -47,6 +47,8 @@ export const ChatSwitcher = observer(() => {
     });
   }
 
+  const toggle = () => window.innerWidth < 520 ? store.sidebar.toggle() : null
+
   return (
     <Root className="channels">
       {authStore.user && 'provider' in authStore.user && authStore.user.provider === 'Guild' &&
@@ -55,6 +57,7 @@ export const ChatSwitcher = observer(() => {
         <NavLink
           key={chat.recipient.id}
           to={`/channels/${guild}/@${chat.recipient.id}`}
+          onClick={toggle}
           children={
             <Chat selected={channel === '@'+chat.recipient.id}>
               <Avatar width={32} height={32} src={chat.recipient.avatarUrl} />

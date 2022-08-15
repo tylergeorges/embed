@@ -28,6 +28,8 @@ const NewChat = () => {
       </Root>
     )
 
+  const toggle = () => window.innerWidth < 520 ? store.sidebar.toggle() : null
+
   return (
     <Root className="new-chat">
       <Top className="top">
@@ -40,7 +42,10 @@ const NewChat = () => {
             <NavLink
               key={user.id}
               to={`/channels/${guild}/@${user.id}`}
-              onClick={store.modal.close}
+              onClick={() => {
+                store.modal.close()
+                toggle()
+              }}
               children={
                 <User>
                     <Avatar width={32} height={32} src={user.avatarUrl} />
