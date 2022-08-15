@@ -22,16 +22,28 @@ const MessagesView = observer(() => {
     generalStore.clearThread(); // Channel changed, cant be looking at a thread anymore
   }, [channel]);
 
+  const [dmLoginFailed, setDMLoginFailed] = React.useState(false)
+
   const navigate = useNavigate()
   useEffect(() => {
     if (user && !authStore.user && !queryParams.has('username') && !queryParams.has('token')) {
-      navigate('..') // Close DM if not logged in
-      generalStore.setSidebarView(Views.Channels)
+      let ls: Storage
+      try {
+        ls = localStorage
+      } catch (e) {
+        generalStore.toggleMenu(true)
+        setDMLoginFailed(true)
+      }
+
+      if (ls) {
+        navigate('..') // Close DM if not logged in
+        generalStore.setSidebarView(Views.Channels)
+      }
     }
   }, [user, authStore.user])
 
   // for DMs, if dynamic usernames or guild auth are being used, we might need to wait until the user is logged in
-  if (user && !authStore.user && (queryParams.has('username') || queryParams.has('token'))) return null
+  if (user && !authStore.user && (queryParams.has('username') || queryParams.has('token') || dmLoginFailed)) return null
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
