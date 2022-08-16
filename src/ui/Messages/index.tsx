@@ -7,6 +7,7 @@ interface MessageProps {
   messages: MessageData[];
   style?: CSSProperties;
   showButtons?: boolean;
+  thread: boolean;
 }
 
 function MessageGroup(props: MessageProps) {
@@ -19,9 +20,9 @@ function MessageGroup(props: MessageProps) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <Message isFirstMessage={true} message={firstMessage} isHovered={isHovered} showButtons={props.showButtons ?? true} />
+      <Message isFirstMessage={true} message={firstMessage} isHovered={isHovered} showButtons={props.showButtons ?? true} thread={props.thread} />
       {otherMessages.map(message => (
-        <Message key={message.id} message={message} showButtons={props.showButtons ?? true} />
+        <Message key={message.id} message={message} showButtons={props.showButtons ?? true} thread={props.thread} />
       ))}
     </MessageGroupBase>
   );

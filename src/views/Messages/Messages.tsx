@@ -138,6 +138,7 @@ export const Messages = observer(({ guild, channel, thread = false }: MessagesPr
                                   <MessageGroup
                                     messages={groupedMessages[index]}
                                     style={style}
+                                    thread={thread}
                                   />
                                 </CellMeasurer>
                             ) : null

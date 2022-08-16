@@ -40,6 +40,11 @@ export const Modal = types
       self.thread = thread
       self.content = content
     },
+    openDelete(thread) {
+      self.isOpen = true
+      self.type = 'delete'
+      self.thread = thread
+    },
     close() {
       self.isOpen = false
     }

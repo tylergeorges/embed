@@ -11,6 +11,7 @@ import MessageContainer, {
 import copyIdIcon from "@images/discordAssets/3fef4f31f944477f5f3e9643cbcaab7a.svg"
 import linkIcon from "@images/discordAssets/a4c2ef2964ee9977baf61a2f6017b93d.svg";
 import speakIcon from "@images/discordAssets/speak.svg"
+import deleteIcon from "@images/discordAssets/delete.svg"
 import {useRouter} from "@hooks";
 import ThreadCreated from "@ui/Messages/Message/variants/ThreadCreated";
 import UserPremiumGuildTierUpgrade
@@ -30,15 +31,17 @@ import RecipientRemove from "@ui/Messages/Message/variants/RecipientRemove";
 import GuildDiscoveryDisqualified
   from "@ui/Messages/Message/variants/GuildDiscoveryDisqualified";
 import { getChannel } from "@ui/shared/Channel";
-import { generalStore } from "@store";
+import { authStore, generalStore } from "@store";
+import { store } from "@models";
 
-type MessageDataModified = Omit<MessageData, "referencedMessage"> & Partial<MessageData>;
+export type MessageDataModified = Omit<MessageData, "referencedMessage"> & Partial<MessageData>;
 
 interface MessageProps {
   isFirstMessage?: boolean;
   message: MessageDataModified;
   isHovered?: boolean;
   showButtons?: boolean;
+  thread?: boolean;
 }
 
 function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
@@ -204,6 +207,18 @@ function Message(props: MessageProps) {
       actionDescription: "Copy Message ID"
     }
   ];
+
+  const userID = authStore.user && ('id' in authStore.user && authStore.user.id || '_id' in authStore.user && authStore.user._id)
+
+  // if message was sent by logged-in user, add delete message button
+  if (props.message.isGuest && props.message.author.id === userID) buttonOptions.push({
+    icon: deleteIcon,
+    onClick: () => {
+      generalStore.setMessageToDelete(props.message)
+      store.modal.openDelete(props.thread)
+    },
+    actionDescription: "Delete Message"
+  })
 
   // remove speak button if no content
   if (!props.message.content) buttonOptions.splice(1, 1);

@@ -78,7 +78,7 @@ function Messages2ElectricBoogaloo({ guild, channel, thread = false }: MessagesP
           Footer: () => <ScrollerSpacer />,
         }}
         itemContent={(index, messageGroup) => (
-          <MessageGroup messages={messageGroup} key={messageGroup[0].id} />
+          <MessageGroup messages={messageGroup} key={messageGroup[0].id} thread={thread} />
         )}
       />
     </MessagesWrapper>

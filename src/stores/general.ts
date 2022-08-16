@@ -3,6 +3,7 @@ import { GuildInfo_guild, Message, Message_thread, Settings_settings } from "@ge
 import {ICategory} from "@ui/Sidebar/Channels/categorise";
 import { EmojiStore } from "@services/Emoji";
 import { defaultEmojis } from "@services/Emoji/defaultEmojis";
+import { MessageDataModified } from "@ui/Messages/Message";
 
 export class GeneralStore {
   @observable appName = 'WidgetBot';
@@ -20,6 +21,7 @@ export class GeneralStore {
   @observable emojis = new EmojiStore(...defaultEmojis);
   @observable pins?: Message[];
   @observable pinsOpen: boolean = false;
+  @observable messageToDelete?: MessageDataModified;
 
   constructor() {
     autorun(() => {
@@ -74,6 +76,10 @@ export class GeneralStore {
 
   @action togglePins(res: boolean = !this.pinsOpen) {
     this.pinsOpen = res
+  }
+
+  @action setMessageToDelete(msg: MessageDataModified) {
+    this.messageToDelete = msg
   }
 }
 

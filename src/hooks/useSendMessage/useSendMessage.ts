@@ -2,7 +2,7 @@ import { useMutation } from 'react-apollo-hooks'
 import SEND_MESSAGE from './SendMessage.graphql'
 import { MESSAGES } from '../useMessages'
 import { useRouter } from '@hooks'
-import { Messages, SendMessage } from '@generated';
+import { Messages, SendMessage, SendMessageVariables } from '@generated';
 import { addNotification } from "notify";
 import { MessageType } from '@generated/globalTypes';
 import { Util } from '@lib/Util';
@@ -10,7 +10,7 @@ import { authStore } from '@store';
 
 export const useSendMessage = (thread?: string) => {
   const { channel } = useRouter()
-  const sendMessage = useMutation<SendMessage>(SEND_MESSAGE);
+  const sendMessage = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE);
 
   return async (content: string, fileName?: string, fileData?: string, fileAlt?: string) =>
     await sendMessage({
