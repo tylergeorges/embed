@@ -58,6 +58,18 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
     }
   );
 
+  private openProfile = (ref: HTMLElement) => store.modal.openProfile(
+    this.props.author.id,
+    this.props.author.name,
+    this.props.author.discrim,
+    this.props.author.avatarUrl,
+    this.props.author.bot,
+    this.props.author.flags,
+    this.props.isGuest,
+    Math.min(ref.getBoundingClientRect().right + 10, innerWidth - 310),
+    Math.min(ref.getBoundingClientRect().y, innerHeight - 300)
+  )
+
   render() {
     // Gets the dominant role color
     const dominantRoleColor = this.getDominantRoleColor(this.props.author.roles);
@@ -66,22 +78,13 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
     // Gets the dominant role icon
     const dominantRoleIconRole = this.getDominantRoleIconRole(this.props.author.roles);
 
-    let nameRef: HTMLDivElement;
+    let nameRef: HTMLSpanElement;
+    let avatarRef: HTMLImageElement;
 
     const username = <UsernameBase
       color={color}
       innerRef={ref => nameRef = ref}
-      onClick={() => store.modal.openProfile(
-        this.props.author.id,
-        this.props.author.name,
-        this.props.author.discrim,
-        this.props.author.avatarUrl,
-        this.props.author.bot,
-        this.props.author.flags,
-        this.props.isGuest,
-        nameRef.getBoundingClientRect().right + 10,
-        Math.min(nameRef.getBoundingClientRect().y, innerHeight - 250)
-      )}
+      onClick={() => this.openProfile(nameRef)}
     >
       {this.props.author.name}
     </UsernameBase>
@@ -97,7 +100,8 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
       <AuthorBase>
         <AvatarBase
           src={getAvatar(this.props.author, {animated: this.props.avatarAnimated ?? false})}
-          draggable={false}
+          innerRef={ref => avatarRef = ref}
+          onClick={() => this.openProfile(avatarRef)}
         />
         {username}
         {dominantRoleIconRole !== null && (

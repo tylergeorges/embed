@@ -506,6 +506,10 @@ export const UsernameBase = memo(styled.span<UsernameBaseProps>`
   vertical-align: baseline;
   white-space: nowrap;
   cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
 `);
 
 export const AvatarBase = styled.img`
@@ -516,6 +520,11 @@ export const AvatarBase = styled.img`
   width: 40px;
   height: 40px;
   z-index: 1;
+  cursor: pointer;
+
+  &:hover {
+    filter: drop-shadow(rgba(0, 0, 0, 0.16) 0px 4px 4px);
+  }
 `;
 
 

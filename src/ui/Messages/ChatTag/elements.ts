@@ -11,6 +11,7 @@ export const ChatTagBase = styled('span')`
   margin-left: 6px;
   line-height: normal;
   font-size: 10px;
+  font-weight: 500;
   text-transform: uppercase;
   height: fit-content;
   border-radius: 3px;
