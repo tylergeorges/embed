@@ -8,6 +8,30 @@ const bounceIn = keyframes`
   to {
     transform: initial;
   }
+`;
+
+const bounceOut = keyframes`
+  from {
+    transform: initial;
+  }
+
+  to {
+    transform: scale(0.6);
+  }
+`;
+
+export const Box = styled('div')`
+  z-index: 100;
+  
+  max-height: calc(100vh - 20px);
+  max-width: calc(100vw - 40px);
+
+  @media (max-width: 270px), (max-height: 200px) {
+    height: 100vh;
+    width: 100vw;
+    max-height: 100vh;
+    max-width: 100vw;
+  }
 `
 
 interface IRoot {
@@ -39,21 +63,13 @@ export const Root = styled('dialog')<IRoot>`
       : css`
           pointer-events: none;
         `};
-`
-
-export const Box = styled('div')`
-  z-index: 100;
   
-
-  max-height: calc(100vh - 20px);
-  max-width: calc(100vw - 40px);
-  animation: ${bounceIn} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-
-  @media (max-width: 270px), (max-height: 200px) {
-    height: 100vh;
-    width: 100vw;
-    max-height: 100vh;
-    max-width: 100vw;
+  &[open] ${Box} {
+    animation: ${bounceIn} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  &:not([open]) ${Box} {
+    animation: ${bounceOut} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
 `
 

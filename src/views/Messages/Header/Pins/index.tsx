@@ -1,5 +1,5 @@
 import { generalStore } from '@store'
-import Message from '@ui/Message'
+import Message from "@ui/Messages/Message";
 import { Loading } from '@ui/Overlays/Loading/elements'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
@@ -49,9 +49,11 @@ export default observer(() => {
             <List className="pin-list">
                 {pins
                     ? pins.length
-                        ? pins.map(pin => <Pin key={pin.id} className="pin"><Message messages={[pin]} allMessages={pins} /></Pin>)
+                        ? pins.map(pin => <Pin key={pin.id} className="pin">
+                            <Message isFirstMessage={true} message={pin} showButtons={false} />
+                        </Pin>)
                         : <NoPins className="no-pins">
-                            <img src={noPins} />
+                            <img src={noPins} alt="no pins" />
                             <span>This channel doesn't have any <br /> pinned messages... yet.</span>
                           </NoPins>
                     : <div style={{ height: '300px' }}><Loading /></div>
