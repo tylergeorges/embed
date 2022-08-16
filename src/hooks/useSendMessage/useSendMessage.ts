@@ -20,6 +20,7 @@ export const useSendMessage = (thread?: string) => {
         sendMessage: {
           __typename: 'Message',
           id: Util.generateSnowflake(),
+          channelId: channel,
           content: content,
           type: MessageType.Default,
           flags: 1 << 4, // reusing flag for optimistic messages

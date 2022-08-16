@@ -22,7 +22,7 @@ export const NotificationBase = styled.div<{hideAfterMs?: number}>`
   border-radius: 9px;
   //animation: slide-in 0.5s ease-in, slide-out ${slideOutAnimDurationMs}ms ease-out ${props => props.hideAfterMs - slideOutAnimDurationMs - 5}ms;
   background-color: ${props => props.theme.colors._background.darken(0.3).string()};
-  max-width: calc(100% - 20px);
+  max-width: calc(100% - 200px);
   min-width: 200px;
   overflow: hidden;
   

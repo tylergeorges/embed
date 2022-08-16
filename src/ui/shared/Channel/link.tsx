@@ -21,6 +21,7 @@ class ChannelLink extends React.PureComponent<Props> {
         onClick={toggle}
         children={children}
         className={className}
+        style={{ textDecoration: 'unset'}}
       />
     );
   }

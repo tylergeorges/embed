@@ -292,6 +292,7 @@ export interface SubscriptionMessage_referencedMessage_thread {
 export interface SubscriptionMessage_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -312,6 +313,7 @@ export interface SubscriptionMessage_referencedMessage {
 export interface SubscriptionMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

@@ -153,6 +153,7 @@ export interface BaseMessage_thread {
 export interface BaseMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

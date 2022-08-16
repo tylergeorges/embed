@@ -22,6 +22,7 @@ export class GeneralStore {
   @observable pins?: Message[];
   @observable pinsOpen: boolean = false;
   @observable messageToDelete?: MessageDataModified;
+  @observable unreadChannels = new Set<string>();
 
   constructor() {
     autorun(() => {
@@ -80,6 +81,14 @@ export class GeneralStore {
 
   @action setMessageToDelete(msg: MessageDataModified) {
     this.messageToDelete = msg
+  }
+
+  @action addUnreadChannel(channel: string) {
+    this.unreadChannels.add(channel)
+  }
+
+  @action readChannel(channel: string) {
+    this.unreadChannels.delete(channel)
   }
 }
 

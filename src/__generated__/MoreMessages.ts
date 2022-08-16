@@ -294,6 +294,7 @@ export interface MoreMessages_channel_TextChannel_messageBunch_messages_referenc
 export interface MoreMessages_channel_TextChannel_messageBunch_messages_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -314,6 +315,7 @@ export interface MoreMessages_channel_TextChannel_messageBunch_messages_referenc
 export interface MoreMessages_channel_TextChannel_messageBunch_messages {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -628,6 +630,7 @@ export interface MoreMessages_channel_AnnouncementChannel_messageBunch_messages_
 export interface MoreMessages_channel_AnnouncementChannel_messageBunch_messages_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -648,6 +651,7 @@ export interface MoreMessages_channel_AnnouncementChannel_messageBunch_messages_
 export interface MoreMessages_channel_AnnouncementChannel_messageBunch_messages {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

@@ -5,6 +5,7 @@
 
 fragment BaseSubscriptionMessage on Message {
     id
+    channelId
     content
     type
     flags

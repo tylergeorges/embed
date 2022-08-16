@@ -1,13 +1,21 @@
 import produce from "immer";
 import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message, MessageUpdated, NewMessage} from "@generated";
+import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables } from "@generated";
 import { generalStore } from "@store";
+import { useContext } from "react";
+import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
+import Message from "@ui/Messages/Message";
+import { ChannelLink, getChannel } from "@ui/shared/Channel";
+
+const queryParams = new URLSearchParams(location.search)
 
 /**
  * Fetches the messages for a channel
  */
 export const useMessages = (channel: string, guild: string, thread?: string) => {
+  const spawnNotif = useContext(NotificationContext)
+
   const query = useQuery(MESSAGES, {
     variables: { channel, thread },
     fetchPolicy: 'network-only'
@@ -55,8 +63,14 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     })
   }
 
-  useSubscription<NewMessage>(NEW_MESSAGE, {
-    variables: { channel, guild, threadId: thread },
+  const notifications = queryParams.get('notifications') === 'true'
+
+  const channels = notifications && generalStore.guild && generalStore.settings && !generalStore.settings?.singleChannel
+    ? generalStore.guild?.channels.map(c => c.id)
+    : [channel]
+
+  useSubscription<NewMessage, NewMessageVariables>(NEW_MESSAGE, {
+    variables: { channels, guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, (data?: { channel: Messages_channel }) => {
@@ -66,14 +80,30 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
             return;
           }
 
-          const message = subscriptionData.data.message as Message
+          const message = subscriptionData.data.message as MessageData
+
+          if (message.channelId !== channel) {
+            message.author.name += ` (#${getChannel(message.channelId)?.name})`
+
+            generalStore.addUnreadChannel(message.channelId)
+
+            return spawnNotif({
+              content: (
+                <ChannelLink id={message.channelId}>
+                  <Message message={message} isFirstMessage={true} />
+                </ChannelLink>
+              ),
+              hideAfter: +queryParams.get('notificationtimeout') || 3000
+            })
+          }
+
           message.author.color = messages.find(m => m.author.id === message.author.id)?.author.color || 0xffffff
           if (!messages.find(m => m.id === message.id)) messages.push(message);
         })
       )}
   });
 
-  useSubscription<MessageUpdated>(MESSAGE_UPDATED, {
+  useSubscription<MessageUpdated, MessageUpdatedVariables>(MESSAGE_UPDATED, {
     variables: { channel, guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
@@ -88,7 +118,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
           const index = messages.findIndex(m => m.id === message.id);
 
           if (index > -1) {
-            const updatedProps = Object.fromEntries(Object.entries(message).filter(([_, v]) => v !== null)) as Partial<Message>
+            const updatedProps = Object.fromEntries(Object.entries(message).filter(([_, v]) => v !== null)) as Partial<MessageData>
             if (updatedProps.author) updatedProps.author.color = messages.find(m => m.author.id === message.author?.id)?.author.color || 0xffffff
             delete updatedProps.__typename
 
@@ -99,7 +129,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     }
   });
 
-  useSubscription<MessageDeleted>(MESSAGE_DELETED, {
+  useSubscription<MessageDeleted, MessageDeletedVariables>(MESSAGE_DELETED, {
     variables: { channel, guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
@@ -119,7 +149,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     }
   });
 
-  useSubscription<MessagesBulkDeleted>(MESSAGES_BULK_DELETED, {
+  useSubscription<MessagesBulkDeleted, MessagesBulkDeletedVariables>(MESSAGES_BULK_DELETED, {
     variables: { channel, guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
@@ -140,7 +170,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     }
   });
 
-  return <any>{
+  return {
     ready,
     messages,
     fetchMore,

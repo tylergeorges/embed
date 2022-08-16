@@ -1,7 +1,7 @@
 #import "./Embed.graphql"
 #import "./BaseSubscriptionMessage.graphql"
 
-# BaseSubscriptionMessage.graphql without isGuest and with referencedMessage
+# BaseSubscriptionMessage.graphql without isGuest and channelId, and with referencedMessage
 
 fragment UpdatedMessage on UpdatedMessage {
     id

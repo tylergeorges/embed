@@ -294,6 +294,7 @@ export interface SendMessage_sendMessage_referencedMessage_thread {
 export interface SendMessage_sendMessage_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -314,6 +315,7 @@ export interface SendMessage_sendMessage_referencedMessage {
 export interface SendMessage_sendMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

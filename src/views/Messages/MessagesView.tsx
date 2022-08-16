@@ -16,6 +16,7 @@ const MessagesView = observer(() => {
 
   useEffect(() => {
     generalStore.clearThread(); // Channel changed, cant be looking at a thread anymore
+    generalStore.readChannel(channel)
   }, [channel]);
 
   return (

@@ -195,6 +195,7 @@ export interface MessageUpdated_messageUpdate_referencedMessage_thread {
 export interface MessageUpdated_messageUpdate_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

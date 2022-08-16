@@ -294,6 +294,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
 export interface Messages_channel_TextChannel_messageBunch_messages_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -314,6 +315,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
 export interface Messages_channel_TextChannel_messageBunch_messages {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -617,6 +619,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -637,6 +640,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -952,6 +956,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -972,6 +977,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -1275,6 +1281,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -1295,6 +1302,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

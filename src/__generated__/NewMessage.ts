@@ -292,6 +292,7 @@ export interface NewMessage_message_referencedMessage_thread {
 export interface NewMessage_message_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -312,6 +313,7 @@ export interface NewMessage_message_referencedMessage {
 export interface NewMessage_message {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -335,7 +337,7 @@ export interface NewMessage {
 }
 
 export interface NewMessageVariables {
-  channel: string;
+  channels?: string[] | null;
   guild: string;
   threadId?: string | null;
 }
