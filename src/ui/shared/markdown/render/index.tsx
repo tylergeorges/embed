@@ -132,12 +132,8 @@ export const parseEmbedTitle = parserFor(
   )
 )
 
-function Markdown({ children: content, mentions, isAuthorBot, users }: { children: string, mentions?: Message_mentions[], isAuthorBot?: boolean, users?: Map<string, Message_author> }) {
-  const parser = isAuthorBot ? parseAllowLinks : parse;
-
-  return content
-    ? parser(content, undefined, {mentions, users})
-    : null
+function Markdown({ children: content, mentions, users }: { children: string, mentions?: Message_mentions[], users?: Map<string, Message_author> }) {
+  return content ? parse(content, undefined, {mentions, users}) : null
 }
 
 namespace Markdown {

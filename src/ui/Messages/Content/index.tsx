@@ -1,5 +1,5 @@
 import {Children, memo, ReactChild, ReactNode, useMemo,} from "react";
-import Markdown from "@ui/shared/markdown/render";
+import Markdown, { LinkMarkdown } from "@ui/shared/markdown/render";
 import {
   Message as MessageData,
   Message_attachments,
@@ -176,14 +176,20 @@ function Content(props: ContentProps) {
         <ContentCore referencedMessage={props.message} showTooltip={props.isReplyContent}>
           <ContentContainerBase data-is-reply-content={props.isReplyContent}>
             {props.message.content.length > 0
-              ? (
-                <>
-                  <Markdown mentions={props.message.mentions} isAuthorBot={props.message.author.bot}>
-                    {props.message.content}
-                  </Markdown>
+              ? <>
+                  {props.message.author.isWebhook
+                    ? (
+                      <LinkMarkdown mentions={props.message.mentions}>
+                        {props.message.content}
+                      </LinkMarkdown>
+                    ) : (
+                      <Markdown mentions={props.message.mentions}>
+                        {props.message.content}
+                      </Markdown>
+                    )
+                  }
                   {props.message.editedAt && <Edited editedAt={props.message.editedAt} />}
                 </>
-              )
               : <ReplyAccessoryText>{dominantAccessoryText}</ReplyAccessoryText>
             }
           </ContentContainerBase>
