@@ -149,6 +149,7 @@ interface MessageProps {
   isHovered?: boolean;
   noThreadButton?: boolean;
   isContextMenuInteraction?: boolean;
+  hideTimestamp?: boolean;
 }
 
 function NormalMessage(props: MessageProps) {
@@ -184,7 +185,7 @@ function NormalMessage(props: MessageProps) {
         )}
         <MessageHeaderBase>
           <MessageAuthor author={props.message.author} avatarAnimated={props.isHovered ?? false} isGuest={props.message.isGuest} />
-          <LargeTimestamp timestamp={props.message.createdAt} />
+          {props.hideTimestamp || <LargeTimestamp timestamp={props.message.createdAt} />}
         </MessageHeaderBase>
         <Content
           message={props.message}

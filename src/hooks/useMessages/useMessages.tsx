@@ -90,7 +90,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
             return spawnNotif({
               content: (
                 <ChannelLink id={message.channelId}>
-                  <Message message={message} isFirstMessage={true} />
+                  <Message message={message} isFirstMessage={true} hideTimestamp={true} />
                 </ChannelLink>
               ),
               hideAfter: +queryParams.get('notificationtimeout') || 3000

@@ -42,6 +42,7 @@ interface MessageProps {
   isHovered?: boolean;
   showButtons?: boolean;
   thread?: boolean;
+  hideTimestamp?: boolean;
 }
 
 function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
