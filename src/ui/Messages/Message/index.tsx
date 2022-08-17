@@ -211,8 +211,8 @@ function Message(props: MessageProps) {
 
   const userID = authStore.user && ('id' in authStore.user && authStore.user.id || '_id' in authStore.user && authStore.user._id)
 
-  // if message was sent by logged-in user, add delete message button
-  if (props.message.isGuest && props.message.author.id === userID) buttonOptions.push({
+  // if message was sent by logged-in user and not in a DM, add delete message button
+  if (props.message.isGuest && props.message.author.id === userID && !channelId.startsWith('@')) buttonOptions.push({
     icon: deleteIcon,
     onClick: () => {
       generalStore.setMessageToDelete(props.message)
@@ -223,6 +223,9 @@ function Message(props: MessageProps) {
 
   // remove speak button if no content
   if (!props.message.content) buttonOptions.splice(1, 1);
+
+  // remove copy link button in DMs
+  if (channelId.startsWith('@')) buttonOptions.shift()
 
   if (props.showButtons)
     return (
