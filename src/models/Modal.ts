@@ -13,7 +13,10 @@ export const Modal = types
     discrim: types.maybeNull(types.string),
     avatarUrl: types.maybeNull(types.string),
     bot: false,
+    system: false,
     flags: types.maybeNull(types.number),
+    crosspost: false,
+    referenceGuild: types.maybeNull(types.string),
     guest: false,
     x: types.maybeNull(types.number),
     y: types.maybeNull(types.number),
@@ -49,7 +52,7 @@ export const Modal = types
       self.thread = thread
       self.content = content
     },
-    openProfile(id, username, discrim, avatarUrl, bot, flags, guest, x, y) {
+    openProfile(id, username, discrim, avatarUrl, bot, system, flags, crosspost, referenceGuild, guest, x, y) {
       self.isOpen = true
       self.type = 'profile'
       self.id = id
@@ -57,7 +60,10 @@ export const Modal = types
       self.discrim = discrim
       self.avatarUrl = avatarUrl
       self.bot = bot
+      self.system = system
       self.flags = flags
+      self.crosspost = crosspost
+      self.referenceGuild = referenceGuild
       self.guest = guest
       self.x = x
       self.y = y

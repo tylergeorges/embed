@@ -66,7 +66,10 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
     this.props.author.discrim,
     this.props.author.avatarUrl,
     this.props.author.bot,
+    this.props.author.system,
     this.props.author.flags,
+    this.props.crosspost,
+    this.props.referenceGuild,
     this.props.isGuest,
     Math.min(ref.getBoundingClientRect().right + 10, innerWidth - 310),
     Math.min(ref.getBoundingClientRect().y, innerHeight - 300)

@@ -8,7 +8,8 @@ export const VerifiedBot = styled.svg`
 `;
 
 export const Tag = styled.span`
-  margin-left: 4px;
+  margin-left: 6px;
+  line-height: normal;
   font-size: 10px;
   font-weight: 500;
   text-transform: uppercase;

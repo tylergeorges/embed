@@ -11,7 +11,7 @@ const verified =
   </Tooltip>
 
 interface TagProps {
-  author: Message_author
+  author: Pick<Message_author, 'bot' | 'system' | 'flags'>
   crosspost: boolean
   referenceGuild: string
   guest: boolean

@@ -64,7 +64,7 @@ const Profile = observer(() => {
         <Tag>
           {store.modal.username}
           {store.modal.discrim !== '0000' ? <Discrim>#{store.modal.discrim}</Discrim> : null}
-          {store.modal.bot && <ChatTag userFlags={store.modal.flags} isGuest={store.modal.guest} />}
+          <ChatTag author={store.modal} crosspost={store.modal.crosspost} referenceGuild={store.modal.referenceGuild} guest={store.modal.guest} />
         </Tag>
         {generalStore.settings?.directEnabled && (/* !store.modal.bot || */store.modal.guest) && userID !== store.modal.id && (
           authStore.user ? <>
