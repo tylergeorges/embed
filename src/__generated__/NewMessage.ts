@@ -18,6 +18,8 @@ export interface NewMessage_message_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface NewMessage_message_attachments {
@@ -158,6 +160,8 @@ export interface NewMessage_message_referencedMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface NewMessage_message_referencedMessage_attachments {
@@ -292,6 +296,7 @@ export interface NewMessage_message_referencedMessage_thread {
 export interface NewMessage_message_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -312,6 +317,7 @@ export interface NewMessage_message_referencedMessage {
 export interface NewMessage_message {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -335,7 +341,7 @@ export interface NewMessage {
 }
 
 export interface NewMessageVariables {
-  channel: string;
+  channels?: string[] | null;
   guild: string;
   threadId?: string | null;
 }

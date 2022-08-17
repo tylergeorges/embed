@@ -21,6 +21,8 @@ interface MessageAuthorProps {
   avatarAnimated?: boolean;
   onlyShowUsername?: boolean;
   isGuest?: boolean;
+  crosspost?: boolean;
+  referenceGuild?: string;
 }
 
 class MessageAuthor extends PureComponent<MessageAuthorProps> {
@@ -107,9 +109,12 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
         {dominantRoleIconRole !== null && (
           <RoleIcon role={dominantRoleIconRole} />
         )}
-        {this.props.author.bot && (
-          <ChatTag userFlags={this.props.author.flags} isGuest={this.props.isGuest} />
-        )}
+        <ChatTag
+          author={this.props.author}
+          crosspost={this.props.crosspost}
+          referenceGuild={this.props.referenceGuild}
+          guest={this.props.isGuest}
+        />
       </AuthorBase>
     );
   }

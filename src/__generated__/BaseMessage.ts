@@ -18,6 +18,8 @@ export interface BaseMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -153,6 +155,7 @@ export interface BaseMessage_thread {
 export interface BaseMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

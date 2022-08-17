@@ -1,12 +1,7 @@
 import Tooltip from "rc-tooltip";
-import * as React from "react";
 import {Locale} from "@lib/Locale";
-import {ChatTagBase, VerifiedBot} from "@ui/Messages/ChatTag/elements";
-
-enum UserFlag {
-  VerifiedSystem = 1 << 12,
-  VerifiedBot = 1 << 16,
-}
+import {Tag, VerifiedBot} from "./elements";
+import { Message_author } from "@generated";
 
 const verified =
   <Tooltip placement="top" overlay="Verified Bot">
@@ -16,29 +11,28 @@ const verified =
   </Tooltip>
 
 interface TagProps {
-  userFlags: number;
-  isGuest: boolean;
+  author: Message_author
+  crosspost: boolean
+  referenceGuild: string
+  guest: boolean
 }
 
-function Tag({userFlags, isGuest}: TagProps) {
-  if (isGuest)
-    return <>GUEST</>;
+const ChatTag = ({ author, crosspost, referenceGuild, guest }: TagProps) => {
+  if (!author.bot) return null
 
-  if (userFlags & UserFlag.VerifiedBot)
-    return <>{verified} {Locale.translate('tag.bot')}</>;
+  if (guest)
+    return <Tag className="guest">Guest</Tag>
 
-  if (userFlags & UserFlag.VerifiedSystem)
-    return <>{verified} {Locale.translate('tag.system')}</>;
+  if (author.system || referenceGuild === '667560445975986187')
+    return <Tag className="verified system">{verified} {Locale.translate('tag.system')}</Tag>
 
-  return <>{Locale.translate('tag.bot')}</>;
-}
+  if (crosspost)
+    return <Tag className="server">{Locale.translate('tag.server')}</Tag>
 
-function ChatTag({ userFlags, isGuest }: TagProps) {
-  return (
-    <ChatTagBase>
-      <Tag userFlags={userFlags} isGuest={isGuest} />
-    </ChatTagBase>
-  );
+  if (author.flags & 1 << 16)
+    return <Tag className="verified bot">{verified} {Locale.translate('tag.bot')}</Tag>
+
+  return <Tag className="bot">{Locale.translate('tag.bot')}</Tag>
 }
 
 export default ChatTag;

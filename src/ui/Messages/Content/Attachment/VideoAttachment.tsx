@@ -6,7 +6,6 @@ import {
 } from "@ui/Messages/Content/Attachment/elements";
 import {useCallback, useEffect, useMemo, useRef, useState} from "react";
 import fileSize from "filesize";
-import Tooltip from "rc-tooltip";
 import useSize from "@ui/Messages/Content/Attachment/useSize";
 
 interface VideoAttachmentProps {
@@ -145,16 +144,14 @@ function VideoAttachment(props: VideoAttachmentProps) {
               }}
             />
           </VideoAttachmentOverlay.ProgressBarBase>
-          <Tooltip overlay="Warning, bugs be here!" placement="top">
-            <VideoAttachmentOverlay.FullscreenButtonBase
-              onClick={() => {
-                if (document.fullscreenElement === null)
-                  attachmentRef.current?.requestFullscreen();
-                else
-                  document.exitFullscreen();
-              }}
-            />
-          </Tooltip>
+          <VideoAttachmentOverlay.FullscreenButtonBase
+            onClick={() => {
+              if (document.fullscreenElement === null)
+                attachmentRef.current?.requestFullscreen();
+              else
+                document.exitFullscreen();
+            }}
+          />
         </VideoAttachmentOverlay.VideoControlsBase>
       </VideoAttachmentOverlay.Base>
     </div>

@@ -18,6 +18,8 @@ export interface SendMessage_sendMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -159,6 +161,8 @@ export interface SendMessage_sendMessage_referencedMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -294,6 +298,7 @@ export interface SendMessage_sendMessage_referencedMessage_thread {
 export interface SendMessage_sendMessage_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -314,6 +319,7 @@ export interface SendMessage_sendMessage_referencedMessage {
 export interface SendMessage_sendMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

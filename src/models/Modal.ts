@@ -66,6 +66,11 @@ export const Modal = types
       self.isOpen = true
       self.type = 'newchat'
     },
+    openDelete(thread) {
+      self.isOpen = true
+      self.type = 'delete'
+      self.thread = thread
+    },
     close() {
       self.isOpen = false
     }

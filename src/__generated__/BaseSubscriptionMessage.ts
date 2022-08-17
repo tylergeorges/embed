@@ -18,6 +18,8 @@ export interface BaseSubscriptionMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface BaseSubscriptionMessage_attachments {
@@ -152,6 +154,7 @@ export interface BaseSubscriptionMessage_thread {
 export interface BaseSubscriptionMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

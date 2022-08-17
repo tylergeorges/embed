@@ -18,6 +18,8 @@ export interface SubscriptionMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface SubscriptionMessage_attachments {
@@ -158,6 +160,8 @@ export interface SubscriptionMessage_referencedMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface SubscriptionMessage_referencedMessage_attachments {
@@ -292,6 +296,7 @@ export interface SubscriptionMessage_referencedMessage_thread {
 export interface SubscriptionMessage_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -312,6 +317,7 @@ export interface SubscriptionMessage_referencedMessage {
 export interface SubscriptionMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

@@ -18,6 +18,8 @@ export interface Messages_channel_TextChannel_messageBunch_messages_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -159,6 +161,8 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -294,6 +298,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
 export interface Messages_channel_TextChannel_messageBunch_messages_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -314,6 +319,7 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
 export interface Messages_channel_TextChannel_messageBunch_messages {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -341,6 +347,8 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_author
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -482,6 +490,8 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -617,6 +627,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -637,6 +648,7 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
 export interface Messages_channel_TextChannel_messageBunch_pinnedMessages {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -676,6 +688,8 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_auth
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -817,6 +831,8 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -952,6 +968,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -972,6 +989,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
 export interface Messages_channel_AnnouncementChannel_messageBunch_messages {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -999,6 +1017,8 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -1140,6 +1160,8 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -1275,6 +1297,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -1295,6 +1318,7 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
 export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessages {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

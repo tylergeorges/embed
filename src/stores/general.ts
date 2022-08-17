@@ -4,6 +4,7 @@ import {ICategory} from "@ui/Sidebar/Channels/categorise";
 import { EmojiStore } from "@services/Emoji";
 import { defaultEmojis } from "@services/Emoji/defaultEmojis";
 import { Views } from "@ui/Sidebar";
+import { MessageDataModified } from "@ui/Messages/Message";
 
 export class GeneralStore {
   @observable appName = 'WidgetBot';
@@ -23,6 +24,8 @@ export class GeneralStore {
   @observable pinsOpen: boolean = false;
   @observable chats: Omit<Chats_getChats, '__typename'>[];
   @observable sidebarView: Views;
+  @observable messageToDelete?: MessageDataModified;
+  @observable unreadChannels = new Set<string>();
 
   constructor() {
     autorun(() => {
@@ -86,6 +89,18 @@ export class GeneralStore {
 
   @action setSidebarView(view: Views) {
     this.sidebarView = view;
+  }
+
+  @action setMessageToDelete(msg: MessageDataModified) {
+    this.messageToDelete = msg
+  }
+
+  @action addUnreadChannel(channel: string) {
+    this.unreadChannels.add(channel)
+  }
+
+  @action readChannel(channel: string) {
+    this.unreadChannels.delete(channel)
   }
 }
 

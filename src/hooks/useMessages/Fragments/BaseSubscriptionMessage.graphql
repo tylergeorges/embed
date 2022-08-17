@@ -5,6 +5,7 @@
 
 fragment BaseSubscriptionMessage on Message {
     id
+    channelId
     content
     type
     flags
@@ -20,6 +21,8 @@ fragment BaseSubscriptionMessage on Message {
         flags
         name
         roles
+        system
+        isWebhook
     }
 
     attachments {

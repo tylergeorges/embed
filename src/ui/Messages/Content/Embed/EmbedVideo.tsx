@@ -54,12 +54,17 @@ function EmbedVideo(props: EmbedVideoProps) {
       </ThumbnailWrapper>
     );
 
+  const url = new URL(props.url);
+  url.searchParams.set("autoplay", "1");
+  url.searchParams.set("auto_play", "1");
+
   return (
     <ThumbnailWrapper thumbnail={props.thumbnail} width={props.width} height={props.height}>
       <VideoIframe
         width={400}
         height={225}
-        src={props.url}
+        src={url.toString()}
+        allowFullScreen={true}
       />
     </ThumbnailWrapper>
   );
