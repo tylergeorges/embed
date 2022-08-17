@@ -18,6 +18,8 @@ export interface MoreMessages_channel_TextChannel_messageBunch_messages_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -159,6 +161,8 @@ export interface MoreMessages_channel_TextChannel_messageBunch_messages_referenc
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -354,6 +358,8 @@ export interface MoreMessages_channel_AnnouncementChannel_messageBunch_messages_
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -495,6 +501,8 @@ export interface MoreMessages_channel_AnnouncementChannel_messageBunch_messages_
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 

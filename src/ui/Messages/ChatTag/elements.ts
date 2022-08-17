@@ -1,13 +1,13 @@
 import styled from "../ThemeContext";
 
-export const VerifiedBot = styled('svg')`
+export const VerifiedBot = styled.svg`
   vertical-align: top;
   width: 15px;
   height: 15px;
   margin-left: -.25rem;
 `;
 
-export const ChatTagBase = styled('span')`
+export const Tag = styled.span`
   margin-left: 4px;
   font-size: 10px;
   text-transform: uppercase;
@@ -19,5 +19,5 @@ export const ChatTagBase = styled('span')`
   display: flex;
   align-items: center;
 
-  background-color: ${({ theme }) => theme.colors._accent.string()};
+  background-color: ${({ theme }) => theme.colors.accent};
 `;

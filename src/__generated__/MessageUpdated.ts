@@ -61,6 +61,8 @@ export interface MessageUpdated_messageUpdate_referencedMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface MessageUpdated_messageUpdate_referencedMessage_attachments {

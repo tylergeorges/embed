@@ -18,6 +18,8 @@ export interface BaseSubscriptionMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface BaseSubscriptionMessage_attachments {

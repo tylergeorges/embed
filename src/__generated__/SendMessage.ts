@@ -18,6 +18,8 @@ export interface SendMessage_sendMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -159,6 +161,8 @@ export interface SendMessage_sendMessage_referencedMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 

@@ -18,6 +18,8 @@ export interface NewMessage_message_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface NewMessage_message_attachments {
@@ -158,6 +160,8 @@ export interface NewMessage_message_referencedMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface NewMessage_message_referencedMessage_attachments {

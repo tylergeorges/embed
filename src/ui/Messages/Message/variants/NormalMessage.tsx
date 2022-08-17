@@ -112,8 +112,13 @@ const ReplyInfo = memo((props: ReplyInfoProps) => {
         : (
           <ReplyUserBase>
             <MiniUserAvatarBase src={miniAvatarUrl} />
-            {props.referencedMessage?.author.bot && (
-              <ChatTag userFlags={props.referencedMessage.author.flags} isGuest={props.referencedMessage.isGuest} />
+            {props.referencedMessage && (
+              <ChatTag
+                author={props.referencedMessage.author}
+                crosspost={!!(props.referencedMessage.flags & 1 << 1)}
+                referenceGuild={props.referencedMessage.messageReference?.guildId}
+                guest={props.referencedMessage.isGuest}
+              />
             )}
             <MiniUserNameBase color={miniUserNameColorHex}>
               {props.mentioned && "@"}{miniUserName}
@@ -184,7 +189,13 @@ function NormalMessage(props: MessageProps) {
           />
         )}
         <MessageHeaderBase>
-          <MessageAuthor author={props.message.author} avatarAnimated={props.isHovered ?? false} isGuest={props.message.isGuest} />
+          <MessageAuthor
+            author={props.message.author}
+            avatarAnimated={props.isHovered ?? false}
+            isGuest={props.message.isGuest}
+            crosspost={!!(props.message.flags & 1 << 1)}
+            referenceGuild={props.message.messageReference?.guildId}
+          />
           {props.hideTimestamp || <LargeTimestamp timestamp={props.message.createdAt} />}
         </MessageHeaderBase>
         <Content

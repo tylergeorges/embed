@@ -18,6 +18,8 @@ export interface SubscriptionMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface SubscriptionMessage_attachments {
@@ -158,6 +160,8 @@ export interface SubscriptionMessage_referencedMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface SubscriptionMessage_referencedMessage_attachments {

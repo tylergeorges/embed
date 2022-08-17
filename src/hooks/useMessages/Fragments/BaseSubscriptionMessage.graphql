@@ -21,6 +21,8 @@ fragment BaseSubscriptionMessage on Message {
         flags
         name
         roles
+        system
+        isWebhook
     }
 
     attachments {

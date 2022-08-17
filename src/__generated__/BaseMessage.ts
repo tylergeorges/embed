@@ -18,6 +18,8 @@ export interface BaseMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 

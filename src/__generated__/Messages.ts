@@ -18,6 +18,8 @@ export interface Messages_channel_TextChannel_messageBunch_messages_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -159,6 +161,8 @@ export interface Messages_channel_TextChannel_messageBunch_messages_referencedMe
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -343,6 +347,8 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_author
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -484,6 +490,8 @@ export interface Messages_channel_TextChannel_messageBunch_pinnedMessages_refere
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -680,6 +688,8 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_auth
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -821,6 +831,8 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_messages_refe
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -1005,6 +1017,8 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 
@@ -1146,6 +1160,8 @@ export interface Messages_channel_AnnouncementChannel_messageBunch_pinnedMessage
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
   color: number;
 }
 

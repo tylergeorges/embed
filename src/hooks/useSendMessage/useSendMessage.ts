@@ -36,7 +36,9 @@ export const useSendMessage = (thread?: string) => {
             id: '_id' in authStore.user ? authStore.user._id : Util.generateSnowflake(),
             flags: 0,
             name: authStore.user.username,
-            roles: []
+            roles: [],
+            system: false,
+            isWebhook: true
           },
           reactions: [],
           attachments: [],
