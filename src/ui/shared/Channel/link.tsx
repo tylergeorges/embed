@@ -8,7 +8,7 @@ type Props = Partial<NavLinkProps> & {
   $ref?: any;
 };
 
-const toggle = () => window.innerWidth < 520 ? store.sidebar.toggle() : null
+const closeSidebar = () => window.innerWidth < 520 ? store.sidebar.close() : null
 
 class ChannelLink extends React.PureComponent<Props> {
   render() {
@@ -18,7 +18,7 @@ class ChannelLink extends React.PureComponent<Props> {
         to={`/channels/${generalStore.guild?.id}/${id}`}
         data-channel={id}
         ref={$ref}
-        onClick={toggle}
+        onClick={closeSidebar}
         children={children}
         className={className}
         style={{ textDecoration: 'unset'}}
