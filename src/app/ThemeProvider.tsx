@@ -10,13 +10,25 @@ import { useQuery } from 'react-apollo-hooks'
 import {useRouter} from '@hooks'
 import {generalStore, authStore} from '@store';
 import { useEffect } from 'react'
-import {Loading} from "@ui/Overlays";
 
 const queryParams = new URLSearchParams(location.search)
 
 export const ThemeProvider = ({ children }) => {
   const guild = useRouter()?.guild ?? '299881420891881473'
   const { data: {settings} } = useQuery<Settings>(GET_SETTINGS, { variables: { guild }, fetchPolicy: 'network-only' })
+
+  let theme: Settings_settings_theme = {
+    __typename: 'ThemeSettings',
+    colors: {
+      __typename: 'ThemeColorSettings',
+      primary: settings?.theme?.colors?.primary || Constants.THEME_COLOR_PRIMARY,
+      accent: settings?.theme?.colors?.accent || Constants.THEME_COLOR_ACCENT,
+      background: settings?.theme?.colors?.background || Constants.THEME_BACKGROUND
+    },
+    css: settings?.theme?.css || ``
+  };
+
+  generalStore.setSettings(settings)
 
   useEffect(() => {
     if (queryParams.has('token')) {
@@ -48,21 +60,6 @@ export const ThemeProvider = ({ children }) => {
       }
     }
   }, []);
-
-  if (!settings) return <Loading />;
-
-  let theme: Settings_settings_theme = {
-    __typename: 'ThemeSettings',
-    colors: {
-      __typename: 'ThemeColorSettings',
-      primary: settings?.theme?.colors?.primary || Constants.THEME_COLOR_PRIMARY,
-      accent: settings?.theme?.colors?.accent || Constants.THEME_COLOR_ACCENT,
-      background: settings?.theme?.colors?.background || Constants.THEME_BACKGROUND
-    },
-    css: settings?.theme?.css || ``
-  };
-
-  generalStore.setSettings(settings)
 
   const themeContext: ThemeContext = {
     ...theme,
