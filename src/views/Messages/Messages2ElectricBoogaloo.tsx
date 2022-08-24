@@ -10,6 +10,7 @@ import {MessagesWrapper, ScrollerSpacer} from "@views/Messages/elements";
 import { Virtuoso } from "react-virtuoso";
 import MessageGroup from "@ui/Messages";
 import { useChatMessages } from "../../hooks/useMessages/useChatMessages";
+import { ApolloQueryResult } from "apollo-client";
 
 const maxMessagesToLoad = 30;
 
@@ -21,9 +22,10 @@ interface MessagesProps {
 }
 
 function Messages2ElectricBoogaloo({ guild, channel, chatUser, thread = false }: MessagesProps) {
-  const { messages, error, ready, stale, fetchMore } = channel ?
-    useMessages(channel, guild, thread ? generalStore.activeThread.id : null) :
-    useChatMessages(chatUser, guild);
+  const channelMessageHandler = useMessages(channel, guild, thread ? generalStore.activeThread.id : null)
+  const chatMessageHandler = useChatMessages(chatUser, guild)
+
+  const { messages, error, ready, stale, fetchMore } = channel ? channelMessageHandler : chatMessageHandler
 
   const groupedMessages = useMemo(() => groupMessages(messages), [messages]);
   const [firstItemIndex, setFirstItemIndex] = useState(100000);
@@ -34,7 +36,7 @@ function Messages2ElectricBoogaloo({ guild, channel, chatUser, thread = false }:
     const { data } = await fetchMore({
       limit: maxMessagesToLoad,
       before: messages[0].id
-    });
+    }) as ApolloQueryResult<any>; // needs cast due to DMs not being paginated
 
     setFirstItemIndex(firstItemIndex - groupMessages(data.channel.messageBunch.messages).length);
   }, [fetchMore, firstItemIndex, groupedMessages]);

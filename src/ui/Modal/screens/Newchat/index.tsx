@@ -3,6 +3,7 @@ import { useRouter } from '@hooks'
 import { store } from '@models'
 import { Member } from '@ui/Messages/elements'
 import { Loading } from '@ui/Overlays'
+import { closeSidebar } from '@ui/shared/Channel/link'
 import { Avatar, Details } from '@ui/Sidebar/Chats/elements'
 import { useQuery } from 'react-apollo-hooks'
 import { NavLink } from 'react-router-dom'
@@ -28,8 +29,6 @@ const NewChat = () => {
       </Root>
     )
 
-  const toggle = () => window.innerWidth < 520 ? store.sidebar.toggle() : null
-
   return (
     <Root className="new-chat">
       <Top className="top">
@@ -44,7 +43,7 @@ const NewChat = () => {
               to={`/channels/${guild}/@${user.id}`}
               onClick={() => {
                 store.modal.close()
-                toggle()
+                closeSidebar()
               }}
               children={
                 <User>

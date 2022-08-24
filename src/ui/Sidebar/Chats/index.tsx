@@ -12,6 +12,7 @@ import client from "@lib/apollo";
 import USER_TAG from "@views/Messages/Header/UserTag.graphql";
 import { FaPlus } from "react-icons/fa";
 import { store } from "@models";
+import { closeSidebar } from "@ui/shared/Channel/link";
 
 export const ChatSwitcher = observer(() => {
   if (!generalStore.chats)
@@ -47,8 +48,6 @@ export const ChatSwitcher = observer(() => {
     });
   }
 
-  const toggle = () => window.innerWidth < 520 ? store.sidebar.toggle() : null
-
   return (
     <Root className="channels">
       {authStore.user && 'provider' in authStore.user && authStore.user.provider === 'Guild' &&
@@ -57,7 +56,7 @@ export const ChatSwitcher = observer(() => {
         <NavLink
           key={chat.recipient.id}
           to={`/channels/${guild}/@${chat.recipient.id}`}
-          onClick={toggle}
+          onClick={closeSidebar}
           children={
             <Chat selected={channel === '@'+chat.recipient.id}>
               <Avatar width={32} height={32} src={chat.recipient.avatarUrl} />

@@ -23,10 +23,10 @@ type MessagesProps = {
 };
 
 export const Messages = observer(({ guild, channel, chatUser, thread = false }: MessagesProps) => {
-  // both of these call the same hooks, so react won't complain about using them conditionally
-  const { messages, error, ready, stale, fetchMore } = channel ?
-    useMessages(channel, guild, thread ? generalStore.activeThread.id : null) :
-    useChatMessages(chatUser, guild)
+  const channelMessageHandler = useMessages(channel, guild, thread ? generalStore.activeThread.id : null)
+  const chatMessageHandler = useChatMessages(chatUser, guild)
+
+  const { messages, error, ready, stale, fetchMore } = channel ? channelMessageHandler : chatMessageHandler
   const groupedMessages = groupMessages(messages);
   const scroller = useObservable({
     isLoadingMore: false,

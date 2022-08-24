@@ -2,13 +2,14 @@ import * as React from "react";
 import { NavLink, NavLinkProps } from "react-router-dom";
 import { store } from "@models";
 import { generalStore } from "@store";
+import { Views } from "@ui/Sidebar";
 
 type Props = Partial<NavLinkProps> & {
   id: string;
   $ref?: any;
 };
 
-const closeSidebar = () => window.innerWidth < 520 ? store.sidebar.close() : null
+export const closeSidebar = () => window.innerWidth < 520 ? store.sidebar.close() : null
 
 class ChannelLink extends React.PureComponent<Props> {
   render() {
@@ -18,7 +19,10 @@ class ChannelLink extends React.PureComponent<Props> {
         to={`/channels/${generalStore.guild?.id}/${id}`}
         data-channel={id}
         ref={$ref}
-        onClick={closeSidebar}
+        onClick={() => {
+          closeSidebar()
+          generalStore.setSidebarView(Views.Channels)
+        }}
         children={children}
         className={className}
         style={{ textDecoration: 'unset'}}

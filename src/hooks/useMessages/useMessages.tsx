@@ -18,16 +18,17 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
   const query = useQuery(MESSAGES, {
     variables: { channel, thread },
-    fetchPolicy: 'network-only'
+    fetchPolicy: 'network-only',
+    skip: !channel
   });
 
   const ready =
     (query.data?.channel?.id === channel) ||
     false;
 
-  const messages = ready ? query.data.channel.messageBunch.messages : [];
+  const messages = ready ? query.data?.channel.messageBunch.messages : [];
 
-  generalStore.setPins(ready ? query.data.channel.messageBunch.pinnedMessages : null)
+  generalStore.setPins(ready ? query.data?.channel.messageBunch.pinnedMessages : null)
 
   let fullyLoaded = false
 
@@ -69,32 +70,36 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     ? generalStore.guild?.channels.map(c => c.id)
     : [channel]
 
+  console.log(channels, channels.length)
+
   useSubscription<NewMessage, NewMessageVariables>(NEW_MESSAGE, {
     variables: { channels, guild, threadId: thread },
+    skip: !channels[0],
     onSubscriptionData({ subscriptionData }) {
-      query.updateQuery(prev =>
+      const message = subscriptionData.data.message as MessageData
+
+      if (message.channelId !== channel) {
+        message.author.name += ` (#${getChannel(message.channelId)?.name})`
+
+        generalStore.addUnreadChannel(message.channelId)
+
+        return spawnNotif({
+          content: (
+            <ChannelLink id={message.channelId}>
+              <Message message={message} isFirstMessage={true} hideTimestamp={true} />
+            </ChannelLink>
+          ),
+          hideAfter: +queryParams.get('notificationtimeout') || 3000
+        })
+      }
+
+      // if a channel is open
+      if (channel) query.updateQuery(prev =>
         produce(prev, (data?: { channel: Messages_channel }) => {
           const messages = data?.channel.messageBunch.messages;
           if (!messages) {
             console.warn('NEW_MESSAGE received empty initial state within subscription', subscriptionData, data);
             return;
-          }
-
-          const message = subscriptionData.data.message as MessageData
-
-          if (message.channelId !== channel) {
-            message.author.name += ` (#${getChannel(message.channelId)?.name})`
-
-            generalStore.addUnreadChannel(message.channelId)
-
-            return spawnNotif({
-              content: (
-                <ChannelLink id={message.channelId}>
-                  <Message message={message} isFirstMessage={true} hideTimestamp={true} />
-                </ChannelLink>
-              ),
-              hideAfter: +queryParams.get('notificationtimeout') || 3000
-            })
           }
 
           message.author.color = messages.find(m => m.author.id === message.author.id)?.author.color || 0xffffff
@@ -105,6 +110,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
   useSubscription<MessageUpdated, MessageUpdatedVariables>(MESSAGE_UPDATED, {
     variables: { channel, guild, threadId: thread },
+    skip: !channel,
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, (data?: { channel: Messages_channel }) => {
@@ -131,6 +137,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
   useSubscription<MessageDeleted, MessageDeletedVariables>(MESSAGE_DELETED, {
     variables: { channel, guild, threadId: thread },
+    skip: !channel,
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, (data?: { channel: Messages_channel }) => {
@@ -151,6 +158,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
   useSubscription<MessagesBulkDeleted, MessagesBulkDeletedVariables>(MESSAGES_BULK_DELETED, {
     variables: { channel, guild, threadId: thread },
+    skip: !channel,
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, (data?: { channel: Messages_channel }) => {
