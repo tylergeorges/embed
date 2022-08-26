@@ -13,7 +13,7 @@ import App from './app'
 import register, { unregister } from './registerServiceWorker'
 
 if (!window.location.hostname.includes(`127.0.0.1`) && !window.location.hostname.includes(`localhost`))
-    Sentry.init({dsn: 'https://dc53893051504a7f9f94b1c207364f5f@o328116.ingest.sentry.io/1840509'});
+    Sentry.init({dsn: 'https://ba886140cbbf46d1b8c5a9c7f6d55267@bugs.widgetbot.io/6'});
 
 // Render App
 ReactDOM.render(
