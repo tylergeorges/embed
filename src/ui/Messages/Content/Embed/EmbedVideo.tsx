@@ -27,8 +27,8 @@ function ThumbnailWrapper({ thumbnail, width, height, children }: ThumbnailWrapp
       src={error ? DiscordImageFailure : thumbnail}
       onError={() => setError(true)}
       style={{
-        width: adjustedWidth,
-        height: adjustedHeight,
+        maxWidth: adjustedWidth,
+        maxHeight: adjustedHeight,
       }}
     />
   );
@@ -61,8 +61,6 @@ function EmbedVideo(props: EmbedVideoProps) {
   return (
     <ThumbnailWrapper thumbnail={props.thumbnail} width={props.width} height={props.height}>
       <VideoIframe
-        width={400}
-        height={225}
         src={url.toString()}
         allowFullScreen={true}
       />

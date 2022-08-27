@@ -149,7 +149,7 @@ function VideoAttachment(props: VideoAttachmentProps) {
               if (document.fullscreenElement === null)
                 attachmentRef.current?.requestFullscreen();
               else
-                document.exitFullscreen();
+                void document.exitFullscreen();
             }}
           />
         </VideoAttachmentOverlay.VideoControlsBase>
