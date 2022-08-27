@@ -27,6 +27,7 @@ export namespace EmbedStyle {
 
     ${props => (props.thumbnailIsLarge || props.hasVideoWithThumbnail) && css`
       max-width: min(432px, 100%);
+      width: 100%;
     `}
   `;
 
@@ -229,10 +230,13 @@ export const VideoIframe = styled.iframe`
 export const VideoThumbnail = styled.div<{src: string}>`
   border-radius: 3px;
   background-image: url(${props => props.src});
+  background-position: center;
   background-size: cover;
   position: relative;
   cursor: pointer;
   aspect-ratio: 400 / 225;
+  width: 100%;
+  height: 100%;
   
   &::after {
     content: '';

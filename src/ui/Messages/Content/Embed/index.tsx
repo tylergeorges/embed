@@ -120,6 +120,7 @@ function Embed({embed, images}: EmbedProps) {
         </EmbedStyle.Content>
         {(embed.thumbnail && embed.type.toLowerCase() !== "video") && (
           <EmbedStyle.Image
+            isFromEmbed={true}
             src={embed.thumbnail.proxyUrl}
             originalUrl={embed.thumbnail.url}
             width={widthThumbnail}
@@ -129,6 +130,7 @@ function Embed({embed, images}: EmbedProps) {
       </EmbedStyle.ContentAndThumbnail>
       {((images === undefined || images?.length === 0) && embed.image) && (
         <EmbedStyle.Image
+          isFromEmbed={true}
           src={embed.image.proxyUrl}
           originalUrl={embed.image.url}
           width={widthImage}
@@ -141,6 +143,7 @@ function Embed({embed, images}: EmbedProps) {
           {images.map(image => (
             <EmbedStyle.MultiImageImageContainer key={image.url}>
               <EmbedStyle.Image
+                isFromEmbed={true}
                 fillMaxSize={true}
                 src={image.proxyUrl}
                 originalUrl={image.url}

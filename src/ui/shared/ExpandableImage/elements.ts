@@ -7,10 +7,11 @@ export const Root = styled.div`
   height: fit-content;
 `
 
-export const Image = styled.img`
-  width: 100%;
+export const Image = styled.img<{isFromEmbed: boolean | undefined}>`
   height: 100%;
   border-radius: 3px;
+  
+  ${({isFromEmbed}) => !isFromEmbed && `width: 100%;`}
 `
 
 export const Error = css`

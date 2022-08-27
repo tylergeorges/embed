@@ -11,6 +11,7 @@ interface Props {
   originalUrl?: string
   className?: string
 
+  isFromEmbed?: boolean
   height?: number
   width?: number
   maxWidth?: number
@@ -53,6 +54,7 @@ const ExpandableImage = (props: Props) => {
       >
         <Image
           src={imageUrl}
+          isFromEmbed={props.isFromEmbed}
           className={loadState === "error" && Error}
           style={{
             maxWidth: scale.width,
