@@ -1,4 +1,5 @@
 import styled from '@lib/emotion'
+import {css} from "react-emotion";
 
 export const Link = styled('a')`
   & code {
@@ -13,11 +14,14 @@ export const Edited = styled('span')`
   opacity: 0.3;
 `
 
+export const colorInherit = css`
+  color: inherit;
+`;
+
 export const QuoteContainer = styled('div')`
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-}
 `
 
 export const QuoteBar = styled('div')`
