@@ -42,7 +42,6 @@ const ExpandableImage = (props: Props) => {
   return (
     <Root
       className={className || null}
-      scale={scale}
       onClick={() => store.modal.openImage(url, props.originalUrl)}
       style={props.fillMaxSize === true ? { width: '100%', height: '100%' } : null}
     >
@@ -56,8 +55,9 @@ const ExpandableImage = (props: Props) => {
           src={imageUrl}
           className={loadState === "error" && Error}
           style={{
-            width: scale.width,
-            height: scale.height
+            maxWidth: scale.width,
+            maxHeight: scale.height,
+            aspectRatio: `${scale.width} / ${scale.height}`
           }}
           // onLoad={() => setLoadState('loaded')}
           onError={() => setLoadState('error')}

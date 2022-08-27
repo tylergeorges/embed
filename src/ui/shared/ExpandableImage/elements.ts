@@ -1,20 +1,15 @@
-import { Scale } from '@ui/shared/ScaledImage'
 import styled from '@lib/emotion'
 
 import {css} from "react-emotion";
-
-interface Props {
-  scale: Scale
-}
-
-export const Root = styled('div')<Props>`
+export const Root = styled.div`
   position: relative;
-  ${({ scale }) => scale.css};
+  width: fit-content;
+  height: fit-content;
 `
 
-export const Image = styled('img')`
+export const Image = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   border-radius: 3px;
 `
 
