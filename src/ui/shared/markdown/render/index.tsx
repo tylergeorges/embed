@@ -1,7 +1,15 @@
 import memoize from 'memoizee'
 import * as R from 'ramda'
 import baseRules from '@ui/shared/markdown/render/ast'
-import { Code, Highlighter, Link, QuoteContainer, QuoteBar, Quote } from '@ui/shared/markdown/render/elements'
+import {
+  Code,
+  Highlighter,
+  Link,
+  QuoteContainer,
+  QuoteBar,
+  Quote,
+  colorInherit
+} from '@ui/shared/markdown/render/elements'
 import {
   astToString,
   flattenAst,
@@ -39,12 +47,26 @@ function createRules(rule: { [key: string]: any }) {
 
   return {
     ...rule,
+    u: {
+      ...rule.u,
+      react: (node, recurseOutput, state) => (
+        <u className={colorInherit} key={state.key}>{recurseOutput(node.content, state)}</u>
+      )
+    },
     s: {
       order: rule.u.order,
       match: SimpleMarkdown.inlineRegex(/^~~([\s\S]+?)~~(?!_)/),
       parse: rule.u.parse,
       react: (node, recurseOutput, state) => (
-        <s key={state.key}>{recurseOutput(node.content, state)}</s>
+        <s className={colorInherit} key={state.key}>{recurseOutput(node.content, state)}</s>
+      )
+    },
+    strong: {
+      ...rule.strong,
+      react: (node, recurseOutput, state) => (
+        <strong className={colorInherit} key={state.key}>
+          {recurseOutput(node.content, state)}
+        </strong>
       )
     },
     paragraph: {
