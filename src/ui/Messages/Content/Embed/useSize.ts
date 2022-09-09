@@ -7,10 +7,7 @@ function useSize(
   cancel?: boolean
 ) {
   const { width, height, isLarge } = useMemo(() => {
-    if (cancel)
-      return { width: null, height: null, isLarge: false };
-
-    if (image === null)
+    if (cancel || image === null)
       return { width: null, height: null, isLarge: false };
 
     if (image.__typename === "EmbedImage" || /^article|image$/i.test(type)) {

@@ -1,9 +1,9 @@
 import optimize from '@ui/shared/ExpandableImage/optimize'
 import { Scale } from '@ui/shared/ScaledImage'
-import { useState, useEffect } from 'react'
+import {useState, useEffect} from 'react'
 import DiscordImageFailure from "@images/discordAssets/discord-image-failure.svg";
 
-import {Error, Image, Root} from './elements'
+import {Error, Image as ImageElement, Root} from './elements'
 import { store } from '@models'
 
 interface Props {
@@ -25,6 +25,7 @@ const ExpandableImage = (props: Props) => {
   const [loadState, setLoadState] = useState<'loaded' | 'error' | 'loading'>(
     null
   );
+  const [actualWidth, setActualWidth] = useState(null);
 
   useEffect(() => {
     const timer = setTimeout(() => !loadState && setLoadState('loading'), 100)
@@ -40,6 +41,10 @@ const ExpandableImage = (props: Props) => {
     })
     : DiscordImageFailure;
 
+  const image = new Image();
+  image.src = imageUrl;
+  image.onload = () => setActualWidth(image.width);
+
   return (
     <Root
       className={className || null}
@@ -52,12 +57,12 @@ const ExpandableImage = (props: Props) => {
         target="_blank"
         rel="noopener"
       >
-        <Image
+        <ImageElement
           src={imageUrl}
           isFromEmbed={props.isFromEmbed}
           className={loadState === "error" && Error}
           style={{
-            maxWidth: scale.width,
+            maxWidth: actualWidth ? Math.min(scale.width, actualWidth) : scale.width,
             maxHeight: scale.height,
             aspectRatio: `${scale.width} / ${scale.height}`
           }}

@@ -18,6 +18,13 @@ export const colorInherit = css`
   color: inherit;
 `;
 
+export const MdWrapper = styled.span`
+  &,
+  * {
+    color: inherit;
+  }
+`;
+
 export const QuoteContainer = styled('div')`
   display: -webkit-box;
   display: -ms-flexbox;

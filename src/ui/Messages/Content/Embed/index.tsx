@@ -7,7 +7,11 @@ import {
 } from "@ui/Messages/Content/Embed/elements";
 import numberToRgb from "@utils/numberToRgb";
 import moment from "moment";
-import {LinkMarkdown, parseEmbedTitle} from "@ui/shared/markdown/render";
+import {
+  EmbedTitleMarkdown,
+  LinkMarkdown,
+  parseEmbedTitle
+} from "@ui/shared/markdown/render";
 import useSize from "@ui/Messages/Content/Embed/useSize";
 import EmbedVideo from "@ui/Messages/Content/Embed/EmbedVideo";
 
@@ -42,11 +46,15 @@ function Embed({embed, images}: EmbedProps) {
     undefined
   );
 
+  const embedHasSingularImage = (images === undefined || images?.length === 0) && embed.image !== null;
+  const hasVideoWithThumbnail = embed.type.toLowerCase() === 'video' && embed.thumbnail !== null;
+  console.log(embed, images, widthImage !== null, hasVideoWithThumbnail, embedHasSingularImage)
   return (
     <EmbedStyle.Base
       color={embedColor}
-      thumbnailIsLarge={widthImage !== null}
-      hasVideoWithThumbnail={embed.type.toLowerCase() === 'video' && embed.thumbnail !== null}
+      thumbnailIsLarge={widthImage !== null || widthThumbnail !== null}
+      hasVideoWithThumbnail={hasVideoWithThumbnail}
+      hasSingularImage={embedHasSingularImage}
     >
       <EmbedStyle.ContentAndThumbnail thumbnailIsLarge={isThumbnailLarge}>
         <EmbedStyle.Content>
@@ -75,7 +83,9 @@ function Embed({embed, images}: EmbedProps) {
             embed.url !== null
               ? (
                 <EmbedStyle.TitleWithUrl href={embed.url} target="_blank">
-                  {parseEmbedTitle(embed.title)}
+                  <EmbedTitleMarkdown>
+                    {embed.title}
+                  </EmbedTitleMarkdown>
                 </EmbedStyle.TitleWithUrl>
               )
               : (
@@ -128,7 +138,7 @@ function Embed({embed, images}: EmbedProps) {
           />
         )}
       </EmbedStyle.ContentAndThumbnail>
-      {((images === undefined || images?.length === 0) && embed.image) && (
+      {embedHasSingularImage && (
         <EmbedStyle.Image
           isFromEmbed={true}
           src={embed.image.proxyUrl}
@@ -144,7 +154,6 @@ function Embed({embed, images}: EmbedProps) {
             <EmbedStyle.MultiImageImageContainer key={image.url}>
               <EmbedStyle.Image
                 isFromEmbed={true}
-                fillMaxSize={true}
                 src={image.proxyUrl}
                 originalUrl={image.url}
                 large={true}

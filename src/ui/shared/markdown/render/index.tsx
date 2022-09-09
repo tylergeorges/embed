@@ -8,7 +8,7 @@ import {
   QuoteContainer,
   QuoteBar,
   Quote,
-  colorInherit
+  MdWrapper
 } from '@ui/shared/markdown/render/elements'
 import {
   astToString,
@@ -50,7 +50,7 @@ function createRules(rule: { [key: string]: any }) {
     u: {
       ...rule.u,
       react: (node, recurseOutput, state) => (
-        <u className={colorInherit} key={state.key}>{recurseOutput(node.content, state)}</u>
+        <u key={state.key}>{recurseOutput(node.content, state)}</u>
       )
     },
     s: {
@@ -58,13 +58,13 @@ function createRules(rule: { [key: string]: any }) {
       match: SimpleMarkdown.inlineRegex(/^~~([\s\S]+?)~~(?!_)/),
       parse: rule.u.parse,
       react: (node, recurseOutput, state) => (
-        <s className={colorInherit} key={state.key}>{recurseOutput(node.content, state)}</s>
+        <s key={state.key}>{recurseOutput(node.content, state)}</s>
       )
     },
     strong: {
       ...rule.strong,
       react: (node, recurseOutput, state) => (
-        <strong className={colorInherit} key={state.key}>
+        <strong key={state.key}>
           {recurseOutput(node.content, state)}
         </strong>
       )
@@ -154,8 +154,39 @@ export const parseEmbedTitle = parserFor(
   )
 )
 
-function Markdown({ children: content, mentions, users }: { children: string, mentions?: Message_mentions[], users?: Map<string, Message_author> }) {
-  return content ? parse(content, undefined, {mentions, users}) : null
+interface MdOptions {
+  children: string;
+  mentions?: Message_mentions[];
+  users?: Map<string, Message_author>;
+  parseFn?: (input: string, inline?: boolean, options?: Record<string, unknown>) => unknown;
+}
+
+function Markdown(
+  {
+    children: content,
+    mentions,
+    users,
+    parseFn
+  }: MdOptions
+) {
+  if (!content)
+    return null;
+
+  return (
+    <MdWrapper>
+      {(parseFn ?? parse)(content, undefined, {mentions, users})}
+    </MdWrapper>
+  );
+}
+
+export function EmbedTitleMarkdown(
+  {
+    children,
+    mentions,
+    users
+  }: Omit<MdOptions, "parseFn">
+) {
+  return <Markdown children={children} mentions={mentions} users={users} parseFn={parseEmbedTitle} />
 }
 
 namespace Markdown {

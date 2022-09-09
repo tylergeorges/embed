@@ -12,6 +12,7 @@ export namespace EmbedStyle {
     color: string | undefined;
     thumbnailIsLarge: boolean;
     hasVideoWithThumbnail: boolean;
+    hasSingularImage: boolean;
   }
 
   export const Base = styled.article<BaseProps>`
@@ -25,8 +26,11 @@ export namespace EmbedStyle {
     gap: 8px;
     max-width: 520px;
 
-    ${props => (props.thumbnailIsLarge || props.hasVideoWithThumbnail) && css`
+    ${props => (props.thumbnailIsLarge || props.hasVideoWithThumbnail || props.hasSingularImage) && css`
       max-width: min(432px, 100%);
+    `}
+    
+    ${props => props.hasVideoWithThumbnail && css`
       width: 100%;
     `}
   `;
@@ -103,12 +107,6 @@ export namespace EmbedStyle {
   export const Image = styled(ExpandableImage)<ImageProps>`
     border-radius: 3px;
     cursor: pointer;
-    ${props => props.width && css`
-      width: ${props.width}px;
-    `}
-    ${props => props.height && css`
-      height: ${props.height}px;
-    `}
     display: flex;
     
     ${props => (props.large && props.withMargin !== false) && css`

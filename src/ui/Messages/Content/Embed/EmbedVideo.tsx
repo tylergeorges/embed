@@ -63,6 +63,7 @@ function EmbedVideo(props: EmbedVideoProps) {
       <VideoIframe
         src={url.toString()}
         allowFullScreen={true}
+        allow="autoplay"
       />
     </ThumbnailWrapper>
   );
