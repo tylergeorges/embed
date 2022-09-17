@@ -1,7 +1,7 @@
 import produce from "immer";
 import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables } from "@generated";
+import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables } from "@generated";
 import { generalStore } from "@store";
 import { useContext } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
@@ -54,6 +54,8 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
           return
         }
         return produce(prev, draftState => {
+          if (draftState === undefined) return;
+
           draftState.channel.messageBunch.messages = [
             ...fetchMoreResult.channel.messageBunch.messages,
             ...draftState.channel.messageBunch.messages

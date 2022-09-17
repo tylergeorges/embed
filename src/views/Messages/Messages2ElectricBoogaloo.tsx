@@ -5,7 +5,7 @@ import {Locale} from "@lib/Locale";
 import {formatError, groupMessages} from "@views/Messages/utils";
 import ErrorAhoy from "@ui/Overlays/ErrorAhoy";
 import {Info, Loading, NoMessages} from "@ui/Overlays";
-import {useCallback, useMemo, useState} from "react";
+import {useCallback, useEffect, useMemo} from "react";
 import {MessagesWrapper, ScrollerSpacer} from "@views/Messages/elements";
 import { Virtuoso } from "react-virtuoso";
 import MessageGroup from "@ui/Messages";
@@ -18,6 +18,8 @@ interface MessagesProps {
   thread?: boolean;
 }
 
+const firstItemIndexStart = 100_000;
+
 function Messages2ElectricBoogaloo({ guild, channel, thread = false }: MessagesProps) {
   const { messages, error, ready, stale, fetchMore } = useMessages(
     channel,
@@ -25,16 +27,41 @@ function Messages2ElectricBoogaloo({ guild, channel, thread = false }: MessagesP
     thread ? generalStore.activeThread.id : null
   );
 
-  const groupedMessages = useMemo(() => groupMessages(messages), [messages]);
-  const [firstItemIndex, setFirstItemIndex] = useState(100000);
-  const loadMoreMessages = useCallback(async () => {
-    const { data } = await fetchMore({
-      limit: maxMessagesToLoad,
-      before: messages[0].id
-    });
+  const messageState = useMemo(() => {
+    if (messages === undefined)
+      return {
+        messages: [],
+        groupedMessages: [],
+        firstItemIndex: firstItemIndexStart,
+      };
 
-    setFirstItemIndex(firstItemIndex - groupMessages(data.channel.messageBunch.messages).length);
-  }, [fetchMore, firstItemIndex, groupedMessages]);
+    if (messageState === undefined)
+      return {
+        messages: messages,
+        groupedMessages: groupMessages(messages),
+        firstItemIndex: firstItemIndexStart - groupMessages(messages).length,
+      }
+
+    return {
+      messages,
+      groupedMessages: groupMessages(messages),
+      firstItemIndex:
+        messageState.firstItemIndex
+        - groupMessages(
+          messages.slice(messageState.messages.length - messages.length)
+        ).length,
+    }
+  }, [messages]);
+
+  const loadMoreMessages = useCallback(
+    async () => fetchMore({
+      before: messageState.messages[0]?.id,
+      limit: maxMessagesToLoad,
+    }), [messageState]);
+
+  useEffect(() => {
+    void loadMoreMessages()
+  }, [channel, guild, thread]);
 
   if (error) {
     addNotification({
@@ -50,7 +77,7 @@ function Messages2ElectricBoogaloo({ guild, channel, thread = false }: MessagesP
   if (!ready)
     return <Loading />;
 
-  if (!groupedMessages.length)
+  if (!messageState.groupedMessages.length)
     return (
       <NoMessages className="no-messages">
         <Info>{Locale.translate('nomessages')}</Info>
@@ -60,10 +87,10 @@ function Messages2ElectricBoogaloo({ guild, channel, thread = false }: MessagesP
   return (
     <MessagesWrapper stale={stale}>
       <Virtuoso
-        data={groupedMessages}
-        firstItemIndex={firstItemIndex}
+        data={messageState.groupedMessages}
+        firstItemIndex={messageState.firstItemIndex}
         overscan={100}
-        startReached={loadMoreMessages}
+        startReached={() => void loadMoreMessages()}
         initialTopMostItemIndex={maxMessagesToLoad - 1}
         alignToBottom={true}
         followOutput={(isAtBottom: boolean) => {

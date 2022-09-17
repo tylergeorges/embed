@@ -48,7 +48,7 @@ function Embed({embed, images}: EmbedProps) {
 
   const embedHasSingularImage = (images === undefined || images?.length === 0) && embed.image !== null;
   const hasVideoWithThumbnail = embed.type.toLowerCase() === 'video' && embed.thumbnail !== null;
-  console.log(embed, images, widthImage !== null, hasVideoWithThumbnail, embedHasSingularImage)
+
   return (
     <EmbedStyle.Base
       color={embedColor}
