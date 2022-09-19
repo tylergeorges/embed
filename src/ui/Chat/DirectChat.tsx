@@ -7,7 +7,9 @@ import { observer } from 'mobx-react'
 import { useMutation } from "react-apollo-hooks";
 import BLOCK_USER from "@ui/Modal/screens/Profile/BlockUser.graphql";
 
-// this is a copy of Chat.tsx for direct chats
+// Chat.tsx but for direct (& group) chats
+
+const list = new Intl.ListFormat()
 
 export const DirectChat: FunctionComponent = observer((props) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -15,21 +17,27 @@ export const DirectChat: FunctionComponent = observer((props) => {
   const [rows, setRows] = useState(1);
   const { channel } = useRouter();
 
-  const chat = generalStore.chats?.find(c => c.recipient.id === channel.substring(1));
+  const chat = generalStore.chats?.find(c => c.id === channel.substring(1));
 
-  const isBlocked = chat && authStore.blockedUsers.includes(chat.recipient.id);
+  const isBlocked = chat && authStore.blockedUsers.includes(chat.id);
 
   const blockUser = useMutation<boolean>(BLOCK_USER);
 
   const unblockUser = async () => {
     await blockUser({
-      variables: { user: chat.recipient.id, active: false },
+      variables: { user: chat.id, active: false },
     });
 
-    const newBlockedUsers = authStore.blockedUsers.filter(r => r !== chat.recipient.id);
+    const newBlockedUsers = authStore.blockedUsers.filter(r => r !== chat.id);
 
     authStore.setBlockedUsers(newBlockedUsers);
   };
+
+  if (!chat) return null;
+
+  const chatName = 'recipient' in chat
+    ? chat.recipient.name
+    : list.format(chat.recipients.map(r => r.name).sort())
 
   return (
     <>
@@ -45,7 +53,7 @@ export const DirectChat: FunctionComponent = observer((props) => {
           </Blocked>
           : <Field rows={rows} canSend={true} className="field">
             <Input
-              channel={{ name: chat?.recipient.name, canSend: true, direct: true }}
+              channel={{ name: chatName, canSend: true, direct: true }}
               onChange={(value: string) => {
                 const rows = value.split(/\r\n|\r|\n/).length;
                 setRows(rows)
@@ -97,7 +105,7 @@ export const DirectChat: FunctionComponent = observer((props) => {
               }}
               innerRef={ref => (inputRef.current = ref)}
               innerProps={{
-                placeholder: `Message ${chat?.recipient.name ? '@' + chat.recipient.name : 'user'}`
+                placeholder: `Message ${chatName}`
               }}
             />
 

@@ -1,7 +1,7 @@
 import produce from "immer";
 import { CHAT_MESSAGES, NEW_DIRECT_MESSAGE } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { ChatMessages, Chats_getChats_DirectChat, Message as MessageData } from "@generated";
+import { ChatMessages, Message as MessageData } from "@generated";
 import { NewDirectMessage } from "@generated/NewDirectMessage";
 import { generalStore } from "@store";
 import { Util } from "@lib/Util";
@@ -59,19 +59,17 @@ export const useChatMessages = (user: string, guild: string) => {
 //     })
 //   }
 
-  type DirectChat = Omit<Chats_getChats_DirectChat, '__typename'>
-
   useSubscription<NewDirectMessage>(NEW_DIRECT_MESSAGE, {
     variables: { guild },
     onSubscriptionData({ subscriptionData }) {
       const message = subscriptionData.data.directMessage as MessageData
 
       if (generalStore.chats) {
-        const chat = generalStore.chats.find((c: DirectChat) => c.recipient?.id === message.author.id)
+        const chat = generalStore.chats.find(c => c.id === message.author.id)
         if (chat) {
           chat.content = message.content
           Util.moveToTop(generalStore.chats, chat)
-        } else generalStore.chats.unshift({ recipient: message.author, content: message.content } as DirectChat)
+        } else generalStore.chats.unshift({ id: message.author.id, recipient: message.author, content: message.content })
       }
 
       if (message.author.id !== user) {

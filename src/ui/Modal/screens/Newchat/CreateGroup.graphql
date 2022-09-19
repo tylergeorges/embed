@@ -1,0 +1,7 @@
+#import "@ui/Sidebar/Chats/Chat.graphql"
+
+mutation CreateGroup($guild: String!, $memberIds: [String!]!, $content: String!) {
+  group: createGroup(guild: $guild, memberIds: $memberIds, content: $content) {
+    ...Chat
+  }
+}

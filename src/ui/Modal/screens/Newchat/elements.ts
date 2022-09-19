@@ -1,6 +1,7 @@
 import styled from "@lib/emotion";
 import * as Modal from "@ui/Modal";
 import { Chat } from "@ui/Sidebar/Chats/elements";
+import { Field as OriginalField } from '../Upload/elements'
 
 export const Root = styled(Modal.Content)`
   padding: 0;
@@ -48,6 +49,11 @@ export const List = styled.div`
     background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
     border-radius: 5px;
   }
+`
+
+export const Field = styled(OriginalField)`
+  text-align: left;
+  margin-top: 20px;
 `
 
 export const UserWrapper = styled.div`

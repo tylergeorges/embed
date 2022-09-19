@@ -36,7 +36,7 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
     let cData;
     try {
         if (channel) cData = generalStore.guild.channels.find(c => c.id === channel) || {};
-        if (chatUser) cData = generalStore.chats.find(c => c.recipient.id === chatUser) || {};
+        if (chatUser) cData = generalStore.chats.find(c => c.id === chatUser) || {};
     } catch (_) {
         cData = {}
     }

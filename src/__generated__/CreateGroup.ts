@@ -4,10 +4,10 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: Chats
+// GraphQL mutation operation: CreateGroup
 // ====================================================
 
-export interface Chats_getChats_DirectChat_recipient {
+export interface CreateGroup_group_DirectChat_recipient {
   __typename: "User";
   id: string;
   name: string;
@@ -18,14 +18,14 @@ export interface Chats_getChats_DirectChat_recipient {
   flags: number | null;
 }
 
-export interface Chats_getChats_DirectChat {
+export interface CreateGroup_group_DirectChat {
   __typename: "DirectChat";
   content: string;
   id: string;
-  recipient: Chats_getChats_DirectChat_recipient;
+  recipient: CreateGroup_group_DirectChat_recipient;
 }
 
-export interface Chats_getChats_DirectGroupChat_recipients {
+export interface CreateGroup_group_DirectGroupChat_recipients {
   __typename: "User";
   id: string;
   name: string;
@@ -36,19 +36,21 @@ export interface Chats_getChats_DirectGroupChat_recipients {
   flags: number | null;
 }
 
-export interface Chats_getChats_DirectGroupChat {
+export interface CreateGroup_group_DirectGroupChat {
   __typename: "DirectGroupChat";
   content: string;
   id: string;
-  recipients: Chats_getChats_DirectGroupChat_recipients[];
+  recipients: CreateGroup_group_DirectGroupChat_recipients[];
 }
 
-export type Chats_getChats = Chats_getChats_DirectChat | Chats_getChats_DirectGroupChat;
+export type CreateGroup_group = CreateGroup_group_DirectChat | CreateGroup_group_DirectGroupChat;
 
-export interface Chats {
-  getChats: Chats_getChats[];
+export interface CreateGroup {
+  group: CreateGroup_group;
 }
 
-export interface ChatsVariables {
+export interface CreateGroupVariables {
   guild: string;
+  memberIds: string[];
+  content: string;
 }

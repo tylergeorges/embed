@@ -1,10 +1,12 @@
 import {action, autorun, observable} from "mobx";
-import { Chats, Chats_getChats, GuildInfo_guild, Message, Message_thread, Settings_settings } from "@generated";
+import { Chats_getChats_DirectChat, Chats_getChats_DirectGroupChat, GuildInfo_guild, Message, Message_thread, Settings_settings } from "@generated";
 import {ICategory} from "@ui/Sidebar/Channels/categorise";
 import { EmojiStore } from "@services/Emoji";
 import { defaultEmojis } from "@services/Emoji/defaultEmojis";
 import { Views } from "@ui/Sidebar";
 import { MessageDataModified } from "@ui/Messages/Message";
+
+type Chat = Omit<Chats_getChats_DirectChat, '__typename'> | Omit<Chats_getChats_DirectGroupChat, '__typename'>
 
 export class GeneralStore {
   @observable appName = 'WidgetBot';
@@ -22,7 +24,7 @@ export class GeneralStore {
   @observable emojis = new EmojiStore(...defaultEmojis);
   @observable pins?: Message[];
   @observable pinsOpen: boolean = false;
-  @observable chats: Omit<Chats_getChats, '__typename'>[];
+  @observable chats: Chat[];
   @observable sidebarView: Views;
   @observable messageToDelete?: MessageDataModified;
   @observable unreadChannels = new Set<string>();
@@ -83,7 +85,7 @@ export class GeneralStore {
     this.pinsOpen = res
   }
 
-  @action setChats(chats: Omit<Chats_getChats, '__typename'>[]) {
+  @action setChats(chats: Chat[]) {
     this.chats = chats;
   }
 

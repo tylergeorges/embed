@@ -3,7 +3,7 @@ import SEND_MESSAGE from './SendMessage.graphql'
 import SEND_DIRECT_MESSAGE from './SendDirectMessage.graphql'
 import { CHAT_MESSAGES, MESSAGES } from '../useMessages'
 import { useRouter } from '@hooks'
-import { ChatMessages, Chats_getChats_DirectChat, Messages, SendMessage, SendMessageVariables } from '@generated'
+import { ChatMessages, Messages, SendMessage, SendMessageVariables } from '@generated'
 import { addNotification } from "notify"
 import { MessageType } from '@generated/globalTypes'
 import { Util } from '@lib/Util'
@@ -56,7 +56,8 @@ export const useSendMessage = (thread?: string) => {
         optimisticResponse: {
           __typename: 'Mutation',
           sendMessage: optimisticData
-        } as SendMessage, update: (store, { data: { sendMessage: newMessage } }) => {
+        } as SendMessage,
+        update: (store, { data: { sendMessage: newMessage } }) => {
           const data = store.readQuery<Messages>({ query: MESSAGES, variables: {channel, thread } })
 
           newMessage.isGuest = true
@@ -85,7 +86,8 @@ export const useSendMessage = (thread?: string) => {
         optimisticResponse: {
           __typename: 'Mutation',
           sendChat: optimisticData
-        } as SendDirectMessage, update: (store, { data: { sendChat: newMessage } }) => {
+        } as SendDirectMessage,
+        update: (store, { data: { sendChat: newMessage } }) => {
           const data = store.readQuery<ChatMessages>({ query: CHAT_MESSAGES, variables: { guild, user } })
 
           newMessage.isGuest = true
@@ -108,7 +110,7 @@ export const useSendMessage = (thread?: string) => {
         autoDismiss: 0
       }))
 
-      const chat = generalStore.chats.find((c: Chats_getChats_DirectChat) => c.recipient.id === user)
+      const chat = generalStore.chats.find(c => c.id === user)
       chat.content = content
       Util.moveToTop(generalStore.chats, chat)
     }
