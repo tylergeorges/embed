@@ -18,6 +18,8 @@ export interface NewDirectMessage_directMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface NewDirectMessage_directMessage_attachments {
@@ -158,6 +160,8 @@ export interface NewDirectMessage_directMessage_referencedMessage_author {
   flags: number | null;
   name: string;
   roles: string[] | null;
+  system: boolean;
+  isWebhook: boolean;
 }
 
 export interface NewDirectMessage_directMessage_referencedMessage_attachments {
@@ -292,6 +296,7 @@ export interface NewDirectMessage_directMessage_referencedMessage_thread {
 export interface NewDirectMessage_directMessage_referencedMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;
@@ -312,6 +317,7 @@ export interface NewDirectMessage_directMessage_referencedMessage {
 export interface NewDirectMessage_directMessage {
   __typename: "Message";
   id: string;
+  channelId: string;
   content: string;
   type: MessageType;
   flags: number | null;

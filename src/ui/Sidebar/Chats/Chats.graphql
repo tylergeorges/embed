@@ -1,14 +1,31 @@
 query Chats($guild: String!) {
   getChats(guild: $guild) {
-    recipient {
-      id
-      name
-      discrim
-      avatarUrl
-      color
-      bot
-      flags
+    ...on DirectChat {
+      recipient {
+        id
+        name
+        discrim
+        avatarUrl
+        color
+        bot
+        flags
+      }
     }
+
+    ...on DirectGroupChat {
+      id
+
+      recipients {
+        id
+        name
+        discrim
+        avatarUrl
+        color
+        bot
+        flags
+      }
+    }
+
     content
   }
 }

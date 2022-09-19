@@ -37,7 +37,7 @@ export const List = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.5px;
-  margin-bottom: 15px;
+  margin: 0 15px 15px 15px;
   overflow: auto;
 
   &::-webkit-scrollbar {
@@ -53,6 +53,10 @@ export const List = styled.div`
 export const UserWrapper = styled.div`
   margin: 0 8px;
   padding-bottom: 2.5px;
+
+  div {
+    background: none !important;
+  }
 
   &:not(:last-child) {
     border-bottom: 1px solid ${({theme}) => theme.colors._primary.fade(0.9).string()};

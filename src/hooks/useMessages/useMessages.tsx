@@ -70,8 +70,6 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     ? generalStore.guild?.channels.map(c => c.id)
     : [channel]
 
-  console.log(channels, channels.length)
-
   useSubscription<NewMessage, NewMessageVariables>(NEW_MESSAGE, {
     variables: { channels, guild, threadId: thread },
     skip: !channels[0],

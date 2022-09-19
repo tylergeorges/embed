@@ -1,12 +1,15 @@
 import { DirectUsers } from '@generated'
 import { useRouter } from '@hooks'
 import { store } from '@models'
+import { settingsStore } from '@store'
 import { Member } from '@ui/Messages/elements'
 import { Loading } from '@ui/Overlays'
 import { closeSidebar } from '@ui/shared/Channel/link'
 import { Avatar, Details } from '@ui/Sidebar/Chats/elements'
+import { useState } from 'react'
 import { useQuery } from 'react-apollo-hooks'
 import { NavLink } from 'react-router-dom'
+import { Button, Checkbox } from '../Upload/elements'
 import DIRECT_USERS from './DirectUsers.graphql'
 import { Close, List, Root, Title, Top, User, UserWrapper } from './elements'
 
@@ -14,6 +17,17 @@ const NewChat = () => {
   const { guild } = useRouter()
 
   const { data: { directUsers }, loading, error } = useQuery<DirectUsers>(DIRECT_USERS, { fetchPolicy: 'network-only' })
+
+  const [users, setUsers] = useState(new Set<string>());
+
+  const addUser = (user: string) => setUsers(set => new Set(set).add(user))
+
+  const removeUser = (user: string) =>
+    setUsers(old => {
+      const set = new Set(old)
+      set.delete(user)
+      return set
+    })
 
   if (loading) return <Loading />;
 
@@ -38,25 +52,29 @@ const NewChat = () => {
       <List className="list">
         {directUsers.map(user => (
           <UserWrapper key={user.id}>
-            <NavLink
-              key={user.id}
-              to={`/channels/${guild}/@${user.id}`}
-              onClick={() => {
-                store.modal.close()
-                closeSidebar()
-              }}
-              children={
-                <User>
-                    <Avatar width={32} height={32} src={user.avatarUrl} />
-                    <Details>
-                        <Member color={user.color}>{user.name}{user.discrim !== '0000' ? `#${user.discrim}` : ''}</Member>
-                    </Details>
-                </User>
-              }
-              style={{ textDecoration: 'none' }}
-            />
+            <Checkbox className="send-button-setting checkbox-field">
+              <input
+                type="checkbox"
+                checked={users.has(user.id)}
+                onChange={e => {
+                  e.target.checked ? addUser(user.id) : removeUser(user.id)
+                }}
+              />
+              <span className="checkbox">
+                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" fillRule="evenodd" clipRule="evenodd" d="M8.99991 16.17L4.82991 12L3.40991 13.41L8.99991 19L20.9999 7.00003L19.5899 5.59003L8.99991 16.17Z"></path></svg>
+              </span>
+              <User>
+                <Avatar width={32} height={32} src={user.avatarUrl} />
+                <Details>
+                  <Member color={user.color}>{user.name}{user.discrim !== '0000' ? `#${user.discrim}` : ''}</Member>
+                </Details>
+              </User>
+            </Checkbox>
           </UserWrapper>
         ))}
+        <Button variant="large" className="button" disabled={!users.size}>
+          {!users.size ? 'Select Users' : users.size === 1 ? `Message ${directUsers.find(u => u.id === users.values().next().value).name}` : `Create Group with ${users.size} Users`}
+        </Button>
       </List>
     </Root>
   )

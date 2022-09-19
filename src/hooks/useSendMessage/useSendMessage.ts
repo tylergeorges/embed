@@ -3,7 +3,7 @@ import SEND_MESSAGE from './SendMessage.graphql'
 import SEND_DIRECT_MESSAGE from './SendDirectMessage.graphql'
 import { CHAT_MESSAGES, MESSAGES } from '../useMessages'
 import { useRouter } from '@hooks'
-import { ChatMessages, Messages, SendMessage, SendMessageVariables } from '@generated'
+import { ChatMessages, Chats_getChats_DirectChat, Messages, SendMessage, SendMessageVariables } from '@generated'
 import { addNotification } from "notify"
 import { MessageType } from '@generated/globalTypes'
 import { Util } from '@lib/Util'
@@ -108,7 +108,7 @@ export const useSendMessage = (thread?: string) => {
         autoDismiss: 0
       }))
 
-      const chat = generalStore.chats.find(c => c.recipient.id === user)
+      const chat = generalStore.chats.find((c: Chats_getChats_DirectChat) => c.recipient.id === user)
       chat.content = content
       Util.moveToTop(generalStore.chats, chat)
     }
