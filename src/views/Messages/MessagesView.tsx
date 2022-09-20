@@ -61,8 +61,8 @@ const MessagesView = observer(() => {
               <Messages guild={guild} channel={channel} chatUser={user} />
             )}
 
-            {user ? <DirectChat /> : <Chat />}
           </React.Suspense>
+          {user ? <DirectChat /> : <Chat />}
         </Wrapper>
       )}
 
