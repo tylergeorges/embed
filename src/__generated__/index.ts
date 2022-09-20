@@ -1,3 +1,4 @@
+export * from './addMember'
 export * from './BaseMessage'
 export * from './BaseSubscriptionMessage'
 export * from './BlockUser'

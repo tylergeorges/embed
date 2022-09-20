@@ -1,0 +1,11 @@
+mutation AddMember($guild: String!, $chat: String!, $member: String!) {
+  addMember(guild: $guild, id: $chat, member: $member) {
+    id
+    name
+    discrim
+    avatarUrl
+    color
+    bot
+    flags
+  }
+}

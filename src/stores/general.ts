@@ -24,6 +24,7 @@ export class GeneralStore {
   @observable emojis = new EmojiStore(...defaultEmojis);
   @observable pins?: Message[];
   @observable pinsOpen: boolean = false;
+  @observable addMembersOpen: boolean = false;
   @observable chats: Chat[];
   @observable sidebarView: Views;
   @observable messageToDelete?: MessageDataModified;
@@ -83,6 +84,10 @@ export class GeneralStore {
 
   @action togglePins(res: boolean = !this.pinsOpen) {
     this.pinsOpen = res
+  }
+
+  @action toggleAddMembersOpen(res: boolean = !this.addMembersOpen) {
+    this.addMembersOpen = res
   }
 
   @action setChats(chats: Chat[]) {

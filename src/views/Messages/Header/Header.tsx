@@ -24,6 +24,7 @@ import {SingleChannelAuth} from '@ui/Sidebar/Panel'
 import {generalStore} from "@store";
 import Pins from './Pins'
 import { FetchUser } from './FetchUser'
+import AddMembers from "@views/Messages/Header/AddMembers";
 
 export interface HeaderProps {
   channel?: string,
@@ -74,6 +75,7 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
             </Stretch>
             {/* {(!thread || generalStore.threadFullscreen) && <Pins />} Thread pins are disabled */}
             {!thread && !chatUser && <Pins />}
+            {!thread && chatUser && 'ownerId' in cData && <AddMembers />}
             <SingleChannelAuthWrapper>
                 <SingleChannelAuth />
             </SingleChannelAuthWrapper>
