@@ -25,6 +25,7 @@ import {generalStore} from "@store";
 import Pins from './Pins'
 import { FetchUser } from './FetchUser'
 import AddMembers from "@views/Messages/Header/AddMembers";
+import LeaveGroup from "@views/Messages/Header/LeaveGroup";
 
 export interface HeaderProps {
   channel?: string,
@@ -75,7 +76,12 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
             </Stretch>
             {/* {(!thread || generalStore.threadFullscreen) && <Pins />} Thread pins are disabled */}
             {!thread && !chatUser && <Pins />}
-            {!thread && chatUser && 'ownerId' in cData && <AddMembers />}
+            {!thread && chatUser && 'ownerId' in cData && (
+              <>
+                <AddMembers />
+                <LeaveGroup />
+              </>
+            )}
             <SingleChannelAuthWrapper>
                 <SingleChannelAuth />
             </SingleChannelAuthWrapper>
