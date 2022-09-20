@@ -39,6 +39,7 @@ export interface Chat_DirectGroupChat_recipients {
 export interface Chat_DirectGroupChat {
   __typename: "DirectGroupChat";
   id: string;
+  ownerId: string;
   recipients: Chat_DirectGroupChat_recipients[];
   content: string;
 }

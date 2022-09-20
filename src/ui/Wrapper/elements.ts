@@ -4,6 +4,7 @@ interface Props {
   squashed: boolean
   hideOnMobile: boolean;
   threadFullscreen: boolean;
+  memberListOpen: boolean;
   onClick?: any
 }
 
@@ -50,13 +51,11 @@ export const Wrapper = styled('div')<Props>`
       ${threadFullscreen ? css`
         @media (min-width: 521px) {
           margin-left: 200px;
-          width: calc(100% - 200px);
         }
       
         @media (min-width: 521px) and (max-width: 400px),
         (min-width: 521px) and (max-height: 340px) {  
-          margin-left: 180px;  
-          width: calc(100% - 180px);
+          margin-left: 180px;
         }
       ` : null};
 
@@ -71,4 +70,16 @@ export const Wrapper = styled('div')<Props>`
           }
         `
       : null};
+
+  ${({ memberListOpen }) =>
+    memberListOpen ? css`
+      @media (min-width: 521px) {
+        margin-right: 200px;
+      }
+    
+      @media (min-width: 521px) and (max-width: 400px),
+      (min-width: 521px) and (max-height: 340px) {  
+        margin-right: 180px;
+      }
+    ` : null};
 `

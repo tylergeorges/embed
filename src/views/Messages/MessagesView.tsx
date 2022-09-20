@@ -49,7 +49,7 @@ const MessagesView = observer(() => {
   return (
     <div style={{ display: 'flex', height: '100%' }}>
       {!(generalStore.activeThread && generalStore.threadFullscreen) && (
-        <Wrapper hideOnMobile={Boolean(generalStore.activeThread)}>
+        <Wrapper hideOnMobile={Boolean(generalStore.activeThread)} memberListOpen={!!user}>
           <React.Suspense fallback={<Fallback />}>
             <Header channel={channel} chatUser={user}/>
           </React.Suspense>
@@ -60,8 +60,9 @@ const MessagesView = observer(() => {
             ) : (
               <Messages guild={guild} channel={channel} chatUser={user} />
             )}
+
+            {user ? <DirectChat /> : <Chat />}
           </React.Suspense>
-          {user ? <DirectChat /> : <Chat />}
         </Wrapper>
       )}
 

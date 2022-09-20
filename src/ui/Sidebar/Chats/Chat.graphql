@@ -15,6 +15,7 @@ fragment Chat on Chat {
 
     ...on DirectGroupChat {
       id
+      ownerId
 
       recipients {
         id

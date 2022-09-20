@@ -1,5 +1,6 @@
 import Modal from '@ui/Modal'
 import Sidebar from '@ui/Sidebar'
+import MemberList from "@ui/MemberList";
 import ChooseChannel from '@views/ChooseChannel'
 import { MessagesView } from '@views/Messages'
 import Notifications from 'notify'
@@ -32,6 +33,7 @@ const App = observer(() => {
                 <Main>
                   <Sidebar />
                   <Outlet />
+                  <MemberList />
                 </Main>
               </>
             }>

@@ -40,6 +40,7 @@ export interface Chats_getChats_DirectGroupChat {
   __typename: "DirectGroupChat";
   content: string;
   id: string;
+  ownerId: string;
   recipients: Chats_getChats_DirectGroupChat_recipients[];
 }
 
