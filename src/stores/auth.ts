@@ -73,6 +73,10 @@ export class AuthStore {
     }
   }
 
+  get userID() {
+    return this.user && ('id' in this.user && this.user.id || '_id' in this.user && this.user._id)
+  }
+
   get blockedUsers() {
     return this.user?.blockedUsers || [];
   }

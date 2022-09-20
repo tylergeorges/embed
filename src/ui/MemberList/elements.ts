@@ -39,6 +39,12 @@ export const MembersTitle = styled.p`
 `;
 
 export const MemberCardBase = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+export const MemberBase = styled.div`
   display: flex;
   padding: 0.3rem 0;
   align-items: center;
@@ -47,4 +53,22 @@ export const MemberCardBase = styled.div`
 export const Avatar = styled.img`
   border-radius: 50%;
   margin-right: 12px;
+`
+
+interface RemoveButtonProps {
+  pressed: boolean;
+}
+
+export const RemoveButtonBase = styled.svg<RemoveButtonProps>`
+  cursor: pointer;
+  
+  path {
+    color: ${({ pressed, theme }) => pressed ? `rgba(237, 66, 39, .9)` : theme.colors._primary.fade(.3).string()};
+  }
+
+  &:hover {
+    path {
+      color: ${({ pressed, theme }) => pressed ? `rgba(237, 66, 39, .6)` : theme.colors._primary.fade(.6).string()};
+    }
+  }
 `

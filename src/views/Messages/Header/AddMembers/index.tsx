@@ -11,7 +11,6 @@ import ADD_MEMBER from './AddMember.graphql';
 import { Avatar } from '@ui/MemberList/elements';
 import { useParams } from "react-router-dom";
 import { useMutation } from "react-apollo-hooks";
-import BLOCK_USER from "@ui/Modal/screens/Profile/BlockUser.graphql";
 
 export default observer(() => {
     const { user } = useParams();
@@ -48,7 +47,7 @@ export default observer(() => {
 
     useEffect(() => {
         if (!generalStore.addMembersOpen) {
-            // setDirectUsers(null);
+            setDirectUsers(null);
             return;
         }
 

@@ -1,8 +1,9 @@
-import { Avatar, MemberCardBase, MembersTitle, Root } from './elements'
+import { Avatar, MembersTitle, MemberCardBase, MemberBase, Root } from './elements'
 import {observer} from 'mobx-react'
 import { useParams } from "react-router-dom";
-import { generalStore } from "@store";
+import { authStore, generalStore } from "@store";
 import { Chats_getChats_DirectGroupChat } from "@generated";
+import RemoveButton from "@ui/MemberList/RemoveButton";
 
 const MemberList = observer(() => {
   const { user } = useParams();
@@ -14,14 +15,20 @@ const MemberList = observer(() => {
   const owner = chat.recipients.find(r => r.id === chat.ownerId);
   const recipients = [owner, ...chat.recipients.filter(r => r.id !== owner.id).sort()];
 
+  const isGroupOwner = authStore.userID === chat.ownerId;
+
   return (
       <Root className="member-list">
         <MembersTitle>Members - {recipients.length}</MembersTitle>
 
         {recipients.map((member, idx) => (
           <MemberCardBase key={idx}>
-            <Avatar width={32} height={32} src={member.avatarUrl} alt={`${member.name} avatar`} />
-            {member.name}
+            <MemberBase>
+              <Avatar width={32} height={32} src={member.avatarUrl} alt={`${member.name} avatar`} />
+              {member.name}
+            </MemberBase>
+
+            {isGroupOwner && authStore.userID !== member.id && <RemoveButton member={member.id} />}
           </MemberCardBase>
         ))}
         </Root>
