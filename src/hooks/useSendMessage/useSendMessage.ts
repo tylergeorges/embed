@@ -9,6 +9,7 @@ import { MessageType } from '@generated/globalTypes'
 import { Util } from '@lib/Util'
 import { authStore, generalStore } from '@store'
 import { SendDirectMessage, SendDirectMessageVariables } from '@generated/SendDirectMessage'
+import api from '@lib/embed-api';
 
 export const useSendMessage = (thread?: string) => {
   const { guild, channel } = useRouter()
@@ -78,6 +79,8 @@ export const useSendMessage = (thread?: string) => {
         message: error.toString().replace('GraphQL error: ', ''),
         autoDismiss: 0
       }))
+
+      api.emit('sentMessage', { channel, content, fileName, fileData, fileAlt, thread })
     } else {
       const user = channel.substring(1)
       await sendDirectMessage({
@@ -111,6 +114,8 @@ export const useSendMessage = (thread?: string) => {
       const chat = generalStore.chats.find(c => c.recipient.id === user)
       chat.content = content
       Util.moveToTop(generalStore.chats, chat)
+
+      api.emit('sentDirectMessage', { user, content })
     }
   }
 }

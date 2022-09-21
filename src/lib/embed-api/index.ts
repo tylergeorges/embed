@@ -1,7 +1,8 @@
 import { Server } from '@widgetbot/embed-api'
 
-// TODO: Fix
-const api = new Server({ id: 'a' /*controller.state.url.api*/ || 'default' })
+const queryParams = new URLSearchParams(location.search)
+
+const api = new Server({ id: queryParams.get('api') ?? 'default' })
 
 api.on('sendMessage', data => {
   if (typeof data === 'string') {
