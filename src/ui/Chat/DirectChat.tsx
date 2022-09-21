@@ -99,9 +99,10 @@ export const DirectChat: FunctionComponent = observer((props) => {
                 }
 
                 // TODO: Clear the input field only when the user is signed in, otherwise they lose their message
-                inputRef.current.value = ''
+                inputRef.current.value = '';
 
                 await sendMessage(content)
+                inputRef.current.focus();
               }}
               innerRef={ref => (inputRef.current = ref)}
               innerProps={{

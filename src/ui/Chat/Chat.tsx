@@ -137,6 +137,7 @@ export const Chat = observer((props: ChatProps) => {
             inputRef.current.value = ''
 
             await sendMessage(content)
+            inputRef.current.focus();
 
             if (slowmode) {
               setSlowmodeTimeRemaining(slowmode)
