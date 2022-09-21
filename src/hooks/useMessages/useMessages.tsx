@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
 import Message from "@ui/Messages/Message";
 import { ChannelLink, getChannel } from "@ui/shared/Channel";
+import api from "@lib/embed-api";
 
 const queryParams = new URLSearchParams(location.search)
 
@@ -102,6 +103,11 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
           message.author.color = messages.find(m => m.author.id === message.author.id)?.author.color || 0xffffff
           if (!messages.find(m => m.id === message.id)) messages.push(message);
+
+          api.emit('message', {
+            channel: message.channelId,
+            message
+          })
         })
       )}
   });
@@ -128,6 +134,11 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
             Object.assign(messages[index], updatedProps)
           }
+
+          api.emit('messageUpdate', {
+            channel,
+            message: message
+          })
         })
       );
     }
@@ -149,6 +160,11 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
           const index = messages.findIndex(m => m.id === id)
 
           if (index > -1) messages.splice(index, 1)
+
+          api.emit('messageDelete', {
+            channel,
+            id
+          })
         })
       );
     }
@@ -171,6 +187,11 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
           channel.messageBunch.messages = channel.messageBunch.messages.filter(
             message => !ids.includes(message.id)
           );
+
+          api.emit('messageDeleteBulk', {
+            channel: channel.id,
+            ids
+          })
         })
       );
     }

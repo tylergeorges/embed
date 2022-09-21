@@ -11,6 +11,7 @@ import Message from "@ui/Messages/Message";
 import { NavLink } from "react-router-dom";
 import { closeSidebar } from "@ui/shared/Channel/link";
 import { Views } from "@ui/Sidebar";
+import api from "@lib/embed-api";
 
 const queryParams = new URLSearchParams(location.search)
 
@@ -71,6 +72,11 @@ export const useChatMessages = (user: string, guild: string) => {
           Util.moveToTop(generalStore.chats, chat)
         } else generalStore.chats.unshift({ id: message.author.id, recipient: message.author, content: message.content })
       }
+
+      api.emit('directMessage', {
+        user,
+        message
+      })
 
       if (message.author.id !== user) {
         return spawnNotif({
