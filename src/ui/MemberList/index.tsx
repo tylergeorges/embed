@@ -1,9 +1,9 @@
-import { Avatar, MembersTitle, MemberCardBase, MemberBase, Root } from './elements'
+import { MembersTitle, Root } from './elements'
 import {observer} from 'mobx-react'
 import { useParams } from "react-router-dom";
 import { authStore, generalStore } from "@store";
 import { Chats_getChats_DirectGroupChat } from "@generated";
-import RemoveButton from "@ui/MemberList/RemoveButton";
+import MemberCard from "@ui/MemberList/MemberCard";
 
 const MemberList = observer(() => {
   const { user } = useParams();
@@ -22,14 +22,7 @@ const MemberList = observer(() => {
         <MembersTitle>Members - {recipients.length}</MembersTitle>
 
         {recipients.map((member, idx) => (
-          <MemberCardBase key={idx}>
-            <MemberBase>
-              <Avatar width={32} height={32} src={member.avatarUrl} alt={`${member.name} avatar`} />
-              {member.name}
-            </MemberBase>
-
-            {isGroupOwner && authStore.userID !== member.id && <RemoveButton member={member.id} />}
-          </MemberCardBase>
+          <MemberCard key={idx} member={member} isGroupOwner={isGroupOwner} />
         ))}
         </Root>
     )

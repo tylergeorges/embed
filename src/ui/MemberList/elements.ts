@@ -39,9 +39,10 @@ export const MembersTitle = styled.p`
 `;
 
 export const MemberCardBase = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
 `;
 
 export const MemberBase = styled.div`
