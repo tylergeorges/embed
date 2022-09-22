@@ -83,6 +83,12 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
           const message = subscriptionData.data.message as MessageData
 
+          if (generalStore.guild)
+            api.emit('message', {
+              channel: generalStore.guild.channels.find(c => c.id === message.channelId),
+              message
+            })
+
           if (message.channelId !== channel) {
             message.author.name += ` (#${getChannel(message.channelId)?.name})`
 
@@ -101,10 +107,6 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
           message.author.color = messages.find(m => m.author.id === message.author.id)?.author.color || 0xffffff
           if (!messages.find(m => m.id === message.id)) messages.push(message);
 
-          api.emit('message', {
-            channel: message.channelId,
-            message
-          })
         })
       )}
   });
@@ -131,10 +133,11 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
             Object.assign(messages[index], updatedProps)
           }
 
-          api.emit('messageUpdate', {
-            channel,
-            message: message
-          })
+          if (generalStore.guild)
+            api.emit('messageUpdate', {
+              channel: generalStore.guild.channels.find(c => c.id === channel),
+              message: message
+            })
         })
       );
     }
@@ -156,10 +159,11 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
           if (index > -1) messages.splice(index, 1)
 
-          api.emit('messageDelete', {
-            channel,
-            id
-          })
+          if (generalStore.guild)
+            api.emit('messageDelete', {
+              channel: generalStore.guild.channels.find(c => c.id === channel),
+              id
+            })
         })
       );
     }
@@ -182,10 +186,11 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
             message => !ids.includes(message.id)
           );
 
-          api.emit('messageDeleteBulk', {
-            channel: channel.id,
-            ids
-          })
+          if (generalStore.guild)
+            api.emit('messageDeleteBulk', {
+              channel: generalStore.guild.channels.find(c => c.id === channel.id),
+              ids
+            })
         })
       );
     }

@@ -6,7 +6,7 @@ import { Messages, SendMessage, SendMessageVariables } from '@generated';
 import { addNotification } from "notify";
 import { MessageType } from '@generated/globalTypes';
 import { Util } from '@lib/Util';
-import { authStore } from '@store';
+import { authStore, generalStore } from '@store';
 import api from '@lib/embed-api';
 
 export const useSendMessage = (thread?: string) => {
@@ -74,6 +74,14 @@ export const useSendMessage = (thread?: string) => {
       autoDismiss: 0
     }))
 
-    api.emit('sentMessage', { channel, content, fileName, fileData, fileAlt, thread })
+    if (generalStore.guild)
+      api.emit('sentMessage', {
+        channel: generalStore.guild.channels.find(c => c.id === channel),
+        content,
+        fileName,
+        fileData,
+        fileAlt,
+        thread
+      })
   }
 }
