@@ -80,7 +80,15 @@ export const useSendMessage = (thread?: string) => {
         autoDismiss: 0
       }))
 
-      api.emit('sentMessage', { channel, content, fileName, fileData, fileAlt, thread })
+      if (generalStore.guild)
+        api.emit('sentMessage', {
+          channel: generalStore.guild.channels.find(c => c.id === channel),
+          content,
+          fileName,
+          fileData,
+          fileAlt,
+          thread
+        })
     } else {
       const user = channel.substring(1)
       await sendDirectMessage({
