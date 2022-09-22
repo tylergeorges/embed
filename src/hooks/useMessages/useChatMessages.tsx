@@ -74,7 +74,6 @@ export const useChatMessages = (user: string, guild: string) => {
       }
 
       api.emit('directMessage', {
-        user,
         message
       })
 
