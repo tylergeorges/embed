@@ -1635,6 +1635,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "avatar",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": true,
+            "deprecationReason": "Use avatarUrl instead."
           }
         ],
         "inputFields": null,
@@ -1823,7 +1839,13 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "DM",
+            "name": "GuildText",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildCategory",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -1835,19 +1857,7 @@
             "deprecationReason": null
           },
           {
-            "name": "GuildText",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "GuildStore",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildVoice",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -1859,7 +1869,13 @@
             "deprecationReason": null
           },
           {
-            "name": "GuildCategory",
+            "name": "GuildVoice",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DM",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -3022,6 +3038,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "isCustomAuthEnabled",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -3625,55 +3657,7 @@
         "interfaces": null,
         "enumValues": [
           {
-            "name": "UserPremiumGuildSubscription",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildInviteReminder",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
             "name": "GuildDiscoveryGracePeriodInitialWarning",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ContextMenuCommand",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Reply",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Unknown",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildDiscoveryDisqualified",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildDiscoveryRequalified",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "Call",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -3685,67 +3669,13 @@
             "deprecationReason": null
           },
           {
-            "name": "UserPremiumGuildTier3",
+            "name": "GuildInviteReminder",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
-            "name": "UserPremiumGuildTier2",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelPinnedMessage",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildMemberJoin",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "GuildDiscoveryGracePeriodFinalWarning",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelNameChange",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChatInputCommand",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ThreadStarterMessage",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UserPremiumGuildTier1",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ThreadCreated",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "ChannelFollowAdd",
+            "name": "UserPremiumGuildSubscription",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -3757,13 +3687,115 @@
             "deprecationReason": null
           },
           {
+            "name": "GuildDiscoveryGracePeriodFinalWarning",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildMemberJoin",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ChannelFollowAdd",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Reply",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ThreadCreated",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ChatInputCommand",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildDiscoveryDisqualified",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ContextMenuCommand",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UserPremiumGuildTier2",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UserPremiumGuildTier3",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ChannelNameChange",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "RecipientRemove",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
           {
+            "name": "Call",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ThreadStarterMessage",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ChannelPinnedMessage",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UserPremiumGuildTier1",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ChannelIconChange",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "GuildDiscoveryRequalified",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "Unknown",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -5062,6 +5094,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "avatar",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": true,
+            "deprecationReason": "Use avatarUrl instead."
           }
         ],
         "inputFields": null,

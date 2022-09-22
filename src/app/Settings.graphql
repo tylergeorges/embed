@@ -7,6 +7,7 @@ query Settings($guild: String!) {
     readonly
     directEnabled
     filesEnabled
+    isCustomAuthEnabled
     theme {
       css
       colors {
