@@ -79,7 +79,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
       if (generalStore.guild)
         api.emit('message', {
-          channel: generalStore.guild.channels.find(c => c.id === channel),
+          channel: generalStore.guild.channels.find(c => c.id === message.channelId),
           message: message
         })
 
