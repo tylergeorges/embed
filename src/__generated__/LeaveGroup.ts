@@ -4,7 +4,7 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: LeaveGroup
+// GraphQL mutation operation: Leavegroup
 // ====================================================
 
 export interface LeaveGroup_leaveGroup {

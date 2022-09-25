@@ -9,6 +9,8 @@ import Hotkeys from 'react-hot-keys'
 import { Root } from './elements'
 
 const Modal = observer(() => {
+  console.log(_.capitalize(store.modal.type));
+
   const Screen = Loadable({
     loader: () =>
       import(/* webpackMode: "lazy", webpackChunkName: "modal-screen-[index]" */ `./screens/${_.capitalize(
@@ -16,7 +18,9 @@ const Modal = observer(() => {
       )}`),
     loading: props =>
       props.pastDelay ? <Spinner name="ball-clip-rotate-multiple" /> : null
-  })
+  });
+
+  console.log(Screen);
 
   return (
     <Hotkeys keyName="escape" onKeyDown={store.modal.close}>
