@@ -1,7 +1,7 @@
 import { generalStore } from '@store'
 import { observer } from 'mobx-react'
 import { useEffect, useState } from 'react'
-import { Display, Title, List, AddMemberButton, Member, NoMembers } from './elements';
+import { Display, Title, List, AddMemberButton, Member, NoMembers, SearchBase } from './elements';
 import { Loading } from '@ui/Overlays/Loading/elements'
 import Tooltip from 'rc-tooltip'
 import client from "@lib/apollo";
@@ -10,7 +10,10 @@ import DIRECT_USERS from "@ui/Modal/screens/Newchat/DirectUsers.graphql";
 import ADD_MEMBER from './AddMember.graphql';
 import { Avatar } from '@ui/MemberList/elements';
 import { useParams } from "react-router-dom";
-import { useMutation } from "react-apollo-hooks";
+import { useMutation, useQuery } from "react-apollo-hooks";
+import { debounce } from "lodash";
+import { Field } from "@ui/Modal/screens/Newchat/elements";
+import { Input } from "@ui/Modal/screens/Authenticate/elements";
 
 export default observer(() => {
     const { user } = useParams();
@@ -23,25 +26,40 @@ export default observer(() => {
     useEffect(() => {
         setRight(innerWidth - button.getBoundingClientRect().right)
 
-        const handleShortcut = (event: KeyboardEvent) => {
-            if (event.ctrlKey && event.key === 'p') {
-                event.preventDefault()
-                generalStore.togglePins()
-            }
-        }
-
         const handleClickOutside = (event: MouseEvent) => {
             if (![display, button].some(e => e?.contains(event.target as Node))) generalStore.togglePins(false)
         }
 
-        document.addEventListener('keydown', handleShortcut)
         document.addEventListener('mousedown', handleClickOutside)
 
         return () => {
-            document.removeEventListener('keydown', handleShortcut)
             document.removeEventListener('mousedown', handleClickOutside)
         }
     });
+
+    let searchTerm = '';
+
+    const fetch = (search: string) => {
+        client.query<DirectUsers>({
+            query: DIRECT_USERS,
+            variables: {
+                name: search
+            },
+            fetchPolicy: 'network-only'
+        }).then(({ data: { directUsers } }) => {
+              const chat = generalStore.chats?.find(r => r.id === user) as Chats_getChats_DirectGroupChat;
+              if (!chat || !('recipients' in chat)) return;
+
+              setDirectUsers(directUsers.filter(directUser => !chat.recipients.find(r => r.id === directUser.id)));
+          });
+    };
+    const fetchDebounced = debounce((search: string) => fetch(search), 250);
+
+    const setSearchTerm = (value: string) => {
+        searchTerm = value;
+
+        fetchDebounced(value);
+    };
 
     const [directUsers, setDirectUsers] = useState<DirectUsers_directUsers[] | null>(null);
 
@@ -51,13 +69,7 @@ export default observer(() => {
             return;
         }
 
-        client.query<DirectUsers>({ query: DIRECT_USERS, variables: { guild: generalStore.guild.id }, fetchPolicy: 'network-only' })
-          .then(({ data: { directUsers } }) => {
-              const chat = generalStore.chats?.find(r => r.id === user) as Chats_getChats_DirectGroupChat;
-              if (!chat || !('recipients' in chat)) return;
-
-              setDirectUsers(directUsers.filter(directUser => !chat.recipients.find(r => r.id === directUser.id)));
-          });
+        fetch(searchTerm);
     }, [generalStore.addMembersOpen])
 
     const addMemberMutation = useMutation<AddMember>(ADD_MEMBER);
@@ -86,6 +98,19 @@ export default observer(() => {
         {generalStore.addMembersOpen && <Display right={right} innerRef={ref => (display = ref)} className="add-member-display">
             <Title className="add-members-title">Choose Member</Title>
             <List className="add-members-list">
+
+                <SearchBase>
+                    <Field className="message-field">
+                        <span>Search Users</span>
+                        <Input
+                          onChange={(e => setSearchTerm(e.target.value))}
+                          autoFocus={true}
+                          maxLength={2000}
+                          className="input"
+                        />
+                    </Field>
+                </SearchBase>
+
                 {directUsers
                     ? directUsers.length
                         ? directUsers.map(member => <Member key={member.id} className="add-member-member" onClick={() => addMember(member.id)}>

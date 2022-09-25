@@ -51,6 +51,10 @@ export const List = styled.div`
   }
 `
 
+export const SearchBase = styled.div`
+  margin: 0 15px;
+`;
+
 export const Field = styled(OriginalField)`
   text-align: left;
   margin-top: 20px;

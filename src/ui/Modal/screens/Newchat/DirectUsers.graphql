@@ -1,5 +1,5 @@
-query DirectUsers {
-  directUsers {
+query DirectUsers($name: String) {
+  directUsers(name: $name) {
     id
     name
     discrim

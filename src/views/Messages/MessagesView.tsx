@@ -45,7 +45,7 @@ const MessagesView = observer(() => {
 
   // for DMs, if dynamic usernames or guild auth are being used, we might need to wait until the user is logged in
   if (user && !authStore.user && (queryParams.has('username') || queryParams.has('token') || dmLoginFailed)) return null;
-  const chat = user ? generalStore.chats.find(c => c.id === user) : undefined;
+  const chat = user ? generalStore.chats?.find(c => c.id === user) : undefined;
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>

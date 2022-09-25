@@ -82,4 +82,8 @@ export const NoMembers = styled.div`
         margin-top: 20px;
         text-align: center;
     }
-`
+`;
+
+export const SearchBase = styled.div`
+  margin-bottom: 15px;
+`;

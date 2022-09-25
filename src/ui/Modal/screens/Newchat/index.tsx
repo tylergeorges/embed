@@ -6,25 +6,42 @@ import { Member } from '@ui/Messages/elements'
 import { Loading } from '@ui/Overlays'
 import { closeSidebar } from '@ui/shared/Channel/link'
 import { Avatar, Details } from '@ui/Sidebar/Chats/elements'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMutation, useQuery } from 'react-apollo-hooks'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { Input } from '../Authenticate/elements'
 import { Button, Checkbox } from '../Upload/elements'
 import DIRECT_USERS from './DirectUsers.graphql'
-import { Close, Field, List, Root, Title, Top, User, UserWrapper } from './elements'
+import { Close, Field, List, Root, Title, Top, User, UserWrapper, SearchBase } from './elements'
 import CREATE_GROUP from './CreateGroup.graphql'
-
+import { debounce } from "lodash";
 
 const NewChat = () => {
-  const { guild } = useRouter()
-  const navigate = useNavigate()
-
-  const createGroup = useMutation<CreateGroup, CreateGroupVariables>(CREATE_GROUP)
-
-  const { data: { directUsers }, loading, error } = useQuery<DirectUsers>(DIRECT_USERS, { fetchPolicy: 'network-only' })
-
+  const { guild } = useRouter();
+  const navigate = useNavigate();
+  const createGroup = useMutation<CreateGroup, CreateGroupVariables>(CREATE_GROUP);
   const [users, setUsers] = useState(new Set<string>());
+  let searchTerm = '';
+
+  const refetchDebounced = debounce((value: string) => {
+    refetch({
+      name: value !== '' ? value : undefined,
+    })
+  }, 250);
+
+  const setSearchTerm = (value: string) => {
+    searchTerm = value;
+
+    refetchDebounced(value);
+  };
+
+  const { data: { directUsers }, loading, error, refetch } = useQuery<DirectUsers>(DIRECT_USERS, {
+    fetchPolicy: 'network-only',
+    variables: {
+      name: searchTerm !== '' ? searchTerm : undefined,
+    }
+  });
+
 
   const addUser = (user: string) => setUsers(set => new Set(set).add(user))
 
@@ -51,14 +68,25 @@ const NewChat = () => {
       </Root>
     )
 
-  let contentField: HTMLInputElement;
-
   return (
     <Root className="new-chat">
       <Top className="top">
         <Title>New Chat</Title>
         <Close onClick={store.modal.close} />
       </Top>
+
+      <SearchBase>
+        <Field className="message-field">
+          <span>Search Users</span>
+          <Input
+            onChange={(e => setSearchTerm(e.target.value))}
+            autoFocus={true}
+            maxLength={2000}
+            className="input"
+          />
+        </Field>
+      </SearchBase>
+
       <List className="list">
         {directUsers.map(user => (
           <UserWrapper key={user.id}>
@@ -82,7 +110,7 @@ const NewChat = () => {
             </Checkbox>
           </UserWrapper>
         ))}
-        {users.size > 1 && <Field className="message field">
+        {users.size > 1 && <Field className="message-field">
           <span>Enter a message</span>
           <Input
             onChange={(e => setMessage(e.target.value))}
