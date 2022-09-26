@@ -12,7 +12,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { Input } from '../Authenticate/elements'
 import { Button, Checkbox } from '../Upload/elements'
 import DIRECT_USERS from './DirectUsers.graphql'
-import { Close, Field, List, Root, Title, Top, User, UserWrapper, SearchBase, ListBase } from './elements'
+import { Close, Field, List, Root, Title, Top, User, UserWrapper, SearchBase, ListBase, ActionsBase } from './elements'
 import CREATE_GROUP from './CreateGroup.graphql'
 import { debounce } from "lodash";
 
@@ -113,7 +113,8 @@ const NewChat = () => {
           ))}
         </List>
 
-        {users.size > 1 && <Field className="message-field">
+        <ActionsBase>
+          {users.size > 1 && <Field className="message-field">
             <span>Enter a message</span>
             <Input
               onChange={(e => setMessage(e.target.value))}
@@ -141,7 +142,8 @@ const NewChat = () => {
           >
             {!users.size ? 'Select Users' : users.size === 1 ? `Message ${directUsers.find(u => u.id === users.values().next().value).name}` : `Create Group with ${users.size} Users`}
           </Button>
-      </ ListBase>
+        </ActionsBase>
+      </ListBase>
     </Root>
   )
 }

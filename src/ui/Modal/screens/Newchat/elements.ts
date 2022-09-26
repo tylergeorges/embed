@@ -35,24 +35,20 @@ export const Close = styled(Modal.Close)`
 `
 
 export const ListBase = styled.div`
-  gap: 2.5px;
-  margin: 0 15px 15px 15px;
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
   overflow: auto;
-
-  &::-webkit-scrollbar {
-    width: 5px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
-    border-radius: 5px;
-  }
 `
 
 export const List = styled.div`
-  display: flex;
-  flex-direction: column;
-  
+  flex-grow: 1;
+  overflow: auto;
+  gap: 2.5px;
+  margin: 0 15px 15px 15px;
+  max-height: 75%;
+
   &::-webkit-scrollbar {
     width: 5px;
   }
@@ -61,6 +57,10 @@ export const List = styled.div`
     background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
     border-radius: 5px;
   }
+`;
+
+export const ActionsBase = styled.div`
+  margin-bottom: 15px;
 `;
 
 export const SearchBase = styled.div`
