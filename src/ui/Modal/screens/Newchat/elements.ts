@@ -34,9 +34,7 @@ export const Close = styled(Modal.Close)`
   margin: 15px;
 `
 
-export const List = styled.div`
-  display: flex;
-  flex-direction: column;
+export const ListBase = styled.div`
   gap: 2.5px;
   margin: 0 15px 15px 15px;
   overflow: auto;
@@ -50,6 +48,20 @@ export const List = styled.div`
     border-radius: 5px;
   }
 `
+
+export const List = styled.div`
+  display: flex;
+  flex-direction: column;
+  
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
+    border-radius: 5px;
+  }
+`;
 
 export const SearchBase = styled.div`
   margin: 0 15px;

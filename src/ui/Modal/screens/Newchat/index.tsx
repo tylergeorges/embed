@@ -12,7 +12,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { Input } from '../Authenticate/elements'
 import { Button, Checkbox } from '../Upload/elements'
 import DIRECT_USERS from './DirectUsers.graphql'
-import { Close, Field, List, Root, Title, Top, User, UserWrapper, SearchBase } from './elements'
+import { Close, Field, List, Root, Title, Top, User, UserWrapper, SearchBase, ListBase } from './elements'
 import CREATE_GROUP from './CreateGroup.graphql'
 import { debounce } from "lodash";
 
@@ -87,58 +87,61 @@ const NewChat = () => {
         </Field>
       </SearchBase>
 
-      <List className="list">
-        {directUsers.map(user => (
-          <UserWrapper key={user.id}>
-            <Checkbox className="checkbox-field">
-              <input
-                type="checkbox"
-                checked={users.has(user.id)}
-                onChange={e => {
-                  e.target.checked ? addUser(user.id) : removeUser(user.id)
-                }}
-              />
-              <span className="checkbox">
-                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" fillRule="evenodd" clipRule="evenodd" d="M8.99991 16.17L4.82991 12L3.40991 13.41L8.99991 19L20.9999 7.00003L19.5899 5.59003L8.99991 16.17Z"></path></svg>
-              </span>
-              <User>
-                <Avatar width={32} height={32} src={user.avatarUrl} />
-                <Details>
-                  <Member color={user.color}>{user.name}{user.discrim !== '0000' ? `#${user.discrim}` : ''}</Member>
-                </Details>
-              </User>
-            </Checkbox>
-          </UserWrapper>
-        ))}
-        {users.size > 1 && <Field className="message-field">
-          <span>Enter a message</span>
-          <Input
-            onChange={(e => setMessage(e.target.value))}
-            autoFocus={true}
-            maxLength={2000}
-            className="input"
-          />
-        </Field>}
-        <Button
-          variant="large"
-          className="button"
-          disabled={!users.size || users.size > 1 && !message}
-          onClick={async () => {
-            if (users.size === 1)
-              navigate(`/channels/${guild}/@${users.values().next().value}`)
-            else {
-              const { data: { group } } = await createGroup({ variables: { guild, memberIds: [...users], content: message}})
-              generalStore.chats.unshift(group)
-              navigate(`/channels/${guild}/@${group.id}`)
-            }
+      <ListBase>
+        <List className="list">
+          {directUsers.map(user => (
+            <UserWrapper key={user.id}>
+              <Checkbox className="checkbox-field">
+                <input
+                  type="checkbox"
+                  checked={users.has(user.id)}
+                  onChange={e => {
+                    e.target.checked ? addUser(user.id) : removeUser(user.id)
+                  }}
+                />
+                <span className="checkbox">
+                  <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" fillRule="evenodd" clipRule="evenodd" d="M8.99991 16.17L4.82991 12L3.40991 13.41L8.99991 19L20.9999 7.00003L19.5899 5.59003L8.99991 16.17Z"></path></svg>
+                </span>
+                <User>
+                  <Avatar width={32} height={32} src={user.avatarUrl} />
+                  <Details>
+                    <Member color={user.color}>{user.name}{user.discrim !== '0000' ? `#${user.discrim}` : ''}</Member>
+                  </Details>
+                </User>
+              </Checkbox>
+            </UserWrapper>
+          ))}
+        </List>
 
-            store.modal.close()
-            closeSidebar()
-          }}
-        >
-          {!users.size ? 'Select Users' : users.size === 1 ? `Message ${directUsers.find(u => u.id === users.values().next().value).name}` : `Create Group with ${users.size} Users`}
-        </Button>
-      </List>
+        {users.size > 1 && <Field className="message-field">
+            <span>Enter a message</span>
+            <Input
+              onChange={(e => setMessage(e.target.value))}
+              autoFocus={true}
+              maxLength={2000}
+              className="input"
+            />
+          </Field>}
+          <Button
+            variant="large"
+            className="button"
+            disabled={!users.size || users.size > 1 && !message}
+            onClick={async () => {
+              if (users.size === 1)
+                navigate(`/channels/${guild}/@${users.values().next().value}`)
+              else {
+                const { data: { group } } = await createGroup({ variables: { guild, memberIds: [...users], content: message}})
+                generalStore.chats.unshift(group)
+                navigate(`/channels/${guild}/@${group.id}`)
+              }
+
+              store.modal.close()
+              closeSidebar()
+            }}
+          >
+            {!users.size ? 'Select Users' : users.size === 1 ? `Message ${directUsers.find(u => u.id === users.values().next().value).name}` : `Create Group with ${users.size} Users`}
+          </Button>
+      </ ListBase>
     </Root>
   )
 }
