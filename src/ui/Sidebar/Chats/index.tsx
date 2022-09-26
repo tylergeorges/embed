@@ -13,6 +13,7 @@ import USER_TAG from "@views/Messages/Header/UserTag.graphql";
 import { FaPlus } from "react-icons/fa";
 import { store } from "@models";
 import { closeSidebar } from "@ui/shared/Channel/link";
+import groupIcon from '@images/discordAssets/group_icon.png';
 
 const list = new Intl.ListFormat()
 
@@ -62,8 +63,8 @@ export const ChatSwitcher = observer(() => {
           onClick={closeSidebar}
           children={
             <Chat selected={channel === '@'+chat.id}>
-              <Avatar width={32} height={32} src={'recipient' in chat ? chat.recipient.avatarUrl : null} />
-              {/* TODO group avatars */}
+              <Avatar width={32} height={32} src={'recipient' in chat ? chat.recipient.avatarUrl : groupIcon}/>
+
               <Details>
                 {'recipient' in chat
                   ? <Member color={chat.recipient.color}>{chat.recipient.name}{chat.recipient.discrim !== '0000' ? `#${chat.recipient.discrim}` : ''}</Member>
