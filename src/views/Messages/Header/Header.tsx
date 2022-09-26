@@ -12,7 +12,8 @@ import {
   SingleChannelAuthWrapper,
   Stretch,
   ThreadName,
-  Topic
+  Topic,
+  CloseMemberListBase
 } from '@ui/Header'
 
 import {Root} from './elements'
@@ -26,6 +27,7 @@ import Pins from './Pins'
 import { FetchUser } from './FetchUser'
 import AddMembers from "@views/Messages/Header/AddMembers";
 import LeaveGroup from "@views/Messages/Header/LeaveGroup";
+import Hamburger from "@ui/Header/Hamburger";
 
 export interface HeaderProps {
   channel?: string,
@@ -80,6 +82,18 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
               <>
                 <AddMembers />
                 <LeaveGroup />
+
+                <CloseMemberListBase>
+                  <Hamburger
+                    onClick={e => {
+                      e.stopPropagation();
+                      store.memberlist.toggle();
+                    }}
+                    open={store.memberlist.isOpen}
+                    thread={thread}
+                    pointRight={true}
+                  />
+                </CloseMemberListBase>
               </>
             )}
             <SingleChannelAuthWrapper>

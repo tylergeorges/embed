@@ -1,11 +1,15 @@
-import { MembersTitle, Root } from './elements'
+import { MembersTitle, Root, Close } from './elements'
 import {observer} from 'mobx-react'
 import { useParams } from "react-router-dom";
 import { authStore, generalStore } from "@store";
 import { Chats_getChats_DirectGroupChat } from "@generated";
 import MemberCard from "@ui/MemberList/MemberCard";
+import { store } from "@models";
+import * as React from "react";
 
 const MemberList = observer(() => {
+  if (!store.memberlist.isOpen) return null;
+
   const { user } = useParams();
   if (!user) return null;
 
@@ -19,6 +23,7 @@ const MemberList = observer(() => {
 
   return (
       <Root className="member-list">
+        {window.innerWidth < 520 && <Close onClick={store.memberlist.toggle}/>}
         <MembersTitle>Members - {recipients.length}</MembersTitle>
 
         {recipients.map((member, idx) => (

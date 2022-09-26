@@ -3,6 +3,7 @@ import styled, { css } from '@lib/emotion'
 interface Props {
   open: boolean
   thread: boolean
+  pointRight: boolean;
 }
 
 export const Ham = styled('button')<Props>`
@@ -42,10 +43,12 @@ export const Ham = styled('button')<Props>`
   }
 
   @media (min-width: 521px) {
-    ${({ theme, open, thread }) =>
+    ${({ theme, open, thread, pointRight }) =>
       open
         ? css`
-            transform: rotate(-180deg);
+            transform: rotate(${ pointRight ? '0deg' : '-180deg' });
+            
+                
             &::before {
               top: -7px;
               left: -9px;

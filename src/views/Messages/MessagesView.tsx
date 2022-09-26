@@ -50,7 +50,7 @@ const MessagesView = observer(() => {
   return (
     <div style={{ display: 'flex', height: '100%' }}>
       {!(generalStore.activeThread && generalStore.threadFullscreen) && (
-        <Wrapper hideOnMobile={Boolean(generalStore.activeThread)} memberListOpen={chat && 'ownerId' in chat}>
+        <Wrapper hideOnMobile={Boolean(generalStore.activeThread)} showMemberList={chat && 'ownerId' in chat}>
           <React.Suspense fallback={<Fallback />}>
             <Header channel={channel} chatUser={user}/>
           </React.Suspense>
