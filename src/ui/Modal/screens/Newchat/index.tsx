@@ -131,7 +131,7 @@ const NewChat = () => {
               if (users.size === 1)
                 navigate(`/channels/${guild}/@${users.values().next().value}`)
               else {
-                const { data: { group } } = await createGroup({ variables: { guild, memberIds: [...users], content: message}})
+                const { data: { createGroup: group } } = await createGroup({ variables: { guild, memberIds: [...users], content: message}})
                 generalStore.chats.unshift(group)
                 navigate(`/channels/${guild}/@${group.id}`)
               }

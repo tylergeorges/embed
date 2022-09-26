@@ -7,7 +7,7 @@
 // GraphQL mutation operation: CreateGroup
 // ====================================================
 
-export interface CreateGroup_group_DirectChat_recipient {
+export interface CreateGroup_createGroup_DirectChat_recipient {
   __typename: "User";
   id: string;
   name: string;
@@ -18,14 +18,14 @@ export interface CreateGroup_group_DirectChat_recipient {
   flags: number | null;
 }
 
-export interface CreateGroup_group_DirectChat {
+export interface CreateGroup_createGroup_DirectChat {
   __typename: "DirectChat";
   content: string;
   id: string;
-  recipient: CreateGroup_group_DirectChat_recipient;
+  recipient: CreateGroup_createGroup_DirectChat_recipient;
 }
 
-export interface CreateGroup_group_DirectGroupChat_recipients {
+export interface CreateGroup_createGroup_DirectGroupChat_recipients {
   __typename: "User";
   id: string;
   name: string;
@@ -36,18 +36,18 @@ export interface CreateGroup_group_DirectGroupChat_recipients {
   flags: number | null;
 }
 
-export interface CreateGroup_group_DirectGroupChat {
+export interface CreateGroup_createGroup_DirectGroupChat {
   __typename: "DirectGroupChat";
   content: string;
   id: string;
   ownerId: string;
-  recipients: CreateGroup_group_DirectGroupChat_recipients[];
+  recipients: CreateGroup_createGroup_DirectGroupChat_recipients[];
 }
 
-export type CreateGroup_group = CreateGroup_group_DirectChat | CreateGroup_group_DirectGroupChat;
+export type CreateGroup_createGroup = CreateGroup_createGroup_DirectChat | CreateGroup_createGroup_DirectGroupChat;
 
 export interface CreateGroup {
-  group: CreateGroup_group;
+  createGroup: CreateGroup_createGroup;
 }
 
 export interface CreateGroupVariables {

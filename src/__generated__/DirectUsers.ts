@@ -19,3 +19,7 @@ export interface DirectUsers_directUsers {
 export interface DirectUsers {
   directUsers: DirectUsers_directUsers[];
 }
+
+export interface DirectUsersVariables {
+  name?: string | null;
+}
