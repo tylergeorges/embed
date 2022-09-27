@@ -36,6 +36,8 @@ export interface HeaderProps {
   AuthStore?: AuthStore
 }
 
+const list = new Intl.ListFormat();
+
 export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
     let cData;
     try {
@@ -48,11 +50,17 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
     const invite = generalStore.settings?.invite;
     const threadData = thread && generalStore.activeThread;
 
+  const chatName = chatUser && 'recipient' in cData
+    ? `${cData.recipient.name}${cData.recipient.discrim !== '0000' ? '#'+cData.recipient.discrim : ''}`
+    : 'recipients' in cData
+      ? list.format(cData.recipients.map(r => r.name).sort())
+      : null;
+
     return (
         <Root thread={thread}>
             <Stretch>
-                { chatUser && cData.recipient ?
-                    <UserName>{cData.recipient.name}{cData.recipient.discrim !== '0000' ? '#'+cData.recipient.discrim : ''}</UserName>
+                { chatUser && chatName ?
+                    <UserName>{chatName}</UserName>
                 : chatUser && generalStore.guild ?
                     <FetchUser guild={generalStore.guild.id} user={chatUser} />
                 :cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
