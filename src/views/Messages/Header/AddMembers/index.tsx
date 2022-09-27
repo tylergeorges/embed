@@ -10,7 +10,7 @@ import DIRECT_USERS from "@ui/Modal/screens/Newchat/DirectUsers.graphql";
 import ADD_MEMBER from './AddMember.graphql';
 import { Avatar } from '@ui/MemberList/elements';
 import { useParams } from "react-router-dom";
-import { useMutation, useQuery } from "react-apollo-hooks";
+import { useMutation } from "react-apollo-hooks";
 import { debounce } from "lodash";
 import { Field } from "@ui/Modal/screens/Newchat/elements";
 import { Input } from "@ui/Modal/screens/Authenticate/elements";
@@ -27,7 +27,7 @@ export default observer(() => {
         setRight(innerWidth - button.getBoundingClientRect().right)
 
         const handleClickOutside = (event: MouseEvent) => {
-            if (![display, button].some(e => e?.contains(event.target as Node))) generalStore.togglePins(false)
+            if (![display, button].some(e => e?.contains(event.target as Node))) generalStore.toggleAddMembersOpen(false)
         }
 
         document.addEventListener('mousedown', handleClickOutside)

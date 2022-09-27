@@ -27,7 +27,7 @@ export const Display = styled.div<DisplayProps>`
     right: ${({right}) => right}px;
     width: 420px;
     overflow-y: auto;
-    max-height: calc(100% - 40px);
+    max-height: calc(100% - 80px);
     border-radius: 4px;
     display: flex;
     flex-direction: column;
@@ -50,7 +50,7 @@ export const Title = styled.div`
 export const List = styled.div`
     overflow-y: auto;
     background-color: ${({ theme }) => theme.colors._background.darken(0.15).string()};
-    padding: 8px;
+    padding: 0 8px 8px 8px;
 
     &::-webkit-scrollbar {
         width: 5px;
