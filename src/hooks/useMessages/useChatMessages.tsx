@@ -66,18 +66,18 @@ export const useChatMessages = (user: string, guild: string) => {
       const message = subscriptionData.data.directMessage as MessageData
 
       if (generalStore.chats) {
-        const chat = generalStore.chats.find(c => c.id === message.author.id)
+        const chat = generalStore.chats.find(c => c.id === message.channelId)
         if (chat) {
           chat.content = message.content
           Util.moveToTop(generalStore.chats, chat)
-        } else generalStore.chats.unshift({ id: message.author.id, recipient: message.author, content: message.content })
+        } else generalStore.chats.unshift({ id: message.channelId, recipient: message.author, content: message.content })
       }
 
       api.emit('directMessage', {
         message
       })
 
-      if (message.author.id !== user) {
+      if (message.channelId !== user) {
         return spawnNotif({
           content: (
             <NavLink
@@ -103,7 +103,7 @@ export const useChatMessages = (user: string, guild: string) => {
             return;
           }
 
-          if (message.author.id === user && !messages.find(m => m.id === message.id)) messages.push(message);
+          if (message.channelId === user && !messages.find(m => m.id === message.id)) messages.push(message);
         })
       )}
   });
