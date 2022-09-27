@@ -27,8 +27,8 @@ const MemberList = observer(({ member, isGroupOwner }: MemberCardProps) => {
       undefined,
       true,
 
-      Math.min(cardRef.getBoundingClientRect().right + 10, innerWidth - 510),
-      Math.min(cardRef.getBoundingClientRect().y, innerHeight - 300)
+      cardRef.getBoundingClientRect().x - (innerWidth > 520 ? 320 : 150),
+      cardRef.getBoundingClientRect().y + (innerWidth > 520 ? 0 : 50),
     )
   }
 
