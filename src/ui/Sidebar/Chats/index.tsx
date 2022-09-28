@@ -1,7 +1,7 @@
 import {NavLink, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react";
 
-import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton } from "./elements";
+import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton, Title } from "./elements";
 import CHATS from "./Chats.graphql";
 import {authStore, generalStore} from "@store";
 import { Chats, Chats_getChats_DirectChat, Chats_getChats_DirectGroupChat, UserTag } from "@generated";
@@ -66,9 +66,12 @@ export const ChatSwitcher = observer(() => {
               <Avatar width={32} height={32} src={'recipient' in chat ? chat.recipient.avatarUrl : groupIcon}/>
 
               <Details>
-                {'recipient' in chat
-                  ? <Member color={chat.recipient.color}>{chat.recipient.name}{chat.recipient.discrim !== '0000' ? `#${chat.recipient.discrim}` : ''}</Member>
-                  : list.format(chat.recipients.map(r => r.name).sort())}
+                <Title>
+                  {'recipient' in chat
+                    ? <Member color={chat.recipient.color}>{chat.recipient.name}{chat.recipient.discrim !== '0000' ? `#${chat.recipient.discrim}` : ''}</Member>
+                    : list.format(chat.recipients.map(r => r.name).sort())}
+                </Title>
+
                 <Preview>{chat.content}</Preview>
               </Details>
             </Chat>
