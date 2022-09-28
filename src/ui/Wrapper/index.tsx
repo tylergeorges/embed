@@ -5,12 +5,12 @@ import { store } from '@models'
 const Wrapper = observer(({ children, hideOnMobile = false, threadFullscreen = true, showMemberList = false }) => (
   <Root
     onClick={() => {
-      if (store.sidebar.isOpen && window.innerWidth < 520) {
-        store.sidebar.toggle()
+      if (window.innerWidth < 520) {
+        if (store.sidebar.isOpen) store.sidebar.toggle();
+        if (store.memberlist.isOpen) store.memberlist.toggle();
       }
     }}
-    squashed={store.sidebar.isOpen}
-    memberListOpen={showMemberList && store.memberlist.isOpen}
+    squashed={store.sidebar.isOpen || store.memberlist.isOpen}
     hideOnMobile={hideOnMobile}
     threadFullscreen={threadFullscreen}
     className="wrapper"

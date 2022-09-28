@@ -8,8 +8,6 @@ import { store } from "@models";
 import * as React from "react";
 
 const MemberList = observer(() => {
-  if (!store.memberlist.isOpen) return null;
-
   const { user } = useParams();
   if (!user) return null;
 
@@ -22,7 +20,7 @@ const MemberList = observer(() => {
   const isGroupOwner = authStore.userID === chat.ownerId;
 
   return (
-      <Root className="member-list">
+      <Root visible={store.memberlist.isOpen} className="member-list">
         {window.innerWidth < 520 && <Close onClick={store.memberlist.toggle}/>}
         <MembersTitle>Members - {recipients.length}</MembersTitle>
 
