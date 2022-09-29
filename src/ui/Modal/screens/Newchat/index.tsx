@@ -12,7 +12,7 @@ import { NavLink, useNavigate } from 'react-router-dom'
 import { Input } from '../Authenticate/elements'
 import { Button, Checkbox } from '../Upload/elements'
 import DIRECT_USERS from './DirectUsers.graphql'
-import { Close, Field, List, Root, Title, Top, User, UserWrapper, SearchBase, ListBase, ActionsBase } from './elements'
+import { Close, Field, List, Root, Title, Top, User, UserWrapper, SearchBase, ListBase, ActionsBase, MessageBase } from './elements'
 import CREATE_GROUP from './CreateGroup.graphql'
 import { debounce } from "lodash";
 
@@ -114,15 +114,17 @@ const NewChat = () => {
         </List>
 
         <ActionsBase>
-          {users.size > 1 && <Field className="message-field">
-            <span>Enter a message</span>
-            <Input
-              onChange={(e => setMessage(e.target.value))}
-              autoFocus={true}
-              maxLength={2000}
-              className="input"
-            />
-          </Field>}
+          {users.size > 1 && <MessageBase>
+            <Field className="message-field">
+              <span>Enter a message</span>
+              <Input
+                onChange={(e => setMessage(e.target.value))}
+                autoFocus={true}
+                maxLength={2000}
+                className="input"
+              />
+            </Field>
+          </MessageBase>}
           <Button
             variant="large"
             className="button"

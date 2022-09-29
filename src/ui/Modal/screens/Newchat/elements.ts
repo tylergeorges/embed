@@ -46,7 +46,7 @@ export const List = styled.div`
   flex-grow: 1;
   overflow: auto;
   gap: 2.5px;
-  margin: 0 15px 15px 15px;
+  margin: 0 15px;
   max-height: 75%;
 
   &::-webkit-scrollbar {
@@ -65,6 +65,10 @@ export const ActionsBase = styled.div`
 
 export const SearchBase = styled.div`
   margin: 0 15px;
+`;
+
+export const MessageBase = styled.div`
+  margin: 0 15px 15px;
 `;
 
 export const Field = styled(OriginalField)`
