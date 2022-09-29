@@ -47,6 +47,13 @@ export const Textarea = styled.textarea<TextareaProps>`
   &::placeholder {
     color: ${({ theme }) => theme.colors._primary.fade(0.7).string()};
     user-select: none;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  &:placeholder-shown {
+    text-overflow: ellipsis;
   }
 
   ::-webkit-scrollbar {
