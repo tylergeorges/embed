@@ -21,7 +21,7 @@ interface DisplayProps {
     right: number
 }
 export const Display = styled.div<DisplayProps>`
-    background: black;
+    background-color: ${({ theme }) => theme.colors.background};
     position: absolute;
     top: 40px;
     right: ${({right}) => right}px;
@@ -47,27 +47,43 @@ export const Title = styled.div`
     box-shadow: 0 1px 0 rgba(4,4,5,0.2), 0 1.5px 0 rgba(6,6,7,0.05), 0 2px 0 rgba(4,4,5,0.05);
 `
 
-export const List = styled.div`
-    overflow-y: auto;
-    background-color: ${({ theme }) => theme.colors._background.darken(0.15).string()};
-    padding: 0 8px 8px 8px;
+export const ListBase = styled.div`
+  position: relative;
 
-    &::-webkit-scrollbar {
-        width: 5px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
-        border-radius: 5px;
-    }
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
 `
+
+export const List = styled.div`
+  flex-grow: 1;
+  overflow: auto;
+  gap: 2.5px;
+  margin: 0 15px 0 15px;
+  max-height: 75%;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
+    border-radius: 5px;
+  }
+`;
+
+export const ActionsBase = styled.div`
+  margin: 0 15px 15px 15px;
+    
+  button {
+    width: 100%;    
+  }
+`;
 
 export const Member = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
-    background-color: ${({ theme }) => theme.colors.background};
-    margin-bottom: 6px;
     border-radius: 4px;
     padding: 8px;
 `

@@ -46,9 +46,6 @@ function Actions() {
           break;
         }
       }
-
-      console.log('got action', subscriptionData);
-
     }
   });
 

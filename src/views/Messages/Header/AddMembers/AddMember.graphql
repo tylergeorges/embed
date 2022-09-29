@@ -1,5 +1,5 @@
-mutation AddMember($guild: String!, $chat: String!, $member: String!) {
-  addMember(guild: $guild, id: $chat, memberIds: [$member]) {
+mutation AddMember($guild: String!, $chat: String!, $members: [String!]!) {
+  addMember(guild: $guild, id: $chat, memberIds: $members) {
     id
     name
     discrim

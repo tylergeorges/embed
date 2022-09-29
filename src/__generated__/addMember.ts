@@ -25,5 +25,5 @@ export interface AddMember {
 export interface AddMemberVariables {
   guild: string;
   chat: string;
-  member: string;
+  members: string[];
 }
