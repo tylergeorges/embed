@@ -19,7 +19,7 @@ export interface AddMember_addMember {
 }
 
 export interface AddMember {
-  addMember: AddMember_addMember;
+  addMember: AddMember_addMember[];
 }
 
 export interface AddMemberVariables {

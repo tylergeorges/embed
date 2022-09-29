@@ -81,8 +81,6 @@ export default observer(() => {
             variables: { guild: generalStore.guild.id, chat: chat.id, member: id },
         })
           .then(({ data: { addMember } }) => {
-              (chat as Chats_getChats_DirectGroupChat).recipients.push(addMember);
-
               generalStore.toggleAddMembersOpen(false);
           });
     }

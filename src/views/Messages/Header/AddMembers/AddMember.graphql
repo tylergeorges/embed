@@ -1,5 +1,5 @@
 mutation AddMember($guild: String!, $chat: String!, $member: String!) {
-  addMember(guild: $guild, id: $chat, member: $member) {
+  addMember(guild: $guild, id: $chat, memberIds: [$member]) {
     id
     name
     discrim

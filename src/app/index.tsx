@@ -14,6 +14,7 @@ import {Locale} from "@lib/Locale";
 import { Loading } from '@ui/Overlays/Loading/elements'
 import { Main } from './elements'
 import Notification from "@ui/Overlays/Notification";
+import Actions from "@ui/Overlays/Actions";
 
 const App = observer(() => {
   const cacheLoaded = useCacheLoaded()
@@ -30,6 +31,7 @@ const App = observer(() => {
                 <Authenticate />
                 <Modal />
                 <Notifications />
+                <Actions />
                 <Main>
                   <Sidebar />
                   <Outlet />

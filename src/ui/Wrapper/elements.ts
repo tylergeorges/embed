@@ -1,9 +1,10 @@
 import styled, { css } from '@lib/emotion'
 
 interface Props {
-  squashed: boolean
+  sidebarOpen: boolean
   hideOnMobile: boolean;
   threadFullscreen: boolean;
+  memberListOpen: boolean;
   onClick?: any
 }
 
@@ -43,8 +44,8 @@ export const Wrapper = styled('div')<Props>`
     ` : null
   }
   
-  ${({ squashed, threadFullscreen, theme }) =>
-    squashed && !theme.singleChannel
+  ${({ sidebarOpen, memberListOpen, threadFullscreen, theme }) =>
+    (sidebarOpen || memberListOpen) && !theme.singleChannel
       ? css`
       
       ${threadFullscreen ? css`
@@ -69,4 +70,16 @@ export const Wrapper = styled('div')<Props>`
           }
         `
       : null};
+
+  ${({ memberListOpen }) =>
+    memberListOpen ? css`
+      @media (min-width: 521px) {
+        margin-right: 200px;
+      }
+    
+      @media (min-width: 521px) and (max-width: 400px),
+      (min-width: 521px) and (max-height: 340px) {  
+        margin-right: 180px;
+      }
+    ` : null};
 `;

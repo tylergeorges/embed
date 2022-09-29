@@ -70,7 +70,11 @@ export const useChatMessages = (user: string, guild: string) => {
         if (chat) {
           chat.content = message.content
           Util.moveToTop(generalStore.chats, chat)
-        } else generalStore.chats.unshift({ id: message.channelId, recipient: message.author, content: message.content })
+        } else {
+          if (message.channelId === message.author.id) {
+            generalStore.chats.unshift({ id: message.channelId, recipient: message.author, content: message.content });
+          }
+        }
       }
 
       api.emit('directMessage', {

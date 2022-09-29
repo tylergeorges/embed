@@ -39,9 +39,7 @@ const RemoveButton = observer((props: RemoveButtonProps) => {
 
     removeMemberMutation({
       variables: { guild: generalStore.guild.id, chat: chat.id, member: props.member },
-    }).then(() => {
-      chat.recipients = chat.recipients.filter(r => r.id !== props.member);
-    })
+    });
   }
 
   return (
