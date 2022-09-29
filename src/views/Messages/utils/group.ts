@@ -42,6 +42,8 @@ export function groupMessages<
   let group = null;
   let previous: Message = undefined;
 
+  messages = messages.sort((a, b) => a.createdAt - b.createdAt);
+
   for (const message of messages) {
     if (group === null || compareGroupability(previous, message) || previous.thread) {
       group = result.push([] as Group) - 1
