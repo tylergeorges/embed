@@ -8,8 +8,9 @@ import { Button } from '../Upload/elements'
 import { Close, List, Root, Title, Top } from './elements'
 import LEAVE_GROUP from "./LeaveGroup.graphql";
 import { Views } from "@ui/Sidebar";
+import { observer } from "mobx-react";
 
-const LeaveGroup = () => {
+const LeaveGroup = observer(() => {
   const { user } = useParams();
   const navigate = useNavigate();
 
@@ -27,7 +28,8 @@ const LeaveGroup = () => {
         const newChats = generalStore.chats.filter(r => r.id !== chat.id);
         generalStore.setChats(newChats);
 
-        navigate('..') // Close DM as we're not in it now
+
+        navigate(`/channels/${generalStore.guild.id}`)
         generalStore.setSidebarView(Views.Channels);
       });
   }
@@ -52,6 +54,6 @@ const LeaveGroup = () => {
       </List>
     </Root>
   )
-}
+});
 
 export default LeaveGroup;

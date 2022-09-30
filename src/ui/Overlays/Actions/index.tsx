@@ -4,8 +4,9 @@ import { Action, ActionVariables, Chats_getChats_DirectGroupChat } from "@genera
 import ACTION from './Action.graphql';
 import { useNavigate, useParams } from "react-router-dom";
 import { authStore, generalStore } from "@store";
+import { observer } from "mobx-react";
 
-function Actions() {
+const Actions =  observer(() => {
   const { guild, user } = useParams();
   const navigate = useNavigate();
 
@@ -32,7 +33,7 @@ function Actions() {
         case 'KickMember': {
           if (authStore.userID === data.user.id) { // Current user kicked
             if (data.group.id === user) {
-              navigate('..') // Close DM if it's currently being viewed
+              navigate(`/channels/${generalStore.guild.id}`)
             }
 
             const newChats = generalStore.chats.filter(r => r.id !== data.group.id);
@@ -50,6 +51,6 @@ function Actions() {
   });
 
   return null;
-}
+});
 
 export default Actions;

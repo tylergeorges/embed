@@ -37,7 +37,7 @@ const MessagesView = observer(() => {
       }
 
       if (ls) {
-        navigate('..') // Close DM if not logged in
+        navigate(`/channels/${generalStore.guild.id}`)
         generalStore.setSidebarView(Views.Channels)
       }
     }
