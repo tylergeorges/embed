@@ -32,5 +32,6 @@ export interface ChannelName {
 }
 
 export interface ChannelNameVariables {
+  guild: string;
   channel: string;
 }

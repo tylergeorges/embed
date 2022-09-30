@@ -3,7 +3,6 @@ import Tooltip from 'rc-tooltip'
 import Emoji from '@ui/shared/Emoji'
 
 import ChannelLink from './link'
-import CHANNEL_INFO from './ChannelInfo.graphql'
 import { Message_mentions } from '@generated'
 import { generalStore } from '@store'
 

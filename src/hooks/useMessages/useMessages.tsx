@@ -1,7 +1,7 @@
 import produce from "immer";
 import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables } from "@generated";
+import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables, Messages, MessagesVariables } from "@generated";
 import { generalStore } from "@store";
 import { useContext } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
@@ -18,7 +18,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
   const spawnNotif = useContext(NotificationContext)
 
   const query = useQuery(MESSAGES, {
-    variables: { channel, thread },
+    variables: { guild, channel, thread },
     fetchPolicy: 'network-only'
   });
 
@@ -48,7 +48,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
     return query.fetchMore({
       query: MORE_MESSAGES,
-      variables: { channel, thread, ...options },
+      variables: { guild, channel, thread, ...options },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (fetchMoreResult.channel.messageBunch.messages.length === 0) {
           fullyLoaded = true

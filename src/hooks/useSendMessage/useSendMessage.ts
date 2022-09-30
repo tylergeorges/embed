@@ -2,15 +2,16 @@ import { useMutation } from 'react-apollo-hooks'
 import SEND_MESSAGE from './SendMessage.graphql'
 import { MESSAGES } from '../useMessages'
 import { useRouter } from '@hooks'
-import { Messages, SendMessage, SendMessageVariables } from '@generated';
+import { Messages, MessagesVariables, SendMessage, SendMessageVariables } from '@generated';
 import { addNotification } from "notify";
 import { MessageType } from '@generated/globalTypes';
 import { Util } from '@lib/Util';
 import { authStore, generalStore } from '@store';
+
 import api from '@lib/embed-api';
 
 export const useSendMessage = (thread?: string) => {
-  const { channel } = useRouter()
+  const { guild, channel } = useRouter()
   const sendMessage = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE);
 
   return async (content: string, fileName?: string, fileData?: string, fileAlt?: string) => {
@@ -65,7 +66,7 @@ export const useSendMessage = (thread?: string) => {
           if (optimisticIndex > -1) data.channel.messageBunch.messages.splice(optimisticIndex, 1)
         }
 
-        store.writeQuery({query: MESSAGES, variables: {channel, thread}, data})
+        store.writeQuery<Messages, MessagesVariables>({query: MESSAGES, variables: { guild, channel, thread }, data})
       }
     }).catch(error => addNotification({
       level: 'error',
