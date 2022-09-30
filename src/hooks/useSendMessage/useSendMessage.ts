@@ -101,6 +101,7 @@ export const useSendMessage = (thread?: string) => {
         update: (store, { data: { sendChat: newMessage } }) => {
           const data = store.readQuery<ChatMessages, ChatMessagesVariables>({ query: CHAT_MESSAGES, variables: { guild, user } })
 
+          newMessage.author.bot = false;
           newMessage.isGuest = true
 
           if (!data.getMessagesForChat.find(m => m.id === newMessage.id))
