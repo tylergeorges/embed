@@ -3,7 +3,7 @@ import SEND_MESSAGE from './SendMessage.graphql'
 import SEND_DIRECT_MESSAGE from './SendDirectMessage.graphql'
 import { CHAT_MESSAGES, MESSAGES } from '../useMessages'
 import { useRouter } from '@hooks'
-import { ChatMessages, Messages, SendMessage, SendMessageVariables } from '@generated'
+import { ChatMessages, ChatMessagesVariables, Messages, MessagesVariables, SendMessage, SendMessageVariables } from '@generated'
 import { addNotification } from "notify"
 import { MessageType } from '@generated/globalTypes'
 import { Util } from '@lib/Util'
@@ -59,7 +59,7 @@ export const useSendMessage = (thread?: string) => {
           sendMessage: optimisticData
         } as SendMessage,
         update: (store, { data: { sendMessage: newMessage } }) => {
-          const data = store.readQuery<Messages>({ query: MESSAGES, variables: {channel, thread } })
+          const data = store.readQuery<Messages, MessagesVariables>({ query: MESSAGES, variables: { guild, channel, thread } })
 
           newMessage.isGuest = true
 
@@ -72,7 +72,7 @@ export const useSendMessage = (thread?: string) => {
             if (optimisticIndex > -1) data.channel.messageBunch.messages.splice(optimisticIndex, 1)
           }
 
-          store.writeQuery({query: MESSAGES, variables: {channel, thread}, data})
+          store.writeQuery<Messages, MessagesVariables>({query: MESSAGES, variables: { guild, channel, thread }, data})
         }
       }).catch(error => addNotification({
         level: 'error',
@@ -99,7 +99,7 @@ export const useSendMessage = (thread?: string) => {
           sendChat: optimisticData
         } as SendDirectMessage,
         update: (store, { data: { sendChat: newMessage } }) => {
-          const data = store.readQuery<ChatMessages>({ query: CHAT_MESSAGES, variables: { guild, user } })
+          const data = store.readQuery<ChatMessages, ChatMessagesVariables>({ query: CHAT_MESSAGES, variables: { guild, user } })
 
           newMessage.isGuest = true
 
@@ -112,7 +112,7 @@ export const useSendMessage = (thread?: string) => {
             if (optimisticIndex > -1) data.getMessagesForChat.splice(optimisticIndex, 1)
           }
 
-          store.writeQuery({query: MESSAGES, variables: {channel, thread}, data})
+          store.writeQuery<ChatMessages, ChatMessagesVariables>({query: CHAT_MESSAGES, variables: { guild, user }, data})
         }
       }).catch(error => addNotification({
         level: 'error',

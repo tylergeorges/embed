@@ -696,6 +696,7 @@ export interface MoreMessages {
 }
 
 export interface MoreMessagesVariables {
+  guild: string;
   channel: string;
   thread?: string | null;
   around?: string | null;
