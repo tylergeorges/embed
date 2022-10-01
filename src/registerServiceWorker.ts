@@ -75,6 +75,12 @@ function registerValidSW(swUrl: string) {
                   action: {
                     label: 'Refresh',
                     callback() {
+                      try {
+                        localStorage.setItem('updatingAt', String(Date.now()))
+                      } catch(e) {
+                        console.log('Could not set updatingAt in localStorage, continuing anyway.');
+                      }
+
                       location.reload()
                     }
                   }

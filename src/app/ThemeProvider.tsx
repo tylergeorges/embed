@@ -11,7 +11,9 @@ import {useRouter} from '@hooks'
 import {generalStore, authStore} from '@store';
 import { useEffect } from 'react'
 
-const queryParams = new URLSearchParams(location.search)
+const queryParams = new URLSearchParams(location.search);
+
+const UPDATE_TIMEOUT = 15000;
 
 export const ThemeProvider = ({ children }) => {
   const guild = useRouter()?.guild ?? '299881420891881473'
@@ -31,18 +33,31 @@ export const ThemeProvider = ({ children }) => {
   generalStore.setSettings(settings)
 
   useEffect(() => {
+    let ls: Storage
+    try {
+      ls = localStorage
+    } catch (e) {
+      generalStore.toggleMenu(true)
+    }
+
+    if (ls && ls.getItem('updatingAt')) {
+      const updateThreshold = parseInt(ls.getItem('updatingAt')) + UPDATE_TIMEOUT;
+      const justUpdated = updateThreshold > Date.now();
+
+      if (justUpdated) {
+        ls.removeItem('updatingAt');
+
+        return; // We don't need to re-auth as the token in localStorage will still be fine.
+      }
+    }
+
     if (queryParams.has('token')) {
       const token = decodeURIComponent(queryParams.get('token'))
 
-      let ls: Storage
-      try {
-        ls = localStorage
-      } catch (e) {
-        generalStore.toggleMenu(true)
-      }
-
       if (ls) authStore.guildLogin(guild, token).then(async () => {
         generalStore.needsUpdate = true;
+      }).catch(e => {
+        console.warn(`Failed to authenticate using guild: ${e}`);
       })
     } else if (queryParams.has('username')) {
       const name = decodeURIComponent(queryParams.get('username'))

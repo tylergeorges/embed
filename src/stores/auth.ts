@@ -129,7 +129,7 @@ export class AuthStore {
         if ((newWindow as Window).closed) {
           cleanup();
           this.inProgress = false;
-          reject(() => {});
+          reject('Window was closed during authentication');
         }
       }, 500);
 
@@ -141,7 +141,7 @@ export class AuthStore {
             source.close();
             if (!data.token) {
               this.inProgress = false;
-              return reject(() => {});
+              return reject(new Error('No token given in response'));
             }
 
             localStorage.setItem('token', data.token);
@@ -154,7 +154,7 @@ export class AuthStore {
             source.close();
             cleanup();
             console.log(data.error);
-            return reject(() => {})
+            return reject(new Error(data.error))
             // return reject(loginError("You pressed cancel on the authentication window"));
           }
         }
@@ -182,7 +182,7 @@ export class AuthStore {
         case 'AUTH_SUCCESS': {
           if (!data.token) {
             this.inProgress = false;
-            return reject(() => {});
+            return reject(new Error('No token given in response'));
           }
 
           localStorage.setItem('token', data.token);
@@ -198,7 +198,7 @@ export class AuthStore {
         }
         case 'AUTH_ERROR': {
           loginError(data.message)
-          return reject(() => {})
+          return reject(new Error(data.message))
         }
       }
     })
@@ -219,7 +219,7 @@ export class AuthStore {
         case 'AUTH_SUCCESS': {
           if (!data.token) {
             this.inProgress = false;
-            return reject(() => {});
+            return reject(new Error('No token given in response'));
           }
 
           localStorage.setItem('token', data.token);
@@ -235,7 +235,7 @@ export class AuthStore {
         }
         case 'AUTH_ERROR': {
           loginError(data.message)
-          return reject(() => {})
+          return reject(new Error(data.message));
         }
       }
     })
