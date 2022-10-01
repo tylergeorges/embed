@@ -85,10 +85,12 @@ export const useChatMessages = (user: string, guild: string) => {
         return spawnNotif({
           content: (
             <NavLink
-              to={`/channels/${guild}/@${message.author.id}`}
-              onClick={() => {
-                closeSidebar()
-                generalStore.setSidebarView(Views.Chats)
+              to={`/channels/${guild}/@${message.channelId}`}
+              onClick={e => {
+                e.stopPropagation();
+
+                closeSidebar();
+                generalStore.setSidebarView(Views.Chats);
               }}
               children={<Message message={message} isFirstMessage={true} hideTimestamp={true} />}
               style={{ textDecoration: 'none' }}
