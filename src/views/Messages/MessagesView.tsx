@@ -3,11 +3,10 @@ import Wrapper from '@ui/Wrapper'
 import { Header, Fallback } from './Header'
 import { Chat } from '@ui/Chat'
 import { DirectChat } from '@ui/Chat/DirectChat'
-import { Messages } from './Messages'
 import { Loading } from '@ui/Overlays'
 import { observer } from "mobx-react";
 import { useEffect } from "react";
-import {authStore, generalStore, settingsStore} from "@store";
+import {authStore, generalStore} from "@store";
 import Messages2ElectricBoogaloo
   from "@views/Messages/Messages2ElectricBoogaloo";
 import { useNavigate, useParams } from 'react-router-dom'
@@ -56,12 +55,7 @@ const MessagesView = observer(() => {
           </React.Suspense>
 
           <React.Suspense fallback={<Loading />}>
-            {settingsStore.messageViewRewriteEnabled ? (
-              <Messages2ElectricBoogaloo guild={guild} channel={channel} chatUser={user} />
-            ) : (
-              <Messages guild={guild} channel={channel} chatUser={user} />
-            )}
-
+            <Messages2ElectricBoogaloo guild={guild} channel={channel} chatUser={user} />
           </React.Suspense>
           {user ? <DirectChat /> : <Chat />}
         </Wrapper>
@@ -75,11 +69,7 @@ const MessagesView = observer(() => {
           </React.Suspense>
 
           <React.Suspense fallback={<Loading />}>
-            {settingsStore.messageViewRewriteEnabled ? (
-              <Messages2ElectricBoogaloo guild={guild} channel={channel} thread />
-            ) : (
-              <Messages guild={guild} channel={channel} thread />
-            )}
+            <Messages2ElectricBoogaloo guild={guild} channel={channel} thread />
           </React.Suspense>
           <Chat thread />
         </Wrapper>
