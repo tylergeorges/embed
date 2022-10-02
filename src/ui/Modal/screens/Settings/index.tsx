@@ -2,8 +2,7 @@ import { store } from '@models'
 import { settingsStore } from '@store'
 import { Checkbox } from '../Upload/elements'
 import {
-  Close, ExperimentsButton,
-  Root,
+  Close, Root,
   Title,
   Top
 } from './elements'
@@ -25,15 +24,15 @@ const Settings = () => (
       </span>
       <span className="checkbox-text">Show Send Message button</span>
     </Checkbox>
-    <ExperimentsButton
-      onClick={() => {
-        store.modal.close();
-        store.modal.openExperiments()
-      }}
-      style={{marginTop: 16}}
-    >
-      Experiments
-    </ExperimentsButton>
+    {/*<ExperimentsButton*/}
+    {/*  onClick={() => {*/}
+    {/*    store.modal.close();*/}
+    {/*    store.modal.openExperiments()*/}
+    {/*  }}*/}
+    {/*  style={{marginTop: 16}}*/}
+    {/*>*/}
+    {/*  Experiments*/}
+    {/*</ExperimentsButton>*/}
   </Root>
 )
 
