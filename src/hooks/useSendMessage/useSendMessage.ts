@@ -7,12 +7,13 @@ import { addNotification } from "notify";
 import { MessageType } from '@generated/globalTypes';
 import { Util } from '@lib/Util';
 import { authStore } from '@store';
+import api from '@lib/embed-api';
 
 export const useSendMessage = (thread?: string) => {
   const { channel } = useRouter()
   const sendMessage = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE);
 
-  return async (content: string, fileName?: string, fileData?: string, fileAlt?: string) =>
+  return async (content: string, fileName?: string, fileData?: string, fileAlt?: string) => {
     await sendMessage({
       variables: { channel, content, fileName, fileData, fileAlt, thread },
       optimisticResponse: {
@@ -72,4 +73,7 @@ export const useSendMessage = (thread?: string) => {
       message: error.toString().replace('GraphQL error: ', ''),
       autoDismiss: 0
     }))
+
+    api.emit('sentMessage', { channel, content, fileName, fileData, fileAlt, thread })
+  }
 }

@@ -48,7 +48,12 @@ export const Settings = styled(Icon)`
     )}")`};
 `
 
-export const UserContainer = styled('div')`
+interface UserContainerProps {
+  loggedIn: boolean;
+  customAuth: boolean;
+}
+export const UserContainer = styled.div<UserContainerProps>`
+  display: ${({ theme, loggedIn, customAuth }) => ((theme.readonly || customAuth) && !loggedIn) ? 'none' : 'unset'};
   padding: 8px 10px;
 
   background-color: ${({theme}) =>
@@ -142,11 +147,11 @@ export const Version = styled('a')`
 const AuthButton = Button.withComponent('a');
 
 export const Auth = styled(AuthButton)`
-    display: ${({theme}) => theme.readonly ? 'none' : 'unset'};
-    background: ${({ theme }) => theme.colors._accent.fade(0.6).string()};
+  display: ${({theme}) => theme.readonly ? 'none' : 'unset'};
+  background: ${({ theme }) => theme.colors._accent.fade(0.6).string()};
 `;
 
-export const NotLoggedIn = styled('div')`
+export const NotLoggedIn = styled.div`
   display: flex;
   justify-content: center;
 `
