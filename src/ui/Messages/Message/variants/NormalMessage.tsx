@@ -155,6 +155,7 @@ interface MessageProps {
   noThreadButton?: boolean;
   isContextMenuInteraction?: boolean;
   hideTimestamp?: boolean;
+  disableProfileClick?: boolean;
 }
 
 function NormalMessage(props: MessageProps) {
@@ -193,6 +194,7 @@ function NormalMessage(props: MessageProps) {
             author={props.message.author}
             avatarAnimated={props.isHovered ?? false}
             isGuest={props.message.isGuest}
+            disableProfile={props.disableProfileClick}
             crosspost={!!(props.message.flags & 1 << 1)}
             referenceGuild={props.message.messageReference?.guildId}
           />

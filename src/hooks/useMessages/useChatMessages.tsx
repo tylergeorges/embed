@@ -87,12 +87,10 @@ export const useChatMessages = (user: string, guild: string) => {
             <NavLink
               to={`/channels/${guild}/@${message.channelId}`}
               onClick={e => {
-                e.stopPropagation();
-
                 closeSidebar();
                 generalStore.setSidebarView(Views.Chats);
               }}
-              children={<Message message={message} isFirstMessage={true} hideTimestamp={true} />}
+              children={<Message message={message} isFirstMessage={true} hideTimestamp={true} disableProfileClick={true} />}
               style={{ textDecoration: 'none' }}
             />
           ),
