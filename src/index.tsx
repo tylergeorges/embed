@@ -1,7 +1,8 @@
 import 'babel-polyfill'
 
 import client from '@lib/apollo'
-import * as Sentry from '@sentry/browser';
+import * as Sentry from '@sentry/react';
+import { BrowserTracing } from "@sentry/tracing";
 import { ApolloProvider } from 'react-apollo'
 import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
 
@@ -12,8 +13,15 @@ import App from './app'
 
 import register, { unregister } from './registerServiceWorker'
 
-if (!window.location.hostname.includes(`127.0.0.1`) && !window.location.hostname.includes(`localhost`))
-    Sentry.init({dsn: 'https://ba886140cbbf46d1b8c5a9c7f6d55267@bugs.widgetbot.io/6'});
+if (!window.location.hostname.includes(`127.0.0.1`) && !window.location.hostname.includes(`localhost`)) {
+  Sentry.init({
+    dsn: 'https://ba886140cbbf46d1b8c5a9c7f6d55267@bugs.widgetbot.io/6',
+    integrations: [new BrowserTracing()],
+
+    tracesSampleRate: 1
+  });
+}
+
 
 // Render App
 ReactDOM.render(
