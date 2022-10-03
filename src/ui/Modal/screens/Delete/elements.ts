@@ -11,7 +11,7 @@ export const Root = styled(Modal.Content)`
   overflow: visible;
 `
 
-export const Title = styled.h1`
+export const Title = styled('h1')`
   font-size: 20px;
   font-weight: 600;
   display: flex;
@@ -20,12 +20,12 @@ export const Title = styled.h1`
   margin: 16px;
 `
 
-export const Text = styled.div`
+export const Text = styled('div')`
   margin: 0 16px 20px;
   color: ${({theme}) => theme.colors._primary.fade(1 - 0.827).string()};
 `
 
-export const Preview = styled.div`
+export const Preview = styled('div')`
   box-shadow: 0 0 0 1px hsla(216,7.2%,13.5%,.6),0 2px 10px 0 hsla(0,0%,0%,.2);
   border-radius: 3px;
   padding: 10px 0;
@@ -33,7 +33,7 @@ export const Preview = styled.div`
   margin: 0 16px 20px;
 `
 
-export const Buttons = styled.div`
+export const Buttons = styled('div')`
   background-color: ${({ theme }) => theme.colors._background.darken(0.15).string()};
   padding: 16px;
   display: flex;
@@ -41,7 +41,7 @@ export const Buttons = styled.div`
   border-radius: 0 0 5px 5px;
 `
 
-const Button = styled.button`
+const Button = styled('button')`
   width: 96px;
   height: 38px;
   font-weight: 500;

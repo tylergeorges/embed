@@ -28,7 +28,7 @@ export const Notifications = styled('div')`
   }
 `
 
-export const Main = styled.main`
+export const Main = styled('main')`
   height: 100%;
 `
 

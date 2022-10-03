@@ -97,7 +97,7 @@ export const Close = styled('button')`
     }
 `;
 
-export const ViewSwitcher = styled.div`
+export const ViewSwitcher = styled('div')`
   display: flex;
   justify-content: space-evenly;
   margin: 10px 0;
@@ -106,7 +106,7 @@ export const ViewSwitcher = styled.div`
 interface ButtonProps {
   selected: boolean
 }
-export const Button = styled.button<ButtonProps>`
+export const Button = styled('button')<ButtonProps>`
   padding: 2px 20px;
   border-radius: 3px;
 

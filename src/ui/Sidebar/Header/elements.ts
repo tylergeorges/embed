@@ -34,7 +34,7 @@ export const Icon = styled('img')`
 `
 
 
-export const Acronym = styled.span`
+export const Acronym = styled('span')`
   height: 26px;
   width: 26px;
   border-radius: 50%;

@@ -5,7 +5,7 @@ interface Props {
     x: number;
     y: number;
 }
-export const Root = styled.div<Props>`
+export const Root = styled('div')<Props>`
     position: absolute;
     border-radius: 8px;
     background-color: ${({ theme }) => theme.colors._background.darken(.55).toString()};
@@ -19,20 +19,20 @@ export const Root = styled.div<Props>`
     `}
 `
 
-export const Avatar = styled.img`
+export const Avatar = styled('img')`
     border-radius: 50%;
 `
 
-export const Top = styled.div`
+export const Top = styled('div')`
     display: flex;
     align-items: flex-end;
 `
 
-export const Badges = styled.div`
+export const Badges = styled('div')`
     margin-left: auto;
 `
 
-export const Badge = styled.img`
+export const Badge = styled('img')`
     margin-right: 2px;
 `
 
@@ -47,7 +47,7 @@ export const Tag = styled('h1')`
     flex-wrap: wrap;
 `
 
-export const Discrim = styled.span`
+export const Discrim = styled('span')`
     color: ${({ theme }) => theme.colors._primary.fade(0.335).toString()};
 `
 

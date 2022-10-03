@@ -38,7 +38,7 @@ export namespace Attachment {
     hasChildren: boolean;
   }
 
-  export const ContainerBase = styled.div<ContainerBaseProps>`
+  export const ContainerBase = styled('div')<ContainerBaseProps>`
     display: flex;
     background-color: ${props => props.theme.colors._background.darken(0.2).string()};
     padding: 10px;
@@ -61,13 +61,13 @@ export namespace Attachment {
     `}
   `;
 
-  export const MetaBase = styled.div`
+  export const MetaBase = styled('div')`
     margin: 0 8px;
     display: flex;
     flex-direction: column;
   `;
 
-  export const FileNameBase = styled.a`
+  export const FileNameBase = styled('a')`
     color: #00aff4 !important;
     max-width: 40vw;
     overflow: hidden;
@@ -75,12 +75,12 @@ export namespace Attachment {
     white-space: nowrap;
   `;
 
-  export const FileSizeBase = styled.span`
+  export const FileSizeBase = styled('span')`
     color: #72767d;
     font-size: 12px;
   `;
 
-  export const DownloadIconBase = styled.a`
+  export const DownloadIconBase = styled('a')`
     opacity: 0.8;
     margin-left: auto;
     
@@ -89,13 +89,13 @@ export namespace Attachment {
     }
   `;
 
-  export const ExtraUserInterfaceBase = styled.div`
+  export const ExtraUserInterfaceBase = styled('div')`
     flex-basis: 100%;
     margin-top: 8px;
     display: flex;
   `;
 
-  export const AudioBase = styled.audio`
+  export const AudioBase = styled('audio')`
     flex: 1;
     height: 32px;
     outline: 0;
@@ -104,7 +104,7 @@ export namespace Attachment {
   ;`
 }
 
-export const SpoilerBase = styled.div`
+export const SpoilerBase = styled('div')`
   overflow: hidden;
   position: relative;
   width: fit-content;
@@ -148,7 +148,7 @@ export const SpoilerBase = styled.div`
 `;
 
 export namespace VideoAttachmentOverlay {
-  export const Base = styled.div`
+  export const Base = styled('div')`
     position: absolute;
     top: 0;
     height: 100%;
@@ -179,13 +179,13 @@ export namespace VideoAttachmentOverlay {
     }
   `;
 
-  export const Control = styled.div`
+  export const Control = styled('div')`
     flex: 1 0;
   `;
 
   export const PlayOrPauseAnimationDuration = 400;
 
-  export const PlayOrPauseButtonAnimation = styled.div`
+  export const PlayOrPauseButtonAnimation = styled('div')`
     position: absolute;
     top: 50%;
     left: 50%;
@@ -231,7 +231,7 @@ export namespace VideoAttachmentOverlay {
     }
   `;
 
-  export const MetadataBase = styled.div`
+  export const MetadataBase = styled('div')`
     padding: 12px;
     transition: transform 0.1s ease-in-out;
     transform: translateY(var(--overlayMetaDataTranslateY));
@@ -239,7 +239,7 @@ export namespace VideoAttachmentOverlay {
     background-image: linear-gradient(0, transparent, rgba(0, 0, 0, 0.7));
   `;
 
-  export const MetadataTitleBase = styled.div`
+  export const MetadataTitleBase = styled('div')`
     font-size: 16px;
     font-weight: 500;
     text-overflow: ellipsis;
@@ -247,7 +247,7 @@ export namespace VideoAttachmentOverlay {
     white-space: nowrap;
   `;
 
-  export const MetadataFilesizeBase = styled.div`
+  export const MetadataFilesizeBase = styled('div')`
     font-weight: 500;
     font-size: 12px;
     opacity: 0.7;
@@ -255,7 +255,7 @@ export namespace VideoAttachmentOverlay {
     color: ${props => props.theme.colors._primary.string()};
   `;
 
-  export const VideoControlsBase = styled.div`
+  export const VideoControlsBase = styled('div')`
     position: absolute;
     display: flex;
     bottom: 0;
@@ -270,13 +270,13 @@ export namespace VideoAttachmentOverlay {
     transform: translateY(var(--overlayControlsTranslateY));
   `;
 
-  export const VideoControlsTimeBase = styled.div`
+  export const VideoControlsTimeBase = styled('div')`
     font-size: 12px;
     font-family: Consolas, monospace;
     user-select: none;
   `;
 
-  export const ProgressBarBase = styled.div`
+  export const ProgressBarBase = styled('div')`
     height: 6px;
     border-radius: 80px;
     flex: 1 0;
@@ -298,7 +298,7 @@ export namespace VideoAttachmentOverlay {
     background-color: ${({theme}) => theme.colors._primary.fade(0.7).string()};
   `;
 
-  export const ProgressBarFillBase = styled.div`
+  export const ProgressBarFillBase = styled('div')`
     height: 100%;
     transition: width 0.25s linear;
     position: relative;
@@ -308,7 +308,7 @@ export namespace VideoAttachmentOverlay {
     background-color: ${({theme}) => theme.colors._accent.string()};
   `;
 
-  const ButtonBase = styled.div`
+  const ButtonBase = styled('div')`
     height: 14px;
     width: 14px;
 

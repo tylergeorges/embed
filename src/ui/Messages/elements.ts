@@ -1,7 +1,7 @@
 import styled from "react-emotion";
 import { MemberLink } from "@ui/shared/Member";
 
-export const MessageGroupBase = styled.div`
+export const MessageGroupBase = styled('div')`
   padding-top: 17px;
 `
 

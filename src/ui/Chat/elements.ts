@@ -43,7 +43,7 @@ export const Field = styled('div')<FieldProps>`
 interface SlowmodeProps {
   red: boolean
 }
-export const Slowmode = styled.div<SlowmodeProps>`
+export const Slowmode = styled('div')<SlowmodeProps>`
   height: 24px;
   font-size: 14px;
   color: ${({ red, theme }) => red ? 'rgba(237, 66, 39, .9)' : theme.colors._primary.fade(.3).string()};
@@ -62,18 +62,18 @@ export const Slowmode = styled.div<SlowmodeProps>`
   }
 `
 
-export const CrateSlowmodeContainer = styled.div`
+export const CrateSlowmodeContainer = styled('div')`
   display: flex;
   padding-right: 10px;
   background-color: rgba(0, 0, 0, 0.1);
 `
 
 
-export const PushDown = styled.div`
+export const PushDown = styled('div')`
   margin: auto 0 0;
 `
 
-export const Blocked = styled.div`
+export const Blocked = styled('div')`
   background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
   border-radius: 10px;
   padding: 0 12px;
@@ -81,7 +81,7 @@ export const Blocked = styled.div`
   justify-content: space-between;
 `;
 
-export const UnblockButton = styled.button`
+export const UnblockButton = styled('button')`
   background: ${({ theme }) => theme.colors._background.string()};
   padding: 4px 12px;
   margin: 8px 0;

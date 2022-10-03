@@ -1,6 +1,6 @@
 import styled from '@lib/emotion'
 
-export const LeaveGroupButton = styled.svg`
+export const LeaveGroupButton = styled('svg')`
     min-width: 24px;
     margin: auto 8px;
     cursor: pointer;

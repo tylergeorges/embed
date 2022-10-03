@@ -47,7 +47,7 @@ export const Timestamp: React.FC<Props> = ({data: {timestamp, style}}) => {
   </Tooltip>
 }
 
-const TSSpan = styled.span`
+const TSSpan = styled('span')`
   background-color: rgba(255, 255, 255, 0.06);
   border-radius: 3px;
   padding: 0 2px;

@@ -5,7 +5,7 @@ interface Props {
   visible: boolean
 };
 
-export const Root = styled.div<Props>`
+export const Root = styled('div')<Props>`
   position: absolute;
   z-index: 9;
   background-color: ${({ theme }) => theme.colors._background.darken(0.15).string()};
@@ -89,7 +89,7 @@ theme.colors._primary.fade(0.8).string()};
     }
 `;
 
-export const MembersTitle = styled.p`
+export const MembersTitle = styled('p')`
   color: ${({ theme }) => theme.colors._primary.fade(0.34).string()};
   text-transform: capitalize;
   margin-bottom: 0.5rem;
@@ -99,20 +99,20 @@ export const MembersTitle = styled.p`
   }
 `;
 
-export const MemberCardBase = styled.div`
+export const MemberCardBase = styled('div')`
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
 `;
 
-export const MemberBase = styled.div`
+export const MemberBase = styled('div')`
   display: flex;
   padding: 0.3rem 0;
   align-items: center;
 `;
 
-export const Avatar = styled.img`
+export const Avatar = styled('img')`
   border-radius: 50%;
   margin-right: 12px;
 `
@@ -121,7 +121,7 @@ interface RemoveButtonProps {
   pressed: boolean;
 }
 
-export const RemoveButtonBase = styled.svg<RemoveButtonProps>`
+export const RemoveButtonBase = styled('svg')<RemoveButtonProps>`
   cursor: pointer;
   
   path {

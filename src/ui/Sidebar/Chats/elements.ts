@@ -13,7 +13,7 @@ export const Root = styled(ScrollOverlay)`
 interface ChatProps {
     selected?: boolean
 }
-export const Chat = styled.div<ChatProps>`
+export const Chat = styled('div')<ChatProps>`
     display: flex;
     padding: 3px 8px;
     margin: 2px 8px;
@@ -29,19 +29,19 @@ export const Chat = styled.div<ChatProps>`
     ` : ''}
 `
 
-export const Avatar = styled.img`
+export const Avatar = styled('img')`
     border-radius: 50%;
     margin-right: 12px;
 `
 
-export const Details = styled.div`
+export const Details = styled('div')`
     display: flex;
     flex-direction: column;
     text-decoration: none;
     min-width: 0;
 `
 
-export const Title = styled.span`
+export const Title = styled('span')`
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
@@ -50,14 +50,14 @@ export const Title = styled.span`
     -webkit-box-orient: vertical;
 `;
 
-export const Preview = styled.span`
+export const Preview = styled('span')`
     font-size: 12px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 `
 
-export const LoadingContainer = styled.div`
+export const LoadingContainer = styled('div')`
     height: 100%;
 `
 

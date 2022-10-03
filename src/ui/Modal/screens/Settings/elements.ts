@@ -13,12 +13,12 @@ export const Root = styled(Modal.Content)`
   overflow: visible;
 `
 
-export const Top = styled.div`
+export const Top = styled('div')`
   padding-bottom: 20px;
   display: flex;
 `
 
-export const Title = styled.h1`
+export const Title = styled('h1')`
   font-size: 20px;
   font-weight: 600;
   display: flex;
@@ -30,7 +30,7 @@ export const Close = styled(Modal.Close)`
   margin: 15px;
 `
 
-export const ExperimentsButton = styled.button`
+export const ExperimentsButton = styled('button')`
   background-color: ${props => props.theme.colors.accent};
   padding: 5px 10px;
   border-radius: 5px;
