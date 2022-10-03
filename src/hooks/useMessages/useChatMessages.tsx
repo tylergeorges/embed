@@ -3,7 +3,7 @@ import { CHAT_MESSAGES, NEW_DIRECT_MESSAGE } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
 import { ChatMessages, Message as MessageData } from "@generated";
 import { NewDirectMessage } from "@generated/NewDirectMessage";
-import { generalStore } from "@store";
+import { authStore, generalStore } from "@store";
 import { Util } from "@lib/Util";
 import { useContext } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
@@ -81,7 +81,8 @@ export const useChatMessages = (user: string, guild: string) => {
         message
       })
 
-      if (message.channelId !== user && message.author.id !== user) {
+      // Ensure we're not currently viewing the DM & also don't notify about own messages
+      if (message.channelId !== user && message.author.id !== authStore.userID) {
         return spawnNotif({
           key: message.channelId,
           content: (

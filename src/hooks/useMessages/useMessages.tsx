@@ -2,7 +2,7 @@ import produce from "immer";
 import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
 import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables, Messages, MessagesVariables } from "@generated";
-import { generalStore } from "@store";
+import { authStore, generalStore } from "@store";
 import { useContext } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
 import Message from "@ui/Messages/Message";
@@ -83,7 +83,8 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
           message: message
         })
 
-      if (message.channelId !== channel && message.author.id !== channel) {
+      // Ensure we're not currently viewing the channel & also don't notify about own messages
+      if (message.channelId !== channel && message.author.id !== authStore.userID) {
         message.author.name += ` (#${getChannel(message.channelId)?.name})`
 
         generalStore.addUnreadChannel(message.channelId)
