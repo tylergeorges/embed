@@ -7,7 +7,7 @@ import {
   useRef,
   useState
 } from "react";
-import { Notification } from "@ui/Overlays/Notification/NotificationContext";
+import { Notification as INotification } from "@ui/Overlays/Notification/NotificationContext";
 import {
   NotificationBase,
   NotificationContentBase,
@@ -24,9 +24,9 @@ interface NotificationProps {
 const progressBarIntervalMs = 200;
 
 function Notification(props: NotificationProps) {
-  const [queue, setQueue] = useState<Notification[]>([]);
-  const notifRef = useRef<Notification | null>(null);
-  const queueRef = useRef<Notification[] | null>(null);
+  const [queue, setQueue] = useState<INotification[]>([]);
+  const notifRef = useRef<INotification | null>(null);
+  const queueRef = useRef<INotification[] | null>(null);
   const notifElementRef = useRef(null);
   const [timeToHide, setTimeToHide] = useState(0);
   queueRef.current = queue;
@@ -50,7 +50,7 @@ function Notification(props: NotificationProps) {
     return () => clearInterval(interval);
   }, [notifRef.current, queue]);
 
-  function spawn(notification: Omit<Notification, "shownAt">) {
+  function spawn(notification: Omit<INotification, "shownAt">) {
     const notif = {...notification, hideAfter: notification.hideAfter + slideOutAnimDurationMs, shownAt: new Date()};
 
     if (queue.length === 0)
