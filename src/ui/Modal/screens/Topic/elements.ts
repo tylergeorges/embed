@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@lib/emotion'
 import * as Modal from '@ui/Modal'
 import { Twemoji } from '@ui/shared/Emoji/emoji'
 
@@ -13,7 +13,7 @@ export const Root = styled(Modal.Content)`
   transform: translate(-50%,-50%);
 `
 
-export const Top = styled('div')`
+export const Top = styled.div`
   padding: 10px 10px 10px 20px;
   display: flex;
 `

@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@lib/emotion'
 import * as Modal from '@ui/Modal'
 import Btn from '@ui/shared/button'
 import { Spinner } from '@ui/Overlays/Loading/elements'

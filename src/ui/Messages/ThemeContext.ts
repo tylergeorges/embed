@@ -1,5 +1,5 @@
 import { Message } from '@generated'
-import styled, { ThemedReactEmotionInterface } from 'react-emotion'
+import styled, { ThemedReactEmotionInterface } from '@lib/emotion'
 import { Theme } from '@lib/emotion'
 
 export * from '@lib/emotion'

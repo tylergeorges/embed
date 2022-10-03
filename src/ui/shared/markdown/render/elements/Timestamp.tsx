@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled from '@lib/emotion'
 import Moment from 'moment'
 import Tooltip from 'rc-tooltip'
 
