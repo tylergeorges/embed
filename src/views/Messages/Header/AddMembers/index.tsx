@@ -6,7 +6,7 @@ import { Loading } from '@ui/Overlays/Loading/elements'
 import Tooltip from 'rc-tooltip'
 import client from "@lib/apollo";
 import { DirectUsers, DirectUsers_directUsers, AddMember, Chats_getChats_DirectGroupChat } from "@generated";
-import DIRECT_USERS from "src/ui/Modal/screens/Newchat/DirectUsers.graphql";
+import DIRECT_USERS from "../../../../ui/Modal/screens/Newchat/DirectUsers.graphql";
 import ADD_MEMBER from './AddMember.graphql';
 import { Avatar } from '@ui/MemberList/elements';
 import { useParams } from "react-router-dom";

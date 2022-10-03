@@ -9,7 +9,7 @@ import { Member } from "@ui/Messages/elements";
 import { useRouter } from "@hooks";
 import { Loading } from "@ui/Overlays/Loading/elements";
 import client from "@lib/apollo";
-import USER_TAG from "src/ui/views/Messages/Header/UserTag.graphql";
+import USER_TAG from "../../../views/Messages/Header/UserTag.graphql";
 import { FaPlus } from "react-icons/fa";
 import { store } from "@models";
 import { closeSidebar } from "@ui/shared/Channel/link";

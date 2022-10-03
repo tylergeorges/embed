@@ -15,7 +15,6 @@ import {
   SlideOut,
   slideOutAnimDurationMs
 } from "@ui/Overlays/Notification/elements";
-import {setInterval} from "timers";
 
 interface NotificationProps {
   children: ReactNode;

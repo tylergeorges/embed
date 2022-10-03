@@ -15,12 +15,13 @@ module.exports = {
   babel: {
     plugins: [
       "graphql-tag",
-      "import-graphql"
+      "import-graphql",
+      "@emotion"
     ]
   },
   webpack: {
     configure: (webpackConfig, {env, paths}) => {
-      webpackConfig.resolve.fallback = {"timers": false}
+      webpackConfig.resolve.fallback = {"timers": require.resolve('timers-browserify')}
       return webpackConfig;
     }
   }

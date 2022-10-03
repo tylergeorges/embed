@@ -1,4 +1,4 @@
-#import "@ui/Sidebar/Chats/Chat.graphql"
+#import "Chat.graphql"
 
 query Chats($guild: String!) {
   getChats(guild: $guild) {

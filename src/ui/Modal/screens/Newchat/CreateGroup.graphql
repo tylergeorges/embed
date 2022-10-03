@@ -1,4 +1,4 @@
-#import "@ui/Sidebar/Chats/Chat.graphql"
+#import "../../../Sidebar/Chats/Chat.graphql"
 
 mutation CreateGroup($guild: String!, $memberIds: [String!]!, $content: String!) {
   createGroup(guild: $guild, memberIds: $memberIds, content: $content) {
