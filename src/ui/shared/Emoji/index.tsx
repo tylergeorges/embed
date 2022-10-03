@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator'
-import { cx } from '@emotion/css'
+import { cx } from '@emotion/css/macro'
 import memoize from 'memoizee'
 import * as React from 'react'
 import emoji from 'react-easy-emoji'

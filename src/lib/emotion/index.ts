@@ -4,7 +4,7 @@ import styled from '@emotion/styled/macro'
 import { ParsedUrl } from '../../types/url'
 import { Settings_settings_theme } from '@generated'
 
-export * from '@emotion/react'
+export * from '@emotion/react/macro'
 
 export interface Theme extends Settings_settings_theme {
   readonly: boolean,

@@ -1,4 +1,4 @@
-import {cx} from '@emotion/css'
+import {cx} from '@emotion/css/macro'
 import {Query} from 'react-apollo'
 
 import RoleLink from './link'
