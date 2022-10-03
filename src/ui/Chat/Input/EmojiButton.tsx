@@ -4,7 +4,7 @@ import { EmojiButton } from './elements'
 interface Props {
   pickerIsOpen: boolean
   setPickerState: (state: boolean) => void
-  setElement: (element: HTMLButtonElement) => void
+  setElement: (element: HTMLDivElement) => void
 }
 
 export default ({ pickerIsOpen, setPickerState, setElement }: Props) => {
@@ -25,7 +25,7 @@ export default ({ pickerIsOpen, setPickerState, setElement }: Props) => {
       onMouseLeave={() => setHover(false)}
       onClick={() => setPickerState(!pickerIsOpen)}
       active={hover || pickerIsOpen}
-      innerRef={ref => setElement(ref)}
+      ref={ref => setElement(ref)}
       className="emoji-button"
     />
   )

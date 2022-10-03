@@ -1,5 +1,5 @@
 import autobind from 'autobind-decorator'
-import { cx } from 'emotion'
+import { cx } from '@emotion/css'
 import memoize from 'memoizee'
 import * as React from 'react'
 import emoji from 'react-easy-emoji'
@@ -37,7 +37,7 @@ class Emoji extends React.PureComponent<Props> {
       if (typeof text === 'undefined' || text === null) return null
 
       return React.cloneElement(text, {
-        className: cx('emoji', Base, className)
+        // className: cx('emoji', Base, className) // TODO[E]: Fix
       })
     }
 
@@ -49,7 +49,7 @@ class Emoji extends React.PureComponent<Props> {
 
       const emote = (
         <Emote
-          innerRef={this.handleErrors}
+          ref={this.handleErrors}
           src={`https://twemoji.maxcdn.com/2/svg/${code + '.svg'}`}
           alt={string}
           className={cx('emoji', className)}

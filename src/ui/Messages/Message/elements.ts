@@ -1,6 +1,6 @@
 import styled from '../ThemeContext'
 import {Twemoji} from "@ui/shared/Emoji/emoji";
-import {css} from "react-emotion";
+import {css} from '@lib/emotion';
 import {memo} from "react";
 import add from "@images/discordAssets/e06a573355c490f7ce6e3125ac01db81.svg";
 import remove from "@images/discordAssets/f772d3d7eddcf3c84f710c10999479f0.svg";

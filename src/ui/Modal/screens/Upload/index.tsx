@@ -40,7 +40,7 @@ const Upload = () => {
           <Field className="filename field">
             <span>Filename</span>
             <Input
-              innerRef={ref => (nameField = ref)}
+              ref={ref => (nameField = ref)}
               spellCheck={false}
               defaultValue={file.name}
               placeholder={file.name}
@@ -51,7 +51,7 @@ const Upload = () => {
           <Field className="description field" style={{display: 'none'}}> {/* alt field hidden */}
             <span>Description (ALT Text)</span>
             <Input
-              innerRef={ref => (descField = ref)}
+              ref={ref => (descField = ref)}
               placeholder="Add a description (optional)"
               maxLength={999}
               className="input"
@@ -60,7 +60,7 @@ const Upload = () => {
           <Field className="message field">
             <span>Message</span>
             <Input
-              innerRef={ref => (contentField = ref)}
+              ref={ref => (contentField = ref)}
               autoFocus={true}
               defaultValue={store.modal.content}
               placeholder="Add message content (optional)"

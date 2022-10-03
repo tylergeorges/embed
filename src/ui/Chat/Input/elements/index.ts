@@ -80,7 +80,7 @@ export const Textarea = styled('textarea')<TextareaProps>`
 interface EmojiButtonProps {
   active: boolean
 }
-export const EmojiButton = styled('div')<EmojiButtonProps>`
+export const EmojiButton = styled.div<EmojiButtonProps>`
   background-image: url(${emojiSprite});
   background-size: 242px 110px;
   min-width: 22px;

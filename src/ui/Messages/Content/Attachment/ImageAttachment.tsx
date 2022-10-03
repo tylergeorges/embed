@@ -11,7 +11,7 @@ function ImageAttachment(props: ImageAttachmentProps) {
   const { width, height } = useSize(props.attachment.width, props.attachment.height);
 
   return (
-    <ExpandableImage src={props.attachment.url} width={width} height={height} className={ImageAttachmentBase} />
+    <ExpandableImage src={props.attachment.url} width={width} height={height} className={ImageAttachmentBase.name} /> // TODO[E]: See other TODO
   )
 }
 

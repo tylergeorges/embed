@@ -93,7 +93,7 @@ class Authenticate extends React.Component<{}, State> {
             <Greeting className="greeting">{Locale.translate('auth.pickname')}</Greeting>
             <Group label={Locale.translate('auth.name')} onSubmit={this.signUp.bind(this)} className="group">
               <Input
-                  innerRef={ref => (this.nameField = ref)}
+                  ref={ref => (this.nameField = ref)}
                   autoFocus={true}
                   spellCheck={false}
                   minLength={1}

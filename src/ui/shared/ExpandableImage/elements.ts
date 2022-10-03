@@ -1,7 +1,5 @@
 import { Scale } from '@ui/shared/ScaledImage'
-import styled from '@lib/emotion'
-
-import {css} from "react-emotion";
+import styled, { css } from '@lib/emotion'
 
 interface Props {
   scale: Scale

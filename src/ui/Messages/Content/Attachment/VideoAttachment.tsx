@@ -94,9 +94,9 @@ function VideoAttachment(props: VideoAttachmentProps) {
   );
 
   return (
-    <div className={VideoAttachmentContainerBase} style={{width, height}} ref={attachmentRef}>
+    <div className={VideoAttachmentContainerBase.name} style={{width, height}} ref={attachmentRef}> // TODO[E]: See other TODO
       <video
-        className={VideoAttachmentBase}
+        className={VideoAttachmentBase.name} // TODO[E]: See other TODO
         preload="metadata"
         src={props.attachmentOrEmbed.url}
         height={height}

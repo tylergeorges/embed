@@ -11,7 +11,7 @@ function GifVEmbed({embed}: GifVEmbedProps) {
 
   return (
     <video
-      className={MediaEmbedBase}
+      className={MediaEmbedBase.name} // TODO[E]: See other TODO
       src={embed.video.proxyUrl ?? embed.video.url}
       width={size.width}
       height={size.height}

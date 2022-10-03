@@ -1,4 +1,4 @@
-import { cx } from 'emotion'
+import { cx } from '@emotion/css'
 import { Query } from 'react-apollo'
 
 import {MemberInfo, Message_author, Message_mentions} from '@generated'

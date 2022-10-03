@@ -1,4 +1,4 @@
-import styled, {css} from "react-emotion";
+import styled, {css} from '@lib/emotion';
 
 export const slideOutAnimDurationMs = 300;
 

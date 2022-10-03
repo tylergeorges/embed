@@ -33,7 +33,7 @@ const MemberList = observer(({ member, isGroupOwner }: MemberCardProps) => {
   }
 
   return (
-    <MemberCardBase innerRef={ref => cardRef = ref}>
+    <MemberCardBase ref={ref => cardRef = ref}>
       <MemberBase onClick={() => openProfile()}>
         <Avatar width={32} height={32} src={member.avatarUrl} alt={`${member.name} avatar`} />
         {member.name}

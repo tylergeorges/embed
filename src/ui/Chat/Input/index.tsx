@@ -56,7 +56,7 @@ class MagicTextarea extends React.Component<Props> {
   getValue = () => this.textarea.value;
   textarea: HTMLTextAreaElement;
   suggestions: Suggestions;
-  emojiButton: HTMLButtonElement;
+  emojiButton: Element;
 
   onChange(value) {
     const { onChange } = this.props;
@@ -115,7 +115,7 @@ class MagicTextarea extends React.Component<Props> {
         <Textarea
           {...this.props.innerProps}
           upload={generalStore.settings?.filesEnabled && !this.props.channel.direct}
-          innerRef={ref => {
+          ref={ref => {
             const { innerRef } = this.props;
 
             this.textarea = ref;

@@ -2,6 +2,7 @@ import * as React from 'react'
 import { css } from '@lib/emotion'
 
 import { Root } from './elements'
+import {SerializedStyles} from "@emotion/react";
 
 interface Scaler {
   width?: number
@@ -38,7 +39,7 @@ export class Scale {
   public height: number
   public scale: number
 
-  public css: string
+  public css: SerializedStyles
 
   private Image: { width: number; height: number }
   private Max: { width: number; height: number }

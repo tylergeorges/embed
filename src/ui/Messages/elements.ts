@@ -1,4 +1,4 @@
-import styled from "react-emotion";
+import styled from "@lib/emotion";
 import { MemberLink } from "@ui/shared/Member";
 
 export const MessageGroupBase = styled('div')`

@@ -61,7 +61,7 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
     }
   );
 
-  private openProfile = (ref: HTMLElement) => {
+  private openProfile = (ref: Element) => {
     if (this.props.disableProfile) return;
 
     store.modal.openProfile(
@@ -88,12 +88,12 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
     // Gets the dominant role icon
     const dominantRoleIconRole = this.getDominantRoleIconRole(this.props.author.roles);
 
-    let nameRef: HTMLSpanElement;
-    let avatarRef: HTMLImageElement;
+    let nameRef: Element;
+    let avatarRef: Element;
 
     const username = <UsernameBase
       color={color}
-      innerRef={ref => nameRef = ref}
+      ref={ref => nameRef = ref}
       onClick={() => this.openProfile(nameRef)}
     >
       {this.props.author.name}
@@ -110,7 +110,7 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
       <AuthorBase>
         <AvatarBase
           src={getAvatar(this.props.author, {animated: this.props.avatarAnimated ?? false})}
-          innerRef={ref => avatarRef = ref}
+          ref={ref => avatarRef = ref}
           onClick={() => this.openProfile(avatarRef)}
         />
         {username}

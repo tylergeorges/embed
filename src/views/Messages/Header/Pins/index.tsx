@@ -9,8 +9,8 @@ import Tooltip from 'rc-tooltip'
 
 export default observer(() => {
     const [right, setRight] = useState(0)
-    let button: HTMLElement
-    let display: HTMLDivElement
+    let button: Element
+    let display: Element
 
     useEffect(() => {
         setRight(innerWidth - button.getBoundingClientRect().right)
@@ -42,9 +42,9 @@ export default observer(() => {
             placement="bottom"
             overlay="Pinned Messages"
         >
-            <PinButton innerRef={ref => (button = ref)} onClick={() => generalStore.togglePins()} open={generalStore.pinsOpen} className="pin-button" x="0" y="0" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M22 12L12.101 2.10101L10.686 3.51401L12.101 4.92901L7.15096 9.87801V9.88001L5.73596 8.46501L4.32196 9.88001L8.56496 14.122L2.90796 19.778L4.32196 21.192L9.97896 15.536L14.222 19.778L15.636 18.364L14.222 16.95L19.171 12H19.172L20.586 13.414L22 12Z"></path></PinButton>
+            <PinButton ref={ref => (button = ref)} onClick={() => generalStore.togglePins()} open={generalStore.pinsOpen} className="pin-button" x="0" y="0" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M22 12L12.101 2.10101L10.686 3.51401L12.101 4.92901L7.15096 9.87801V9.88001L5.73596 8.46501L4.32196 9.88001L8.56496 14.122L2.90796 19.778L4.32196 21.192L9.97896 15.536L14.222 19.778L15.636 18.364L14.222 16.95L19.171 12H19.172L20.586 13.414L22 12Z"></path></PinButton>
         </Tooltip>
-        {generalStore.pinsOpen && <Display right={right} innerRef={ref => (display = ref)} className="pin-display">
+        {generalStore.pinsOpen && <Display right={right} ref={ref => (display = ref)} className="pin-display">
             <Title className="pin-title">Pinned Messages</Title>
             <List className="pin-list">
                 {pins

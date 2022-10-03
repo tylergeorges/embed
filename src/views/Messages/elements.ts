@@ -2,7 +2,7 @@ import { ScrollVisible } from '@ui/shared/scrollable'
 import SmartList from '@ui/shared/SmartList'
 import styled from '@lib/emotion'
 import { AutoSizer } from 'react-virtualized'
-import {injectGlobal} from "emotion";
+import {injectGlobal} from '@emotion/css';
 
 interface Props {
   squashed: boolean

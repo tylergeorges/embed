@@ -1,5 +1,5 @@
 import styled from '../../ThemeContext'
-import {css} from "react-emotion";
+import {css} from "@lib/emotion";
 import play from "../../../../app/res/images/discordAssets/play.svg";
 import pause from "../../../../app/res/images/discordAssets/pause.svg";
 import fullscreen from "../../../../app/res/images/discordAssets/fullscreen.svg";

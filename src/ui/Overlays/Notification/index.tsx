@@ -70,7 +70,7 @@ function Notification(props: NotificationProps) {
         <NotificationBase
           hideAfterMs={notifRef.current.hideAfter}
           ref={notifElementRef}
-          className={timeToHide < slideOutAnimDurationMs ? SlideOut : SlideIn}
+          className={timeToHide < slideOutAnimDurationMs ? SlideOut.name : SlideIn.name} // TODO[E]: See other TODO
         >
           <NotificationContentBase>
             {notifRef.current.content}

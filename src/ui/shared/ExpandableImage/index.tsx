@@ -54,7 +54,7 @@ const ExpandableImage = (props: Props) => {
       >
         <Image
           src={imageUrl}
-          className={loadState === "error" && Error}
+          className={loadState === "error" && Error.name} // TODO[E]: Is this correct? (added .name to Error)
           style={{
             width: scale.width,
             height: scale.height

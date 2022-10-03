@@ -1,4 +1,4 @@
-import { cx } from 'emotion'
+import { cx } from '@emotion/css'
 import Tooltip from 'rc-tooltip'
 import Emoji from '@ui/shared/Emoji'
 

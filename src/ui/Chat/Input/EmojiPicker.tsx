@@ -67,7 +67,7 @@ const EmojiPicker = observer(({ button, close, onSelect }: Props) => {
   }
 
   return (
-    <Root className="emoji-picker" innerRef={ref => picker = ref}>
+    <Root className="emoji-picker" ref={ref => picker = ref}>
       <Container>
         <Sidebar className="emoji-picker-sidebar">
           {Object.keys(emojiCategories).map(category => {

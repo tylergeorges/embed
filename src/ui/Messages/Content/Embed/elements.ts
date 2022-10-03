@@ -1,4 +1,4 @@
-import styled, {css} from "react-emotion";
+import styled, {css} from "@lib/emotion";
 import ExpandableImage from "@ui/shared/ExpandableImage";
 import play from "../../../../app/res/images/discordAssets/play.svg";
 
