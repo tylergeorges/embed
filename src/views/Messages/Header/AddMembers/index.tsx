@@ -73,6 +73,7 @@ export default observer(() => {
 
     useEffect(() => {
         if (!generalStore.addMembersOpen) {
+            setUsers([]);
             setDirectUsers(null);
             return;
         }
@@ -85,8 +86,6 @@ export default observer(() => {
         if (users.some(x => x.id === user.id)) return;
 
         setUsers([user, ...users]);
-
-        console.log('set');
     }
 
     const removeUser = (userId: string) => setUsers(users.filter(x => x.id !== userId));

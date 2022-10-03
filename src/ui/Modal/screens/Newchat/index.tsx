@@ -1,78 +1,88 @@
-import { CreateGroup, CreateGroupVariables, DirectUsers } from '@generated'
+import {
+  CreateGroup,
+  CreateGroupVariables,
+  DirectUsers,
+  DirectUsers_directUsers
+} from '@generated'
 import { useRouter } from '@hooks'
 import { store } from '@models'
-import { generalStore, settingsStore } from '@store'
+import { generalStore } from '@store'
 import { Member } from '@ui/Messages/elements'
-import { Loading } from '@ui/Overlays'
 import { closeSidebar } from '@ui/shared/Channel/link'
 import { Avatar, Details } from '@ui/Sidebar/Chats/elements'
-import { useEffect, useRef, useState } from 'react'
-import { useMutation, useQuery } from 'react-apollo-hooks'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useMutation } from 'react-apollo-hooks'
+import { useNavigate } from 'react-router-dom'
 import { Input } from '../Authenticate/elements'
 import { Button, Checkbox } from '../Upload/elements'
 import DIRECT_USERS from './DirectUsers.graphql'
 import { Close, Field, List, Root, Title, Top, User, UserWrapper, SearchBase, ListBase, ActionsBase, MessageBase } from './elements'
 import CREATE_GROUP from './CreateGroup.graphql'
 import { debounce } from "lodash";
+import client from "@lib/apollo";
+import { observer } from "mobx-react";
 
-const NewChat = () => {
+interface SelectedUser {
+  id: string;
+  name: string;
+}
+
+const NewChat = observer(() => {
   const { guild } = useRouter();
   const navigate = useNavigate();
   const createGroup = useMutation<CreateGroup, CreateGroupVariables>(CREATE_GROUP);
-  const [users, setUsers] = useState(new Set<string>());
+  const [directUsers, setDirectUsers] = useState<DirectUsers_directUsers[]>([]);
   let searchTerm = '';
 
-  const refetchDebounced = debounce((value: string) => {
-    refetch({
-      name: value !== '' ? value : undefined,
+  const closeModal = () => {
+    setUsers([]);
+    setDirectUsers([]);
+    store.modal.close();
+  }
+
+  const fetch = (search: string) => {
+    client.query<DirectUsers>({
+      query: DIRECT_USERS,
+      variables: {
+        name: search
+      },
+      fetchPolicy: 'network-only'
+    }).then(({ data: { directUsers } }) => {
+      setDirectUsers(directUsers);
     })
-  }, 250);
+  };
+  const fetchDebounced = debounce((search: string) => fetch(search), 250);
 
   const setSearchTerm = (value: string) => {
     searchTerm = value;
 
-    refetchDebounced(value);
+    fetchDebounced(value);
   };
 
-  const { data: { directUsers }, loading, error, refetch } = useQuery<DirectUsers>(DIRECT_USERS, {
-    fetchPolicy: 'network-only',
-    variables: {
-      name: searchTerm !== '' ? searchTerm : undefined,
+  useEffect(() => {
+    if (store.modal.type !== 'newchat') return;
+
+    if (store.modal.isOpen) {
+      fetch(searchTerm);
     }
-  });
+  }, [store.modal.isOpen]);
 
+  const [users, setUsers] = useState<SelectedUser[]>([]);
+  const addUser = (user: SelectedUser) => {
+    if (users.some(x => x.id === user.id)) return;
 
-  const addUser = (user: string) => setUsers(set => new Set(set).add(user))
+    setUsers([user, ...users]);
+  }
 
-  const removeUser = (user: string) =>
-    setUsers(old => {
-      const set = new Set(old)
-      set.delete(user)
-      return set
-    })
+  const removeUser = (userId: string) => setUsers(users.filter(x => x.id !== userId));
 
   const [message, setMessage] = useState('')
-
-  if (loading) return <Loading />;
-
-  if (!directUsers) return (
-      <Root>
-        <Top>
-          <Title>Error Fetching Users</Title>
-          <Close onClick={store.modal.close} />
-        </Top>
-        {error && <div style={{ margin: '1rem' }}>
-          {error.message}
-        </div>}
-      </Root>
-    )
 
   return (
     <Root className="new-chat">
       <Top className="top">
         <Title>New Chat</Title>
-        <Close onClick={store.modal.close} />
+        <Close onClick={closeModal} />
       </Top>
 
       <SearchBase>
@@ -94,9 +104,9 @@ const NewChat = () => {
               <Checkbox className="checkbox-field">
                 <input
                   type="checkbox"
-                  checked={users.has(user.id)}
+                  checked={users.some(r => r.id === user.id)}
                   onChange={e => {
-                    e.target.checked ? addUser(user.id) : removeUser(user.id)
+                    e.target.checked ? addUser({ id: user.id, name: user.name}) : removeUser(user.id)
                   }}
                 />
                 <span className="checkbox">
@@ -114,7 +124,7 @@ const NewChat = () => {
         </List>
 
         <ActionsBase>
-          {users.size > 1 && <MessageBase>
+          {users.length > 1 && <MessageBase>
             <Field className="message-field">
               <span>Enter a message</span>
               <Input
@@ -128,26 +138,26 @@ const NewChat = () => {
           <Button
             variant="large"
             className="button"
-            disabled={!users.size || users.size > 1 && !message}
+            disabled={!users.length || users.length > 1 && !message}
             onClick={async () => {
-              if (users.size === 1)
-                navigate(`/channels/${guild}/@${users.values().next().value}`)
+              if (users.length === 1)
+                navigate(`/channels/${guild}/@${users[0].id}`)
               else {
-                const { data: { createGroup: group } } = await createGroup({ variables: { guild, memberIds: [...users], content: message}})
+                const { data: { createGroup: group } } = await createGroup({ variables: { guild, memberIds: users.map(r => r.id), content: message}})
                 generalStore.chats.unshift(group)
                 navigate(`/channels/${guild}/@${group.id}`)
               }
 
-              store.modal.close()
+              closeModal();
               closeSidebar()
             }}
           >
-            {!users.size ? 'Select Users' : users.size === 1 ? `Message ${directUsers.find(u => u.id === users.values().next().value).name}` : `Create Group with ${users.size} Users`}
+            {!users.length ? 'Select Users' : users.length === 1 ? `Message ${users[0].name}` : `Create Group with ${users.length} Users`}
           </Button>
         </ActionsBase>
       </ListBase>
     </Root>
   )
-}
+});
 
 export default NewChat
