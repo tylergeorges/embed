@@ -4,7 +4,7 @@
   "version": "v0.0.0-canary",
   "homepage": "/",
   "scripts": {
-    "start": "rm -rf ./node_modules/.cache/babel-loader && craco start",
+    "start": "craco start",
     "build": "craco build",
     "analyze": "yarn build --analyze",
     "lingui": "lingui",
