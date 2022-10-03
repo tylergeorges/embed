@@ -25,4 +25,4 @@ export interface Theme extends Settings_settings_theme {
   loadedSettings: boolean
 }
 
-export default styled // as ThemedReactEmotionInterface<Theme> TODO: Reimplement
+export default styled
