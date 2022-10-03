@@ -1,39 +1,20 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "target": "es2019",
     "module": "es2020",
-    "lib": ["esnext", "es6", "dom"],
+    "lib": ["esnext", "dom", "dom.iterable"],
     "sourceMap": true,
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
     "outDir": "build/dist",
     "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
     "jsx": "react-jsx",
     "rootDir": "src",
-    "baseUrl": ".",
-    "paths": {
-      "@lib/*": ["src/lib/*"],
-      "@constants/*": ["src/constants/*"],
-      "@constants": ["src/constants/index"],
-      "@ui/*": ["src/ui/*"],
-      "@models": ["src/models/index"],
-      "@hooks": ["src/hooks/index"],
-      "@views/*": ["src/views/*"],
-      "@services/*": ["src/services/*"],
-      "@generated": ["src/__generated__/index"],
-      "@generated/*": ["src/__generated__/*"],
-      "@utils/*": ["src/utils/*"],
-      "@store": ["src/stores"],
-      "@store/*": ["src/stores/*"],
-      "notify": ["src/app/notify.tsx"],
-      "locales": ["src/app/locales"],
-      "locales/*": ["src/app/locales/*"],
-      "embed-api": ["src/lib/embed-api"],
-      "@images/*": ["src/app/res/images/*"]
-    },
     "plugins": [
       {
         "name": "ts-graphql-plugin"
