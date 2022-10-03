@@ -13,11 +13,10 @@ module.exports = {
     }
   ],
   babel: {
-    presets: ["@babel/preset-env"],
     plugins: [
       "graphql-tag",
       "import-graphql",
-      // "@emotion"
+      "@emotion"
     ]
   },
   webpack: {
