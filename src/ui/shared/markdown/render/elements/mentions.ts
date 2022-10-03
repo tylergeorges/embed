@@ -4,7 +4,7 @@ import $Member from '@ui/shared/Member'
 import $Role from '@ui/shared/Role'
 import styled, { css } from '@lib/emotion'
 import { Message_mentions } from '@generated'
-import { THEME_COLOR_ACCENT } from '@constants/theme'
+import * as Constants from '@constants'
 
 interface Props {
   color?: string
@@ -27,8 +27,8 @@ const base = (inline: boolean, color: string, clickable: boolean) => css`
       `
     : css`
         padding: 0 2px;
-        background-color: ${Color(color).fade(color === THEME_COLOR_ACCENT ? .7 : .9).string()};
-        color: ${color === THEME_COLOR_ACCENT ? Color('white').fade(.2).string() : color} !important;
+        background-color: ${Color(color).fade(color === Constants.THEME_COLOR_ACCENT ? .7 : .9).string()};
+        color: ${color === Constants.THEME_COLOR_ACCENT ? Color('white').fade(.2).string() : color} !important;
         text-decoration: none !important;
 
         &:hover {

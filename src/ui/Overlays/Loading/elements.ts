@@ -1,4 +1,4 @@
-import { THEME_COLOR_ACCENT } from '@constants/theme'
+import * as Constants from '@constants'
 import styled, { keyframes } from '@lib/emotion'
 
 const cube = keyframes`
@@ -19,7 +19,7 @@ export const Spinner = styled('div')`
   &::after,
   &::before {
     content: '';
-    background-color: ${({ theme }) => theme.colors?.accent ?? THEME_COLOR_ACCENT};
+    background-color: ${({ theme }) => theme.colors?.accent ?? Constants.THEME_COLOR_ACCENT};
     width: 15px;
     height: 15px;
     position: absolute;
