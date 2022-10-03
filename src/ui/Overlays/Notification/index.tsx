@@ -59,9 +59,13 @@ function Notification(props: NotificationProps) {
     setQueue([...queue, notif]);
   }
 
+  function clearKey(key: string) {
+    setQueue([...queue.filter(r => r.key !== key)]);
+  }
+
   return (
     <NotificationContext.Provider
-      value={spawn}
+      value={{ spawn, clearKey }}
     >
       {Boolean(notifRef.current) && (
         <NotificationBase

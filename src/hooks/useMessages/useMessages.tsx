@@ -15,7 +15,7 @@ const queryParams = new URLSearchParams(location.search)
  * Fetches the messages for a channel
  */
 export const useMessages = (channel: string, guild: string, thread?: string) => {
-  const spawnNotif = useContext(NotificationContext)
+  const { spawn: spawnNotif, clearKey: clearNotifKey } = useContext(NotificationContext)
 
   const query = useQuery<Messages, MessagesVariables>(MESSAGES, {
     variables: { guild, channel, thread },
@@ -89,8 +89,9 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
         generalStore.addUnreadChannel(message.channelId)
 
         return spawnNotif({
+          key: message.channelId,
           content: (
-            <ChannelLink id={message.channelId}>
+            <ChannelLink id={message.channelId} onClick={() => clearNotifKey(message.channelId)}>
               <Message message={message} isFirstMessage={true} hideTimestamp={true} />
             </ChannelLink>
           ),

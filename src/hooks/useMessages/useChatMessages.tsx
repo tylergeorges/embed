@@ -19,7 +19,7 @@ const queryParams = new URLSearchParams(location.search)
  * Fetches the messages for a DM chat
  */
 export const useChatMessages = (user: string, guild: string) => {
-  const spawnNotif = useContext(NotificationContext)
+  const { spawn: spawnNotif, clearKey: clearNotifKey } = useContext(NotificationContext)
 
   const query = useQuery(CHAT_MESSAGES, {
     variables: { guild, user },
@@ -83,10 +83,13 @@ export const useChatMessages = (user: string, guild: string) => {
 
       if (message.channelId !== user) {
         return spawnNotif({
+          key: message.channelId,
           content: (
             <NavLink
               to={`/channels/${guild}/@${message.channelId}`}
               onClick={e => {
+                clearNotifKey(message.channelId);
+
                 closeSidebar();
                 generalStore.setSidebarView(Views.Chats);
               }}
