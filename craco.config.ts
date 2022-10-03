@@ -14,11 +14,8 @@ module.exports = {
   ],
   babel: {
     plugins: [
-      // ["emotion", {
-      //   "sourceMap": true,
-      //   "autoLabel": true,
-      //   "labelFormat": "[local]"
-      // }]
+      "graphql-tag",
+      "import-graphql"
     ]
   },
   webpack: {
