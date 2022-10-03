@@ -111,7 +111,7 @@
     "@types/lingui__react": "^2.8.0",
     "@types/lodash": "^4.14.136",
     "@types/memoizee": "^0.4.2",
-    "@types/node": "^10.14.13",
+    "@types/node": "^18.8.0",
     "@types/qs": "^6.5.3",
     "@types/ramda": "^0.25.49",
     "@types/raven-js": "^3.10.0",

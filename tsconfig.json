@@ -15,7 +15,7 @@
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "rootDir": "src",
-    "typeRoots": ["emotion.d.ts"],
+    "typeRoots": ["emotion.d.ts", "node_modules", "node_modules/@types"],
     "plugins": [
       {
         "name": "ts-graphql-plugin"
