@@ -83,7 +83,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
           message: message
         })
 
-      if (message.channelId !== channel) {
+      if (message.channelId !== channel && message.author.id !== channel) {
         message.author.name += ` (#${getChannel(message.channelId)?.name})`
 
         generalStore.addUnreadChannel(message.channelId)

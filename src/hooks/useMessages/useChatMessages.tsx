@@ -81,7 +81,7 @@ export const useChatMessages = (user: string, guild: string) => {
         message
       })
 
-      if (message.channelId !== user) {
+      if (message.channelId !== user && message.author.id !== user) {
         return spawnNotif({
           key: message.channelId,
           content: (
