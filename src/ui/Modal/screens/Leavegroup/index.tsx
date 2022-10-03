@@ -1,4 +1,4 @@
-import { LeaveGroup } from '@generated'
+import { LeaveGroup as LeaveGroupMutation } from '@generated'
 import { store } from '@models'
 import { generalStore } from '@store'
 import { closeSidebar } from '@ui/shared/Channel/link'
@@ -17,7 +17,7 @@ const LeaveGroup = observer(() => {
   const chat = generalStore.chats?.find(r => r.id === user);
   if (!chat || !('recipients' in chat)) return null;
 
-  const leaveGroupMutation = useMutation<LeaveGroup>(LEAVE_GROUP);
+  const leaveGroupMutation = useMutation<LeaveGroupMutation>(LEAVE_GROUP);
   function leaveGroup() {
     leaveGroupMutation({
       variables: { guild: generalStore.guild.id, chat: chat.id },
