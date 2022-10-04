@@ -68,8 +68,10 @@ export const useChatMessages = (user: string, guild: string) => {
       if (generalStore.chats) {
         const chat = generalStore.chats.find(c => c.id === message.channelId)
         if (chat) {
-          chat.content = message.content
-          Util.moveToTop(generalStore.chats, chat)
+          chat.content = message.content;
+
+          const newChats = Util.moveToTopImmutable(generalStore.chats, chat);
+          generalStore.setChats(newChats);
         } else {
           if (message.channelId === message.author.id) {
             generalStore.chats.unshift({ id: message.channelId, recipient: message.author, content: message.content });

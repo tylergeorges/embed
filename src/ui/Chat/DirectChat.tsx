@@ -39,6 +39,8 @@ export const DirectChat: FunctionComponent = observer((props) => {
     ? chat.recipient.name
     : list.format(chat.recipients.map(r => r.name).sort())
 
+  console.log('directChat re-render');
+
   return (
     <>
       <PushDown />
