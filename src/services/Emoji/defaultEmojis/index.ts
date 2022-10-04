@@ -1,6 +1,6 @@
 import { Emoji } from "@services/Emoji";
 
-const categoryMap = require('./emojis.json');
+import categoryMap from './emojis.json'
 
 const emojisArray = Object.entries(categoryMap).map(([category, emojisObj]) => {
   return Object.entries(emojisObj).map(([utf8, keywords]) => {

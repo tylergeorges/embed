@@ -18,7 +18,7 @@ import getAvatar from "@utils/getAvatar";
 import { store } from '@models';
 import { generalStore } from '@store';
 
-const { version } = require('../../../../package.json');
+import { version } from '../../../../package.json'
 
 console.log(`WidgetBot version: ${version}`)
 

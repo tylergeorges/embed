@@ -8,7 +8,7 @@ import localForage from 'localforage'
 import cacheRedirects from './cacheRedirects'
 import dataIdFromObject from './dataIdFromObject'
 
-const introspectionQueryResultData = require('../codegen/fragmentTypes.json')
+import introspectionQueryResultData from '../codegen/fragmentTypes.json'
 const fragmentMatcher = new IntrospectionFragmentMatcher({
   introspectionQueryResultData
 })
