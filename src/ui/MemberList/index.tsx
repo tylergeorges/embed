@@ -15,7 +15,7 @@ const MemberList = observer(() => {
   if (!chat || chat.__typename !== 'DirectGroupChat') return null;
 
   const owner = chat.recipients.find(r => r.id === chat.ownerId);
-  const recipients = [owner, ...chat.recipients.filter(r => r.id !== owner.id).sort()];
+  const recipients = [owner, ...chat.recipients.filter(r => r.id !== owner.id).sort()].filter((r, idx, self) => self.findIndex(x => x.id === r.id) === idx);
 
   const isGroupOwner = authStore.userID === chat.ownerId;
 
