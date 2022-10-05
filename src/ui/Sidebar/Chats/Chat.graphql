@@ -1,0 +1,32 @@
+fragment Chat on Chat {
+    ...on DirectChat {
+      id
+
+      recipient {
+        id
+        name
+        discrim
+        avatarUrl
+        color
+        bot
+        flags
+      }
+    }
+
+    ...on DirectGroupChat {
+      id
+      ownerId
+
+      recipients {
+        id
+        name
+        discrim
+        avatarUrl
+        color
+        bot
+        flags
+      }
+    }
+
+    content
+}

@@ -1,10 +1,11 @@
 import { types } from 'mobx-state-tree'
-import { AuthMenu, Sidebar } from "./Sidebar";
+import { AuthMenu, MemberList, Sidebar } from "./Sidebar";
 import { Modal } from './Modal'
 
 export const Store = types
   .model('Store', {
     sidebar: Sidebar,
+    memberlist: MemberList,
     modal: Modal,
     authmenu: AuthMenu
   })
@@ -13,6 +14,7 @@ export const Store = types
 
 export const store = Store.create({
   sidebar: {},
+  memberlist: {},
   modal: {},
   authmenu: {}
 })

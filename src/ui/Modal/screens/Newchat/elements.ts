@@ -1,6 +1,7 @@
 import styled from "@lib/emotion";
 import * as Modal from "@ui/Modal";
 import { Chat } from "@ui/Sidebar/Chats/elements";
+import { Field as OriginalField } from '../Upload/elements'
 
 export const Root = styled(Modal.Content)`
   padding: 0;
@@ -33,12 +34,20 @@ export const Close = styled(Modal.Close)`
   margin: 15px;
 `
 
-export const List = styled.div`
+export const ListBase = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: column;
-  gap: 2.5px;
-  margin-bottom: 15px;
   overflow: auto;
+`
+
+export const List = styled.div`
+  flex-grow: 1;
+  overflow: auto;
+  gap: 2.5px;
+  margin: 0 15px;
+  max-height: 75%;
 
   &::-webkit-scrollbar {
     width: 5px;
@@ -48,11 +57,32 @@ export const List = styled.div`
     background: ${({ theme }) => theme.colors._background.darken(0.5).string()};
     border-radius: 5px;
   }
+`;
+
+export const ActionsBase = styled.div`
+  margin-bottom: 15px;
+`;
+
+export const SearchBase = styled.div`
+  margin: 0 15px;
+`;
+
+export const MessageBase = styled.div`
+  margin: 0 15px 15px;
+`;
+
+export const Field = styled(OriginalField)`
+  text-align: left;
+  margin-top: 20px;
 `
 
 export const UserWrapper = styled.div`
   margin: 0 8px;
   padding-bottom: 2.5px;
+
+  div {
+    background: none !important;
+  }
 
   &:not(:last-child) {
     border-bottom: 1px solid ${({theme}) => theme.colors._primary.fade(0.9).string()};

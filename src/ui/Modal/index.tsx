@@ -16,7 +16,7 @@ const Modal = observer(() => {
       )}`),
     loading: props =>
       props.pastDelay ? <Spinner name="ball-clip-rotate-multiple" /> : null
-  })
+  });
 
   return (
     <Hotkeys keyName="escape" onKeyDown={store.modal.close}>

@@ -10,7 +10,7 @@ import { Loading } from "@ui/Overlays";
 import { addNotification } from "notify";
 import { Locale } from '@lib/Locale'
 import { authStore, generalStore } from "@store";
-import { ChannelName } from '@generated'
+import { ChannelName, ChannelNameVariables } from '@generated'
 import Tooltip from 'rc-tooltip'
 import moment from 'moment'
 import { observer } from 'mobx-react'
@@ -38,8 +38,8 @@ export const Chat = observer((props: ChatProps) => {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const sendMessage = useSendMessage(props.thread ? generalStore.activeThread.id : null);
   const [rows, setRows] = useState(1);
-  const { channel } = useRouter();
-  const { data, error, loading } = useQuery<ChannelName>(GET_CHANNEL_NAME, { variables: { channel } });
+  const { guild, channel } = useRouter();
+  const { data, error, loading } = useQuery<ChannelName, ChannelNameVariables>(GET_CHANNEL_NAME, { variables: { guild, channel } });
 
   const [slowmodeTimeRemaining, setSlowmodeTimeRemaining] = useState(-1)
   const [slowmodeInterval, setSlowmodeInterval] = useState<NodeJS.Timeout | null>(null)
@@ -137,6 +137,7 @@ export const Chat = observer((props: ChatProps) => {
             inputRef.current.value = ''
 
             await sendMessage(content)
+            inputRef.current.focus();
 
             if (slowmode) {
               setSlowmodeTimeRemaining(slowmode)

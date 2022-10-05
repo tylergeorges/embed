@@ -1,8 +1,8 @@
 import produce from "immer";
 import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables } from "@generated";
-import { generalStore } from "@store";
+import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables, Messages, MessagesVariables } from "@generated";
+import { authStore, generalStore } from "@store";
 import { useContext } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
 import Message from "@ui/Messages/Message";
@@ -15,10 +15,10 @@ const queryParams = new URLSearchParams(location.search)
  * Fetches the messages for a channel
  */
 export const useMessages = (channel: string, guild: string, thread?: string) => {
-  const spawnNotif = useContext(NotificationContext)
+  const { spawn: spawnNotif, clearKey: clearNotifKey } = useContext(NotificationContext)
 
-  const query = useQuery(MESSAGES, {
-    variables: { channel, thread },
+  const query = useQuery<Messages, MessagesVariables>(MESSAGES, {
+    variables: { guild, channel, thread },
     fetchPolicy: 'network-only',
     skip: !channel
   });
@@ -49,7 +49,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
     return query.fetchMore({
       query: MORE_MESSAGES,
-      variables: { channel, thread, ...options },
+      variables: { guild, channel, thread, ...options },
       updateQuery: (prev, { fetchMoreResult }) => {
         if (fetchMoreResult.channel.messageBunch.messages.length === 0) {
           fullyLoaded = true
@@ -71,8 +71,6 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
     ? generalStore.guild?.channels.map(c => c.id)
     : [channel]
 
-  console.log(channels, channels.length)
-
   useSubscription<NewMessage, NewMessageVariables>(NEW_MESSAGE, {
     variables: { channels, guild, threadId: thread },
     skip: !channels[0],
@@ -85,14 +83,16 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
           message: message
         })
 
-      if (message.channelId !== channel) {
+      // Ensure we're not currently viewing the channel & also don't notify about own messages
+      if (message.channelId !== channel && message.author.id !== authStore.userID) {
         message.author.name += ` (#${getChannel(message.channelId)?.name})`
 
         generalStore.addUnreadChannel(message.channelId)
 
         return spawnNotif({
+          key: message.channelId,
           content: (
-            <ChannelLink id={message.channelId}>
+            <ChannelLink id={message.channelId} onClick={() => clearNotifKey(message.channelId)}>
               <Message message={message} isFirstMessage={true} hideTimestamp={true} />
             </ChannelLink>
           ),

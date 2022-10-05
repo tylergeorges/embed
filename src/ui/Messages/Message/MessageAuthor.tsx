@@ -23,6 +23,7 @@ interface MessageAuthorProps {
   isGuest?: boolean;
   crosspost?: boolean;
   referenceGuild?: string;
+  disableProfile?: boolean;
 }
 
 class MessageAuthor extends PureComponent<MessageAuthorProps> {
@@ -60,20 +61,24 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
     }
   );
 
-  private openProfile = (ref: HTMLElement) => store.modal.openProfile(
-    this.props.author.id,
-    this.props.author.name,
-    this.props.author.discrim,
-    this.props.author.avatarUrl,
-    this.props.author.bot,
-    this.props.author.system,
-    this.props.author.flags,
-    this.props.crosspost,
-    this.props.referenceGuild,
-    this.props.isGuest,
-    Math.min(ref.getBoundingClientRect().right + 10, innerWidth - 310),
-    Math.min(ref.getBoundingClientRect().y, innerHeight - 300)
-  )
+  private openProfile = (ref: HTMLElement) => {
+    if (this.props.disableProfile) return;
+
+    store.modal.openProfile(
+      this.props.author.id,
+      this.props.author.name,
+      this.props.author.discrim,
+      this.props.author.avatarUrl,
+      this.props.author.bot,
+      this.props.author.system,
+      this.props.author.flags,
+      this.props.crosspost,
+      this.props.referenceGuild,
+      this.props.isGuest,
+      Math.min(ref.getBoundingClientRect().right + 10, innerWidth - 310),
+      Math.min(ref.getBoundingClientRect().y, innerHeight - 300)
+    )
+  }
 
   render() {
     // Gets the dominant role color

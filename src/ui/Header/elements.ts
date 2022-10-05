@@ -145,3 +145,8 @@ export const Fullscreen = styled('svg')`
     color: ${({theme}) => theme.colors._primary.fade(0.6).string()};
   }
 `;
+
+export const CloseMemberListBase = styled.div`
+  position: relative;
+  margin-right: 15px;
+`;

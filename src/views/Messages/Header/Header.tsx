@@ -12,7 +12,8 @@ import {
   SingleChannelAuthWrapper,
   Stretch,
   ThreadName,
-  Topic
+  Topic,
+  CloseMemberListBase
 } from '@ui/Header'
 
 import {Root} from './elements'
@@ -24,6 +25,9 @@ import {SingleChannelAuth} from '@ui/Sidebar/Panel'
 import {generalStore} from "@store";
 import Pins from './Pins'
 import { FetchUser } from './FetchUser'
+import AddMembers from "@views/Messages/Header/AddMembers";
+import LeaveGroup from "@views/Messages/Header/LeaveGroup";
+import Hamburger from "@ui/Header/Hamburger";
 
 export interface HeaderProps {
   channel?: string,
@@ -32,11 +36,13 @@ export interface HeaderProps {
   AuthStore?: AuthStore
 }
 
+const list = new Intl.ListFormat();
+
 export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
     let cData;
     try {
         if (channel) cData = generalStore.guild.channels.find(c => c.id === channel) || {};
-        if (chatUser) cData = generalStore.chats.find(c => c.recipient.id === chatUser) || {};
+        if (chatUser) cData = generalStore.chats.find(c => c.id === chatUser) || {};
     } catch (_) {
         cData = {}
     }
@@ -44,11 +50,17 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
     const invite = generalStore.settings?.invite;
     const threadData = thread && generalStore.activeThread;
 
+  const chatName = chatUser && 'recipient' in cData
+    ? `${cData.recipient.name}${cData.recipient.discrim !== '0000' ? '#'+cData.recipient.discrim : ''}`
+    : 'recipients' in cData
+      ? list.format(cData.recipients.map(r => r.name).sort())
+      : null;
+
     return (
         <Root thread={thread}>
             <Stretch>
-                { chatUser && cData.recipient ?
-                    <UserName>{cData.recipient.name}{cData.recipient.discrim !== '0000' ? '#'+cData.recipient.discrim : ''}</UserName>
+                { chatUser && chatName ?
+                    <UserName>{chatName}</UserName>
                 : chatUser && generalStore.guild ?
                     <FetchUser guild={generalStore.guild.id} user={chatUser} />
                 :cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
@@ -74,6 +86,24 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
             </Stretch>
             {/* {(!thread || generalStore.threadFullscreen) && <Pins />} Thread pins are disabled */}
             {!thread && !chatUser && <Pins />}
+            {!thread && chatUser && 'ownerId' in cData && (
+              <>
+                <AddMembers />
+                <LeaveGroup />
+
+                <CloseMemberListBase>
+                  <Hamburger
+                    onClick={e => {
+                      e.stopPropagation();
+                      store.memberlist.toggle();
+                    }}
+                    open={store.memberlist.isOpen}
+                    thread={thread}
+                    pointRight={true}
+                  />
+                </CloseMemberListBase>
+              </>
+            )}
             <SingleChannelAuthWrapper>
                 <SingleChannelAuth />
             </SingleChannelAuthWrapper>

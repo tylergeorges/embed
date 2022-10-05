@@ -1356,6 +1356,7 @@ export interface Messages {
 }
 
 export interface MessagesVariables {
+  guild: string;
   channel: string;
   thread?: string | null;
   around?: string | null;

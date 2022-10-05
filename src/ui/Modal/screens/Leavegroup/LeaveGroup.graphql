@@ -1,0 +1,11 @@
+mutation LeaveGroup($guild: String!, $chat: String!) {
+  leaveGroup(guild: $guild, id: $chat) {
+    id
+    name
+    discrim
+    avatarUrl
+    color
+    bot
+    flags
+  }
+}

@@ -77,6 +77,10 @@ export const Modal = types
       self.type = 'delete'
       self.thread = thread
     },
+    openLeaveGroup() {
+      self.isOpen = true;
+      self.type = 'leavegroup'
+    },
     close() {
       self.isOpen = false
     }

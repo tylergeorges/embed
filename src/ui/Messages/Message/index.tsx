@@ -43,6 +43,7 @@ interface MessageProps {
   showButtons?: boolean;
   thread?: boolean;
   hideTimestamp?: boolean;
+  disableProfileClick?: boolean;
 }
 
 function MessageTypeSwitch(props: Omit<MessageProps, "showButtons">) {
@@ -176,16 +177,16 @@ function Message(props: MessageProps) {
         const text = props.message.content
           .replace(/^\|\|([\s\S]+?)\|\|/, "spoiler")
           .replace(/^<a?:(\w+):\d+>/, "emoji $1")
-          .replace(/^<@!?([0-9]+?)>/, (_, id) => 
-            props.message.mentions?.find(m => m.type === MentionType.Member && m.id === id)?.name 
+          .replace(/^<@!?([0-9]+?)>/, (_, id) =>
+            props.message.mentions?.find(m => m.type === MentionType.Member && m.id === id)?.name
             ?? "unknown user"
           )
-          .replace(/^<@&?([0-9]+?)>/, (_, id) => 
+          .replace(/^<@&?([0-9]+?)>/, (_, id) =>
             props.message.mentions?.find(m => m.type === MentionType.Role && m.id === id)?.name
             ?? generalStore.guild?.roles.find(r => r.id === id)?.name
             ?? "deleted role"
           )
-          .replace(/^<#?([0-9]+?)>/, (_, id) => 
+          .replace(/^<#?([0-9]+?)>/, (_, id) =>
             props.message.mentions?.find(m => m.type === MentionType.Channel && m.id === id)?.name
             ?? getChannel(id)?.name
             ?? "deleted channel"

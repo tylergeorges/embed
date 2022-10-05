@@ -1,10 +1,10 @@
 import {NavLink, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react";
 
-import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton } from "./elements";
+import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton, Title } from "./elements";
 import CHATS from "./Chats.graphql";
 import {authStore, generalStore} from "@store";
-import { Chats, UserTag } from "@generated";
+import { Chats, Chats_getChats_DirectChat, Chats_getChats_DirectGroupChat, UserTag } from "@generated";
 import { Member } from "@ui/Messages/elements";
 import { useRouter } from "@hooks";
 import { Loading } from "@ui/Overlays/Loading/elements";
@@ -13,6 +13,9 @@ import USER_TAG from "@views/Messages/Header/UserTag.graphql";
 import { FaPlus } from "react-icons/fa";
 import { store } from "@models";
 import { closeSidebar } from "@ui/shared/Channel/link";
+import groupIcon from '@images/discordAssets/group_icon.png';
+
+const list = new Intl.ListFormat()
 
 export const ChatSwitcher = observer(() => {
   if (!generalStore.chats)
@@ -25,7 +28,7 @@ export const ChatSwitcher = observer(() => {
   if (!generalStore.chats) return <LoadingContainer><Loading /></LoadingContainer>
 
   const userId = channel?.startsWith('@') ? channel.substring(1) : null;
-  if (userId && !generalStore.chats.find(r => r.recipient.id === userId)) {
+  if (userId && !generalStore.chats.find(r => r.id === userId)) {
     client.query<UserTag>({
       query: USER_TAG,
       variables: { guild, user: userId }
@@ -35,10 +38,11 @@ export const ChatSwitcher = observer(() => {
       // If an external ID was passed in, change url to the WidgetBot id
       if (userId !== userData.id) navigate('@' + userData.id, { replace: true });
 
-      if (generalStore.chats.find(r => r.recipient.id === userData.id)) return
+      if (generalStore.chats.find(r => r.id === userData.id)) return
 
       generalStore.setChats([
         {
+          id: userData.id,
           content: "",
           recipient: { ...userData, bot: false }
         },
@@ -54,14 +58,20 @@ export const ChatSwitcher = observer(() => {
         <NewChatButton onClick={store.modal.openNewChat}><FaPlus /> New Chat</NewChatButton>}
       {generalStore.chats.map((chat) => (
         <NavLink
-          key={chat.recipient.id}
-          to={`/channels/${guild}/@${chat.recipient.id}`}
+          key={chat.id}
+          to={`/channels/${guild}/@${chat.id}`}
           onClick={closeSidebar}
           children={
-            <Chat selected={channel === '@'+chat.recipient.id}>
-              <Avatar width={32} height={32} src={chat.recipient.avatarUrl} />
+            <Chat selected={channel === '@'+chat.id}>
+              <Avatar width={32} height={32} src={'recipient' in chat ? chat.recipient.avatarUrl : groupIcon}/>
+
               <Details>
-                <Member color={chat.recipient.color}>{chat.recipient.name}{chat.recipient.discrim !== '0000' ? `#${chat.recipient.discrim}` : ''}</Member>
+                <Title>
+                  {'recipient' in chat
+                    ? <Member color={chat.recipient.color}>{chat.recipient.name}{chat.recipient.discrim !== '0000' ? `#${chat.recipient.discrim}` : ''}</Member>
+                    : list.format(chat.recipients.map(r => r.name).sort())}
+                </Title>
+
                 <Preview>{chat.content}</Preview>
               </Details>
             </Chat>

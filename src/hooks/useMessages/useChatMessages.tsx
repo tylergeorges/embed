@@ -3,7 +3,7 @@ import { CHAT_MESSAGES, NEW_DIRECT_MESSAGE } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
 import { ChatMessages, Message as MessageData } from "@generated";
 import { NewDirectMessage } from "@generated/NewDirectMessage";
-import { generalStore } from "@store";
+import { authStore, generalStore } from "@store";
 import { Util } from "@lib/Util";
 import { useContext } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
@@ -19,7 +19,7 @@ const queryParams = new URLSearchParams(location.search)
  * Fetches the messages for a DM chat
  */
 export const useChatMessages = (user: string, guild: string) => {
-  const spawnNotif = useContext(NotificationContext)
+  const { spawn: spawnNotif, clearKey: clearNotifKey } = useContext(NotificationContext)
 
   const query = useQuery(CHAT_MESSAGES, {
     variables: { guild, user },
@@ -66,27 +66,37 @@ export const useChatMessages = (user: string, guild: string) => {
       const message = subscriptionData.data.directMessage as MessageData
 
       if (generalStore.chats) {
-        const chat = generalStore.chats.find(c => c.recipient.id === message.author.id)
+        const chat = generalStore.chats.find(c => c.id === message.channelId)
         if (chat) {
-          chat.content = message.content
-          Util.moveToTop(generalStore.chats, chat)
-        } else generalStore.chats.unshift({ recipient: message.author, content: message.content })
+          chat.content = message.content;
+
+          const newChats = Util.moveToTopImmutable(generalStore.chats, chat);
+          generalStore.setChats(newChats);
+        } else {
+          if (message.channelId === message.author.id) {
+            generalStore.chats.unshift({ id: message.channelId, recipient: message.author, content: message.content });
+          }
+        }
       }
 
       api.emit('directMessage', {
         message
       })
 
-      if (message.author.id !== user) {
+      // Ensure we're not currently viewing the DM & also don't notify about own messages
+      if (message.channelId !== user && message.author.id !== authStore.userID) {
         return spawnNotif({
+          key: message.channelId,
           content: (
             <NavLink
-              to={`/channels/${guild}/@${message.author.id}`}
-              onClick={() => {
-                closeSidebar()
-                generalStore.setSidebarView(Views.Chats)
+              to={`/channels/${guild}/@${message.channelId}`}
+              onClick={e => {
+                clearNotifKey(message.channelId);
+
+                closeSidebar();
+                generalStore.setSidebarView(Views.Chats);
               }}
-              children={<Message message={message} isFirstMessage={true} hideTimestamp={true} />}
+              children={<Message message={message} isFirstMessage={true} hideTimestamp={true} disableProfileClick={true} />}
               style={{ textDecoration: 'none' }}
             />
           ),
@@ -103,7 +113,7 @@ export const useChatMessages = (user: string, guild: string) => {
             return;
           }
 
-          if (message.author.id === user && !messages.find(m => m.id === message.id)) messages.push(message);
+          if (message.channelId === user && !messages.find(m => m.id === message.id)) messages.push(message);
         })
       )}
   });

@@ -13,13 +13,15 @@ export const closeSidebar = () => window.innerWidth < 520 ? store.sidebar.close(
 
 class ChannelLink extends React.PureComponent<Props> {
   render() {
-    const { id, $ref, children, className } = this.props;
+    const { id, $ref, children, className, onClick } = this.props;
     return (
       <NavLink
         to={`/channels/${generalStore.guild?.id}/${id}`}
         data-channel={id}
         ref={$ref}
-        onClick={() => {
+        onClick={(e) => {
+          onClick?.(e);
+
           closeSidebar()
           generalStore.setSidebarView(Views.Channels)
         }}

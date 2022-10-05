@@ -1,5 +1,5 @@
-query ChannelName($channel: String!) {
-  channel(id: $channel) {
+query ChannelName($guild: String!, $channel: String!) {
+  channel: channelV2(id: $channel, guild: $guild) {
     name
     id
     rateLimitPerUser

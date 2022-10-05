@@ -41,6 +41,15 @@ export const Details = styled.div`
     min-width: 0;
 `
 
+export const Title = styled.span`
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+`;
+
 export const Preview = styled.span`
     font-size: 12px;
     white-space: nowrap;

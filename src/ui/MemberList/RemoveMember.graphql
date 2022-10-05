@@ -1,0 +1,11 @@
+mutation RemoveMember($guild: String!, $chat: String!, $member: String!) {
+  removeMember(guild: $guild, id: $chat, member: $member) {
+    id
+    name
+    discrim
+    avatarUrl
+    color
+    bot
+    flags
+  }
+}

@@ -1,0 +1,42 @@
+subscription Action($guild: String!) {
+    action(guild: $guild) {
+        __typename
+
+        ...on JoinMember {
+            group {
+                id
+                ownerId
+                content
+                recipients {
+                    id
+                    name
+                    discrim
+                    avatarUrl
+                    color
+                    bot
+                    flags
+                }
+            }
+
+            user {
+                id
+                name
+                discrim
+                avatarUrl
+                color
+                bot
+                flags
+            }
+        }
+
+        ...on KickMember {
+            group {
+                id
+            }
+
+            user {
+                id
+            }
+        }
+    }
+}
