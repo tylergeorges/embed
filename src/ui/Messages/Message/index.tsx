@@ -33,12 +33,13 @@ import GuildDiscoveryDisqualified
 import { getChannel } from "@ui/shared/Channel";
 import { authStore, generalStore } from "@store";
 import { store } from "@models";
+import DateSeparator from "@ui/Messages/Message/DateSeparator";
 
 export type MessageDataModified = Omit<MessageData, "referencedMessage"> & Partial<MessageData>;
 
 interface MessageProps {
   isFirstMessage?: boolean;
-  message: MessageDataModified;
+  message: MessageDataModified & {separator?: string};
   isHovered?: boolean;
   showButtons?: boolean;
   thread?: boolean;
@@ -176,16 +177,16 @@ function Message(props: MessageProps) {
         const text = props.message.content
           .replace(/^\|\|([\s\S]+?)\|\|/, "spoiler")
           .replace(/^<a?:(\w+):\d+>/, "emoji $1")
-          .replace(/^<@!?([0-9]+?)>/, (_, id) => 
-            props.message.mentions?.find(m => m.type === MentionType.Member && m.id === id)?.name 
+          .replace(/^<@!?([0-9]+?)>/, (_, id) =>
+            props.message.mentions?.find(m => m.type === MentionType.Member && m.id === id)?.name
             ?? "unknown user"
           )
-          .replace(/^<@&?([0-9]+?)>/, (_, id) => 
+          .replace(/^<@&?([0-9]+?)>/, (_, id) =>
             props.message.mentions?.find(m => m.type === MentionType.Role && m.id === id)?.name
             ?? generalStore.guild?.roles.find(r => r.id === id)?.name
             ?? "deleted role"
           )
-          .replace(/^<#?([0-9]+?)>/, (_, id) => 
+          .replace(/^<#?([0-9]+?)>/, (_, id) =>
             props.message.mentions?.find(m => m.type === MentionType.Channel && m.id === id)?.name
             ?? getChannel(id)?.name
             ?? "deleted channel"
@@ -226,12 +227,24 @@ function Message(props: MessageProps) {
 
   if (props.showButtons)
     return (
-      <MessageContainer buttons={buttonOptions}>
-        <MessageTypeSwitch {...props} />
-      </MessageContainer>
+      <>
+        {props.message.separator && (
+          <DateSeparator dateString={props.message.separator} />
+        )}
+        <MessageContainer buttons={buttonOptions}>
+          <MessageTypeSwitch {...props} />
+        </MessageContainer>
+      </>
     );
 
-  return <MessageTypeSwitch {...props} />;
+  return (
+    <>
+      {props.message.separator && (
+        <DateSeparator dateString={props.message.separator} />
+      )}
+      <MessageTypeSwitch {...props} />
+    </>
+  );
 }
 
 export default memo(Message);

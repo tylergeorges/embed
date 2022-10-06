@@ -7,8 +7,10 @@ import ErrorAhoy from "@ui/Overlays/ErrorAhoy";
 import {Info, Loading, NoMessages} from "@ui/Overlays";
 import {useCallback, useEffect, useMemo} from "react";
 import {MessagesWrapper, ScrollerSpacer} from "@views/Messages/elements";
-import { Virtuoso } from "react-virtuoso";
+import {Virtuoso} from "react-virtuoso";
 import MessageGroup from "@ui/Messages";
+import {Message} from "@generated";
+import Moment from "moment";
 
 const maxMessagesToLoad = 30;
 
@@ -16,6 +18,35 @@ interface MessagesProps {
   guild: string;
   channel: string;
   thread?: boolean;
+}
+
+function groupGroupsByTimestamp(messages: Message[][]): (Message & {withSeparator?: true})[][] {
+  return (
+    Object.values(
+      messages
+        .reduce((acc, current) => {
+          const date = Moment(current[0].createdAt).format("L");
+
+          return {
+            ...acc,
+            [date]: (
+              [...(acc[date] ?? []), current]
+            )
+          }
+        }, {})
+    ) as Message[][][]
+  )
+    .reduce((acc, [[first, ...restOfFirstGroup], ...current]) => ([
+      ...acc,
+      [
+        {
+          ...first,
+          separator: Moment(first.createdAt).format("MMMM DD, YYYY")
+        },
+        ...restOfFirstGroup
+      ],
+      ...current
+    ]), [] as Message[][]);
 }
 
 const firstItemIndexStart = 100_000;
@@ -35,21 +66,25 @@ function Messages2ElectricBoogaloo({ guild, channel, thread = false }: MessagesP
         firstItemIndex: firstItemIndexStart,
       };
 
+    const grouped = groupGroupsByTimestamp(groupMessages(messages));
+
     if (messageState === undefined)
       return {
         messages: messages,
-        groupedMessages: groupMessages(messages),
-        firstItemIndex: firstItemIndexStart - groupMessages(messages).length,
+        groupedMessages: grouped,
+        firstItemIndex: firstItemIndexStart - grouped.length,
       }
 
     return {
       messages,
-      groupedMessages: groupMessages(messages),
+      groupedMessages: grouped,
       firstItemIndex:
         messageState.firstItemIndex
-        - groupMessages(
-          messages.slice(messageState.messages.length - messages.length)
-        ).length,
+        - groupGroupsByTimestamp(
+            groupMessages(
+              messages.slice(messageState.messages.length - messages.length)
+            )
+          ).length,
     }
   }, [messages]);
 
