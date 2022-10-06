@@ -28,10 +28,10 @@ ReactDOM.render(
 );
 
 // Hot reloading
-declare const module: any;
-if (module.hot) {
-    unregister();
-    module.hot.accept()
-} else {
-    register();
-}
+// declare const module: any;
+// if (module.hot) {
+//     unregister();
+//     module.hot.accept()
+// } else {
+//     register();
+// }
