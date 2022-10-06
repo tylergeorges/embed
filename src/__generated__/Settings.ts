@@ -28,6 +28,7 @@ export interface Settings_settings {
   hideSidebar: boolean | null;
   readonly: boolean;
   filesEnabled: boolean;
+  isCustomAuthEnabled: boolean;
   theme: Settings_settings_theme | null;
 }
 

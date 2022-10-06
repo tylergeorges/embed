@@ -6,6 +6,7 @@ query Settings($guild: String!) {
     hideSidebar
     readonly
     filesEnabled
+    isCustomAuthEnabled
     theme {
       css
       colors {

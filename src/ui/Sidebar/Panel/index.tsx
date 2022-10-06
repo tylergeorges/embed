@@ -33,7 +33,11 @@ export default class Panel extends React.Component<{}> {
 
 		return (
 			<Root className="panel">
-				<UserContainer className="user-container">
+				<UserContainer
+					loggedIn={!!authStore.user}
+					customAuth={generalStore.settings?.isCustomAuthEnabled}
+					className="user-container"
+				>
 					{authStore.user
 						? (
 							<LoggedInUser className="logged-in-user">
@@ -58,8 +62,8 @@ export default class Panel extends React.Component<{}> {
 											<SettingsIcon />
 										</UserButton>
 									</Tooltip>
-
-									{queryParams.has('username') || queryParams.has('token') || // disable logout for dynamic usernames & guild auth
+									{/* disable logout for dynamic usernames & guild auth */}
+									{queryParams.has('username') || generalStore.settings?.isCustomAuthEnabled ||
 										<Tooltip
 											placement="top"
 											overlay={Locale.translate('auth.logout')}

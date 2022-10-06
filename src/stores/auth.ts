@@ -9,6 +9,7 @@ import { addNotification } from 'notify';
 import {act} from "react-dom/test-utils";
 import {Locale} from "@lib/Locale";
 import {generalStore} from "@store/general";
+import api from "@lib/embed-api";
 
 interface DiscordUser {
   avatar: string
@@ -82,6 +83,8 @@ export class AuthStore {
 
     window.localStorage.setItem('user', JSON.stringify(data));
     this.user = data;
+
+    api.emit('signIn', data.user)
 
     return data;
   }
@@ -170,6 +173,9 @@ export class AuthStore {
           this.token = data.token;
           this.user = data.user;
           this.inProgress = false;
+
+          api.emit('signIn', data.user)
+
           return resolve();
         }
         case 'AUTH_ERROR': {
@@ -204,6 +210,9 @@ export class AuthStore {
           this.token = data.token;
           this.user = data.user;
           this.inProgress = false;
+
+          api.emit('signIn', data.user)
+
           return resolve();
         }
         case 'AUTH_ERROR': {
