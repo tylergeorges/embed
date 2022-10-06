@@ -3,7 +3,7 @@ import styled from '@lib/emotion'
 interface AddMemberButtonProps {
     open: boolean
 }
-export const AddMemberButton = styled('svg')<AddMemberButtonProps>`
+export const AddMemberButton = styled.svg<AddMemberButtonProps>`
     min-width: 24px;
     margin: auto 8px;
     cursor: pointer;
@@ -20,7 +20,7 @@ export const AddMemberButton = styled('svg')<AddMemberButtonProps>`
 interface DisplayProps {
     right: number
 }
-export const Display = styled('div')<DisplayProps>`
+export const Display = styled.div<DisplayProps>`
     background-color: ${({ theme }) => theme.colors.background};
     position: absolute;
     top: 40px;
@@ -39,7 +39,7 @@ export const Display = styled('div')<DisplayProps>`
     }
 `
 
-export const Title = styled('div')`
+export const Title = styled.div`
     background-color: ${({ theme }) => theme.colors._background.darken(0.41).string()};
     padding: 16px;
     font-family: var(--font-display);
@@ -47,7 +47,7 @@ export const Title = styled('div')`
     box-shadow: 0 1px 0 rgba(4,4,5,0.2), 0 1.5px 0 rgba(6,6,7,0.05), 0 2px 0 rgba(4,4,5,0.05);
 `
 
-export const ListBase = styled('div')`
+export const ListBase = styled.div`
   position: relative;
 
   display: flex;
@@ -55,7 +55,7 @@ export const ListBase = styled('div')`
   overflow: auto;
 `
 
-export const List = styled('div')`
+export const List = styled.div`
   flex-grow: 1;
   overflow: auto;
   gap: 2.5px;
@@ -72,7 +72,7 @@ export const List = styled('div')`
   }
 `;
 
-export const ActionsBase = styled('div')`
+export const ActionsBase = styled.div`
   margin: 0 15px 15px 15px;
     
   button {
@@ -80,7 +80,7 @@ export const ActionsBase = styled('div')`
   }
 `;
 
-export const Member = styled('div')`
+export const Member = styled.div`
     display: flex;
     align-items: center;
     cursor: pointer;
@@ -88,7 +88,7 @@ export const Member = styled('div')`
     padding: 8px;
 `
 
-export const NoMembers = styled('div')`
+export const NoMembers = styled.div`
     margin: 8px 0 16px 0;
     display: flex;
     flex-direction: column;
@@ -100,6 +100,6 @@ export const NoMembers = styled('div')`
     }
 `;
 
-export const SearchBase = styled('div')`
+export const SearchBase = styled.div`
   margin-bottom: 15px;
 `;

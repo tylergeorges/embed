@@ -146,7 +146,7 @@ export const Fullscreen = styled('svg')`
   }
 `;
 
-export const CloseMemberListBase = styled('div')`
+export const CloseMemberListBase = styled.div`
   position: relative;
   margin-right: 15px;
 `;

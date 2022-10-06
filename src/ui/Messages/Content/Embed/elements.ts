@@ -14,7 +14,7 @@ export namespace EmbedStyle {
     hasVideoWithThumbnail: boolean;
   }
 
-  export const Base = styled('article')<BaseProps>`
+  export const Base = styled.article<BaseProps>`
     padding: 16px 16px 16px 12px;
     border-left: 4px solid ${props => props.color ?? props.theme.colors._background.darken(0.7).string()};
     background-color: ${props => props.theme.colors._background.darken(0.1).string()};
@@ -34,7 +34,7 @@ export namespace EmbedStyle {
     thumbnailIsLarge: boolean;
   }
 
-  export const ContentAndThumbnail = styled('div')<ContentAndThumbnailProps>`
+  export const ContentAndThumbnail = styled.div<ContentAndThumbnailProps>`
     display: flex;
     gap: 16px;
     
@@ -44,7 +44,7 @@ export namespace EmbedStyle {
     `}
   `;
 
-  export const Content = styled('div')`
+  export const Content = styled.div`
     display: grid;
     gap: 8px;
   `;
@@ -53,7 +53,7 @@ export namespace EmbedStyle {
     amount: number;
   }
 
-  export const Images = styled('div')<ImagesProps>`
+  export const Images = styled.div<ImagesProps>`
     display: grid;
     gap: 4px;
     border-radius: 3px;
@@ -84,7 +84,7 @@ export namespace EmbedStyle {
     }
   `;
 
-  export const MultiImageImageContainer = styled('div')`
+  export const MultiImageImageContainer = styled.div`
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -114,7 +114,7 @@ export namespace EmbedStyle {
     `}
   `;
 
-  export const Author = styled('div')`
+  export const Author = styled.div`
     font-size: 14px;
     font-weight: 600;
     display: inline-grid;
@@ -124,13 +124,13 @@ export namespace EmbedStyle {
     color: ${props => props.theme.colors._primary.string()};
   `;
 
-  export const AuthorIcon = styled('img')`
+  export const AuthorIcon = styled.img`
     width: 24px;
     height: 24px;
     border-radius: 100%;
   `;
 
-  export const AuthorName = styled('span')`
+  export const AuthorName = styled.span`
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -141,42 +141,42 @@ export namespace EmbedStyle {
     }
   `;
 
-  export const Provider = styled('div')`
+  export const Provider = styled.div`
     font-size: 12px;
     color: ${props => props.theme.colors._primary.darken(0.1).string()};
   `;
 
-  export const Title = styled('div')`
+  export const Title = styled.div`
     font-size: 16px;
     font-weight: 600;
   `;
 
-  export const TitleWithUrl = styled('a')`
+  export const TitleWithUrl = styled.a`
     font-size: 16px;
     font-weight: 600;
   `;
 
-  export const Description = styled('div')`
+  export const Description = styled.div`
     font-size: 14px;
     white-space: pre-wrap;
     color: ${props => props.theme.colors._primary.darken(0.1).string()};
   `;
 
-  export const Footer = styled('div')`
+  export const Footer = styled.div`
     font-size: 12px;
     display: flex;
     align-items: center;
     color: ${props => props.theme.colors._primary.darken(0.1).string()};
   `;
 
-  export const FooterIcon = styled('img')`
+  export const FooterIcon = styled.img`
     border-radius: 100%;
     width: 20px;
     height: 20px;
     margin-right: 8px;
   `;
 
-  export const Fields = styled('div')`
+  export const Fields = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -184,7 +184,7 @@ export namespace EmbedStyle {
     gap: 8px;
   `;
 
-  export const Field = styled('div')<{inline?: boolean}>`
+  export const Field = styled.div<{inline?: boolean}>`
     flex: 0;
     max-width: 506px;
     ${({inline}) =>
@@ -199,14 +199,14 @@ export namespace EmbedStyle {
     }
   `;
 
-  export const FieldName = styled('div')`
+  export const FieldName = styled.div`
     font-size: 14px;
     margin-bottom: 4px;
     font-weight: 600;
     color: ${props => props.theme.colors._primary.string()};
   `;
 
-  export const FieldValue = styled('div')`
+  export const FieldValue = styled.div`
     font-size: 14px;
     font-weight: 400;
     white-space: pre-wrap;
@@ -214,12 +214,12 @@ export namespace EmbedStyle {
   `;
 }
 
-export const VideoIframe = styled('iframe')`
+export const VideoIframe = styled.iframe`
   border-radius: 3px;
   border: none;
 `;
 
-export const VideoThumbnail = styled('div')<{src: string}>`
+export const VideoThumbnail = styled.div<{src: string}>`
   border-radius: 3px;
   background-image: url(${props => props.src});
   background-size: cover;

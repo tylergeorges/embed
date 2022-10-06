@@ -1,12 +1,12 @@
 import styled from "@lib/emotion";
 
-export const ReplyIconBase = styled('img')`
+export const ReplyIconBase = styled.img`
   margin-left: .25rem;
   width: 20px;
   height: 20px;
 `;
 
-export const ContentContainerBase = styled('div')`
+export const ContentContainerBase = styled.div`
   color: ${props => props.theme.colors._primary.fade(0.2).string()};
   font-weight: 400;
   
@@ -24,29 +24,29 @@ export const ContentContainerBase = styled('div')`
   }
 `;
 
-export const ReplyAccessoryText = styled('span')`
+export const ReplyAccessoryText = styled.span`
   font-style: italic;
 `
 
-export const ContentMessageTooltipBase = styled('div')`
+export const ContentMessageTooltipBase = styled.div`
   max-width: 60vw;
 `;
 
-export const LottieStickerWrapper = styled('span')`
+export const LottieStickerWrapper = styled.span`
   width: fit-content;
 `
 
-export const StickerTooltipBase = styled('span')`
+export const StickerTooltipBase = styled.span`
   display: flex;
   align-items: center;
   white-space: break-spaces;
 `;
 
-export const StickerTooltipIconBase = styled('img')`
+export const StickerTooltipIconBase = styled.img`
   margin-right: .25rem;
 `;
 
-export const ThreadButtonContainerBase = styled('div')`
+export const ThreadButtonContainerBase = styled.div`
   margin-top: 4px;
   width: 100%;
   display: block;
@@ -54,7 +54,7 @@ export const ThreadButtonContainerBase = styled('div')`
 
 export const ThreadButtonHeight = 34;
 
-export const ThreadButtonBase = styled('div')`
+export const ThreadButtonBase = styled.div`
   width: fit-content;
   padding: 8px;
   height: ${ThreadButtonHeight}px;
@@ -62,19 +62,19 @@ export const ThreadButtonBase = styled('div')`
   background-color: ${({theme}) => theme.colors._background.darken(0.2).string()};
 `;
 
-export const ThreadButtonTopLineBase = styled('div')`
+export const ThreadButtonTopLineBase = styled.div`
   display: flex;
   font-size: 14px;
   font-weight: 600;
 `;
 
-export const ThreadButtonNameBase = styled('span')`
+export const ThreadButtonNameBase = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 `;
 
-export const SeeThreadButtonBase = styled('div')`
+export const SeeThreadButtonBase = styled.div`
   margin-left: 8px;
   color: #00aff4;
   white-space: nowrap;

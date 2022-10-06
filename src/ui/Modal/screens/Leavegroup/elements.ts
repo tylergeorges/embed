@@ -17,12 +17,12 @@ export const Root = styled(Modal.Content)`
   overflow: visible;
 `
 
-export const Top = styled('div')`
+export const Top = styled.div`
   padding: 10px 10px 5px 20px;
   display: flex;
 `
 
-export const Title = styled('h1')`
+export const Title = styled.h1`
   font-size: 20px;
   font-weight: 600;
   margin: 10px 0;
@@ -34,7 +34,7 @@ export const Close = styled(Modal.Close)`
   margin: 15px;
 `
 
-export const List = styled('div')`
+export const List = styled.div`
   display: flex;
   flex-direction: column;
   gap: 2.5px;
@@ -51,7 +51,7 @@ export const List = styled('div')`
   }
 `
 
-export const SearchBase = styled('div')`
+export const SearchBase = styled.div`
   margin: 0 15px;
 `;
 
@@ -60,7 +60,7 @@ export const Field = styled(OriginalField)`
   margin-top: 20px;
 `
 
-export const UserWrapper = styled('div')`
+export const UserWrapper = styled.div`
   margin: 0 8px;
   padding-bottom: 2.5px;
 

@@ -103,5 +103,12 @@ const App = observer(() => {
 //   }
 // }
 
+process.on('unhandledRejection', (err: any) => {
+  console.error(err);
+});
+
+process.on('uncaughtException', (err: any) => {
+  console.error(err);
+});
 
 export default App

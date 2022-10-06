@@ -1,13 +1,13 @@
 import styled from "../ThemeContext";
 
-export const VerifiedBot = styled('svg')`
+export const VerifiedBot = styled.svg`
   vertical-align: top;
   width: 15px;
   height: 15px;
   margin-left: -.25rem;
 `;
 
-export const Tag = styled('span')`
+export const Tag = styled.span`
   margin-left: 6px;
   line-height: normal;
   font-size: 10px;

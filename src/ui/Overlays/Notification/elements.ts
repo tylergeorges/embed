@@ -12,7 +12,7 @@ export const SlideOut = css`
   animation-fill-mode: forwards;
 `;
 
-export const NotificationBase = styled('div')<{hideAfterMs?: number}>`
+export const NotificationBase = styled.div<{hideAfterMs?: number}>`
   $default-transform: translateY(100%);
   
   position: fixed;
@@ -50,16 +50,16 @@ export const NotificationBase = styled('div')<{hideAfterMs?: number}>`
   }
 `;
 
-export const NotificationContentBase = styled('div')`
+export const NotificationContentBase = styled.div`
   padding: 10px;
 `;
 
-export const NotificationProgressBarContainer = styled('div')`
+export const NotificationProgressBarContainer = styled.div`
   height: 5px;
   background-color: ${props => props.theme.colors._background.darken(0.4).string()};
 `;
 
-export const NotificationProgressBar = styled('div')`
+export const NotificationProgressBar = styled.div`
   height: 5px;
   //transition: width 200ms linear;
   background-color: ${props => props.theme.colors.accent};

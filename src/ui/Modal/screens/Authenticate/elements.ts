@@ -129,11 +129,11 @@ export const Overlay = styled('div')`
   background-color: rgba(0, 0, 0, 0.7);
 `
 
-export const LSText = styled('p')`
+export const LSText = styled.p`
   margin: 8px 0;
 `
 
-export const XEye = styled('img')`
+export const XEye = styled.img`
   height: 1.2rem;
   width: 1.2rem;
   vertical-align: bottom;

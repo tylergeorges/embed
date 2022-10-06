@@ -16,12 +16,12 @@ export const Root = styled(Modal.Content)`
   overflow: visible;
 `
 
-export const Top = styled('div')`
+export const Top = styled.div`
   padding: 10px 10px 10px 20px;
   display: flex;
 `
 
-export const Image = styled('img')`
+export const Image = styled.img`
   max-height: 150px;
   max-width: 150px;
   margin-top: -50px;
@@ -34,7 +34,7 @@ export const Close = styled(Modal.Close)`
   margin-left: auto;
 `
 
-export const Body = styled('form')`
+export const Body = styled.form`
   display: flex;
   flex-direction: column;
   margin: 0 20px 20px;
@@ -44,13 +44,13 @@ export const Body = styled('form')`
   white-space: pre-wrap;
 `
 
-export const Title = styled('h4')`
+export const Title = styled.h4`
   font-size: 1.25rem;
   font-weight: 700;
   margin: 10px 0;
 `
 
-export const Field = styled('label')`
+export const Field = styled.label`
   display: flex;
   flex-direction: column;
   margin: 9px 0;
@@ -65,7 +65,7 @@ export const Field = styled('label')`
   }
 `
 
-export const Checkbox = styled('label')`
+export const Checkbox = styled.label`
   display: flex;
   align-items: center;
   margin: 9px 0;

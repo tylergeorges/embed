@@ -8,7 +8,7 @@ export const Root = styled('div')`
   ${({ theme }) => theme.url.preset === 'crate' ? css`margin-right: 40px;` : ''}
 `
 
-export const UploadButton = styled('label')`
+export const UploadButton = styled.label`
   padding: 10px 16px;
   cursor: pointer;
 
@@ -26,7 +26,7 @@ export const UploadButton = styled('label')`
 interface TextareaProps {
   upload?: boolean
 }
-export const Textarea = styled('textarea')<TextareaProps>`
+export const Textarea = styled.textarea<TextareaProps>`
   width: 100%;
   height: 100%;
   padding: 10px 16px 10px 0;
@@ -97,7 +97,7 @@ export const EmojiButton = styled.div<EmojiButtonProps>`
 interface SendButtonProps {
   disabled: boolean
 }
-export const SendButton = styled('button')<SendButtonProps>`
+export const SendButton = styled.button<SendButtonProps>`
   padding: 10px 15px;
   display: flex;
   margin: auto;
@@ -124,7 +124,7 @@ export const SendButton = styled('button')<SendButtonProps>`
   `}
 `
 
-export const SendButtonContainer = styled('div')`
+export const SendButtonContainer = styled.div`
   display: flex;
   margin-left: 8px;
   height: 42px;

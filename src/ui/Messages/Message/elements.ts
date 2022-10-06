@@ -23,7 +23,7 @@ import {ThreadButtonHeight} from "@ui/Messages/Content/elements";
  */
 
 export namespace MessageContainerStyle {
-  export const Base = styled('div')`
+  export const Base = styled.div`
     position: relative;
     margin-right: 14px;
     
@@ -36,7 +36,7 @@ export namespace MessageContainerStyle {
     }
   `;
 
-  export const Buttons = styled('div')`
+  export const Buttons = styled.div`
     position: absolute;
     right: 14px;
     top: 0;
@@ -56,7 +56,7 @@ export namespace MessageContainerStyle {
     }
   `;
 
-  export const Button = styled('button')`
+  export const Button = styled.button`
     border: none;
     border-radius: 0;
     display: flex;
@@ -73,7 +73,7 @@ export namespace MessageContainerStyle {
 interface MessageBaseProps {
   isUserMentioned?: boolean;
 }
-export const MessageBase = styled('div')<MessageBaseProps>`
+export const MessageBase = styled.div<MessageBaseProps>`
   position: relative;
   padding: 2px 48px 2px 72px;
 
@@ -115,7 +115,7 @@ export const MessageBase = styled('div')<MessageBaseProps>`
   background-color: var(--background-color);
 `;
 
-export const DeferredMessage = styled('div')`
+export const DeferredMessage = styled.div`
   font-size: 14px;
 `;
 
@@ -129,7 +129,7 @@ export const FailedInteraction = styled(DeferredMessage)`
 
 const typingIndicatorDuration = "1.2s";
 
-export const TypingIndicator = styled('svg')`
+export const TypingIndicator = styled.svg`
   @keyframes typing {
     0% {
       transform: scale(0.9);
@@ -174,7 +174,7 @@ export const SystemMessageBase = styled(MessageBase)`
   align-items: center;
 `;
 
-export const SystemMessageContentBase = styled('span')<{fullPrimary?: boolean}>`
+export const SystemMessageContentBase = styled.span<{fullPrimary?: boolean}>`
   ${({fullPrimary, theme}) => fullPrimary
     ? css`
       color: ${theme.colors._primary.string()};
@@ -190,7 +190,7 @@ export const SystemMessageContentBase = styled('span')<{fullPrimary?: boolean}>`
 interface SystemMessageLinkBaseProps {
   cursor?: string;
 }
-export const SystemMessageLinkBase = memo(styled('span')<SystemMessageLinkBaseProps>`
+export const SystemMessageLinkBase = memo(styled.span<SystemMessageLinkBaseProps>`
   color: ${({theme}) => theme.colors._primary.string()};
   
   &:hover {
@@ -204,7 +204,7 @@ interface ThreadSpineBaseProps {
   hasReply: boolean;
 }
 
-export const ThreadSpineBase = memo(styled('div')<ThreadSpineBaseProps>`
+export const ThreadSpineBase = memo(styled.div<ThreadSpineBaseProps>`
   position: absolute;
   left: calc(72px / 2);
   border-left: 2px solid #4f545c;
@@ -231,7 +231,7 @@ export const ThreadSpineBase = memo(styled('div')<ThreadSpineBaseProps>`
   `}
 `);
 
-export const ReplySpineBase = memo(styled('div')`
+export const ReplySpineBase = memo(styled.div`
   position: absolute;
   width: 33px;
   height: 12px;
@@ -242,7 +242,7 @@ export const ReplySpineBase = memo(styled('div')`
   border-top-left-radius: 6px;
 `);
 
-export const EditedBase = styled('span')`
+export const EditedBase = styled.span`
   font-size: 10px;
   margin-left: 4px;
   white-space: nowrap;
@@ -253,7 +253,7 @@ export const EditedBase = styled('span')`
 interface ContentBaseProps {
   isReplyContent?: boolean;
 }
-export const ContentBase = styled('span')`
+export const ContentBase = styled.span`
   color: ${({theme}) => theme.colors._primary.fade(1 - 0.827).string()};
   
   ${
@@ -281,13 +281,13 @@ export const ContentBase = styled('span')`
 `;
 
 export namespace SlashCommandBase {
-  export const Base = styled('span')`
+  export const Base = styled.span`
     color: ${({theme}) => theme.colors._primary.fade(1 - 0.64).string()};
     font-size: 14px;
     user-select: none;
   `;
 
-  export const Command = styled('span')`
+  export const Command = styled.span`
     color: #00AFF4;
   `;
 }
@@ -298,7 +298,7 @@ export const ReplyInfoBase = styled('div')`
   margin-bottom: 4px;
 `
 
-export const ReplyUserBase = styled('span')`
+export const ReplyUserBase = styled.span`
   display: flex;
   align-items: center;
 `;
@@ -309,7 +309,7 @@ export const MiniUserAvatarBase = styled('img')`
   height: 16px;
 `;
 
-export const UnknownReplyIcon = styled('div')`
+export const UnknownReplyIcon = styled.div`
   background-color: #202225;
   border-radius: 50%;
   width: 16px;
@@ -327,7 +327,7 @@ export const UnknownReplyText = styled(SlashCommandBase.Base)`
 interface MiniUserNameBaseProps {
   color: string;
 }
-export const MiniUserNameBase = styled('span')<MiniUserNameBaseProps>`
+export const MiniUserNameBase = styled.span<MiniUserNameBaseProps>`
   margin-right: 4px;
   margin-left: 4px;
   font-size: 14px;
@@ -375,7 +375,7 @@ export namespace IconsBase {
     centerVertically?: boolean;
   }
 
-  const IconBase = styled('div')<IconBaseProps>`
+  const IconBase = styled.div<IconBaseProps>`
     position: absolute;
     left: 0;
     // We're using centerVertically !== false because if centerVertically is undefined, it'll be true.
@@ -434,7 +434,7 @@ export namespace IconsBase {
 ==============================================================
  */
 
-export const MessageAccessoriesBase = styled('div')`
+export const MessageAccessoriesBase = styled.div`
   display: grid;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -443,14 +443,14 @@ export const MessageAccessoriesBase = styled('div')`
   grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
 `;
 
-export const ReactionsBase = styled('div')`
+export const ReactionsBase = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
   user-select: none;
 `;
 
-export const ReactionBase = styled('span')`
+export const ReactionBase = styled.span`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -461,7 +461,7 @@ export const ReactionBase = styled('span')`
   background-color: ${({theme}) => theme.colors._background.darken(0.2).string()};
 `;
 
-export const EmojiTooltipBase = styled('div')`
+export const EmojiTooltipBase = styled.div`
   display: flex;
   align-items: center;
   gap: 8px;
@@ -472,7 +472,7 @@ export const ReactionEmojiBase = styled(Twemoji)`
   height: 16px;
 `;
 
-export const ReactionCountBase = styled('span')`
+export const ReactionCountBase = styled.span`
   margin-left: 6px;
   min-width: 9px;
   font-weight: 500;
@@ -491,14 +491,14 @@ export const ReactionCountBase = styled('span')`
 ==============================================================
  */
 
-export const AuthorBase = styled('span')`
+export const AuthorBase = styled.span`
   display: inline-flex;
 `;
 
 interface UsernameBaseProps {
   color: string | undefined;
 }
-export const UsernameBase = memo(styled('span')<UsernameBaseProps>`
+export const UsernameBase = memo(styled.span<UsernameBaseProps>`
   color: ${props => props.color ?? props.theme.colors.primary};
   font-weight: 500;
   font-size: 16px;
@@ -512,7 +512,7 @@ export const UsernameBase = memo(styled('span')<UsernameBaseProps>`
   }
 `);
 
-export const AvatarBase = styled('img')`
+export const AvatarBase = styled.img`
   position: absolute;
   left: 16px;
   margin-top: 1px;
@@ -537,7 +537,7 @@ export const AvatarBase = styled('img')`
 ==============================================================
  */
 
-export const RoleIconBase = styled('img')`
+export const RoleIconBase = styled.img`
   margin-left: .25rem;
   width: 20px;
   height: 20px;
