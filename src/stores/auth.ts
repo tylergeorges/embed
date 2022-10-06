@@ -1,5 +1,6 @@
 import { action, computed, observable } from "mobx";
 import axios from 'axios';
+import * as Sentry from '@sentry/browser';
 import { APIRequest, Endpoints } from "../api";
 import {API_URL, url} from "@lib/env";
 import { ICategory } from "@ui/Sidebar/Channels/categorise";
@@ -45,6 +46,7 @@ const loginError = (msg: string) => addNotification({
   message: msg.replace('GraphQL error: ', ''),
   autoDismiss: 0,
 });
+
 export class AuthStore {
   @observable token: string;
   @observable locale: string;
@@ -59,18 +61,28 @@ export class AuthStore {
       this.locale = window.localStorage.getItem("locale") || "en";
       try {
         this.user = JSON.parse(window.localStorage.getItem('user'));
+        Sentry.setUser(this.sentryUser);
       } catch (e) {
         this.logout();
+        Sentry.setUser(null);
         generalStore.needsUpdate = true;
       }
 
       if (!this.token || !this.user) {
         this.logout();
+        Sentry.setUser(null);
         generalStore.needsUpdate = true;
         // localStorage.setItem('lastUpdate', version)
       }
     } catch (e) {
       console.log('WidgetBot: localStorage is inaccessible so auth is disabled')
+    }
+  }
+
+  private get sentryUser() {
+    return {
+      id: 'id' in this.user ? this.user.id : this.user._id,
+      username: this.user.username
     }
   }
 
@@ -101,6 +113,7 @@ export class AuthStore {
 
     window.localStorage.setItem('user', JSON.stringify(data));
     this.user = data;
+    Sentry.setUser(this.sentryUser);
 
     api.emit('signIn', data.user)
 
@@ -113,6 +126,8 @@ export class AuthStore {
 
     this.user = undefined;
     this.token = undefined;
+
+    Sentry.setUser(null);
   }
 
   @action discordLogin() {
@@ -191,6 +206,7 @@ export class AuthStore {
           this.token = data.token;
           this.user = data.user;
           this.inProgress = false;
+          Sentry.setUser(this.sentryUser);
 
           api.emit('signIn', data.user)
 
@@ -228,6 +244,7 @@ export class AuthStore {
           this.token = data.token;
           this.user = data.user;
           this.inProgress = false;
+          Sentry.setUser(this.sentryUser);
 
           api.emit('signIn', data.user)
 
