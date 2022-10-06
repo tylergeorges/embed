@@ -38,11 +38,11 @@ export class Locale extends React.PureComponent<Props, { cache: { [key: string]:
     }
 
     async componentDidMount() {
-        this.setState({
-            cache: {
-                en: (await import("../locales/embed/en-US.json")) as any
-            }
-        });
+        // this.setState({
+        //     cache: {
+        //         en: (await import("../locales/embed/en-US.json")) as any
+        //     }
+        // });
     }
 
     static translate(key: keyof typeof import("../locales/embed/en-US.json"), replacements?: { [key: string]: string; }) {

@@ -13,7 +13,7 @@ const Modal = observer(() => {
     loader: () =>
       import(/* webpackMode: "lazy", webpackChunkName: "modal-screen-[index]" */ `./screens/${_.capitalize(
         store.modal.type
-      )}`),
+      )}/index.jsx`),
     loading: props =>
       props.pastDelay ? <Spinner name="ball-clip-rotate-multiple" /> : null
   });
