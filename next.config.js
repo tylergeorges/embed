@@ -9,6 +9,13 @@ const nextConfig = {
   },
   sentry: {
     hideSourceMaps: false
+  },
+  compiler: {
+    emotion: {
+      sourceMap: true,
+      autoLabel: 'always',
+      labelFormat: '[local]'
+    }
   }
 };
 

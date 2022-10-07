@@ -11,6 +11,9 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@emotion/css": "^11.10.0",
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
     "@sentry/nextjs": "^7.14.2",
     "@sentry/tracing": "^7.14.2",
     "next": "12.3.1",
