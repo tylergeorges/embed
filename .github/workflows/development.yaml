@@ -1,8 +1,5 @@
 development:
-  on:
-    push:
-      branches:
-        - nextjs
+  on: push
   name: Development
   runs-on: ubuntu-latest
   steps:
