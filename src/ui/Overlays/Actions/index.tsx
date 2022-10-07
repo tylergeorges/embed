@@ -20,9 +20,12 @@ const Actions =  observer(() => {
       switch(data.__typename) {
         case 'JoinMember': {
           if (authStore.userID === data.user.id) { // Current user added
+            if (generalStore.chats.find(x => x.id === data.group.id)) return;
+
             generalStore.chats.unshift(data.group)
           } else { // Other user Added
             const chat = generalStore.chats.find(r => r.id === data.group.id) as Chats_getChats_DirectGroupChat;
+            if (!chat || chat.recipients.find(r => r.id === data.user.id)) return;
 
             chat.recipients.push(data.user);
           }
