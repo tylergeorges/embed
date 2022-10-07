@@ -1,16 +1,16 @@
 name: 'Development'
 on: push
-
-build:
-  name: Development
-  runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 16.x
-    - run: npm install -g yarn
-    - run: yarn install --frozen-lockfile
-    - run: yarn build
-    - run: yarn lint
-    - run: yarn export
+jobs:
+  build:
+    name: Development
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+      - run: npm install -g yarn
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+      - run: yarn lint
+      - run: yarn export
