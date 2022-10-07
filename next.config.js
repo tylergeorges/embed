@@ -19,4 +19,7 @@ const nextConfig = {
   }
 };
 
-module.exports = withSentryConfig(nextConfig, { silent: true });
+module.exports = withSentryConfig(nextConfig, {
+  silent: true,
+  dryRun: process.env.NODE_ENV !== 'production'
+});
