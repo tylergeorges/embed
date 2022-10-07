@@ -1,7 +1,0 @@
-/src/locale/_build
-node_modules
-.idea
-build/
-debug.log
-yarn-error.log
-.DS_Store
