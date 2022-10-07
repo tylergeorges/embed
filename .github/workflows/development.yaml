@@ -1,5 +1,7 @@
-development:
-  on: push
+name: 'Development'
+on: push
+
+build:
   name: Development
   runs-on: ubuntu-latest
   steps:
