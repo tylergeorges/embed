@@ -6,7 +6,7 @@ export function getEnvVar(key: string): string | undefined {
   if (!VARIABLES[key]) return;
 
   const [replaced, defaultValue] = VARIABLES[key];
-  if (replaced === `{{${key}}`) return defaultValue;
+  if (replaced === `{{${key}}}`) return defaultValue;
 
-  return replaced.substring(2, replaced.length - 1);
+  return replaced.substring(2, replaced.length - 2);
 }
