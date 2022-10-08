@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "export": "next export",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
     "@emotion/css": "^11.10.0",
@@ -16,11 +17,15 @@
     "@emotion/styled": "^11.10.4",
     "@sentry/nextjs": "^7.14.2",
     "@sentry/tracing": "^7.14.2",
+    "graphql": "^16.6.0",
     "next": "12.3.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "urql": "^3.0.3"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "2.13.5",
+    "@graphql-codegen/client-preset": "1.0.5",
     "@next/eslint-plugin-next": "^12.3.1",
     "@types/node": "18.8.3",
     "@types/react": "18.0.21",
