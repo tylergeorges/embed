@@ -15,10 +15,11 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
+    "consistent-return": "off",
     "import/prefer-default-export": "off",
     "import/extensions": "off",
-    "@typescript-eslint/no-shadow": "off",
     "import/no-extraneous-dependencies": "off",
+    "@typescript-eslint/no-shadow": "off",
     "react/jsx-props-no-spreading": "off",
     "react/no-array-index-key": "off",
     "react/require-default-props": "off",
