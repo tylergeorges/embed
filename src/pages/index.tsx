@@ -15,7 +15,7 @@ import {
   Grid,
   Logo,
   LogoImg
-} from './elements';
+} from '../components/index/elements';
 
 const Home: NextPage = () => (
   <Container>
