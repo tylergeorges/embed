@@ -2,18 +2,18 @@ import { useMutation } from 'react-apollo-hooks'
 import SEND_MESSAGE from './SendMessage.graphql'
 import SEND_DIRECT_MESSAGE from './SendDirectMessage.graphql'
 import { CHAT_MESSAGES, MESSAGES } from '../useMessages'
-import { useRouter } from '@hooks'
-import { ChatMessages, ChatMessagesVariables, Messages, MessagesVariables, SendMessage, SendMessageVariables } from '@generated'
-import { addNotification } from "notify"
-import { MessageType } from '@generated/globalTypes'
-import { Util } from '@lib/Util'
-import { authStore, generalStore } from '@store'
-import { SendDirectMessage, SendDirectMessageVariables } from '@generated/SendDirectMessage'
 import api from '@lib/embed-api';
+import { authStore, generalStore } from '@store';
+import { useRouter } from '@hooks'
+import { addNotification } from "notify";
+import { ChatMessages, ChatMessagesVariables, Messages, MessagesVariables, SendMessage, SendMessageVariables } from '@generated'
+import { Util } from '@lib/Util';
+import { MessageType } from '@generated/globalTypes';
+import { SendDirectMessage, SendDirectMessageVariables } from '@generated/SendDirectMessage'
 
 export const useSendMessage = (thread?: string) => {
   const { guild, channel } = useRouter()
-  const sendMessage = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE)
+  const sendMessage = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE);
   const sendDirectMessage = useMutation<SendDirectMessage, SendDirectMessageVariables>(SEND_DIRECT_MESSAGE)
 
   return async (content: string, fileName?: string, fileData?: string, fileAlt?: string) => {
