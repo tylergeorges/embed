@@ -1,1 +1,0 @@
-{"__schema":{"types":[{"kind":"INTERFACE","name":"Channel","possibleTypes":[{"name":"AnnouncementChannel"},{"name":"TextChannel"}]}]}}
