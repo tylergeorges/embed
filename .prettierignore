@@ -1,0 +1,8 @@
+/build/
+/.next/
+/out/
+/.idea/
+/.pnp/
+/compiled/
+/coverage/
+/node_modules/
