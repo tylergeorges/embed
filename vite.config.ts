@@ -13,7 +13,7 @@ export default defineConfig({
         plugins: ['@emotion/babel-plugin']
       }
     }),
-    eslint({ include: ['src/**/*.{ts,tsx}'] }),
+    eslint({ include: ['src/**/*.{ts,tsx}'], failOnError: false, failOnWarning: false }),
     tsconfigPaths(),
     codegen()
   ],

@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import { useQuery } from '@apollo/client';
 import reactLogo from './assets/react.svg';
 import './App.css';
-import { graphql } from '@/graphql';
+import { graphql } from '@/graphql/generated';
 
 export const test = graphql(/* GraphQL */ `
   query Guild {
-    guild(id: "") {
+    guild(id: "585454996800405509") {
       id
     }
   }
@@ -13,6 +14,8 @@ export const test = graphql(/* GraphQL */ `
 
 function App() {
   const [count, setCount] = useState(0);
+
+  const { data } = useQuery(test);
 
   return (
     <div className="App">
@@ -25,6 +28,7 @@ function App() {
         </a>
       </div>
       <h1>Vite + React</h1>
+      <h1>{data?.guild.id ?? 'NO ID'}</h1>
       <div className="card">
         <button type="button" onClick={() => setCount(count => count + 1)}>
           count is {count}

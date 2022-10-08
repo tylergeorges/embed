@@ -5,7 +5,7 @@ const config: CodegenConfig = {
   schema: 'https://s-staging.widgetbot.io/api/graphql',
   documents: 'src/**/*.tsx',
   generates: {
-    'src/graphql': {
+    'src/graphql/generated': {
       preset: 'client',
       plugins: []
     }
