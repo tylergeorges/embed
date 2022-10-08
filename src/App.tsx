@@ -1,6 +1,15 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import './App.css';
+import { graphql } from '@/graphql';
+
+export const test = graphql(/* GraphQL */ `
+  query Guild {
+    guild(id: "") {
+      id
+    }
+  }
+`);
 
 function App() {
   const [count, setCount] = useState(0);

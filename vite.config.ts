@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import eslint from 'vite-plugin-eslint';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import codegen from 'vite-plugin-graphql-codegen';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -13,7 +14,8 @@ export default defineConfig({
       }
     }),
     eslint({ include: ['src/**/*.{ts,tsx}'] }),
-    tsconfigPaths()
+    tsconfigPaths(),
+    codegen()
   ],
   server: {
     port: 3443,

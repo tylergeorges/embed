@@ -2,7 +2,6 @@
   "name": "embed",
   "private": true,
   "version": "v0.0.0-canary",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -12,11 +11,14 @@
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
+    "graphql": "^16.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.10.2",
+    "@graphql-codegen/cli": "^2.13.5",
+    "@graphql-codegen/client-preset": "^1.0.5",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.39.0",
@@ -36,6 +38,7 @@
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
     "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-graphql-codegen": "^2.3.0",
     "vite-tsconfig-paths": "^3.5.1"
   }
 }
