@@ -19,6 +19,7 @@
   ],
   "rules": {
     "prettier/prettier": ["error"],
+    "consistent-return": "off",
     "import/prefer-default-export": "off",
     "import/extensions": "off",
     "@typescript-eslint/no-shadow": "off",

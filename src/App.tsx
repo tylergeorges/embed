@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import reactLogo from './assets/react.svg';
 import './App.css';
 import { graphql } from '@/graphql/generated';
+import { getEnvVar } from '@/util/env';
 
 export const test = graphql(/* GraphQL */ `
   query Guild {
@@ -17,6 +18,9 @@ function App() {
 
   const { data } = useQuery(test);
 
+
+  const apiUrl = getEnvVar('CUSTOM_SERVER_ENDPOINT');
+
   return (
     <div className="App">
       <div>
@@ -29,6 +33,7 @@ function App() {
       </div>
       <h1>Vite + React</h1>
       <h1>{data?.guild.id ?? 'NO ID'}</h1>
+      <h1>{apiUrl ?? 'no api url'}</h1>
       <div className="card">
         <button type="button" onClick={() => setCount(count => count + 1)}>
           count is {count}

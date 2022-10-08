@@ -13,9 +13,14 @@ export default defineConfig({
       failOnError: process.env.CI === 'true',
       failOnWarning: process.env.CI === 'true'
     }),
-    tsconfigPaths(),
+    tsconfigPaths({
+      extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
+    }),
     codegen()
   ],
+  build: {
+    outDir: 'build'
+  },
   server: {
     port: 3443,
     strictPort: true,
