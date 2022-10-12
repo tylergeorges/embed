@@ -4,7 +4,7 @@ import { store } from '@models';
 import { generalStore } from '@store';
 import Message from '@ui/Messages/Message';
 import { addNotification } from 'notify';
-import { useMutation } from 'react-apollo-hooks';
+import { useMutation } from '@apollo/client';
 import DELETE_MESSAGE from './DeleteMessage.graphql'
 import {
   DeleteButton,

@@ -1,5 +1,5 @@
-import { WebSocketLink } from 'apollo-link-ws'
 import {WS_URL} from "@lib/env";
+import {WebSocketLink} from "@apollo/client/link/ws";
 
 let ls: Storage
 try {

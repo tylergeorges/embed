@@ -4,7 +4,7 @@ import { authStore, generalStore } from "@store"
 import { NavLink } from "react-router-dom"
 import Tooltip from "rc-tooltip"
 import { Views } from "@ui/Sidebar"
-import { useMutation } from "react-apollo-hooks";
+import { useMutation } from "@apollo/client";
 import BLOCK_USER from './BlockUser.graphql';
 import { observer } from "mobx-react";
 import { login } from "@views/Messages/Header"

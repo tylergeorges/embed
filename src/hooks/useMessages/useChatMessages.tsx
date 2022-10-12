@@ -1,6 +1,6 @@
 import produce from "immer";
 import { CHAT_MESSAGES, NEW_DIRECT_MESSAGE } from ".";
-import { useQuery, useSubscription } from "react-apollo-hooks";
+import { useQuery, useSubscription } from "@apollo/client";
 import { ChatMessages, Message as MessageData } from "@generated";
 import { NewDirectMessage } from "@generated/NewDirectMessage";
 import { authStore, generalStore } from "@store";

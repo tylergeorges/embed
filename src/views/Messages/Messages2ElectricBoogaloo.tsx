@@ -25,7 +25,10 @@ function Messages2ElectricBoogaloo({ guild, channel, chatUser, thread = false }:
   const channelMessageHandler = useMessages(channel, guild, thread ? generalStore.activeThread.id : null)
   const chatMessageHandler = useChatMessages(chatUser, guild)
 
-  const { messages, error, ready, stale, fetchMore } = channel ? channelMessageHandler : chatMessageHandler
+  const amogus = channel ? channelMessageHandler : chatMessageHandler;
+  console.log("amogus", amogus)
+
+  const { messages, error, ready, stale, fetchMore } = amogus
 
   const groupedMessages = useMemo(() => groupMessages(messages), [messages]);
   const [firstItemIndex, setFirstItemIndex] = useState(100000);
@@ -78,7 +81,7 @@ function Messages2ElectricBoogaloo({ guild, channel, chatUser, thread = false }:
 
           return false;
         }}
-        atBottomThreshold={2}
+        atBottomThreshold={4}
         components={{
           Footer: () => <ScrollerSpacer />,
         }}

@@ -1,8 +1,8 @@
-import { ApolloClient } from 'apollo-client'
-import { setContext } from 'apollo-link-context';
+import { ApolloClient } from '@apollo/client'
 
 import cache from './cache'
 import link from './link'
+import {setContext} from "@apollo/client/link/context";
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists

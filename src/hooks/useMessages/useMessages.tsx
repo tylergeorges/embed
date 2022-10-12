@@ -1,6 +1,6 @@
 import produce from "immer";
 import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
-import { useQuery, useSubscription } from "react-apollo-hooks";
+import { useQuery, useSubscription } from "@apollo/client";
 import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables, Messages, MessagesVariables } from "@generated";
 import { authStore, generalStore } from "@store";
 import { useContext } from "react";
@@ -104,14 +104,15 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
       if (channel) query.updateQuery(prev =>
         produce(prev, (data?: { channel: Messages_channel }) => {
           const messages = data?.channel.messageBunch.messages;
+          console.log("among us", query, prev, data, channel);
           if (!messages) {
             console.warn('NEW_MESSAGE received empty initial state within subscription', subscriptionData, data);
             return;
           }
 
           message.author.color = messages.find(m => m.author.id === message.author.id)?.author.color || 0xffffff
-          if (!messages.find(m => m.id === message.id)) messages.push(message);
-
+          if (!messages.find(m => m.id === message.id))
+            messages.push(message);
         })
       )}
   });

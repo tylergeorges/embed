@@ -1,8 +1,8 @@
-import {ApolloLink} from 'apollo-link'
-import {BatchHttpLink} from 'apollo-link-batch-http'
-import {onError} from 'apollo-link-error'
 import {GRAPHQL_URL, url} from "@lib/env";
 import {authStore} from '@store';
+import {ApolloLink} from "@apollo/client";
+import {onError} from "@apollo/client/link/error";
+import {BatchHttpLink} from "@apollo/client/link/batch-http";
 
 const httpLink = ApolloLink.from([
 	onError(({graphQLErrors, networkError}) => {

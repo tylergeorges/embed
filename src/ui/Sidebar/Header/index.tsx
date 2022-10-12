@@ -1,6 +1,6 @@
 import Tooltip from 'rc-tooltip'
 import * as React from 'react'
-import {Query} from 'react-apollo'
+import {Query} from "@apollo/client/react/components";
 
 import {GuildInfo, GuildInfoVariables} from '@generated'
 import {BannerName, BannerRoot, Count, Icon, Acronym, Name, Root} from './elements'

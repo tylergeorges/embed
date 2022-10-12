@@ -1,4 +1,4 @@
-import { useQuery } from "react-apollo-hooks";
+import { useQuery } from "@apollo/client";
 import USER_TAG from './UserTag.graphql'
 import { UserTag } from '@generated'
 import { UserName } from "@ui/Header";

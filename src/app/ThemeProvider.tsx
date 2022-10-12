@@ -6,7 +6,7 @@ import GET_SETTINGS from './Settings.graphql'
 
 import { Settings, Settings_settings_theme } from '@generated'
 import * as Constants from '@constants'
-import { useQuery } from 'react-apollo-hooks'
+import { useQuery } from '@apollo/client'
 import {useRouter} from '@hooks'
 import {generalStore, authStore} from '@store';
 import { useEffect } from 'react'

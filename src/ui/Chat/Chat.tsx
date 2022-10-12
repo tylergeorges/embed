@@ -1,6 +1,6 @@
 import GET_CHANNEL_NAME from './ChannelName.graphql'
 import { useRouter, useSendMessage } from '@hooks'
-import { useQuery } from 'react-apollo-hooks'
+import { useQuery } from '@apollo/client'
 import Input from './Input'
 import { CrateSlowmodeContainer, Field, PushDown, Root, Slowmode } from './elements'
 import { useState, useRef, useEffect } from 'react'

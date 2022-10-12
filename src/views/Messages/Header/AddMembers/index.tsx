@@ -10,7 +10,7 @@ import DIRECT_USERS from "@ui/Modal/screens/Newchat/DirectUsers.graphql";
 import ADD_MEMBER from './AddMember.graphql';
 import { Avatar } from '@ui/MemberList/elements';
 import { useParams } from "react-router-dom";
-import { useMutation } from "react-apollo-hooks";
+import { useMutation } from "@apollo/client";
 import { debounce } from "lodash";
 import { Field } from "@ui/Modal/screens/Newchat/elements";
 import { Input } from "@ui/Modal/screens/Authenticate/elements";

@@ -1,17 +1,18 @@
-import { ApolloLink, split } from 'apollo-link'
-import apolloLogger from 'apollo-link-logger'
-import { createPersistedQueryLink } from 'apollo-link-persisted-queries'
-import { RetryLink } from 'apollo-link-retry'
-import { getMainDefinition } from 'apollo-utilities'
-
+import {ApolloLink, split} from '@apollo/client';
 import httpLink from './http'
 import wsLink from './websocket'
+import {RetryLink} from "@apollo/client/link/retry";
+import {
+  createPersistedQueryLink,
+  PersistedQueryLink
+} from "@apollo/client/link/persisted-queries";
+import {getMainDefinition} from "@apollo/client/utilities";
 
 const DEVELOPMENT = process.env.NODE_ENV === 'development';
 
 const link = ApolloLink.from(
   [
-    apolloLogger,
+    // apolloLogger,
     new RetryLink({
       attempts: {
         max: 300
@@ -20,7 +21,7 @@ const link = ApolloLink.from(
         initial: 200
       }
     }),
-    !DEVELOPMENT && createPersistedQueryLink(),
+    // !DEVELOPMENT && createPersistedQueryLink(new Options()),
     split(
       ({ query }) => {
         const { kind, operation } = getMainDefinition(query) as any;

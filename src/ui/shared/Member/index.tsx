@@ -1,5 +1,5 @@
 import { cx } from 'emotion'
-import { Query } from 'react-apollo'
+import { Query } from '@apollo/client'
 
 import {MemberInfo, Message_author, Message_mentions} from '@generated'
 import MemberLink from './link'

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSubscription } from "react-apollo-hooks";
+import { useSubscription } from "@apollo/client";
 import { Action, ActionVariables, Chats_getChats_DirectGroupChat } from "@generated";
 import ACTION from './Action.graphql';
 import { useNavigate, useParams } from "react-router-dom";

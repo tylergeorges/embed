@@ -1,5 +1,5 @@
 import {cx} from 'emotion'
-import {Query} from 'react-apollo'
+import {Query} from "@apollo/client/react/components";
 
 import RoleLink from './link'
 import ROLE_INFO from './RoleInfo.graphql'

@@ -4,7 +4,7 @@ import { Field, PushDown, Root, Blocked, UnblockButton } from './elements'
 import { useState, useRef, FunctionComponent } from 'react'
 import { authStore, generalStore } from "@store";
 import { observer } from 'mobx-react'
-import { useMutation } from "react-apollo-hooks";
+import { useMutation } from "@apollo/client";
 import BLOCK_USER from "@ui/Modal/screens/Profile/BlockUser.graphql";
 
 // Chat.tsx but for direct (& group) chats

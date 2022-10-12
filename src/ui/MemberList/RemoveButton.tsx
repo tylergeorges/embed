@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { RemoveButtonBase } from './elements'
 import {observer} from 'mobx-react'
-import { useMutation } from "react-apollo-hooks";
+import { useMutation } from "@apollo/client";
 import REMOVE_MEMBER from './RemoveMember.graphql';
 import { RemoveMember } from "@generated";
 import { generalStore } from "@store";

@@ -2,8 +2,8 @@ import 'babel-polyfill'
 
 import client from '@lib/apollo'
 import * as Sentry from '@sentry/browser';
-import { ApolloProvider } from 'react-apollo'
-import { ApolloProvider as ApolloHooksProvider } from 'react-apollo-hooks'
+import { ApolloProvider } from '@apollo/client'
+import { ApolloProvider as ApolloHooksProvider } from '@apollo/client'
 
 import * as ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'

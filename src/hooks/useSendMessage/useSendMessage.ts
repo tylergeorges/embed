@@ -1,4 +1,4 @@
-import { useMutation } from 'react-apollo-hooks'
+import {ApolloCache, useMutation} from '@apollo/client'
 import SEND_MESSAGE from './SendMessage.graphql'
 import SEND_DIRECT_MESSAGE from './SendDirectMessage.graphql'
 import { CHAT_MESSAGES, MESSAGES } from '../useMessages'
@@ -13,8 +13,8 @@ import { SendDirectMessage, SendDirectMessageVariables } from '@generated/SendDi
 
 export const useSendMessage = (thread?: string) => {
   const { guild, channel } = useRouter()
-  const sendMessage = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE);
-  const sendDirectMessage = useMutation<SendDirectMessage, SendDirectMessageVariables>(SEND_DIRECT_MESSAGE)
+  const [sendMessage] = useMutation<SendMessage, SendMessageVariables>(SEND_MESSAGE);
+  const [sendDirectMessage] = useMutation<SendDirectMessage, SendDirectMessageVariables>(SEND_DIRECT_MESSAGE)
 
   return async (content: string, fileName?: string, fileData?: string, fileAlt?: string) => {
     const optimisticData = {
@@ -58,8 +58,8 @@ export const useSendMessage = (thread?: string) => {
           __typename: 'Mutation',
           sendMessage: optimisticData
         } as SendMessage,
-        update: (store, { data: { sendMessage: newMessage } }) => {
-          const data = store.readQuery<Messages, MessagesVariables>({ query: MESSAGES, variables: { guild, channel, thread } })
+        update: (store: ApolloCache<MessagesVariables>, { data: { sendMessage: newMessage } }) => {
+          const data = store.readQuery({ query: MESSAGES, variables: { guild, channel, thread } })
 
           newMessage.isGuest = true
 
@@ -72,7 +72,7 @@ export const useSendMessage = (thread?: string) => {
             if (optimisticIndex > -1) data.channel.messageBunch.messages.splice(optimisticIndex, 1)
           }
 
-          store.writeQuery<Messages, MessagesVariables>({query: MESSAGES, variables: { guild, channel, thread }, data})
+          store.writeQuery({query: MESSAGES, variables: { guild, channel, thread }, data})
         }
       }).catch(error => addNotification({
         level: 'error',
@@ -99,7 +99,7 @@ export const useSendMessage = (thread?: string) => {
           sendChat: optimisticData
         } as SendDirectMessage,
         update: (store, { data: { sendChat: newMessage } }) => {
-          const data = store.readQuery<ChatMessages, ChatMessagesVariables>({ query: CHAT_MESSAGES, variables: { guild, user } })
+          const data = store.readQuery({ query: CHAT_MESSAGES, variables: { guild, user } })
 
           newMessage.author.bot = false;
           newMessage.isGuest = true
@@ -113,7 +113,7 @@ export const useSendMessage = (thread?: string) => {
             if (optimisticIndex > -1) data.getMessagesForChat.splice(optimisticIndex, 1)
           }
 
-          store.writeQuery<ChatMessages, ChatMessagesVariables>({query: CHAT_MESSAGES, variables: { guild, user }, data})
+          store.writeQuery({query: CHAT_MESSAGES, variables: { guild, user }, data})
         }
       }).catch(error => addNotification({
         level: 'error',

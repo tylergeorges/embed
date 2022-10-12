@@ -1,4 +1,4 @@
-import {Query} from "react-apollo";
+import {Query} from "@apollo/client/react/components";
 import {Channels, ChannelsVariables} from "@generated";
 import {observer} from "mobx-react";
 
@@ -32,9 +32,12 @@ export const ChannelSwitcher = observer(() => {
 						generalStore.setChannels([])
 					}
 
-					return generalStore.channels.map((category, i) => (
-						<Category key={i} category={category} activeChannel={channel} index={i}/>
-					)
+					return (
+						<>
+							{generalStore.channels.map((category, i) => (
+								<Category key={i} category={category} activeChannel={channel} index={i}/>
+							))}
+						</>
 				)
 				}}
 			</Query>
