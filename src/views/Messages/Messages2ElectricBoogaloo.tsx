@@ -78,7 +78,7 @@ function Messages2ElectricBoogaloo({ guild, channel, chatUser, thread = false }:
 
           return false;
         }}
-        atBottomThreshold={2}
+        atBottomThreshold={100}
         components={{
           Footer: () => <ScrollerSpacer />,
         }}
