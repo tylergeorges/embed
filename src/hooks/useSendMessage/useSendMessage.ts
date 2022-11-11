@@ -52,44 +52,49 @@ export const useSendMessage = (thread?: string) => {
     }
 
     if (!channel.startsWith('@')) {
-      await sendMessage({
-        variables: { channel, content, fileName, fileData, fileAlt, thread },
-        optimisticResponse: {
-          __typename: 'Mutation',
-          sendMessage: optimisticData
-        } as SendMessage,
-        update: (store, { data: { sendMessage: newMessage } }) => {
-          const data = store.readQuery<Messages, MessagesVariables>({ query: MESSAGES, variables: { guild, channel, thread } })
+      try {
+        await sendMessage({
+          variables: { channel, content, fileName, fileData, fileAlt, thread },
+          optimisticResponse: {
+            __typename: 'Mutation',
+            sendMessage: optimisticData
+          } as SendMessage,
+          update: (store, { data: { sendMessage: newMessage } }) => {
+            const data = store.readQuery<Messages, MessagesVariables>({ query: MESSAGES, variables: { guild, channel, thread } })
 
-          newMessage.isGuest = true
+            newMessage.isGuest = true
 
-          if (!data.channel.messageBunch.messages.find(m => m.id === newMessage.id))
-            data.channel.messageBunch.messages.push(newMessage)
+            if (!data.channel.messageBunch.messages.find(m => m.id === newMessage.id))
+              data.channel.messageBunch.messages.push(newMessage)
 
-          if (!(newMessage.flags & 1 << 4)) {
-            // trims spaces so Discord's normalization doesn't break it
-            const optimisticIndex = data.channel.messageBunch.messages.findIndex(m => m.content.replace(/ /g, '') === newMessage.content.replace(/ /g, '') && m.flags & 1 << 4)
-            if (optimisticIndex > -1) data.channel.messageBunch.messages.splice(optimisticIndex, 1)
+            if (!(newMessage.flags & 1 << 4)) {
+              // trims spaces so Discord's normalization doesn't break it
+              const optimisticIndex = data.channel.messageBunch.messages.findIndex(m => m.content.replace(/ /g, '') === newMessage.content.replace(/ /g, '') && m.flags & 1 << 4)
+              if (optimisticIndex > -1) data.channel.messageBunch.messages.splice(optimisticIndex, 1)
+            }
+
+            store.writeQuery<Messages, MessagesVariables>({query: MESSAGES, variables: { guild, channel, thread }, data})
           }
+        });
 
-          store.writeQuery<Messages, MessagesVariables>({query: MESSAGES, variables: { guild, channel, thread }, data})
-        }
-      }).catch(error => addNotification({
-        level: 'error',
-        title: 'Error sending message',
-        message: error.toString().replace('GraphQL error: ', ''),
-        autoDismiss: 0
-      }))
+        if (generalStore.guild)
+          api.emit('sentMessage', {
+            channel: generalStore.guild.channels.find(c => c.id === channel),
+            content,
+            fileName,
+            fileData,
+            fileAlt,
+            thread
+          })
+      } catch(error) {
+        addNotification({
+          level: 'error',
+          title: 'Error sending message',
+          message: error.toString().replace('GraphQL error: ', ''),
+          autoDismiss: 0
+        });
+      }
 
-      if (generalStore.guild)
-        api.emit('sentMessage', {
-          channel: generalStore.guild.channels.find(c => c.id === channel),
-          content,
-          fileName,
-          fileData,
-          fileAlt,
-          thread
-        })
     } else {
       const user = channel.substring(1)
       await sendDirectMessage({
