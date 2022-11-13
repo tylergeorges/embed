@@ -1,0 +1,3 @@
+mutation DeleteChatMessage($id: String!, $guild: String!, $channel: String!, $isGroup: Boolean!) {
+  deleteChatMessage(id: $id, guild: $guild, channel: $channel, isGroup: $isGroup)
+}

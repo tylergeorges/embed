@@ -55,7 +55,7 @@ export const ChatSwitcher = observer(() => {
   return (
     <Root className="channels">
       {authStore.user && 'provider' in authStore.user && authStore.user.provider === 'Guild' &&
-        <NewChatButton onClick={store.modal.openNewChat}><FaPlus /> New Chat</NewChatButton>}
+        <NewChatButton onClick={store.modal.openNewChat}><FaPlus /> New DM/Group Chat</NewChatButton>}
       {generalStore.chats.map((chat) => (
         <NavLink
           key={chat.id}

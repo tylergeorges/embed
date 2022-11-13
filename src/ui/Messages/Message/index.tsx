@@ -213,7 +213,7 @@ function Message(props: MessageProps) {
   const userID = authStore.user && ('id' in authStore.user && authStore.user.id || '_id' in authStore.user && authStore.user._id)
 
   // if message was sent by logged-in user and not in a DM, add delete message button
-  if (props.message.isGuest && props.message.author.id === userID && !channelId.startsWith('@')) buttonOptions.push({
+  if (props.message.isGuest && props.message.author.id === userID) buttonOptions.push({
     icon: deleteIcon,
     onClick: () => {
       generalStore.setMessageToDelete(props.message)
