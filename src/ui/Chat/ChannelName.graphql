@@ -12,5 +12,9 @@ query ChannelName($guild: String!, $channel: String!) {
       nsfw
       canSend
     }
+    ... on VoiceChannel {
+      nsfw
+      canSend
+    }
   }
 }

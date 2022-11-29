@@ -1,4 +1,4 @@
-import {ChannelLink, Hash, News, Store, NSFW, NSFWNews, Rules} from '@ui/shared/Channel'
+import {ChannelLink, Hash, News, Store, NSFW, NSFWNews, Rules, Voice, NSFWVoice} from '@ui/shared/Channel'
 import styled, { css, keyframes } from '@lib/emotion'
 import { Twemoji } from '@ui/shared/Emoji/emoji'
 import Item from '@ui/SelectItem'
@@ -71,6 +71,10 @@ export const NSFWNewstag = icon(NSFWNews)
 export const Storetag = icon(Store)
 
 export const Rulestag = icon(Rules)
+
+export const Voicetag = icon(Voice)
+
+export const NSFWVoicetag = icon(NSFWVoice)
 
 export const Name = styled('div')`
   color: inherit;

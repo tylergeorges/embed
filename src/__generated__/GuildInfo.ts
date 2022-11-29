@@ -43,7 +43,24 @@ export interface GuildInfo_guild_channels_AnnouncementChannel {
   nsfw: boolean;
 }
 
-export type GuildInfo_guild_channels = GuildInfo_guild_channels_TextChannel | GuildInfo_guild_channels_AnnouncementChannel;
+export interface GuildInfo_guild_channels_VoiceChannel_category {
+  __typename: "Category";
+  name: string;
+  position: number;
+}
+
+export interface GuildInfo_guild_channels_VoiceChannel {
+  __typename: "VoiceChannel";
+  name: string;
+  id: string;
+  position: number;
+  rateLimitPerUser: number | null;
+  category: GuildInfo_guild_channels_VoiceChannel_category | null;
+  canSend: boolean;
+  nsfw: boolean;
+}
+
+export type GuildInfo_guild_channels = GuildInfo_guild_channels_TextChannel | GuildInfo_guild_channels_AnnouncementChannel | GuildInfo_guild_channels_VoiceChannel;
 
 export interface GuildInfo_guild_roles {
   __typename: "Role";

@@ -1,5 +1,5 @@
 import Button from '@ui/shared/button'
-import { Hash, NSFW, News, NSFWNews, Rules, ThreadHash } from '@ui/shared/Channel'
+import { Hash, NSFW, News, NSFWNews, Rules, ThreadHash, Voice, NSFWVoice } from '@ui/shared/Channel'
 import Markdown from '@ui/shared/markdown/render'
 import styled from '@lib/emotion'
 import { Twemoji } from '@ui/shared/Emoji/emoji'
@@ -81,6 +81,10 @@ export const NSFWNewsName = name(NSFWNews)
 
 export const RulesName = name(Rules)
 
+export const VoiceName = name(Voice)
+
+export const NSFWVoiceName = name(NSFWVoice)
+
 export const Emoji = styled(Twemoji)`
   width: 18px !important;
   height: 100% !important;
@@ -88,10 +92,13 @@ export const Emoji = styled(Twemoji)`
   vertical-align: -0.4em;
 `
 
-export const Topic = styled(Markdown.withComponent('div'))`
+interface TopicProps {
+  clickable?: boolean
+}
+export const Topic = styled(Markdown.withComponent('div'))<TopicProps>`
   text-overflow: ellipsis;
   overflow: hidden;
-  cursor: pointer;
+  cursor: ${({clickable}) => clickable ? 'pointer' : 'default'};
   white-space: nowrap;
   font-size: 14px;
   font-weight: 500;

@@ -7,11 +7,13 @@ import {
   NewsName,
   NSFWName,
   NSFWNewsName,
+  NSFWVoiceName,
   RulesName,
   SingleChannelAuthWrapper,
   Stretch,
   ThreadName,
-  Topic
+  Topic,
+  VoiceName
 } from '@ui/Header'
 
 import {Root} from './elements'
@@ -48,6 +50,10 @@ export const Header = observer(({ channel, thread }: HeaderProps) => {
                     <NSFWNewsName><Emoji>{cData?.name}</Emoji></NSFWNewsName>
                 : cData.__typename === 'AnnouncementChannel' ?
                     <NewsName><Emoji>{cData?.name}</Emoji></NewsName>
+                : cData.nsfw && cData.__typename === 'VoiceChannel' ?
+                    <NSFWVoiceName><Emoji>{cData?.name}</Emoji></NSFWVoiceName>
+                : cData.__typename === 'VoiceChannel' ?
+                    <VoiceName><Emoji>{cData?.name}</Emoji></VoiceName>
                 : cData.id === generalStore.guild?.rulesChannelId ?
                     <RulesName><Emoji>{cData?.name}</Emoji></RulesName>
                 : cData.nsfw ?
@@ -55,18 +61,19 @@ export const Header = observer(({ channel, thread }: HeaderProps) => {
                 : thread ?
                     <ThreadName><Emoji>{threadData.name}</Emoji></ThreadName>
                 : <Name><Emoji>{cData?.name}</Emoji></Name>}
-                {window.innerWidth < 520 || !cData.topic || thread ? null : (
+                {window.innerWidth < 520 || (!cData.topic && cData.__typename !== 'VoiceChannel') || thread ? null : (
                         <Topic
-                            onClick={() => store.modal.openTopic(cData?.topic, cData.name)}
+                            onClick={() => cData.__typename === 'VoiceChannel' ? null : store.modal.openTopic(cData?.topic, cData.name)}
                             className="topic"
                             codeBlocksInline={false}
+                            clickable={cData.__typename !== 'VoiceChannel'}
                         >
-                            {cData?.topic}
+                            {cData.__typename === 'VoiceChannel' ? `Chat for the ${cData.name} voice channel, join in Discord to participate in voice` : cData?.topic}
                         </Topic>
                     )}
             </Stretch>
             {/* {(!thread || generalStore.threadFullscreen) && <Pins />} Thread pins are disabled */}
-            {thread || <Pins />}
+            {thread || cData.__typename === 'VoiceChannel' || <Pins />}
             <SingleChannelAuthWrapper>
                 <SingleChannelAuth />
             </SingleChannelAuthWrapper>
