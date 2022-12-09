@@ -71,7 +71,7 @@ function getDominantRoleColor(
   if (referencedMessage !== null) {
     const roleIds = referencedMessage.author.roles ?? [];
     const [role] = roleIds
-      .map(id => generalStore.guild.roles.find(r => r.id === id))
+      .map(id => generalStore.guild?.roles.find(r => r.id === id))
       .filter(r => r !== undefined && r.color !== 0)
       .sort((a, b) => b.position - a.position);
 
