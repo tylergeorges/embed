@@ -1,7 +1,7 @@
 import produce from "immer";
 import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables, Messages, MessagesVariables } from "@generated";
+import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables, Messages, MessagesVariables, Messages_channel_TextChannel_messageBunch } from "@generated";
 import { authStore, generalStore } from "@store";
 import { useContext } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
@@ -29,7 +29,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
   const messages = ready ? query.data?.channel.messageBunch.messages : [];
 
-  generalStore.setPins(ready ? query.data?.channel.messageBunch.pinnedMessages : null)
+  generalStore.setPins(ready ? (query.data?.channel.messageBunch as Messages_channel_TextChannel_messageBunch).pinnedMessages ?? null : null)
 
   let fullyLoaded = false
 
