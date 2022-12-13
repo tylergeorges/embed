@@ -25,5 +25,12 @@ query MoreMessages(
                 }
             }
         }
+        ... on VoiceChannel {
+            messageBunch(id: $thread, limit: $limit, after: $after, before: $before, around: $around) {
+                messages {
+                    ...Message
+                }
+            }
+        }
     }
 }

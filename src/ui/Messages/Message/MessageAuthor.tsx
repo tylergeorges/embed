@@ -37,7 +37,7 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
       if (roleIds === null) return null;
 
       const [role] = roleIds
-        .map(id => generalStore.guild.roles.find(r => r.id === id))
+        .map(id => generalStore.guild?.roles.find(r => r.id === id))
         .filter(r => r !== undefined && r.color !== 0)
         .sort((a, b) => b.position - a.position);
 
@@ -50,7 +50,7 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
       if (roleIds === null) return null;
 
       const [role] = roleIds
-        .map(id => generalStore.guild.roles.find(r => r.id === id))
+        .map(id => generalStore.guild?.roles.find(r => r.id === id))
         .filter(r => r !== undefined && (r.icon !== null || r.unicodeEmoji !== null))
         .sort((a, b) => b.position - a.position);
 

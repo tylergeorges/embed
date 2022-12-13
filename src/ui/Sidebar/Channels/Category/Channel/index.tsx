@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { ITEM_ID } from '@ui/Sidebar/Channels'
 
-import {Hashtag, Name, Emoji, Pings, Root, Newstag, Storetag, NSFWTag, NSFWNewstag, WIP, Rulestag} from './elements'
+import {Hashtag, Name, Emoji, Pings, Root, Newstag, Storetag, NSFWTag, NSFWNewstag, WIP, Rulestag, Voicetag, NSFWVoicetag} from './elements'
 import {inject, observer} from "mobx-react";
 import { generalStore } from '@store';
 
@@ -29,6 +29,9 @@ class Channel extends React.PureComponent<Props> {
                         }
                         case 'StoreChannel': {
                             return <Storetag className="store" />;
+                        }
+                        case 'VoiceChannel': {
+                            return this.props.nsfw ? <NSFWVoicetag className="nsfwvoice" /> : <Voicetag className="voice" />;
                         }
                         case 'TextChannel': {
                             return this.props.nsfw ? <NSFWTag className="nsfw" /> : <Hashtag className="hash" />;

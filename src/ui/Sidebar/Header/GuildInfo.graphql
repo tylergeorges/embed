@@ -34,6 +34,10 @@ query GuildInfo($guild: String!) {
                 canSend
                 nsfw
             }
+            ... on VoiceChannel {
+                canSend
+                nsfw
+            }
         }
 
         roles {
