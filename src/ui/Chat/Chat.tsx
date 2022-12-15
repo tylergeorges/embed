@@ -14,6 +14,7 @@ import { ChannelName, ChannelNameVariables } from '@generated'
 import Tooltip from 'rc-tooltip'
 import moment from 'moment'
 import { observer } from 'mobx-react'
+import { Turnstile, TurnstileInstance } from './turnstile'
 
 export interface ChatProps {
   thread?: boolean;
@@ -47,6 +48,13 @@ export const Chat = observer((props: ChatProps) => {
     if (slowmodeTimeRemaining < 0) clearInterval(slowmodeInterval)
   }, [slowmodeTimeRemaining])
 
+  const turnstile = useRef<TurnstileInstance>(null)
+
+  useEffect(() => {
+    if (!generalStore.turnstileToken)
+      turnstile.current?.reset()
+  }, [generalStore.turnstileToken])
+
   if (loading) return <Loading />;
   if (!data || !data.channel) {
     addNotification({
@@ -54,7 +62,6 @@ export const Chat = observer((props: ChatProps) => {
       title: Locale.translate('notif.channelunavailable'),
       message: Locale.translate('notif.channelunavailable.desc'),
       autoDismiss: 0,
-
     });
     return null;
   }
@@ -86,6 +93,11 @@ export const Chat = observer((props: ChatProps) => {
   return <>
     <PushDown />
     {(slowmode && crate) ? <CrateSlowmodeContainer>{slowmodeElement}</CrateSlowmodeContainer> : null}
+    {generalStore.settings?.isCaptchaEnabled ? <Turnstile
+      siteKey="0x4AAAAAAABP3JY7_fHelV2P"
+      onSuccess={token => generalStore.setTurnstileToken(token)}
+      ref={turnstile}
+    />: null}
     <Root className="chat">
       <Field rows={rows} canSend={authStore.user && data.channel.canSend} className="field">
         <Input
@@ -97,6 +109,13 @@ export const Chat = observer((props: ChatProps) => {
           }}
           onSubmit={async (content: string) => {
             if (content.length === 0) return
+
+            if (generalStore.settings.isCaptchaEnabled && !generalStore.turnstileToken)
+              return addNotification({
+                level: 'info',
+                title: 'No CAPTCHA value detected',
+                message: 'Wait a few seconds and try again.',        
+              })
 
             if (slowmodeTimeRemaining >= 0) {
               setSlowmodeRed(true)

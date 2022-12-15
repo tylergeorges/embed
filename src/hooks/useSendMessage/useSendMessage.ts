@@ -16,7 +16,7 @@ export const useSendMessage = (thread?: string) => {
 
   return async (content: string, fileName?: string, fileData?: string, fileAlt?: string) => {
     await sendMessage({
-      variables: { channel, content, fileName, fileData, fileAlt, thread },
+      variables: { channel, content, fileName, fileData, fileAlt, thread, captchaRes: generalStore.turnstileToken },
       optimisticResponse: {
         __typename: 'Mutation',
         sendMessage: {
@@ -84,5 +84,7 @@ export const useSendMessage = (thread?: string) => {
         fileAlt,
         thread
       })
+
+    generalStore.setTurnstileToken(null)
   }
 }

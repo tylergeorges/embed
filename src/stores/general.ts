@@ -23,6 +23,7 @@ export class GeneralStore {
   @observable pinsOpen: boolean = false;
   @observable messageToDelete?: MessageDataModified;
   @observable unreadChannels = new Set<string>();
+  @observable turnstileToken?: string = null;
 
   constructor() {
     autorun(() => {
@@ -89,6 +90,10 @@ export class GeneralStore {
 
   @action readChannel(channel: string) {
     this.unreadChannels.delete(channel)
+  }
+
+  @action setTurnstileToken(token: string) {
+    this.turnstileToken = token
   }
 }
 

@@ -121,5 +121,11 @@ export const Button = styled(Btn)`
   &::before {
     display: none;
   }
+
+  &:disabled {
+    background-color: ${({ theme }) => theme.colors._accent.fade(.5).string()};
+    pointer-events: none;
+  }
+  transition: background-color .1s ease-in-out;
 `
 

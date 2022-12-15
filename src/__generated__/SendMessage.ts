@@ -349,4 +349,5 @@ export interface SendMessageVariables {
   fileData?: string | null;
   fileName?: string | null;
   fileAlt?: string | null;
+  captchaRes?: string | null;
 }

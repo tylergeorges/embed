@@ -5,8 +5,9 @@ import { useRef, useState } from 'react'
 import { useSendMessage } from '@hooks'
 import { Input } from '../Authenticate/elements'
 import { Loading } from '@ui/Overlays/Loading/elements'
+import { observer } from 'mobx-react'
 
-const Upload = () => {
+const Upload = observer(() => {
   const file = generalStore.file
 
   const [dataURL, setDataURL] = useState(null)
@@ -78,7 +79,7 @@ const Upload = () => {
             </span>
             <span className="checkbox-text">Mark as spoiler</span>
           </Checkbox>
-          <Button variant="large" className="button">
+          <Button variant="large" className="button" disabled={generalStore.settings?.isCaptchaEnabled && !generalStore.turnstileToken}>
             Upload to {store.modal.thread ? `"${generalStore.activeThread.name}"` : '#'+store.modal.channel}
           </Button>
         </>
@@ -86,6 +87,6 @@ const Upload = () => {
       </Body>
     </Root>
   )
-}
+})
 
 export default Upload

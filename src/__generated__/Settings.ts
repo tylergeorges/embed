@@ -29,6 +29,7 @@ export interface Settings_settings {
   readonly: boolean;
   filesEnabled: boolean;
   isCustomAuthEnabled: boolean;
+  isCaptchaEnabled: boolean;
   theme: Settings_settings_theme | null;
 }
 
