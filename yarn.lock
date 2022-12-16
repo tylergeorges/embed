@@ -11134,10 +11134,10 @@ react-dom@^17.0.1:
     object-assign "^4.1.1"
     scheduler "^0.20.1"
 
-react-easy-emoji@^1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/react-easy-emoji/-/react-easy-emoji-1.6.1.tgz#72a3b6ef1e327d937a865c3795d400d0a178b706"
-  integrity sha512-VCGm1tAAdOCNVh6j+M1KoWZn4FIXcqdnf0rXINo0Sgo7eF2sat/JhITKFl8PmbpfIYqYLOobpFDVpst4ddJUlw==
+react-easy-emoji@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/react-easy-emoji/-/react-easy-emoji-1.8.0.tgz#0a84eeb424d1b686fbbdba1396c029e661930ec7"
+  integrity sha512-7KTFnsRDgU1c95ILwrzf7crFl+8H2iKPaDbjjmFO4Vhl9H1/LL6llA2e0SXJ+OX3Ma6UE7euHnFMe09DyZ2c2A==
   dependencies:
     string-replace-to-array "^2.1.0"
 
