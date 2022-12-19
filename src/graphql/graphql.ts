@@ -253,6 +253,7 @@ export type Guild = {
 
 export type GuildSettings = {
   __typename?: 'GuildSettings';
+  defaultModeration: Scalars['Boolean'];
   directEnabled: Scalars['Boolean'];
   discordMode: Scalars['Boolean'];
   filesEnabled: Scalars['Boolean'];
@@ -261,6 +262,7 @@ export type GuildSettings = {
   guestName?: Maybe<Scalars['String']>;
   hideSidebar?: Maybe<Scalars['Boolean']>;
   invite?: Maybe<Scalars['String']>;
+  isCaptchaEnabled: Scalars['Boolean'];
   isCustomAuthEnabled: Scalars['Boolean'];
   readonly: Scalars['Boolean'];
   singleChannel?: Maybe<Scalars['String']>;
@@ -370,6 +372,7 @@ export type Mutation = {
   addMember: Array<User>;
   blockUser: Scalars['Boolean'];
   createGroup: Chat;
+  deleteChatMessage: Scalars['String'];
   deleteMessage: Scalars['String'];
   leaveGroup: User;
   removeMember: User;
@@ -392,6 +395,13 @@ export type MutationCreateGroupArgs = {
   content: Scalars['String'];
   guild: Scalars['String'];
   memberIds: Array<Scalars['String']>;
+};
+
+export type MutationDeleteChatMessageArgs = {
+  channel: Scalars['String'];
+  guild: Scalars['String'];
+  id: Scalars['String'];
+  isGroup?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type MutationDeleteMessageArgs = {
@@ -421,6 +431,7 @@ export type MutationSendChatArgs = {
 };
 
 export type MutationSendMessageArgs = {
+  captchaRes?: InputMaybe<Scalars['String']>;
   channel: Scalars['String'];
   content: Scalars['String'];
   fileAlt?: InputMaybe<Scalars['String']>;
@@ -653,6 +664,37 @@ export type User = {
   name: Scalars['String'];
   roles?: Maybe<Array<Scalars['String']>>;
   system: Scalars['Boolean'];
+};
+
+export type VoiceChannel = Channel & {
+  __typename?: 'VoiceChannel';
+  canSend: Scalars['Boolean'];
+  category?: Maybe<Category>;
+  id: Scalars['String'];
+  messageBunch: MessageBunch;
+  /** @deprecated This field is deprecated, use `messageBunch` instead */
+  messages: Array<Message>;
+  name: Scalars['String'];
+  nsfw: Scalars['Boolean'];
+  position: Scalars['Int'];
+  rateLimitPerUser?: Maybe<Scalars['Int']>;
+  type: ChannelType;
+};
+
+export type VoiceChannelMessageBunchArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  around?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+};
+
+export type VoiceChannelMessagesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  around?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
 };
 
 export type GuildQueryVariables = Exact<{ [key: string]: never }>;
