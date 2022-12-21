@@ -1,7 +1,9 @@
 import React from 'react';
+import { Provider } from 'urql';
 
 import type { AppProps } from 'next/app';
 import { injectGlobal } from '@emotion/css';
+import { client } from '../graphql/client';
 
 function MyApp({ Component, pageProps }: AppProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -34,7 +36,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
   `;
 
-  return <Component {...pageProps} />;
+  return (
+    <Provider value={client}>
+      <Component {...pageProps} />
+    </Provider>
+  );
 }
 
 export default MyApp;
