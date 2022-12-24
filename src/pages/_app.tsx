@@ -1,11 +1,13 @@
 import React from 'react';
-import { Provider } from 'urql';
-
 import type { AppProps } from 'next/app';
+import { StoreProvider } from 'easy-peasy';
+import { Provider } from 'urql';
 import { injectGlobal } from '@emotion/css';
+
+import { store } from '../state';
 import { client } from '../graphql/client';
 
-function MyApp({ Component, pageProps }: AppProps) {
+function App({ Component, pageProps }: AppProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   injectGlobal`
     html,
@@ -37,10 +39,12 @@ function MyApp({ Component, pageProps }: AppProps) {
   `;
 
   return (
-    <Provider value={client}>
-      <Component {...pageProps} />
-    </Provider>
+    <StoreProvider store={store}>
+      <Provider value={client}>
+        <Component {...pageProps} />
+      </Provider>
+    </StoreProvider>
   );
 }
 
-export default MyApp;
+export default App;
