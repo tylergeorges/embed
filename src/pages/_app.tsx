@@ -7,6 +7,8 @@ import { injectGlobal } from '@emotion/css';
 import { store } from '../state';
 import { client } from '../graphql/client';
 
+import '../i18n';
+
 function App({ Component, pageProps }: AppProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
   injectGlobal`
