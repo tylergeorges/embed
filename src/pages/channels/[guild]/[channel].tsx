@@ -3,26 +3,80 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'urql';
 import { graphql } from '../../../graphql';
+import { Channel, ChannelType } from '../../../graphql/graphql';
+import { ChannelLink, Test } from './elements';
 
 const guildQuery = graphql(/* GraphQL */ `
-  query Guild {
-    guild(id: "585454996800405509") {
+  query Guild($id: String!) {
+    guild(id: $id) {
       id
+      name
+      channels {
+        id
+        name
+        type
+        position
+        category {
+          id
+          name
+          position
+        }
+        rateLimitPerUser
+      }
     }
   }
 `);
 
+const position = (channel: Channel) =>
+  channel.type === ChannelType.GuildVoice ? channel.position + 500 : channel.position;
+
 const GuildChannel: NextPage = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const { guild, channel } = router.query;
-  const [result] = useQuery({ query: guildQuery });
+  const { guild: guildID, channel: channelID } = router.query;
+  const [result] = useQuery({ query: guildQuery, variables: { id: guildID as string } });
 
-  console.log(result);
+  if (!result.data) return <div>loading...</div>;
+
+  const { guild } = result.data;
+
+  console.log(guild);
+
+  const categories = [
+    ...new Map(guild.channels.map(c => [c.category?.id, c.category])).values()
+  ].filter(c => c);
 
   return (
     <div>
-      Channel - {guild} - {channel}
+      Channel - {guildID} - {channelID}
+      <p>Guild: {guild.name}</p>
+      <p>Channel: #{guild.channels.find(c => c.id === channelID)?.name}</p>
+      <Test>hi</Test>
+      <div>
+        {guild.channels
+          .filter(c => !c.category)
+          .sort((a, b) => position(a) - position(b))
+          .map(channel => (
+            <ChannelLink key={channel.id} href={`/channels/${guildID}/${channel.id}`}>
+              #{channel.name}
+            </ChannelLink>
+          ))}
+      </div>
+      {categories.map(category => (
+        <details open key={category!.id} style={{ marginTop: '10px' }}>
+          <summary>{category!.name}</summary>
+          <div style={{ marginLeft: '10px' }}>
+            {guild.channels
+              .filter(c => c.category?.id === category!.id)
+              .sort((a, b) => position(a) - position(b))
+              .map(channel => (
+                <ChannelLink key={channel.id} href={`/channels/${guildID}/${channel.id}`}>
+                  #{channel.name}
+                </ChannelLink>
+              ))}
+          </div>
+        </details>
+      ))}
       <p>{t('input.message', { CHANNEL: 'pog' })}</p>
     </div>
   );

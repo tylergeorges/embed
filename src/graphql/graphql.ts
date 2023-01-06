@@ -697,9 +697,47 @@ export type VoiceChannelMessagesArgs = {
   limit?: InputMaybe<Scalars['Int']>;
 };
 
-export type GuildQueryVariables = Exact<{ [key: string]: never }>;
+export type GuildQueryVariables = Exact<{
+  id: Scalars['String'];
+}>;
 
-export type GuildQuery = { __typename?: 'Query'; guild: { __typename?: 'Guild'; id: string } };
+export type GuildQuery = {
+  __typename?: 'Query';
+  guild: {
+    __typename?: 'Guild';
+    id: string;
+    name: string;
+    channels: Array<
+      | {
+          __typename?: 'AnnouncementChannel';
+          id: string;
+          name: string;
+          type: ChannelType;
+          position: number;
+          rateLimitPerUser?: number | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+      | {
+          __typename?: 'TextChannel';
+          id: string;
+          name: string;
+          type: ChannelType;
+          position: number;
+          rateLimitPerUser?: number | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+      | {
+          __typename?: 'VoiceChannel';
+          id: string;
+          name: string;
+          type: ChannelType;
+          position: number;
+          rateLimitPerUser?: number | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+    >;
+  };
+};
 
 export const GuildDocument = {
   kind: 'Document',
@@ -708,6 +746,16 @@ export const GuildDocument = {
       kind: 'OperationDefinition',
       operation: 'query',
       name: { kind: 'Name', value: 'Guild' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
@@ -718,12 +766,41 @@ export const GuildDocument = {
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'id' },
-                value: { kind: 'StringValue', value: '585454996800405509', block: false }
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'channels' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'position' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'category' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'position' } }
+                          ]
+                        }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'rateLimitPerUser' } }
+                    ]
+                  }
+                }
+              ]
             }
           }
         ]
