@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from 'urql';
 import { graphql } from '../../../graphql';
 import { Channel, ChannelType } from '../../../graphql/graphql';
-import { ChannelLink, Test } from './elements';
+import { ChannelLink, Test } from '../../../components/test/elements';
 
 const guildQuery = graphql(/* GraphQL */ `
   query Guild($id: String!) {
