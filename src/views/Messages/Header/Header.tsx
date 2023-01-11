@@ -99,11 +99,10 @@ export const Header = observer(({ channel, thread }: HeaderProps) => {
     )
 });
 
-/** Log in or out */
-export function login()  {
-    generalStore.settings?.guestMode
-        ? (authStore.user ? logout() : generalStore.toggleMenu(true))
-        : (authStore.user ? logout() : discordLogin())
+export function login() {
+    if (authStore.user) return
+
+    generalStore.settings?.guestMode ? generalStore.toggleMenu(true) : discordLogin()
 }
 
 function discordLogin() {

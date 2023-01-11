@@ -37,10 +37,13 @@ export const Suggestions = styled(ScrollOverlay)<Props>`
   }
 `
 
-export const NoPerms = styled(`p`)`
+interface NoPermsProps {
+  clickable?: boolean
+}
+export const NoPerms = styled.p<NoPermsProps>`
   opacity: 0.4;
   margin: 10px;
   -webkit-touch-callout: none; 
   user-select: none;
-  cursor: pointer;
+  cursor: ${({ clickable }) => clickable ? 'pointer' : 'not-allowed'};
 `;
