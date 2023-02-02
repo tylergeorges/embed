@@ -84,7 +84,7 @@ export class AuthStore {
     window.localStorage.setItem('user', JSON.stringify(data));
     this.user = data;
 
-    api.emit('signIn', data.user)
+    api.emit('signIn', data)
 
     return data;
   }
