@@ -7,6 +7,21 @@
 // GraphQL query operation: GuildInfo
 // ====================================================
 
+export interface GuildInfo_guild_channels_ThreadChannel_category {
+  __typename: "Category";
+  name: string;
+  position: number;
+}
+
+export interface GuildInfo_guild_channels_ThreadChannel {
+  __typename: "ThreadChannel";
+  name: string;
+  id: string;
+  position: number;
+  rateLimitPerUser: number | null;
+  category: GuildInfo_guild_channels_ThreadChannel_category | null;
+}
+
 export interface GuildInfo_guild_channels_TextChannel_category {
   __typename: "Category";
   name: string;

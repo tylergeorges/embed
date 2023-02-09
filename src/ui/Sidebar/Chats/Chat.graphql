@@ -29,4 +29,5 @@ fragment Chat on Chat {
     }
 
     content
+    unreadMessages
 }

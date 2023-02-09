@@ -2,9 +2,8 @@ import {NavLink, useNavigate} from "react-router-dom";
 import {observer} from "mobx-react";
 
 import { Root, Chat, Avatar, Details, Preview, LoadingContainer, NewChatButton, Title } from "./elements";
-import CHATS from "./Chats.graphql";
 import {authStore, generalStore} from "@store";
-import { Chats, Chats_getChats_DirectChat, Chats_getChats_DirectGroupChat, UserTag } from "@generated";
+import { UserTag } from "@generated";
 import { Member } from "@ui/Messages/elements";
 import { useRouter } from "@hooks";
 import { Loading } from "@ui/Overlays/Loading/elements";
@@ -18,13 +17,10 @@ import groupIcon from '@images/discordAssets/group_icon.png';
 const list = new Intl.ListFormat()
 
 export const ChatSwitcher = observer(() => {
-  if (!generalStore.chats)
-    client.query<Chats>({ query: CHATS, variables: { guild: generalStore.guild.id }, fetchPolicy: 'network-only' })
-      .then(({ data: { getChats: chats } }) => generalStore.setChats(chats))
-
   const { guild, channel } = useRouter();
   const navigate = useNavigate();
 
+  // Chats are now fetched in Sidebar/index to handle initial unread counts
   if (!generalStore.chats) return <LoadingContainer><Loading /></LoadingContainer>
 
   const userId = channel?.startsWith('@') ? channel.substring(1) : null;
@@ -44,7 +40,8 @@ export const ChatSwitcher = observer(() => {
         {
           id: userData.id,
           content: "",
-          recipient: { ...userData, bot: false }
+          recipient: { ...userData, bot: false },
+          unreadMessages: 0
         },
 
         ...generalStore.chats,

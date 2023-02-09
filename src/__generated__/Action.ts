@@ -23,6 +23,7 @@ export interface Action_action_JoinMember_group {
   id: string;
   ownerId: string;
   content: string;
+  unreadMessages: number;
   recipients: Action_action_JoinMember_group_recipients[];
 }
 

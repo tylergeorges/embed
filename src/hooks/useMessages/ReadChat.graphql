@@ -1,0 +1,3 @@
+mutation ReadChat($id: String!, $guild: String!) {
+  markChatAsRead(id: $id, guild: $guild)
+}

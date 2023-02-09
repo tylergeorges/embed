@@ -1,11 +1,11 @@
 import produce from "immer";
-import { CHAT_MESSAGES, NEW_DIRECT_MESSAGE } from ".";
-import { useQuery, useSubscription } from "react-apollo-hooks";
+import { CHAT_MESSAGES, NEW_DIRECT_MESSAGE, READ_CHAT } from ".";
+import { useMutation, useQuery, useSubscription } from "react-apollo-hooks";
 import { ChatMessages, Message as MessageData } from "@generated";
 import { NewDirectMessage } from "@generated/NewDirectMessage";
 import { authStore, generalStore } from "@store";
 import { Util } from "@lib/Util";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
 import Message from "@ui/Messages/Message";
 import { NavLink } from "react-router-dom";
@@ -26,6 +26,11 @@ export const useChatMessages = (user: string, guild: string) => {
     skip: !user,
     fetchPolicy: 'network-only'
   });
+
+  const markAsRead = useMutation(READ_CHAT)
+  useEffect(() => {
+    if (user) markAsRead({ variables: { guild, id: user } }) 
+  }, [user])
 
   const ready = !!query.data?.getMessagesForChat
 
@@ -74,7 +79,7 @@ export const useChatMessages = (user: string, guild: string) => {
           generalStore.setChats(newChats);
         } else {
           if (message.channelId === message.author.id) {
-            generalStore.chats.unshift({ id: message.channelId, recipient: message.author, content: message.content });
+            generalStore.chats.unshift({ id: message.channelId, recipient: message.author, content: message.content, unreadMessages: 0 });
           }
         }
       }
@@ -82,6 +87,9 @@ export const useChatMessages = (user: string, guild: string) => {
       api.emit('directMessage', {
         message
       })
+
+      if (message.channelId === user)
+        markAsRead({ variables: { guild, id: user } })
 
       // Ensure we're not currently viewing the DM & also don't notify about own messages
       if (message.channelId !== user && message.author.id !== authStore.userID) {

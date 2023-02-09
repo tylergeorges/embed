@@ -7,6 +7,13 @@
 // GraphQL query operation: ChannelName
 // ====================================================
 
+export interface ChannelName_channel_ThreadChannel {
+  __typename: "ThreadChannel";
+  name: string;
+  id: string;
+  rateLimitPerUser: number | null;
+}
+
 export interface ChannelName_channel_TextChannel {
   __typename: "TextChannel";
   name: string;

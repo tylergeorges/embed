@@ -21,6 +21,7 @@ export interface CreateGroup_createGroup_DirectChat_recipient {
 export interface CreateGroup_createGroup_DirectChat {
   __typename: "DirectChat";
   content: string;
+  unreadMessages: number;
   id: string;
   recipient: CreateGroup_createGroup_DirectChat_recipient;
 }
@@ -39,6 +40,7 @@ export interface CreateGroup_createGroup_DirectGroupChat_recipients {
 export interface CreateGroup_createGroup_DirectGroupChat {
   __typename: "DirectGroupChat";
   content: string;
+  unreadMessages: number;
   id: string;
   ownerId: string;
   recipients: CreateGroup_createGroup_DirectGroupChat_recipients[];

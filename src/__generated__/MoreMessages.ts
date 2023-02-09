@@ -9,6 +9,11 @@ import { MessageType, FormatType, MentionType } from "./globalTypes";
 // GraphQL query operation: MoreMessages
 // ====================================================
 
+export interface MoreMessages_channel_ThreadChannel {
+  __typename: "ThreadChannel";
+  id: string;
+}
+
 export interface MoreMessages_channel_TextChannel_messageBunch_messages_author {
   __typename: "User";
   avatarUrl: string;
@@ -1029,7 +1034,7 @@ export interface MoreMessages_channel_VoiceChannel {
   messageBunch: MoreMessages_channel_VoiceChannel_messageBunch;
 }
 
-export type MoreMessages_channel = MoreMessages_channel_TextChannel | MoreMessages_channel_AnnouncementChannel | MoreMessages_channel_VoiceChannel;
+export type MoreMessages_channel = MoreMessages_channel_ThreadChannel | MoreMessages_channel_TextChannel | MoreMessages_channel_AnnouncementChannel | MoreMessages_channel_VoiceChannel;
 
 export interface MoreMessages {
   channel: MoreMessages_channel;

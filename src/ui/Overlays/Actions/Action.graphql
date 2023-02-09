@@ -7,6 +7,7 @@ subscription Action($guild: String!) {
                 id
                 ownerId
                 content
+                unreadMessages
                 recipients {
                     id
                     name

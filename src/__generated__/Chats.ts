@@ -21,6 +21,7 @@ export interface Chats_getChats_DirectChat_recipient {
 export interface Chats_getChats_DirectChat {
   __typename: "DirectChat";
   content: string;
+  unreadMessages: number;
   id: string;
   recipient: Chats_getChats_DirectChat_recipient;
 }
@@ -39,6 +40,7 @@ export interface Chats_getChats_DirectGroupChat_recipients {
 export interface Chats_getChats_DirectGroupChat {
   __typename: "DirectGroupChat";
   content: string;
+  unreadMessages: number;
   id: string;
   ownerId: string;
   recipients: Chats_getChats_DirectGroupChat_recipients[];
