@@ -29,7 +29,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
   const messages = ready ? query.data?.channel.messageBunch.messages : [];
 
-  generalStore.setPins(ready ? (query.data?.channel.messageBunch as Messages_channel_TextChannel_messageBunch).pinnedMessages ?? null : null)
+  generalStore.setPins(ready ? (query.data?.channel.messageBunch as Messages_channel_TextChannel_messageBunch)?.pinnedMessages ?? null : null)
 
   let fullyLoaded = false
 
