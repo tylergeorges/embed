@@ -19,13 +19,13 @@ export enum Views {
 }
 
 const Sidebar = observer(() => {
-    const { channel } = useRouter()
+    const { guild, channel } = useRouter()
 
     useEffect(() => {
         generalStore.setSidebarView(channel?.startsWith('@') && authStore.user ? Views.Chats : Views.Channels)
 
         if (!generalStore.chats && generalStore.settings?.directEnabled && authStore.user)
-            client.query<ChatQuery>({ query: CHATS, variables: { guild: generalStore.guild.id }, fetchPolicy: 'network-only' })
+            client.query<ChatQuery>({ query: CHATS, variables: { guild }, fetchPolicy: 'network-only' })
                 .then(({ data: { getChats: chats } }) => {
                     generalStore.setChats(chats)
                     const unreadCount = chats.reduce((count, chat) => count + chat.unreadMessages, 0)
