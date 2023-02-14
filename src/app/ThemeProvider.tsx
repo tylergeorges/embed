@@ -33,25 +33,25 @@ export const ThemeProvider = ({ children }) => {
   generalStore.setSettings(settings)
 
   useEffect(() => {
-    let ls: Storage
-    try {
-      ls = localStorage
-    } catch (e) {
-      generalStore.toggleMenu(true)
-    }
-
-    if (ls && ls.getItem('updatingAt')) {
-      const updateThreshold = parseInt(ls.getItem('updatingAt')) + UPDATE_TIMEOUT;
-      const justUpdated = updateThreshold > Date.now();
-
-      if (justUpdated) {
-        ls.removeItem('updatingAt');
-
-        return; // We don't need to re-auth as the token in localStorage will still be fine.
-      }
-    }
-
     if (queryParams.has('token')) {
+      let ls: Storage
+      try {
+        ls = localStorage
+      } catch (e) {
+        generalStore.toggleMenu(true)
+      }
+
+      if (ls && ls.getItem('updatingAt')) {
+        const updateThreshold = parseInt(ls.getItem('updatingAt')) + UPDATE_TIMEOUT;
+        const justUpdated = updateThreshold > Date.now();
+
+        if (justUpdated) {
+          ls.removeItem('updatingAt');
+
+          return; // We don't need to re-auth as the token in localStorage will still be fine.
+        }
+      }
+
       const token = decodeURIComponent(queryParams.get('token'))
 
       if (ls) authStore.guildLogin(guild, token).then(async () => {
