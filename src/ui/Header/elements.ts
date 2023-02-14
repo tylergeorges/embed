@@ -39,6 +39,7 @@ export const Stretch = styled('div')`
   flex-grow: 1;
   overflow: hidden;
   flex-shrink: 1;
+  width: 0;
 `
 
 const name = (hash: typeof Hash) => styled(hash)`
@@ -92,6 +93,12 @@ export const Emoji = styled(Twemoji)`
   vertical-align: -0.4em;
 `
 
+export const TopicWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+`
+
 interface TopicProps {
   clickable?: boolean
 }
@@ -103,7 +110,7 @@ export const Topic = styled(Markdown.withComponent('div'))<TopicProps>`
   font-size: 14px;
   font-weight: 500;
   padding: 0 15px;
-  display: flex;
+  display: block;
   align-items: center;
   border-left: 1px solid
     ${({ theme }) => theme.colors._primary.fade(0.9).string()};
