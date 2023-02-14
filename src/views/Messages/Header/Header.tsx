@@ -15,6 +15,7 @@ import {
   ThreadName,
   Topic,
   CloseMemberListBase,
+  TopicWrapper,
   VoiceName
 } from '@ui/Header'
 
@@ -81,6 +82,7 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
                     <ThreadName><Emoji>{threadData.name}</Emoji></ThreadName>
                 : <Name><Emoji>{cData?.name}</Emoji></Name>}
                 {window.innerWidth < 520 || (!cData.topic && cData.__typename !== 'VoiceChannel') || thread ? null : (
+                    <TopicWrapper>
                         <Topic
                             onClick={() => cData.__typename === 'VoiceChannel' ? null : store.modal.openTopic(cData?.topic, cData.name)}
                             className="topic"
@@ -89,7 +91,8 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
                         >
                             {cData.__typename === 'VoiceChannel' ? `Chat for the ${cData.name} voice channel, join in Discord to participate in voice` : cData?.topic}
                         </Topic>
-                    )}
+                    </TopicWrapper>
+                )}
             </Stretch>
             {/* {(!thread || generalStore.threadFullscreen) && <Pins />} Thread pins are disabled */}
             {!thread && !chatUser && cData.__typename !== 'VoiceChannel' && <Pins />}
@@ -137,11 +140,10 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
     )
 });
 
-/** Log in or out */
-export function login()  {
-    generalStore.settings?.guestMode
-        ? (authStore.user ? logout() : generalStore.toggleMenu(true))
-        : (authStore.user ? logout() : discordLogin())
+export function login() {
+    if (authStore.user) return
+
+    generalStore.settings?.guestMode ? generalStore.toggleMenu(true) : discordLogin()
 }
 
 function discordLogin() {

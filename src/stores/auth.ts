@@ -115,7 +115,7 @@ export class AuthStore {
     this.user = data;
     Sentry.setUser(this.sentryUser);
 
-    api.emit('signIn', data.user)
+    api.emit('signIn', data)
 
     return data;
   }

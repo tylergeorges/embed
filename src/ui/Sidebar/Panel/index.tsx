@@ -107,7 +107,7 @@ export class SingleChannelAuth extends React.Component<{}> {
 				<Auth
 					className="auth"
 					target="_blank"
-					onClick={login}
+					onClick={authStore.user ? logout : login}
 					style={{padding: '2px 0', minWidth: '28px'}}
 				>
 					{authStore.user ? <FiLogOut /> : <FiLogIn />}

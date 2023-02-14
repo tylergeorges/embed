@@ -38,7 +38,7 @@ function Reaction(props: ReactionProps) {
         :
         {props.reaction.emojiId !== null
           ? props.reaction.emojiName
-          : generalStore.emojis.get(props.reaction.emojiName).keywords[0]
+          : generalStore.emojis.get(props.reaction.emojiName)?.keywords[0] ?? 'unknown emoji'
         }
         :
       </EmojiTooltipBase>
