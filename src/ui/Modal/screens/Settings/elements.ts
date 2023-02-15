@@ -36,3 +36,8 @@ export const ExperimentsButton = styled.button`
   border-radius: 5px;
   color: ${props => props.theme.colors.primary};
 `;
+
+export const OverrideInfo = styled.div`
+  color: #eda839;
+  font-size: 14px;
+`
