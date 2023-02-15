@@ -9,16 +9,18 @@ import {
   Top
 } from './elements'
 
+const forceSendButton = generalStore.accessibility?.has('forceSendButton')
+
 const Settings = () => (
   <Root className="settings-modal">
     <Top className="top">
       <Title>Settings</Title>
       <Close onClick={store.modal.close} />
     </Top>
-    <Checkbox className="send-button-setting checkbox-field">
+    <Checkbox className="send-button-setting checkbox-field" disabled={forceSendButton}>
       <input
         type="checkbox"
-        defaultChecked={settingsStore.sendButton}
+        defaultChecked={settingsStore.sendButton || forceSendButton}
         onChange={e => settingsStore.setSendButton(e.target.checked)}
       />
       <span className="checkbox">
@@ -26,7 +28,7 @@ const Settings = () => (
       </span>
       <span className="checkbox-text">Show Send Message button</span>
     </Checkbox>
-    {generalStore.accessibility?.has('forceSendButton') && <OverrideInfo className="override-info send-button-override-info">This website has enabled the send button regardless of your settings.</OverrideInfo>}
+    {forceSendButton && <OverrideInfo className="override-info send-button-override-info">This website has enabled the send button regardless of your settings.</OverrideInfo>}
 
     <ExperimentsButton
       onClick={() => {
