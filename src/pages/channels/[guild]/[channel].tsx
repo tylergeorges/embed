@@ -6,10 +6,9 @@ import { graphql } from '../../../graphql';
 import { Channel, ChannelType } from '../../../graphql/graphql';
 import { ChannelLink, Test } from '../../../components/test/elements';
 
-const guildQuery = graphql(/* GraphQL */ `
+const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {
     guild(id: $id) {
-      id
       name
       channels {
         id
@@ -34,11 +33,11 @@ const GuildChannel: NextPage = () => {
   const { t } = useTranslation();
   const router = useRouter();
   const { guild: guildID, channel: channelID } = router.query;
-  const [result] = useQuery({ query: guildQuery, variables: { id: guildID as string } });
+  const [{ data }] = useQuery({ query: guildDocument, variables: { id: guildID as string } });
 
-  if (!result.data) return <div>loading...</div>;
+  if (!data) return <div>loading...</div>;
 
-  const { guild } = result.data;
+  const { guild } = data;
 
   console.log(guild);
 

@@ -32,6 +32,7 @@ export type AnnouncementChannel = Channel & {
   nsfw: Scalars['Boolean'];
   position: Scalars['Int'];
   rateLimitPerUser?: Maybe<Scalars['Int']>;
+  threads?: Maybe<Array<Channel>>;
   topic?: Maybe<Scalars['String']>;
   type: ChannelType;
 };
@@ -101,6 +102,7 @@ export type Channel = {
   name: Scalars['String'];
   position: Scalars['Int'];
   rateLimitPerUser?: Maybe<Scalars['Int']>;
+  threads?: Maybe<Array<Channel>>;
   type: ChannelType;
 };
 
@@ -119,6 +121,7 @@ export type Chat = {
   content: Scalars['String'];
   guildId: Scalars['String'];
   id: Scalars['String'];
+  unreadMessages: Scalars['Int'];
   updatedAt: Scalars['Long'];
 };
 
@@ -133,6 +136,7 @@ export type DirectChat = Chat & {
   guildId: Scalars['String'];
   id: Scalars['String'];
   recipient: User;
+  unreadMessages: Scalars['Int'];
   updatedAt: Scalars['Long'];
 };
 
@@ -143,6 +147,7 @@ export type DirectGroupChat = Chat & {
   id: Scalars['String'];
   ownerId: Scalars['String'];
   recipients: Array<User>;
+  unreadMessages: Scalars['Int'];
   updatedAt: Scalars['Long'];
 };
 
@@ -265,6 +270,7 @@ export type GuildSettings = {
   isCaptchaEnabled: Scalars['Boolean'];
   isCustomAuthEnabled: Scalars['Boolean'];
   readonly: Scalars['Boolean'];
+  showVoiceChannels: Scalars['Boolean'];
   singleChannel?: Maybe<Scalars['String']>;
   theme?: Maybe<ThemeSettings>;
 };
@@ -318,6 +324,7 @@ export type Message = {
   stickers: Array<Sticker>;
   thread?: Maybe<Thread>;
   type: MessageType;
+  unread: Scalars['Boolean'];
 };
 
 export type MessageBunch = {
@@ -375,6 +382,7 @@ export type Mutation = {
   deleteChatMessage: Scalars['String'];
   deleteMessage: Scalars['String'];
   leaveGroup: User;
+  markChatAsRead: Scalars['String'];
   removeMember: User;
   sendChat: Message;
   sendMessage: Message;
@@ -415,6 +423,11 @@ export type MutationLeaveGroupArgs = {
   id: Scalars['String'];
 };
 
+export type MutationMarkChatAsReadArgs = {
+  guild: Scalars['String'];
+  id: Scalars['String'];
+};
+
 export type MutationRemoveMemberArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
@@ -442,6 +455,7 @@ export type MutationSendMessageArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  /** @deprecated Use `channelV2` instead */
   channel: Channel;
   channelV2: Channel;
   directUsers: Array<User>;
@@ -586,6 +600,7 @@ export type TextChannel = Channel & {
   nsfw: Scalars['Boolean'];
   position: Scalars['Int'];
   rateLimitPerUser?: Maybe<Scalars['Int']>;
+  threads?: Maybe<Array<Channel>>;
   topic?: Maybe<Scalars['String']>;
   type: ChannelType;
 };
@@ -626,6 +641,42 @@ export type Thread = {
   locked: Scalars['Boolean'];
   messageCount: Scalars['Int'];
   name: Scalars['String'];
+};
+
+export type ThreadChannel = Channel & {
+  __typename?: 'ThreadChannel';
+  appliedTags: Array<Scalars['String']>;
+  canSend: Scalars['Boolean'];
+  category?: Maybe<Category>;
+  id: Scalars['String'];
+  messageBunch: MessageBunch;
+  messageCount: Scalars['Int'];
+  /** @deprecated This field is deprecated, use `messageBunch` instead */
+  messages: Array<Message>;
+  name: Scalars['String'];
+  nsfw: Scalars['Boolean'];
+  parentId: Scalars['String'];
+  position: Scalars['Int'];
+  rateLimitPerUser?: Maybe<Scalars['Int']>;
+  threads?: Maybe<Array<Channel>>;
+  topic?: Maybe<Scalars['String']>;
+  type: ChannelType;
+};
+
+export type ThreadChannelMessageBunchArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  around?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
+};
+
+export type ThreadChannelMessagesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  around?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
 };
 
 export type UpdatedMessage = {
@@ -678,6 +729,7 @@ export type VoiceChannel = Channel & {
   nsfw: Scalars['Boolean'];
   position: Scalars['Int'];
   rateLimitPerUser?: Maybe<Scalars['Int']>;
+  threads?: Maybe<Array<Channel>>;
   type: ChannelType;
 };
 
@@ -705,7 +757,6 @@ export type GuildQuery = {
   __typename?: 'Query';
   guild: {
     __typename?: 'Guild';
-    id: string;
     name: string;
     channels: Array<
       | {
@@ -719,6 +770,15 @@ export type GuildQuery = {
         }
       | {
           __typename?: 'TextChannel';
+          id: string;
+          name: string;
+          type: ChannelType;
+          position: number;
+          rateLimitPerUser?: number | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+      | {
+          __typename?: 'ThreadChannel';
           id: string;
           name: string;
           type: ChannelType;
@@ -772,7 +832,6 @@ export const GuildDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 {
                   kind: 'Field',
