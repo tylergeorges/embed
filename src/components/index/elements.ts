@@ -15,13 +15,13 @@ export const Container = styled('div', {
 // `;
 
 export const Main = styled('main', {
-  'min-height': '100vh',
+  minHeight: '100vh',
   padding: '4rem 0',
   flex: 1,
   display: 'flex',
-  'flex-direction': 'column',
-  'justify-content': 'center',
-  'align-items': 'center'
+  flexDirection: 'column',
+  justifyContent: 'center',
+  alignItems: 'center'
 });
 
 // export const Footer = styled.footer`
@@ -41,11 +41,11 @@ export const Footer = styled('footer', {
   display: 'flex',
   flex: 1,
   padding: '2rem 0',
-  'border-top': '1px solid #eaeaea',
-  'justify-content': 'center',
-  'align-items': 'center',
+  borderTop: '1px solid #eaeaea',
+  justifyContent: 'center',
+  alignItems: 'center',
   '@media (prefers-color-scheme: dark)': {
-    'border-color': '#222'
+    borderColor: '#222'
   }
 });
 
@@ -58,9 +58,9 @@ export const Footer = styled('footer', {
 
 export const FooterLink = styled('a', {
   display: 'flex',
-  'justify-content': 'center',
-  'align-items': 'center',
-  'flex-grow': 1
+  justifyContent: 'center',
+  alignItems: 'center',
+  flexGrow: 1
 });
 
 // export const TitleLink = styled.a`
@@ -76,16 +76,10 @@ export const FooterLink = styled('a', {
 
 export const TitleLink = styled('a', {
   color: '#0070f3',
-  'text-decoration': 'none',
+  textDecoration: 'none',
 
-  ':hover': {
-    'text-decoration': 'underline'
-  },
-  ':focus': {
-    'text-decoration': 'underline'
-  },
-  ':active': {
-    'text-decoration': 'underline'
+  '&:hover,&:focus,&:active': {
+    textDecoration: 'underline'
   }
 });
 
@@ -98,9 +92,9 @@ export const TitleLink = styled('a', {
 
 export const Title = styled('h1', {
   margin: 0,
-  'line-height': '1.15',
-  'font-size': '4rem',
-  'text-align': 'center'
+  lineHeight: '1.15',
+  fontSize: '4rem',
+  textAlign: 'center'
 });
 
 // export const Description = styled.p`
@@ -111,10 +105,10 @@ export const Title = styled('h1', {
 // `;
 
 export const Description = styled('p', {
-  'text-align': 'center',
+  textAlign: 'center',
   margin: '4rem 0',
-  'line-height': '1.5',
-  'font-size': '1.5rem'
+  lineHeight: '1.5',
+  fontSize: '1.5rem'
 });
 
 // export const Card = styled.a`
@@ -173,7 +167,7 @@ export const Card = styled(
 
 export const CardTitle = styled('h2', {
   margin: '0 0 1rem 0',
-  'font-size': '1.5rem'
+  fontSize: '1.5rem'
 });
 
 // export const CardDescription = styled.p`
@@ -184,8 +178,8 @@ export const CardTitle = styled('h2', {
 
 export const CardDescription = styled('p', {
   margin: 0,
-  'font-size': '1.25rem',
-  'line-height': '1.5'
+  fontSize: '1.25rem',
+  lineHeight: '1.5'
 });
 
 // export const Code = styled.code`
@@ -203,14 +197,14 @@ export const CardDescription = styled('p', {
 
 export const Code = styled('code', {
   background: '#fafafa',
-  'border-radius': '5px',
+  borderRadius: '5px',
   padding: '0.75rem',
-  'font-size': '1.1rem',
-  'font-family':
+  fontSize: '1.1rem',
+  fontFamily:
     'Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace',
 
   '@media (prefers-color-scheme: dark)': {
-    'border-color': '#111'
+    borderColor: '#111'
   }
 });
 
@@ -229,14 +223,14 @@ export const Code = styled('code', {
 
 export const Grid = styled('div', {
   display: 'flex',
-  'align-items': 'center',
-  'justify-content': 'center',
-  'flex-wrap': 'wrap',
-  'max-width': '800px',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexWrap: 'wrap',
+  maxWidth: '800px',
 
   '@media (max-width: 600px)': {
     width: '100%',
-    'flex-direction': 'column'
+    flexDirection: 'column'
   }
 });
 
@@ -247,7 +241,7 @@ export const Grid = styled('div', {
 
 export const Logo = styled('span', {
   height: '1em',
-  'margin-left': '0.5rem'
+  marginLeft: '0.5rem'
 });
 
 // export const LogoImg = styled.img`
@@ -258,6 +252,6 @@ export const Logo = styled('span', {
 
 export const LogoImg = styled('img', {
   '@media (prefers-color-scheme: dark)': {
-    'border-color': '#222'
+    borderColor: '#222'
   }
 });
