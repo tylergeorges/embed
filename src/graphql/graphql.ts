@@ -799,6 +799,20 @@ export type GuildQuery = {
   };
 };
 
+export type ChannelQueryVariables = Exact<{
+  channelId: Scalars['String'];
+  guildId: Scalars['String'];
+}>;
+
+export type ChannelQuery = {
+  __typename?: 'Query';
+  channelV2:
+    | { __typename?: 'AnnouncementChannel'; id: string }
+    | { __typename?: 'TextChannel'; id: string }
+    | { __typename?: 'ThreadChannel'; id: string }
+    | { __typename?: 'VoiceChannel'; id: string };
+};
+
 export const GuildDocument = {
   kind: 'Document',
   definitions: [
@@ -867,3 +881,56 @@ export const GuildDocument = {
     }
   ]
 } as unknown as DocumentNode<GuildQuery, GuildQueryVariables>;
+export const ChannelDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Channel' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'channelId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'guildId' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'channelV2' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'channelId' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'guild' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'guildId' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<ChannelQuery, ChannelQueryVariables>;

@@ -26,6 +26,15 @@ const guildDocument = graphql(/* GraphQL */ `
   }
 `);
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const channelDocument = graphql(/* GraphQL */ `
+  query Channel($channelId: String!, $guildId: String!) {
+    channelV2(id: $channelId, guild: $guildId) {
+      id
+    }
+  }
+`);
+
 const position = (channel: Channel) =>
   channel.type === ChannelType.GuildVoice ? channel.position + 500 : channel.position;
 
