@@ -38,7 +38,7 @@ function App({ Component, pageProps }: AppProps) {
   //   }
   // `;
 
-  globalCss({
+  const globalStyles = globalCss({
     html: {
       padding: 0,
       margin: 0,
@@ -69,6 +69,7 @@ function App({ Component, pageProps }: AppProps) {
     }
   });
 
+  globalStyles();
   return (
     <StoreProvider store={store}>
       <Provider value={client}>
