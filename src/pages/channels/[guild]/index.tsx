@@ -6,6 +6,8 @@ const GuildIndex: NextPage = () => {
   const router = useRouter();
   const { guild } = router.query;
 
+  console.log('server', typeof window === 'undefined');
+
   const apiUrl = getEnvVar('CUSTOM_SERVER_ENDPOINT');
 
   return (

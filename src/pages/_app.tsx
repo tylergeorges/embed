@@ -5,6 +5,7 @@ import { Provider } from 'urql';
 import { globalCss } from '@stitches/react';
 import { store } from '../state';
 import { client } from '../graphql/client';
+import RenderProvider from '../util/render';
 import '../i18n';
 
 function App({ Component, pageProps }: AppProps) {
@@ -71,11 +72,13 @@ function App({ Component, pageProps }: AppProps) {
 
   globalStyles();
   return (
-    <StoreProvider store={store}>
-      <Provider value={client}>
-        <Component {...pageProps} />
-      </Provider>
-    </StoreProvider>
+    <RenderProvider>
+      <StoreProvider store={store}>
+        <Provider value={client}>
+          <Component {...pageProps} />
+        </Provider>
+      </StoreProvider>
+    </RenderProvider>
   );
 }
 
