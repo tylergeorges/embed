@@ -104,7 +104,7 @@ export default observer(({ count }: { count: number }) => {
                                 <img src={stars} alt="" draggable={false} />
                                 <NoThreadsIcon>{ThreadIcon}</NoThreadsIcon>
                             </div>
-                            <span>There are no threads.</span>
+                            <span>There are no active threads.</span>
                         </NoThreads>
                     : <div><Loading /></div>
                 }
