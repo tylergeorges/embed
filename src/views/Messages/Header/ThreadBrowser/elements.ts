@@ -1,4 +1,5 @@
 import styled from '@lib/emotion'
+import { ContentBase } from '@ui/Messages/Message/elements'
 
 interface ThreadButtonProps {
     open: boolean
@@ -110,6 +111,10 @@ export const Preview = styled.div`
     span span {
         opacity: 1;
     }
+`
+
+export const Time = styled(ContentBase)`
+    margin: 0 4px;
 `
 
 export const NoThreads = styled.div`
