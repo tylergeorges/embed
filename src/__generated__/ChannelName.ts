@@ -34,7 +34,16 @@ export interface ChannelName_channel_VoiceChannel {
   canSend: boolean;
 }
 
-export type ChannelName_channel = ChannelName_channel_TextChannel | ChannelName_channel_AnnouncementChannel | ChannelName_channel_VoiceChannel;
+export interface ChannelName_channel_ThreadChannel {
+  __typename: "ThreadChannel";
+  name: string;
+  id: string;
+  rateLimitPerUser: number | null;
+  nsfw: boolean;
+  canSend: boolean;
+}
+
+export type ChannelName_channel = ChannelName_channel_TextChannel | ChannelName_channel_AnnouncementChannel | ChannelName_channel_VoiceChannel | ChannelName_channel_ThreadChannel;
 
 export interface ChannelName {
   channel: ChannelName_channel;

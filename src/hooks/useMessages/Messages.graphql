@@ -40,5 +40,13 @@ query Messages(
                 }
             }
         }
+
+        ... on ThreadChannel { # This is not currently used but it resolves type issues
+            messageBunch(id: $thread, limit: $limit, after: $after, before: $before, around: $around) {
+                messages {
+                    ...Message
+                }
+            }
+        }
     }
 }

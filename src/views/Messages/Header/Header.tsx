@@ -25,6 +25,7 @@ import {observer} from "mobx-react";
 import {SingleChannelAuth} from '@ui/Sidebar/Panel'
 import {generalStore} from "@store";
 import Pins from './Pins'
+import ThreadBrowser from './ThreadBrowser'
 
 export interface HeaderProps {
   channel: string,
@@ -47,7 +48,9 @@ export const Header = observer(({ channel, thread }: HeaderProps) => {
     return (
         <Root thread={thread}>
             <Stretch>
-                { cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
+                { thread ?
+                    <ThreadName><Emoji>{threadData.name}</Emoji></ThreadName>
+                : cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
                     <NSFWNewsName><Emoji>{cData?.name}</Emoji></NSFWNewsName>
                 : cData.__typename === 'AnnouncementChannel' ?
                     <NewsName><Emoji>{cData?.name}</Emoji></NewsName>
@@ -59,8 +62,6 @@ export const Header = observer(({ channel, thread }: HeaderProps) => {
                     <RulesName><Emoji>{cData?.name}</Emoji></RulesName>
                 : cData.nsfw ?
                     <NSFWName><Emoji>{cData?.name}</Emoji></NSFWName>
-                : thread ?
-                    <ThreadName><Emoji>{threadData.name}</Emoji></ThreadName>
                 : <Name><Emoji>{cData?.name}</Emoji></Name>}
                 {window.innerWidth < 520 || (!cData.topic && cData.__typename !== 'VoiceChannel') || thread ? null : (
                     <TopicWrapper>
@@ -75,6 +76,7 @@ export const Header = observer(({ channel, thread }: HeaderProps) => {
                     </TopicWrapper>
                 )}
             </Stretch>
+            {thread || cData.__typename === 'VoiceChannel' || <ThreadBrowser count={cData.threads?.length} />}
             {/* {(!thread || generalStore.threadFullscreen) && <Pins />} Thread pins are disabled */}
             {thread || cData.__typename === 'VoiceChannel' || <Pins />}
             <SingleChannelAuthWrapper>

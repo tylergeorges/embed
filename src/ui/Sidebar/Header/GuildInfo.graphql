@@ -28,13 +28,25 @@ query GuildInfo($guild: String!) {
                 topic
                 canSend
                 nsfw
+                
+                threads {
+                    id
+                }
             }
             ... on AnnouncementChannel {
                 topic
                 canSend
                 nsfw
+
+                threads {
+                    id
+                }
             }
             ... on VoiceChannel {
+                canSend
+                nsfw
+            }
+            ...on ThreadChannel {
                 canSend
                 nsfw
             }

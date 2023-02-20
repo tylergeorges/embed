@@ -13,6 +13,11 @@ export interface GuildInfo_guild_channels_TextChannel_category {
   position: number;
 }
 
+export interface GuildInfo_guild_channels_TextChannel_threads {
+  __typename: "AnnouncementChannel" | "TextChannel" | "ThreadChannel" | "VoiceChannel";
+  id: string;
+}
+
 export interface GuildInfo_guild_channels_TextChannel {
   __typename: "TextChannel";
   name: string;
@@ -23,12 +28,18 @@ export interface GuildInfo_guild_channels_TextChannel {
   topic: string | null;
   canSend: boolean;
   nsfw: boolean;
+  threads: GuildInfo_guild_channels_TextChannel_threads[] | null;
 }
 
 export interface GuildInfo_guild_channels_AnnouncementChannel_category {
   __typename: "Category";
   name: string;
   position: number;
+}
+
+export interface GuildInfo_guild_channels_AnnouncementChannel_threads {
+  __typename: "AnnouncementChannel" | "TextChannel" | "ThreadChannel" | "VoiceChannel";
+  id: string;
 }
 
 export interface GuildInfo_guild_channels_AnnouncementChannel {
@@ -41,6 +52,7 @@ export interface GuildInfo_guild_channels_AnnouncementChannel {
   topic: string | null;
   canSend: boolean;
   nsfw: boolean;
+  threads: GuildInfo_guild_channels_AnnouncementChannel_threads[] | null;
 }
 
 export interface GuildInfo_guild_channels_VoiceChannel_category {
@@ -60,7 +72,24 @@ export interface GuildInfo_guild_channels_VoiceChannel {
   nsfw: boolean;
 }
 
-export type GuildInfo_guild_channels = GuildInfo_guild_channels_TextChannel | GuildInfo_guild_channels_AnnouncementChannel | GuildInfo_guild_channels_VoiceChannel;
+export interface GuildInfo_guild_channels_ThreadChannel_category {
+  __typename: "Category";
+  name: string;
+  position: number;
+}
+
+export interface GuildInfo_guild_channels_ThreadChannel {
+  __typename: "ThreadChannel";
+  name: string;
+  id: string;
+  position: number;
+  rateLimitPerUser: number | null;
+  category: GuildInfo_guild_channels_ThreadChannel_category | null;
+  canSend: boolean;
+  nsfw: boolean;
+}
+
+export type GuildInfo_guild_channels = GuildInfo_guild_channels_TextChannel | GuildInfo_guild_channels_AnnouncementChannel | GuildInfo_guild_channels_VoiceChannel | GuildInfo_guild_channels_ThreadChannel;
 
 export interface GuildInfo_guild_roles {
   __typename: "Role";

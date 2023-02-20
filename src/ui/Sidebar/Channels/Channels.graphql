@@ -24,6 +24,10 @@ query Channels($guild: String!) {
         canSend
         nsfw
       }
+      ... on ThreadChannel {
+        canSend
+        nsfw
+      }
     }
   }
 }

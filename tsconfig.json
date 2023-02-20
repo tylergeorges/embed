@@ -21,6 +21,7 @@
       "@ui/*": ["src/ui/*"],
       "@models": ["src/models/index"],
       "@hooks": ["src/hooks/index"],
+      "@hooks/*": ["src/hooks/*"],
       "@views/*": ["src/views/*"],
       "@services/*": ["src/services/*"],
       "@generated": ["src/__generated__/index"],
