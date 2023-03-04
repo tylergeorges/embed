@@ -55,10 +55,10 @@ const ExpandableImage = (props: Props) => {
         <Image
           src={imageUrl}
           className={loadState === "error" && Error}
-          style={{
-            width: scale.width,
-            height: scale.height
-          }}
+          // style={{
+          //   width: scale.width,
+          //   height: scale.height
+          // }}
           // onLoad={() => setLoadState('loaded')}
           onError={() => setLoadState('error')}
         />
