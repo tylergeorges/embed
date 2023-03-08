@@ -15,7 +15,6 @@ interface Props {
   width?: number
   maxWidth?: number
   maxHeight?: number
-  fillMaxSize?: boolean
 }
 
 const ExpandableImage = (props: Props) => {
@@ -44,7 +43,7 @@ const ExpandableImage = (props: Props) => {
       className={className || null}
       scale={scale}
       onClick={() => store.modal.openImage(url, props.originalUrl)}
-      style={props.fillMaxSize === true ? { width: '100%', height: '100%' } : null}
+      style={{ width: '100%', height: '100%' }}
     >
       <a
         href={props.originalUrl ?? props.src}
@@ -55,10 +54,10 @@ const ExpandableImage = (props: Props) => {
         <Image
           src={imageUrl}
           className={loadState === "error" && Error}
-          style={{
-            width: scale.width,
-            height: scale.height
-          }}
+          // style={{
+          //   width: scale.width,
+          //   height: scale.height
+          // }}
           // onLoad={() => setLoadState('loaded')}
           onError={() => setLoadState('error')}
         />
