@@ -185,7 +185,10 @@ export namespace EmbedStyle {
   `;
 
   export const Field = styled.div<{inline?: boolean}>`
-    flex: 0;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: auto;
+    min-width: 150px;
     max-width: 506px;
     ${({inline}) =>
       inline
