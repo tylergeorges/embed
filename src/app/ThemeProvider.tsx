@@ -32,6 +32,8 @@ export const ThemeProvider = ({ children }) => {
 
   generalStore.setSettings(settings)
 
+  generalStore.setAccessibility(queryParams.get('accessibility'))
+
   useEffect(() => {
     if (queryParams.has('token')) {
       let ls: Storage

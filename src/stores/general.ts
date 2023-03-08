@@ -29,6 +29,7 @@ export class GeneralStore {
   @observable sidebarView: Views;
   @observable messageToDelete?: MessageDataModified;
   @observable unreadChannels = new Set<string>();
+  @observable accessibility?: Set<string>;
 
   constructor() {
     autorun(() => {
@@ -108,6 +109,10 @@ export class GeneralStore {
 
   @action readChannel(channel: string) {
     this.unreadChannels.delete(channel)
+  }
+
+  @action setAccessibility(data?: string) {
+    this.accessibility = new Set(data?.split(','))
   }
 }
 

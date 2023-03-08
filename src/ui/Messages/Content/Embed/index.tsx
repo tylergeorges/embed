@@ -141,7 +141,6 @@ function Embed({embed, images}: EmbedProps) {
           {images.map(image => (
             <EmbedStyle.MultiImageImageContainer key={image.url}>
               <EmbedStyle.Image
-                fillMaxSize={true}
                 src={image.proxyUrl}
                 originalUrl={image.url}
                 large={true}

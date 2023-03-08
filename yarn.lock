@@ -788,10 +788,10 @@
     text-table "^0.2.0"
     webpack-log "^1.1.2"
 
-"@widgetbot/embed-api@^1.2.6":
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/@widgetbot/embed-api/-/embed-api-1.2.6.tgz#0cbee8536b9eace52b3c697d5c13596115fb958d"
-  integrity sha512-rsE0SPVb1Gc9kiCcHOSwyfS7xGi2mPaRus/o5i/ucPkNSjurhlRUlJBilb1wXTwzLSt8IfY9sNDtvrHHaj1RVA==
+"@widgetbot/embed-api@^1.2.8":
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/@widgetbot/embed-api/-/embed-api-1.2.8.tgz#cf4466b3add9e95c15e0f80d79ff73cbaa10ecb9"
+  integrity sha512-2fMnUGCZDDsqVBWzkv0f6E9NgiHVcTusLCH8V0Ar3cAOXRVB0QDYuQPHojxpe5z7xazYa2iqEI+WXrq/zWMbQg==
   dependencies:
     post-robot "^8.0.28"
 

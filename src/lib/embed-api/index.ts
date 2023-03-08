@@ -1,3 +1,4 @@
+import { authStore } from '@store'
 import { Server } from '@widgetbot/embed-api'
 
 const queryParams = new URLSearchParams(location.search)
@@ -16,6 +17,10 @@ api.on('sendMessage', data => {
     const { channel, message } = data
     // controller.signals.sendMessage({ channel, message })
   }
+})
+
+api.on('logout', () => {
+  authStore.logout()
 })
 
 export default api

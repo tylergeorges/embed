@@ -1,4 +1,4 @@
-import styled from 'react-emotion'
+import styled, { css } from 'react-emotion'
 import * as Modal from '@ui/Modal'
 import Btn from '@ui/shared/button'
 import { Spinner } from '@ui/Overlays/Loading/elements'
@@ -65,12 +65,20 @@ export const Field = styled.label`
   }
 `
 
-export const Checkbox = styled.label`
+interface CheckboxProps {
+  disabled?: boolean
+}
+export const Checkbox = styled.label<CheckboxProps>`
   display: flex;
   align-items: center;
   margin: 9px 0;
   font-size: 14px;
   cursor: pointer;
+
+  ${({ disabled }) => disabled && css`
+    opacity: 0.5;
+    pointer-events: none;
+  `}
 
   input {
     appearance: none;
