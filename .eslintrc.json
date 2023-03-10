@@ -30,6 +30,7 @@
     "react/require-default-props": "off",
     "react/jsx-no-useless-fragment": "off",
     "react/function-component-definition": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/destructuring-assignment": "off"
   }
 }
