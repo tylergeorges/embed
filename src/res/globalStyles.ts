@@ -1,6 +1,6 @@
 import { globalCss } from '@stitches/react';
 
-globalCss({
+const globalStyles = globalCss({
   '.rc-tooltip': {
     position: 'absolute',
     zIndex: 1070,
@@ -104,24 +104,24 @@ globalCss({
   },
 
   '.rc-tooltip-placement-right, .rc-tooltip-placement-rightTop, .rc-tooltip-placement-rightBottom': {
-    padding: '0 5px 0 9px',
-    '.rc-tooltip-arrow': {
-      left: '4px',
-      marginTop: '-5px',
-      borderWidth: '5px 5px 5px 0',
-      borderRightColor: '#18191c'
-    }
-  },
+      padding: '0 5px 0 9px',
+      '.rc-tooltip-arrow': {
+        left: '4px',
+        marginTop: '-5px',
+        borderWidth: '5px 5px 5px 0',
+        borderRightColor: '#18191c'
+      }
+    },
 
   '.rc-tooltip-placement-bottom, .rc-tooltip-placement-bottomLeft, .rc-tooltip-placement-bottomRight': {
-    padding: '9px 0 5px 0',
-    '.rc-tooltip-arrow': {
-      top: '4px',
-      marginLeft: '-5px',
-      borderWidth: '0 5px 5px',
-      borderBottomColor: '#18191c'
-    }
-  },
+      padding: '9px 0 5px 0',
+      '.rc-tooltip-arrow': {
+        top: '4px',
+        marginLeft: '-5px',
+        borderWidth: '0 5px 5px',
+        borderBottomColor: '#18191c'
+      }
+    },
 
   '.rc-tooltip-placement-left, .rc-tooltip-placement-leftTop, .rc-tooltip-placement-leftBottom': {
     padding: '0 9px 0 5px',
@@ -133,13 +133,12 @@ globalCss({
     }
   },
 
-
   '.rc-tooltip-arrow': {
     position: 'absolute',
     width: 0,
     height: 0,
     borderColor: 'transparent',
-    borderStyle: 'solid',
+    borderStyle: 'solid'
   },
 
   '.rc-tooltip-placement-top .rc-tooltip-arrow': {
@@ -199,3 +198,7 @@ globalCss({
     cursor: 'pointer'
   }
 });
+
+globalStyles();
+
+export default globalStyles;
