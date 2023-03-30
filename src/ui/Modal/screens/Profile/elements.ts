@@ -32,7 +32,7 @@ export const Badges = styled.div`
     margin-left: auto;
 `
 
-export const Badge = styled.img`
+export const BadgeImage = styled.img`
     margin-right: 2px;
 `
 
