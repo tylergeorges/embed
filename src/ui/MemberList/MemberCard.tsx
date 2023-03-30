@@ -27,8 +27,10 @@ const MemberList = observer(({ member, isGroupOwner }: MemberCardProps) => {
       undefined,
       true,
 
+      // if in sidebar view, render profile left of member list
+      // if in overlay view, render profile below member
       cardRef.getBoundingClientRect().x - (innerWidth > 520 ? 320 : 150),
-      Math.min(cardRef.getBoundingClientRect().y + (innerWidth > 520 ? 0 : 50), innerHeight - 300),
+      cardRef.getBoundingClientRect().y + (innerWidth > 520 ? 0 : 45),
     )
   }
 

@@ -75,8 +75,8 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
       this.props.crosspost,
       this.props.referenceGuild,
       this.props.isGuest,
-      Math.min(ref.getBoundingClientRect().right + 10, innerWidth - 310),
-      Math.min(ref.getBoundingClientRect().y, innerHeight - 300)
+      ref.getBoundingClientRect().right + 10,
+      ref.getBoundingClientRect().y
     )
   }
 

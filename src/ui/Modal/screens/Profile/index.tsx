@@ -9,6 +9,7 @@ import BLOCK_USER from './BlockUser.graphql';
 import { observer } from "mobx-react";
 import { login } from "@views/Messages/Header"
 import getAvatar from "@utils/getAvatar"
+import { useEffect, useState } from "react"
 
 // badges
 import staff from '@images/discordAssets/48d5bdcffe9e7848067c2e187f1ef951.svg'
@@ -28,70 +29,80 @@ const Profile = observer(() => {
   const blockUser = useMutation<boolean>(BLOCK_USER);
 
   const useBlockUser = async (block: boolean) => {
-      await blockUser({
-        variables: { user: store.modal.id, active: block },
-      });
+    await blockUser({
+      variables: { user: store.modal.id, active: block },
+    });
 
-      const newBlockedUsers = block
-        ? [...authStore.blockedUsers, store.modal.id]
-        : authStore.blockedUsers.filter(r => r !== store.modal.id);
+    const newBlockedUsers = block
+      ? [...authStore.blockedUsers, store.modal.id]
+      : authStore.blockedUsers.filter(r => r !== store.modal.id);
 
-      authStore.setBlockedUsers(newBlockedUsers);
+    authStore.setBlockedUsers(newBlockedUsers);
   };
 
   const isBlocked = authStore.blockedUsers.includes(store.modal.id);
 
   const userID = authStore.user && ('id' in authStore.user && authStore.user.id || '_id' in authStore.user && authStore.user._id)
 
+  let root: HTMLDivElement
+
+  const [height, setHeight] = useState(0)
+  useEffect(() => {
+    setHeight(root?.getBoundingClientRect().height ?? 0)
+  }, [root?.getBoundingClientRect().height])
+
+  const x = Math.min(store.modal.x, innerWidth - 310) // width = 300
+  const y = Math.min(store.modal.y, innerHeight - height - 10)
+
   return (
-      <Root x={store.modal.x} y={store.modal.y}>
-        <Top>
-          <Avatar height={92} width={92} src={getAvatar({ avatarUrl: store.modal.avatarUrl }, { size: 256 })} />
-          <Badges>
-            {store.modal.flags & 1 << 0 ? <Tooltip overlay="Discord Staff" placement="top"><Badge src={staff} /></Tooltip> : null}
-            {store.modal.flags & 1 << 1 ? <Tooltip overlay="Partnered Server Owner" placement="top"><Badge src={partner} /></Tooltip> : null}
-            {store.modal.flags & 1 << 18 ? <Tooltip overlay="Discord Certified Moderator" placement="top"><Badge src={certifiedMod} /></Tooltip> : null}
-            {store.modal.flags & 1 << 2 ? <Tooltip overlay="HypeSquad Events" placement="top"><Badge src={hypesquadEvents} /></Tooltip> : null}
-            {store.modal.flags & 1 << 6 ? <Tooltip overlay="HypeSquad Bravery" placement="top"><Badge src={bravery} /></Tooltip> : null}
-            {store.modal.flags & 1 << 7 ? <Tooltip overlay="HypeSquad Brilliance" placement="top"><Badge src={brilliance} /></Tooltip> : null}
-            {store.modal.flags & 1 << 8 ? <Tooltip overlay="HypeSquad Balance" placement="top"><Badge src={balance} /></Tooltip> : null}
-            {store.modal.flags & 1 << 3 ? <Tooltip overlay="Discord Bug Hunter" placement="top"><Badge src={bugHunter1} /></Tooltip> : null}
-            {store.modal.flags & 1 << 14 ? <Tooltip overlay="Discord Bug Hunter" placement="top"><Badge src={bugHunter2} /></Tooltip> : null}
-            {store.modal.flags & 1 << 17 ? <Tooltip overlay="Early Verified Bot Developer" placement="top"><Badge src={earlyVerifiedBotDev} /></Tooltip> : null}
-            {store.modal.flags & 1 << 9 ? <Tooltip overlay="Early Supporter" placement="top"><Badge src={earlySupporter} /></Tooltip> : null}
-          </Badges>
-        </Top>
-        <Tag>
-          {store.modal.username}
-          {/* {store.modal.discrim !== '0000' ? <Discrim>#{store.modal.discrim}</Discrim> : null} */}
-          <ChatTag author={store.modal} crosspost={store.modal.crosspost} referenceGuild={store.modal.referenceGuild} guest={store.modal.guest} />
-        </Tag>
-        {generalStore.settings?.directEnabled && (/* !store.modal.bot || */store.modal.guest) && !store.modal.system && userID !== store.modal.id && (
-          authStore.user ? <>
-            {!isBlocked && <NavLink
-              to={`./@${store.modal.id}`}
-              children={<ProfileButton variant="large" onClick={() => {
-                store.modal.close()
-                generalStore.setSidebarView(Views.Chats)
-              }}>Message @{store.modal.username}</ProfileButton>}
-            />}
+    <Root x={x} y={y} innerRef={ref => root = ref}>
+      <Top>
+        <Avatar height={92} width={92} src={getAvatar({ avatarUrl: store.modal.avatarUrl }, { size: 256 })} />
+        <Badges>
+          {store.modal.flags & 1 << 0 ? <Tooltip overlay="Discord Staff" placement="top"><Badge src={staff} /></Tooltip> : null}
+          {store.modal.flags & 1 << 1 ? <Tooltip overlay="Partnered Server Owner" placement="top"><Badge src={partner} /></Tooltip> : null}
+          {store.modal.flags & 1 << 18 ? <Tooltip overlay="Discord Certified Moderator" placement="top"><Badge src={certifiedMod} /></Tooltip> : null}
+          {store.modal.flags & 1 << 2 ? <Tooltip overlay="HypeSquad Events" placement="top"><Badge src={hypesquadEvents} /></Tooltip> : null}
+          {store.modal.flags & 1 << 6 ? <Tooltip overlay="HypeSquad Bravery" placement="top"><Badge src={bravery} /></Tooltip> : null}
+          {store.modal.flags & 1 << 7 ? <Tooltip overlay="HypeSquad Brilliance" placement="top"><Badge src={brilliance} /></Tooltip> : null}
+          {store.modal.flags & 1 << 8 ? <Tooltip overlay="HypeSquad Balance" placement="top"><Badge src={balance} /></Tooltip> : null}
+          {store.modal.flags & 1 << 3 ? <Tooltip overlay="Discord Bug Hunter" placement="top"><Badge src={bugHunter1} /></Tooltip> : null}
+          {store.modal.flags & 1 << 14 ? <Tooltip overlay="Discord Bug Hunter" placement="top"><Badge src={bugHunter2} /></Tooltip> : null}
+          {store.modal.flags & 1 << 17 ? <Tooltip overlay="Early Verified Bot Developer" placement="top"><Badge src={earlyVerifiedBotDev} /></Tooltip> : null}
+          {store.modal.flags & 1 << 9 ? <Tooltip overlay="Early Supporter" placement="top"><Badge src={earlySupporter} /></Tooltip> : null}
+        </Badges>
+      </Top>
+      <Tag>
+        {store.modal.username}
+        {/* {store.modal.discrim !== '0000' ? <Discrim>#{store.modal.discrim}</Discrim> : null} */}
+        <ChatTag author={store.modal} crosspost={store.modal.crosspost} referenceGuild={store.modal.referenceGuild} guest={store.modal.guest} />
+      </Tag>
+      {generalStore.settings?.directEnabled && (/* !store.modal.bot || */store.modal.guest) && !store.modal.system && userID !== store.modal.id && (
+        authStore.user ? <>
+          {!isBlocked && <NavLink
+            to={`./@${store.modal.id}`}
+            children={<ProfileButton variant="large" onClick={() => {
+              store.modal.close()
+              generalStore.setSidebarView(Views.Chats)
+            }}>Message @{store.modal.username}</ProfileButton>}
+          />}
 
-            <ProfileButton id="profile-block-button" variant="large" color="#d83c3e" onClick={() => useBlockUser(!isBlocked)}>
-              {isBlocked ? 'Unblock' : 'Block'} @{store.modal.username}
-            </ProfileButton>
-          </>
-          : <ProfileButton variant="large" onClick={login}>
-            Log in to message
+          <ProfileButton id="profile-block-button" variant="large" color="#d83c3e" onClick={() => useBlockUser(!isBlocked)}>
+            {isBlocked ? 'Unblock' : 'Block'} @{store.modal.username}
           </ProfileButton>
-        )}
+        </>
+        : <ProfileButton variant="large" onClick={login}>
+          Log in to message
+        </ProfileButton>
+      )}
 
-        <style>{`
-            .modal {
-                background: none;
-            }
-        `}</style>
-      </Root>
-    );
+      <style>{`
+          .modal {
+              background: none;
+          }
+      `}</style>
+    </Root>
+  );
 });
 
 export default Profile
