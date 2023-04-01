@@ -2,9 +2,8 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'urql';
-import { graphql } from '../../../graphql';
-import { Channel, ChannelType } from '../../../graphql/graphql';
-import { ChannelLink, Test } from '../../../components/test/elements';
+import { graphql } from '@/src/graphql';
+import { Channel, ChannelType } from '@/src/graphql/graphql';
 
 const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {
@@ -59,15 +58,14 @@ const GuildChannel: NextPage = () => {
       Channel - {guildID} - {channelID}
       <p>Guild: {guild.name}</p>
       <p>Channel: #{guild.channels.find(c => c.id === channelID)?.name}</p>
-      <Test>hi</Test>
       <div>
         {guild.channels
           .filter(c => !c.category)
           .sort((a, b) => position(a) - position(b))
           .map(channel => (
-            <ChannelLink key={channel.id} href={`/channels/${guildID}/${channel.id}`}>
+            <a key={channel.id} href={`/channels/${guildID}/${channel.id}`}>
               #{channel.name}
-            </ChannelLink>
+            </a>
           ))}
       </div>
       {categories.map(category => (
@@ -78,9 +76,9 @@ const GuildChannel: NextPage = () => {
               .filter(c => c.category?.id === category!.id)
               .sort((a, b) => position(a) - position(b))
               .map(channel => (
-                <ChannelLink key={channel.id} href={`/channels/${guildID}/${channel.id}`}>
+                <a key={channel.id} href={`/channels/${guildID}/${channel.id}`}>
                   #{channel.name}
-                </ChannelLink>
+                </a>
               ))}
           </div>
         </details>

@@ -1,5 +1,6 @@
-import { styled } from '@/stitches.config';
+// import { styled } from '@/stitches.config';
 
-export const Main = styled('main')`
-  height: 100%
-`;
+// export const Main = styled('main')`
+//   height: 100%
+// `;
+export {}

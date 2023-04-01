@@ -5,7 +5,7 @@ import { Provider } from 'urql';
 import { globalCss } from '@stitches/react';
 import { store } from '../state';
 import { client } from '../graphql/client';
-import RenderProvider from '../util/render';
+import RenderProvider from '../components/Providers/Render';
 import '../i18n';
 
 function App({ Component, pageProps }: AppProps) {

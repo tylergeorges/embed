@@ -103,4 +103,4 @@ export function styled<
   return refForwarded;
 }
 
-export const { theme, globalCss, keyframes, css } = stitches;
+export const { theme, globalCss, keyframes, css, getCssText } = stitches;
