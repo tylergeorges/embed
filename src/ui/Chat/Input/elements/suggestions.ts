@@ -31,6 +31,7 @@ export const Suggestions = styled(ScrollOverlay)<Props>`
 
   height: ${({ length }) => (length > 8 ? 300 : length * 36) + 8 * 2 + 34}px !important;
   max-height: calc(100vh - 130px);
+  z-index: 2;
 
   & > div:nth-child(1) {
     padding: 0 8px 8px 0;
