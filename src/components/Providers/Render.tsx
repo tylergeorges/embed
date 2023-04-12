@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 import React from 'react';
-import { getEnvVar } from '../../util/env';
+import { getEnvVar } from '@/util/env';
 
 const Wrapper = (props: { children: React.ReactNode }) => <>{props.children}</>;
 

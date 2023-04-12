@@ -2,7 +2,7 @@ import { createStitches } from '@stitches/react';
 import React, { ForwardedRef, forwardRef } from 'react';
 import OverridableStyledComponent, {
   Element
-} from './src/components/Shared/OverridableStyledComponent';
+} from '@/components/Core/OverridableStyledComponent';
 
 const stitches = createStitches({
   theme: {
@@ -60,6 +60,9 @@ const stitches = createStitches({
     },
     borderWidths: {
       spines: '2px'
+    },
+    media: {
+      mobile: '(min-width: 520px)'
     }
   }
 });
