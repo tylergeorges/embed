@@ -63,6 +63,12 @@ const stitches = createStitches({
     },
     media: {
       mobile: '(min-width: 520px)'
+    },
+    singleChannel: {
+      enable: false
+    },
+    url: {
+      height: 0
     }
   }
 });
