@@ -1,16 +1,19 @@
 import { store } from "@models"
-import { Root, Tag, Avatar, Top, Badges, BadgeImage, Discrim, ProfileButton } from "./elements"
+import { Root, Tag, Avatar, Top, Badges, BadgeImage, Discrim, ProfileButton, ProfileLinkButton } from "./elements"
 import { authStore, generalStore } from "@store"
 import { NavLink } from "react-router-dom"
 import Tooltip from "rc-tooltip"
 import { Views } from "@ui/Sidebar"
-import { useMutation } from "react-apollo-hooks";
+import { useMutation, useQuery } from "react-apollo-hooks";
 import BLOCK_USER from './BlockUser.graphql';
 import { observer } from "mobx-react";
 import { login } from "@views/Messages/Header"
 import getAvatar from "@utils/getAvatar"
 import ChatTag from "@ui/Messages/ChatTag";
 import { useEffect, useState } from "react"
+import PROFILE from './Profile.graphql'
+import { Profile } from "@generated"
+import { useRouter } from "@hooks"
 
 // badges
 import staff from '@images/discordAssets/48d5bdcffe9e7848067c2e187f1ef951.svg'
@@ -33,6 +36,10 @@ interface BadgeProps {
 }
 
 const Profile = observer(() => {
+  const { guild } = useRouter()
+
+  const { data: { user } } = useQuery<Profile>(PROFILE, { variables: { guild, user: store.modal.id } });
+
   const blockUser = useMutation<boolean>(BLOCK_USER);
 
   const useBlockUser = async (block: boolean) => {
@@ -56,7 +63,7 @@ const Profile = observer(() => {
   const [height, setHeight] = useState(0)
   useEffect(() => {
     setHeight(root?.getBoundingClientRect().height ?? 0)
-  }, [root?.getBoundingClientRect().height])
+  }, [root?.getBoundingClientRect().height, authStore.user, isBlocked, user?.profile.buttons.length])
 
   const x = Math.min(store.modal.x, innerWidth - 310) // width = 300
   const y = Math.min(store.modal.y, innerHeight - height - 10)
@@ -92,6 +99,14 @@ const Profile = observer(() => {
         {/* {store.modal.discrim !== '0000' ? <Discrim>#{store.modal.discrim}</Discrim> : null} */}
         <ChatTag author={store.modal} crosspost={store.modal.crosspost} referenceGuild={store.modal.referenceGuild} guest={store.modal.guest} />
       </Tag>
+      {user?.profile.buttons.filter(b => b.url).map(b => (
+        <ProfileLinkButton
+          variant="large" 
+          key={b.url}
+          href={b.url}
+          target="_blank"
+        >{b.content}</ProfileLinkButton>
+      ))}
       {generalStore.settings?.directEnabled && (/* !store.modal.bot || */store.modal.guest) && !store.modal.system && userID !== store.modal.id && (
         authStore.user ? <>
           {!isBlocked && <NavLink

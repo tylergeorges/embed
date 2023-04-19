@@ -51,7 +51,7 @@ export const Discrim = styled.span`
     color: ${({ theme }) => theme.colors._primary.fade(0.335).toString()};
 `
 
-export const ProfileButton = styled(Button)`
+const profileButtonStyle = css`
     margin-top: 15px;
     width: 100%;
     height: 40px;
@@ -60,4 +60,11 @@ export const ProfileButton = styled(Button)`
     &::before {
         display: none;
     }
+`
+
+export const ProfileButton = styled(Button)(profileButtonStyle)
+
+export const ProfileLinkButton = styled(Button.withComponent('a'))`
+    display: block;
+    ${profileButtonStyle}
 `

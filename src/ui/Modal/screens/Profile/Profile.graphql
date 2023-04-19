@@ -1,0 +1,16 @@
+query Profile($guild: String!, $user: String!) {
+  user: userData(guild: $guild, id: $user) {
+    id
+
+    profile(guild: $guild) {
+        buttons {
+            content
+            url
+            action
+            icon
+            iconLocation
+            color
+        }
+    }
+  }
+}
