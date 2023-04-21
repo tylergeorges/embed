@@ -1,11 +1,12 @@
 import React from 'react';
 import type { AppProps } from 'next/app';
 import { StoreProvider } from 'easy-peasy';
-import { Provider } from 'urql';
+import { Provider as GraphQLProvider } from 'urql';
 import { globalCss } from '@stitches/react';
 import { store } from '../state';
 import { client } from '../graphql/client';
 import '../i18n';
+import SettingsProvider from '../lib/contexts/SettingsProvider';
 
 function App({ Component, pageProps }: AppProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -72,9 +73,11 @@ function App({ Component, pageProps }: AppProps) {
   globalStyles();
   return (
     <StoreProvider store={store}>
-      <Provider value={client}>
-        <Component {...pageProps} />
-      </Provider>
+      <GraphQLProvider value={client}>
+        <SettingsProvider>
+          <Component {...pageProps} />
+        </SettingsProvider>
+      </GraphQLProvider>
     </StoreProvider>
   );
 }

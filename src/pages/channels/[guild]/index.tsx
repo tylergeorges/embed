@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { getEnvVar } from '../../../lib/util';
+import { getEnvVar } from '../../../util';
 
 const GuildIndex: NextPage = () => {
   const router = useRouter();
