@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { GuildSettings } from '../../graphql/graphql';
+import { GuildSettings } from '@graphql/graphql';
 
 // React context where settings will be stored
 const SettingsContext = createContext<GuildSettings | null>(null);

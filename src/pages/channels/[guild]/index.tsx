@@ -1,6 +1,6 @@
+import { getEnvVar } from '@util/env';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { getEnvVar } from '../../../util';
 
 export async function getServerSideProps() {
   return {

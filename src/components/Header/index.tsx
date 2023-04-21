@@ -1,4 +1,4 @@
-import { styled, css, theme } from '@/../stitches.config';
+import { styled, css, theme } from '@stitches-config';
 
 export const Root = styled(
   'header',
@@ -25,24 +25,31 @@ export const SingleChannel = styled(
   })
 );
 
-export const Inner = styled('div', 'inner', css({
-  display: 'flex',
-  flexShrink: '1',
-  flexGrow: 1,
-  minWidth: 0,
-  height: '47px',
-  padding: '10px 0',
-  '@media (max-width: 270px), (max-height: 300px)': {
-    height: '41px',
-    padding: '7px 0'
-  }
-}))
+export const Inner = styled(
+  'div',
+  'inner',
+  css({
+    display: 'flex',
+    flexShrink: '1',
+    flexGrow: 1,
+    minWidth: 0,
+    height: '47px',
+    padding: '10px 0',
+    '@media (max-width: 270px), (max-height: 300px)': {
+      height: '41px',
+      padding: '7px 0'
+    }
+  })
+);
 
-export const Stretch = styled('div', 'stretch', css({
-  diplay: 'flex',
-  flexGrow: 1,
-  overflow: 'hidden',
-  flexShrink: 1,
-  width: 0
-}))
-
+export const Stretch = styled(
+  'div',
+  'stretch',
+  css({
+    diplay: 'flex',
+    flexGrow: 1,
+    overflow: 'hidden',
+    flexShrink: 1,
+    width: 0
+  })
+);

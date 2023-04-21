@@ -1,4 +1,4 @@
-import { styled, css, theme } from '@/../stitches.config';
+import { styled, css, theme } from '@stitches-config';
 
 export const Main = styled(
   'main',
@@ -19,7 +19,7 @@ export const Notifications = styled(
     },
 
     '.notification-br': {
-      bottom: theme.url.height ? `calc(100% - ${theme.url.height}px)`: '0'
+      bottom: theme.url.height ? `calc(100% - ${theme.url.height}px)` : '0'
     },
 
     '.notification': {

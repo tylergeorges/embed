@@ -1,9 +1,9 @@
+import { graphql } from '@graphql/index';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'urql';
-import { graphql } from '@/graphql';
-import { Channel, ChannelType } from '@/graphql/graphql';
+import { Channel, ChannelType } from '@graphql/graphql';
 
 const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {

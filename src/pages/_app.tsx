@@ -3,10 +3,10 @@ import type { AppProps } from 'next/app';
 import { StoreProvider } from 'easy-peasy';
 import { Provider as GraphQLProvider } from 'urql';
 import { globalCss } from '@stitches/react';
-import { store } from '../state';
-import { client } from '../graphql/client';
+import { store } from '@state';
 import '../i18n';
-import SettingsProvider from '../lib/contexts/SettingsProvider';
+import { client } from '@graphql/client';
+import SettingsProvider from '@lib/contexts/SettingsProvider';
 
 function App({ Component, pageProps }: AppProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions

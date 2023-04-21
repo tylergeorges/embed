@@ -1,8 +1,6 @@
 import { createStitches } from '@stitches/react';
 import React, { ForwardedRef, forwardRef } from 'react';
-import OverridableStyledComponent, {
-  Element
-} from '@/components/Core/OverridableStyledComponent';
+import OverridableStyledComponent, { Element } from '@components/Core/OverridableStyledComponent';
 
 const stitches = createStitches({
   theme: {
