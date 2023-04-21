@@ -1,11 +1,11 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { getEnvVar } from '../../../util/env';
+import { getEnvVar } from '../../../util';
 
 export async function getServerSideProps() {
   return {
-    props: {}, // will be passed to the page component as props
-  }
+    props: {} // will be passed to the page component as props
+  };
 }
 
 const GuildIndex: NextPage = () => {
