@@ -7,43 +7,14 @@
 // GraphQL query operation: ChannelName
 // ====================================================
 
-export interface ChannelName_channel_TextChannel {
-  __typename: "TextChannel";
+export interface ChannelName_channel {
+  __typename: "AnnouncementChannel" | "ForumChannel" | "TextChannel" | "ThreadChannel" | "VoiceChannel";
   name: string;
   id: string;
   rateLimitPerUser: number | null;
   nsfw: boolean;
   canSend: boolean;
 }
-
-export interface ChannelName_channel_AnnouncementChannel {
-  __typename: "AnnouncementChannel";
-  name: string;
-  id: string;
-  rateLimitPerUser: number | null;
-  nsfw: boolean;
-  canSend: boolean;
-}
-
-export interface ChannelName_channel_VoiceChannel {
-  __typename: "VoiceChannel";
-  name: string;
-  id: string;
-  rateLimitPerUser: number | null;
-  nsfw: boolean;
-  canSend: boolean;
-}
-
-export interface ChannelName_channel_ThreadChannel {
-  __typename: "ThreadChannel";
-  name: string;
-  id: string;
-  rateLimitPerUser: number | null;
-  nsfw: boolean;
-  canSend: boolean;
-}
-
-export type ChannelName_channel = ChannelName_channel_TextChannel | ChannelName_channel_AnnouncementChannel | ChannelName_channel_VoiceChannel | ChannelName_channel_ThreadChannel;
 
 export interface ChannelName {
   channel: ChannelName_channel;

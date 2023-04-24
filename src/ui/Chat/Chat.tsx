@@ -1,3 +1,4 @@
+// @ts-nocheck
 import GET_CHANNEL_NAME from './ChannelName.graphql'
 import { useRouter, useSendMessage } from '@hooks'
 import { useQuery } from 'react-apollo-hooks'

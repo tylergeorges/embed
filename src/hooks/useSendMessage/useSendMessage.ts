@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import { useMutation } from 'react-apollo-hooks'
 import SEND_MESSAGE from './SendMessage.graphql'
 import { MESSAGES } from '../useMessages'

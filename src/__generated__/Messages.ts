@@ -9,6 +9,11 @@ import { MessageType, FormatType, MentionType } from "./globalTypes";
 // GraphQL query operation: Messages
 // ====================================================
 
+export interface Messages_channel_ForumChannel {
+  __typename: "ForumChannel";
+  id: string;
+}
+
 export interface Messages_channel_TextChannel_messageBunch_messages_author {
   __typename: "User";
   avatarUrl: string;
@@ -2029,7 +2034,7 @@ export interface Messages_channel_ThreadChannel {
   messageBunch: Messages_channel_ThreadChannel_messageBunch;
 }
 
-export type Messages_channel = Messages_channel_TextChannel | Messages_channel_AnnouncementChannel | Messages_channel_VoiceChannel | Messages_channel_ThreadChannel;
+export type Messages_channel = Messages_channel_ForumChannel | Messages_channel_TextChannel | Messages_channel_AnnouncementChannel | Messages_channel_VoiceChannel | Messages_channel_ThreadChannel;
 
 export interface Messages {
   channel: Messages_channel;

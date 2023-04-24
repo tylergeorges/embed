@@ -10,6 +10,7 @@ import { useRouter } from '@hooks'
 import Messages2ElectricBoogaloo
   from "@views/Messages/Messages2ElectricBoogaloo";
 import {Messages} from "@views/Messages/Messages";
+import Forum from '@ui/Forum'
 
 const MessagesView = observer(() => {
   const { guild, channel } = useRouter()
@@ -18,6 +19,8 @@ const MessagesView = observer(() => {
     generalStore.clearThread(); // Channel changed, cant be looking at a thread anymore
     generalStore.readChannel(channel)
   }, [channel]);
+
+  const channelType = generalStore.guild?.channels?.find(c => c.id === channel)?.__typename;
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
@@ -28,7 +31,9 @@ const MessagesView = observer(() => {
           </React.Suspense>
 
           <React.Suspense fallback={<Loading />}>
-            {settingsStore.messageViewRewriteEnabled ? (
+            {channelType === 'ForumChannel' ? (
+              <Forum guild={guild} channel={channel} />
+            ) : settingsStore.messageViewRewriteEnabled ? (
               <Messages2ElectricBoogaloo guild={guild} channel={channel} />
             ) : (
               <Messages guild={guild} channel={channel} />

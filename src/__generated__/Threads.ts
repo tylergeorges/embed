@@ -10,7 +10,7 @@ import { MessageType, FormatType, MentionType } from "./globalTypes";
 // ====================================================
 
 export interface Threads_channel_threads_AnnouncementChannel {
-  __typename: "AnnouncementChannel" | "TextChannel" | "VoiceChannel";
+  __typename: "AnnouncementChannel" | "ForumChannel" | "TextChannel" | "VoiceChannel";
 }
 
 export interface Threads_channel_threads_ThreadChannel_messageBunch_messages_author {
@@ -192,7 +192,7 @@ export interface Threads_channel_threads_ThreadChannel {
 export type Threads_channel_threads = Threads_channel_threads_AnnouncementChannel | Threads_channel_threads_ThreadChannel;
 
 export interface Threads_channel {
-  __typename: "AnnouncementChannel" | "TextChannel" | "ThreadChannel" | "VoiceChannel";
+  __typename: "AnnouncementChannel" | "ForumChannel" | "TextChannel" | "ThreadChannel" | "VoiceChannel";
   id: string;
   threads: Threads_channel_threads[] | null;
 }
