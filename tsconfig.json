@@ -16,12 +16,12 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@util/*": ["src/util/*"],
+      "@util": ["src/util"],
       "@lib/*": ["src/lib/*"],
       "@state": ["src/state"],
       "@components/*": ["src/components/*"],
       "@graphql/*": ["src/graphql/*"],
-      "@stitches-config": ["stitches.config.tsx"]
+      "@stitches": ["stitches.config.tsx"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

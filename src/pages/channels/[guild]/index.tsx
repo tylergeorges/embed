@@ -1,4 +1,4 @@
-import { getEnvVar } from '@util/env';
+import { getEnvVar } from '@util';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 

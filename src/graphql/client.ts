@@ -1,5 +1,5 @@
 import { createClient } from 'urql';
-import { getEnvVar } from '@util/env';
+import { getEnvVar } from '@util';
 
 export const client = createClient({
   url: `https://${getEnvVar('CUSTOM_SERVER_ENDPOINT')}/api/graphql`
