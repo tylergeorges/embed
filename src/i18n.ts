@@ -38,10 +38,10 @@ i18next.use(initReactI18next).init({
   lng: 'en-GB',
   fallbackLng: 'en-GB',
   interpolation: {
-    escapeValue: false, // React already protects against this so we don't need to do it here
+    escapeValue: false, // React already protects against this, so we don't need to do it here
     prefix: '{',
     suffix: '}'
   },
 
-  debug: process.env.NODE_ENV === 'development'
+  debug: false // process.env.NODE_ENV === 'development'
 });
