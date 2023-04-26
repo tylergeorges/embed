@@ -1,10 +1,11 @@
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { useTranslation } from 'react-i18next';
 import { useQuery } from 'urql';
 import { useMemo } from 'react';
 import { graphql } from '@/graphql';
-import { Channel, ChannelType } from '@/graphql/graphql';
+import { Main } from '@/components/Core';
+import { TextChannelView } from '@/components/Core/TextChannel/TextChannelView';
+import { ChannelsListView } from '@/components/Core/ChannelsList/ChannelsListView';
 
 const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {
@@ -35,11 +36,7 @@ const channelDocument = graphql(/* GraphQL */ `
   }
 `);
 
-const position = (channel: Channel) =>
-  channel.type === ChannelType.GuildVoice ? channel.position + 500 : channel.position;
-
 const GuildChannel: NextPage = () => {
-  const { t } = useTranslation();
   const router = useRouter();
   const { guild: guildID, channel: channelID } = router.query;
   const [{ data }] = useQuery({ query: guildDocument, variables: { id: guildID as string } });
@@ -54,6 +51,7 @@ const GuildChannel: NextPage = () => {
       [...new Map(data?.guild.channels.map(c => [c.category?.id, c.category])).values()].filter(
         c => c
       ),
+
     [data]
   );
 
@@ -62,39 +60,22 @@ const GuildChannel: NextPage = () => {
   const { guild } = data;
 
   console.log(guild);
-
   return (
-    <div>
-      Channel - {guildID} - {channelID}
-      <p>Guild: {guild.name}</p>
-      <p>Channel: #{currentChannel?.name}</p>
-      <div>
-        {guild.channels
-          .filter(c => !c.category)
-          .sort((a, b) => position(a) - position(b))
-          .map(channel => (
-            <a key={channel.id} href={`/channels/${guildID}/${channel.id}`}>
-              #{channel.name}
-            </a>
-          ))}
+    <Main>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          width: '100%',
+          height: '100%'
+        }}
+      >
+        {/* //! Channels Side Bar */}
+        <ChannelsListView categories={categories} guildData={data} guildID={guildID as string} />
+
+        <TextChannelView channel={currentChannel!.name} guildName={guild.name} />
       </div>
-      {categories.map(category => (
-        <details open key={category!.id} style={{ marginTop: '10px' }}>
-          <summary>{category!.name}</summary>
-          <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column' }}>
-            {guild.channels
-              .filter(c => c.category?.id === category!.id)
-              .sort((a, b) => position(a) - position(b))
-              .map(channel => (
-                <a key={channel.id} href={`/channels/${guildID}/${channel.id}`}>
-                  #{channel.name}
-                </a>
-              ))}
-          </div>
-        </details>
-      ))}
-      <p>{t('input.message', { CHANNEL: currentChannel?.name })}</p>
-    </div>
+    </Main>
   );
 };
 

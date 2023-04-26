@@ -1,8 +1,8 @@
-import React, { JSXElementConstructor } from "react";
+import React, { JSXElementConstructor } from 'react';
 
 export type Element = keyof JSX.IntrinsicElements | JSXElementConstructor<any>;
 
-export type Props<C extends Element> = Omit<React.ComponentProps<C>, "ref"> & {
+export type Props<C extends Element> = Omit<React.ComponentProps<C>, 'ref'> & {
   overrideClassName?: string;
   className?: string;
   component: C;
@@ -16,15 +16,11 @@ function OverridableStyledComponent<C extends Element>({
   innerRef,
   ...props
 }: Props<C>) {
-  className ??= "";
+  className ??= '';
 
   return (
     // @ts-ignore
-    <Component
-      {...props}
-      ref={innerRef}
-      className={`${className} ${overrideClassName}`}
-    />
+    <Component {...props} ref={innerRef} className={`${className} ${overrideClassName}`} />
   );
 }
 

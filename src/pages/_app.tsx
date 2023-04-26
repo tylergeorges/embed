@@ -7,6 +7,7 @@ import { store } from '../state';
 import { client } from '../graphql/client';
 import RenderProvider from '../components/Providers/Render';
 import '../i18n';
+import { theme } from '../../stitches.config';
 
 function App({ Component, pageProps }: AppProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -44,13 +45,17 @@ function App({ Component, pageProps }: AppProps) {
       padding: 0,
       margin: 0,
       fontFamily:
-        '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif'
+        '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
+      width: '100%',
+      height: '100%'
     },
     body: {
       padding: 0,
       margin: 0,
       fontFamily:
-        '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif'
+        '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
+      width: '100%',
+      height: '100%'
     },
     a: {
       color: 'inherit',
@@ -67,6 +72,13 @@ function App({ Component, pageProps }: AppProps) {
         color: 'white',
         background: 'black'
       }
+    },
+    '#__next': {
+      width: '100%',
+      height: '100%'
+    },
+    'input::placeholder': {
+      color: theme.colors.primaryOpacity50
     }
   });
 
