@@ -13,13 +13,17 @@ const stitches = createStitches({
       primaryOpacity50: 'rgba(255, 255, 255, 0.5)',
       primaryOpacity60: 'rgba(255, 255, 255, 0.6)',
       primaryOpacity80: 'rgba(255, 255, 255, 0.8)',
+      primaryOpacity90: 'rgba(255, 255, 255, 0.9)',
       primaryOpacity100: 'rgba(255, 255, 255, 1.0)',
+      primary: 'rgba(255, 255, 255, 1.0)',
       primaryDark: '#72767d',
       systemMessageDark: '#999999',
       textMuted: 'rgb(163, 166, 170)',
       interactiveNormal: '#dcddde',
       accent: '#5865f2',
+      accentOpacity60: '#5865f299',
       background: '#36393f',
+      backgroundOpacity10: '#36393f1a',
       backgroundSecondary: '#2f3136',
       backgroundTertiary: '#202225',
       messageHover: 'rgba(0, 0, 0, .05)',
@@ -69,6 +73,9 @@ const stitches = createStitches({
     },
     url: {
       height: 0
+    },
+    readOnly: {
+      enable: false
     }
   }
 });
