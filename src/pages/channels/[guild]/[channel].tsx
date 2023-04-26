@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'urql';
+import { useMemo } from 'react';
 import { graphql } from '@/graphql';
 import { Channel, ChannelType } from '@/graphql/graphql';
 
@@ -43,21 +44,30 @@ const GuildChannel: NextPage = () => {
   const { guild: guildID, channel: channelID } = router.query;
   const [{ data }] = useQuery({ query: guildDocument, variables: { id: guildID as string } });
 
+  const currentChannel = useMemo(
+    () => data?.guild.channels.find(c => c.id === channelID),
+    [channelID, data]
+  );
+
+  const categories = useMemo(
+    () =>
+      [...new Map(data?.guild.channels.map(c => [c.category?.id, c.category])).values()].filter(
+        c => c
+      ),
+    [data]
+  );
+
   if (!data) return <div>loading...</div>;
 
   const { guild } = data;
 
   console.log(guild);
 
-  const categories = [
-    ...new Map(guild.channels.map(c => [c.category?.id, c.category])).values()
-  ].filter(c => c);
-
   return (
     <div>
       Channel - {guildID} - {channelID}
       <p>Guild: {guild.name}</p>
-      <p>Channel: #{guild.channels.find(c => c.id === channelID)?.name}</p>
+      <p>Channel: #{currentChannel?.name}</p>
       <div>
         {guild.channels
           .filter(c => !c.category)
@@ -71,7 +81,7 @@ const GuildChannel: NextPage = () => {
       {categories.map(category => (
         <details open key={category!.id} style={{ marginTop: '10px' }}>
           <summary>{category!.name}</summary>
-          <div style={{ marginLeft: '10px' }}>
+          <div style={{ marginLeft: '10px', display: 'flex', flexDirection: 'column' }}>
             {guild.channels
               .filter(c => c.category?.id === category!.id)
               .sort((a, b) => position(a) - position(b))
@@ -83,7 +93,7 @@ const GuildChannel: NextPage = () => {
           </div>
         </details>
       ))}
-      <p>{t('input.message', { CHANNEL: 'pog' })}</p>
+      <p>{t('input.message', { CHANNEL: currentChannel?.name })}</p>
     </div>
   );
 };
