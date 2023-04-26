@@ -1,20 +1,35 @@
+ nextjs-paths
 import { styled, css, theme } from '@stitches';
 
-export const Root = styled(
-  'header',
-  'root',
-  css({
-    overflow: 'hidden',
-    userSelect: 'none',
-    display: 'flex',
-    flexShrink: 0,
-    zIndex: 8,
-    backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    boxShadow:
-      '0 2px 4px -1px rgba(0, 0, 0, 0.1), 0px 4px 5px 0px rgba(0, 0, 0, 0.12), 0px 1px 10px 0px rgba(0, 0, 0, 0.09), 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06)'
-  })
+import { Root, SingleChannel, Inner } from './elements';
+import Hamburger from './Hamburger';
+// import { Header as ServerInfo } from '../Sidebar/Header'
+interface Props {
+  children: any;
+  thread?: boolean;
+}
+ nextjs-container
+
+const Header = ({ children, thread = false }: Props) => (
+  <Root className="header">
+    <SingleChannel>{/* <ServerInfo /> */}</SingleChannel>
+    <Inner>
+      <Hamburger
+        onClick={e => {
+          e.stopPropagation();
+          // thread
+          //   ? generalStore.clearThread()
+          //   : store.sidebar.toggle();
+        }}
+        // open={store.sidebar.isOpen}
+        thread={thread}
+      />
+      {children}
+    </Inner>
+  </Root>
 );
 
+ nextjs-paths
 export const SingleChannel = styled(
   'div',
   'single-channel',
@@ -53,3 +68,8 @@ export const Stretch = styled(
     width: 0
   })
 );
+
+export default Header;
+
+export * from './elements';
+ nextjs-container
