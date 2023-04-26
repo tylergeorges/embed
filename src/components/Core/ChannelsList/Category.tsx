@@ -4,10 +4,16 @@ import {
   ChannelNameActiveInner,
   ChannelNameContainer,
   ChannelNameInner
-} from '@/components/Core';
-import { ICategory } from '@/components/Core/ChannelsList/ChannelsListView';
-import { Hash } from '@/components/Shared/Channel/elements';
-import { Channel, ChannelType, GuildQuery } from '@/graphql/graphql';
+} from '@components/Core';
+import { Hash } from '@components/Shared/Channel/elements';
+import { Channel, ChannelType, GuildQuery } from '@graphql/graphql';
+
+export interface ICategory {
+  __typename?: 'Category' | undefined;
+  id: string;
+  name: string;
+  position: number;
+}
 
 interface CategoryProps {
   /** Category we are rendering channels for. */

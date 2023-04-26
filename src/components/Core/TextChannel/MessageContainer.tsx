@@ -1,4 +1,4 @@
-import { MessageWrapper } from '@/components/Core';
+import { MessageWrapper } from '@components/Core';
 
 interface MessageContainerProps {
   /** Name of the guild. */

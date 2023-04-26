@@ -1,11 +1,15 @@
 import { useTranslation } from 'react-i18next';
-import { BaseMessageProps } from '@/components/Core/TextChannel/TextChannelView';
+
+interface MessageInputProps {
+  /** The name of the current text channel. */
+  channel: string;
+}
 
 /** This component handles sending messages to the current text channel.
  *
  * @param channel                   The name of the current text channel.
  */
-export const MessageInput = ({ channel }: BaseMessageProps) => {
+export const MessageInput = ({ channel }: MessageInputProps) => {
   const { t } = useTranslation();
   return (
     <div

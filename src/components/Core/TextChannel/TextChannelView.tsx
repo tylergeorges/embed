@@ -1,13 +1,12 @@
-import { MessageContainer } from '@/components/Core/TextChannel/MessageContainer';
-import { MessageInput } from '@/components/Core/TextChannel/MessageInput';
-import { TextChannelHeader } from '@/components/Core/TextChannel/TextChannelHeader';
+import { MessageContainer } from '@components/Core/TextChannel/MessageContainer';
+import { MessageInput } from '@components/Core/TextChannel/MessageInput';
+import { TextChannelHeader } from '@components/Core/TextChannel/TextChannelHeader';
 
-export interface BaseMessageProps {
-  /** The name of the current text channel. */
-  channel: string;
-}
 
-interface MessageViewProps extends BaseMessageProps {
+
+interface MessageViewProps  {
+    /** The name of the current text channel. */
+    channel: string;
   /** Name of the guild. */
   guildName: string;
 }

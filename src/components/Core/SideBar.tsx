@@ -1,5 +1,5 @@
-import { Wrapper } from '@/components/Core';
-import { Header } from '@/components/Header/Header';
+import { Wrapper } from '@components/Core';
+import { Header } from '@components/Header/Header';
 
 interface SideBarProps {
   /** Name to display in header. */

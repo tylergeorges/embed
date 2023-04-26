@@ -1,11 +1,11 @@
+import { graphql } from '@graphql/index';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useQuery } from 'urql';
 import { useMemo } from 'react';
-import { graphql } from '@/graphql';
-import { Main } from '@/components/Core';
-import { TextChannelView } from '@/components/Core/TextChannel/TextChannelView';
-import { ChannelsListView } from '@/components/Core/ChannelsList/ChannelsListView';
+import { Main } from '@components/Core';
+import { TextChannelView } from '@components/Core/TextChannel/TextChannelView';
+import { ChannelsListView } from '@components/Core/ChannelsList/ChannelsListView';
 
 const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {

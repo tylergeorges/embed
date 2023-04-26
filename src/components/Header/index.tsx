@@ -1,4 +1,11 @@
-import { styled, css, theme } from '@/../stitches.config';
+import { styled, css, theme } from '@stitches';
+// import { Root, SingleChannel, Inner } from './elements';
+// import Hamburger from './Hamburger';
+// import { Header as ServerInfo } from '../Sidebar/Header'
+// interface Props {
+//   children: any;
+//   thread?: boolean;
+// }
 
 export const Root = styled(
   'header',

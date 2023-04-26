@@ -1,14 +1,7 @@
 import { useRouter } from 'next/router';
-import { GuildQuery } from '@/graphql/graphql';
-import { SideBar } from '@/components/Core/SideBar';
-import { Category } from '@/components/Core/ChannelsList/Category';
-
-export interface ICategory {
-  __typename?: 'Category' | undefined;
-  id: string;
-  name: string;
-  position: number;
-}
+import { GuildQuery } from '@graphql/graphql';
+import { SideBar } from '@components/Core/SideBar';
+import { Category, ICategory } from '@components/Core/ChannelsList/Category';
 
 /** All the categories for the guild. */
 export type TCategories = (ICategory | undefined | null)[];

@@ -1,5 +1,5 @@
-import { Root, Stretch } from '@/components/Header';
-import { Hash } from '@/components/Shared/Channel/elements';
+import { Root, Stretch } from '@components/Header';
+import { Hash } from '@components/Shared/Channel/elements';
 
 export interface HeaderProps {
   /** Name to display in header. */

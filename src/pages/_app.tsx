@@ -1,13 +1,14 @@
 import React from 'react';
 import type { AppProps } from 'next/app';
 import { StoreProvider } from 'easy-peasy';
-import { Provider } from 'urql';
+import { Provider as GraphQLProvider } from 'urql';
 import { globalCss } from '@stitches/react';
-import { store } from '../state';
-import { client } from '../graphql/client';
-import RenderProvider from '../components/Providers/Render';
+import { store } from '@state';
 import '../i18n';
-import { theme } from '../../stitches.config';
+// import { theme } from '../../stitches.config';
+import { client } from '@graphql/client';
+import SettingsProvider from '@lib/contexts/SettingsProvider';
+import { theme } from '@stitches';
 
 function App({ Component, pageProps }: AppProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -84,13 +85,13 @@ function App({ Component, pageProps }: AppProps) {
 
   globalStyles();
   return (
-    <RenderProvider>
-      <StoreProvider store={store}>
-        <Provider value={client}>
+    <StoreProvider store={store}>
+      <GraphQLProvider value={client}>
+        <SettingsProvider>
           <Component {...pageProps} />
-        </Provider>
-      </StoreProvider>
-    </RenderProvider>
+        </SettingsProvider>
+      </GraphQLProvider>
+    </StoreProvider>
   );
 }
 
