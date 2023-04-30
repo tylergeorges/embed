@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { useStoreActions, useStoreState } from '@hooks/storeHooks';
-import { useState } from 'react';
+import { useMediaQuery } from '@lib/hooks';
 import { TextChannelWrapper } from './elements';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
-import { MessageInput } from './MessageInput';
+import { TextBox } from './TextBox';
 
 /** The overall text channel view container.
  *
@@ -16,7 +16,7 @@ export const TextChannel = () => {
   // Used to check if the screen size is mobile because if it is then the sidebars
   // hover over the text channel and we want to be able to close them by clicking on
   // the text channel.
-  const [windowIsMobile] = useState(window.matchMedia('screen and (max-width: 768px)').matches);
+  const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
 
   // boolean check for sidebar lists
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
@@ -65,7 +65,7 @@ export const TextChannel = () => {
     >
       <TextChannelHeader channelName={currentChannel?.name as string} />
       <MessageContainer guildName={guildName} />
-      <MessageInput
+      <TextBox
         channelName={
           translate.t('input.message', { CHANNEL: currentChannel?.name as string }) as string
         }

@@ -1,4 +1,4 @@
-import { TextInput, TextInputWrapper } from './elements';
+import { TextBoxWrapper, TextBoxInput } from './elements';
 
 interface MessageInputProps {
   /** The name of the current text channel. */
@@ -9,9 +9,9 @@ interface MessageInputProps {
  *
  * @param channelName                  The name of the current text channel.
  */
-export const MessageInput = ({ channelName }: MessageInputProps) => (
+export const TextBox = ({ channelName }: MessageInputProps) => (
   // const { t } = useTranslation();
-  <TextInputWrapper>
-    <TextInput placeholder={channelName} />
-  </TextInputWrapper>
+  <TextBoxWrapper>
+    <TextBoxInput placeholder={channelName} />
+  </TextBoxWrapper>
 );

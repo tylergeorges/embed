@@ -11,11 +11,11 @@ interface MessageContainerProps {
  */
 export const MessageContainer = ({ guildName }: MessageContainerProps) => (
   <MessageWrapper>
-    <div id="channel-welcome_header_con">
-      <p id="channel-welcome_header">
+    <div className="channel-welcome_header_con">
+      <p className="channel-welcome_header">
         Welcome to <br /> {guildName}
       </p>
-      <p id="channel-welcome_subheader">This is the beginning of this server.</p>
+      <p className="channel-welcome_subheader">This is the beginning of this server.</p>
     </div>
   </MessageWrapper>
 );

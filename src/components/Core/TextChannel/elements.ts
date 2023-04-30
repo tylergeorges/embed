@@ -1,9 +1,9 @@
 import { styled } from '@stitches/react';
 import { css } from '@stitches';
 
-export const Root = styled(
+export const TextChannelWrapper = styled(
   'div',
-  'text-channel_root',
+  'text-channel_wrapper',
   css({
     display: 'flex',
     flexDirection: 'column',
@@ -63,10 +63,9 @@ export const Root = styled(
   })
 );
 
-export const TextChannelWrapper = styled(Root, 'textchannel-wrapper', {});
 export const MessageWrapper = styled(
   'div',
-  'messagewrapper',
+  'message-wrapper',
   css({
     width: '100%',
     height: '100%',
@@ -102,9 +101,9 @@ export const MessageWrapper = styled(
   })
 );
 
-export const TextInputWrapper = styled(
+export const TextBoxWrapper = styled(
   'div',
-  'user-text_input_con',
+  'text-box_wrapper',
   css({
     marginLeft: 15,
     marginRight: 15,
@@ -115,9 +114,10 @@ export const TextInputWrapper = styled(
     marginBottom: 15
   })
 );
-export const TextInput = styled(
+
+export const TextBoxInput = styled(
   'input',
-  'user-text_input',
+  'text-box_input',
   css({
     // padding: '10px 16px 10px 0px',
     width: '100%',
