@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { useStoreActions, useStoreState } from '@hooks/storeHooks';
+import { useStoreActions, useStoreState } from '@state';
 import { useMediaQuery } from '@lib/hooks';
 import { TextChannelWrapper } from './elements';
 import { TextChannelHeader } from './TextChannelHeader';

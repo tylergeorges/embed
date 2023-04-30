@@ -1,8 +1,34 @@
-import { Category } from '@graphql/graphql';
-import { UiState } from '@state/types';
-import { action } from 'easy-peasy';
+import { Category, Channel, GuildQuery } from '@graphql/graphql';
+import { Action, action } from 'easy-peasy';
 
-const ui: UiState.Store = {
+export interface UIStore {
+  /** The Y coordinate of the current channel selected */
+  currentChannelYPos: number;
+
+  isMembersListOpen: boolean;
+
+  isChannelsListOpen: boolean;
+
+  /** Category we are rendering channels for. */
+  /** All the categories for the guild. */
+  guildCategories: Category[] | undefined;
+
+  guildChannels: Channel[] | undefined;
+  /** Data for the current guild. */
+  guildData: (GuildQuery & { guildID: string; channelID: string }) | undefined;
+  currentChannel: Channel | undefined;
+
+  // Actions
+  setIsChannelsListOpen: Action<UIStore, boolean>;
+  setIsMembersListOpen: Action<UIStore, boolean>;
+  setGuildData: Action<UIStore, GuildQuery & { guildID: string; channelID: string }>;
+  // Pass object for initial render on route
+  // Else we just pass a regular channel object
+  setCurrentChannel: Action<UIStore, Channel>;
+  setCurrentChannelYPos: Action<UIStore, number>;
+}
+
+const ui: UIStore = {
   // State
   currentChannelYPos: 0,
 

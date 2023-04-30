@@ -1,4 +1,4 @@
-import { useStoreState } from '@hooks/storeHooks';
+import { useStoreState } from '@state';
 import { BackgroundContainer, Background } from './elements';
 
 /** Animated background for the current selected channel. */

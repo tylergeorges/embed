@@ -5,9 +5,9 @@ import { useQuery } from 'urql';
 import { useEffect } from 'react';
 import { Main } from '@components/Core';
 import { TextChannel } from '@components/Core/TextChannel';
-import { ChannelsList } from '@components/SideBar/ChannelsList';
-import { MembersList } from '@components/SideBar/MembersList';
-import { useStoreActions } from '@hooks/storeHooks';
+import { ChannelsList } from '@components/Sidebar/ChannelsList';
+import { MembersList } from '@components/Sidebar/MembersList';
+import { useStoreActions } from '@state';
 import { RouterQuery } from 'types/routerQuery';
 
 const guildDocument = graphql(/* GraphQL */ `

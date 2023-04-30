@@ -10,9 +10,8 @@ interface SettingsProviderProps {
 }
 function SettingsProvider({ children }: SettingsProviderProps) {
   // TODO: Fetch the settings
-  const settings = null;
 
-  return <SettingsContext.Provider value={settings}>{children}</SettingsContext.Provider>;
+  return <>{children}</>;
 }
 
 // A custom hook to use the settings context

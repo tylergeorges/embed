@@ -1,4 +1,4 @@
-import { useStoreActions, useStoreState } from '@hooks/storeHooks';
+import { useStoreActions, useStoreState } from '@state';
 import { Burger, Ham } from './elements';
 
 interface Props {

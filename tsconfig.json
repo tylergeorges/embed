@@ -17,10 +17,11 @@
     "paths": {
       "@util/*": ["./src/util/*"],
       "@lib/*": ["./src/lib/*"],
-      "@state/*": ["./src/state/*"],
       "@components/*": ["./src/components/*"],
       "@graphql/*": ["./src/graphql/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@state": ["./src/state"],
+      "@state/*": ["./src/state/*"],
       "@stitches": ["./stitches.config.tsx"],
       "types/*": ["./src/types/*"]
     }

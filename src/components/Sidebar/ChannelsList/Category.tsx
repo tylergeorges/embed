@@ -1,6 +1,6 @@
 import { Category as ICategory, Channel, ChannelType } from '@graphql/graphql';
 import { useEffect, useRef } from 'react';
-import { useStoreActions, useStoreState } from '@hooks/storeHooks';
+import { useStoreActions, useStoreState } from '@state';
 import { ChannelName } from './ChannelName';
 import { CategoryName, ChannelNameContainer, CategoryContainer } from './elements';
 

@@ -1,11 +1,11 @@
 import { createStore } from 'easy-peasy';
-import { UiState, UserState } from '@state/types';
-import user from './user';
-import ui from './ui';
+
+import user, { UserStore } from './stores/user';
+import ui, { UIStore } from './stores/ui';
 
 export interface RootStore {
-  user: UserState.Store;
-  ui: UiState.Store;
+  user: UserStore;
+  ui: UIStore;
 }
 
 const state: RootStore = {

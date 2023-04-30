@@ -1,5 +1,5 @@
 import { MembersSideBar } from '@components/SideBar/elements';
-import { useStoreState } from '@hooks/storeHooks';
+import { useStoreState } from '@state';
 
 export const MembersList = () => {
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
-import { useStoreState } from '@hooks/storeHooks';
+import { useStoreState } from '@state';
 import { RouterQuery } from 'types/routerQuery';
 import { Header } from '@components/Header/Header';
 import { Category } from './Category';
