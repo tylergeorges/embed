@@ -14,16 +14,16 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "baseUrl": ".",
     "paths": {
-      "@util/*": ["src/util/*"],
-      "@lib/*": ["src/lib/*"],
-      "@state/*": ["src/state/*"],
-      "@components/*": ["src/components/*"],
-      "@graphql/*": ["src/graphql/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@stitches": ["stitches.config.tsx"],
-      "types/*": ["src/types/*"]
+      "@*": ["./src/*"],
+      "@util/*": ["./src/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@state/*": ["./src/state/*"],
+      "@components/*": ["./src/components/*"],
+      "@graphql/*": ["./src/graphql/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@stitches": ["./stitches.config.tsx"],
+      "types/*": ["./src/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src", "pages/**/*"],
