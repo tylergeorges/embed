@@ -12,6 +12,6 @@ interface TextChannelHeaderProps {
  */
 export const TextChannelHeader = ({ channelName }: TextChannelHeaderProps) => (
   <ChannelHeaderContainer>
-    <Header header_name={channelName} shadowEnabled isChannelHeader />
+    <Header name={channelName} shadowEnabled isChannelHeader />
   </ChannelHeaderContainer>
 );

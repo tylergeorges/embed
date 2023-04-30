@@ -56,8 +56,8 @@ export const Root = styled(
   })
 );
 
-export const ChannelsSidebar = styled(Root, 'sidebar-channels_list', {});
-export const MembersSidebar = styled(Root, 'sidebar-members_list', {});
+export const ChannelsSidebar = styled(Root, 'channels-sidebar', {});
+export const MembersSidebar = styled(Root, 'members-sidebar', {});
 
 export const Close = styled(
   'button',

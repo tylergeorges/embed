@@ -32,7 +32,7 @@ export const TextChannel = () => {
 
   const translate = useTranslation();
 
-  const hideSideBar = () => {
+  const hideSidebar = () => {
     setIsChannelsListOpen(false);
     setIsMembersListOpen(false);
   };
@@ -59,7 +59,7 @@ export const TextChannel = () => {
       onClick={
         //  Only allow clicking text channel to close sidebars if on mobile
         (windowIsMobile && isChannelsListOpen) || (windowIsMobile && isMembersListOpen)
-          ? hideSideBar
+          ? hideSidebar
           : undefined
       }
     >
