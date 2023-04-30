@@ -18,7 +18,6 @@ export const ChannelName = ({ channel, isActive }: ChannelNameProps) => {
   const guildID = useStoreState(state => state.guild.data!.id) as string;
 
   const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
-  const setCurrentChannel = useStoreActions(state => state.ui.setCurrentChannel);
 
   useEffect(() => {
     if (initialRef.current) {
@@ -32,14 +31,9 @@ export const ChannelName = ({ channel, isActive }: ChannelNameProps) => {
   /** Sets the new select component's y position because we clicked on a new
    *  channel.
    */
-  const handleChannelClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-      setCurrentChannelYPos(e.currentTarget.offsetTop);
-      setCurrentChannel(channel);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setCurrentChannel]
-  );
+  const handleChannelClick = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    setCurrentChannelYPos(e.currentTarget.offsetTop);
+  }, []);
 
   return (
     <ChannelNameWrapper key={channel.id} draggable={false} onClick={handleChannelClick}>

@@ -26,9 +26,10 @@ export const TextChannel = () => {
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
 
-  const guildName = useStoreState(state => state.ui.guildData?.guild.name) as string;
+  const guildName = useStoreState(state => state.guild.data!.name);
 
-  const currentChannel = useStoreState(state => state.ui.currentChannel);
+  // TODO: Write a hook (useCurrentChannel) or something to pull channel id from url & get it from state.guild.channels.
+  const currentChannel: any = null;
 
   const translate = useTranslation();
 

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { graphql } from '@graphql/gql';
 import { useQuery } from 'urql';
-import { useStoreActions } from '@state';
+import { useStoreActions, useStoreState } from '@state';
 import { useRouter } from 'next/router';
 import { RouterQuery } from 'types/routerQuery';
 
@@ -10,27 +10,27 @@ interface GuildProviderProps {
 }
 
 const guildDocument = graphql(/* GraphQL */ `
-    query Guild($id: String!) {
-        guild(id: $id) {
-            id
-            name
-            settings {
-                readonly
-            }
-            channels {
-                id
-                name
-                type
-                position
-                category {
-                    id
-                    name
-                    position
-                }
-                rateLimitPerUser
-            }
+  query Guild($id: String!) {
+    guild(id: $id) {
+      id
+      name
+      settings {
+        readonly
+      }
+      channels {
+        id
+        name
+        type
+        position
+        category {
+          id
+          name
+          position
         }
+        rateLimitPerUser
+      }
     }
+  }
 `);
 
 export const GuildProvider = ({ children }: GuildProviderProps) => {
@@ -42,6 +42,7 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
     variables: { id: guildID }
   });
 
+  const guildId = useStoreState(state => state.guild.data?.id);
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
   const setChannels = useStoreActions(state => state.guild.setChannels);
@@ -49,15 +50,16 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
   useEffect(() => {
     if (!fetching && data) {
       setGuildData(data.guild);
+      // @ts-expect-error
       setSettings(data.guild.settings);
+      // @ts-expect-error
       setChannels(data.guild.channels);
     }
-
   }, [data, fetching]);
 
-  if (!data || fetching) {
+  if (!guildId) {
     return <>loading...</>;
   }
 
   return <>{children}</>;
-}
+};
