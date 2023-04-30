@@ -1,4 +1,5 @@
-import { styled, css, theme } from '@/../stitches.config';
+import { css, theme } from '@stitches';
+import { styled } from '@stitches/react';
 
 export const Ham = styled(
   'button',
@@ -8,7 +9,6 @@ export const Ham = styled(
     background: 'none',
     flexShrink: 0,
     color: theme.colors.accent,
-    display: theme.singleChannel.enable ? 'none' : 'inline-block',
     marginLeft: 20,
     marginRight: 10,
     position: 'relative',
@@ -28,7 +28,7 @@ export const Ham = styled(
       height: 40,
       opacity: 0,
       transition: 'opacity 0.1s ease',
-      backgroundColor: theme.colors.primaryOpacity90,
+      backgroundColor: theme.colors.primaryOpacity10,
       borderRadius: '50%'
     },
     '&:hover': {
@@ -46,9 +46,9 @@ export const Ham = styled(
           },
           div: {
             '&::before': {
-              top: -4.8,
               width: 15,
               transform: 'rotate(45deg)',
+              top: -4.8,
               right: -3
             },
             '&::after': {
@@ -83,13 +83,13 @@ export const Burger = styled(
   css({
     '&, &::before, &::after': {
       content: '',
+      backgroundColor: theme.colors.accent,
       color: 'inherit',
       position: 'absolute',
       height: 2,
       width: '100%',
       top: 'calc(50% - 2px)',
       right: 0,
-      backgroundColor: 'currentColor',
       transition: '0.3s'
     },
 

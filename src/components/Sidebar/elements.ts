@@ -1,64 +1,69 @@
-import { styled, css, theme } from '@/../stitches.config';
+import { styled } from '@stitches/react';
+import { css, theme } from '@stitches';
 
 export const Root = styled(
   'div',
   'sidebar-root',
   css({
     position: 'absolute',
+    backgroundColor: 'rgb(46, 48, 54)',
+
     zIndex: 9,
-    backgroundColor: theme.colors.backgroundOpacity10,
-    width: 200,
+    width: 250,
+    maxWidth: 250,
     height: '100%',
     flexShrink: 0,
-    transition: 'transform 0.3s ease',
+    transition: 'transform ease 0.3s',
     display: 'flex',
     flexDirection: 'column',
     willChange: 'transform',
-    overflow: 'hidden',
-
-    '& > div > div:nth-child(1)': {
-      paddingBottom: 10
-    },
-
-    '@media (max-width: 400px), (max-height: 340px)': {
-      width: 180
-    },
-
-    '@media (max-width: 210px)': {
-      width: 150
-    },
-
-    '@media (max-width: 170px)': {
-      width: 150
-    },
-
     variants: {
-      visible: {
-        true: {
-          [`& ${!theme.singleChannel.enable}`]: {
-            '@media (max-width: 520px)': {
-              boxShadow:
-                '0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12)'
-            },
-            '@media screen and (max-width: 520px)': {
-              boxShadow:
-                '0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12)'
-            }
-          }
-        },
+      channelsListOpen: {
         false: {
-          display: theme.singleChannel.enable ? 'none' : 'translateX(-250px)'
+          transform: 'translateX(-250px)'
+          // display:'none'
+        }
+      },
+
+      membersListOpen: {
+        false: {
+          transform: 'translateX(250px)'
+          // display:'none'
+        }
+      },
+      type: {
+        members_list: {},
+        channels_list: {
+          '.sidebar-header_container': {
+            textAlign: 'center',
+            position: 'relative'
+          },
+
+          '.sidebar-children_container': {
+            position: 'relative',
+            width: '100%',
+            maxWidth: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            height: '100%',
+            marginBottom: '1.5rem',
+            overflowY: 'auto'
+          }
         }
       }
     }
   })
 );
 
+export const ChannelsSideBar = styled(Root, 'sidebar-channels_list', {});
+export const MembersSideBar = styled(Root, 'sidebar-members_list', {});
+
 export const Close = styled(
   'button',
   'sidebar-close',
   css({
-    '@media screen and (max-width: 520px)': {
+    '@media screen and (max-width: 578px)': {
       position: 'absolute',
       right: 0,
       height: 30,

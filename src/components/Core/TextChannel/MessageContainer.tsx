@@ -1,4 +1,4 @@
-import { MessageWrapper } from '@components/Core';
+import { MessageWrapper } from './elements';
 
 interface MessageContainerProps {
   /** Name of the guild. */
@@ -11,20 +11,11 @@ interface MessageContainerProps {
  */
 export const MessageContainer = ({ guildName }: MessageContainerProps) => (
   <MessageWrapper>
-    <div
-      style={{
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        maxWidth: '10%',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-    >
-      <p style={{ fontWeight: 700, fontSize: '1.5rem', marginBottom: 0 }}>Welcome to {guildName}</p>
-      <p style={{ margin: 0, fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.5)' }}>
-        This is the beginning of this server.
+    <div id="channel-welcome_header_con">
+      <p id="channel-welcome_header">
+        Welcome to <br /> {guildName}
       </p>
+      <p id="channel-welcome_subheader">This is the beginning of this server.</p>
     </div>
   </MessageWrapper>
 );

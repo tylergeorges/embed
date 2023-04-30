@@ -16,12 +16,14 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@util": ["src/util"],
+      "@util/*": ["src/util/*"],
       "@lib/*": ["src/lib/*"],
-      "@state": ["src/state"],
+      "@state/*": ["src/state/*"],
       "@components/*": ["src/components/*"],
       "@graphql/*": ["src/graphql/*"],
-      "@stitches": ["stitches.config.tsx"]
+      "@hooks/*": ["src/hooks/*"],
+      "@stitches": ["stitches.config.tsx"],
+      "types/*": ["src/types/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

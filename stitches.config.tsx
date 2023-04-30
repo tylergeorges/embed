@@ -2,7 +2,29 @@ import { createStitches } from '@stitches/react';
 import React, { ForwardedRef, forwardRef } from 'react';
 import OverridableStyledComponent, { Element } from '@components/Core/OverridableStyledComponent';
 
+// @media screen and (max-width: 578px)
+
+// @sm	@media (min-width: 640px)
+// @md	@media (min-width: 768px)
+// @lg	@media (min-width: 1024px)
+// @xl	@media (min-width: 1280px)
+// @xxl	@media (min-width: 1536px)
+
+// screen and
+
 const stitches = createStitches({
+  media: {
+    sm: '(min-width: 640px)',
+    md: '(min-width: 768px)',
+    lg: '(min-width: 1024px)',
+    xl: '(min-width: 1280px)',
+    xxl: '(min-width: 1536px)',
+    sm_screen: 'screen and (max-width: 640px)',
+    md_screen: 'screen  and (max-width: 768px)',
+    lg_screen: 'screen and (max-width: 1024px)',
+    xl_screen: 'screen and (max-width: 1280px)',
+    xxl_screen: 'screen and (max-width: 1536px)'
+  },
   theme: {
     colors: {
       primaryOpacity10: 'rgba(255, 255, 255, 0.1)',
@@ -46,6 +68,7 @@ const stitches = createStitches({
       m: '14px',
       l: '16px'
     },
+
     space: {
       xxs: '1px',
       xs: '2px',

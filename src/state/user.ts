@@ -1,20 +1,7 @@
-import { Action, action } from 'easy-peasy';
+import { UserState } from '@state/types';
+import { action } from 'easy-peasy';
 
-export interface IUser {
-  id: string;
-  username: string;
-  discriminator: string;
-  avatarUrl: string;
-  provider: 'Guild' | 'Discord' | 'Guest';
-}
-
-export interface UserStore {
-  data?: IUser;
-  setUserData: Action<UserStore, IUser>;
-  updateUserData: Action<UserStore, Partial<IUser>>;
-}
-
-const user: UserStore = {
+const user: UserState.Store = {
   data: undefined,
   setUserData: action((state, payload) => {
     state.data = payload;

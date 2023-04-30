@@ -3,44 +3,14 @@ import type { AppProps } from 'next/app';
 import { StoreProvider } from 'easy-peasy';
 import { Provider as GraphQLProvider } from 'urql';
 import { globalCss } from '@stitches/react';
-import { store } from '@state';
+import { store } from '@state/store';
 import '../i18n';
-// import { theme } from '../../stitches.config';
 import { client } from '@graphql/client';
 import SettingsProvider from '@lib/contexts/SettingsProvider';
 import { theme } from '@stitches';
+import Head from 'next/head';
 
 function App({ Component, pageProps }: AppProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-  // injectGlobal`
-  //   html,
-  //   body {
-  //     padding: 0;
-  //     margin: 0;
-  //     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell,
-  //     Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  //   }
-  //
-  //   a {
-  //     color: inherit;
-  //     text-decoration: none;
-  //   }
-  //
-  //   * {
-  //     box-sizing: border-box;
-  //   }
-  //
-  //   @media (prefers-color-scheme: dark) {
-  //     html {
-  //       color-scheme: dark;
-  //     }
-  //     body {
-  //       color: white;
-  //       background: black;
-  //     }
-  //   }
-  // `;
-
   const globalStyles = globalCss({
     html: {
       padding: 0,
@@ -48,7 +18,8 @@ function App({ Component, pageProps }: AppProps) {
       fontFamily:
         '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
       width: '100%',
-      height: '100%'
+      height: '100%',
+      overflow: 'hidden'
     },
     body: {
       padding: 0,
@@ -56,15 +27,17 @@ function App({ Component, pageProps }: AppProps) {
       fontFamily:
         '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
       width: '100%',
-      height: '100%'
+      height: '100%',
+      overflowX: 'hidden'
     },
     a: {
       color: 'inherit',
       textDecoration: 'none'
     },
-    '*': {
+    '*, ::after, ::before': {
       boxSizing: 'border-box'
     },
+
     '@media (prefers-color-scheme: dark)': {
       html: {
         colorScheme: 'dark'
@@ -88,6 +61,9 @@ function App({ Component, pageProps }: AppProps) {
     <StoreProvider store={store}>
       <GraphQLProvider value={client}>
         <SettingsProvider>
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+          </Head>
           <Component {...pageProps} />
         </SettingsProvider>
       </GraphQLProvider>

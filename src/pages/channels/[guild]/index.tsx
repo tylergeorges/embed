@@ -1,4 +1,4 @@
-import { getEnvVar } from '@util';
+import { getEnvVar } from '@util/env';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 
@@ -11,8 +11,6 @@ export async function getServerSideProps() {
 const GuildIndex: NextPage = () => {
   const router = useRouter();
   const { guild } = router.query;
-
-  console.log('server', typeof window === 'undefined');
 
   const apiUrl = getEnvVar('CUSTOM_SERVER_ENDPOINT');
 

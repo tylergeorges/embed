@@ -2,10 +2,13 @@ import { graphql } from '@graphql/index';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useQuery } from 'urql';
-import { useMemo } from 'react';
+import { useEffect } from 'react';
 import { Main } from '@components/Core';
-import { TextChannelView } from '@components/Core/TextChannel/TextChannelView';
-import { ChannelsListView } from '@components/Core/ChannelsList/ChannelsListView';
+import { TextChannel } from '@components/Core/TextChannel';
+import { ChannelsList } from '@components/SideBar/ChannelsList';
+import { MembersList } from '@components/SideBar/MembersList';
+import { useStoreActions } from '@hooks/storeHooks';
+import { RouterQuery } from 'types/routerQuery';
 
 const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {
@@ -38,45 +41,36 @@ const channelDocument = graphql(/* GraphQL */ `
 
 const GuildChannel: NextPage = () => {
   const router = useRouter();
-  const { guild: guildID, channel: channelID } = router.query;
-  const [{ data }] = useQuery({ query: guildDocument, variables: { id: guildID as string } });
+  const { guild: guildID, channel: channelID } = router.query as RouterQuery;
 
-  const currentChannel = useMemo(
-    () => data?.guild.channels.find(c => c.id === channelID),
-    [channelID, data]
-  );
+  // Fetch guild data
+  const [{ data, fetching }] = useQuery({
+    query: guildDocument,
+    variables: { id: guildID as string }
+  });
 
-  const categories = useMemo(
-    () =>
-      [...new Map(data?.guild.channels.map(c => [c.category?.id, c.category])).values()].filter(
-        c => c
-      ),
+  // Action to set the guild data in store
+  const setGuildData = useStoreActions(state => state.ui.setGuildData);
 
-    [data]
-  );
+  useEffect(() => {
+    if (!fetching && data) {
+      // Add guild data to store
+      setGuildData({ ...data, guildID, channelID });
+    }
+  }, [setGuildData, guildID, fetching]);
 
-  if (!data) return <div>loading...</div>;
-
-  const { guild } = data;
-
-  console.log(guild);
-  return (
-    <Main>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          width: '100%',
-          height: '100%'
-        }}
-      >
-        {/* //! Channels Side Bar */}
-        <ChannelsListView categories={categories} guildData={data} guildID={guildID as string} />
-
-        <TextChannelView channel={currentChannel!.name} guildName={guild.name} />
-      </div>
-    </Main>
-  );
+  if (data && !fetching) {
+    return (
+      <Main>
+        <div className="inner_main">
+          <ChannelsList />
+          <TextChannel />
+          <MembersList />
+        </div>
+      </Main>
+    );
+  }
+  return <div>loading...</div>;
 };
 
 export default GuildChannel;

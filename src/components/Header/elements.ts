@@ -36,6 +36,16 @@ export const SingleChannel = styled(
   })
 );
 
+export const ChannelHeaderContainer = styled(
+  'div',
+  'textchannel-header_container',
+  css({
+    width: 'calc(100% + 250px)',
+    position: 'absolute',
+    height: 60
+  })
+);
+
 export const Inner = styled(
   'div',
   'inner',
