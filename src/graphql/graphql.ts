@@ -37,13 +37,17 @@ export type AnnouncementChannel = Channel & {
   type: ChannelType;
 };
 
+
 export type AnnouncementChannelMessageBunchArgs = {
   after?: InputMaybe<Scalars['String']>;
   around?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  messageId?: InputMaybe<Scalars['String']>;
+  threadId?: InputMaybe<Scalars['String']>;
 };
+
 
 export type AnnouncementChannelMessagesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -51,6 +55,8 @@ export type AnnouncementChannelMessagesArgs = {
   before?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  messageId?: InputMaybe<Scalars['String']>;
+  threadId?: InputMaybe<Scalars['String']>;
 };
 
 export type Application = {
@@ -97,9 +103,11 @@ export type Category = {
 };
 
 export type Channel = {
+  canSend: Scalars['Boolean'];
   category?: Maybe<Category>;
   id: Scalars['String'];
   name: Scalars['String'];
+  nsfw: Scalars['Boolean'];
   position: Scalars['Int'];
   rateLimitPerUser?: Maybe<Scalars['Int']>;
   threads?: Maybe<Array<Channel>>;
@@ -107,13 +115,18 @@ export type Channel = {
 };
 
 export enum ChannelType {
+  AnnouncementThread = 'AnnouncementThread',
   Dm = 'DM',
   GroupDm = 'GroupDm',
+  GuildAnnouncement = 'GuildAnnouncement',
   GuildCategory = 'GuildCategory',
-  GuildNews = 'GuildNews',
-  GuildStore = 'GuildStore',
+  GuildDirectory = 'GuildDirectory',
+  GuildForum = 'GuildForum',
+  GuildStageVoice = 'GuildStageVoice',
   GuildText = 'GuildText',
   GuildVoice = 'GuildVoice',
+  PrivateThread = 'PrivateThread',
+  PublicThread = 'PublicThread',
   Unknown = 'Unknown'
 }
 
@@ -123,6 +136,12 @@ export type Chat = {
   id: Scalars['String'];
   unreadMessages: Scalars['Int'];
   updatedAt: Scalars['Long'];
+};
+
+export type DefaultReaction = {
+  __typename?: 'DefaultReaction';
+  emojiId?: Maybe<Scalars['String']>;
+  emojiName?: Maybe<Scalars['String']>;
 };
 
 export type DeletedMessage = {
@@ -234,6 +253,33 @@ export enum FormatType {
   Png = 'PNG',
   Unknown = 'Unknown'
 }
+
+export type ForumChannel = Channel & {
+  __typename?: 'ForumChannel';
+  availableTags?: Maybe<Array<ForumTag>>;
+  canSend: Scalars['Boolean'];
+  category?: Maybe<Category>;
+  defaultForumLayout?: Maybe<Scalars['Int']>;
+  defaultReactionEmoji?: Maybe<DefaultReaction>;
+  defaultSortOrder?: Maybe<Scalars['Int']>;
+  id: Scalars['String'];
+  name: Scalars['String'];
+  nsfw: Scalars['Boolean'];
+  position: Scalars['Int'];
+  rateLimitPerUser?: Maybe<Scalars['Int']>;
+  threads?: Maybe<Array<Channel>>;
+  topic?: Maybe<Scalars['String']>;
+  type: ChannelType;
+};
+
+export type ForumTag = {
+  __typename?: 'ForumTag';
+  emojiId?: Maybe<Scalars['String']>;
+  emojiName?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  moderated: Scalars['Boolean'];
+  name: Scalars['String'];
+};
 
 export type Guild = {
   __typename?: 'Guild';
@@ -388,22 +434,26 @@ export type Mutation = {
   sendMessage: Message;
 };
 
+
 export type MutationAddMemberArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
   memberIds: Array<Scalars['String']>;
 };
 
+
 export type MutationBlockUserArgs = {
   active?: Scalars['Boolean'];
   id: Scalars['String'];
 };
+
 
 export type MutationCreateGroupArgs = {
   content: Scalars['String'];
   guild: Scalars['String'];
   memberIds: Array<Scalars['String']>;
 };
+
 
 export type MutationDeleteChatMessageArgs = {
   channel: Scalars['String'];
@@ -412,27 +462,32 @@ export type MutationDeleteChatMessageArgs = {
   isGroup?: InputMaybe<Scalars['Boolean']>;
 };
 
+
 export type MutationDeleteMessageArgs = {
   channel: Scalars['String'];
   id: Scalars['String'];
   threadId?: InputMaybe<Scalars['String']>;
 };
 
+
 export type MutationLeaveGroupArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
 };
+
 
 export type MutationMarkChatAsReadArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
 };
 
+
 export type MutationRemoveMemberArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
   member: Scalars['String'];
 };
+
 
 export type MutationSendChatArgs = {
   content: Scalars['String'];
@@ -442,6 +497,7 @@ export type MutationSendChatArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
 };
+
 
 export type MutationSendMessageArgs = {
   captchaRes?: InputMaybe<Scalars['String']>;
@@ -468,22 +524,27 @@ export type Query = {
   userData?: Maybe<User>;
 };
 
+
 export type QueryChannelArgs = {
   id: Scalars['String'];
 };
+
 
 export type QueryChannelV2Args = {
   guild: Scalars['String'];
   id: Scalars['String'];
 };
 
+
 export type QueryDirectUsersArgs = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+
 export type QueryGetChatsArgs = {
   guild: Scalars['String'];
 };
+
 
 export type QueryGetMessagesForChatArgs = {
   guild: Scalars['String'];
@@ -491,13 +552,16 @@ export type QueryGetMessagesForChatArgs = {
   isGroup?: InputMaybe<Scalars['Boolean']>;
 };
 
+
 export type QueryGuildArgs = {
   id: Scalars['String'];
 };
 
+
 export type QuerySettingsArgs = {
   id: Scalars['String'];
 };
+
 
 export type QueryUserDataArgs = {
   guild: Scalars['String'];
@@ -550,13 +614,16 @@ export type Subscription = {
   messageV2?: Maybe<Message>;
 };
 
+
 export type SubscriptionActionArgs = {
   guild: Scalars['String'];
 };
 
+
 export type SubscriptionDirectMessageArgs = {
   guild: Scalars['String'];
 };
+
 
 export type SubscriptionMessageArgs = {
   channel: Scalars['String'];
@@ -564,11 +631,13 @@ export type SubscriptionMessageArgs = {
   threadId?: InputMaybe<Scalars['String']>;
 };
 
+
 export type SubscriptionMessageDeleteArgs = {
   channel: Scalars['String'];
   guild: Scalars['String'];
   threadId?: InputMaybe<Scalars['String']>;
 };
+
 
 export type SubscriptionMessageDeleteBulkArgs = {
   channel: Scalars['String'];
@@ -576,11 +645,13 @@ export type SubscriptionMessageDeleteBulkArgs = {
   threadId?: InputMaybe<Scalars['String']>;
 };
 
+
 export type SubscriptionMessageUpdateArgs = {
   channel: Scalars['String'];
   guild: Scalars['String'];
   threadId?: InputMaybe<Scalars['String']>;
 };
+
 
 export type SubscriptionMessageV2Args = {
   channels?: InputMaybe<Array<Scalars['String']>>;
@@ -605,13 +676,17 @@ export type TextChannel = Channel & {
   type: ChannelType;
 };
 
+
 export type TextChannelMessageBunchArgs = {
   after?: InputMaybe<Scalars['String']>;
   around?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  messageId?: InputMaybe<Scalars['String']>;
+  threadId?: InputMaybe<Scalars['String']>;
 };
+
 
 export type TextChannelMessagesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -619,6 +694,8 @@ export type TextChannelMessagesArgs = {
   before?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  messageId?: InputMaybe<Scalars['String']>;
+  threadId?: InputMaybe<Scalars['String']>;
 };
 
 export type ThemeColorSettings = {
@@ -663,13 +740,17 @@ export type ThreadChannel = Channel & {
   type: ChannelType;
 };
 
+
 export type ThreadChannelMessageBunchArgs = {
   after?: InputMaybe<Scalars['String']>;
   around?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  messageId?: InputMaybe<Scalars['String']>;
+  threadId?: InputMaybe<Scalars['String']>;
 };
+
 
 export type ThreadChannelMessagesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -677,6 +758,8 @@ export type ThreadChannelMessagesArgs = {
   before?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  messageId?: InputMaybe<Scalars['String']>;
+  threadId?: InputMaybe<Scalars['String']>;
 };
 
 export type UpdatedMessage = {
@@ -733,13 +816,17 @@ export type VoiceChannel = Channel & {
   type: ChannelType;
 };
 
+
 export type VoiceChannelMessageBunchArgs = {
   after?: InputMaybe<Scalars['String']>;
   around?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  messageId?: InputMaybe<Scalars['String']>;
+  threadId?: InputMaybe<Scalars['String']>;
 };
+
 
 export type VoiceChannelMessagesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -747,190 +834,16 @@ export type VoiceChannelMessagesArgs = {
   before?: InputMaybe<Scalars['String']>;
   id?: InputMaybe<Scalars['String']>;
   limit?: InputMaybe<Scalars['Int']>;
+  messageId?: InputMaybe<Scalars['String']>;
+  threadId?: InputMaybe<Scalars['String']>;
 };
 
 export type GuildQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
-export type GuildQuery = {
-  __typename?: 'Query';
-  guild: {
-    __typename?: 'Guild';
-    name: string;
-    channels: Array<
-      | {
-          __typename?: 'AnnouncementChannel';
-          id: string;
-          name: string;
-          type: ChannelType;
-          position: number;
-          rateLimitPerUser?: number | null;
-          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
-        }
-      | {
-          __typename?: 'TextChannel';
-          id: string;
-          name: string;
-          type: ChannelType;
-          position: number;
-          rateLimitPerUser?: number | null;
-          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
-        }
-      | {
-          __typename?: 'ThreadChannel';
-          id: string;
-          name: string;
-          type: ChannelType;
-          position: number;
-          rateLimitPerUser?: number | null;
-          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
-        }
-      | {
-          __typename?: 'VoiceChannel';
-          id: string;
-          name: string;
-          type: ChannelType;
-          position: number;
-          rateLimitPerUser?: number | null;
-          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
-        }
-    >;
-  };
-};
 
-export type ChannelQueryVariables = Exact<{
-  channelId: Scalars['String'];
-  guildId: Scalars['String'];
-}>;
+export type GuildQuery = { __typename?: 'Query', guild: { __typename?: 'Guild', id: string, name: string, settings: { __typename?: 'GuildSettings', readonly: boolean }, channels: Array<{ __typename?: 'AnnouncementChannel', id: string, name: string, type: ChannelType, position: number, rateLimitPerUser?: number | null, category?: { __typename?: 'Category', id: string, name: string, position: number } | null } | { __typename?: 'ForumChannel', id: string, name: string, type: ChannelType, position: number, rateLimitPerUser?: number | null, category?: { __typename?: 'Category', id: string, name: string, position: number } | null } | { __typename?: 'TextChannel', id: string, name: string, type: ChannelType, position: number, rateLimitPerUser?: number | null, category?: { __typename?: 'Category', id: string, name: string, position: number } | null } | { __typename?: 'ThreadChannel', id: string, name: string, type: ChannelType, position: number, rateLimitPerUser?: number | null, category?: { __typename?: 'Category', id: string, name: string, position: number } | null } | { __typename?: 'VoiceChannel', id: string, name: string, type: ChannelType, position: number, rateLimitPerUser?: number | null, category?: { __typename?: 'Category', id: string, name: string, position: number } | null }> } };
 
-export type ChannelQuery = {
-  __typename?: 'Query';
-  channelV2:
-    | { __typename?: 'AnnouncementChannel'; id: string }
-    | { __typename?: 'TextChannel'; id: string }
-    | { __typename?: 'ThreadChannel'; id: string }
-    | { __typename?: 'VoiceChannel'; id: string };
-};
 
-export const GuildDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'Guild' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'guild' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'channels' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'type' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'position' } },
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'category' },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'position' } }
-                          ]
-                        }
-                      },
-                      { kind: 'Field', name: { kind: 'Name', value: 'rateLimitPerUser' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<GuildQuery, GuildQueryVariables>;
-export const ChannelDocument = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'OperationDefinition',
-      operation: 'query',
-      name: { kind: 'Name', value: 'Channel' },
-      variableDefinitions: [
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'channelId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
-          }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'guildId' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
-          }
-        }
-      ],
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'channelV2' },
-            arguments: [
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'channelId' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'guild' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'guildId' } }
-              }
-            ],
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
-            }
-          }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<ChannelQuery, ChannelQueryVariables>;
+export const GuildDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Guild"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"guild"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"settings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readonly"}}]}},{"kind":"Field","name":{"kind":"Name","value":"channels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"position"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rateLimitPerUser"}}]}}]}}]}}]} as unknown as DocumentNode<GuildQuery, GuildQueryVariables>;

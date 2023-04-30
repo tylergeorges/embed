@@ -12,7 +12,7 @@ interface SideBarProps {
 }
 
 /** Reusable SideBar component. */
-export const SideBar = ({ header_name, sidebar_color, children }: SideBarProps) => (
+export const Sidebar = ({ header_name, sidebar_color, children }: SideBarProps) => (
   <Root
     style={{
       backgroundColor: sidebar_color

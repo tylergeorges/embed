@@ -1,16 +1,19 @@
 import { createStore } from 'easy-peasy';
 
-import user, { UserStore } from './stores/user';
 import ui, { UIStore } from './stores/ui';
+import guild, { GuildStore } from './stores/guild';
+import user, { UserStore } from './stores/user';
 
 export interface RootStore {
-  user: UserStore;
   ui: UIStore;
+  guild: GuildStore
+  user: UserStore;
 }
 
 const state: RootStore = {
-  user,
-  ui
+  ui,
+  guild,
+  user
 };
 
 export const store = createStore(state);

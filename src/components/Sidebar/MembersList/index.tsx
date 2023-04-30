@@ -1,10 +1,10 @@
-import { MembersSideBar } from '@components/SideBar/elements';
+import { MembersSidebar } from '@components/Sidebar/elements';
 import { useStoreState } from '@state';
 
 export const MembersList = () => {
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
   return (
-    <MembersSideBar
+    <MembersSidebar
       css={{
         right: 0,
         height: 'calc(100% - 60px)',
@@ -13,6 +13,6 @@ export const MembersList = () => {
       membersListOpen={isMembersListOpen}
     >
       <div />
-    </MembersSideBar>
+    </MembersSidebar>
   );
 };

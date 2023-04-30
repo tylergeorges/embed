@@ -4,7 +4,7 @@ import { Hamburger } from './Hamburger/index';
 
 export interface HeaderProps {
   /** Name to display in header. */
-  header_name: string;
+  name: string;
 
   /** If the header should have a drop shadow or not.
    *
@@ -19,19 +19,20 @@ export interface HeaderProps {
 }
 
 /** Reusable Header component. */
-export const Header = ({ header_name, shadowEnabled, isChannelHeader }: HeaderProps) => (
+export const Header = ({ name, shadowEnabled, isChannelHeader }: HeaderProps) => (
   <HeaderRoot shadowEnabled={shadowEnabled}>
     {isChannelHeader ? (
       // If this is a header for a text channel
       <HeaderChannel>
         <Hamburger />
         <Hash />
-        <p className="header-text_content">{header_name}</p>
+        <p className="header-text_content">{name}</p>
       </HeaderChannel>
     ) : (
       <Stretch>
-        <p className="header-text_content">{header_name}</p>
+        <p className="header-text_content">{name}</p>
       </Stretch>
     )}
   </HeaderRoot>
+
 );

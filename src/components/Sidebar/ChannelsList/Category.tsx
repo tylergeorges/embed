@@ -19,16 +19,17 @@ interface CategoryProps {
 /** This component renders a category and its channels. */
 export const Category = ({ category, currentChannelID }: CategoryProps) => {
   const initialChannelRef = useRef<HTMLAnchorElement | null>(null);
+
+  const guildChannels = useStoreState(state => state.guild.channels!);
+
   const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
-  const guildChannels = useStoreState(state => state.ui.guildChannels) as Channel[];
 
   useEffect(() => {
     // ! Sets the initial ActiveBackground component's position
     if (initialChannelRef.current) {
       setCurrentChannelYPos(initialChannelRef.current.offsetTop);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <CategoryContainer open key={category.id}>

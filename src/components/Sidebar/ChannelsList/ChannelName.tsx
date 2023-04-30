@@ -15,12 +15,10 @@ interface ChannelNameProps {
 export const ChannelName = ({ channel, isActive }: ChannelNameProps) => {
   const initialRef = useRef<HTMLAnchorElement>(null);
 
-  // Store actions
+  const guildID = useStoreState(state => state.guild.data!.id) as string;
+
   const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
   const setCurrentChannel = useStoreActions(state => state.ui.setCurrentChannel);
-
-  // Store state
-  const guildID = useStoreState(state => state.ui.guildData?.guildID) as string;
 
   useEffect(() => {
     if (initialRef.current) {

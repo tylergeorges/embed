@@ -8,6 +8,7 @@ import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
 import SettingsProvider from '@lib/contexts/SettingsProvider';
 import '../i18n';
+import { GuildProvider } from '@components/Providers';
 
 function App({ Component, pageProps }: AppProps) {
   const globalStyles = globalCss({
@@ -59,13 +60,13 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <StoreProvider store={store}>
       <GraphQLProvider value={client}>
-        <SettingsProvider>
+        <GuildProvider>
           <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
           </Head>
 
           <Component {...pageProps} />
-        </SettingsProvider>
+        </GuildProvider>
       </GraphQLProvider>
     </StoreProvider>
   );
