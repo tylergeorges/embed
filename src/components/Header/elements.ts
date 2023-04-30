@@ -1,4 +1,5 @@
-import { styled, css, theme } from '@stitches';
+import { styled } from '@stitches/react';
+import { css, theme } from '@stitches';
 import {
   Hash,
   NSFW,
@@ -9,9 +10,18 @@ import {
   ThreadHash,
   Voice
 } from '../Shared/Channel/elements';
-import Button from '../Shared/button';
 
-export const Root = styled(
+export const ChannelHeaderContainer = styled(
+  'div',
+  'textchannel-header_container',
+  css({
+    width: 'calc(100% + 250px)',
+    position: 'absolute',
+    height: 60
+  })
+);
+
+const Root = styled(
   'header',
   'root',
   css({
@@ -21,10 +31,33 @@ export const Root = styled(
     flexShrink: 0,
     zIndex: 8,
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    boxShadow:
-      '0 2px 4px -1px rgba(0, 0, 0, 0.1), 0px 4px 5px 0px rgba(0, 0, 0, 0.12), 0px 1px 10px 0px rgba(0, 0, 0, 0.09), 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06)'
+
+    '.header-text_content': {
+      fontWeight: 'bold',
+      fontSize: 18
+    },
+
+    variants: {
+      shadowEnabled: {
+        true: {
+          boxShadow:
+            '0 2px 4px -1px rgba(0, 0, 0, 0.1), 0px 4px 5px 0px rgba(0, 0, 0, 0.12), 0px 1px 10px 0px rgba(0, 0, 0, 0.09), 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06)',
+          backgroundColor: 'transparent',
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'center',
+          width: '100%',
+          height: 60
+        },
+        false: {
+          backgroundColor: 'transparent'
+        }
+      }
+    }
   })
 );
+
+export const HeaderRoot = styled(Root, 'header-root', {});
 
 export const SingleChannel = styled(
   'div',
@@ -33,16 +66,6 @@ export const SingleChannel = styled(
     [`& ${theme.singleChannel.enable}`]: {
       display: 'none'
     }
-  })
-);
-
-export const ChannelHeaderContainer = styled(
-  'div',
-  'textchannel-header_container',
-  css({
-    width: 'calc(100% + 250px)',
-    position: 'absolute',
-    height: 60
   })
 );
 
@@ -72,6 +95,21 @@ export const Stretch = styled(
     overflow: 'hidden',
     flexShrink: 1,
     width: 0
+  })
+);
+
+export const HeaderChannel = styled(
+  Stretch,
+  'textchannel-header',
+  css({
+    display: 'flex',
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    marginLeft: 15,
+    flexDirection: 'row',
+
+    '.textchannel-channel_name': {}
   })
 );
 
@@ -123,51 +161,3 @@ export const RulesName = name(Rules);
 export const VoiceName = name(Voice);
 
 export const NSFWVoiceName = name(NSFWVoice);
-
-export const TopicWrapper = styled(
-  'div',
-  'topic-wrapper',
-  css({
-    display: 'flex',
-    alignItems: 'center',
-    overflow: 'hidden'
-  })
-);
-
-export const JoinLink = styled(
-  'a',
-  'join-link',
-  css({
-    [`& ${Button}`]: {
-      background: theme.colors.accentOpacity60,
-      marginRight: 20,
-      flexShrink: 0
-    }
-  })
-);
-
-export const SingleChannelAuthWrapper = styled(
-  'div',
-  'single-channel-auth-wrapper',
-  css({
-    [`& ${theme.singleChannel.enable && !theme.readOnly.enable}`]: {
-      display: 'none'
-    },
-    marginLeft: 10,
-    '> a': {
-      display: 'block'
-    }
-  })
-);
-
-export const Fullscreen = styled(
-  'svg',
-  'fullscreen',
-  css({
-    marginLeft: '1rem',
-    cursor: 'pointer',
-    path: {
-      color: theme.colors.primaryOpacity60
-    }
-  })
-);

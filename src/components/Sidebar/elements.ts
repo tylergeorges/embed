@@ -1,9 +1,9 @@
 import { styled } from '@stitches/react';
 import { css, theme } from '@stitches';
 
-export const Root = styled(
+export const SidebarWrapper = styled(
   'div',
-  'sidebar-root',
+  'sidebar_wrapper',
   css({
     position: 'absolute',
     backgroundColor: 'rgb(46, 48, 54)',
@@ -56,12 +56,12 @@ export const Root = styled(
   })
 );
 
-export const ChannelsSidebar = styled(Root, 'channels-sidebar', {});
-export const MembersSidebar = styled(Root, 'members-sidebar', {});
+export const ChannelsSidebarWrapper = styled(SidebarWrapper, 'channels-sidebar_wrapper', {});
+export const MembersSidebarWrapper = styled(SidebarWrapper, 'members-sidebar_wrapper', {});
 
 export const Close = styled(
   'button',
-  'sidebar-close',
+  'sidebar_close',
   css({
     '@media screen and (max-width: 578px)': {
       position: 'absolute',

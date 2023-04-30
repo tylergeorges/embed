@@ -2,10 +2,10 @@ import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 import { useStoreState } from '@state';
 import { RouterQuery } from 'types/routerQuery';
-import { Header } from '@components/Header/Header';
+import { Header } from '@components/Header';
 import { Category } from './Category';
 import { ActiveBackground } from './ActiveBackground';
-import { ChannelsSidebar } from '../elements';
+import { ChannelsSidebarWrapper } from '../elements';
 
 /** This component displays the channels for the given guild, it wraps
  *  the guild header and all of the guilds channels.
@@ -22,7 +22,7 @@ export const ChannelsList = () => {
   const categories = useStoreState(state => state.guild.categories);
 
   return (
-    <ChannelsSidebar type="channels_list" channelsListOpen={isChannelsListOpen}>
+    <ChannelsSidebarWrapper type="channels_list" channelsListOpen={isChannelsListOpen}>
       <div className="sidebar-header_container">
         <Header name={guildName} isChannelHeader={false} />
       </div>
@@ -36,6 +36,6 @@ export const ChannelsList = () => {
           </Fragment>
         ))}
       </div>
-    </ChannelsSidebar>
+    </ChannelsSidebarWrapper>
   );
 };

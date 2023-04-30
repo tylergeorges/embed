@@ -1,4 +1,4 @@
-import { Header } from '@components/Header/Header';
+import { Header } from '@components/Header';
 import { ChannelHeaderContainer } from '@components/Header/elements';
 
 interface TextChannelHeaderProps {
