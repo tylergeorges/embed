@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
-import { Category } from '@components/SideBar/ChannelsList/Category';
 import { Fragment } from 'react';
 import { ChannelsSideBar } from '@components/SideBar/elements';
 import { Header } from '@components/Header/Header';
 import { useStoreState } from '@hooks/storeHooks';
 import { RouterQuery } from 'types/routerQuery';
+import { Category } from './Category';
 import { ActiveBackground } from './ActiveBackground';
 
 /** This component displays the channels for the given guild, it wraps

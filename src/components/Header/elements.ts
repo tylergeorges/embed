@@ -1,4 +1,4 @@
-import { styled, css, theme } from '@/../stitches.config';
+import { styled, css, theme } from '@stitches';
 import {
   Hash,
   NSFW,

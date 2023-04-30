@@ -1,7 +1,7 @@
 import { Category as ICategory, Channel, ChannelType } from '@graphql/graphql';
 import { useEffect, useRef } from 'react';
-import { ChannelName } from '@components/SideBar/ChannelsList/ChannelName';
 import { useStoreActions, useStoreState } from '@hooks/storeHooks';
+import { ChannelName } from './ChannelName';
 import { CategoryName, ChannelNameContainer, CategoryContainer } from './elements';
 
 /** Sorts channels based on the channel type. */

@@ -1,10 +1,10 @@
-import { MessageContainer } from '@components/Core/TextChannel/MessageContainer';
-import { MessageInput } from '@components/Core/TextChannel/MessageInput';
-import { TextChannelHeader } from '@components/Core/TextChannel/TextChannelHeader';
 import { useTranslation } from 'react-i18next';
 import { useStoreActions, useStoreState } from '@hooks/storeHooks';
 import { useState } from 'react';
 import { TextChannelWrapper } from './elements';
+import { TextChannelHeader } from './TextChannelHeader';
+import { MessageContainer } from './MessageContainer';
+import { MessageInput } from './MessageInput';
 
 /** The overall text channel view container.
  *

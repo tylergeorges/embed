@@ -1,6 +1,6 @@
 import { HeaderChannel, HeaderRoot, Stretch } from '@components/Header';
-import Hamburger from '@components/Header/Hamburger';
 import { Hash } from '@components/Shared/Channel/elements';
+import { Hamburger } from './Hamburger/index';
 
 export interface HeaderProps {
   /** Name to display in header. */

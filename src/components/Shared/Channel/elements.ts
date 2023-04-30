@@ -1,4 +1,4 @@
-import { styled, css, theme } from '@/../stitches.config';
+import { styled, css, theme } from '@stitches';
 
 export const Hash = styled(
   'div',

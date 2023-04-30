@@ -1,4 +1,4 @@
-import { TextInput, TextInputWrapper } from '@components/Core/TextChannel/elements';
+import { TextInput, TextInputWrapper } from './elements';
 
 interface MessageInputProps {
   /** The name of the current text channel. */

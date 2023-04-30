@@ -1,7 +1,7 @@
-import { Hash } from '@components/Shared/Channel/elements';
 import { useCallback, useEffect, useRef } from 'react';
 import { useStoreActions, useStoreState } from '@hooks/storeHooks';
 import { Channel } from '@graphql/graphql';
+import { Hash } from '@components/Shared/Channel/elements';
 import { ChannelNameWrapper, ChannelNameInner } from './elements';
 
 interface ChannelNameProps {

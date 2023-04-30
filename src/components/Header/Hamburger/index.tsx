@@ -5,7 +5,7 @@ interface Props {
   thread?: boolean;
 }
 
-const Hamburger = ({ thread = false }: Props) => {
+export const Hamburger = ({ thread = false }: Props) => {
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
 
@@ -25,5 +25,3 @@ const Hamburger = ({ thread = false }: Props) => {
     </Ham>
   );
 };
-
-export default Hamburger;
