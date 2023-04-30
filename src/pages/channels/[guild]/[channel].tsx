@@ -57,7 +57,8 @@ const GuildChannel: NextPage = () => {
       // Add guild data to store
       setGuildData({ ...data, guildID, channelID });
     }
-  }, [setGuildData, guildID, fetching]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [setGuildData, fetching]);
 
   if (data && !fetching) {
     return (

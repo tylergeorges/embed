@@ -27,6 +27,7 @@ export const Category = ({ category, currentChannelID }: CategoryProps) => {
     if (initialChannelRef.current) {
       setCurrentChannelYPos(initialChannelRef.current.offsetTop);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

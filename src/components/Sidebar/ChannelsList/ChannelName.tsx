@@ -28,6 +28,7 @@ export const ChannelName = ({ channel, isActive }: ChannelNameProps) => {
       // background light up,
       setCurrentChannelYPos(initialRef.current.offsetTop);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   /** Sets the new select component's y position because we clicked on a new
@@ -38,6 +39,7 @@ export const ChannelName = ({ channel, isActive }: ChannelNameProps) => {
       setCurrentChannelYPos(e.currentTarget.offsetTop);
       setCurrentChannel(channel);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [setCurrentChannel]
   );
 
@@ -46,7 +48,8 @@ export const ChannelName = ({ channel, isActive }: ChannelNameProps) => {
       <ChannelNameInner
         active_state={isActive}
         href={`/channels/${guildID}/${channel.id}`}
-        ref={isActive ? initialRef : undefined} // We only want to set the ref for the current channel
+        // We only want to set the ref for the current channel
+        ref={isActive ? initialRef : undefined}
         draggable={false}
       >
         <Hash />
