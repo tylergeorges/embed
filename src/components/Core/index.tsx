@@ -1,4 +1,9 @@
-import { styled, css, theme } from '@stitches';
+import { styled, css, theme, keyframes } from '@stitches';
+
+const scaleIn = keyframes({
+  '0%': { transform: 'scale(0.90)', opacity: 0 },
+  '100%': { transform: 'scale(1)', opacity: 1 }
+});
 
 export const Main = styled(
   'main',
@@ -9,11 +14,13 @@ export const Main = styled(
     flexDirection: 'row',
     width: '100%',
     backgroundColor: theme.colors.background,
+
     '.inner_main': {
       flexDirection: 'row',
       width: '100%',
       height: '100%',
-      display: 'flex'
+      display: 'flex',
+      animation: `${scaleIn} 300ms`
     }
   })
 );

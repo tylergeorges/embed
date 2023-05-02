@@ -4,6 +4,7 @@ import { useQuery } from 'urql';
 import { useStoreActions } from '@state';
 import { useRouter } from 'next/router';
 import { RouterQuery } from 'types/routerQuery';
+import { Loading } from '@components/Overlays/Loading';
 
 interface GuildProviderProps {
   children: React.ReactNode;
@@ -56,5 +57,6 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
     }
   }, [data, fetching, setChannels, setGuildData, setSettings]);
 
+  if (fetching && !data) return <Loading />;
   return <>{children}</>;
 };

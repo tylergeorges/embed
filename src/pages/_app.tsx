@@ -18,7 +18,8 @@ function App({ Component, pageProps }: AppProps) {
         '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
       width: '100%',
       height: '100%',
-      overflow: 'hidden'
+      overflow: 'hidden',
+      backgroundColor: theme.colors.background
     },
     body: {
       padding: 0,
@@ -27,7 +28,8 @@ function App({ Component, pageProps }: AppProps) {
         '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
       width: '100%',
       height: '100%',
-      overflowX: 'hidden'
+      overflowX: 'hidden',
+      backgroundColor: theme.colors.background
     },
     a: {
       color: 'inherit',
