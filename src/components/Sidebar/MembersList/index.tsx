@@ -1,5 +1,5 @@
-import { MembersSidebarWrapper } from '@components/Sidebar/elements';
 import { useStoreState } from '@state';
+import { MembersSidebarWrapper } from '../elements';
 
 export const MembersList = () => {
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
@@ -10,6 +10,7 @@ export const MembersList = () => {
         height: 'calc(100% - 60px)',
         bottom: 0
       }}
+      className="members-sidebar_wrapper"
       membersListOpen={isMembersListOpen}
     >
       <div />

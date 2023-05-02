@@ -1,4 +1,3 @@
-import React from 'react';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { StoreProvider } from 'easy-peasy';
@@ -6,7 +5,6 @@ import { Provider as GraphQLProvider } from 'urql';
 import { store } from '@state/store';
 import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
-import SettingsProvider from '@lib/contexts/SettingsProvider';
 import '../i18n';
 import { GuildProvider } from '@components/Providers';
 
@@ -52,7 +50,7 @@ function App({ Component, pageProps }: AppProps) {
       height: '100%'
     },
     'input::placeholder': {
-      color: theme.colors.primaryOpacity50
+      color: theme.colors.primaryOpacity30
     }
   });
 
@@ -64,7 +62,6 @@ function App({ Component, pageProps }: AppProps) {
           <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
           </Head>
-
           <Component {...pageProps} />
         </GuildProvider>
       </GraphQLProvider>

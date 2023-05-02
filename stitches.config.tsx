@@ -68,20 +68,22 @@ const stitches = createStitches({
       m: '14px',
       l: '16px'
     },
-
     space: {
       xxs: '1px',
       xs: '2px',
-      small: '4px',
-      medium: '6px',
-      large: '8px',
+      sm: '4px',
+      md: '6px',
+      lg: '8px',
       xl: '12px',
       xxl: '16px'
     },
     sizes: {
       messageLeftPadding: '72px',
       threadButton: '34px',
-      messageTypeIcon: '16px'
+      messageTypeIcon: '16px',
+      sideBarWidth: '200px',
+      channelNameHeight: '32px',
+      messageInputSize: '44px'
     },
     borderWidths: {
       spines: '2px'

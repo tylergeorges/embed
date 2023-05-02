@@ -9,8 +9,8 @@ export const SidebarWrapper = styled(
     backgroundColor: 'rgb(46, 48, 54)',
 
     zIndex: 9,
-    width: 250,
-    maxWidth: 250,
+    width: theme.sizes.sideBarWidth,
+    maxWidth: theme.sizes.sideBarWidth,
     height: '100%',
     flexShrink: 0,
     transition: 'transform ease 0.3s',
@@ -20,15 +20,15 @@ export const SidebarWrapper = styled(
     variants: {
       channelsListOpen: {
         false: {
-          transform: 'translateX(-250px)'
+          transform: `translateX(-200px)`
           // display:'none'
         }
       },
 
       membersListOpen: {
         false: {
-          transform: 'translateX(250px)'
-          // display:'none'
+          transform: 'translateX($sideBarWidth)',
+          display: 'none'
         }
       },
       type: {

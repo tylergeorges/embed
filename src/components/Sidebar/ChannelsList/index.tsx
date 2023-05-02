@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router';
-import { Fragment } from 'react';
 import { useStoreState } from '@state';
 import { RouterQuery } from 'types/routerQuery';
 import { Header } from '@components/Header';
@@ -21,8 +20,14 @@ export const ChannelsList = () => {
   const guildName = useStoreState(state => state.guild.data?.name) as string;
   const categories = useStoreState(state => state.guild.categories);
 
+  if (!categories) return <div>Loading...</div>;
+
   return (
-    <ChannelsSidebarWrapper type="channels_list" channelsListOpen={isChannelsListOpen}>
+    <ChannelsSidebarWrapper
+      type="channels_list"
+      channelsListOpen={isChannelsListOpen}
+      className="channels-sidebar_wrapper"
+    >
       <div className="sidebar-header_container">
         <Header name={guildName} isChannelHeader={false} />
       </div>
@@ -31,9 +36,11 @@ export const ChannelsList = () => {
         <ActiveBackground />
 
         {categories.map(category => (
-          <Fragment key={category.id}>
-            <Category currentChannelID={currentChannelID as string} category={category} />
-          </Fragment>
+          <Category
+            currentChannelID={currentChannelID as string}
+            category={category}
+            key={category.id}
+          />
         ))}
       </div>
     </ChannelsSidebarWrapper>

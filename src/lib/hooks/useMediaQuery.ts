@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 
 export const useMediaQuery = (query: string) => {
-  const [matchesQuery, setMatchesQuery] = useState(window.matchMedia(query).matches);
+  const [matchesQuery, setMatchesQuery] = useState<boolean>(
+    window && window.matchMedia(query).matches
+  );
 
   useEffect(() => {
     const handleResize = () => {

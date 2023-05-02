@@ -1,4 +1,4 @@
-import { HeaderChannel, HeaderRoot, Stretch } from '@components/Header/elements';
+import { GuildHeader, HeaderChannel, HeaderRoot } from '@components/Header/elements';
 import { Hash } from '@components/Shared/Channel/elements';
 import { Hamburger } from './Hamburger/index';
 
@@ -20,18 +20,18 @@ export interface HeaderProps {
 
 /** Reusable Header component. */
 export const Header = ({ name, shadowEnabled, isChannelHeader }: HeaderProps) => (
-  <HeaderRoot shadowEnabled={shadowEnabled}>
+  <HeaderRoot shadowEnabled={shadowEnabled} className="header-root">
     {isChannelHeader ? (
       // If this is a header for a text channel
-      <HeaderChannel>
+      <HeaderChannel className="text-channel_header">
         <Hamburger />
         <Hash />
         <p className="header-text_content">{name}</p>
       </HeaderChannel>
     ) : (
-      <Stretch>
+      <GuildHeader className="guild-header">
         <p className="header-text_content">{name}</p>
-      </Stretch>
+      </GuildHeader>
     )}
   </HeaderRoot>
 );

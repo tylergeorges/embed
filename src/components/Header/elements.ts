@@ -13,9 +13,9 @@ import {
 
 export const ChannelHeaderContainer = styled(
   'div',
-  'textchannel-header_container',
+  'text-channel_header_container',
   css({
-    width: 'calc(100% + 250px)',
+    width: 'calc(100% + $sideBarWidth)',
     position: 'absolute',
     height: 60
   })
@@ -97,10 +97,11 @@ export const Stretch = styled(
     width: 0
   })
 );
+export const GuildHeader = styled(Stretch, 'guild-header', {});
 
 export const HeaderChannel = styled(
   Stretch,
-  'textchannel-header',
+  'text-channel_header',
   css({
     display: 'flex',
     width: '100%',

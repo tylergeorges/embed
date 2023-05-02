@@ -1,14 +1,50 @@
 // ! Imported from the library instead of custom config because of weird bugs
+import { theme } from '@stitches';
 import { css, styled } from '@stitches/react';
 import Link from 'next/link';
 
+export const CategoryNameContainer = styled(
+  'div',
+  'category-name_container',
+  css({
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: 8
+  })
+);
+export const CategoryNameArrow = styled(
+  'div',
+  'category-name_arrow',
+  css({
+    width: 20,
+    height: 20,
+    cursor: 'pointer',
+    position: 'relative',
+    display: 'inline-block',
+    backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='105.167' fill='rgb(107,108,112)' height='61.651' id='chevron-down'%3e%3cpath d='M2.868 3.155c3.955-4.046 9.458-4.363 14.291 0l35.434 33.971L88.026 3.155c4.834-4.363 10.347-4.046 14.269 0a10.77 10.77 0 0 1 0 14.643c-3.683 3.791-42.568 40.817-42.568 40.817a9.917 9.917 0 0 1-14.286 0S6.574 21.589 2.874 17.798a10.764 10.764 0 0 1 0-14.643Z'%3e%3c/path%3e%3c/svg%3e")`,
+    backgroundSize: '60%',
+    backgroundPosition: '50% 50%',
+    backgroundRepeat: 'no-repeat',
+    transition: 'transform 0.15s ease',
+
+    variants: {
+      opened: {
+        false: {
+          transform: 'rotate(-90deg)'
+        }
+      }
+    }
+  })
+);
+
 export const CategoryName = styled(
-  'summary',
-  'categoryname',
+  'div',
+  'category-name',
   css({
     textTransform: 'uppercase',
     transition: '100ms ease',
-    color: 'rgba(255,255,255,0.4)',
+    color: 'rgba(255,255,255,0.3)',
     height: 20,
 
     //  Ignore dragging
@@ -20,39 +56,45 @@ export const CategoryName = styled(
     '-ms-user-select': 'none' /* Internet Explorer/Edge */,
     'user-select': 'none',
 
-    marginLeft: 8,
+    // marginLeft: 8,
     marginRight: 8,
     marginTop: 2,
     marginBottom: 5,
     fontSize: '$lg',
-    alignSelf: 'center'
+    alignSelf: 'center',
+    '&:hover': {
+      color: 'rgba(255,255,255,0.5)'
+    }
   })
 );
 export const CategoryContainer = styled(
-  'details',
+  'div',
+  // 'details',
   'category-container',
   css({
     width: '100%',
     color: 'rgba(255, 255, 255, 0.7)',
     fontWeight: 500,
-    paddingTop: 20
+    paddingTop: 20,
+    transition: 'translateY 0.5s ease',
+    backgroundColor: 'rgb(46, 48, 54)'
   })
 );
 
 export const ChannelNameWrapper = styled(
   'div',
-  'channelname-wrapper',
+  'channel-name_wrapper',
   css({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '2.5rem',
+    height: 'auto',
     width: '100%',
-    marginTop: 2,
-    marginBottom: 2,
-
-    //  Ignore dragging
+    transition: 'max-height 350ms ease',
+    maxHeight: theme.sizes.channelNameHeight,
+    marginTop: '$xs',
+    marginBottom: '$xs',
     '-moz-user-select': 'none',
     '-khtml-user-select': 'none',
     '-webkit-user-select': 'none',
@@ -65,30 +107,28 @@ export const ChannelNameWrapper = styled(
 
 export const ChannelNameInner = styled(
   Link,
-  'channelname',
+  'channel-name',
   css({
     transition: '100ms ease',
-
-    //  Ignore dragging
-    '-moz-user-select': 'none',
-    '-khtml-user-select': 'none',
-    '-webkit-user-select': 'none',
-    '-webkit-touch-callout': 'none' /* iOS Safari */,
-    ' -khtml-user-select': 'none' /* Konqueror HTML */,
-    '-ms-user-select': 'none' /* Internet Explorer/Edge */,
-    'user-select': 'none',
-
-    borderRadius: 4,
-    padding: '0.75rem',
-    margin: '0.75rem',
-
+    fontSize: '$lg',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%',
     height: '100%',
+    lineHeight: theme.sizes.channelNameHeight,
+
+    marginLeft: '$space$lg',
+    marginRight: '$space$lg',
+    paddingRight: '$lg',
+    paddingLeft: '$lg',
+    marginTop: '$xs',
+    marginBottom: '$xs',
+
     color: 'rgba(255,255,255,0.3)',
     willChange: 'background-color, color,',
+    borderRadius: 4,
+    width: 'calc(100% - 16px)',
+
     '&:hover': {
       backgroundColor: 'rgba(255,255,255,0.1)',
       color: 'rgba(255,255,255,0.5)'
@@ -109,11 +149,12 @@ export const ChannelNameInner = styled(
 
 export const ChannelNameContainer = styled(
   'div',
-  'channelname_container',
+  'channel-name_container',
   css({
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+    overflow: 'hidden'
   })
 );

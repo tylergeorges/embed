@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { graphql } from '@graphql/gql';
 import { useQuery } from 'urql';
-import { useStoreActions, useStoreState } from '@state';
+import { useStoreActions } from '@state';
 import { useRouter } from 'next/router';
 import { RouterQuery } from 'types/routerQuery';
 
@@ -42,7 +42,6 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
     variables: { id: guildID }
   });
 
-  const guildId = useStoreState(state => state.guild.data?.id);
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
   const setChannels = useStoreActions(state => state.guild.setChannels);
@@ -55,11 +54,7 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
       // @ts-expect-error
       setChannels(data.guild.channels);
     }
-  }, [data, fetching]);
-
-  if (!guildId) {
-    return <>loading...</>;
-  }
+  }, [data, fetching, setChannels, setGuildData, setSettings]);
 
   return <>{children}</>;
 };

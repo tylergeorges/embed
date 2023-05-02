@@ -1,19 +1,25 @@
 import type { NextPage } from 'next';
 import { Main } from '@components/Core';
-import { TextChannel } from '@components/Core/TextChannel';
-import { ChannelsList } from '@components/Sidebar/ChannelsList';
-import { MembersList } from '@components/Sidebar/MembersList';
+import { MembersList } from '@components/SideBar/MembersList';
+import { ChannelsList } from '@components/SideBar/ChannelsList';
+import dynamic from 'next/dynamic';
 
-const GuildChannel: NextPage = () => {
-  return (
+// Dynamic import because it depends on using 'window' so we disable ssr
+const Container = dynamic(
+  () => import('../../../components/Core/Container/index').then(mod => mod.Container),
+  {
+    ssr: false
+  }
+);
+
+const GuildChannel: NextPage = () => (
     <Main>
       <div className="inner_main">
         <ChannelsList />
-        <TextChannel />
+        <Container />
         <MembersList />
       </div>
     </Main>
   );
-};
 
 export default GuildChannel;
