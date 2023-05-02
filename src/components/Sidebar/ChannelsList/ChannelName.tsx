@@ -71,6 +71,7 @@ export const ChannelName = forwardRef<HTMLAnchorElement, ChannelNameProps>(
           className="channel-name"
         >
           <Hash />
+
           {channel.name}
         </ChannelNameInner>
       </ChannelNameWrapper>

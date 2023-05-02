@@ -17,7 +17,7 @@ export interface UIStore {
 const ui: UIStore = {
   // State
   isChannelsListOpen: true,
-  isMembersListOpen: false,
+  isMembersListOpen: true,
   // Used for when we collapse and open categories drop down
   // to return active background component to original spot
   initChannelYPos: 0,

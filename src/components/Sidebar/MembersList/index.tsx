@@ -7,8 +7,11 @@ export const MembersList = () => {
     <MembersSidebarWrapper
       css={{
         right: 0,
-        height: 'calc(100% - 60px)',
-        bottom: 0
+        // height: 'calc(100% - 60px)',
+        height: '100%',
+        position: 'absolute',
+        // bottom: 0,
+        zIndex: 1
       }}
       className="members-sidebar_wrapper"
       membersListOpen={isMembersListOpen}

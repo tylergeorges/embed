@@ -27,8 +27,8 @@ export const SidebarWrapper = styled(
 
       membersListOpen: {
         false: {
-          transform: 'translateX($sideBarWidth)',
-          display: 'none'
+          transform: 'translateX(200px)'
+          // display: 'none'
         }
       },
       type: {

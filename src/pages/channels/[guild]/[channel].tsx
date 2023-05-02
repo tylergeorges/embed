@@ -1,6 +1,5 @@
 import type { NextPage } from 'next';
 import { Main } from '@components/Core';
-import { MembersList } from '@components/Sidebar/MembersList';
 import { ChannelsList } from '@components/Sidebar/ChannelsList';
 import dynamic from 'next/dynamic';
 
@@ -16,7 +15,7 @@ const GuildChannel: NextPage = () => (
     <div className="inner_main">
       <ChannelsList />
       <Container />
-      <MembersList />
+      {/* <MembersList /> */}
     </div>
   </Main>
 );

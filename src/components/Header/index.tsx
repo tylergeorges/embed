@@ -1,5 +1,11 @@
-import { GuildHeader, HeaderChannel, HeaderRoot } from '@components/Header/elements';
+import {
+  GuildHeader,
+  HeaderChannel,
+  HeaderChannelNameWrapper,
+  HeaderRoot
+} from '@components/Header/elements';
 import { Hash } from '@components/Shared/Channel/elements';
+import { MembersIcon } from '@components/Header/MembersIcon';
 import { Hamburger } from './Hamburger/index';
 
 export interface HeaderProps {
@@ -24,9 +30,12 @@ export const Header = ({ name, shadowEnabled, isChannelHeader }: HeaderProps) =>
     {isChannelHeader ? (
       // If this is a header for a text channel
       <HeaderChannel className="text-channel_header">
-        <Hamburger />
-        <Hash />
-        <p className="header-text_content">{name}</p>
+        <HeaderChannelNameWrapper className="text-channel_header_name_container">
+          <Hamburger />
+          <Hash />
+          <p className="header-text_content">{name}</p>
+        </HeaderChannelNameWrapper>
+        <MembersIcon />
       </HeaderChannel>
     ) : (
       <GuildHeader className="guild-header">
