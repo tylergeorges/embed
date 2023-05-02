@@ -9,14 +9,6 @@ import '../i18n';
 import { GuildProvider } from '@components/Providers';
 import React from 'react';
 
-interface Props {
-  children: React.ReactNode;
-}
-
-const SafeHydrate: React.FC<Props> = ({ children }) => (
-  <div suppressHydrationWarning>{typeof window === 'undefined' ? null : children}</div>
-);
-
 function App({ Component, pageProps }: AppProps) {
   const globalStyles = globalCss({
     html: {
@@ -65,21 +57,16 @@ function App({ Component, pageProps }: AppProps) {
 
   globalStyles();
   return (
-    <SafeHydrate>
-      <StoreProvider store={store}>
-        <GraphQLProvider value={client}>
-          <GuildProvider>
-            <Head>
-              <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1, minimum-scale=1"
-              />
-            </Head>
-            <Component {...pageProps} />
-          </GuildProvider>
-        </GraphQLProvider>
-      </StoreProvider>
-    </SafeHydrate>
+    <StoreProvider store={store}>
+      <GraphQLProvider value={client}>
+        <GuildProvider>
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+          </Head>
+          <Component {...pageProps} />
+        </GuildProvider>
+      </GraphQLProvider>
+    </StoreProvider>
   );
 }
 

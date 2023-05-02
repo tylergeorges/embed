@@ -2,7 +2,14 @@ import type { NextPage } from 'next';
 import { Main } from '@components/Core';
 import { MembersList } from '@components/Sidebar/MembersList';
 import { ChannelsList } from '@components/Sidebar/ChannelsList';
-import { Container } from '@components/Core/Container';
+import dynamic from 'next/dynamic';
+
+const Container = dynamic(
+  () => import('../../../components/Core/Container/index').then(mod => mod.Container),
+  {
+    ssr: false
+  }
+);
 
 const GuildChannel: NextPage = () => (
   <Main>

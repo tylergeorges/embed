@@ -26,9 +26,9 @@ const guild: GuildStore = {
   categories: computed(state => {
     if (!state.channels) return [];
 
-    return [
-      ...new Map(state.channels.map(c => [c.category?.id, c.category])).values()
-    ].filter(c => c) as Category[];
+    return [...new Map(state.channels.map(c => [c.category?.id, c.category])).values()].sort(
+      (a, b) => (a?.position || 0) - (b?.position || 0) // we use || 0 in case position is undefined
+    ) as Category[];
   }),
 
   // Actions
@@ -42,7 +42,7 @@ const guild: GuildStore = {
 
   setChannels: action((state, payload) => {
     state.channels = payload;
-  }),
+  })
 };
 
 export default guild;
