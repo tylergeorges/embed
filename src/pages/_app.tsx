@@ -38,6 +38,15 @@ function App({ Component, pageProps }: AppProps) {
     '*, ::after, ::before': {
       boxSizing: 'border-box'
     },
+    '.non-dragable': {
+      '-moz-user-select': 'none',
+      '-khtml-user-select': 'none',
+      '-webkit-user-select': 'none',
+      '-webkit-touch-callout': 'none' /* iOS Safari */,
+      ' -khtml-user-select': 'none' /* Konqueror HTML */,
+      '-ms-user-select': 'none' /* Internet Explorer/Edge */,
+      'user-select': 'none'
+    },
 
     '@media (prefers-color-scheme: dark)': {
       html: {

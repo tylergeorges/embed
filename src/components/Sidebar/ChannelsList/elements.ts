@@ -47,15 +47,6 @@ export const CategoryName = styled(
     color: 'rgba(255,255,255,0.3)',
     height: 20,
 
-    //  Ignore dragging
-    '-moz-user-select': 'none',
-    '-khtml-user-select': 'none',
-    '-webkit-user-select': 'none',
-    '-webkit-touch-callout': 'none' /* iOS Safari */,
-    ' -khtml-user-select': 'none' /* Konqueror HTML */,
-    '-ms-user-select': 'none' /* Internet Explorer/Edge */,
-    'user-select': 'none',
-
     // marginLeft: 8,
     marginRight: 8,
     marginTop: 2,
@@ -128,7 +119,7 @@ export const ChannelNameInner = styled(
     willChange: 'background-color, color,',
     borderRadius: 4,
     width: 'calc(100% - 16px)',
-
+    fontWeight: '500',
     '&:hover': {
       backgroundColor: 'rgba(255,255,255,0.1)',
       color: 'rgba(255,255,255,0.5)'

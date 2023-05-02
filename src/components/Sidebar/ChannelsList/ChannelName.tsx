@@ -20,6 +20,7 @@ export const ChannelName = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     const guildID = useStoreState(state => state.guild.data!.id) as string;
     const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
     const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
+
     /** Sets the new select component's y position because we clicked on a new
      *  channel.
      */
@@ -28,6 +29,7 @@ export const ChannelName = forwardRef<HTMLAnchorElement, ChannelNameProps>(
       setInitChannelYPos(e.currentTarget.offsetTop);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
     return (
       <ChannelNameWrapper
         key={channel.id}

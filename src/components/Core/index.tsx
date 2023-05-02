@@ -1,8 +1,8 @@
 import { styled, css, theme, keyframes } from '@stitches';
 
-const scaleIn = keyframes({
-  '0%': { transform: 'scale(0.90)', opacity: 0 },
-  '100%': { transform: 'scale(1)', opacity: 1 }
+const zoomIn = keyframes({
+  from: { transform: 'scale(0.90)', opacity: 0 },
+  to: { transform: 'initial', opacity: 1 }
 });
 
 export const Main = styled(
@@ -20,7 +20,7 @@ export const Main = styled(
       width: '100%',
       height: '100%',
       display: 'flex',
-      animation: `${scaleIn} 300ms`
+      animation: `${zoomIn} 0.5s ease`
     }
   })
 );

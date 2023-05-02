@@ -10,12 +10,14 @@ interface MessageContainerProps {
  * @param guildName                 Name of the guild.
  */
 export const MessageContainer = ({ guildName }: MessageContainerProps) => (
-  <MessageWrapper className="message-wrapper">
-    <div className="channel-welcome_header_con">
-      <p className="channel-welcome_header">
+  <MessageWrapper className="message-wrapper non-draggable" draggable={false}>
+    <div className="channel-welcome_header_con non-draggable">
+      <p className="channel-welcome_header non-draggable" draggable={false}>
         Welcome to <br /> {guildName}
       </p>
-      <p className="channel-welcome_subheader">This is the beginning of this server.</p>
+      <p className="channel-welcome_subheader non-draggable" draggable={false}>
+        This is the beginning of this server.
+      </p>
     </div>
   </MessageWrapper>
 );

@@ -32,14 +32,6 @@ export const Background = styled(
 
     height: theme.sizes.channelNameHeight,
     // width: '100%',
-    // ignore dragging
-    '-moz-user-select': 'none',
-    '-khtml-user-select': 'none',
-    '-webkit-user-select': 'none',
-    '-webkit-touch-callout': 'none' /* iOS Safari */,
-    ' -khtml-user-select': 'none' /* Konqueror HTML */,
-    '-ms-user-select': 'none' /* Internet Explorer/Edge */,
-    'user-select': 'none',
 
     variants: {
       // Disables animation on initial render of page

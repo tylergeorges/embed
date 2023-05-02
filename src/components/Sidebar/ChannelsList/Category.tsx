@@ -24,55 +24,103 @@ interface CategoryProps {
 
 /** This component renders a category and its channels. */
 export const Category = ({ category, currentChannelID }: CategoryProps) => {
+  const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   //
   const currentChannelRef = useRef<HTMLAnchorElement>(null);
   const categoryRef = useRef<HTMLDivElement>(null);
 
-  const [isCategoryOpen, setIsCategoryOpen] = useState(true);
-
   const guildChannels = useStoreState(state => state.guild.channels!);
 
-  const initChannelYPos = useStoreState(state => state.ui.initChannelYPos);
   const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
-
   const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
+
+  const initChannelYPos = useStoreState(state => state.ui.initChannelYPos);
+  const currentChannelY = useStoreState(state => state.ui.currentChannelYPos);
+
+  // Ref used to get the height of the container that holds the channel names
+  const channelsConRef = useRef<HTMLDivElement>(null);
+  const [channelsConHeight, setChannelsConHeight] = useState(0);
 
   useEffect(() => {
     // ! Sets the initial ActiveBackground component's position
-
     if (currentChannelRef.current) {
       setCurrentChannelYPos(currentChannelRef.current.offsetTop);
 
       setInitChannelYPos(currentChannelRef.current.offsetTop);
     }
+
+    if (channelsConRef.current) {
+      setChannelsConHeight(channelsConRef.current.offsetHeight);
+    }
   }, [setCurrentChannelYPos, setInitChannelYPos]);
 
   const toggleIsOpen = useCallback(() => {
-    if (isCategoryOpen && categoryRef.current) {
+    // If this category has an active channel
+    const isActiveCategory = !!currentChannelRef.current;
+
+    // If category with active channel is below this one
+    const activeCategoryIsBelow =
+      categoryRef.current && initChannelYPos > categoryRef.current.offsetTop;
+
+    // When we close the category
+    if (isCategoryOpen) {
       const channelHeight = 29;
+
+      if (!isActiveCategory && activeCategoryIsBelow) {
+        // When closing a category that isnt the active category
+        // and the active category is below this one, update the
+        // channels initial Y and current Y
+        setCurrentChannelYPos(currentChannelY - channelsConHeight);
+        setInitChannelYPos(initChannelYPos - channelsConHeight);
+      }
+      // When closing an active channel
+      if (isActiveCategory && categoryRef.current) {
+        setCurrentChannelYPos(categoryRef.current.offsetTop + channelHeight);
+      }
       setIsCategoryOpen(false);
-      setCurrentChannelYPos(categoryRef.current.offsetTop + channelHeight);
-    } else {
-      // Used for when we re-open the list
-      setCurrentChannelYPos(initChannelYPos);
+    }
+    // When we open the category
+    else {
+      // When opening an active category
+      if (isActiveCategory) {
+        setCurrentChannelYPos(initChannelYPos);
+      }
+
+      // When opening a category that isnt active and the active
+      // category is below this one
+      if (!isActiveCategory && activeCategoryIsBelow) {
+        setInitChannelYPos(initChannelYPos + channelsConHeight);
+        setCurrentChannelYPos(currentChannelY + channelsConHeight);
+      }
       setIsCategoryOpen(true);
     }
-  }, [isCategoryOpen, initChannelYPos, setCurrentChannelYPos]);
+  }, [
+    isCategoryOpen,
+    initChannelYPos,
+    setCurrentChannelYPos,
+    currentChannelY,
+    channelsConHeight,
+    setInitChannelYPos
+  ]);
 
   return (
-    <CategoryContainer className="category-container">
+    <CategoryContainer className="category-container" draggable={false}>
       <CategoryNameContainer
         onClick={toggleIsOpen}
         ref={categoryRef}
-        className="category-name_container"
+        className="category-name_container non-dragable"
       >
         <CategoryNameArrow opened={isCategoryOpen} className="category-name_arrow" />
-        <CategoryName draggable={false} className="category-name">
+        <CategoryName draggable={false} className="category-name non-dragable">
           {category.name}
         </CategoryName>
       </CategoryNameContainer>
 
-      <ChannelNameContainer draggable={false} className="channel-name_container">
+      <ChannelNameContainer
+        draggable={false}
+        className="channel-name_container"
+        ref={channelsConRef}
+      >
         {guildChannels
           .filter(c => c.category?.id === category!.id)
           .sort((a, b) => position(a) - position(b))
