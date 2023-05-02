@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build && yarn export",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "export": "next export -o build",
@@ -12,6 +12,7 @@
     "codegen": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
+    "@babel/core": "^7.21.0",
     "@sentry/nextjs": "^7.14.2",
     "@sentry/tracing": "^7.14.2",
     "@stitches/react": "^1.2.8",
@@ -22,6 +23,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-i18next": "^12.1.1",
+    "ts-node": "^10.9.1",
     "urql": "^3.0.3"
   },
   "devDependencies": {
@@ -39,7 +41,8 @@
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-next": "12.3.1",
     "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-import": "^2.26.0",
+    "eslint-import-resolver-typescript": "^3.5.5",
+    "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",

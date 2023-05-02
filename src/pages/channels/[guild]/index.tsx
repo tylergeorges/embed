@@ -1,6 +1,6 @@
+import { getEnvVar } from '@util/env';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { getEnvVar } from '../../../util';
 
 const GuildIndex: NextPage = () => {
   const router = useRouter();
@@ -8,13 +8,16 @@ const GuildIndex: NextPage = () => {
 
   const apiUrl = getEnvVar('CUSTOM_SERVER_ENDPOINT');
 
-  return (
-    <div>
-      <p>Guild - {guild}</p>
+  if (apiUrl) {
+    return (
+      <div>
+        <p>Guild - {guild}</p>
 
-      <p>apiUrl - {apiUrl}</p>
-    </div>
-  );
+        <p>apiUrl - {apiUrl}</p>
+      </div>
+    );
+  }
+  return <div>ERROR - api url returned undefined</div>;
 };
 
 export default GuildIndex;

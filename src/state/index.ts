@@ -1,12 +1,7 @@
-import { createStore } from 'easy-peasy';
-import user, { UserStore } from './user';
+import { RootStore } from '@state/store';
+import { createTypedHooks } from 'easy-peasy';
 
-export interface RootStore {
-  user: UserStore;
-}
+const { useStoreActions, useStoreState, useStoreDispatch, useStore } =
+  createTypedHooks<RootStore>();
 
-const state: RootStore = {
-  user
-};
-
-export const store = createStore(state);
+export { useStoreActions, useStoreState, useStoreDispatch, useStore };
