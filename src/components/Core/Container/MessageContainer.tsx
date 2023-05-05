@@ -16,7 +16,7 @@ interface MessageContainerProps {
  */
 export const MessageContainer = ({ guildName, onClick }: MessageContainerProps) => {
   const translate = useTranslation();
-  const currentChannel = { name: 'text-channel-name' };
+  const currentChannel = { name: 'placeholder-name' };
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
   return (
     <MessageWrapper

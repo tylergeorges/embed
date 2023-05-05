@@ -109,21 +109,39 @@ export const IconButtonRoot = styled(
   css({
     width: 24,
     height: 24,
+    marginLeft: 8,
+    marginRight: 8,
+    cursor: 'pointer',
     path: {
       fill: 'rgb(181,186,193)'
     },
-    cursor: 'pointer',
     '&:hover': {
       path: {
-        fill: theme.colors.primaryOpacity60
+        fill: theme.colors.primaryOpacity80
+      }
+    },
+    variants: {
+      isActive: {
+        true: {
+          path: {
+            fill: theme.colors.primaryOpacity90
+          }
+        }
       }
     }
   })
 );
 
-export const MembersIconRoot = styled(
+export const MembersIcon = styled(
   IconButtonRoot,
-  'text-channel_members_icon',
+  'text-channel_header_members_button',
+  css({
+    justifySelf: 'flex-end'
+  })
+);
+export const PinIcon = styled(
+  IconButtonRoot,
+  'text-channel_header_pin_button',
   css({
     justifySelf: 'flex-end'
   })

@@ -1,16 +1,5 @@
-import {
-  GuildHeader,
-  GuildHeaderName,
-  HeaderChannel,
-  HeaderChannelNameWrapper,
-  HeaderRoot,
-  Stretch,
-  TextChannelHeaderDesc,
-  TextChannelHeaderName
-} from '@components/Header/elements';
-import { MembersIcon } from '@components/Header/MembersIcon';
-import { useStoreActions } from '@state';
-import { Hamburger } from './Hamburger/index';
+import { GuildHeader, GuildHeaderName, HeaderRoot } from '@components/Header/elements';
+import { ChannelHeader } from '@components/Header/ChannelHeader';
 
 export interface HeaderProps {
   /** Name to display in header. */
@@ -36,56 +25,14 @@ export const Header = ({
   shadowEnabled,
   isChannelHeader,
   channel_description
-}: HeaderProps) => {
-  const setShowInfoModal = useStoreActions(state => state.ui.setShowInfoModal);
-
-  const openInfoModal = () => {
-    setShowInfoModal(true);
-  };
-  return (
-    <HeaderRoot shadowEnabled={shadowEnabled} className="header-root">
-      {isChannelHeader ? (
-        // If this is a header for a text channel
-        <HeaderChannel className="text-channel_header">
-          <HeaderChannelNameWrapper
-            role="dialog"
-            aria-modal="true"
-            className="text-channel_header_name_container"
-          >
-            <Hamburger />
-            <Stretch
-              css={{
-                display: 'flex',
-                alignItems: 'center',
-                height: '100%',
-                overflow: 'hidden',
-                wordBreak: 'break-word',
-                flexShrink: 1,
-                flexGrow: 1
-              }}
-            >
-              {/* <Hash /> */}
-              <TextChannelHeaderName className="text-channel_header_name">
-                {name}
-              </TextChannelHeaderName>
-              <TextChannelHeaderDesc
-                className="text-channel_header_description"
-                onClick={openInfoModal}
-              >
-                {channel_description}
-              </TextChannelHeaderDesc>
-            </Stretch>
-          </HeaderChannelNameWrapper>
-
-          <div>
-            <MembersIcon />
-          </div>
-        </HeaderChannel>
-      ) : (
-        <GuildHeader className="guild-header">
-          <GuildHeaderName className="guild-header_name">{name}</GuildHeaderName>
-        </GuildHeader>
-      )}
-    </HeaderRoot>
-  );
-};
+}: HeaderProps) => (
+  <HeaderRoot shadowEnabled={shadowEnabled} className="header-root">
+    {isChannelHeader ? (
+      <ChannelHeader channel_name={name} channel_description={channel_description || ''} />
+    ) : (
+      <GuildHeader className="guild-header">
+        <GuildHeaderName className="guild-header_name">{name}</GuildHeaderName>
+      </GuildHeader>
+    )}
+  </HeaderRoot>
+);
