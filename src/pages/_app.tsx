@@ -38,6 +38,33 @@ function App({ Component, pageProps }: AppProps) {
     '*, ::after, ::before': {
       boxSizing: 'border-box'
     },
+    /* width */
+    '::-webkit-scrollbar': {
+      width: 16,
+      height: 16
+    },
+
+    /* Track */
+    '::-webkit-scrollbar-track': {
+      borderRadius: 8,
+      backgroundClip: 'padding-box',
+      border: '4px solid transparent',
+      backgroundColor: 'rgba(0,0,0,0.2)'
+    },
+
+    /* Handle */
+    '::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,0.4)',
+      minHeight: 40,
+      backgroundClip: 'padding-box',
+      border: '4px solid transparent',
+      borderRadius: 8
+    },
+
+    /* Handle on hover */
+    '::-webkit-scrollbar-thumb:hover': {
+      // background: 'white'
+    },
     '.non-dragable': {
       '-moz-user-select': 'none',
       '-khtml-user-select': 'none',

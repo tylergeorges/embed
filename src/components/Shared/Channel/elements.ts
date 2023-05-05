@@ -109,18 +109,15 @@ export const IconButtonRoot = styled(
   css({
     width: 24,
     height: 24,
-    // viewBox: '0 0 24 24',
     path: {
       fill: 'rgb(181,186,193)'
     },
+    cursor: 'pointer',
     '&:hover': {
       path: {
         fill: theme.colors.primaryOpacity60
-        // fill: theme.colors.primaryOpacity60,
       }
     }
-    // className="text-channel_members_icon text-channel_header_icons"
-    // onClick={() => setMembersListOpen(!isMembersListOpen)}
   })
 );
 

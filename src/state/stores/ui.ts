@@ -6,18 +6,22 @@ export interface UIStore {
   currentChannelYPos: number;
   isMembersListOpen: boolean;
   isChannelsListOpen: boolean;
+  showInfoModal: boolean;
 
   // Actions
   setIsChannelsListOpen: Action<UIStore, boolean>;
   setIsMembersListOpen: Action<UIStore, boolean>;
   setCurrentChannelYPos: Action<UIStore, number>;
   setInitChannelYPos: Action<UIStore, number>;
+  setShowInfoModal: Action<UIStore, boolean>;
 }
 
 const ui: UIStore = {
   // State
   isChannelsListOpen: true,
   isMembersListOpen: true,
+  showInfoModal: false,
+
   // Used for when we collapse and open categories drop down
   // to return active background component to original spot
   initChannelYPos: 0,
@@ -30,6 +34,9 @@ const ui: UIStore = {
 
   setIsMembersListOpen: action((state, payload) => {
     state.isMembersListOpen = payload;
+  }),
+  setShowInfoModal: action((state, payload) => {
+    state.showInfoModal = payload;
   }),
 
   // Set the current channel's Y position, this is used for the

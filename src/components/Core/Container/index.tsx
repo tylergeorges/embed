@@ -29,7 +29,6 @@ export const Container = () => {
   const guildName = useStoreState(state => state.guild.data?.name);
 
   // TODO: Write a hook (useCurrentChannel) or something to pull channel id from url & get it from state.guild.channels.
-  const currentChannel: any = null;
 
   useEffect(() => {
     setIsMembersListOpen(!windowIsMobile);
@@ -66,7 +65,7 @@ export const Container = () => {
       }}
       channelsListOpen={isChannelsListOpen}
     >
-      <TextChannelHeader channelName={currentChannel?.name as string} />
+      <TextChannelHeader />
       <TextChannelInnerWrapper
         className="text-channel_inner_wrapper"
         css={{

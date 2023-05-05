@@ -2,7 +2,7 @@ import { styled } from '@stitches/react';
 import { css, theme } from '@stitches';
 
 export const SidebarWrapper = styled(
-  'div',
+  'aside',
   'sidebar_wrapper',
   css({
     position: 'absolute',
@@ -63,37 +63,20 @@ export const Close = styled(
   'button',
   'sidebar_close',
   css({
-    '@media screen and (max-width: 578px)': {
-      position: 'absolute',
-      right: 0,
-      height: 30,
-      width: 30,
-      margin: 'auto 4px',
+    right: 0,
+    height: 30,
+    width: 30,
 
-      background: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='${encodeURIComponent(
-        theme.colors.primary.toString()
-      )}' viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e")`,
-      backgroundSize: '40%',
-      backgroundPosition: '50% 50%',
-      backgroundRepeat: 'no-repeat',
-      opacity: 0.5,
-
-      border: 'none',
-      outline: 'none',
-      cursor: 'pointer',
-      transition: 'background-color 0.1s ease',
-
-      [`& ${theme.singleChannel.enable}`]: {
-        display: 'none'
-      },
-
-      '&:hover, &:focus': {
-        backgroundColor: theme.colors.primaryOpacity80
-      },
-
-      '&, &::after': {
-        borderRadius: '50%'
-      }
+    background: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='rgba(255,255,255,0.3)' viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e")`,
+    backgroundSize: '50%',
+    backgroundPosition: '50% 50%',
+    backgroundRepeat: 'no-repeat',
+    border: 'none',
+    outline: 'none',
+    cursor: 'pointer',
+    borderRadius: '50%',
+    '&:hover, &:focus': {
+      backgroundColor: theme.colors.primaryOpacity10
     }
   })
 );

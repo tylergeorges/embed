@@ -10,7 +10,13 @@ export const CategoryNameContainer = styled(
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 8
+    marginLeft: 8,
+    transition: 'color 100ms ease',
+    color: 'rgba(255,255,255,0.3)',
+    cursor: 'pointer',
+    '&:hover': {
+      color: theme.colors.primaryOpacity60
+    }
   })
 );
 export const CategoryNameArrow = styled(
@@ -27,6 +33,7 @@ export const CategoryNameArrow = styled(
     backgroundPosition: '50% 50%',
     backgroundRepeat: 'no-repeat',
     transition: 'transform 0.15s ease',
+    fill: 'red',
 
     variants: {
       opened: {
@@ -43,8 +50,7 @@ export const CategoryName = styled(
   'category-name',
   css({
     textTransform: 'uppercase',
-    transition: '100ms ease',
-    color: 'rgba(255,255,255,0.3)',
+
     height: 20,
 
     // marginLeft: 8,
@@ -52,10 +58,7 @@ export const CategoryName = styled(
     marginTop: 2,
     marginBottom: 5,
     fontSize: '$lg',
-    alignSelf: 'center',
-    '&:hover': {
-      color: 'rgba(255,255,255,0.5)'
-    }
+    alignSelf: 'center'
   })
 );
 export const CategoryContainer = styled(
