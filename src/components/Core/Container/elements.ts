@@ -134,11 +134,12 @@ export const MessageWrapper = styled(
 
     '.channel-welcome_header_con': {
       width: '100%',
-      display: 'flex',
+      display: 'block',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      textAlign: 'center'
+      textAlign: 'center',
+      margin: '$xxl'
     },
     '.channel-welcome_header': {
       fontWeight: 700,
@@ -170,10 +171,10 @@ export const TextBoxWrapper = styled(
   css({
     paddingLeft: '$xxl',
     paddingRight: '$xxl',
-    height: '7%',
+    // height: '7%',
     display: 'flex',
     alignItems: 'center',
-    minHeight: 66,
+    // minHeight: 66,
     width: '100%'
     // marginBottom: 5
   })
@@ -189,11 +190,11 @@ export const TextBoxInput = styled(
     border: 'none',
     borderRadius: 8,
     outline: 'none',
-    fontSize: '1rem',
+    fontSize: '$lg',
     padding: 10,
     height: theme.sizes.messageInputSize,
     minHeight: theme.sizes.messageInputSize,
-    lineHeight: 22,
-    fontWeight: 400
+    fontWeight: 400,
+    marginBottom: 24
   })
 );

@@ -51,13 +51,13 @@ export const CategoryName = styled(
   css({
     textTransform: 'uppercase',
 
-    height: 20,
+    // height: 20,
 
     // marginLeft: 8,
-    marginRight: 8,
-    marginTop: 2,
-    marginBottom: 5,
-    fontSize: '$lg',
+    // marginRight: 8,
+    // marginTop: 2,
+    // marginBottom: 5,
+    fontSize: '$sm',
     alignSelf: 'center'
   })
 );
@@ -70,8 +70,8 @@ export const CategoryContainer = styled(
     color: 'rgba(255, 255, 255, 0.7)',
     fontWeight: 500,
     paddingTop: 20,
-    transition: 'translateY 0.5s ease',
-    backgroundColor: 'rgb(46, 48, 54)'
+    transition: 'translateY 0.5s ease'
+    // backgroundColor: 'rgb(46, 48, 54)'
   })
 );
 
@@ -122,7 +122,7 @@ export const ChannelNameInner = styled(
     willChange: 'background-color, color,',
     borderRadius: 4,
     width: 'calc(100% - 16px)',
-    fontWeight: '500',
+    fontWeight: '400',
     '&:hover': {
       backgroundColor: 'rgba(255,255,255,0.1)',
       color: 'rgba(255,255,255,0.5)'

@@ -6,7 +6,8 @@ export const SidebarWrapper = styled(
   'sidebar_wrapper',
   css({
     position: 'absolute',
-    backgroundColor: 'rgb(46, 48, 54)',
+    backgroundColor: '$backgroundSecondary',
+    // backgroundColor: 'rgb(46, 48, 54)',
 
     zIndex: 9,
     width: theme.sizes.sideBarWidth,
