@@ -1,5 +1,34 @@
-import { styled } from '@stitches/react';
+import { keyframes, styled } from '@stitches/react';
 import { css, theme } from '@stitches';
+
+const leftSlideIn = keyframes({
+  '0%': {
+    transform: 'translateX(-200px)'
+  },
+  '50%': {
+    transform: 'translateX(2px)'
+    // transform: 'translateX(5px)'
+    // transform: 'translateX(5px)  scaleX(1.025)'
+  },
+  '100%': {
+    transform: 'translateX(0px)'
+  }
+});
+
+const leftSlideOut = keyframes({
+  '0%': {
+    transform: 'translateX(0px)'
+  },
+  '50%': {
+    transform: 'translateX(2px)'
+    // transform: 'translateX(10px) scaleX(1.095)'
+    // transform: 'translateX(10px) scaleX(1.075)'
+    // transform: 'translateX(5px)'
+  },
+  '100%': {
+    transform: 'translateX(-200px) scaleX(1)'
+  }
+});
 
 export const SidebarWrapper = styled(
   'aside',
@@ -14,22 +43,40 @@ export const SidebarWrapper = styled(
     maxWidth: theme.sizes.sideBarWidth,
     height: '100%',
     flexShrink: 0,
-    transition: 'transform ease 0.3s',
+    // transition: 'transform ease 0.3s',
     display: 'flex',
     flexDirection: 'column',
     willChange: 'transform',
+
     variants: {
       channelsListOpen: {
         false: {
+          animation: `${leftSlideOut} 300ms ease`,
           transform: `translateX(-200px)`
           // display:'none'
+        },
+        true: {
+          animation: `${leftSlideIn} 550ms ease`
+
+          // transform: `translateX(0px)`1
+
+          // transform: `translateX(200px)`
         }
       },
 
       membersListOpen: {
         false: {
-          transform: 'translateX(200px)'
+          // transform: 'translateX(200px)'
+          transform: `translateX(200px)`
+
+          // animation: `${rightSlideOut} 300ms ease`,
           // display: 'none'
+        },
+        true: {
+          // animation: `${rightSlideIn} 550ms ease`
+          transform: `translateX(0px)`
+
+          // transform: `translateX(200px)`
         }
       },
       type: {
@@ -38,6 +85,7 @@ export const SidebarWrapper = styled(
           '.sidebar-header_container': {
             textAlign: 'center',
             position: 'relative'
+            // animation: `${leftContentSlideIn} 800ms ease`
           },
 
           '.sidebar-children_container': {
@@ -50,6 +98,8 @@ export const SidebarWrapper = styled(
             height: '100%',
             marginBottom: '1.5rem',
             overflowY: 'auto'
+            // animation: `${leftContentSlideIn} 600ms ease`
+            // animationDelay: '550ms'
           }
         }
       }

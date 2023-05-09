@@ -91,8 +91,8 @@ export const Container = () => {
             translate.t('input.message', { CHANNEL: currentChannel?.name as string }) as string
           
         /> */}
-        <MembersList />
       </TextChannelInnerWrapper>
+      <MembersList />
     </TextChannelWrapper>
   );
 };

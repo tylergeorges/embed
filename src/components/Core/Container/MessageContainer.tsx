@@ -25,6 +25,7 @@ export const MessageContainer = ({ guildName, onClick }: MessageContainerProps) 
       membersListOpen={isMembersListOpen}
       onClick={onClick}
     >
+      {/* <TextChannelHeader /> */}
       <div className="channel-welcome_header_con non-draggable">
         <p className="channel-welcome_header non-draggable" draggable={false}>
           Welcome to <br /> {guildName}

@@ -1,5 +1,5 @@
 import { styled } from '@stitches/react';
-import { css, theme } from '@stitches';
+import { theme, css } from '@stitches';
 
 export const TextChannelWrapper = styled(
   'div',
@@ -13,20 +13,21 @@ export const TextChannelWrapper = styled(
     // ! drop shadow, hide it using opacity for animation and only show for mobile users
     marginLeft: theme.sizes.sideBarWidth,
 
-    '&::after': {
-      content: '',
-      top: 0,
-      left: 0,
-      position: 'absolute',
-      height: '100%',
-      width: '100%',
-      pointerEvents: 'none',
-      opacity: 0,
+    // '&::after': {
+    //   content: '',
+    //   top: 0,
+    //   left: 0,
+    //   position: 'absolute',
+    //   height: '100%',
+    //   width: '100%',
+    //   pointerEvents: 'none',
+    //   opacity: 0,
 
-      transition: 'opacity 0.5s ease 0s',
-      willChange: 'opacity',
-      backgroundColor: 'rgba(0, 0, 0, 0.5)'
-    },
+    //   // transition: 'opacity 0.5s ease 0s',
+    //   // willChange: 'opacity',
+    //   // backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
+    // },
 
     // ! show drop shadow
     '@md_screen': {
@@ -35,12 +36,12 @@ export const TextChannelWrapper = styled(
       marginLeft: '0px !important',
       marginRight: '0px !important',
       width: '100% !important',
-      height: '100%',
-      '&::after': {
-        transition: 'opacity 0.5s ease 0s',
-        content: '',
-        opacity: 1
-      }
+      height: '100%'
+      // '&::after': {
+      //   transition: 'opacity 0.5s ease 0s',
+      //   content: '',
+      //   opacity: 1
+      // }
     },
 
     variants: {
@@ -117,19 +118,19 @@ export const MessageWrapper = styled(
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    marginRight: 200,
     transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
     zIndex: 0,
-
+    marginRight: theme.sizes.sideBarWidth,
     '@md_screen': {
       // ! assuming the members side bar is still open
-      marginRight: '0px !important',
+      // marginRight: '0px !important',
       width: '100% !important',
       height: '100%'
     },
     '@md': {
       marginRight: '0px !important',
       width: '100% !important'
+      // height:'100%'
     },
 
     '.channel-welcome_header_con': {
@@ -141,6 +142,7 @@ export const MessageWrapper = styled(
       textAlign: 'center',
       margin: '$xxl'
     },
+
     '.channel-welcome_header': {
       fontWeight: 700,
       fontSize: '32px',
@@ -158,7 +160,21 @@ export const MessageWrapper = styled(
       membersListOpen: {
         false: {
           width: '100% !important',
-          marginRight: '0px !important'
+          marginRight: 0
+          // marginRight: '0px !important'
+        },
+        true: {
+          '@md_screen': {
+            // ! assuming the members side bar is still open
+            marginRight: '0px !important',
+            width: '100% !important',
+            height: '100%'
+          },
+          '@md': {
+            // ! assuming the members side bar is still open
+            marginRight: '0px !important',
+            height: '100%'
+          }
         }
       }
     }
