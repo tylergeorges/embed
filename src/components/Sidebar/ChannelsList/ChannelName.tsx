@@ -20,6 +20,8 @@ export const ChannelName = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     const guildID = useStoreState(state => state.guild.data!.id) as string;
     const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
     const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
+    const setContextMenuData = useStoreActions(state => state.ui.setContextMenuData);
+    const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
 
     /** Sets the new select component's y position because we clicked on a new
      *  channel.
@@ -29,6 +31,18 @@ export const ChannelName = forwardRef<HTMLAnchorElement, ChannelNameProps>(
       setInitChannelYPos(e.currentTarget.offsetTop);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    const handleContextMenuClick = useCallback(
+      (e: React.MouseEvent) => {
+        e.preventDefault();
+        setContextMenuData({
+          xPos: e.clientX,
+          yPos: e.clientY,
+          channelLink: `https://discord.com/channels/${guildID}/${channel.id}`
+        });
+        setShowContextMenu(true);
+      },
+      [channel.id, guildID, setShowContextMenu, setContextMenuData]
+    );
 
     return (
       <ChannelNameWrapper
@@ -69,6 +83,7 @@ export const ChannelName = forwardRef<HTMLAnchorElement, ChannelNameProps>(
           ref={isActive ? ref : null}
           draggable={false}
           className="channel-name"
+          onContextMenu={handleContextMenuClick}
         >
           <Hash />
 

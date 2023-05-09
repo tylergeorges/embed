@@ -3,6 +3,9 @@ import { Main } from '@components/Core';
 import { ChannelsList } from '@components/Sidebar/ChannelsList';
 import dynamic from 'next/dynamic';
 import { InformationModal } from '@components/Overlays/Loading/Modal/InformationModal';
+import { ContextMenu } from '@components/Overlays/ContextMenu';
+import { useContextMenu } from '@lib/hooks';
+import { useStoreState } from '@state';
 
 const Container = dynamic(
   () => import('../../../components/Core/Container/index').then(mod => mod.Container),
@@ -11,15 +14,21 @@ const Container = dynamic(
   }
 );
 
-const GuildChannel: NextPage = () => (
-  <Main>
-    <InformationModal />
-    <div className="inner_main">
-      <ChannelsList />
-      <Container />
-      {/* <MembersList /> */}
-    </div>
-  </Main>
-);
+const GuildChannel: NextPage = () => {
+  const { handleRightClick } = useContextMenu();
+  const showContextMenu = useStoreState(state => state.ui.showContextMenu);
+
+  return (
+    <Main onContextMenu={handleRightClick}>
+      {showContextMenu && <ContextMenu />}
+      <InformationModal />
+      <div className="inner_main">
+        <ChannelsList />
+        <Container />
+        {/* <MembersList /> */}
+      </div>
+    </Main>
+  );
+};
 
 export default GuildChannel;

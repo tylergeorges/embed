@@ -1,5 +1,5 @@
 import { useStoreActions, useStoreState } from '@state';
-import { useMediaQuery } from '@lib/hooks';
+import { useContextMenu, useMediaQuery } from '@lib/hooks';
 import { MembersList } from '@components/Sidebar/MembersList';
 import { useCallback, useEffect } from 'react';
 import { TextChannelInnerWrapper, TextChannelWrapper } from './elements';
@@ -25,6 +25,8 @@ export const Container = () => {
   // actions to set sidebar lists state
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
+
+  const { hideContextMenu } = useContextMenu();
 
   const guildName = useStoreState(state => state.guild.data?.name);
 
@@ -64,6 +66,7 @@ export const Container = () => {
         }
       }}
       channelsListOpen={isChannelsListOpen}
+      onClick={hideContextMenu}
     >
       <TextChannelHeader />
       <TextChannelInnerWrapper

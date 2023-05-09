@@ -3,7 +3,7 @@ import { useStoreActions, useStoreState } from '@state';
 import { RouterQuery } from 'types/routerQuery';
 import { Header } from '@components/Header';
 import { ModalBackdrop } from '@components/Overlays/Loading/Modal/elements';
-import { useMediaQuery } from '@lib/hooks';
+import { useContextMenu, useMediaQuery } from '@lib/hooks';
 import { Category } from './Category';
 import { ActiveBackground } from './ActiveBackground';
 import { ChannelsSidebarWrapper } from '../elements';
@@ -16,7 +16,7 @@ export const ChannelsList = () => {
   const router = useRouter();
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
   const { channel: currentChannelID } = router.query as RouterQuery;
-
+  const { hideContextMenu } = useContextMenu();
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
 
   const guildName = useStoreState(state => state.guild.data?.name) as string;
@@ -39,6 +39,7 @@ export const ChannelsList = () => {
         css={{
           zIndex: 11
         }}
+        onClick={hideContextMenu}
       >
         <div className="sidebar-header_container">
           <Header name={guildName} isChannelHeader={false} />

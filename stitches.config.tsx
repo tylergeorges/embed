@@ -49,6 +49,7 @@ const stitches = createStitches({
       backgroundSecondary: '#2b2d31',
       backgroundSecondaryAlt: '#232428',
       backgroundTertiary: '#232428',
+      contextMenuBackground: '#111214',
       messageHover: 'rgba(0, 0, 0, .05)',
       link: '#00b0f4',
       mentioned: 'rgba(250, 166, 26, 0.1)',
