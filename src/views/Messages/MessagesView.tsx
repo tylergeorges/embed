@@ -39,7 +39,7 @@ const MessagesView = observer(() => {
               <Messages guild={guild} channel={channel} />
             )}
           </React.Suspense>
-          <Chat />
+          {channelType === 'ForumChannel' || <Chat />}
         </Wrapper>
       )}
 
