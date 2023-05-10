@@ -15,11 +15,11 @@ const Container = dynamic(
 );
 
 const GuildChannel: NextPage = () => {
-  const { handleRightClick } = useContextMenu();
+  const { disableBrowserMenu } = useContextMenu();
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);
 
   return (
-    <Main onContextMenu={handleRightClick}>
+    <Main onContextMenu={disableBrowserMenu}>
       {showContextMenu && <ContextMenu />}
       <InformationModal />
       <div className="inner_main">

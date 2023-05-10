@@ -26,6 +26,7 @@ export const Background = styled(
     paddingRight: '$lg',
     paddingLeft: '$lg',
     marginTop: '$xs',
+    pointerEvents: 'none',
 
     marginBottom: '$xs',
     width: 'calc(100% - 16px)',
