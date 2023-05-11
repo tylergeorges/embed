@@ -105,6 +105,7 @@ const Profile = observer(() => {
           key={b.url}
           href={b.url}
           target="_blank"
+          color={b.color}
         >{b.content}</ProfileLinkButton>
       ))}
       {generalStore.settings?.directEnabled && (/* !store.modal.bot || */store.modal.guest) && !store.modal.system && userID !== store.modal.id && (
