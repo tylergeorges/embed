@@ -2,9 +2,9 @@ import { useRouter } from 'next/router';
 import { useStoreActions, useStoreState } from '@state';
 import { RouterQuery } from 'types/routerQuery';
 import { Header } from '@components/Header';
-import { ModalBackdrop } from '@components/Overlays/Loading/Modal/elements';
+import { ModalBackdrop } from '@components/Overlays/Modal/elements';
 import { useContextMenu, useMediaQuery } from '@lib/hooks';
-import { Category } from './Category';
+import { Category } from './Category/Category';
 import { ActiveBackground } from './ActiveBackground';
 import { ChannelsSidebarWrapper } from '../elements';
 

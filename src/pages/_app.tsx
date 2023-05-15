@@ -28,8 +28,9 @@ function App({ Component, pageProps }: AppProps) {
         '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
       width: '100%',
       height: '100%',
-      overflowX: 'hidden',
-      backgroundColor: theme.colors.background
+      color: 'white',
+      backgroundColor: theme.colors.background,
+      overflow: 'hidden'
     },
     a: {
       color: 'inherit',
@@ -38,6 +39,7 @@ function App({ Component, pageProps }: AppProps) {
     '*, ::after, ::before': {
       boxSizing: 'border-box'
     },
+
     /* width */
     '::-webkit-scrollbar': {
       width: 16,
@@ -75,15 +77,15 @@ function App({ Component, pageProps }: AppProps) {
       'user-select': 'none'
     },
 
-    '@media (prefers-color-scheme: dark)': {
-      html: {
-        colorScheme: 'dark'
-      },
-      body: {
-        color: 'white',
-        background: 'black'
-      }
-    },
+    // '@media (prefers-color-scheme: dark)': {
+    //   html: {
+    //     colorScheme: 'dark'
+    //   },
+    //   body: {
+    //     color: 'white',
+    //     background: 'black'
+    //   }
+    // },
     '#__next': {
       width: '100%',
       height: '100%'

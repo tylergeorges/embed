@@ -12,7 +12,10 @@ export interface UIStore {
   currentChannelYPos: number;
   isMembersListOpen: boolean;
   isChannelsListOpen: boolean;
-  showInfoModal: boolean;
+
+  showTopicModal: boolean;
+  showThreadsModal: boolean;
+
   showContextMenu: boolean;
   contextMenuData: ContextMenuData;
 
@@ -21,8 +24,9 @@ export interface UIStore {
   setIsMembersListOpen: Action<UIStore, boolean>;
   setCurrentChannelYPos: Action<UIStore, number>;
   setInitChannelYPos: Action<UIStore, number>;
-  setShowInfoModal: Action<UIStore, boolean>;
+  setShowTopicModal: Action<UIStore, boolean>;
   setShowContextMenu: Action<UIStore, boolean>;
+  setShowThreadsModal: Action<UIStore, boolean>;
   setContextMenuData: Action<UIStore, ContextMenuData>;
 }
 
@@ -30,7 +34,8 @@ const ui: UIStore = {
   // State
   isChannelsListOpen: true,
   isMembersListOpen: true,
-  showInfoModal: false,
+  showTopicModal: false,
+  showThreadsModal: true,
   contextMenuData: { xPos: 0, yPos: 0 },
   showContextMenu: false,
 
@@ -47,8 +52,13 @@ const ui: UIStore = {
   setIsMembersListOpen: action((state, payload) => {
     state.isMembersListOpen = payload;
   }),
-  setShowInfoModal: action((state, payload) => {
-    state.showInfoModal = payload;
+
+  setShowTopicModal: action((state, payload) => {
+    state.showTopicModal = payload;
+  }),
+
+  setShowThreadsModal: action((state, payload) => {
+    state.showThreadsModal = payload;
   }),
 
   // Set the current channel's Y position, this is used for the

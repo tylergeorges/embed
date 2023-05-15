@@ -23,6 +23,11 @@ const guildDocument = graphql(/* GraphQL */ `
         name
         type
         position
+
+        threads {
+          id
+          name
+        }
         category {
           id
           name

@@ -45,7 +45,7 @@ export const CategoryNameArrow = styled(
   })
 );
 
-export const CategoryName = styled(
+export const CategoryNameContent = styled(
   'div',
   'category-name',
   css({
@@ -141,9 +141,9 @@ export const ChannelNameInner = styled(
   })
 );
 
-export const ChannelNameContainer = styled(
+export const ChannelsWrapper = styled(
   'div',
-  'channel-name_container',
+  'channels-wrapper',
   css({
     display: 'flex',
     flexDirection: 'column',

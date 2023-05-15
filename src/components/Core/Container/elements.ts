@@ -9,6 +9,8 @@ export const TextChannelWrapper = styled(
     flexDirection: 'column',
     transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
     width: '100%',
+    height: '100%',
+    // overflowX: 'hidden',
     // width: `calc(100% - $sideBarWidth)`,
     // ! drop shadow, hide it using opacity for animation and only show for mobile users
     marginLeft: theme.sizes.sideBarWidth,
@@ -207,10 +209,12 @@ export const TextBoxInput = styled(
     borderRadius: 8,
     outline: 'none',
     fontSize: '$lg',
-    padding: 10,
-    height: theme.sizes.messageInputSize,
-    minHeight: theme.sizes.messageInputSize,
+    padding: 11,
+    // height: theme.sizes.messageInputSize,
+    // minHeight: theme.sizes.messageInputSize,
     fontWeight: 400,
-    marginBottom: 24
+    marginBottom: 24,
+    color: 'white'
+    // marginBottom: '1.3rem',
   })
 );

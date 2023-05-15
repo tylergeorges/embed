@@ -6,7 +6,14 @@ export interface IGuild {
   name: string;
 }
 
+interface Thread {
+  id: string;
+  name: string;
+  __typename: 'ThreadChannel';
+}
+
 export interface GuildStore {
+  currentChannelThreads: Thread[] | undefined;
   data?: IGuild;
   settings?: GuildSettings;
   channels?: Channel[];
@@ -21,6 +28,7 @@ const guild: GuildStore = {
   data: undefined,
   settings: undefined,
   channels: undefined,
+  currentChannelThreads: undefined,
 
   // Computed
   categories: computed(state => {
@@ -42,6 +50,18 @@ const guild: GuildStore = {
 
   setChannels: action((state, payload) => {
     state.channels = payload;
+
+    const threads = [];
+    // const threads = payload.map(channel => channel?.threads)
+    const channelsWithThreads = payload.filter(channel => channel.threads.length > 0);
+
+    channelsWithThreads.forEach(channel => {
+      channel.threads?.forEach(thread => {
+        threads.push(thread);
+      });
+    });
+
+    state.currentChannelThreads = threads;
   })
 };
 

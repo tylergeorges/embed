@@ -16,19 +16,14 @@ export interface HeaderProps {
    */
   isChannelHeader: boolean;
 
-  channel_description?: string;
+  channelTopic?: string;
 }
 
 /** Reusable Header component. */
-export const Header = ({
-  name,
-  shadowEnabled,
-  isChannelHeader,
-  channel_description
-}: HeaderProps) => (
+export const Header = ({ name, shadowEnabled, isChannelHeader, channelTopic }: HeaderProps) => (
   <HeaderRoot shadowEnabled={shadowEnabled} className="header-root">
     {isChannelHeader ? (
-      <ChannelHeader channel_name={name} channel_description={channel_description || ''} />
+      <ChannelHeader channelName={name} channelTopic={channelTopic || ''} />
     ) : (
       <GuildHeader className="guild-header">
         <GuildHeaderName className="guild-header_name">{name}</GuildHeaderName>

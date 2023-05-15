@@ -2,10 +2,11 @@ import type { NextPage } from 'next';
 import { Main } from '@components/Core';
 import { ChannelsList } from '@components/Sidebar/ChannelsList';
 import dynamic from 'next/dynamic';
-import { InformationModal } from '@components/Overlays/Loading/Modal/InformationModal';
+import { ChannelTopicModal } from '@components/Overlays/Modal/InformationModal/ChannelTopicModal';
 import { ContextMenu } from '@components/Overlays/ContextMenu';
 import { useContextMenu } from '@lib/hooks';
 import { useStoreState } from '@state';
+import { ThreadsPopover } from '@components/Overlays/Modal/Popover/ThreadsPopover';
 
 const Container = dynamic(
   () => import('../../../components/Core/Container/index').then(mod => mod.Container),
@@ -21,11 +22,12 @@ const GuildChannel: NextPage = () => {
   return (
     <Main onContextMenu={disableBrowserMenu}>
       {showContextMenu && <ContextMenu />}
-      <InformationModal />
+
+      <ThreadsPopover />
+      <ChannelTopicModal />
       <div className="inner_main">
         <ChannelsList />
         <Container />
-        {/* <MembersList /> */}
       </div>
     </Main>
   );
