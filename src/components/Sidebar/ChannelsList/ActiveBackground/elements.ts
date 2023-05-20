@@ -43,6 +43,11 @@ export const Background = styled(
         false: {
           transition: 'none'
         }
+      },
+      isCurrentChannelThread: {
+        true: {
+          // transform: 'translateX(10.5)'
+        }
       }
     }
   })

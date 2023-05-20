@@ -10,6 +10,8 @@ export interface UIStore {
   // State
   initChannelYPos: number;
   currentChannelYPos: number;
+
+  isCurrentChannelThread: boolean | undefined;
   isMembersListOpen: boolean;
   isChannelsListOpen: boolean;
 
@@ -22,11 +24,15 @@ export interface UIStore {
   // Actions
   setIsChannelsListOpen: Action<UIStore, boolean>;
   setIsMembersListOpen: Action<UIStore, boolean>;
+  setIsCurrentChannelThread: Action<UIStore, boolean>;
+
   setCurrentChannelYPos: Action<UIStore, number>;
   setInitChannelYPos: Action<UIStore, number>;
+
   setShowTopicModal: Action<UIStore, boolean>;
   setShowContextMenu: Action<UIStore, boolean>;
   setShowThreadsModal: Action<UIStore, boolean>;
+
   setContextMenuData: Action<UIStore, ContextMenuData>;
 }
 
@@ -35,7 +41,8 @@ const ui: UIStore = {
   isChannelsListOpen: true,
   isMembersListOpen: true,
   showTopicModal: false,
-  showThreadsModal: true,
+  isCurrentChannelThread: undefined,
+  showThreadsModal: false,
   contextMenuData: { xPos: 0, yPos: 0 },
   showContextMenu: false,
 
@@ -51,6 +58,9 @@ const ui: UIStore = {
 
   setIsMembersListOpen: action((state, payload) => {
     state.isMembersListOpen = payload;
+  }),
+  setIsCurrentChannelThread: action((state, payload) => {
+    state.isCurrentChannelThread = payload;
   }),
 
   setShowTopicModal: action((state, payload) => {

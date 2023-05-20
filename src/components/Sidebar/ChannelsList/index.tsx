@@ -15,7 +15,7 @@ import { ChannelsSidebarWrapper } from '../elements';
 export const ChannelsList = () => {
   const router = useRouter();
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
-  const { channel: currentChannelID } = router.query as RouterQuery;
+  const { channel: currentChannelID, thread: currentThreadID } = router.query as RouterQuery;
   const { hideContextMenu } = useContextMenu();
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
 
@@ -51,6 +51,7 @@ export const ChannelsList = () => {
           {categories.map(category => (
             <Category
               currentChannelID={currentChannelID as string}
+              currentThreadID={currentThreadID}
               category={category}
               key={category.id}
             />

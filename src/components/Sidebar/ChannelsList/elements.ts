@@ -79,12 +79,12 @@ export const ChannelNameWrapper = styled(
   'div',
   'channel-name_wrapper',
   css({
-    display: 'flex',
+    // display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: 'auto',
-    width: '100%',
+    // width: '100%',
     transition: 'max-height 350ms ease',
     maxHeight: theme.sizes.channelNameHeight,
     marginTop: '$xs',
@@ -95,7 +95,26 @@ export const ChannelNameWrapper = styled(
     '-webkit-touch-callout': 'none' /* iOS Safari */,
     ' -khtml-user-select': 'none' /* Konqueror HTML */,
     '-ms-user-select': 'none' /* Internet Explorer/Edge */,
-    'user-select': 'none'
+    'user-select': 'none',
+
+    variants: {
+      isThread: {
+        true: {
+          // margin: 0,
+          marginLeft: 36,
+          // marginLeft: 36,
+          paddingLeft: 6,
+          paddingRight: 8,
+          margubRight: 8,
+          display: 'flex',
+          flexDirection: 'row'
+          // width: '100%'
+          // paddingTop: 6,
+          // paddingBottom: 6
+          // width:'100%'
+        }
+      }
+    }
   })
 );
 
@@ -141,6 +160,21 @@ export const ChannelNameInner = styled(
   })
 );
 
+export const ThreadNameInner = styled(
+  ChannelNameInner,
+  'thread-name',
+  css({
+    margin: 0,
+    padding: 0,
+    // paddingTop: 6,
+    // paddingBottom: 6,
+    display: 'flex',
+    width: '100%',
+    height: '100%'
+    // width: 'calc(100% - 16px)'
+  })
+);
+
 export const ChannelsWrapper = styled(
   'div',
   'channels-wrapper',
@@ -150,5 +184,16 @@ export const ChannelsWrapper = styled(
     width: '100%',
     boxSizing: 'border-box',
     overflow: 'hidden'
+  })
+);
+
+export const ThreadsWrapper = styled(
+  ChannelsWrapper,
+  'thread-wrapper',
+  css({
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
+    // justifyContent:"center"
   })
 );

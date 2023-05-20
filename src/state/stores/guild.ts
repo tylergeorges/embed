@@ -6,14 +6,21 @@ export interface IGuild {
   name: string;
 }
 
-interface Thread {
+export interface IThread extends Channel {
   id: string;
   name: string;
   __typename: 'ThreadChannel';
 }
 
+export type ChannelThreads = {
+  [channelId: string]: {
+    threads: Channel[];
+  };
+};
+// export type GuildThreads = Record<string, ChannelThreads>;
+
 export interface GuildStore {
-  currentChannelThreads: Thread[] | undefined;
+  channelThreads: Computed<GuildStore, ChannelThreads>;
   data?: IGuild;
   settings?: GuildSettings;
   channels?: Channel[];
@@ -28,7 +35,30 @@ const guild: GuildStore = {
   data: undefined,
   settings: undefined,
   channels: undefined,
-  currentChannelThreads: undefined,
+  channelThreads: computed(state => {
+    if (!state.channels) return {};
+
+    const channelThreads: ChannelThreads = {};
+
+    // Filter for channels that have threads
+    const channelsWithThreads = state.channels.filter(
+      channel => channel.threads && channel.threads?.length > 0
+    );
+
+    // Iterate over channels that have threads and add them to map
+    for (let i = 0; i < channelsWithThreads.length; i += 1) {
+      const channel = channelsWithThreads[i];
+
+      const mapHasChannel = channelThreads[channel.id];
+      if (mapHasChannel) break;
+
+      channelThreads[channel.id] = { threads: [] };
+
+      channelThreads[channel.id].threads = channel.threads as Channel[];
+    }
+
+    return channelThreads;
+  }),
 
   // Computed
   categories: computed(state => {
@@ -51,17 +81,26 @@ const guild: GuildStore = {
   setChannels: action((state, payload) => {
     state.channels = payload;
 
-    const threads = [];
+    // const threads: Channel[] = [];
     // const threads = payload.map(channel => channel?.threads)
-    const channelsWithThreads = payload.filter(channel => channel.threads.length > 0);
+    // const channelsWithThreads = payload.filter(
+    //   channel => channel.threads && channel.threads?.length > 0
+    // );
 
-    channelsWithThreads.forEach(channel => {
-      channel.threads?.forEach(thread => {
-        threads.push(thread);
-      });
-    });
+    // channelsWithThreads.forEach(channel => {
+    //     const hasChannelId = channelThreads.channelIds.includes(channel.id)
 
-    state.currentChannelThreads = threads;
+    //     if(!hasChannelId){
+    //       channelThreads.channelIds.push(channel.id)
+    //     }
+    //     channelThreads[channel.id].push()
+
+    // });
+    // channelsWithThreads.forEach(channel => {
+    //   channel.threads?.forEach(thread => {
+    //     threads.push(thread);
+    //   });
+    // });
   })
 };
 
