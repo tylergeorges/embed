@@ -34,13 +34,13 @@ export const List = styled.div`
     }
 `
 
-export const Thread = styled.button`
+export const Post = styled.button`
     display: block;
     width: 100%;
     background-color: ${({ theme }) => theme.colors._background.darken(.1).string()};
     margin-bottom: 6px;
     border: 1px solid transparent;
-    border-radius: 4px;
+    border-radius: 12px;
     padding: 15px;
     font-size: 16px;
     text-align: left;
@@ -52,10 +52,11 @@ export const Thread = styled.button`
     }
 `
 
-export const ThreadName = styled.div`
+export const PostName = styled.div`
   color: ${props => props.theme.colors._primary.fade(0.2).string()};
   font-weight: 600;
   font-size: 20px;
+  padding-bottom: 6px;
 `;
 
 export const Preview = styled.div`
@@ -64,47 +65,41 @@ export const Preview = styled.div`
     white-space: nowrap;
     pointer-events: none;
     display: flex;
+    padding-bottom: 8px;
 
     span span {
         opacity: 1;
-    }
-`
-
-export const Time = styled(ContentBase)`
-    margin: 0 4px;
-`
-
-export const NoThreads = styled.div`
-    margin: 75px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    div {
-        position: relative;
-    }
-
-    img {
-        position: absolute;
-        left: -10px;
-    }
-
-    span {
-        margin-top: 20px;
-        text-align: center;
-        font-size: 24px;
         font-weight: 600;
     }
 `
 
-export const NoThreadsIcon = styled.div`
-    background: ${({ theme }) => theme.colors.background};
-    padding: 22px;
-    border-radius: 100%;
-    display: flex;
+export const Footer = styled.span`
+    margin: 0 4px;
+    gap: 8px;
 
-    svg {
-        width: 36px;
-        height: 36px;
+    font-size: 14px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+`
+
+export const MessageCount = styled.span`
+    display: flex;
+    gap: 4px;
+    align-items: center;
+
+    svg, path {
+        color: ${({ theme }) => theme.colors._primary.fade(0.2).string()};
     }
+`
+
+export const Divider = styled.span`
+    font-family: "Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+    color: ${({ theme }) => theme.colors._primary.fade(0.9).string()};
+
+`
+
+export const Time = styled.span`
+    color: ${({ theme }) => theme.colors._primary.fade(0.36).string()};
 `

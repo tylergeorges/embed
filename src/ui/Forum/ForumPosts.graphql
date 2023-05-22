@@ -1,0 +1,26 @@
+#import "@hooks/useMessages/Fragments/BaseMessage.graphql"
+
+query ForumPosts($guild: String!, $channel: String!) {
+  channel: channelV2(id: $channel, guild: $guild) {
+    id
+    threads {
+      ...on ThreadChannel {
+        id
+        name
+        messageCount
+        appliedTags
+        firstMessage: messageBunch(onlyFetchFirstMessage: true) {
+          messages {
+            ...BaseMessage
+          }
+        }
+        messageBunch(limit: 1) {
+          messages {
+            id
+            createdAt
+          }
+        }
+      }
+    }
+  }
+}
