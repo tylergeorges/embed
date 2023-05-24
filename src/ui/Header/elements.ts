@@ -156,4 +156,8 @@ export const Fullscreen = styled('svg')`
   path {
     color: ${({theme}) => theme.colors._primary.fade(0.6).string()};
   }
+
+  @media only screen and (max-width: 520px) {
+    display: none
+  }
 `;
