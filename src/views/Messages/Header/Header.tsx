@@ -1,10 +1,12 @@
 import Tooltip from 'rc-tooltip'
 import {
   Emoji,
+  ForumName,
   Fullscreen,
   Join,
   Name,
   NewsName,
+  NSFWForumName,
   NSFWName,
   NSFWNewsName,
   NSFWVoiceName,
@@ -58,6 +60,10 @@ export const Header = observer(({ channel, thread }: HeaderProps) => {
                     <NSFWVoiceName><Emoji>{cData?.name}</Emoji></NSFWVoiceName>
                 : cData.__typename === 'VoiceChannel' ?
                     <VoiceName><Emoji>{cData?.name}</Emoji></VoiceName>
+                : cData.nsfw && cData.__typename === 'ForumChannel' ?
+                    <NSFWForumName><Emoji>{cData?.name}</Emoji></NSFWForumName>
+                : cData.__typename === 'ForumChannel' ?
+                    <ForumName><Emoji>{cData?.name}</Emoji></ForumName>
                 : cData.id === generalStore.guild?.rulesChannelId ?
                     <RulesName><Emoji>{cData?.name}</Emoji></RulesName>
                 : cData.nsfw ?
@@ -76,9 +82,9 @@ export const Header = observer(({ channel, thread }: HeaderProps) => {
                     </TopicWrapper>
                 )}
             </Stretch>
-            {thread || cData.__typename === 'VoiceChannel' || <ThreadBrowser count={cData.threads?.length} />}
+            {thread || ['VoiceChannel', 'ForumChannel'].includes(cData.__typename) || <ThreadBrowser count={cData.threads?.length} />}
             {/* {(!thread || generalStore.threadFullscreen) && <Pins />} Thread pins are disabled */}
-            {thread || cData.__typename === 'VoiceChannel' || <Pins />}
+            {thread || ['VoiceChannel', 'ForumChannel'].includes(cData.__typename) || <Pins />}
             <SingleChannelAuthWrapper>
                 <SingleChannelAuth />
             </SingleChannelAuthWrapper>

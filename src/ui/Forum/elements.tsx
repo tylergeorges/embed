@@ -21,7 +21,7 @@ export const Separator = styled.span`
 export const List = styled.div`
     overflow-y: auto;
     background-color: ${({ theme }) => theme.colors._background.darken(0.25).string()};
-    padding: 8px;
+    padding: 16px;
     height: 100%;
 
     &::-webkit-scrollbar {
@@ -38,7 +38,7 @@ export const Post = styled.button`
     display: block;
     width: 100%;
     background-color: ${({ theme }) => theme.colors._background.darken(.1).string()};
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     border: 1px solid transparent;
     border-radius: 12px;
     padding: 15px;

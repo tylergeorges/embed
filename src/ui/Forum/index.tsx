@@ -6,7 +6,7 @@ import { List, Post, Preview, PostName, Footer, Root, Username, Separator, Divid
 import stars from '@images/discordAssets/stars.svg'
 import Tooltip from 'rc-tooltip'
 import FORUM_POSTS from './ForumPosts.graphql'
-import { ForumPosts, ForumPostsVariables, ForumPosts_channel_threads_ThreadChannel } from '@generated';
+import { ForumPosts, ForumPostsVariables, ForumPosts_channel_ForumChannel as Forum, ForumPosts_channel_ForumChannel_threads_ThreadChannel as Thread } from '@generated';
 import Content from '@ui/Messages/Content';
 import { ReplyUserBase } from '@ui/Messages/Message/elements';
 import { convertColor, getDominantRoleColor } from '@ui/Messages/Message/MessageAuthor';
@@ -25,6 +25,11 @@ type Props = {
     channel: string;
 };
 
+enum SortOrder {
+    LatestActivity,
+    CreationDate
+}
+
 export default observer(({ guild, channel }: Props) => {
     const { data, loading, error } = useQuery<ForumPosts, ForumPostsVariables>(FORUM_POSTS, { variables: { guild, channel }, fetchPolicy: 'network-only'})
 
@@ -37,13 +42,24 @@ export default observer(({ guild, channel }: Props) => {
         })
     }, [error?.message])
 
+    const sortOrder = (data.channel as Forum)?.defaultSortOrder ?? SortOrder.LatestActivity
+
+    const sort = (a: Thread, b: Thread) => {
+        switch (sortOrder) {
+            case SortOrder.LatestActivity:
+                return +b.messageBunch.messages.at(-1).id - +a.messageBunch.messages.at(-1).id
+            case SortOrder.CreationDate:
+                return +b.firstMessage.messages[0].createdAt - +a.firstMessage.messages[0].createdAt
+        }
+    }
+
     return <>
         <Root>
             <List className="forum-posts-list">
                 {!loading
                     ? data?.channel?.threads?.length
-                        ? <>{(data.channel.threads as ForumPosts_channel_threads_ThreadChannel[])
-                            ?.sort((a, b) => +b.messageBunch.messages.at(-1).id - +a.messageBunch.messages.at(-1).id)
+                        ? <>{(data.channel.threads as Thread[])
+                            ?.sort(sort)
                             .map(thread => {
                                 const message = thread.firstMessage.messages[0]
                                 const lastMessage = thread.messageBunch.messages.at(-1)

@@ -22,5 +22,9 @@ query ForumPosts($guild: String!, $channel: String!) {
         }
       }
     }
+
+    ...on ForumChannel {
+      defaultSortOrder
+    }
   }
 }
