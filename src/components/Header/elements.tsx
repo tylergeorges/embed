@@ -15,18 +15,28 @@ export const ChannelHeaderContainer = styled(
     // zIndex: 1
   })
 );
+export const ThreadPanelHeaderContainer = styled(
+  ChannelHeaderContainer,
+  'panel-thread_header_container',
+  css({
+    // height: '100%',
+    // width: '100%',
+    // display: 'flex',
+    // justifyContent: 'flex-start'
+  })
+);
 
 const Root = styled(
   'header',
   'root',
   css({
-    overflow: 'hidden',
+    // overflow: 'hidden',
     userSelect: 'none',
     display: 'flex',
     flexShrink: 0,
     zIndex: 8,
     // backgroundColor: 'rgba(0, 0, 0, 0.1)',
-    height: 48,
+    height: '$headerHeight',
 
     variants: {
       shadowEnabled: {
@@ -107,12 +117,12 @@ export const Inner = styled(
 );
 
 export const Stretch = styled(
-  'header',
+  'div',
   'stretch',
   css({
     diplay: 'flex',
     flexGrow: 1,
-    overflow: 'hidden',
+    // overflow: 'hidden',
     flexShrink: 1,
     width: 0
   })
@@ -224,6 +234,41 @@ const name = (hash: typeof Hash) =>
       }
     })
   );
+
+export const ThreadPanelHeaderRoot = styled(
+  ChannelHeaderRoot,
+  'panel-thread_header_root',
+  css({
+    backgroundColor: '$background',
+    height: '$headerHeight',
+    margin: 0,
+    padding: 0,
+    paddingRight: 8
+  })
+);
+
+export const ThreadPanelHeaderIconContainer = styled(
+  'div',
+  'panel-thread_header_icon_container',
+  css({
+    width: '100%',
+    display: 'flex',
+    height: '100%',
+    alignItems: 'center'
+  })
+);
+export const ThreadPanelHeaderIconContent = styled(
+  'div',
+  'panel-thread_header_icon_content',
+  css({
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    fontWeight: 600
+  })
+);
 
 export const Name = name(Hash);
 

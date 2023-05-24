@@ -7,7 +7,7 @@ interface MessageContainerProps {
   /** Name of the guild. */
   guildName: string;
 
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 /** This component handles rendering the current text channel's messages.
@@ -24,6 +24,16 @@ export const MessageContainer = ({ guildName, onClick }: MessageContainerProps) 
       draggable={false}
       membersListOpen={isMembersListOpen}
       onClick={onClick}
+      css={{
+        paddingLeft: '$lg',
+        paddingRight: '$lg',
+        '@media screen  and (max-width: 768px)': {
+          transition: 'transform 0.3s ease 0s',
+          transform: `translateX(0px) !important`,
+          width: '100% !important',
+          height: '100%'
+        }
+      }}
     >
       {/* <TextChannelHeader /> */}
       <div className="channel-welcome_header_con non-draggable">

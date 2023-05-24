@@ -12,22 +12,22 @@ export const ToolTipContainer = styled(
     transform: 'scale(0)',
     pointerEvents: 'none',
     transition: 'transform 100ms ease',
-
     variants: {
       visible: {
         false: {
           transform: 'scale(0)'
         },
         true: {
-          transform: 'scale(0.95)'
+          transform: 'scale(0.85)'
         }
       },
       placement: {
         top: {
-          marginTop: -70
+          top: -40
         },
         bottom: {
-          top: 47
+          top: 30
+          // marginTop: 2
           // marginRight: 40,
           // position:'relative',
         }
@@ -40,8 +40,10 @@ export const ToolTipContent = styled(
   'span',
   'tool-tip_content',
   css({
-    display: 'block',
+    display: 'inline-block',
     fontSize: '$md',
+    position: 'relative',
+    // whiteSpace: 'nowrap',
     textAlign: 'center'
   })
 );
@@ -53,7 +55,8 @@ export const ToolTipWrapper = styled(
     // overflow: 'visible',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'relative'
     // margin: 10,
     // marginLeft: 8,
     // marginRight: 8,

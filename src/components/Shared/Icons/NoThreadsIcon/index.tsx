@@ -6,11 +6,12 @@ import {
 import { ThreadsIcon } from '@components/Shared/Icons/ThreadsIcon';
 
 export const NoThreadsIcon = () => (
-  <NoThreadsIconOuter>
-    <NoThreadsIconInner>
+  <NoThreadsIconOuter className="popout-no_threads_outer">
+    <NoThreadsIconInner className="popout-no_threads_inner">
       <ThreadsIcon size="large" css={{ textAlign: 'center' }} />
 
       <NoThreadsStars
+        className="popout-no_threads_stars"
         aria-hidden="true"
         role="img"
         width="104"

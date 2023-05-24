@@ -8,9 +8,7 @@ export const ContextMenu = () => {
   const copyToClipboard = () => {
     navigator.clipboard
       .writeText(contextMenuData?.channelLink || '')
-      .then(() => {
-        console.log(contextMenuData?.channelLink);
-      })
+      .then(() => {})
       .catch(err => {
         console.error('Could not copy channel link: ', err);
       });

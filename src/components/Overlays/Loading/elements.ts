@@ -29,8 +29,10 @@ export const Spinner = styled(
       width: 15,
       height: 15,
       position: 'absolute',
-      //   top: -24,
-      //   left: -32,
+      alignSelf: 'center',
+      justifySelf: 'center',
+      bottom: 15,
+      right: 15,
       animation: `${cube} 1.8s infinite ease-in-out`
     },
     '&::after': {
@@ -51,10 +53,10 @@ export const SpinnerWrapper = styled(
     alignItems: 'center',
     justifyContent: 'center',
     '*:first-child': {
-      position: 'absolute',
-      left: '50%',
-      top: '50%',
-      transform: 'translate(-50%, -50%)'
+      position: 'absolute'
+      // left: '50%',
+      // top: '50%',
+      // transform: 'translate(-50%, -50%)'
     }
   })
 );

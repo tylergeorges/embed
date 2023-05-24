@@ -88,7 +88,9 @@ const stitches = createStitches({
       messageTypeIcon: '16px',
       sideBarWidth: '200px',
       channelNameHeight: '32px',
-      messageInputSize: '43px'
+      messageInputSize: '43px',
+      threadPanelMinWidth: '400px',
+      headerHeight: '48px'
     },
     borderWidths: {
       spines: '2px'

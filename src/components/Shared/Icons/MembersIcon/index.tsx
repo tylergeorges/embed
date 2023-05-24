@@ -1,4 +1,4 @@
-import { MembersIconRoot } from '@components/Shared/Icons/IconButtonWrapper/elements';
+import { MembersIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
 import { IconProps } from '../icon.types';
 
 export const MembersIcon = ({ onClick, isActive, size }: IconProps) => (

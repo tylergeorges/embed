@@ -2,9 +2,12 @@ import { useStoreActions, useStoreState } from '@state';
 import { useContextMenu, useMediaQuery } from '@lib/hooks';
 import { MembersList } from '@components/Sidebar/MembersList';
 import { useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { Channel } from '@graphql/graphql';
 import { TextChannelInnerWrapper, TextChannelWrapper } from './elements';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
+import { RouterQuery } from '../../../types/routerQuery';
 
 /** The overall text channel view container.
  *
@@ -21,7 +24,15 @@ export const Container = () => {
   // boolean check for sidebar lists
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
+  const isThreadsPanelOpen = useStoreState(state => state.ui.isThreadsPanelOpen);
+  const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
 
+  const channelThreads = useStoreState(state => state.guild.channelThreads);
+
+  const router = useRouter();
+  const { thread: threadID, channel } = router.query as RouterQuery;
+
+  const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
   // actions to set sidebar lists state
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
@@ -33,8 +44,24 @@ export const Container = () => {
   // TODO: Write a hook (useCurrentChannel) or something to pull channel id from url & get it from state.guild.channels.
 
   useEffect(() => {
-    setIsMembersListOpen(!windowIsMobile);
-  }, [windowIsMobile, setIsMembersListOpen]);
+    if (isCurrentChannelThread) {
+      const thread = channelThreads[channel].threads.find(th => th.id === threadID) as Channel;
+      setCurrentThread(thread);
+    }
+
+    if (!isThreadsPanelOpen) {
+      setIsMembersListOpen(!windowIsMobile);
+    }
+  }, [
+    windowIsMobile,
+    setIsMembersListOpen,
+    isThreadsPanelOpen,
+    channel,
+    isCurrentChannelThread,
+    setCurrentThread,
+    channelThreads,
+    threadID
+  ]);
   // const translate = useTranslation();
 
   const hideSidebar = useCallback(() => {
@@ -57,15 +84,17 @@ export const Container = () => {
       className="text-channel_wrapper"
       css={{
         '@media screen  and (max-width: 768px)': {
-          transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
+          transition: 'transform 0.3s ease 0s',
 
           // ! assuming the members side bar is still open
-          marginLeft: '0px !important',
+          transform: `translateX(0px) !important`,
           width: '100% !important',
           height: '100%'
         }
       }}
-      channelsListOpen={isChannelsListOpen}
+      panelAndChannelsOpen={isThreadsPanelOpen && isChannelsListOpen}
+      channelsListOpen={!isThreadsPanelOpen && isChannelsListOpen}
+      threadsPanelOpen={!isChannelsListOpen && isThreadsPanelOpen}
       onClick={hideContextMenu}
     >
       <TextChannelHeader />
@@ -88,12 +117,6 @@ export const Container = () => {
         }}
       >
         <MessageContainer guildName={guildName} onClick={hideSidebar} />
-
-        {/* <TextBox
-          channelName={
-            translate.t('input.message', { CHANNEL: currentChannel?.name as string }) as string
-          
-        /> */}
       </TextChannelInnerWrapper>
       <MembersList />
     </TextChannelWrapper>

@@ -3,7 +3,7 @@ import {
   ToolTipContent,
   ToolTipContainer
 } from '@components/Shared/ToolTip/elements';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 interface ToolTipProps {
   label: string;
@@ -18,8 +18,7 @@ export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
   const childrenConRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [left, setLeft] = useState(0);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const memoizedLeftValue = useMemo(() => left, []);
+  const [visited, setVisited] = useState(false);
 
   const openToolTip = () => {
     setShowToolTip(true);
@@ -29,19 +28,23 @@ export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
   };
 
   useEffect(() => {
-    if (childrenConRef.current && tooltipRef.current && memoizedLeftValue === 0) {
-      const tooltip = tooltipRef.current;
-      const childrenCon = childrenConRef.current;
-      const calcLeft = childrenCon.offsetLeft - tooltip.offsetWidth * 0.9;
+    const childrenRef = childrenConRef.current;
+    const tooltipElement = tooltipRef.current;
 
-      if (
-        calcLeft >= window.innerWidth ||
-        tooltip.clientWidth + tooltip.offsetLeft >= window.innerWidth
-      ) {
-        setLeft(calcLeft);
+    if (childrenRef && tooltipElement && !visited) {
+      setVisited(true);
+
+      const tooltipFor = childrenRef.getBoundingClientRect();
+      const labelX = Math.floor(tooltipFor.x + tooltipElement.offsetWidth);
+
+      const isTooltipOffscreen = labelX >= window.innerWidth;
+
+      if (isTooltipOffscreen && left === 0 && !visited) {
+        const moveAmount = labelX - window.innerWidth;
+        setLeft(tooltipElement.offsetLeft - moveAmount);
       }
     }
-  }, [left, memoizedLeftValue]);
+  }, [left]);
 
   return (
     <ToolTipWrapper

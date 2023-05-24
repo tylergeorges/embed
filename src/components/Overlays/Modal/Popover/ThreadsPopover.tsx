@@ -8,11 +8,12 @@ import {
   NoThreadsContent,
   NoThreadsHeader
 } from '@components/Overlays/Modal/elements';
+import { ThreadsPanelButton } from '@components/Shared/Icons/Buttons/ThreadsPanelButton';
 import { NoThreadsIcon } from '@components/Shared/Icons/NoThreadsIcon';
 import { ThreadsIcon } from '@components/Shared/Icons/ThreadsIcon';
 import { useStoreState, useStoreActions } from '@state';
 import { useRouter } from 'next/router';
-import { ReactElement, useRef } from 'react';
+import { ReactElement, useMemo, useRef } from 'react';
 import { RouterQuery } from 'types/routerQuery';
 
 interface ThreadsPopoverProps {
@@ -34,6 +35,10 @@ export const ThreadsPopover = ({ children }: ThreadsPopoverProps) => {
 
   const currentChannelThreads = channelThreads[channelId]?.threads ?? [];
 
+  const channelHasThreads = useMemo(
+    () => currentChannelThreads.length > 0,
+    [currentChannelThreads.length]
+  );
   return (
     <>
       <Popover
@@ -43,27 +48,30 @@ export const ThreadsPopover = ({ children }: ThreadsPopoverProps) => {
         hideModal={hideThreadsModal}
         popoverFor={childrenRef.current}
       >
-        {currentChannelThreads.length > 0 ? (
-          <ThreadsPopoverContent>
-            <>
-              <ThreadsPopoverListHeader>OLDER THREADS</ThreadsPopoverListHeader>
-              <ThreadsPopoverList>
-                {' '}
-                {currentChannelThreads.map(thread => (
-                  <ThreadsPopoverListItem
-                    key={thread.id}
-                    onClick={() =>
-                      router.push(`/channels/${guildId}/${channelId}?thread=${thread.id}`)
-                    }
-                  >
-                    <ThreadName>{thread.name}</ThreadName>
-                  </ThreadsPopoverListItem>
-                ))}
-              </ThreadsPopoverList>
-            </>
+        {channelHasThreads ? (
+          <ThreadsPopoverContent className="popover-threads_content">
+            <ThreadsPopoverListHeader className="popover-threads_list_header">
+              OLDER THREADS
+            </ThreadsPopoverListHeader>
+            <ThreadsPopoverList className="popover-threads_list_container">
+              {' '}
+              {currentChannelThreads.map(thread => (
+                <ThreadsPopoverListItem
+                  className="popover-threads_list_item"
+                  key={thread.id}
+                  onClick={() =>
+                    router.push(`/channels/${guildId}/${channelId}?thread=${thread.id}`)
+                  }
+                >
+                  <ThreadName className="popover-threads_list_threadname">{thread.name}</ThreadName>
+
+                  <ThreadsPanelButton thread={thread} />
+                </ThreadsPopoverListItem>
+              ))}
+            </ThreadsPopoverList>
           </ThreadsPopoverContent>
         ) : (
-          <NoThreadsContent>
+          <NoThreadsContent className="popover-no_threads_content">
             <NoThreadsIcon />
             <NoThreadsHeader>There are no threads.</NoThreadsHeader>
           </NoThreadsContent>

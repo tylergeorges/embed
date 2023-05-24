@@ -37,16 +37,17 @@ export const Popover = ({
           isOpen={isOpen}
           aria-label={title}
           role="dialog"
+          className="popover-container"
           css={{
             right: `calc(${popoverFor?.clientLeft}px + 80px)`
           }}
         >
-          <PopoverHeader>
-            <PopoverHeaderContent className="non-dragable">
-              <PopoverTitleWrapper>
+          <PopoverHeader className="popover-header">
+            <PopoverHeaderContent className="popover-header_content non-dragable">
+              <PopoverTitleWrapper className="popover-title_container">
                 {TitleIcon && <TitleIcon />}
 
-                <PopoverTitle>{title}</PopoverTitle>
+                <PopoverTitle className="popover-title">{title}</PopoverTitle>
               </PopoverTitleWrapper>
               <Close onClick={hideModal} />
             </PopoverHeaderContent>

@@ -1,4 +1,4 @@
-import { ThreadsIconRoot } from '@components/Shared/Icons/IconButtonWrapper/elements';
+import { ThreadsIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
 import { IconProps } from '../icon.types';
 
 export const ThreadsIcon = ({ onClick, isActive, css, size }: IconProps) => (

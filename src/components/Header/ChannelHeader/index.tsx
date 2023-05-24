@@ -5,11 +5,11 @@ import {
   ChannelHeaderTopic,
   ChannelHeaderName
 } from '@components/Header/elements';
-import { Hamburger } from '@components/Header/ChannelHeader/Hamburger';
-import { MembersButton } from '@components/Header/ChannelHeader/MembersButton';
-import { PinButton } from '@components/Header/ChannelHeader/PinButton';
+import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
+import { MembersButton } from '@components/Shared/Icons/Buttons/MembersButton';
+import { PinButton } from '@components/Shared/Icons/Buttons/PinButton';
+import { ThreadsButton } from '@components/Shared/Icons/Buttons/ThreadsButton';
 import { useStoreActions } from '@state';
-import { ThreadsButton } from '@components/Header/ChannelHeader/ThreadsButton';
 
 interface ChannelHeaderProps {
   channelTopic: string;

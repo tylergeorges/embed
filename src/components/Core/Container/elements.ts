@@ -7,53 +7,36 @@ export const TextChannelWrapper = styled(
   css({
     display: 'flex',
     flexDirection: 'column',
-    transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
-    width: '100%',
+    position: 'relative',
+    transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
     height: '100%',
     // overflowX: 'hidden',
-    // width: `calc(100% - $sideBarWidth)`,
+    width: '100% !important',
+    // width: 'calc(100% - $sideBarWidth) !important',
+    // width:'100%',
     // ! drop shadow, hide it using opacity for animation and only show for mobile users
-    marginLeft: theme.sizes.sideBarWidth,
-
-    // '&::after': {
-    //   content: '',
-    //   top: 0,
-    //   left: 0,
-    //   position: 'absolute',
-    //   height: '100%',
-    //   width: '100%',
-    //   pointerEvents: 'none',
-    //   opacity: 0,
-
-    //   // transition: 'opacity 0.5s ease 0s',
-    //   // willChange: 'opacity',
-    //   // backgroundColor: 'rgba(0, 0, 0, 0.5)',
-
-    // },
+    // marginLeft: theme.sizes.sideBarWidth,
+    transform: `translateX(${theme.sizes.sideBarWidth})`,
+    // alignSelf: 'flex-end',
 
     // ! show drop shadow
     '@md_screen': {
-      transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
+      transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
       // ! assuming the members side bar is still open
-      marginLeft: '0px !important',
-      marginRight: '0px !important',
-      width: '100% !important',
       height: '100%'
-      // '&::after': {
-      //   transition: 'opacity 0.5s ease 0s',
-      //   content: '',
-      //   opacity: 1
-      // }
     },
 
     variants: {
       // ! assuming the members sidebar is still open
       channelsListOpen: {
-        false: {
-          width: '100% !important',
-          marginLeft: '0px !important'
-        },
+        // false: {
+        //   width: '100% !important',
+        //   marginLeft: '0px !important',
+        //   transform: 'translateX(0px)'
+        // },
         true: {
+          // transform: `translateX(${theme.sizes.sideBarWidth})`,
+          width: 'calc(100% - $sideBarWidth) !important',
           '@md_screen': {
             '&::after': {
               transition: 'opacity 0.5s ease 0s',
@@ -61,6 +44,21 @@ export const TextChannelWrapper = styled(
               opacity: 1
             }
           }
+        },
+        false: {
+          transform: 'translateX(0px)'
+        }
+      },
+      threadsPanelOpen: {
+        true: {
+          width: `calc(100% - $threadPanelMinWidth + 8px) !important`
+          // transform: `translateX(0px)`
+        }
+      },
+      panelAndChannelsOpen: {
+        true: {
+          width: `calc(100% - ($sideBarWidth + $threadPanelMinWidth + 8px))  !important`,
+          transform: `translateX(200px)`
         }
       }
     }
@@ -110,7 +108,7 @@ export const MessageWrapper = styled(
   'div',
   'message-wrapper',
   css({
-    width: '100%',
+    // width: '100%',
     height: '100%',
     // paddingLeft: 40,
     // paddingRight: 40,
@@ -120,9 +118,9 @@ export const MessageWrapper = styled(
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'flex-end',
-    transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
+    transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
     zIndex: 0,
-    marginRight: theme.sizes.sideBarWidth,
+    // transform: `translateX(-20px)`,
     '@md_screen': {
       // ! assuming the members side bar is still open
       // marginRight: '0px !important',
@@ -166,6 +164,8 @@ export const MessageWrapper = styled(
           // marginRight: '0px !important'
         },
         true: {
+          width: 'calc(100% - $sideBarWidth)',
+
           '@md_screen': {
             // ! assuming the members side bar is still open
             marginRight: '0px !important',
@@ -194,7 +194,6 @@ export const TextBoxWrapper = styled(
     alignItems: 'center',
     // minHeight: 66,
     width: '100%'
-    // marginBottom: 5
   })
 );
 

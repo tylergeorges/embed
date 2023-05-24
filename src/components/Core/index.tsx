@@ -14,15 +14,22 @@ export const Main = styled(
     flexDirection: 'row',
     width: '100%',
     backgroundColor: theme.colors.background,
+    // position: 'relative',
+    animation: `${zoomIn} 0.5s ease`,
+    justifyItems: 'center'
+  })
+);
 
-    '.inner_main': {
-      flexDirection: 'row',
-      width: '100%',
-      maxWidth: '100%',
-      height: '100%',
-      display: 'flex',
-      animation: `${zoomIn} 0.5s ease`
-    }
+export const InnerMain = styled(
+  'div',
+  'inner-main',
+  css({
+    flexDirection: 'row',
+    width: '100%',
+    // maxWidth: '100%',
+    height: '100%',
+    display: 'flex'
+    // position: 'relative'
   })
 );
 

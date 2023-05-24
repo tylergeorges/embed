@@ -6,18 +6,18 @@ export const MembersList = () => {
   return (
     <MembersSidebarWrapper
       css={{
-        right: 0,
-        // height: 'calc(100% - 60px)',
-        // height: '100%',
-        // position: 'absolute',
-        // bottom: 0,
+        right: 0, // Test this
+
         transition: 'transform ease 0.3s',
-        zIndex: 1
+        zIndex: 1,
+        justifySelf: 'flex-end'
+        // backgroundColor:'green'
+        // alignSelf:"flex-end",
       }}
       className="members-sidebar_wrapper"
       membersListOpen={isMembersListOpen}
     >
-      <div />
+      <div>ONLINE</div>
     </MembersSidebarWrapper>
   );
 };

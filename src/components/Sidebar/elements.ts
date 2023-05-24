@@ -44,30 +44,18 @@ export const SidebarWrapper = styled(
         false: {
           animation: `${leftSlideOut} 300ms ease`,
           transform: `translateX(-200px)`
-          // display:'none'
         },
         true: {
           animation: `${leftSlideIn} 550ms ease`
-
-          // transform: `translateX(0px)`1
-
-          // transform: `translateX(200px)`
         }
       },
 
       membersListOpen: {
         false: {
-          // transform: 'translateX(200px)'
-          transform: `translateX(200px)`
-
-          // animation: `${rightSlideOut} 300ms ease`,
-          // display: 'none'
+          transform: `translateX(150%)`
         },
         true: {
-          // animation: `${rightSlideIn} 550ms ease`
           transform: `translateX(0px)`
-
-          // transform: `translateX(200px)`
         }
       },
       type: {
@@ -76,7 +64,6 @@ export const SidebarWrapper = styled(
           '.sidebar-header_container': {
             textAlign: 'center',
             position: 'relative'
-            // animation: `${leftContentSlideIn} 800ms ease`
           },
 
           '.sidebar-children_container': {
@@ -89,8 +76,6 @@ export const SidebarWrapper = styled(
             height: '100%',
             marginBottom: '1.5rem',
             overflowY: 'auto'
-            // animation: `${leftContentSlideIn} 600ms ease`
-            // animationDelay: '550ms'
           }
         }
       }
@@ -100,6 +85,68 @@ export const SidebarWrapper = styled(
 
 export const ChannelsSidebarWrapper = styled(SidebarWrapper, 'channels-sidebar_wrapper', {});
 export const MembersSidebarWrapper = styled(SidebarWrapper, 'members-sidebar_wrapper', {});
+export const ThreadsPanelContainer = styled(
+  'div',
+  'thread-panel_wrapper',
+  css({
+    width: '100%',
+    height: '100%',
+    bottom: 0,
+    display: 'flex',
+    zIndex: 2,
+    transition: 'transform ease 0.3s',
+    position: 'absolute',
+
+    backgroundColor: '$background',
+    flexDirection: 'column',
+    '@media screen  and (max-width: 768px)': {
+      width: '100%'
+    },
+    variants: {
+      isOpen: {
+        false: {
+          transform: `translateX(100%)`
+        },
+        true: {
+          width: '100%',
+          '@media screen  and (max-width: 768px)': {
+            width: '100%',
+            transform: `translateX(-2%)`
+          }
+        }
+      }
+    }
+  })
+);
+export const ThreadPanelWrapper = styled(
+  'div',
+  'thread-panel_wrapper',
+  css({
+    height: '100%',
+    // bottom: 0,
+    minWidth: '$threadPanelMinWidth',
+    right: 0,
+    display: 'flex',
+    zIndex: 2,
+    transition: 'transform ease 0.3s',
+    position: 'absolute',
+    backgroundColor: '$background',
+    flexDirection: 'row',
+    variants: {
+      isOpen: {
+        false: {
+          transform: `translateX(100%)`
+        },
+        true: {
+          '@media screen  and (max-width: 768px)': {
+            width: '100%',
+            transform: `translateX(2%)`
+          }
+        }
+      }
+    }
+  })
+);
 
 export const Close = styled(
   'button',
@@ -117,8 +164,43 @@ export const Close = styled(
     outline: 'none',
     cursor: 'pointer',
     borderRadius: '50%',
+
     '&:hover, &:focus': {
       backgroundColor: theme.colors.primaryOpacity10
+    },
+
+    variants: {
+      color: {
+        light: {
+          right: 0,
+          height: 20,
+          width: 20,
+
+          backgroundSize: '50%',
+          backgroundPosition: '50% 50%',
+          backgroundRepeat: 'no-repeat',
+          border: 'none',
+          outline: 'none',
+          cursor: 'pointer',
+          borderRadius: '50%',
+          background: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='rgb(181, 186, 193)' viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e")`
+        }
+      }
+    }
+  })
+);
+
+export const ThreadsPanelSeperator = styled(
+  'div',
+  'panel-threads_seperator',
+  css({
+    height: '100%',
+    width: 8,
+    transform: `translateX(-8px)`,
+    backgroundColor: 'rgb(30, 31, 34)',
+    zIndex: 9,
+    '@media screen  and (max-width: 768px)': {
+      opacity: 0
     }
   })
 );

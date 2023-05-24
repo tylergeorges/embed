@@ -1,4 +1,4 @@
-import { PinIconRoot } from '@components/Shared/Icons/IconButtonWrapper/elements';
+import { PinIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
 import { IconProps } from '../icon.types';
 
 export const PinIcon = ({ onClick, isActive, size }: IconProps) => (

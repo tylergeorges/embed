@@ -151,6 +151,7 @@ export const PopoverContainer = styled(
     minHeight: 400,
     maxHeight: '80vh',
     maxWidth: 600,
+    height: '20%',
     width: '35vw',
     top: 48,
     display: 'flex',
@@ -161,7 +162,9 @@ export const PopoverContainer = styled(
     transition: 'transform 300ms ease',
     borderBottomRightRadius: 8,
     borderBottomLeftRadius: 8,
+    boxSizing: 'border-box',
     zIndex: 1,
+
     alignSelf: 'center',
     justifySelf: 'center',
     boxShadow: 'rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
@@ -274,7 +277,6 @@ export const ThreadsPopoverList = styled(
   'div',
   'popover-threads_list_container',
   css({
-    // overflowY: 'scroll',
     height: '100%',
     width: '100%'
   })
@@ -314,7 +316,9 @@ export const ThreadsPopoverContent = styled(
     flexDirection: 'column',
     paddingRight: 16,
     paddingLeft: 16,
-    overflowY: 'auto'
+    position: 'relative',
+    overflowY: 'auto',
+    boxSizing: 'border-box'
   })
 );
 export const ThreadsPopoverListItem = styled(
@@ -323,10 +327,20 @@ export const ThreadsPopoverListItem = styled(
   css({
     backgroundColor: '$background',
     width: '100%',
-    height: '100%',
+    // height: '100%',
     padding: '$xxl',
     marginBottom: '$lg',
-    borderRadius: 8
+    borderRadius: 8,
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'transparent',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    cursor: 'pointer',
+    '&:hover': {
+      borderColor: 'rgba(255, 255, 255, 0.1)'
+    }
   })
 );
 
