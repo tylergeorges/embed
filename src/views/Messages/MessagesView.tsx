@@ -11,6 +11,9 @@ import Messages2ElectricBoogaloo
   from "@views/Messages/Messages2ElectricBoogaloo";
 import {Messages} from "@views/Messages/Messages";
 import Forum from '@ui/Forum'
+import { useQuery } from 'react-apollo-hooks'
+import { ChannelType, ChannelTypeVariables } from '@generated'
+import CHANNEL_TYPE from './ChannelType.graphql'
 
 const MessagesView = observer(() => {
   const { guild, channel } = useRouter()
@@ -20,7 +23,13 @@ const MessagesView = observer(() => {
     generalStore.readChannel(channel)
   }, [channel]);
 
-  const channelType = generalStore.guild?.channels?.find(c => c.id === channel)?.__typename;
+  const knownChannelType = generalStore.guild?.channels?.find(c => c.id === channel)?.__typename;
+
+  const { data } = useQuery<ChannelType, ChannelTypeVariables>(CHANNEL_TYPE, { skip: !!knownChannelType, variables: { guild, channel } });
+
+  const channelType = knownChannelType || data?.channel?.__typename
+
+  if (!channelType) return <Loading />
 
   return (
     <div style={{ display: 'flex', height: '100%' }}>
