@@ -25,9 +25,9 @@ const MessagesView = observer(() => {
 
   const knownChannelType = generalStore.guild?.channels?.find(c => c.id === channel)?.__typename;
 
-  const { data } = useQuery<ChannelType, ChannelTypeVariables>(CHANNEL_TYPE, { skip: !!knownChannelType, variables: { guild, channel } });
+  const { data, error } = useQuery<ChannelType, ChannelTypeVariables>(CHANNEL_TYPE, { skip: !!knownChannelType, variables: { guild, channel } });
 
-  const channelType = knownChannelType || data?.channel?.__typename
+  const channelType = knownChannelType || data?.channel?.__typename || (error ? 'TextChannel' : null)
 
   if (!channelType) return <Loading />
 
