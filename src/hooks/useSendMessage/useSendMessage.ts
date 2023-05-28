@@ -53,7 +53,7 @@ export const useSendMessage = (thread?: string) => {
           thread: null,
         }
       } as SendMessage, update: (store, { data: { sendMessage: newMessage } }) => {
-        const data = store.readQuery<Messages>({ query: MESSAGES, variables: {channel, thread } })
+        const data = store.readQuery<Messages>({ query: MESSAGES, variables: { guild, channel, thread } })
 
         newMessage.isGuest = true
 
