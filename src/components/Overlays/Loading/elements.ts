@@ -31,12 +31,27 @@ export const Spinner = styled(
       position: 'absolute',
       alignSelf: 'center',
       justifySelf: 'center',
-      bottom: 15,
-      right: 15,
+      // bottom: 15,
+      // right: 15,
       animation: `${cube} 1.8s infinite ease-in-out`
     },
     '&::after': {
       animationDelay: ' -0.9s'
+    },
+    variants: {
+      type: {
+        fetchingMessages: {
+          '&::after, &::before': {
+            width: 10,
+            height: 10
+          },
+          alignSelf: 'center',
+          justifySelf: 'center',
+          top: 0
+          // left: 0,
+          // right: 0
+        }
+      }
     }
   })
 );
@@ -57,10 +72,11 @@ export const SpinnerWrapper = styled(
       position: 'absolute'
     },
     variants: {
-      fetchingMessages: {
-        true: {
-          position: 'static',
-          width: '100%'
+      type: {
+        fetchingMessages: {
+          position: 'relative',
+          width: '100%',
+          height: 70
         }
       }
     }

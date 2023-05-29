@@ -25,9 +25,9 @@ export const MessageContainer = ({ onClick, guildName }: MessageContainerProps) 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
   const getMessageKey = (rowIndex: number) => {
-    if (rowIndex > staticMessages.length - 1) return '';
+    if (rowIndex >= staticMessages.length) return 'end';
     const message = staticMessages[rowIndex];
-    return `${message.id}-${message.author.id}-${message.createdAt}`;
+    return message.id;
   };
   return (
     <>
