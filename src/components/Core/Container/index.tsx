@@ -1,13 +1,12 @@
 import { useStoreActions, useStoreState } from '@state';
-import { useContextMenu, useMediaQuery } from '@lib/hooks';
+import { useContextMenu, useMediaQuery, useAppRouter } from '@lib/hooks';
 import { MembersList } from '@components/Sidebar/MembersList';
 import { useCallback, useEffect } from 'react';
-import { useRouter } from 'next/router';
+
 import { Channel } from '@graphql/graphql';
 import { TextChannelInnerWrapper, TextChannelWrapper } from './elements';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
-import { RouterQuery } from '../../../types/routerQuery';
 
 /** The overall text channel view container.
  *
@@ -29,8 +28,7 @@ export const Container = () => {
 
   const channelThreads = useStoreState(state => state.guild.channelThreads);
 
-  const router = useRouter();
-  const { thread: threadID, channel } = router.query as RouterQuery;
+  const { threadId, channelId } = useAppRouter();
 
   const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
   // actions to set sidebar lists state
@@ -45,7 +43,7 @@ export const Container = () => {
 
   useEffect(() => {
     if (isCurrentChannelThread) {
-      const thread = channelThreads[channel].threads.find(th => th.id === threadID) as Channel;
+      const thread = channelThreads[channelId].threads.find(th => th.id === threadId) as Channel;
       setCurrentThread(thread);
     }
 
@@ -56,11 +54,11 @@ export const Container = () => {
     windowIsMobile,
     setIsMembersListOpen,
     isThreadsPanelOpen,
-    channel,
+    threadId,
+    channelId,
     isCurrentChannelThread,
     setCurrentThread,
-    channelThreads,
-    threadID
+    channelThreads
   ]);
   // const translate = useTranslation();
 

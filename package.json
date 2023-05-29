@@ -16,6 +16,7 @@
     "@sentry/nextjs": "^7.14.2",
     "@sentry/tracing": "^7.14.2",
     "@stitches/react": "^1.2.8",
+    "@types/react-virtualized": "^9.21.22",
     "easy-peasy": "^5.2.0",
     "graphql": "^16.6.0",
     "i18next": "^22.4.6",
@@ -23,6 +24,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-i18next": "^12.1.1",
+    "react-virtualized": "^9.22.5",
     "ts-node": "^10.9.1",
     "urql": "^3.0.3"
   },

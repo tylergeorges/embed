@@ -1,17 +1,16 @@
+import { useAppRouter } from '@lib/hooks';
 import { getEnvVar } from '@util/env';
 import type { NextPage } from 'next';
-import { useRouter } from 'next/router';
 
 const GuildIndex: NextPage = () => {
-  const router = useRouter();
-  const { guild } = router.query;
+  const { guildId } = useAppRouter();
 
   const apiUrl = getEnvVar('CUSTOM_SERVER_ENDPOINT');
 
   if (apiUrl) {
     return (
       <div>
-        <p>Guild - {guild}</p>
+        <p>Guild - {guildId}</p>
 
         <p>apiUrl - {apiUrl}</p>
       </div>

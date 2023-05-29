@@ -1,5 +1,5 @@
-import { css, styled, theme } from '@stitches';
-import { keyframes } from '@stitches/react';
+import { css, theme } from '@stitches';
+import { keyframes, styled } from '@stitches/react';
 
 const cube = keyframes({
   '25%': {
@@ -52,11 +52,17 @@ export const SpinnerWrapper = styled(
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+
     '*:first-child': {
       position: 'absolute'
-      // left: '50%',
-      // top: '50%',
-      // transform: 'translate(-50%, -50%)'
+    },
+    variants: {
+      fetchingMessages: {
+        true: {
+          position: 'static',
+          width: '100%'
+        }
+      }
     }
   })
 );

@@ -1,9 +1,7 @@
-import { useRouter } from 'next/router';
 import { useStoreActions, useStoreState } from '@state';
-import { RouterQuery } from 'types/routerQuery';
 import { Header } from '@components/Header';
 import { ModalBackdrop } from '@components/Overlays/Modal/elements';
-import { useContextMenu, useMediaQuery } from '@lib/hooks';
+import { useAppRouter, useContextMenu, useMediaQuery } from '@lib/hooks';
 import { Category } from './Category/Category';
 import { ActiveBackground } from './ActiveBackground';
 import { ChannelsSidebarWrapper } from '../elements';
@@ -13,9 +11,8 @@ import { ChannelsSidebarWrapper } from '../elements';
  *
  */
 export const ChannelsList = () => {
-  const router = useRouter();
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
-  const { channel: currentChannelID, thread: currentThreadID } = router.query as RouterQuery;
+  const { channelId, threadId } = useAppRouter();
   const { hideContextMenu } = useContextMenu();
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
 
@@ -50,8 +47,8 @@ export const ChannelsList = () => {
 
           {categories.map(category => (
             <Category
-              currentChannelID={currentChannelID as string}
-              currentThreadID={currentThreadID}
+              currentChannelID={channelId}
+              currentThreadID={threadId}
               category={category}
               key={category.id}
             />

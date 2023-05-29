@@ -44,6 +44,7 @@ export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
         setLeft(tooltipElement.offsetLeft - moveAmount);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [left]);
 
   return (

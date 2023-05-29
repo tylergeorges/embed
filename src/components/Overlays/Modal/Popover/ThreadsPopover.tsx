@@ -11,10 +11,9 @@ import {
 import { ThreadsPanelButton } from '@components/Shared/Icons/Buttons/ThreadsPanelButton';
 import { NoThreadsIcon } from '@components/Shared/Icons/NoThreadsIcon';
 import { ThreadsIcon } from '@components/Shared/Icons/ThreadsIcon';
+import { useAppRouter } from '@lib/hooks';
 import { useStoreState, useStoreActions } from '@state';
-import { useRouter } from 'next/router';
 import { ReactElement, useMemo, useRef } from 'react';
-import { RouterQuery } from 'types/routerQuery';
 
 interface ThreadsPopoverProps {
   children: ReactElement<any, any>;
@@ -29,9 +28,8 @@ export const ThreadsPopover = ({ children }: ThreadsPopoverProps) => {
   };
 
   const channelThreads = useStoreState(state => state.guild.channelThreads);
-  const router = useRouter();
 
-  const { guild: guildId, channel: channelId } = router.query as RouterQuery;
+  const { guildId, channelId, router } = useAppRouter();
 
   const currentChannelThreads = channelThreads[channelId]?.threads ?? [];
 

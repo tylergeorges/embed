@@ -108,7 +108,7 @@ export const MessageWrapper = styled(
   'div',
   'message-wrapper',
   css({
-    // width: '100%',
+    width: '100%',
     height: '100%',
     // paddingLeft: 40,
     // paddingRight: 40,
@@ -117,7 +117,7 @@ export const MessageWrapper = styled(
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'flex-end',
+    // justifyContent: 'flex-end',
     transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
     zIndex: 0,
     // transform: `translateX(-20px)`,
@@ -189,7 +189,8 @@ export const TextBoxWrapper = styled(
   css({
     paddingLeft: '$xxl',
     paddingRight: '$xxl',
-    // height: '7%',
+    // height: '100%',
+    position: 'relative',
     display: 'flex',
     alignItems: 'center',
     // minHeight: 66,
@@ -208,6 +209,7 @@ export const TextBoxInput = styled(
     borderRadius: 8,
     outline: 'none',
     fontSize: '$lg',
+    // height:'100%',
     padding: 11,
     // height: theme.sizes.messageInputSize,
     // minHeight: theme.sizes.messageInputSize,
@@ -215,5 +217,17 @@ export const TextBoxInput = styled(
     marginBottom: 24,
     color: 'white'
     // marginBottom: '1.3rem',
+  })
+);
+export const MessageContentContainer = styled(
+  'div',
+  'text-box_input',
+  css({
+    // overflowWrap: 'break-word',
+    // paddingTop: 2,
+    // paddingBottom: 2,
+    // paddingLeft: 72,
+    // paddingRight: 48,
+    // marginTop: 17
   })
 );

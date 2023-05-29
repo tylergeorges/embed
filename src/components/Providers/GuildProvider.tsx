@@ -2,9 +2,8 @@ import React, { useEffect } from 'react';
 import { graphql } from '@graphql/gql';
 import { useQuery } from 'urql';
 import { useStoreActions } from '@state';
-import { useRouter } from 'next/router';
-import { RouterQuery } from 'types/routerQuery';
 import { Loading } from '@components/Overlays/Loading';
+import { useAppRouter } from '@lib/hooks';
 
 interface GuildProviderProps {
   children: React.ReactNode;
@@ -40,12 +39,11 @@ const guildDocument = graphql(/* GraphQL */ `
 `);
 
 export const GuildProvider = ({ children }: GuildProviderProps) => {
-  const router = useRouter();
-  const { guild: guildID } = router.query as RouterQuery;
+  const { guildId } = useAppRouter();
 
   const [{ data, fetching }] = useQuery({
     query: guildDocument,
-    variables: { id: guildID }
+    variables: { id: guildId }
   });
 
   const setGuildData = useStoreActions(state => state.guild.setData);
