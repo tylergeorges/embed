@@ -18,6 +18,7 @@ function GifVEmbed({embed}: GifVEmbedProps) {
       autoPlay
       muted
       loop
+      playsInline
     />
   );
 }

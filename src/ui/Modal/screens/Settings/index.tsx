@@ -1,12 +1,15 @@
 import { store } from '@models'
-import { settingsStore } from '@store'
+import { generalStore, settingsStore } from '@store'
 import { Checkbox } from '../Upload/elements'
 import {
   Close, ExperimentsButton,
+  OverrideInfo,
   Root,
   Title,
   Top
 } from './elements'
+
+const forceSendButton = generalStore.accessibility?.has('forceSendButton')
 
 const Settings = () => (
   <Root className="settings-modal">
@@ -14,10 +17,10 @@ const Settings = () => (
       <Title>Settings</Title>
       <Close onClick={store.modal.close} />
     </Top>
-    <Checkbox className="send-button-setting checkbox-field">
+    <Checkbox className="send-button-setting checkbox-field" disabled={forceSendButton}>
       <input
         type="checkbox"
-        defaultChecked={settingsStore.sendButton}
+        defaultChecked={settingsStore.sendButton || forceSendButton}
         onChange={e => settingsStore.setSendButton(e.target.checked)}
       />
       <span className="checkbox">
@@ -25,6 +28,8 @@ const Settings = () => (
       </span>
       <span className="checkbox-text">Show Send Message button</span>
     </Checkbox>
+    {forceSendButton && <OverrideInfo className="override-info send-button-override-info">This website has enabled the send button regardless of your settings.</OverrideInfo>}
+
     <ExperimentsButton
       onClick={() => {
         store.modal.close();
