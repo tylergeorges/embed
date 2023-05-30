@@ -1,9 +1,11 @@
+/* eslint-disable no-plusplus */
 import { TextBox } from '@components/Core/Container/TextBox';
 import { useTranslation } from 'react-i18next';
 import { useStoreState } from '@state';
-
 import { staticMessages } from '@components/Core/VirtualLists/staticData';
 import { MessagesList } from '@components/Core/VirtualLists/MessagesList';
+import { APIMessage } from 'discord-api-types/v10';
+import { useMemo } from 'react';
 import { MessageWrapper } from './elements';
 
 interface MessageContainerProps {
@@ -29,6 +31,31 @@ export const MessageContainer = ({ onClick, guildName }: MessageContainerProps) 
     const message = staticMessages[rowIndex];
     return message.id;
   };
+
+  const groupMessages = (messages: APIMessage[]) => {
+    const grouped: APIMessage[][] = [];
+
+    for (let i = 0; i < messages.length; i++) {
+      const message = messages[i];
+
+      if (i === 0) {
+        grouped.push([]);
+        grouped[0].push(message);
+      } else if (i > 0) {
+        const prevAuthorId = grouped[grouped.length - 1][0].author.id;
+
+        if (prevAuthorId === message.author.id) {
+          grouped[grouped.length - 1].push(message);
+        } else {
+          grouped.push([message]);
+        }
+      }
+    }
+
+    return grouped;
+  };
+
+  const groupedMessages = useMemo(() => groupMessages(staticMessages), []);
   return (
     <>
       <MessageWrapper
@@ -46,7 +73,7 @@ export const MessageContainer = ({ onClick, guildName }: MessageContainerProps) 
           }
         }}
       >
-        <MessagesList messages={staticMessages} getKey={getMessageKey} />
+        <MessagesList groupedMessages={groupedMessages} getKey={getMessageKey} />
         <TextBox
           channelName={
             translate.t('input.message', { CHANNEL: currentChannel?.name as string }) as string

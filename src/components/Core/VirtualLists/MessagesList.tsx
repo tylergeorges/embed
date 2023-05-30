@@ -16,17 +16,18 @@ import {
 } from 'react-virtualized';
 import { loadMoreStaticMessages } from '@components/Core/VirtualLists/staticData';
 // import { MessageSkeleton } from '@components/Core/Container/MessageSkeleton';
-import Message from '@root/Message';
 import { APIMessage } from 'discord-api-types/v10';
+import MessageGroup from '@lib/message-renderer/src';
+// import { MessageSkeleton } from '@components/Core/Container/MessageSkeleton';
 
 interface MessageListProps {
-  messages: APIMessage[];
+  groupedMessages: APIMessage[][];
   getKey: (rowIndex: number) => string;
 }
 
 type RegisterList = (registeredChild: any) => void;
 
-export const MessagesList = ({ messages, getKey }: MessageListProps) => {
+export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
   const listRef = useRef<List | null>(null);
   const registerListRef = useRef<RegisterList | null>(null);
   const recentListWidth = useRef<number>(0);
@@ -34,8 +35,8 @@ export const MessagesList = ({ messages, getKey }: MessageListProps) => {
   const cache = useRef(
     new CellMeasurerCache({
       fixedWidth: true,
-      keyMapper: getKey
-      // defaultHeight: 100
+      keyMapper: getKey,
+      defaultHeight: 100
     })
   );
 
@@ -50,23 +51,15 @@ export const MessagesList = ({ messages, getKey }: MessageListProps) => {
   const messageRenderer = ({ key, index, style, parent }: ListRowProps) => {
     let listItem: ReactNode;
 
-    if (index >= messages.length) {
+    if (index >= groupedMessages.length) {
       listItem = (
         <SpinnerWrapper type="fetchingMessages">
           <Spinner type="fetchingMessages" />
         </SpinnerWrapper>
       );
-    }
-    // else if (isScrolling && !isVisible && index <= messages.length - 1) {
-    //   const message = messages[index];
-
-    //   listItem = <MessageSkeleton message={message} />;
-    // }
-    else {
-      const message = messages[index];
-      listItem = <Message message={message} />;
-      // listItem = <Message message={message} />;
-      // listItem = <Message message={message} />;
+    } else {
+      const messageGroup = groupedMessages[index];
+      listItem = <MessageGroup thread={false} messages={messageGroup} />;
     }
 
     return (
@@ -91,7 +84,7 @@ export const MessagesList = ({ messages, getKey }: MessageListProps) => {
     }
   };
 
-  const isRowLoaded = ({ index }: { index: number }) => index < messages.length;
+  const isRowLoaded = ({ index }: { index: number }) => index < groupedMessages.length;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const loadMoreRows = async (indexRange: IndexRange) => loadMoreStaticMessages;
@@ -100,7 +93,7 @@ export const MessagesList = ({ messages, getKey }: MessageListProps) => {
   return (
     <VirtualListContainer>
       <InfiniteLoader
-        rowCount={messages.length + 1}
+        rowCount={groupedMessages.length + 1}
         isRowLoaded={isRowLoaded}
         loadMoreRows={loadMoreRows}
       >
@@ -120,7 +113,7 @@ export const MessagesList = ({ messages, getKey }: MessageListProps) => {
                 registerListRef.current = registerChild;
                 return (
                   <List
-                    rowCount={messages.length + 1}
+                    rowCount={groupedMessages.length + 1}
                     rowRenderer={messageRenderer}
                     rowHeight={cache.current.rowHeight}
                     overscanRowCount={1}

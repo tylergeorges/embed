@@ -38,5 +38,6 @@ export const VirtualListMessageWrapper = styled(
     // paddingLeft: 72,
     // paddingTop: 2,
     // paddingBottom: 2
+    textAlign: 'left'
   })
 );
