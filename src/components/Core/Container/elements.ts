@@ -1,5 +1,6 @@
-import { styled } from '@stitches/react';
+import { keyframes, styled } from '@stitches/react';
 import { theme, css } from '@stitches';
+import Image from 'next/image';
 
 export const TextChannelWrapper = styled(
   'div',
@@ -219,15 +220,164 @@ export const TextBoxInput = styled(
     // marginBottom: '1.3rem',
   })
 );
-export const MessageContentContainer = styled(
+export const MessageContentOuterWrapper = styled(
   'div',
-  'text-box_input',
+  'message-content_outer_wrapper',
   css({
-    // overflowWrap: 'break-word',
-    // paddingTop: 2,
-    // paddingBottom: 2,
-    // paddingLeft: 72,
-    // paddingRight: 48,
-    // marginTop: 17
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 17,
+    paddingRight: 48,
+    paddingLeft: 72,
+    paddingTop: 2,
+    paddingBottom: 2,
+    '&:hover': {
+      backgroundColor: 'rgba(0,0,0,0.1)'
+    }
+  })
+);
+
+export const MessageContent = styled(
+  'div',
+  'message-content',
+  css({
+    position: 'relative',
+    textAlign: 'left'
+  })
+);
+
+export const MessageAvatar = styled(
+  Image,
+  'message-avatar',
+  css({
+    borderRadius: 999,
+    position: 'absolute',
+    left: 16,
+    pointerEvents: 'none'
+  })
+);
+export const MessageUsername = styled(
+  'h3',
+  'message-username',
+  css({
+    fontSize: 16,
+    margin: 0,
+    pointerEvents: 'none',
+    userSelect: 'none'
+  })
+);
+
+const SkeletonLoader = keyframes({
+  '0%': {
+    opacity: '40%'
+  },
+  '50%': {
+    opacity: '80%'
+  },
+  '100%': {
+    opacity: '40%'
+  }
+});
+
+export const SkeletonLoaderRoot = styled(
+  'div',
+  'skeleton-loader_root',
+  css({
+    animation: `${SkeletonLoader} 3s infinite ease-in-out`,
+    background: `${theme.colors.primaryOpacity20}`,
+    pointerEvents: 'none',
+    userSelect: 'none'
+  })
+);
+
+export const MessageSkeletonWrapper = styled(
+  'div',
+  'message-skeleton_wrapper',
+  css({
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: 25,
+    paddingRight: 48,
+    paddingLeft: 72,
+    paddingTop: 2,
+    paddingBottom: 2
+  })
+);
+
+export const MessageSkeletonContent = styled(
+  'div',
+  'message-skeleton_content',
+  css({
+    position: 'relative',
+    textAlign: 'left',
+    // width: '60%',
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
+    // width: '100%',
+    pointerEvents: 'none',
+    userSelect: 'none'
+  })
+);
+
+export const MessageSkeletonContentLine = styled(
+  'div',
+  'message-skeleton_content_line',
+  css({
+    position: 'relative',
+    textAlign: 'left',
+    color: 'transparent',
+    // marginTop: 10,
+    width: '100%',
+    // background: 'rgba(255, 255, 255, 0.2)',
+    // height: 16,
+    borderRadius: 10
+    // display: 'flex',
+    // flexDirection: 'row'
+  })
+);
+
+export const MessageSkeletonContentWord = styled(
+  'p',
+  'message-skeleton_content_word',
+  css({
+    position: 'relative',
+    color: 'transparent',
+    borderRadius: 10,
+    background: theme.colors.primaryOpacity10,
+    animation: `${SkeletonLoader} 2s infinite ease-in-out`,
+    pointerEvents: 'none'
+    // height:21,
+  })
+);
+
+export const MessageSkeletonUsername = styled(
+  SkeletonLoaderRoot,
+  'message-skeleton_username',
+  css({
+    fontSize: 16,
+    margin: 0,
+    color: 'transparent',
+    width: 150,
+    pointerEvents: 'none',
+    userSelect: 'none',
+    borderRadius: 10,
+    background: theme.colors.primaryOpacity10,
+    animationDelay: '1s'
+  })
+);
+
+export const MessageSkeletonAvatar = styled(
+  SkeletonLoaderRoot,
+  'message-skeleton_avatar',
+  css({
+    borderRadius: 999,
+    position: 'absolute',
+    left: 16,
+
+    width: 40,
+    height: 40
   })
 );

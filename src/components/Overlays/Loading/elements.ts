@@ -31,8 +31,8 @@ export const Spinner = styled(
       position: 'absolute',
       alignSelf: 'center',
       justifySelf: 'center',
-      // bottom: 15,
-      // right: 15,
+      bottom: 15,
+      right: 15,
       animation: `${cube} 1.8s infinite ease-in-out`
     },
     '&::after': {
@@ -46,8 +46,8 @@ export const Spinner = styled(
             height: 10
           },
           alignSelf: 'center',
-          justifySelf: 'center',
-          top: 0
+          justifySelf: 'center'
+          // top: 15
           // left: 0,
           // right: 0
         }

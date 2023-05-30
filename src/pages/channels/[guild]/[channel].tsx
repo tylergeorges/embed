@@ -18,12 +18,12 @@ const Container = dynamic(
 const GuildChannel: NextPage = () => {
   const { disableBrowserMenu } = useContextMenu();
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);
-
+  const showTopicModal = useStoreState(state => state.ui.showTopicModal);
   return (
     <Main onContextMenu={disableBrowserMenu}>
       {showContextMenu && <ContextMenu />}
 
-      <ChannelTopicModal />
+      {showTopicModal && <ChannelTopicModal />}
       <InnerMain>
         <ChannelsList />
         <Container />

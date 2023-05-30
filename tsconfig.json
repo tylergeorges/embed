@@ -23,9 +23,22 @@
       "@state": ["./src/state"],
       "@state/*": ["./src/state/*"],
       "@stitches": ["./stitches.config.tsx"],
-      "types/*": ["./src/types/*"]
+      "types/*": ["./src/types/*"],
+
+      "@root/*": ["./src/lib/message-renderer/src/*"],
+      "@images/*": ["./src/lib/message-renderer/src/assets/images/*"],
+      "@svg/*": ["./src/lib/message-renderer/src/assets/svg/*"],
+      "@utils/*": ["./src/lib/message-renderer/src/utils/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src", "pages/**/*"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src",
+    "pages/**/*",
+    "./src/lib/message-renderer/*.ts",
+    "./src/lib/message-renderer/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }
