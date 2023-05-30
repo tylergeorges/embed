@@ -4,23 +4,19 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL query operation: ChannelName
+// GraphQL query operation: ChannelType
 // ====================================================
 
-export interface ChannelName_channel {
+export interface ChannelType_channel {
   __typename: "AnnouncementChannel" | "ForumChannel" | "TextChannel" | "ThreadChannel" | "VoiceChannel";
-  name: string;
   id: string;
-  rateLimitPerUser: number | null;
-  nsfw: boolean;
-  canSend: boolean;
 }
 
-export interface ChannelName {
-  channel: ChannelName_channel;
+export interface ChannelType {
+  channel: ChannelType_channel;
 }
 
-export interface ChannelNameVariables {
+export interface ChannelTypeVariables {
   guild: string;
   channel: string;
 }

@@ -3,18 +3,7 @@ query ChannelName($guild: String!, $channel: String!) {
     name
     id
     rateLimitPerUser
-
-    ... on TextChannel {
-      nsfw
-      canSend
-    }
-    ... on AnnouncementChannel {
-      nsfw
-      canSend
-    }
-    ... on VoiceChannel {
-      nsfw
-      canSend
-    }
+    nsfw
+    canSend
   }
 }

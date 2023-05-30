@@ -49,6 +49,7 @@ export namespace MessageContainerStyle {
     border-radius: 4px;
     overflow: hidden;
     transition: box-shadow 0.1s ease-in-out;
+    user-select: none;
     
     &:hover {
       cursor: pointer;

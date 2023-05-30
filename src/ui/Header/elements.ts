@@ -1,5 +1,5 @@
 import Button from '@ui/shared/button'
-import { Hash, NSFW, News, NSFWNews, Rules, ThreadHash, Voice, NSFWVoice } from '@ui/shared/Channel'
+import { Hash, NSFW, News, NSFWNews, Rules, ThreadHash, Voice, NSFWVoice, Forum, NSFWForum } from '@ui/shared/Channel'
 import Markdown from '@ui/shared/markdown/render'
 import styled from '@lib/emotion'
 import { Twemoji } from '@ui/shared/Emoji/emoji'
@@ -86,6 +86,10 @@ export const VoiceName = name(Voice)
 
 export const NSFWVoiceName = name(NSFWVoice)
 
+export const ForumName = name(Forum)
+
+export const NSFWForumName = name(NSFWForum)
+
 export const Emoji = styled(Twemoji)`
   width: 18px !important;
   height: 100% !important;
@@ -155,5 +159,9 @@ export const Fullscreen = styled('svg')`
   
   path {
     color: ${({theme}) => theme.colors._primary.fade(0.6).string()};
+  }
+
+  @media only screen and (max-width: 520px) {
+    display: none
   }
 `;

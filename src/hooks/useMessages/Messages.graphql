@@ -12,7 +12,7 @@ query Messages(
     channel: channelV2(id: $channel, guild: $guild) {
         id
         ... on TextChannel {
-            messageBunch(id: $thread, limit: $limit, after: $after, before: $before, around: $around) {
+            messageBunch(threadId: $thread, limit: $limit, after: $after, before: $before, around: $around) {
                 messages {
                     ...Message
                 }
@@ -23,7 +23,7 @@ query Messages(
             }
         }
         ... on AnnouncementChannel {
-            messageBunch(id: $thread, limit: $limit, after: $after, before: $before, around: $around) {
+            messageBunch(threadId: $thread, limit: $limit, after: $after, before: $before, around: $around) {
                 messages {
                     ...Message
                 }
@@ -34,7 +34,21 @@ query Messages(
             }
         }
         ... on VoiceChannel {
-            messageBunch(id: $thread, limit: $limit, after: $after, before: $before, around: $around) {
+            messageBunch(threadId: $thread, limit: $limit, after: $after, before: $before, around: $around) {
+                messages {
+                    ...Message
+                }
+            }
+        }
+        ... on ForumChannel {
+            messageBunch(threadId: $thread, limit: $limit, after: $after, before: $before, around: $around) {
+                messages {
+                    ...Message
+                }
+            }
+        }
+        ... on ThreadChannel { # This is not currently used but it resolves type issues
+            messageBunch(threadId: $thread, limit: $limit, after: $after, before: $before, around: $around) {
                 messages {
                     ...Message
                 }

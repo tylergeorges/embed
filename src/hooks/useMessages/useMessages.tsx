@@ -1,7 +1,7 @@
 import produce from "immer";
 import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables, Messages, MessagesVariables } from "@generated";
+import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables, Messages, MessagesVariables, GuildInfo_guild_channels } from "@generated";
 import { generalStore } from "@store";
 import { useContext } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
@@ -89,8 +89,9 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
               message
             })
 
-          if (message.channelId !== channel) {
-            message.author.name += ` (#${getChannel(message.channelId)?.name})`
+          let msgChannel: GuildInfo_guild_channels
+          if (message.channelId !== channel && (msgChannel = getChannel(message.channelId))) {
+            message.author.name += ` (#${msgChannel.name})`
 
             generalStore.addUnreadChannel(message.channelId)
 
