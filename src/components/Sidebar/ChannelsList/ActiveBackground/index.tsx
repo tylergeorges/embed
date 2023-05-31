@@ -5,6 +5,7 @@ import { Background } from './elements';
 export const ActiveBackground = () => {
   const currentChannelYPos = useStoreState(state => state.ui.currentChannelYPos);
   const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
+
   if (currentChannelYPos) {
     // <BackgroundContainer>
     return (

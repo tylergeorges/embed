@@ -5,7 +5,9 @@ import {
   MessageSkeletonUsername,
   MessageSkeletonAvatar,
   MessageSkeletonWrapper,
-  MessageSkeletonContentWord
+  MessageSkeletonContentLongWord,
+  MessageSkeletonContentShortWord,
+  MessageSkeletonContentMedWord
 } from '@components/Core/Container/elements';
 
 export const MessageSkeleton = () => (
@@ -13,13 +15,36 @@ export const MessageSkeleton = () => (
     <MessageSkeletonAvatar className="message-skeleton_avatar" />
 
     <MessageSkeletonContent className="message-skeleton_content">
-      <MessageSkeletonUsername className="message-skeleton_username">
-        {/* {message.author.name} */}
-      </MessageSkeletonUsername>
+      <MessageSkeletonUsername className="message-skeleton_username" />
       <MessageSkeletonContentLine className="message-skeleton_content_line">
-        <MessageSkeletonContentWord className="message-skeleton_content_word">
-          {/* {message.content} */}
-        </MessageSkeletonContentWord>
+        <MessageSkeletonContentLongWord />
+        <MessageSkeletonContentMedWord />
+        <MessageSkeletonContentLongWord />
+        <MessageSkeletonContentShortWord />
+        <MessageSkeletonContentLongWord />
+        <MessageSkeletonContentLongWord />
+        <MessageSkeletonContentMedWord />
+        <MessageSkeletonContentLongWord />
+        <MessageSkeletonContentMedWord />
+        <MessageSkeletonContentMedWord />
+        <MessageSkeletonContentLongWord />
+      </MessageSkeletonContentLine>
+      <MessageSkeletonContentLine className="message-skeleton_content_line">
+        <MessageSkeletonContentMedWord />
+        <MessageSkeletonContentLongWord />
+        <MessageSkeletonContentMedWord />
+        <MessageSkeletonContentLongWord />
+        <MessageSkeletonContentMedWord />
+      </MessageSkeletonContentLine>
+      <MessageSkeletonContentLine className="message-skeleton_content_line">
+        <MessageSkeletonContentLongWord />
+        <MessageSkeletonContentLongWord />
+        <MessageSkeletonContentMedWord />
+        <MessageSkeletonContentLongWord />
+        <MessageSkeletonContentMedWord />
+        <MessageSkeletonContentMedWord />
+        <MessageSkeletonContentShortWord />
+        <MessageSkeletonContentLongWord />
       </MessageSkeletonContentLine>
     </MessageSkeletonContent>
   </MessageSkeletonWrapper>

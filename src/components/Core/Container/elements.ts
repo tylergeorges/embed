@@ -333,14 +333,16 @@ export const MessageSkeletonContentLine = styled(
     width: '100%',
     // background: 'rgba(255, 255, 255, 0.2)',
     // height: 16,
-    borderRadius: 10
-    // display: 'flex',
-    // flexDirection: 'row'
+    borderRadius: 10,
+    display: 'flex',
+    flexDirection: 'row',
+    height: 22,
+    marginTop: 5
   })
 );
 
 export const MessageSkeletonContentWord = styled(
-  'p',
+  'div',
   'message-skeleton_content_word',
   css({
     position: 'relative',
@@ -348,8 +350,33 @@ export const MessageSkeletonContentWord = styled(
     borderRadius: 10,
     background: theme.colors.primaryOpacity10,
     animation: `${SkeletonLoader} 2s infinite ease-in-out`,
-    pointerEvents: 'none'
-    // height:21,
+    pointerEvents: 'none',
+    height: 22,
+    marginTop: 5,
+    marginRight: 5
+  })
+);
+export const MessageSkeletonContentLongWord = styled(
+  MessageSkeletonContentWord,
+  'message-skeleton_content_word',
+  css({
+    position: 'relative',
+
+    width: 100
+  })
+);
+export const MessageSkeletonContentShortWord = styled(
+  MessageSkeletonContentWord,
+  'message-skeleton_content_word',
+  css({
+    width: 24
+  })
+);
+export const MessageSkeletonContentMedWord = styled(
+  MessageSkeletonContentWord,
+  'message-skeleton_content_word',
+  css({
+    width: 50
   })
 );
 
@@ -364,6 +391,7 @@ export const MessageSkeletonUsername = styled(
     pointerEvents: 'none',
     userSelect: 'none',
     borderRadius: 10,
+    height: 22,
     background: theme.colors.primaryOpacity10,
     animationDelay: '1s'
   })

@@ -19,13 +19,13 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
     const guildChannels = useStoreState(state => state.guild.channels!);
 
     return (
-      <>
+      <div ref={ref}>
         {guildChannels
           .filter(c => c.category?.id === category?.id)
           .sort((a, b) => positionChannel(a) - positionChannel(b))
           .map(channel => (
             <Fragment key={channel.id}>
-              <ChannelsWrapper draggable={false} className="channels-wrapper" ref={ref}>
+              <ChannelsWrapper draggable={false} className="channels-wrapper">
                 <Channel
                   channel={channel}
                   isActive={!currentThreadID && channel.id === currentChannelID}
@@ -52,7 +52,7 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
               ))}
             </Fragment>
           ))}
-      </>
+      </div>
     );
   }
 );

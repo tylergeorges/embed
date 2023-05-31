@@ -4,7 +4,7 @@ import {
   VirtualListMessageWrapper
 } from '@components/Core/VirtualLists/elements';
 import { Spinner, SpinnerWrapper } from '@components/Overlays/Loading/elements';
-import { ReactNode, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import {
   AutoSizer,
   CellMeasurer,
@@ -15,9 +15,8 @@ import {
   ListRowProps
 } from 'react-virtualized';
 import { loadMoreStaticMessages } from '@components/Core/VirtualLists/staticData';
-// import { MessageSkeleton } from '@components/Core/Container/MessageSkeleton';
 import { APIMessage } from 'discord-api-types/v10';
-import MessageGroup from '@lib/message-renderer/src';
+import MessageGroup, { MessageRendererProvider } from '@lib/message-renderer/src';
 // import { MessageSkeleton } from '@components/Core/Container/MessageSkeleton';
 
 interface MessageListProps {
@@ -31,10 +30,10 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
   const listRef = useRef<List | null>(null);
   const registerListRef = useRef<RegisterList | null>(null);
   const recentListWidth = useRef<number>(0);
-
+  const autoSizerTimeout = useRef<NodeJS.Timeout | null>(null);
   const cache = useRef(
     new CellMeasurerCache({
-      fixedWidth: true,
+      fixedWidth: true, //! dont remove this or list will break!
       keyMapper: getKey,
       defaultHeight: 100
     })
@@ -59,7 +58,17 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
       );
     } else {
       const messageGroup = groupedMessages[index];
-      listItem = <MessageGroup thread={false} messages={messageGroup} />;
+      // listItem = <MessageSkeleton />;
+
+      listItem = (
+        <MessageRendererProvider>
+          {({ themeClass }) => (
+            <div className={themeClass}>
+              <MessageGroup thread={false} messages={messageGroup} />
+            </div>
+          )}
+        </MessageRendererProvider>
+      );
     }
 
     return (
@@ -90,6 +99,14 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
   const loadMoreRows = async (indexRange: IndexRange) => loadMoreStaticMessages;
   // const loadMoreRows = async (indexRange: IndexRange) => loadMore();
 
+  useEffect(
+    () => () => {
+      if (autoSizerTimeout.current) {
+        clearTimeout(autoSizerTimeout.current);
+      }
+    },
+    []
+  );
   return (
     <VirtualListContainer>
       <InfiniteLoader
@@ -104,7 +121,7 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
             <AutoSizer>
               {({ width, height }) => {
                 if (recentListWidth.current && recentListWidth.current !== width) {
-                  setTimeout(() => {
+                  autoSizerTimeout.current = setTimeout(() => {
                     resizeList();
                   }, 0);
                 }

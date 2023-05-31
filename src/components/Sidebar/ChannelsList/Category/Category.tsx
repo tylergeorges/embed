@@ -68,12 +68,12 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
     // When we close the category
     if (isCategoryOpen) {
       const channelHeight = 23;
-      // const channelHeight = 29;
 
       if (!isActiveCategory && activeCategoryIsBelow) {
         // When closing a category that isnt the active category
         // and the active category is below this one, update the
         // channels initial Y and current Y
+
         setCurrentChannelYPos(currentChannelY - channelsConHeight);
         setInitChannelYPos(initChannelYPos - channelsConHeight);
       }
@@ -94,6 +94,7 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
       // category is below this one
       if (!isActiveCategory && activeCategoryIsBelow) {
         setInitChannelYPos(initChannelYPos + channelsConHeight);
+
         setCurrentChannelYPos(currentChannelY + channelsConHeight);
       }
       setIsCategoryOpen(true);
