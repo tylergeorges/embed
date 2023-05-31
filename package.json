@@ -17,6 +17,8 @@
     "@sentry/tracing": "^7.14.2",
     "@stitches/react": "^1.2.8",
     "@types/react-virtualized": "^9.21.22",
+    "@widgetbot/message-renderer": "1.0.0-SNAPSHOT",
+    "discord-api-types": "^0.37.43",
     "easy-peasy": "^5.2.0",
     "graphql": "^16.6.0",
     "highlight.js": "^11.8.0",

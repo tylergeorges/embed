@@ -17,7 +17,7 @@ import {
 import { loadMoreStaticMessages } from '@components/Core/VirtualLists/staticData';
 // import { MessageSkeleton } from '@components/Core/Container/MessageSkeleton';
 import { APIMessage } from 'discord-api-types/v10';
-import MessageGroup from '@lib/message-renderer/src';
+import MessageGroup from '@widgetbot/message-renderer';
 // import { MessageSkeleton } from '@components/Core/Container/MessageSkeleton';
 
 interface MessageListProps {
