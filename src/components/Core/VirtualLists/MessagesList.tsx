@@ -16,11 +16,10 @@ import {
 } from 'react-virtualized';
 import { loadMoreStaticMessages } from '@components/Core/VirtualLists/staticData';
 // import { MessageSkeleton } from '@components/Core/Container/MessageSkeleton';
-import MessageGroup, { MessageRendererProvider } from '@widgetbot/message-renderer';
-// import { Message } from '@graphql/graphql';
-
-import { APIMessage } from 'discord-api-types/v10';
+import MessageGroup from '@widgetbot/message-renderer';
 import { groupMessages } from '@util/groupMessages';
+// import { Message } from '@graphql/graphql';
+import { APIMessage } from 'discord-api-types/v10';
 
 interface MessageListProps {
   groupedMessages: APIMessage[][];
@@ -63,16 +62,9 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
       const messageGroup = groupedMessages[index];
       // listItem = <MessageSkeleton />;
 
-      listItem = (
-        <MessageRendererProvider>
-          {({ themeClass }) => (
-            <div className={themeClass}>
-              {/* <MessageGroup thread={false} messages={messageGroup} /> */}
-              <MessageGroup messages={messageGroup} />
-            </div>
-          )}
-        </MessageRendererProvider>
-      );
+      // @ts-ignore
+      // TODO: fix
+      listItem = <MessageGroup messages={messageGroup} thread={false} />;
     }
 
     return (

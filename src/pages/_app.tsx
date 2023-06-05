@@ -8,6 +8,7 @@ import { client } from '@graphql/client';
 import '../i18n';
 import { GuildProvider } from '@components/Providers';
 import React from 'react';
+import { MessageRendererProvider } from '@widgetbot/message-renderer';
 
 function App({ Component, pageProps }: AppProps) {
   const globalStyles = globalCss({
@@ -103,7 +104,13 @@ function App({ Component, pageProps }: AppProps) {
           <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
           </Head>
-          <Component {...pageProps} />
+          <MessageRendererProvider>
+            {({ themeClass }) => (
+              <div className={themeClass}>
+                <Component {...pageProps} />
+              </div>
+            )}
+          </MessageRendererProvider>
         </GuildProvider>
       </GraphQLProvider>
     </StoreProvider>
