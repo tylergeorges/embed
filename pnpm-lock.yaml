@@ -2786,6 +2786,32 @@ packages:
       tslib: 2.5.0
     dev: true
 
+  /@widgetbot/message-renderer@1.0.0-SNAPSHOT(@types/react@18.0.21)(react@18.2.0):
+    resolution:
+      {
+        integrity: sha512-MmfS3sEScF2/ZfKMypG/vJhjXWmjcRpnPk1GAvFihJyPmDfa9+nVNZSaUXrD711cVeSYsP+vEBNjsURhOei6Gg==
+      }
+    dependencies:
+      '@stitches/react': 1.2.8(react@18.2.0)
+      autobind-decorator: 2.4.0
+      color: 4.2.3
+      discord-api-types: 0.37.43
+      filesize: 10.0.7
+      highlight.js: 10.7.3
+      lodash: 4.17.21
+      lottie-web: 5.12.0
+      memoizee: 0.4.15
+      moment: 2.29.4
+      ramda: 0.28.0
+      rc-tooltip: 3.7.3(react-dom@18.2.0)(react@18.2.0)
+      react-dom: 18.2.0(react@18.2.0)
+      react-easy-emoji: 1.8.1(@types/react@18.0.21)(react@18.2.0)
+      simple-markdown: 0.7.3
+    transitivePeerDependencies:
+      - '@types/react'
+      - react
+    dev: false
+
   /abort-controller@3.0.0:
     resolution:
       {
