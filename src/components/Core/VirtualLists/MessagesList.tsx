@@ -18,8 +18,9 @@ import { loadMoreStaticMessages } from '@components/Core/VirtualLists/staticData
 // import { MessageSkeleton } from '@components/Core/Container/MessageSkeleton';
 import MessageGroup, { MessageRendererProvider } from '@widgetbot/message-renderer';
 // import { Message } from '@graphql/graphql';
+
 import { APIMessage } from 'discord-api-types/v10';
-import { groupMessages } from '../../../util/groupMessages';
+import { groupMessages } from '@util/groupMessages';
 
 interface MessageListProps {
   groupedMessages: APIMessage[][];
