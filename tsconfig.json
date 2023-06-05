@@ -23,12 +23,7 @@
       "@state": ["./src/state"],
       "@state/*": ["./src/state/*"],
       "@stitches": ["./stitches.config.tsx"],
-      "types/*": ["./src/types/*"],
-
-      "@root/*": ["./src/lib/message-renderer/src/*"],
-      "@images/*": ["./src/lib/message-renderer/src/assets/images/*"],
-      "@svg/*": ["./src/lib/message-renderer/src/assets/svg/*"],
-      "@utils/*": ["./src/lib/message-renderer/src/utils/*"]
+      "types/*": ["./src/types/*"]
     }
   },
   "include": [

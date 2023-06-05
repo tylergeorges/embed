@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import { useStoreState } from '@state';
 import { staticMessages } from '@components/Core/VirtualLists/staticData';
 import { MessagesList } from '@components/Core/VirtualLists/MessagesList';
-import { APIMessage } from 'discord-api-types/v10';
 import { useMemo } from 'react';
+import { groupMessages } from '@util/groupMessages';
 import { MessageWrapper } from './elements';
 
 interface MessageContainerProps {
@@ -30,29 +30,6 @@ export const MessageContainer = ({ onClick, guildName }: MessageContainerProps) 
     if (rowIndex >= staticMessages.length) return 'end';
     const message = staticMessages[rowIndex];
     return message.id;
-  };
-
-  const groupMessages = (messages: APIMessage[]) => {
-    const grouped: APIMessage[][] = [];
-
-    for (let i = 0; i < messages.length; i++) {
-      const message = messages[i];
-
-      if (i === 0) {
-        grouped.push([]);
-        grouped[0].push(message);
-      } else if (i > 0) {
-        const prevAuthorId = grouped[grouped.length - 1][0].author.id;
-
-        if (prevAuthorId === message.author.id) {
-          grouped[grouped.length - 1].push(message);
-        } else {
-          grouped.push([message]);
-        }
-      }
-    }
-
-    return grouped;
   };
 
   const groupedMessages = useMemo(() => groupMessages(staticMessages), []);

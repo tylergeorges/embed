@@ -15,9 +15,11 @@ import {
   ListRowProps
 } from 'react-virtualized';
 import { loadMoreStaticMessages } from '@components/Core/VirtualLists/staticData';
-import { APIMessage } from 'discord-api-types/v10';
-import MessageGroup, { MessageRendererProvider } from '@lib/message-renderer/src';
 // import { MessageSkeleton } from '@components/Core/Container/MessageSkeleton';
+import MessageGroup, { MessageRendererProvider } from '@widgetbot/message-renderer';
+// import { Message } from '@graphql/graphql';
+import { APIMessage } from 'discord-api-types/v10';
+import { groupMessages } from '../../../util/groupMessages';
 
 interface MessageListProps {
   groupedMessages: APIMessage[][];
@@ -50,7 +52,7 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
   const messageRenderer = ({ key, index, style, parent }: ListRowProps) => {
     let listItem: ReactNode;
 
-    if (index >= groupedMessages.length) {
+    if (index === groupedMessages.length) {
       listItem = (
         <SpinnerWrapper type="fetchingMessages">
           <Spinner type="fetchingMessages" />
@@ -64,7 +66,8 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
         <MessageRendererProvider>
           {({ themeClass }) => (
             <div className={themeClass}>
-              <MessageGroup thread={false} messages={messageGroup} />
+              {/* <MessageGroup thread={false} messages={messageGroup} /> */}
+              <MessageGroup messages={messageGroup} />
             </div>
           )}
         </MessageRendererProvider>
@@ -96,7 +99,11 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
   const isRowLoaded = ({ index }: { index: number }) => index < groupedMessages.length;
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const loadMoreRows = async (indexRange: IndexRange) => loadMoreStaticMessages;
+  const loadMoreRows = async (indexRange: IndexRange) => {
+    const moreMessages = groupMessages(loadMoreStaticMessages);
+
+    return groupedMessages.unshift(...moreMessages);
+  };
   // const loadMoreRows = async (indexRange: IndexRange) => loadMore();
 
   useEffect(
@@ -139,6 +146,7 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
                     onRowsRendered={onRowsRendered}
                     width={width}
                     ref={setListRef}
+                    scrollToIndex={groupedMessages.length}
                   />
                 );
               }}
