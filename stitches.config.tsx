@@ -1,19 +1,5 @@
-import { createStitches } from '@stitches/react';
-import React, { ForwardedRef, forwardRef } from 'react';
-import OverridableStyledComponent, { Element } from '@components/Core/OverridableStyledComponent';
+import { ScaleValue, createStitches } from '@stitches/react';
 
-// @media screen and (max-width: 578px)
-
-// @sm	@media (min-width: 640px)
-// @md	@media (min-width: 768px)
-// @lg	@media (min-width: 1024px)
-// @xl	@media (min-width: 1280px)
-// @xxl	@media (min-width: 1536px)
-
-// screen and
-export const mediaQuery = {
-  small: 'screen and (max-width: 768px)'
-};
 const stitches = createStitches({
   theme: {
     colors: {
@@ -32,6 +18,10 @@ const stitches = createStitches({
 
       textPrimary: '#FFFFFF',
       textMuted: 'rgb(163, 166, 170)',
+
+      iconDark: 'rgb(128, 132, 142)',
+      iconLight: 'rgb(181,186,193)',
+      iconActive: '$primaryOpacity90',
 
       systemMessageDark: '#999999',
       interactiveNormal: '#dcddde',
@@ -72,6 +62,7 @@ const stitches = createStitches({
       '2xl': '32px'
     },
     space: {
+      none: '0px',
       '2xs': '4px',
       xs: '6px',
       sm: '8px',
@@ -122,17 +113,6 @@ const stitches = createStitches({
       '2xl': '32px',
       round: '99999999999px'
     },
-
-    // media: {
-    //   // sm: '(min-width: 640px)',
-    //   // md: '(min-width: 768px)',
-    //   // lg: '(min-width: 1024px)',
-    //   // xl: '(min-width: 1280px)',
-    //   // xxl: '(min-width: 1536px)',
-    //   // small: '(min-width: 768px)'
-    //   small: 'screen and (max-width: 768px)',
-    // },
-
     singleChannel: {
       enable: false
     },
@@ -142,46 +122,28 @@ const stitches = createStitches({
     readOnly: {
       enable: false
     }
+  },
+  media: {
+    small: 'screen and (max-width: 768px)'
+  },
+  utils: {
+    marginX: (value: ScaleValue<'space'>) => ({
+      marginLeft: value,
+      marginRight: value
+    }),
+    marginY: (value: ScaleValue<'space'>) => ({
+      marginTop: value,
+      marginBottom: value
+    }),
+    paddingX: (value: ScaleValue<'space'>) => ({
+      paddingLeft: value,
+      paddingRight: value
+    }),
+    paddingY: (value: ScaleValue<'space'>) => ({
+      paddingTop: value,
+      paddingBottom: value
+    })
   }
 });
 
-export function styled<
-  Comp extends Element,
-  Css extends string | ((args: { as?: Element } & Record<string, unknown>) => string)
->(component: Comp, overrideClassName: string, cssClass: Css) {
-  type ToReturnProps<TStitchesProps extends { as?: Element }> = React.ComponentProps<
-    TStitchesProps extends { as: Element } ? TStitchesProps['as'] : Comp
-  > & {
-    stitchesProps?: TStitchesProps &
-      (Css extends (arg: infer P) => string ? P : {}) &
-      (React.ComponentProps<Comp> extends { stitchesProps: infer P } ? P : {});
-  };
-
-  function ComponentToReturn<TStitchesProps extends { as?: Element }>(
-    props: ToReturnProps<TStitchesProps>,
-    ref: ForwardedRef<Comp>
-  ) {
-    const { stitchesProps, ...restOfProps } = props;
-
-    const actualClassName = cssClass instanceof Function ? cssClass(stitchesProps) : cssClass;
-
-    return (
-      // @ts-expect-error TS2322
-      <OverridableStyledComponent
-        component={component}
-        className={actualClassName}
-        overrideClassName={overrideClassName}
-        innerRef={ref}
-        {...restOfProps}
-      />
-    );
-  }
-
-  const refForwarded = forwardRef(ComponentToReturn);
-
-  refForwarded.toString = () => `.${overrideClassName}`;
-
-  return refForwarded;
-}
-
-export const { theme, globalCss, keyframes, css, getCssText } = stitches;
+export const { theme, globalCss, keyframes, css, getCssText, styled } = stitches;

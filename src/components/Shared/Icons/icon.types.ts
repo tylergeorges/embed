@@ -14,4 +14,13 @@ export interface IconProps {
         [x: string]: 'large' | 'regular' | undefined;
       })
     | undefined;
+  color?:
+    | 'dark'
+    | 'light'
+    | ({
+        '@initial'?: 'dark' | 'light' | undefined;
+      } & {
+        [x: string]: 'dark' | 'light' | undefined;
+      })
+    | undefined;
 }

@@ -31,12 +31,10 @@ export const ThreadPanelHeader = () => {
         <ThreadPanelHeaderIconContainer className="panel-thread_header_icon_container">
           <ThreadPanelHeaderIconContent className="panel-thread_header_icon_content">
             {windowIsMobile && <Hamburger />}
-            <ThreadsIcon
-              css={{ marginLeft: 8, marginRight: 8, path: { fill: 'rgb(128, 132, 142)' } }}
-            />
+            <ThreadsIcon color="dark" css={{ marginX: '$sm' }} />
             {currentThread?.name}
           </ThreadPanelHeaderIconContent>
-          <CloseButton onClick={closePanel} />
+          <CloseButton onClick={closePanel} color="dark" />
         </ThreadPanelHeaderIconContainer>
       </ThreadPanelHeaderRoot>
     </Header>

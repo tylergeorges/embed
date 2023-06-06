@@ -6,7 +6,7 @@ import { staticMessages } from '@components/Core/VirtualLists/staticData';
 import { MessagesList } from '@components/Core/VirtualLists/MessagesList';
 import { useMemo } from 'react';
 import { groupMessages } from '@util/groupMessages';
-import { mediaQuery } from '@stitches';
+
 import { MessageWrapper } from './elements';
 
 interface MessageContainerProps {
@@ -37,13 +37,13 @@ export const MessageContainer = ({ onClick, guildName }: MessageContainerProps) 
   return (
     <>
       <MessageWrapper
-        className="message-wrapper non-draggable"
+        className="message-wrapper non-dragable"
         draggable={false}
         membersListOpen={isMembersListOpen}
         onClick={onClick}
         mobile={{
           '@initial': false,
-          [`${mediaQuery.small}`]: true
+          '@small': true
         }}
       >
         <MessagesList groupedMessages={groupedMessages} getKey={getMessageKey} />

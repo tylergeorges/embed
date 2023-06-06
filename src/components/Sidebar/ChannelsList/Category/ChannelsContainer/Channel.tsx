@@ -1,9 +1,10 @@
-import { forwardRef, useCallback } from 'react';
+import { forwardRef, useCallback, useMemo } from 'react';
 import { useStoreActions, useStoreState } from '@state';
-import { Channel as IChannel } from '@graphql/graphql';
-import { Hash } from '@components/Shared/Channel/elements';
+import { ChannelType, Channel as IChannel } from '@graphql/graphql';
+import { Fourm, Hash, News } from '@components/Shared/Channel/elements';
 import { Thread } from '@components/Sidebar/ChannelsList/Category/ChannelsContainer/Thread';
 import { IThread } from '@state/stores/guild';
+import { useAppRouter } from '@lib/hooks';
 import { ChannelNameWrapper, ChannelNameInner } from '../../elements';
 
 interface ChannelNameProps {
@@ -25,7 +26,8 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
     const setContextMenuData = useStoreActions(state => state.ui.setContextMenuData);
     const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
-
+    const { channelId } = useAppRouter();
+    const currentGuildUrl = useMemo(() => `/channels/${guildID}`, [guildID]);
     /** Sets the new select component's y position because we clicked on a new
      *  channel.
      */
@@ -53,31 +55,34 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
         key={channel.id}
         draggable={false}
         onClick={handleChannelClick}
-        className="channel-name_wrapper"
+        className="channel-name_wrapper non-dragable"
         isActive={isActive}
         isCategoryOpen={isCategoryOpen}
         isThread={isThread}
       >
         {isThread ? (
-          <>
-            <Thread
-              isActive={isActive}
-              ref={isActive ? ref : null}
-              handleContextMenuClick={handleContextMenuClick}
-              thread={channel as IThread}
-            />
-          </>
+          <Thread
+            isActive={isActive}
+            ref={isActive ? ref : null}
+            handleContextMenuClick={handleContextMenuClick}
+            thread={channel as IThread}
+            currentChannelUrl={`${currentGuildUrl}/${channelId}`}
+          />
         ) : (
           <ChannelNameInner
             active_state={isActive}
-            href={`/channels/${guildID}/${channel.id}`}
-            // We only want to set the ref for the current channel
+            href={`${currentGuildUrl}/${channel.id}`}
             ref={isActive ? ref : null}
             draggable={false}
             className="channel-name"
             onContextMenu={handleContextMenuClick}
           >
-            <Hash />
+            {channel.type === ChannelType.GuildText && <Hash />}
+
+            {channel.type === ChannelType.GuildAnnouncement && <News />}
+
+            {channel.type === ChannelType.GuildForum && <Fourm />}
+
             {channel.name}
           </ChannelNameInner>
         )}

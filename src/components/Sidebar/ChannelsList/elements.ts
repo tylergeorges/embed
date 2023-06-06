@@ -70,23 +70,16 @@ export const ChannelNameWrapper = styled(
   'div',
   'channel-name_wrapper',
   css({
-    // display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     height: 'auto',
-    // width: '100%',
+
     transition: 'max-height 350ms ease',
-    maxHeight: theme.sizes.channelNameHeight,
+    maxHeight: '$channelNameHeight',
+
     marginTop: '$2xs',
     marginBottom: '$2xs',
-    '-moz-user-select': 'none',
-    '-khtml-user-select': 'none',
-    '-webkit-user-select': 'none',
-    '-webkit-touch-callout': 'none' /* iOS Safari */,
-    ' -khtml-user-select': 'none' /* Konqueror HTML */,
-    '-ms-user-select': 'none' /* Internet Explorer/Edge */,
-    'user-select': 'none',
 
     variants: {
       isThread: {
@@ -142,20 +135,9 @@ export const ChannelNameInner = styled(
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    height: theme.sizes.channelNameHeight,
-    lineHeight: theme.sizes.channelNameHeight,
-
-    marginLeft: '$sm',
-    marginRight: '$sm',
-    paddingRight: '$lg',
-    paddingLeft: '$lg',
-    marginTop: '$2xs',
-    marginBottom: '$2xs',
-    borderRadius: '$2xs',
 
     color: '$primaryOpacity30',
     willChange: 'background-color, color,',
-    width: '$channelNameWidth',
     fontWeight: '$thin',
 
     '&:hover': {
@@ -203,8 +185,8 @@ export const ThreadsWrapper = styled(
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    width: '100%'
-
-    // justifyContent:"center"
+    width: '100%',
+    marginTop: -10,
+    padding: 0
   })
 );

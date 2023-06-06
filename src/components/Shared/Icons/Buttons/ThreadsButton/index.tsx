@@ -15,7 +15,7 @@ export const ThreadsButton = () => {
     <>
       <ThreadsPopover>
         <IconButtonWrapper button_label="Threads" tooltipPlacement="bottom">
-          <ThreadsIcon onClick={openThreadsModal} />
+          <ThreadsIcon onClick={openThreadsModal} color="light" />
         </IconButtonWrapper>
       </ThreadsPopover>
     </>

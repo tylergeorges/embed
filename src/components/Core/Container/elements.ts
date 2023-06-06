@@ -1,5 +1,5 @@
-import { keyframes, styled } from '@stitches/react';
-import { theme, css } from '@stitches';
+import { keyframes } from '@stitches/react';
+import { theme, css, styled } from '@stitches';
 import Image from 'next/image';
 
 export const TextChannelWrapper = styled(
@@ -108,8 +108,7 @@ export const TextChannelInnerWrapper = styled(
       mobile: {
         true: {
           transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
-          marginLeft: '0px',
-          marginRight: 0,
+          marginX: '$none',
           width: '100%',
           height: '100%'
         }
@@ -165,7 +164,7 @@ export const MessageWrapper = styled(
     '.channel-welcome_subheader': {
       margin: 0,
       fontSize: '14px',
-      color: 'rgba(255, 255, 255, 0.5)',
+      color: '$primaryOpacity50',
       textAlign: 'center'
     },
     variants: {
@@ -192,11 +191,12 @@ export const MessageWrapper = styled(
         membersListOpen: true,
         mobile: true,
         css: {
-          marginRight: '0px',
+          marginRight: '$none',
           width: '100%',
           height: '100%',
           transition: 'transform 0.3s ease 0s',
           transform: `translateX(0px)`,
+
           '&::after': {
             content: '',
             transition: 'opacity 0.5s ease 0s',
@@ -212,9 +212,8 @@ export const TextBoxWrapper = styled(
   'div',
   'text-box_wrapper',
   css({
-    paddingLeft: '$xl',
-    paddingRight: '$xl',
     position: 'relative',
+    paddingX: '$xl',
     display: 'flex',
     alignItems: 'center',
     width: '100%'
@@ -230,11 +229,11 @@ export const TextBoxInput = styled(
 
     border: 'none',
     borderRadius: '$xs',
+    fontWeight: '$thin',
+
     outline: 'none',
     fontSize: '$lg',
     padding: '$md',
-    fontWeight: '$thin',
-    // marginBottom: '$md',
     color: '$textPrimary'
   })
 );

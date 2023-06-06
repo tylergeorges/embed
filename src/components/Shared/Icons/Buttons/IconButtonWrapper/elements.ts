@@ -1,14 +1,12 @@
-import { css, theme } from '@stitches';
-import { styled } from '@stitches/react';
+import { css, theme, styled } from '@stitches';
+// import { styled } from '@stitches/react';
 
 export const IconRoot = styled(
   'svg',
   'button-icons',
   css({
     cursor: 'pointer',
-    path: {
-      fill: 'rgb(181,186,193)'
-    },
+
     justifySelf: 'flex-end',
     '&:hover': {
       path: {
@@ -19,7 +17,7 @@ export const IconRoot = styled(
       isActive: {
         true: {
           path: {
-            fill: theme.colors.primaryOpacity90
+            fill: '$iconActive'
           }
         }
       },
@@ -32,6 +30,19 @@ export const IconRoot = styled(
           width: '$iconSizeXl',
           height: '$iconSizeXl'
         }
+      },
+      color: {
+        light: {
+          path: {
+            fill: '$iconLight'
+          }
+        },
+        dark: {
+          path: {
+            fill: '$iconDark'
+          }
+          // marginLeft: 8, marginRight: 8, path: { fill: 'rgb(128, 132, 142)'
+        }
       }
     }
   })
@@ -42,13 +53,14 @@ export const IconButtonRoot = styled(
   'icon-button_wrapper_root',
   css({
     display: 'flex',
-    whiteSpace: 'nowrap',
-    marginLeft: 8,
-    marginRight: 8,
-    width: 24,
-    height: 24,
     alignItems: 'center',
     justifyContent: 'center',
+
+    whiteSpace: 'nowrap',
+
+    width: '$iconSizeMed',
+    height: '$iconSizeMed',
+    marginX: '$sm',
     position: 'relative'
   })
 );
@@ -67,7 +79,8 @@ export const SpineIconRoot = styled(
     height: 11,
     position: 'absolute',
     justifySelf: 'flex-start',
-    left: 22
+    left: 30,
+    marginTop: 10
   })
 );
 

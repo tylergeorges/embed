@@ -1,5 +1,5 @@
-import { keyframes, styled } from '@stitches/react';
-import { css, theme } from '@stitches';
+import { keyframes } from '@stitches/react';
+import { css, theme, styled } from '@stitches';
 
 const leftSlideIn = keyframes({
   '0%': {
@@ -84,7 +84,18 @@ export const SidebarWrapper = styled(
 );
 
 export const ChannelsSidebarWrapper = styled(SidebarWrapper, 'channels-sidebar_wrapper', {});
-export const MembersSidebarWrapper = styled(SidebarWrapper, 'members-sidebar_wrapper', {});
+
+export const MembersSidebarWrapper = styled(
+  SidebarWrapper,
+  'members-sidebar_wrapper',
+  css({
+    right: 0,
+    transition: 'transform ease 0.3s',
+    zIndex: 1,
+    justifySelf: 'flex-end'
+  })
+);
+
 export const ThreadsPanelContainer = styled(
   'div',
   'thread-panel_wrapper',

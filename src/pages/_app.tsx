@@ -77,7 +77,17 @@ function App({ Component, pageProps }: AppProps) {
       '-ms-user-select': 'none' /* Internet Explorer/Edge */,
       'user-select': 'none'
     },
-
+    '.channel-name': {
+      marginLeft: '$sm',
+      marginRight: '$sm',
+      paddingRight: '$lg',
+      paddingLeft: '$lg',
+      marginTop: '$2xs',
+      marginBottom: '$2xs',
+      borderRadius: '$2xs',
+      width: '$channelNameWidth',
+      height: '$channelNameHeight'
+    },
     // '@media (prefers-color-scheme: dark)': {
     //   html: {
     //     colorScheme: 'dark'

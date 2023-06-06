@@ -1,7 +1,7 @@
 import { ThreadsPanelIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
 import { IconProps } from '../icon.types';
 
-export const ThreadsPanelIcon = ({ onClick, size, customSize }: IconProps) => (
+export const ThreadsPanelIcon = ({ onClick, size, customSize, color }: IconProps) => (
   <ThreadsPanelIconRoot
     size={size ?? 'regular'}
     aria-label="Threads Panel Button"
@@ -9,6 +9,7 @@ export const ThreadsPanelIcon = ({ onClick, size, customSize }: IconProps) => (
     css={customSize ? { width: customSize, height: customSize } : {}}
     className="threads-panel_icon"
     viewBox="0 0 24 24"
+    color={color || 'light'}
   >
     <g strokeWidth="0" />
 

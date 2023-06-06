@@ -67,7 +67,8 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
 
     // When we close the category
     if (isCategoryOpen) {
-      const channelHeight = 23;
+      const channelHeight = 25;
+      // const channelHeight = 23;
 
       if (!isActiveCategory && activeCategoryIsBelow) {
         // When closing a category that isnt the active category

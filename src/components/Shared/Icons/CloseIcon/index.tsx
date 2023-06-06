@@ -1,13 +1,14 @@
 import { CloseIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
 import { IconProps } from '../icon.types';
 
-export const CloseIcon = ({ onClick, isActive, size }: IconProps) => (
+export const CloseIcon = ({ onClick, isActive, size, color }: IconProps) => (
   <CloseIconRoot
     size={size ?? 'regular'}
     isActive={isActive}
     aria-label="Close"
     className="icon-close"
     onClick={onClick}
+    color={color || 'light'}
   >
     <path
       fill="currentColor"

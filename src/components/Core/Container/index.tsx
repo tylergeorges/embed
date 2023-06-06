@@ -4,7 +4,6 @@ import { MembersList } from '@components/Sidebar/MembersList';
 import { useCallback, useEffect } from 'react';
 
 import { Channel } from '@graphql/graphql';
-import { mediaQuery } from '@stitches';
 import { TextChannelInnerWrapper, TextChannelWrapper } from './elements';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
@@ -58,7 +57,6 @@ export const Container = () => {
     setCurrentThread,
     channelThreads
   ]);
-  // const translate = useTranslation();
 
   const hideSidebar = useCallback(() => {
     if ((windowIsMobile && isChannelsListOpen) || (windowIsMobile && isMembersListOpen)) {
@@ -80,7 +78,7 @@ export const Container = () => {
       className="text-channel_wrapper"
       mobile={{
         '@initial': false,
-        [`${mediaQuery.small}`]: true
+        '@small': true
       }}
       channelsListOpen={isChannelsListOpen}
       threadsPanelOpen={isThreadsPanelOpen}
@@ -91,7 +89,7 @@ export const Container = () => {
         className="text-channel_inner_wrapper"
         mobile={{
           '@initial': false,
-          [`${mediaQuery.small}`]: true
+          '@small': true
         }}
       >
         <MessageContainer guildName={guildName} onClick={hideSidebar} />

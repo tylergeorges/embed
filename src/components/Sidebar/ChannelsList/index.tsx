@@ -3,7 +3,7 @@ import { Header } from '@components/Header';
 import { ModalBackdrop } from '@components/Overlays/Modal/elements';
 import { useAppRouter, useContextMenu, useMediaQuery } from '@lib/hooks';
 import { Category } from './Category/Category';
-import { ActiveBackground } from './ActiveBackground';
+import { ChannelHighlighter } from './ChannelHighlighter';
 import { ChannelsSidebarWrapper } from '../elements';
 
 /** This component displays the channels for the given guild, it wraps
@@ -43,7 +43,7 @@ export const ChannelsList = () => {
         </div>
 
         <div className="sidebar-children_container">
-          <ActiveBackground />
+          <ChannelHighlighter />
 
           {categories.map(category => (
             <Category
