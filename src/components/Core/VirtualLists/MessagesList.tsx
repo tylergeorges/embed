@@ -16,7 +16,6 @@ import {
 } from 'react-virtualized';
 import { loadMoreStaticMessages } from '@components/Core/VirtualLists/staticData';
 // import { MessageSkeleton } from '@components/Core/Container/MessageSkeleton';
-import MessageGroup from '@widgetbot/message-renderer';
 import { groupMessages } from '@util/groupMessages';
 // import { Message } from '@graphql/graphql';
 import { APIMessage } from 'discord-api-types/v10';
@@ -58,14 +57,15 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
           <Spinner type="fetchingMessages" />
         </SpinnerWrapper>
       );
-    } else {
-      const messageGroup = groupedMessages[index];
-      // listItem = <MessageSkeleton />;
-
-      // @ts-ignore
-      // TODO: fix
-      listItem = <MessageGroup messages={messageGroup} thread={false} />;
     }
+    // else {
+    //   const messageGroup = groupedMessages[index];
+    //   // listItem = <MessageSkeleton />;
+
+    //   // @ts-ignore
+    //   // TODO: fix
+    //   // listItem = <MessageGroup messages={messageGroup} thread={false} />;
+    // }
 
     return (
       <CellMeasurer
@@ -97,7 +97,6 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
 
     return groupedMessages.unshift(...moreMessages);
   };
-  // const loadMoreRows = async (indexRange: IndexRange) => loadMore();
 
   useEffect(
     () => () => {

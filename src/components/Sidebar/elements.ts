@@ -99,7 +99,7 @@ export const ThreadsPanelContainer = styled(
 
     backgroundColor: '$background',
     flexDirection: 'column',
-    '@media screen  and (max-width: 768px)': {
+    '@mobile': {
       width: '100%'
     },
     variants: {
@@ -109,7 +109,7 @@ export const ThreadsPanelContainer = styled(
         },
         true: {
           width: '100%',
-          '@media screen  and (max-width: 768px)': {
+          '@mobile': {
             width: '100%',
             transform: `translateX(-2%)`
           }
@@ -132,17 +132,18 @@ export const ThreadPanelWrapper = styled(
     position: 'absolute',
     backgroundColor: '$background',
     flexDirection: 'row',
+
     variants: {
       isOpen: {
         false: {
           transform: `translateX(100%)`
-        },
-        true: {
-          '@media screen  and (max-width: 768px)': {
-            width: '100%',
-            transform: `translateX(2%)`
-          }
         }
+      },
+      mobile: {
+        true: {
+          width: '100%'
+        },
+        false: {}
       }
     }
   })
@@ -153,8 +154,8 @@ export const Close = styled(
   'sidebar_close',
   css({
     right: 0,
-    height: 30,
-    width: 30,
+    height: '$iconSizeLarge',
+    width: '$iconSizeLarge',
 
     background: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='rgba(255,255,255,0.3)' viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e")`,
     backgroundSize: '50%',
@@ -173,8 +174,8 @@ export const Close = styled(
       color: {
         light: {
           right: 0,
-          height: 20,
-          width: 20,
+          height: '$iconSizeSmall',
+          width: '$iconSizeSmall',
 
           backgroundSize: '50%',
           backgroundPosition: '50% 50%',
@@ -197,10 +198,12 @@ export const ThreadsPanelSeperator = styled(
     height: '100%',
     width: 8,
     transform: `translateX(-8px)`,
-    backgroundColor: 'rgb(30, 31, 34)',
+    backgroundColor: '$borderDark',
     zIndex: 9,
-    '@media screen  and (max-width: 768px)': {
-      opacity: 0
+    '@mobile': {
+      true: {
+        opacity: 0
+      }
     }
   })
 );

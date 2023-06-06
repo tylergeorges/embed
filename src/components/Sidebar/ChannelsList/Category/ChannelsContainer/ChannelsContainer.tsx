@@ -37,7 +37,7 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
               {channel.threads?.map(thread => (
                 <Fragment key={thread.id}>
                   {currentThreadID === thread.id && (
-                    <ThreadsWrapper>
+                    <ThreadsWrapper className="thread-wrapper">
                       <Spine />
                       <Channel
                         isThread

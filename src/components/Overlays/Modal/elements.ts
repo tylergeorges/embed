@@ -118,7 +118,7 @@ export const ModalHeaderContent = styled(
   css({
     fontSize: '100%',
     // fontSize: '$xl',
-    padding: '$xxl',
+    padding: '$xl',
     display: 'flex',
     justifyContent: 'space-between',
     cursor: 'default'
@@ -167,7 +167,7 @@ export const PopoverContainer = styled(
 
     alignSelf: 'center',
     justifySelf: 'center',
-    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
+    boxShadow: '$dropShadow',
 
     variants: {
       isOpen: {
@@ -231,14 +231,14 @@ export const ChannelTopicModalContent = styled(
   HeaderMainContentRoot,
   'modal-channel_topic_content',
   css({
-    fontSize: '$l',
+    fontSize: '$lg',
     color: 'rgba(255,255,255,0.7)',
     height: '100%',
     flexGrow: 1,
     flexShrink: 1,
-    paddingLeft: '$xxl',
+    paddingLeft: '$xl',
     paddingRight: '$lg',
-    paddingBottom: '$xxl',
+    paddingBottom: '$2xl',
     textRendering: 'optimizeLegibility',
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',
@@ -258,7 +258,7 @@ export const NoThreadsIconOuter = styled(
   'popout-no_threads_outer',
   css({
     position: 'relative',
-    marginBottom: 16
+    marginBottom: '$xl'
   })
 );
 export const NoThreadsIconInner = styled(
@@ -266,7 +266,7 @@ export const NoThreadsIconInner = styled(
   'popout-no_threads_inner',
   css({
     position: 'relative',
-    padding: 22,
+    padding: '$2xl',
     display: 'flex',
     borderImageOutset: 'stretch',
     alignItems: 'center'
@@ -298,7 +298,7 @@ export const ThreadsPopoverListHeader = styled(
   css({
     fontSize: '$sm',
     width: '100%',
-    fontWeight: '600',
+    fontWeight: '$bold',
     marginBottom: '$lg',
     marginTop: '$lg',
     color: '$primaryOpacity50',
@@ -314,8 +314,8 @@ export const ThreadsPopoverContent = styled(
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    paddingRight: 16,
-    paddingLeft: 16,
+    paddingRight: '$lg',
+    paddingLeft: '$lg',
     position: 'relative',
     overflowY: 'auto',
     boxSizing: 'border-box'
@@ -327,10 +327,9 @@ export const ThreadsPopoverListItem = styled(
   css({
     backgroundColor: '$background',
     width: '100%',
-    // height: '100%',
-    padding: '$xxl',
+    padding: '$lg',
     marginBottom: '$lg',
-    borderRadius: 8,
+    borderRadius: '$md',
     borderWidth: '1px',
     borderStyle: 'solid',
     borderColor: 'transparent',
@@ -365,6 +364,6 @@ export const NoThreadsHeader = styled(
   'popover-no_threads_header',
   css({
     textAlign: 'center',
-    fontWeight: '600'
+    fontWeight: '$bold'
   })
 );

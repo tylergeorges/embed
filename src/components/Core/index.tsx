@@ -40,7 +40,7 @@ export const Notifications = styled(
     button: {
       cursor: 'pointer',
       outline: 0,
-      fontWeight: '500 !important'
+      fontWeight: '$medium'
     },
 
     '.notification-br': {

@@ -54,31 +54,8 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
         draggable={false}
         onClick={handleChannelClick}
         className="channel-name_wrapper"
-        // if the cateogry isnt open and this text channel is currently open,
-        // then this should be true
-        // categoryOpen={isCategoryOpen ? true : isActive ? true : false}
-        css={
-          // eslint-disable-next-line no-nested-ternary
-          !isActive
-            ? !isCategoryOpen
-              ? // if this channel name is NOT the current channel and the
-                // category is closed
-                {
-                  position: 'relative',
-                  overflow: 'hidden',
-                  maxHeight: 0,
-                  margin: 0,
-                  padding: 0
-                }
-              : // if the channel name is NOT the current channel AND the category
-                // is still open
-                {
-                  position: 'relative',
-                  top: 0
-                }
-            : // if the channel name is the current channel do nothing
-              {}
-        }
+        isActive={isActive}
+        isCategoryOpen={isCategoryOpen}
         isThread={isThread}
       >
         {isThread ? (
@@ -101,7 +78,6 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
             onContextMenu={handleContextMenuClick}
           >
             <Hash />
-
             {channel.name}
           </ChannelNameInner>
         )}

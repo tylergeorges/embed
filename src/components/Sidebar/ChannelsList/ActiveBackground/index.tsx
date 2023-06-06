@@ -11,9 +11,7 @@ export const ActiveBackground = () => {
     return (
       <Background
         css={{
-          transform: `translateY(${currentChannelYPos}px) ${
-            isCurrentChannelThread ? 'scaleX(0.85) translateX(15px)' : ''
-          }`
+          '--yPos': `${currentChannelYPos}px`
         }}
         isCurrentChannelThread={isCurrentChannelThread}
         className="active-channel_background "

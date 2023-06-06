@@ -4,6 +4,7 @@ import { MembersList } from '@components/Sidebar/MembersList';
 import { useCallback, useEffect } from 'react';
 
 import { Channel } from '@graphql/graphql';
+import { mediaQuery } from '@stitches';
 import { TextChannelInnerWrapper, TextChannelWrapper } from './elements';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
@@ -19,6 +20,8 @@ export const Container = () => {
   // hover over the text channel and we want to be able to close them by clicking on
   // the text channel.
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
+  const { threadId, channelId } = useAppRouter();
+  const { hideContextMenu } = useContextMenu();
 
   // boolean check for sidebar lists
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
@@ -27,22 +30,17 @@ export const Container = () => {
   const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
 
   const channelThreads = useStoreState(state => state.guild.channelThreads);
+  const guildName = useStoreState(state => state.guild.data?.name);
 
-  const { threadId, channelId } = useAppRouter();
-
-  const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
   // actions to set sidebar lists state
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
-
-  const { hideContextMenu } = useContextMenu();
-
-  const guildName = useStoreState(state => state.guild.data?.name);
+  const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
 
   // TODO: Write a hook (useCurrentChannel) or something to pull channel id from url & get it from state.guild.channels.
 
   useEffect(() => {
-    if (isCurrentChannelThread) {
+    if (isCurrentChannelThread && threadId) {
       const thread = channelThreads[channelId].threads.find(th => th.id === threadId) as Channel;
       setCurrentThread(thread);
     }
@@ -80,38 +78,20 @@ export const Container = () => {
   return (
     <TextChannelWrapper
       className="text-channel_wrapper"
-      css={{
-        '@media screen  and (max-width: 768px)': {
-          transition: 'transform 0.3s ease 0s',
-
-          // ! assuming the members side bar is still open
-          transform: `translateX(0px) !important`,
-          width: '100% !important',
-          height: '100%'
-        }
+      mobile={{
+        '@initial': false,
+        [`${mediaQuery.small}`]: true
       }}
-      panelAndChannelsOpen={isThreadsPanelOpen && isChannelsListOpen}
-      channelsListOpen={!isThreadsPanelOpen && isChannelsListOpen}
-      threadsPanelOpen={!isChannelsListOpen && isThreadsPanelOpen}
+      channelsListOpen={isChannelsListOpen}
+      threadsPanelOpen={isThreadsPanelOpen}
       onClick={hideContextMenu}
     >
       <TextChannelHeader />
       <TextChannelInnerWrapper
         className="text-channel_inner_wrapper"
-        css={{
-          '@media screen  and (max-width: 768px)': {
-            transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
-
-            // ! assuming the members side bar is still open
-            marginRight: '0px !important',
-            width: '100% !important',
-            height: '100%',
-            '&::after': {
-              transition: 'opacity 0.5s ease 0s',
-              content: '',
-              opacity: isChannelsListOpen || isMembersListOpen ? 1 : 0
-            }
-          }
+        mobile={{
+          '@initial': false,
+          [`${mediaQuery.small}`]: true
         }}
       >
         <MessageContainer guildName={guildName} onClick={hideSidebar} />

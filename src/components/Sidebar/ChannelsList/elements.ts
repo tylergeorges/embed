@@ -1,6 +1,6 @@
 // ! Imported from the library instead of custom config because of weird bugs
-import { theme } from '@stitches';
-import { css, styled } from '@stitches/react';
+import { theme, css } from '@stitches';
+import { styled } from '@stitches/react';
 import Link from 'next/link';
 
 export const CategoryNameContainer = styled(
@@ -10,7 +10,7 @@ export const CategoryNameContainer = styled(
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    marginLeft: 8,
+    marginLeft: '$lg',
     transition: 'color 100ms ease',
     color: 'rgba(255,255,255,0.3)',
     cursor: 'pointer',
@@ -23,8 +23,8 @@ export const CategoryNameArrow = styled(
   'div',
   'category-name_arrow',
   css({
-    width: 20,
-    height: 20,
+    width: '$iconSizeSmall',
+    height: '$iconSizeSmall',
     cursor: 'pointer',
     position: 'relative',
     display: 'inline-block',
@@ -50,28 +50,19 @@ export const CategoryNameContent = styled(
   'category-name',
   css({
     textTransform: 'uppercase',
-
-    // height: 20,
-
-    // marginLeft: 8,
-    // marginRight: 8,
-    // marginTop: 2,
-    // marginBottom: 5,
     fontSize: '$sm',
     alignSelf: 'center'
   })
 );
 export const CategoryContainer = styled(
   'div',
-  // 'details',
   'category-container',
   css({
     width: '100%',
     color: 'rgba(255, 255, 255, 0.7)',
-    fontWeight: 500,
-    paddingTop: 20,
+    fontWeight: '$medium',
+    paddingTop: '$xl',
     transition: 'translateY 0.5s ease'
-    // backgroundColor: 'rgb(46, 48, 54)'
   })
 );
 
@@ -87,8 +78,8 @@ export const ChannelNameWrapper = styled(
     // width: '100%',
     transition: 'max-height 350ms ease',
     maxHeight: theme.sizes.channelNameHeight,
-    marginTop: '$xs',
-    marginBottom: '$xs',
+    marginTop: '$2xs',
+    marginBottom: '$2xs',
     '-moz-user-select': 'none',
     '-khtml-user-select': 'none',
     '-webkit-user-select': 'none',
@@ -100,21 +91,45 @@ export const ChannelNameWrapper = styled(
     variants: {
       isThread: {
         true: {
-          // margin: 0,
-          marginLeft: 36,
-          // marginLeft: 36,
-          paddingLeft: 6,
-          paddingRight: 8,
-          margubRight: 8,
+          marginLeft: '$xl',
+          paddingLeft: '$xs',
+          paddingRight: '$xs',
+          marginRight: '$sm',
           display: 'flex',
-          flexDirection: 'row'
-          // width: '100%'
-          // paddingTop: 6,
-          // paddingBottom: 6
-          // width:'100%'
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyItems: 'center',
+          paddingTop: '$md'
+        }
+      },
+      isActive: {
+        false: {}
+      },
+      isCategoryOpen: {
+        true: {}
+      }
+    },
+    compoundVariants: [
+      {
+        isActive: false,
+        isCategoryOpen: false,
+        css: {
+          position: 'relative',
+          overflow: 'hidden',
+          maxHeight: 0,
+          margin: 0,
+          padding: 0
+        }
+      },
+      {
+        isActive: false,
+        isCategoryOpen: true,
+        css: {
+          position: 'relative',
+          top: 0
         }
       }
-    }
+    ]
   })
 );
 
@@ -127,29 +142,30 @@ export const ChannelNameInner = styled(
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    height: '100%',
+    height: theme.sizes.channelNameHeight,
     lineHeight: theme.sizes.channelNameHeight,
 
-    marginLeft: '$space$lg',
-    marginRight: '$space$lg',
+    marginLeft: '$sm',
+    marginRight: '$sm',
     paddingRight: '$lg',
     paddingLeft: '$lg',
-    marginTop: '$xs',
-    marginBottom: '$xs',
+    marginTop: '$2xs',
+    marginBottom: '$2xs',
+    borderRadius: '$2xs',
 
-    color: 'rgba(255,255,255,0.3)',
+    color: '$primaryOpacity30',
     willChange: 'background-color, color,',
-    borderRadius: 4,
-    width: 'calc(100% - 16px)',
-    fontWeight: '400',
+    width: '$channelNameWidth',
+    fontWeight: '$thin',
+
     '&:hover': {
-      backgroundColor: 'rgba(255,255,255,0.1)',
-      color: 'rgba(255,255,255,0.5)'
+      backgroundColor: '$primaryOpacity10',
+      color: '$primaryOpacity50'
     },
     variants: {
       active_state: {
         true: {
-          color: 'rgba(255,255,255,0.7)',
+          color: '$primaryOpacity70',
           backgroundColor: 'transparent',
           '&:hover': {
             backgroundColor: 'transparent'
@@ -164,14 +180,7 @@ export const ThreadNameInner = styled(
   ChannelNameInner,
   'thread-name',
   css({
-    margin: 0,
-    padding: 0,
-    // paddingTop: 6,
-    // paddingBottom: 6,
-    display: 'flex',
-    width: '100%',
-    height: '100%'
-    // width: 'calc(100% - 16px)'
+    width: '100%'
   })
 );
 
@@ -193,7 +202,9 @@ export const ThreadsWrapper = styled(
   css({
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '100%'
+
     // justifyContent:"center"
   })
 );

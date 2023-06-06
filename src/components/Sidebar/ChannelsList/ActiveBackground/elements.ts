@@ -18,24 +18,25 @@ export const Background = styled(
   'active-channel_background',
   css({
     position: 'absolute',
-    backgroundColor: 'rgba(255,255,255,0.1)',
+    backgroundColor: '$primaryOpacity10',
 
-    borderRadius: 4,
-    marginLeft: '$space$lg',
-    marginRight: '$space$lg',
+    marginLeft: '$sm',
+    marginRight: '$sm',
     paddingRight: '$lg',
     paddingLeft: '$lg',
-    marginTop: '$xs',
+    marginTop: '$2xs',
+    marginBottom: '$2xs',
+    borderRadius: '$2xs',
+
     pointerEvents: 'none',
 
-    marginBottom: '$xs',
-    width: 'calc(100% - 16px)',
+    width: '$channelNameWidth',
 
     height: theme.sizes.channelNameHeight,
+    transform: 'translateY(var(--yPos))',
     // width: '100%',
 
     variants: {
-      // Disables animation on initial render of page
       animated: {
         true: {
           transition: '350ms ease'
@@ -46,7 +47,7 @@ export const Background = styled(
       },
       isCurrentChannelThread: {
         true: {
-          // transform: 'translateX(10.5)'
+          transform: 'translateY(var(--yPos)) scaleX(0.8) translateX(15px)'
         }
       }
     }

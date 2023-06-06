@@ -33,11 +33,6 @@ export const VirtualListMessageWrapper = styled(
   'div',
   'list-message_container',
   css({
-    // marginTop: 17,
-    // paddingRight: 48,
-    // paddingLeft: 72,
-    // paddingTop: 2,
-    // paddingBottom: 2
     textAlign: 'left'
   })
 );

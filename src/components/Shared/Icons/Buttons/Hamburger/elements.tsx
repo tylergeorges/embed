@@ -17,6 +17,7 @@ export const Ham = styled(
     cursor: 'pointer',
     transition: '0.3s',
     outline: 'none',
+    top: 5,
 
     '&::before': {
       position: 'absolute',

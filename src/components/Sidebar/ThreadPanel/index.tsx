@@ -7,13 +7,20 @@ import {
   ThreadPanelWrapper
 } from '@components/Sidebar/elements';
 import { useStoreState } from '@state';
+import { mediaQuery } from '@stitches';
 
 export const ThreadPanel = () => {
   const isThreadsPanelOpen = useStoreState(state => state.ui.isThreadsPanelOpen);
   const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
 
   return (
-    <ThreadPanelWrapper isOpen={isThreadsPanelOpen && isCurrentChannelThread}>
+    <ThreadPanelWrapper
+      mobile={{
+        '@initial': false,
+        [`${mediaQuery.small}`]: true
+      }}
+      isOpen={isThreadsPanelOpen && isCurrentChannelThread}
+    >
       <ThreadsPanelSeperator className="panel-threads_seperator" />
 
       <ThreadsPanelContainer

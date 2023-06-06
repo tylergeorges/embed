@@ -41,15 +41,15 @@ export const Spinner = styled(
     variants: {
       type: {
         fetchingMessages: {
+          height: 70,
           '&::after, &::before': {
             width: 10,
-            height: 10
+            height: 10,
+            bottom: 0,
+            top: 20
           },
           alignSelf: 'center',
           justifySelf: 'center'
-          // top: 15
-          // left: 0,
-          // right: 0
         }
       }
     }
@@ -67,7 +67,6 @@ export const SpinnerWrapper = styled(
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-
     '*:first-child': {
       position: 'absolute'
     },
@@ -76,7 +75,8 @@ export const SpinnerWrapper = styled(
         fetchingMessages: {
           position: 'relative',
           width: '100%',
-          height: 70
+          height: 40,
+          transform: 'scale(0.9)'
         }
       }
     }

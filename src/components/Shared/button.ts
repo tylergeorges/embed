@@ -15,7 +15,7 @@ const Button = styled(
     border: 'none',
     textDecoration: 'none',
     cursor: 'pointer',
-    fontWeight: 500,
+    fontWeight: '$medium',
     outline: 'none',
     userSelect: 'none',
 

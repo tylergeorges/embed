@@ -25,12 +25,12 @@ export const IconRoot = styled(
       },
       size: {
         regular: {
-          width: 24,
-          height: 24
+          width: '$iconSizeMed',
+          height: '$iconSizeMed'
         },
         large: {
-          width: 36,
-          height: 36
+          width: '$iconSizeXl',
+          height: '$iconSizeXl'
         }
       }
     }

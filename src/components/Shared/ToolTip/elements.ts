@@ -7,8 +7,9 @@ export const ToolTipContainer = styled(
   css({
     backgroundColor: '#18191c',
     position: 'absolute',
-    padding: '$lg',
-    borderRadius: 8,
+    padding: '$sm',
+    borderRadius: '$xs',
+    // borderRadius: 8,
     transform: 'scale(0)',
     pointerEvents: 'none',
     transition: 'transform 100ms ease',
@@ -27,9 +28,6 @@ export const ToolTipContainer = styled(
         },
         bottom: {
           top: 30
-          // marginTop: 2
-          // marginRight: 40,
-          // position:'relative',
         }
       }
     }
@@ -43,7 +41,6 @@ export const ToolTipContent = styled(
     display: 'inline-block',
     fontSize: '$md',
     position: 'relative',
-    // whiteSpace: 'nowrap',
     textAlign: 'center'
   })
 );
@@ -52,15 +49,9 @@ export const ToolTipWrapper = styled(
   'div',
   'tool-tip_wrapper',
   css({
-    // overflow: 'visible',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     position: 'relative'
-    // margin: 10,
-    // marginLeft: 8,
-    // marginRight: 8,
-    // width: 24,
-    // height: 24
   })
 );

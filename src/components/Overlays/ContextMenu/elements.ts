@@ -7,19 +7,18 @@ export const ContextMenuWrapper = styled(
   css({
     backgroundColor: theme.colors.contextMenuBackground,
     // width: 150,
-    height: 'auto',
+    // height: '',
     position: 'absolute',
     zIndex: 12,
-    maxHeight: 'calc(100vh - 32px )',
     minWidth: 188,
     maxWidth: 320,
-    boxShadow: 'rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
-    borderRadius: 4,
-    padding: 8,
+    boxShadow: '$dropShadow',
+    borderRadius: '$xs',
+    padding: '$xs',
     variants: {
       visible: {
         false: {
-          display: 'none'
+          opacity: 0
         }
       }
     }
