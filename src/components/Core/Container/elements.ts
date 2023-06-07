@@ -40,12 +40,6 @@ export const TextChannelWrapper = styled(
           // transform: `translateX(0px)`
         }
       }
-      // panelAndChannelsOpen: {
-      //   true: {
-      //     width: `calc(100% - ($sideBarWidth + $threadPanelMinWidth + 8px))  !important`,
-      //     transform: `translateX(200px)`
-      //   }
-      // }
     },
     compoundVariants: [
       {

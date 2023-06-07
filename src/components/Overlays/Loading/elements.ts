@@ -75,8 +75,8 @@ export const SpinnerWrapper = styled(
         fetchingMessages: {
           position: 'relative',
           width: '100%',
-          height: 40,
-          transform: 'scale(0.9)'
+          height: 80
+          // transform: 'scale(0.9)'
         }
       }
     }
