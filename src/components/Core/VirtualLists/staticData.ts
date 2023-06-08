@@ -33,7 +33,7 @@ export const loadMoreStaticMessages: APIMessage[] = [
   {
     id: '1042882684902453278',
     type: 0,
-    content: 'FIRST LOADED MESSAGE loaded more messages',
+    content: 'LAST LOADED MESSAGE loaded more messages',
     channel_id: '998637045327081502',
     author: user3,
     attachments: [
@@ -133,7 +133,7 @@ export const loadMoreStaticMessages: APIMessage[] = [
     attachments: [],
     channel_id: 'wqeqwdsa',
     content:
-      "LAST LOADED MESSAGE  industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+      "FIRST LOADED MESSAGE  industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     id: 'wwqeewq',
     embeds: [],
     timestamp: '2022-11-17T19:23:27.904000+00:00',
@@ -152,7 +152,7 @@ export const staticMessages: APIMessage[] = [
     id: '1042882684902453278',
     type: 0,
     content:
-      "FIRST MESSAGE 🔓 **__Upcoming Change for Command Permissions__** 🔐 Based on feedback, we're making some updates to permissions for application commands to simplify permission management and to make command permissions more closely resemble other permissions systems in Discord. Server admins can begin to opt-in to the command permission changes outlined in the change log on a per-server basis **starting on December 16, 2022**. However, changes will not be applied to all servers **until late January or early February**. > **📰 Change log: <http://discord.com/developers/docs/change-log#upcoming-application-command-permission-changes>**. This includes many more context and details about whether you'll be affected + how to update your app accordingly. > <:SystemMessageWarn:842172192401915971>﻿ Most apps will be unaffected by this change, but **if your app uses the `PUT /applications/<application_id>/guilds/<guild_id>/commands/<command_id>/permissions` endpoint, you may need to make updates.** There are two main changes included: **1️⃣ The logic used to apply permission configurations to a user in a given context within Discord clients.** The new command permissions configuration behavior allows command-level permissions, app-level permissions, and `default_member_permissions` to work together rather than independently. - `default_member_permissions` acts as a “default” that a developer can set when creating or updating a command - App-level permission configurations (typically set by admins) now act as the 'base' configuration - Command-level permission configurations (typically set by admins) now act as an “override” of the app-level **2️⃣ A new `APPLICATION_COMMAND_PERMISSIONS_V2` guild feature flag to indicate whether that guild is using the old permissions logic or the new (upcoming) logic.** And now....a flowchart to help understand and visualize *how* permissions configurations are used by Discord clients *(it's huge, so you might want to click 'Open Original' to see all of it)*",
+      "LAST MESSAGE 🔓 **__Upcoming Change for Command Permissions__** 🔐 Based on feedback, we're making some updates to permissions for application commands to simplify permission management and to make command permissions more closely resemble other permissions systems in Discord. Server admins can begin to opt-in to the command permission changes outlined in the change log on a per-server basis **starting on December 16, 2022**. However, changes will not be applied to all servers **until late January or early February**. > **📰 Change log: <http://discord.com/developers/docs/change-log#upcoming-application-command-permission-changes>**. This includes many more context and details about whether you'll be affected + how to update your app accordingly. > <:SystemMessageWarn:842172192401915971>﻿ Most apps will be unaffected by this change, but **if your app uses the `PUT /applications/<application_id>/guilds/<guild_id>/commands/<command_id>/permissions` endpoint, you may need to make updates.** There are two main changes included: **1️⃣ The logic used to apply permission configurations to a user in a given context within Discord clients.** The new command permissions configuration behavior allows command-level permissions, app-level permissions, and `default_member_permissions` to work together rather than independently. - `default_member_permissions` acts as a “default” that a developer can set when creating or updating a command - App-level permission configurations (typically set by admins) now act as the 'base' configuration - Command-level permission configurations (typically set by admins) now act as an “override” of the app-level **2️⃣ A new `APPLICATION_COMMAND_PERMISSIONS_V2` guild feature flag to indicate whether that guild is using the old permissions logic or the new (upcoming) logic.** And now....a flowchart to help understand and visualize *how* permissions configurations are used by Discord clients *(it's huge, so you might want to click 'Open Original' to see all of it)*",
     channel_id: '998637045327081502',
     author: {
       bot: true,
@@ -175,6 +175,19 @@ export const staticMessages: APIMessage[] = [
         content_type: 'image/png'
       }
     ],
+    // attachments: [
+    //   {
+    //     id: '1042878162901672048',
+    //     filename: 'flowchart-for-new-permissions.png',
+    //     size: 981134,
+    //     url: 'https://cdn.discordapp.com/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
+    //     proxy_url:
+    //       'https://media.discordapp.net/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
+    //     width: 8576,
+    //     height: 5074,
+    //     content_type: 'image/png'
+    //   }
+    // ],
     reactions: [
       {
         count: 5,
@@ -751,7 +764,7 @@ export const staticMessages: APIMessage[] = [
     author: user1,
     attachments: [],
     channel_id: 'wqeqwdsa',
-    content: 'more messages last ote,',
+    content: 'FIRST MESSAGE',
     id: '0828f670-9250-439b-af48-2fbcb5738608',
     embeds: [],
     timestamp: '2022-11-17T19:23:27.904000+00:00',

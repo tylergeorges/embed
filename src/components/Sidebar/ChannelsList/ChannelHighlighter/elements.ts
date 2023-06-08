@@ -35,7 +35,8 @@ export const Background = styled(
       },
       isCurrentChannelThread: {
         true: {
-          transform: 'translateY(calc(var(--yPos) - 4px)) scaleX(0.79) scaleY(0.9) translateX(25px)'
+          transform: 'translateY(var(--yPos)) scaleX(0.79)  translateX(25px)'
+          // transform: 'translateY(var(--yPos)) scaleX(0.79) scaleY(0.9) translateX(25px)',
         }
       }
     }

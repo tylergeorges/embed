@@ -13,9 +13,6 @@ dependencies:
   '@stitches/react':
     specifier: ^1.2.8
     version: 1.2.8(react@18.2.0)
-  '@types/react-virtualized':
-    specifier: ^9.21.22
-    version: 9.21.22
   '@widgetbot/message-renderer':
     specifier: ^1.0.2
     version: 1.0.2(@types/react@18.0.21)(react@18.2.0)
@@ -61,9 +58,9 @@ dependencies:
   react-i18next:
     specifier: ^12.1.1
     version: 12.1.5(i18next@22.4.10)(react-dom@18.2.0)(react@18.2.0)
-  react-virtualized:
-    specifier: ^9.22.5
-    version: 9.22.5(react-dom@18.2.0)(react@18.2.0)
+  react-virtuoso:
+    specifier: ^4.3.9
+    version: 4.3.9(react-dom@18.2.0)(react@18.2.0)
   simple-markdown:
     specifier: ^0.7.3
     version: 0.7.3
@@ -2521,16 +2518,6 @@ packages:
     dependencies:
       '@types/react': 18.0.21
 
-  /@types/react-virtualized@9.21.22:
-    resolution:
-      {
-        integrity: sha512-YRifyCKnBG84+J/Hny0f3bo8BRrcNT74CvsAVpQpZcS83fdC7lP7RfzwL2ND8/ihhpnDFL1IbxJ9MpQNaKUDuQ==
-      }
-    dependencies:
-      '@types/prop-types': 15.7.5
-      '@types/react': 18.0.21
-    dev: false
-
   /@types/react@18.0.21:
     resolution:
       {
@@ -3554,14 +3541,6 @@ packages:
     engines: { node: '>=0.8' }
     dev: true
 
-  /clsx@1.2.1:
-    resolution:
-      {
-        integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==
-      }
-    engines: { node: '>=6' }
-    dev: false
-
   /color-convert@1.9.3:
     resolution:
       {
@@ -4034,16 +4013,6 @@ packages:
       {
         integrity: sha512-R8LUSEay/68zE5c8/3BDxiTEvgb4xZTF0RKmAHfiEVN3klfIpXfi2/QCoiWPccVQ0J/ZGdz9OjzL4uJEP/MRAw==
       }
-    dev: false
-
-  /dom-helpers@5.2.1:
-    resolution:
-      {
-        integrity: sha512-nRCa7CK3VTrM2NmGkIy4cbK7IZlgBE/PYMn55rrXefr5xXDP0LdtfPnblFDoVdcAfslJ7or6iqAUnx0CCGIWQA==
-      }
-    dependencies:
-      '@babel/runtime': 7.20.13
-      csstype: 3.1.1
     dev: false
 
   /dot-case@3.0.4:
@@ -7690,23 +7659,18 @@ packages:
       }
     dev: false
 
-  /react-virtualized@9.22.5(react-dom@18.2.0)(react@18.2.0):
+  /react-virtuoso@4.3.9(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
-        integrity: sha512-YqQMRzlVANBv1L/7r63OHa2b0ZsAaDp1UhVNEdUaXI8A5u6hTpA5NYtUueLH2rFuY/27mTGIBl7ZhqFKzw18YQ==
+        integrity: sha512-xz8jqaZojIVUbMlUsrwdCH86ApbzfvYzkXKTjxCjFFfieoo46xftvXIC4JKt0eBMlDQLmwrVyXy1FP5ibjqU4A==
       }
+    engines: { node: '>=10' }
     peerDependencies:
-      react: ^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0
-      react-dom: ^15.3.0 || ^16.0.0-alpha || ^17.0.0 || ^18.0.0
+      react: '>=16 || >=17 || >= 18'
+      react-dom: '>=16 || >=17 || >= 18'
     dependencies:
-      '@babel/runtime': 7.20.13
-      clsx: 1.2.1
-      dom-helpers: 5.2.1
-      loose-envify: 1.4.0
-      prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      react-lifecycles-compat: 3.0.4
     dev: false
 
   /react@18.2.0:

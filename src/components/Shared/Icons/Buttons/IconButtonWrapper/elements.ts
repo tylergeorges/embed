@@ -80,7 +80,7 @@ export const SpineIconRoot = styled(
     position: 'absolute',
     justifySelf: 'flex-start',
     left: 30,
-    marginTop: 10
+    marginTop: 16
   })
 );
 

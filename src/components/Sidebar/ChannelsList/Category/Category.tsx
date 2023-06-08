@@ -41,9 +41,9 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
 
     // ! Sets the initial ActiveBackground component's position
     if (currentChannelRef.current) {
-      setCurrentChannelYPos(currentChannelRef.current.offsetTop);
+      setCurrentChannelYPos(currentChannelRef.current.offsetTop - 4);
 
-      setInitChannelYPos(currentChannelRef.current.offsetTop);
+      setInitChannelYPos(currentChannelRef.current.offsetTop - 4);
     }
 
     if (channelsConRef.current) {

@@ -9,6 +9,8 @@ export const ChannelHighlighter = () => {
   const { threadId } = useAppRouter();
   if (currentChannelYPos) {
     // <BackgroundContainer>
+
+    console.log(currentChannelYPos);
     return (
       <Background
         css={{

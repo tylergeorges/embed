@@ -84,8 +84,8 @@ export const ChannelNameWrapper = styled(
     variants: {
       isThread: {
         true: {
-          marginLeft: '$xl',
-          paddingLeft: '$xs',
+          marginLeft: '$lg',
+          paddingLeft: '$lg',
           paddingRight: '$xs',
           marginRight: '$sm',
           display: 'flex',
@@ -184,9 +184,11 @@ export const ThreadsWrapper = styled(
   css({
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    // alignItems: 'center',
     width: '100%',
-    marginTop: -10,
+    // marginTop: "$2xs",
+    marginTop: -6,
+    // marginTop: -10,
     padding: 0
   })
 );

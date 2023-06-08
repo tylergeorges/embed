@@ -3,9 +3,9 @@ import { TextBox } from '@components/Core/Container/TextBox';
 import { useTranslation } from 'react-i18next';
 import { useStoreState } from '@state';
 import { staticMessages } from '@components/Core/VirtualLists/staticData';
-import { MessagesList } from '@components/Core/VirtualLists/MessagesList';
 import { useMemo } from 'react';
 import { groupMessages } from '@util/groupMessages';
+import { MessagesList } from '@components/Core/VirtualLists/MessagesList';
 import { MessageWrapper } from './elements';
 
 interface MessageContainerProps {
@@ -39,6 +39,7 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
         }}
       >
         <MessagesList groupedMessages={groupedMessages} />
+        {/* <MessagesList groupedMessages={groupedMessages} /> */}
         <TextBox
           channelName={
             translate.t('input.message', { CHANNEL: currentChannel?.name as string }) as string
