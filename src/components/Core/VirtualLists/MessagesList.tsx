@@ -4,7 +4,6 @@ import {
   VirtualListMessageWrapper
 } from '@components/Core/VirtualLists/elements';
 import { Spinner, SpinnerWrapper } from '@components/Overlays/Loading/elements';
-import { ReactNode, useEffect, useRef } from 'react';
 import {
   AutoSizer,
   CellMeasurer,
@@ -20,10 +19,12 @@ import { groupMessages } from '@util/groupMessages';
 // import { Message } from '@graphql/graphql';
 import { APIMessage } from 'discord-api-types/v10';
 import MessageGroup, { MessageRendererProvider } from '@widgetbot/message-renderer';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+
+type GroupedMessages = APIMessage[][];
 
 interface MessageListProps {
-  groupedMessages: APIMessage[][];
-  getKey: (rowIndex: number) => string;
+  groupedMessages: GroupedMessages;
 }
 
 type RegisterList = (registeredChild: any) => void;
@@ -33,17 +34,28 @@ type LoadedRowsMap = {
   };
 };
 
-export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
+type MeasureCallbacks = {
+  [index: number]: () => void;
+};
+
+export const MessagesList = ({ groupedMessages }: MessageListProps) => {
   const listRef = useRef<List | null>(null);
   const loadedRowsMap = useRef<LoadedRowsMap>({});
+  const measureCallbacks = useRef<MeasureCallbacks>({});
   const registerListRef = useRef<RegisterList | null>(null);
   const recentListWidth = useRef<number>(0);
   const autoSizerTimeout = useRef<NodeJS.Timeout | null>(null);
-  // const [canLoadRows, setCanLoadRows] = useState(false);
+  const [messages, setMessages] = useState<GroupedMessages>(groupedMessages);
+  const [isFetching, setIsFetching] = useState(false);
+  const isMounted = useRef(false);
+
+  // ! LAST MESSAGE SHOWN = TOTAL LENGTH OF MESSAGE ARRAY
+  const lastMeasuredIndex = useRef(0);
+
   const cache = useRef(
     new CellMeasurerCache({
       fixedWidth: true, //! dont remove this or list will break!
-      keyMapper: getKey,
+      // keyMapper: getKey,
       defaultHeight: 100
     })
   );
@@ -52,108 +64,151 @@ export const MessagesList = ({ groupedMessages, getKey }: MessageListProps) => {
       if (autoSizerTimeout.current) {
         clearTimeout(autoSizerTimeout.current);
       }
+
+      isMounted.current = false;
     },
-    [listRef, groupedMessages.length]
+    []
   );
 
   const resizeList = () => {
     if (listRef.current) {
+      console.log('clearing cache in resize list ');
       cache.current.clearAll();
       listRef.current.recomputeRowHeights();
+
+      if (!isMounted.current) {
+        isMounted.current = true;
+      }
     }
   };
 
   const messageRenderer = ({ key, index, style, parent }: ListRowProps) => {
-    let listItem: ReactNode;
-    if (!loadedRowsMap.current[index]) {
-      loadedRowsMap.current[index] = { loaded: true };
-    }
+    const normalizedIndex = messages.length - index;
 
-    if (index === 0) {
-      listItem = (
-        <SpinnerWrapper type="fetchingMessages">
-          <Spinner type="fetchingMessages" />
-        </SpinnerWrapper>
-      );
-    } else {
-      const messageGroup = groupedMessages[index - 1];
-      if (messageGroup && messageGroup.length) {
-        listItem = <MessageGroup messages={messageGroup} thread={false} />;
+    const getContent = (measure: () => void) => {
+      let listItem: ReactNode;
+      measureCallbacks.current[normalizedIndex] = measure;
+
+      if (!loadedRowsMap.current[normalizedIndex]) {
+        loadedRowsMap.current[normalizedIndex] = { loaded: true };
+        // lastMeasuredIndex.current = index;
+        if (normalizedIndex < lastMeasuredIndex.current) {
+          lastMeasuredIndex.current = normalizedIndex;
+        } else {
+          lastMeasuredIndex.current += normalizedIndex;
+        }
       }
-    }
+
+      if (normalizedIndex === messages.length) {
+        listItem = (
+          <SpinnerWrapper type="fetchingMessages">
+            <Spinner type="fetchingMessages" />
+          </SpinnerWrapper>
+        );
+      } else {
+        const messageGroup = messages[normalizedIndex];
+        if (messageGroup && messageGroup.length) {
+          listItem = <MessageGroup messages={messageGroup} thread={false} />;
+        }
+      }
+
+      return listItem;
+    };
 
     return (
       <CellMeasurer
-        style={{ width: recentListWidth.current }}
+        style={{ ...style, width: recentListWidth.current }}
         columnIndex={0}
-        key={key}
         parent={parent}
         rowIndex={index}
         cache={cache.current}
+        key={key}
       >
-        <VirtualListMessageWrapper style={style}>{listItem}</VirtualListMessageWrapper>
+        {({ measure }) => (
+          <VirtualListMessageWrapper style={style}>{getContent(measure)}</VirtualListMessageWrapper>
+        )}
       </CellMeasurer>
     );
   };
 
   const setListRef = (ref: List) => {
-    listRef.current = ref;
-
+    if (listRef.current === null) {
+      listRef.current = ref;
+    }
     if (registerListRef.current) {
       registerListRef.current(ref);
     }
   };
 
-  const isRowLoaded = ({ index }: { index: number }) => !!loadedRowsMap.current[index];
+  const isRowLoaded = ({ index }: { index: number }) => {
+    // We do this because the order of messages is reversed
+    // 0 -> length
 
+    // 0 = most recent message
+    // length = last message in batch
+
+    // So if the index passed in is 2
+    // And the message array length is 10
+    // The actual message thats displayed is 8 because 10 - 2 = 8
+
+    // if the index is the last item in the list fetch more data
+    const atTopOfList = isMounted.current && !isFetching && lastMeasuredIndex.current === index;
+    // const atTopOfList = lastMeasuredIndex.current === index;
+    // const atTopOfList = lastMeasuredIndex.current === index - 2;
+    if (atTopOfList && !isFetching && isMounted.current) {
+      console.log('fetch more', atTopOfList, lastMeasuredIndex.current, index);
+    }
+
+    return !atTopOfList;
+  };
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const loadMoreRows = async (indexRange: IndexRange) => {
-    // }
-    const moreMessages = groupMessages(loadMoreStaticMessages);
+    if (!isFetching && isMounted.current) {
+      console.log('fetching');
+      setIsFetching(true);
 
-    groupedMessages.unshift(...moreMessages);
-    cache.current.clear(2, 0);
+      const moreMessages = groupMessages(loadMoreStaticMessages);
+      setMessages(prev => [...prev, ...moreMessages]);
+    }
   };
-  // new Promise(resolve => {
 
-  //   return resolve();
-  // });
   return (
     <VirtualListContainer>
       <InfiniteLoader
-        rowCount={groupedMessages.length + 1}
+        // rowCount={messages.length + 1}
         isRowLoaded={isRowLoaded}
-        threshold={1}
+        // threshold={1}
+        threshold={0}
+        rowCount={messages.length + 1}
         loadMoreRows={loadMoreRows}
       >
         {({ onRowsRendered, registerChild }) => (
           <AutoSizer>
             {({ width, height }) => {
-              if (recentListWidth.current && recentListWidth.current !== width) {
+              if (recentListWidth.current !== width) {
                 autoSizerTimeout.current = setTimeout(() => {
                   resizeList();
                 }, 0);
               }
+              registerListRef.current = registerChild;
 
               recentListWidth.current = width;
-              registerListRef.current = registerChild;
+
               return (
                 <MessageRendererProvider>
                   {({ themeClass }) => (
                     <div className={themeClass}>
                       <List
-                        // rowCount={Infinity}
-                        rowCount={groupedMessages.length + 1}
+                        rowCount={messages.length + 1}
                         rowRenderer={messageRenderer}
                         rowHeight={cache.current.rowHeight}
-                        overscanRowCount={0}
                         deferredMeasurementCache={cache.current}
                         height={height}
                         onRowsRendered={onRowsRendered}
                         width={width}
                         ref={setListRef}
-                        scrollToIndex={groupedMessages.length + 1}
-                        scrollToAlignment="start"
+                        // scrollToIndex={messages.length + 1}
+                        scrollToAlignment="end"
                       />
                     </div>
                   )}

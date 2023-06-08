@@ -95,7 +95,7 @@ export const TextChannelInnerWrapper = styled(
     height: '100%',
     width: '100%',
     display: 'flex',
-    position: 'relative',
+    // position: 'relative',
     flexDirection: 'row',
 
     variants: {

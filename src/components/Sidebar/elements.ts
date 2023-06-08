@@ -38,7 +38,6 @@ export const SidebarWrapper = styled(
     display: 'flex',
     flexDirection: 'column',
     willChange: 'transform',
-
     variants: {
       channelsListOpen: {
         false: {
@@ -55,7 +54,7 @@ export const SidebarWrapper = styled(
           transform: `translateX(150%)`
         },
         true: {
-          transform: `translateX(0px)`
+          transform: `translateX(0)`
         }
       },
       type: {
@@ -91,8 +90,9 @@ export const MembersSidebarWrapper = styled(
   css({
     right: 0,
     transition: 'transform ease 0.3s',
-    zIndex: 1,
-    justifySelf: 'flex-end'
+    zIndex: 1
+    // justifySelf: 'flex-end',
+    // transform: `translateX(0)`
   })
 );
 

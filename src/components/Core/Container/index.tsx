@@ -29,7 +29,6 @@ export const Container = () => {
   const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
 
   const channelThreads = useStoreState(state => state.guild.channelThreads);
-  const guildName = useStoreState(state => state.guild.data?.name);
 
   // actions to set sidebar lists state
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
@@ -71,8 +70,6 @@ export const Container = () => {
     setIsChannelsListOpen
   ]);
 
-  if (!guildName) return <div>Loading...</div>;
-
   return (
     <TextChannelWrapper
       className="text-channel_wrapper"
@@ -92,9 +89,9 @@ export const Container = () => {
           '@small': true
         }}
       >
-        <MessageContainer guildName={guildName} onClick={hideSidebar} />
+        <MessageContainer onBackdropClick={hideSidebar} />
+        <MembersList />
       </TextChannelInnerWrapper>
-      <MembersList />
     </TextChannelWrapper>
   );
 };
