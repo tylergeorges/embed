@@ -62,13 +62,7 @@ export const Container = () => {
       setIsChannelsListOpen(false);
       setIsMembersListOpen(false);
     }
-  }, [
-    isChannelsListOpen,
-    isMembersListOpen,
-    windowIsMobile,
-    setIsMembersListOpen,
-    setIsChannelsListOpen
-  ]);
+  }, [isChannelsListOpen, isMembersListOpen, windowIsMobile, setIsMembersListOpen, setIsChannelsListOpen]);
 
   return (
     <TextChannelWrapper

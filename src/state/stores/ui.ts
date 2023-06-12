@@ -43,7 +43,7 @@ const ui: UIStore = {
   // State
   isChannelsListOpen: true,
   isThreadsPanelOpen: false,
-  isMembersListOpen: false,
+  isMembersListOpen: true,
 
   isCurrentChannelThread: undefined,
   showTopicModal: false,

@@ -29,6 +29,52 @@ const user3: APIUser = {
   discriminator: '0000'
 };
 
+const users: APIUser[] = [user1, user2, user3];
+
+const getRandomItem = <T = unknown>(itemArr: T[]): T => {
+  const idx = Math.floor(Math.random() * itemArr.length);
+  return itemArr[idx];
+};
+
+const messageContentArr: string[] = [
+  'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut ',
+  'aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat ',
+  'qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. ',
+  'laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem ',
+  'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?',
+  'minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute ',
+  'in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'
+];
+
+const getRandMessage = (user: APIUser): APIMessage => {
+  const content = getRandomItem(messageContentArr);
+  const randId = Math.random() * 99999999;
+
+  return {
+    content,
+    author: user,
+    attachments: [],
+    channel_id: '309009333436547082',
+    edited_timestamp: null,
+    embeds: [],
+    id: `${randId}`,
+    mention_everyone: false,
+    mention_roles: [],
+    mentions: [],
+    pinned: false,
+    timestamp: Date.now().toLocaleString(),
+    type: MessageType.Default,
+    tts: false
+  };
+};
+
+export const generateMessage = () => {
+  const user = getRandomItem(users);
+  const message = getRandMessage(user);
+
+  return message;
+};
+
 export const loadMoreStaticMessages: APIMessage[] = [
   {
     id: '1042882684902453278',
@@ -42,8 +88,7 @@ export const loadMoreStaticMessages: APIMessage[] = [
         filename: 'flowchart-for-new-permissions.png',
         size: 981134,
         url: 'https://cdn.discordapp.com/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
-        proxy_url:
-          'https://media.discordapp.net/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
+        proxy_url: 'https://media.discordapp.net/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
         width: 8576,
         height: 5074,
         content_type: 'image/png'
@@ -97,8 +142,7 @@ export const loadMoreStaticMessages: APIMessage[] = [
     author: user1,
     attachments: [],
     channel_id: 'wqeqwdsa',
-    content:
-      'loaded more messages messagesmore messagesmore messagesmore messagesmore messagesmore messages',
+    content: 'loaded more messages messagesmore messagesmore messagesmore messagesmore messagesmore messages',
     id: 'wwqeewq',
     embeds: [],
     timestamp: '2022-11-17T19:23:27.904000+00:00',
@@ -168,8 +212,7 @@ export const staticMessages: APIMessage[] = [
         filename: 'flowchart-for-new-permissions.png',
         size: 981134,
         url: 'https://cdn.discordapp.com/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
-        proxy_url:
-          'https://media.discordapp.net/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
+        proxy_url: 'https://media.discordapp.net/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
         width: 8576,
         height: 5074,
         content_type: 'image/png'

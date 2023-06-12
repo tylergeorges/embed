@@ -21,8 +21,6 @@ export const ChannelsList = () => {
 
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
 
-  if (!categories) return <div>Loading...</div>;
-
   const closeSidebar = () => {
     setIsChannelsListOpen(false);
   };
@@ -46,19 +44,11 @@ export const ChannelsList = () => {
           <ChannelHighlighter />
 
           {categories.map(category => (
-            <Category
-              currentChannelID={channelId}
-              currentThreadID={threadId}
-              category={category}
-              key={category.id}
-            />
+            <Category currentChannelID={channelId} currentThreadID={threadId} category={category} key={category.id} />
           ))}
         </div>
       </ChannelsSidebarWrapper>
-      <ModalBackdrop
-        isOpen={windowIsMobile ? !!isChannelsListOpen : false}
-        onClick={closeSidebar}
-      />
+      <ModalBackdrop isOpen={windowIsMobile ? !!isChannelsListOpen : false} onClick={closeSidebar} />
     </>
   );
 };

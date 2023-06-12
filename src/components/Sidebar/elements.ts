@@ -1,27 +1,4 @@
-import { keyframes } from '@stitches/react';
 import { css, theme, styled } from '@stitches';
-
-const leftSlideIn = keyframes({
-  '0%': {
-    transform: 'translateX(-200px)'
-  },
-  '50%': {
-    transform: 'translateX(2px)'
-  },
-  '100%': {
-    transform: 'translateX(0px)'
-  }
-});
-
-const leftSlideOut = keyframes({
-  '0%': {
-    transform: 'translateX(0px)'
-  },
-
-  '100%': {
-    transform: 'translateX(-200px) '
-  }
-});
 
 export const SidebarWrapper = styled(
   'aside',
@@ -34,18 +11,20 @@ export const SidebarWrapper = styled(
     width: theme.sizes.sideBarWidth,
     maxWidth: theme.sizes.sideBarWidth,
     height: '100%',
-    flexShrink: 0,
     display: 'flex',
     flexDirection: 'column',
     willChange: 'transform',
+    transition: 'transform 300ms ease',
     variants: {
       channelsListOpen: {
         false: {
-          animation: `${leftSlideOut} 300ms ease`,
+          // animation: `${leftSlideOut} 300ms ease`,
           transform: `translateX(-200px)`
         },
         true: {
-          animation: `${leftSlideIn} 550ms ease`
+          // animation: `${leftSlideIn} 550ms ease`,
+          transform: 'translateX(0)',
+          transition: 'transform 300ms ease'
         }
       },
 
@@ -89,7 +68,7 @@ export const MembersSidebarWrapper = styled(
   'members-sidebar_wrapper',
   css({
     right: 0,
-    transition: 'transform ease 0.3s',
+    // transition: 'transform ease 0.3s',
     zIndex: 1
     // justifySelf: 'flex-end',
     // transform: `translateX(0)`

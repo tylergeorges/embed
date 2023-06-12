@@ -1,6 +1,16 @@
 import { styled } from '@stitches/react';
 import { css } from '@stitches';
+import { Virtuoso } from 'react-virtuoso';
 
+export const VirtualList = styled(
+  Virtuoso,
+  'virtual-list',
+  css({
+    height: '100%',
+    // height: '100%',
+    width: '100%'
+  })
+);
 export const VirtualListContentContainer = styled(
   'div',
   'list-content_container',
@@ -25,7 +35,7 @@ export const VirtualListContainer = styled(
   css({
     flex: 1,
     width: '100%',
-    height: '100%'
+    position: 'relative'
   })
 );
 
@@ -34,5 +44,6 @@ export const VirtualListMessageWrapper = styled(
   'list-message_container',
   css({
     textAlign: 'left'
+    // paddingBottom: 6
   })
 );

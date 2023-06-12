@@ -28,7 +28,7 @@ export const TextChannelWrapper = styled(
       channelsListOpen: {
         true: {
           transform: `translateX(${theme.sizes.sideBarWidth})`,
-          width: 'calc(100% - $sideBarWidth)'
+          width: `calc(100% - ${theme.sizes.sideBarWidth})`
         },
         false: {
           transform: 'translateX(0px)'
@@ -64,7 +64,7 @@ export const TextChannelWrapper = styled(
             content: '',
             opacity: 1
           },
-          width: 'calc(100% - $sideBarWidth)'
+          width: `calc(100% - ${theme.sizes.sideBarWidth})`
         }
       },
       {
@@ -95,14 +95,14 @@ export const TextChannelInnerWrapper = styled(
     height: '100%',
     width: '100%',
     display: 'flex',
-    // position: 'relative',
+    position: 'relative',
     flexDirection: 'row',
 
     variants: {
       mobile: {
         true: {
           transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
-          marginX: '$none',
+          margin: 0,
           width: '100%',
           height: '100%'
         }
@@ -117,7 +117,8 @@ export const MessageWrapper = styled(
   css({
     width: '100%',
     height: '100%',
-    paddingBottom: 10,
+    // paddingBottom: 10,
+    position: 'relative',
     textAlign: 'center',
     alignItems: 'center',
     display: 'flex',
@@ -146,11 +147,11 @@ export const MessageWrapper = styled(
       justifyContent: 'center',
       alignItems: 'center',
       textAlign: 'center',
-      margin: '$2xl'
+      margin: `${theme.space['2xl']}`
     },
 
     '.channel-welcome_header': {
-      fontSize: '$2xl',
+      fontSize: `${theme.space['2xl']}`,
       marginBottom: 0,
       alignSelf: 'center',
       textAlign: 'center'
@@ -158,7 +159,7 @@ export const MessageWrapper = styled(
     '.channel-welcome_subheader': {
       margin: 0,
       fontSize: '14px',
-      color: '$primaryOpacity50',
+      color: `${theme.colors.primaryOpacity50}`,
       textAlign: 'center'
     },
     variants: {
@@ -185,7 +186,7 @@ export const MessageWrapper = styled(
         membersListOpen: true,
         mobile: true,
         css: {
-          marginRight: '$none',
+          marginRight: 'none',
           width: '100%',
           height: '100%',
           transition: 'transform 0.3s ease 0s',
@@ -207,7 +208,9 @@ export const TextBoxWrapper = styled(
   'text-box_wrapper',
   css({
     position: 'relative',
-    paddingX: '$xl',
+    paddingLeft: '$xl',
+    paddingRight: '$xl',
+    marginBottom: '$lg',
     display: 'flex',
     alignItems: 'center',
     width: '100%'
@@ -228,6 +231,7 @@ export const TextBoxInput = styled(
     outline: 'none',
     fontSize: '$lg',
     padding: '$md',
+    paddingTop: '$sm',
     color: '$textPrimary'
   })
 );
@@ -238,11 +242,12 @@ export const MessageContentOuterWrapper = styled(
     width: '100%',
     display: 'flex',
     flexDirection: 'row',
-    marginTop: 17,
+    // marginTop: 17,
     paddingRight: 48,
     paddingLeft: 72,
-    paddingTop: 2,
-    paddingBottom: 2,
+    // paddingTop: 2,
+    // paddingBottom: 6,
+    // paddingBottom: 2,
     '&:hover': {
       backgroundColor: 'rgba(0,0,0,0.1)'
     }
