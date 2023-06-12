@@ -21,10 +21,11 @@ type GroupedMessages = APIMessage[][];
 
 interface MessagesListProps {
   groupedMessages: GroupedMessages;
-  handleTopStateChange: (topState: boolean) => void;
+  handleTopStateChange?: (topState: boolean) => void;
+  startReached?: (index: number) => void;
 }
 
-export const MessagesList = ({ groupedMessages, handleTopStateChange }: MessagesListProps) => {
+export const MessagesList = ({ groupedMessages, handleTopStateChange, startReached }: MessagesListProps) => {
   const listRef = useRef<VirtuosoHandle>(null);
   // const [isAtBottom, setIsAtBottom] = useState(false);
   // const listRendered = useRef(false);
@@ -52,6 +53,7 @@ export const MessagesList = ({ groupedMessages, handleTopStateChange }: Messages
               initialTopMostItemIndex={groupedMessages.length}
               ref={listRef}
               atTopStateChange={handleTopStateChange}
+              startReached={startReached}
               itemContent={Message}
               components={{ Header: FetchingDataSpinner }}
               followOutput="auto"

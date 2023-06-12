@@ -2,10 +2,11 @@
 import { TextBox } from '@components/Core/Container/TextBox';
 import { useTranslation } from 'react-i18next';
 import { useStoreState } from '@state';
-import { generateMessage, loadMoreStaticMessages, staticMessages } from '@components/Core/VirtualLists/staticData';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { groupMessages } from '@util/groupMessages';
 import { MessagesList } from '@components/Core/VirtualLists/MessagesList';
+import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
+import { useMessages } from '@hooks/useMessages';
 import { MessageWrapper } from './elements';
 
 interface MessageContainerProps {
@@ -18,28 +19,34 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
   const currentChannel = { name: 'placeholder-name' };
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
-  const groupedMessages = useMemo(() => groupMessages(staticMessages), []);
 
-  const [messages, setMessages] = useState(groupedMessages);
+  // const handleTopStateChange = (isTopReached: boolean) => {
+  //   const canFetchData = isTopReached;
+  //   if (canFetchData) {
+  //     const olderMessages = groupMessages(loadMoreStaticMessages);
+  //
+  //     setMessages(recentMessages => [...olderMessages, ...recentMessages]);
+  //   }
+  // };
 
-  const handleTopStateChange = (isTopReached: boolean) => {
-    const canFetchData = isTopReached;
-    if (canFetchData) {
-      const olderMessages = groupMessages(loadMoreStaticMessages);
+  const { messages, fetchMore, isReady } = useMessages('585454996800405509', '585840022511550494');
 
-      setMessages(recentMessages => [...olderMessages, ...recentMessages]);
-    }
-  };
+  const groupedMessages = useMemo(() => groupMessages(messages.map(m => convertMessageToDiscord(m))), [messages]);
+  const [firstItemIndex, setFirstItemIndex] = useState(10000);
 
-  const addMessages = (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const loadMoreMessages = useCallback(() => {
+    console.log('loadMoreMessages');
+    fetchMore(messages[0].id);
 
-    const newMessagesArr = [generateMessage(), generateMessage(), generateMessage(), generateMessage()];
+    console.log('fetchMore ran.');
+    console.log('firstItemIndex', firstItemIndex);
+    console.log('groupedMessages.length', groupedMessages.length);
 
-    const newMessages = groupMessages(newMessagesArr);
+    setFirstItemIndex(firstItemIndex - groupedMessages.length);
+  }, [messages, fetchMore, firstItemIndex, groupedMessages]);
 
-    setMessages(olderMessages => [...olderMessages, ...newMessages]);
-  };
+  if (!isReady) return <p>Loading...</p>;
+
   return (
     <>
       <MessageWrapper
@@ -52,10 +59,7 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
           '@small': true
         }}
       >
-        <MessagesList groupedMessages={messages} handleTopStateChange={handleTopStateChange} />
-        <button onClick={addMessages} type="button">
-          Push new messages
-        </button>
+        <MessagesList groupedMessages={groupedMessages} startReached={loadMoreMessages} />
         <TextBox channelName={translate.t('input.message', { CHANNEL: currentChannel?.name as string }) as string} />
       </MessageWrapper>
     </>

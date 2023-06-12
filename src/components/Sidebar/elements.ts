@@ -1,4 +1,5 @@
-import { css, theme, styled } from '@stitches';
+import { css, theme } from '@stitches';
+import { styled } from '@stitches/react';
 
 export const SidebarWrapper = styled(
   'aside',
