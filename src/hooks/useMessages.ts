@@ -2,6 +2,7 @@ import { gql, useQuery } from 'urql';
 import { graphql } from '@graphql/gql';
 import { useEffect, useState } from 'react';
 import { MessageFragmentFragment, MessagesQueryQueryVariables } from '@graphql/graphql';
+import { groupMessages } from '@util/groupMessages';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MessageFragment = gql`
@@ -68,8 +69,12 @@ export const useMessages = (guild: string, channel: string) => {
   const ready = data?.channelV2.id === channel || false;
 
   const [messages, setMessages] = useState<MessageFragmentFragment[]>([]);
+  const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
+
   useEffect(() => {
     const msgs = ready ? data?.channelV2.messageBunch.messages : [];
+    setNewMessageGroupLength(groupMessages(msgs).length);
+    console.log('grouped', groupMessages(msgs).length);
 
     setMessages(prev => (ready ? [...msgs, ...prev] : []));
   }, [ready, data]);
@@ -85,6 +90,7 @@ export const useMessages = (guild: string, channel: string) => {
   return {
     messages,
     fetchMore,
+    newMessageGroupLength,
     isReady: ready,
     isStale: stale
   };

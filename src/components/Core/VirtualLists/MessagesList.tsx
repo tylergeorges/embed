@@ -2,8 +2,7 @@ import { VirtualListContainer, VirtualListMessageWrapper } from '@components/Cor
 import { Spinner, SpinnerWrapper } from '@components/Overlays/Loading/elements';
 import MessageGroup, { MessageRendererProvider } from '@widgetbot/message-renderer';
 import { APIMessage } from 'discord-api-types/v10';
-import { useRef } from 'react';
-import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
+import { Virtuoso } from 'react-virtuoso';
 
 const FetchingDataSpinner = () => (
   <SpinnerWrapper type="fetchingMessages">
@@ -21,46 +20,41 @@ type GroupedMessages = APIMessage[][];
 
 interface MessagesListProps {
   groupedMessages: GroupedMessages;
-  handleTopStateChange?: (topState: boolean) => void;
+  firstItemIndex: number;
+  handleBottomStateChanged?: (atBottom: boolean) => void;
   startReached?: (index: number) => void;
 }
 
-export const MessagesList = ({ groupedMessages, handleTopStateChange, startReached }: MessagesListProps) => {
-  const listRef = useRef<VirtuosoHandle>(null);
-  // const [isAtBottom, setIsAtBottom] = useState(false);
-  // const listRendered = useRef(false);
+export const MessagesList = ({ groupedMessages, startReached, firstItemIndex, handleBottomStateChanged }: MessagesListProps) => (
+  <VirtualListContainer>
+    <MessageRendererProvider>
+      {({ themeClass }) => (
+        <div className={themeClass} style={{ height: '100%', width: '100%' }}>
+          <Virtuoso
+            data={groupedMessages}
+            style={{
+              height: '100%',
+              overflowX: 'hidden'
+            }}
+            initialTopMostItemIndex={100 - 1}
+            firstItemIndex={firstItemIndex}
+            startReached={startReached}
+            alignToBottom
+            atBottomStateChange={handleBottomStateChanged}
+            atBottomThreshold={2}
+            itemContent={Message}
+            overscan={100}
+            components={{ Header: FetchingDataSpinner }}
+            followOutput={(isAtBottom: boolean) => {
+              if (isAtBottom) {
+                return 'auto'; // can be 'auto' or false to avoid scrolling
+              }
 
-  // const handleBottomState = (atBottom: boolean) => {
-  //   if (!listRendered.current) {
-  //     listRendered.current = true;
-  //     setIsAtBottom(true);
-  //   } else {
-  //     setIsAtBottom(atBottom);
-  //   }
-  // };
-
-  return (
-    <VirtualListContainer>
-      <MessageRendererProvider>
-        {({ themeClass }) => (
-          <div className={themeClass} style={{ height: '100%', width: '100%' }}>
-            <Virtuoso
-              data={groupedMessages}
-              style={{
-                height: '100%',
-                overflowX: 'hidden'
-              }}
-              initialTopMostItemIndex={groupedMessages.length}
-              ref={listRef}
-              atTopStateChange={handleTopStateChange}
-              startReached={startReached}
-              itemContent={Message}
-              components={{ Header: FetchingDataSpinner }}
-              followOutput="auto"
-            />
-          </div>
-        )}
-      </MessageRendererProvider>
-    </VirtualListContainer>
-  );
-};
+              return false;
+            }}
+          />
+        </div>
+      )}
+    </MessageRendererProvider>
+  </VirtualListContainer>
+);
