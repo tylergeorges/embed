@@ -955,6 +955,99 @@ export type GuildQuery = {
   };
 };
 
+export type BaseMessageFragment = ({ __typename?: 'Message'; author: { __typename?: 'User'; color: number } } & {
+  ' $fragmentRefs'?: { BaseSubscriptionMessageFragment: BaseSubscriptionMessageFragment };
+}) & { ' $fragmentName'?: 'BaseMessageFragment' };
+
+export type BaseSubscriptionMessageFragment = {
+  __typename?: 'Message';
+  id: string;
+  channelId: string;
+  content: string;
+  type: MessageType;
+  flags?: number | null;
+  createdAt: any;
+  editedAt?: any | null;
+  isGuest: boolean;
+  author: {
+    __typename?: 'User';
+    avatarUrl: string;
+    bot: boolean;
+    discrim: string;
+    id: string;
+    flags?: number | null;
+    name: string;
+    roles?: Array<string> | null;
+    system: boolean;
+    isWebhook: boolean;
+  };
+  attachments: Array<{
+    __typename?: 'Attachment';
+    url: string;
+    height?: number | null;
+    width?: number | null;
+    filename: string;
+    size: number;
+  }>;
+  stickers: Array<{ __typename?: 'Sticker'; id: string; name: string; formatType: FormatType; lottieData?: string | null }>;
+  reactions?: Array<{
+    __typename?: 'Reaction';
+    count: number;
+    emojiId?: string | null;
+    emojiName?: string | null;
+    animated?: boolean | null;
+  }> | null;
+  messageReference?: { __typename?: 'MessageReference'; guildId?: string | null; channelId: string; messageId?: string | null } | null;
+  embeds: Array<{ __typename?: 'Embed' } & { ' $fragmentRefs'?: { EmbedFragment: EmbedFragment } }>;
+  mentions: Array<{ __typename?: 'Mention'; id: string; type: MentionType; name: string }>;
+  interaction?: {
+    __typename?: 'MessageInteraction';
+    name: string;
+    user: { __typename?: 'Author'; id: string; username: string; discriminator: string; avatarUrl: string };
+  } | null;
+  thread?: { __typename?: 'Thread'; id: string; name: string; archivedAt?: any | null; locked: boolean; messageCount: number } | null;
+} & { ' $fragmentName'?: 'BaseSubscriptionMessageFragment' };
+
+export type EmbedFragment = {
+  __typename?: 'Embed';
+  title?: string | null;
+  description?: string | null;
+  url?: string | null;
+  timestamp?: string | null;
+  color?: number | null;
+  type?: string | null;
+  author?: { __typename?: 'EmbedAuthor'; url?: string | null; name?: string | null; proxyIconUrl?: string | null } | null;
+  fields?: Array<{ __typename?: 'EmbedField'; value: string; name: string; inline?: boolean | null }> | null;
+  image?: {
+    __typename?: 'EmbedImage';
+    url?: string | null;
+    proxyUrl?: string | null;
+    width?: number | null;
+    height?: number | null;
+  } | null;
+  provider?: { __typename?: 'EmbedProvider'; name?: string | null; url?: string | null } | null;
+  footer?: { __typename?: 'EmbedFooter'; proxyIconUrl?: string | null; text: string } | null;
+  thumbnail?: {
+    __typename?: 'EmbedThumbnail';
+    height?: number | null;
+    width?: number | null;
+    url?: string | null;
+    proxyUrl?: string | null;
+  } | null;
+  video?: {
+    __typename?: 'EmbedVideo';
+    height?: number | null;
+    width?: number | null;
+    url?: string | null;
+    proxyUrl?: string | null;
+  } | null;
+} & { ' $fragmentName'?: 'EmbedFragment' };
+
+export type MessageFragment = ({
+  __typename?: 'Message';
+  referencedMessage?: ({ __typename?: 'Message' } & { ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment } }) | null;
+} & { ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment } }) & { ' $fragmentName'?: 'MessageFragment' };
+
 export type MessageFragmentFragment = {
   __typename?: 'Message';
   id: string;
@@ -989,6 +1082,304 @@ export type MessagesQueryQuery = {
     | { __typename?: 'VoiceChannel'; id: string };
 };
 
+export const EmbedFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'Embed' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Embed' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'author' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'proxyIconUrl' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'fields' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'value' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'inline' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'proxyUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'provider' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'footer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'proxyIconUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'text' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'thumbnail' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'proxyUrl' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'video' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'proxyUrl' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<EmbedFragment, unknown>;
+export const BaseSubscriptionMessageFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'BaseSubscriptionMessage' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'channelId' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'editedAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'isGuest' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'author' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'system' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'isWebhook' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'attachments' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'filename' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'stickers' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'formatType' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lottieData' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'reactions' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'count' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'emojiId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'emojiName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'animated' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'messageReference' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'guildId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'channelId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'messageId' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'embeds' },
+            selectionSet: { kind: 'SelectionSet', selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'Embed' } }] }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'mentions' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'interaction' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'user' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'discriminator' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'thread' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'archivedAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'locked' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'messageCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    ...EmbedFragmentDoc.definitions
+  ]
+} as unknown as DocumentNode<BaseSubscriptionMessageFragment, unknown>;
+export const BaseMessageFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'BaseMessage' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseSubscriptionMessage' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'author' },
+            selectionSet: { kind: 'SelectionSet', selections: [{ kind: 'Field', name: { kind: 'Name', value: 'color' } }] }
+          }
+        ]
+      }
+    },
+    ...BaseSubscriptionMessageFragmentDoc.definitions
+  ]
+} as unknown as DocumentNode<BaseMessageFragment, unknown>;
+export const MessageFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'Message' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'referencedMessage' },
+            selectionSet: { kind: 'SelectionSet', selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } }] }
+          }
+        ]
+      }
+    },
+    ...BaseMessageFragmentDoc.definitions
+  ]
+} as unknown as DocumentNode<MessageFragment, unknown>;
 export const MessageFragmentFragmentDoc = {
   kind: 'Document',
   definitions: [
