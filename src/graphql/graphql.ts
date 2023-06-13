@@ -955,11 +955,42 @@ export type GuildQuery = {
   };
 };
 
-export type BaseMessageFragment = ({ __typename?: 'Message'; author: { __typename?: 'User'; color: number } } & {
-  ' $fragmentRefs'?: { BaseSubscriptionMessageFragment: BaseSubscriptionMessageFragment };
-}) & { ' $fragmentName'?: 'BaseMessageFragment' };
+export type EmbedFragment = {
+  __typename?: 'Embed';
+  title?: string | null;
+  description?: string | null;
+  url?: string | null;
+  timestamp?: string | null;
+  color?: number | null;
+  type?: string | null;
+  author?: { __typename?: 'EmbedAuthor'; url?: string | null; name?: string | null; proxyIconUrl?: string | null } | null;
+  fields?: Array<{ __typename?: 'EmbedField'; value: string; name: string; inline?: boolean | null }> | null;
+  image?: {
+    __typename?: 'EmbedImage';
+    url?: string | null;
+    proxyUrl?: string | null;
+    width?: number | null;
+    height?: number | null;
+  } | null;
+  provider?: { __typename?: 'EmbedProvider'; name?: string | null; url?: string | null } | null;
+  footer?: { __typename?: 'EmbedFooter'; proxyIconUrl?: string | null; text: string } | null;
+  thumbnail?: {
+    __typename?: 'EmbedThumbnail';
+    height?: number | null;
+    width?: number | null;
+    url?: string | null;
+    proxyUrl?: string | null;
+  } | null;
+  video?: {
+    __typename?: 'EmbedVideo';
+    height?: number | null;
+    width?: number | null;
+    url?: string | null;
+    proxyUrl?: string | null;
+  } | null;
+} & { ' $fragmentName'?: 'EmbedFragment' };
 
-export type BaseSubscriptionMessageFragment = {
+export type BaseMessageFragment = {
   __typename?: 'Message';
   id: string;
   channelId: string;
@@ -1006,58 +1037,7 @@ export type BaseSubscriptionMessageFragment = {
     user: { __typename?: 'Author'; id: string; username: string; discriminator: string; avatarUrl: string };
   } | null;
   thread?: { __typename?: 'Thread'; id: string; name: string; archivedAt?: any | null; locked: boolean; messageCount: number } | null;
-} & { ' $fragmentName'?: 'BaseSubscriptionMessageFragment' };
-
-export type EmbedFragment = {
-  __typename?: 'Embed';
-  title?: string | null;
-  description?: string | null;
-  url?: string | null;
-  timestamp?: string | null;
-  color?: number | null;
-  type?: string | null;
-  author?: { __typename?: 'EmbedAuthor'; url?: string | null; name?: string | null; proxyIconUrl?: string | null } | null;
-  fields?: Array<{ __typename?: 'EmbedField'; value: string; name: string; inline?: boolean | null }> | null;
-  image?: {
-    __typename?: 'EmbedImage';
-    url?: string | null;
-    proxyUrl?: string | null;
-    width?: number | null;
-    height?: number | null;
-  } | null;
-  provider?: { __typename?: 'EmbedProvider'; name?: string | null; url?: string | null } | null;
-  footer?: { __typename?: 'EmbedFooter'; proxyIconUrl?: string | null; text: string } | null;
-  thumbnail?: {
-    __typename?: 'EmbedThumbnail';
-    height?: number | null;
-    width?: number | null;
-    url?: string | null;
-    proxyUrl?: string | null;
-  } | null;
-  video?: {
-    __typename?: 'EmbedVideo';
-    height?: number | null;
-    width?: number | null;
-    url?: string | null;
-    proxyUrl?: string | null;
-  } | null;
-} & { ' $fragmentName'?: 'EmbedFragment' };
-
-export type MessageFragment = ({
-  __typename?: 'Message';
-  referencedMessage?: ({ __typename?: 'Message' } & { ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment } }) | null;
-} & { ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment } }) & { ' $fragmentName'?: 'MessageFragment' };
-
-export type MessageFragmentFragment = {
-  __typename?: 'Message';
-  id: string;
-  type: MessageType;
-  channelId: string;
-  content: string;
-  createdAt: any;
-  editedAt?: any | null;
-  author: { __typename?: 'User'; bot: boolean; id: string; name: string; avatarUrl: string; discrim: string };
-} & { ' $fragmentName'?: 'MessageFragmentFragment' };
+} & { ' $fragmentName'?: 'BaseMessageFragment' };
 
 export type MessagesQueryQueryVariables = Exact<{
   guild: Scalars['String'];
@@ -1075,7 +1055,7 @@ export type MessagesQueryQuery = {
         id: string;
         messageBunch: {
           __typename?: 'MessageBunch';
-          messages: Array<{ __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragmentFragment: MessageFragmentFragment } }>;
+          messages: Array<{ __typename?: 'Message' } & { ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment } }>;
         };
       }
     | { __typename?: 'ThreadChannel'; id: string }
@@ -1188,12 +1168,12 @@ export const EmbedFragmentDoc = {
     }
   ]
 } as unknown as DocumentNode<EmbedFragment, unknown>;
-export const BaseSubscriptionMessageFragmentDoc = {
+export const BaseMessageFragmentDoc = {
   kind: 'Document',
   definitions: [
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'BaseSubscriptionMessage' },
+      name: { kind: 'Name', value: 'BaseMessage' },
       typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } },
       selectionSet: {
         kind: 'SelectionSet',
@@ -1335,86 +1315,7 @@ export const BaseSubscriptionMessageFragmentDoc = {
     },
     ...EmbedFragmentDoc.definitions
   ]
-} as unknown as DocumentNode<BaseSubscriptionMessageFragment, unknown>;
-export const BaseMessageFragmentDoc = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'BaseMessage' },
-      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          { kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseSubscriptionMessage' } },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'author' },
-            selectionSet: { kind: 'SelectionSet', selections: [{ kind: 'Field', name: { kind: 'Name', value: 'color' } }] }
-          }
-        ]
-      }
-    },
-    ...BaseSubscriptionMessageFragmentDoc.definitions
-  ]
 } as unknown as DocumentNode<BaseMessageFragment, unknown>;
-export const MessageFragmentDoc = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'Message' },
-      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          { kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'referencedMessage' },
-            selectionSet: { kind: 'SelectionSet', selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } }] }
-          }
-        ]
-      }
-    },
-    ...BaseMessageFragmentDoc.definitions
-  ]
-} as unknown as DocumentNode<MessageFragment, unknown>;
-export const MessageFragmentFragmentDoc = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'MessageFragment' },
-      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'channelId' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'author' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'discrim' } }
-              ]
-            }
-          },
-          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'editedAt' } }
-        ]
-      }
-    }
-  ]
-} as unknown as DocumentNode<MessageFragmentFragment, unknown>;
 export const GuildDocument = {
   kind: 'Document',
   definitions: [
@@ -1563,7 +1464,7 @@ export const MessagesQueryDocument = {
                               name: { kind: 'Name', value: 'messages' },
                               selectionSet: {
                                 kind: 'SelectionSet',
-                                selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'MessageFragment' } }]
+                                selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } }]
                               }
                             }
                           ]
@@ -1578,6 +1479,6 @@ export const MessagesQueryDocument = {
         ]
       }
     },
-    ...MessageFragmentFragmentDoc.definitions
+    ...BaseMessageFragmentDoc.definitions
   ]
 } as unknown as DocumentNode<MessagesQueryQuery, MessagesQueryQueryVariables>;
