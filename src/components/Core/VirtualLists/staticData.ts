@@ -94,6 +94,7 @@ export const loadMoreStaticMessages: APIMessage[] = [
         content_type: 'image/png'
       }
     ],
+
     reactions: [
       {
         count: 5,
