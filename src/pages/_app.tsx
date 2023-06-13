@@ -12,6 +12,10 @@ import React from 'react';
 
 function App({ Component, pageProps }: AppProps) {
   const globalStyles = globalCss({
+    '@font-face': {
+      fontFamily: 'GgSans',
+      src: 'url(/font/gg-sans-Regular.ttf)'
+    },
     html: {
       padding: 0,
       margin: 0,
@@ -38,7 +42,8 @@ function App({ Component, pageProps }: AppProps) {
       textDecoration: 'none'
     },
     '*, ::after, ::before': {
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      fontFamily: 'GgSans'
     },
 
     /* width */
