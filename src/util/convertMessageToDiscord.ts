@@ -1,7 +1,7 @@
 import { APIMessage, MessageType } from 'discord-api-types/v10';
-import { MessageFragmentFragment } from '@graphql/graphql';
+import { BaseMessageFragment } from '@graphql/graphql';
 
-export const convertMessageToDiscord = (message: MessageFragmentFragment): APIMessage => ({
+export const convertMessageToDiscord = (message: BaseMessageFragment): APIMessage => ({
   id: message.id,
   type: MessageType.Default,
   channel_id: message.channelId,
@@ -16,7 +16,15 @@ export const convertMessageToDiscord = (message: MessageFragmentFragment): APIMe
     avatar: message.author.avatarUrl?.split('/').pop()?.split('.')[0] ?? null,
     discriminator: message.author.discrim
   },
-  attachments: [],
+  attachments: message.attachments.map(a => ({
+    id: '0',
+    url: a.url,
+    height: a.height,
+    width: a.width,
+    filename: a.filename,
+    size: a.size,
+    proxy_url: a.url
+  })),
   embeds: [],
   reactions: [],
   mentions: [],
