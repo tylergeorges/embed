@@ -8,7 +8,7 @@ import { MessagesList } from '@components/Core/VirtualLists/MessagesList';
 import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
 import { useMessages } from '@hooks/useMessages';
 import { APIMessage } from 'discord-api-types/v10';
-import { MessageFragmentFragment } from '@graphql/graphql';
+import { BaseMessageFragment } from '@graphql/graphql';
 import { MessageWrapper } from './elements';
 
 interface MessageContainerProps {
@@ -17,7 +17,7 @@ interface MessageContainerProps {
 }
 
 type MessageState = {
-  messages: MessageFragmentFragment[];
+  messages: BaseMessageFragment[];
   groupedMessages: APIMessage[][];
   firstItemIndex: number;
 };
