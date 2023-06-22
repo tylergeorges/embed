@@ -276,7 +276,8 @@ export const TextBoxInput = styled(
     justifyContent: 'flex-start',
     alignItems: 'center',
     position: 'relative',
-    display: 'flex',
+    display: 'block',
+    // display: 'flex',
     // padding: '$md',
     // paddingTop: '$sm',
     color: '$textPrimary'

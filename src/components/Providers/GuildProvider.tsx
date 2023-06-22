@@ -58,7 +58,7 @@ const guildDocument = graphql(/* GraphQL */ `
 `);
 
 export const GuildProvider = ({ children }: GuildProviderProps) => {
-  const { guildId } = useAppRouter();
+  const { guildId, router } = useAppRouter();
 
   const [{ data, fetching }] = useQuery({
     query: guildDocument,
@@ -71,7 +71,9 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
   const channels = useStoreState(state => state.guild.channels);
 
   useEffect(() => {
-    // router.push('channels/299881420891881473/309009333436547082');
+    if (!guildId) {
+      router.push('/channels/299881420891881473/309009333436547082');
+    }
 
     if (data && !fetching) {
       setGuildData(data.guild);
@@ -83,6 +85,5 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
   }, [data, fetching, setChannels, setGuildData, setSettings]);
 
   if (fetching || !data || channels === undefined) return <Loading />;
-
   return <>{children}</>;
 };
