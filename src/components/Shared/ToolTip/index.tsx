@@ -1,8 +1,4 @@
-import {
-  ToolTipWrapper,
-  ToolTipContent,
-  ToolTipContainer
-} from '@components/Shared/ToolTip/elements';
+import { ToolTipWrapper, ToolTipContent, ToolTipContainer } from '@components/Shared/ToolTip/elements';
 import { useEffect, useRef, useState } from 'react';
 
 interface ToolTipProps {
@@ -48,16 +44,11 @@ export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
   }, [left]);
 
   return (
-    <ToolTipWrapper
-      className="tool-tip_wrapper"
-      onTouchStart={undefined}
-      onMouseEnter={openToolTip}
-      onMouseLeave={hideToolTip}
-    >
+    <ToolTipWrapper className="tooltip-wrapper" onTouchStart={undefined} onMouseEnter={openToolTip} onMouseLeave={hideToolTip}>
       <div ref={childrenConRef}>{children}</div>
 
       <ToolTipContainer
-        className="tool-tip_container"
+        className="tooltip-container"
         visible={show || showToolTip}
         placement={placement}
         ref={tooltipRef}
@@ -69,7 +60,7 @@ export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
             : {}
         }
       >
-        <ToolTipContent className="tool-tip_content">{label}</ToolTipContent>
+        <ToolTipContent className="tooltip-content">{label}</ToolTipContent>
       </ToolTipContainer>
     </ToolTipWrapper>
   );

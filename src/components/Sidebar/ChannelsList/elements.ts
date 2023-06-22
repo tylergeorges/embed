@@ -136,7 +136,7 @@ export const ChannelNameInner = styled(
     flexDirection: 'row',
     alignItems: 'center',
 
-    color: '$primaryOpacity30',
+    color: '$textMuted',
     willChange: 'background-color, color,',
     fontWeight: '$thin',
 

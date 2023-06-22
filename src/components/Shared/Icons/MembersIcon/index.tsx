@@ -1,13 +1,12 @@
 import { MembersIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
 import { IconProps } from '../icon.types';
 
-export const MembersIcon = ({ onClick, isActive, size, color }: IconProps) => (
+export const MembersIcon = ({ isActive, size, color }: IconProps) => (
   <MembersIconRoot
     size={size ?? 'regular'}
     isActive={isActive}
     aria-label="Show/Hide Members Button"
     className="text-channel_header_members_button text-channel_header_icons"
-    onClick={onClick}
     color={color || 'light'}
   >
     <path d="M14 8.00598C14 10.211 12.206 12.006 10 12.006C7.795 12.006 6 10.211 6 8.00598C6 5.80098 7.794 4.00598 10 4.00598C12.206 4.00598 14 5.80098 14 8.00598ZM2 19.006C2 15.473 5.29 13.006 10 13.006C14.711 13.006 18 15.473 18 19.006V20.006H2V19.006Z" />

@@ -17,7 +17,7 @@ const stitches = createStitches({
       primaryDark: '#72767d',
 
       textPrimary: '#FFFFFF',
-      textMuted: 'rgb(163, 166, 170)',
+      textMuted: 'rgb(109, 111, 120)',
 
       iconDark: 'rgb(128, 132, 142)',
       iconLight: 'rgb(181,186,193)',
@@ -34,7 +34,7 @@ const stitches = createStitches({
       backgroundSecondaryAlt: '#232428',
       backgroundTertiary: '#232428',
 
-      inputBackground: 'rgba(255, 255, 255, 0.07)',
+      inputBackground: 'rgba(255, 255, 255, 0.03)',
 
       contextMenuBackground: '#111214',
       messageHover: 'rgba(0, 0, 0, .05)',
@@ -87,7 +87,7 @@ const stitches = createStitches({
 
       messageLeftPadding: '72px',
 
-      messageInputSize: '43px',
+      messageInputSize: '44px',
       headerHeight: '48px'
     },
     shadows: {
@@ -103,6 +103,7 @@ const stitches = createStitches({
     borderWidths: {
       spines: '2px'
     },
+
     radii: {
       '2xs': '4px',
       xs: '6px',
@@ -140,6 +141,10 @@ const stitches = createStitches({
       paddingRight: value
     }),
     paddingY: (value: ScaleValue<'space'>) => ({
+      paddingTop: value,
+      paddingBottom: value
+    }),
+    size: (value: ScaleValue<''>) => ({
       paddingTop: value,
       paddingBottom: value
     })

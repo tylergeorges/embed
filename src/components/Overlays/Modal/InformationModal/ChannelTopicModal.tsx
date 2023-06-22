@@ -6,19 +6,15 @@ import { useStoreActions, useStoreState } from '@state';
 export const ChannelTopicModal = () => {
   const showTopicModal = useStoreState(state => state.ui.showTopicModal);
   const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);
+  const currentChannel = useStoreState(state => state.guild.currentChannel);
 
   const hideTopicModal = () => {
     setShowTopicModal(false);
   };
 
   return (
-    <InformationModal isOpen={showTopicModal} hideModal={hideTopicModal} title="#placeholder-name">
-      <ChannelTopicModalContent className="modal-channel_topic_content">
-        random channel topic that should overflow so i can test to see how it loos random channel
-        topic that should overflow so i can test to see how it loos random channel topic that should
-        overflow so i can test to see how it loos random channel topic that should overflow so i can
-        test to see how it loos
-      </ChannelTopicModalContent>
+    <InformationModal isOpen={showTopicModal} hideModal={hideTopicModal} title={`#${currentChannel?.name}`}>
+      <ChannelTopicModalContent className="modal-channel_topic_content">{currentChannel?.topic}</ChannelTopicModalContent>
     </InformationModal>
   );
 };

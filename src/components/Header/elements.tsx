@@ -11,11 +11,7 @@ export const ChannelHeaderContainer = styled(
     backgroundColor: '$background'
   })
 );
-export const ThreadPanelHeaderContainer = styled(
-  ChannelHeaderContainer,
-  'panel-thread_header_container',
-  css({})
-);
+export const ThreadPanelHeaderContainer = styled(ChannelHeaderContainer, 'panel-thread_header_container', css({}));
 
 const Root = styled(
   'header',
@@ -146,7 +142,8 @@ export const ChannelHeaderTopic = styled(
   'div',
   'text-channel_header_topic',
   css({
-    color: 'rgba(255,255,255,0.4)',
+    color: '$textMuted',
+    // color: 'rgba(255,255,255,0.4)',
     fontSize: 14,
     margin: 0,
     borderLeftStyle: 'solid',

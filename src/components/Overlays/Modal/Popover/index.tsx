@@ -15,18 +15,11 @@ interface PopoverProps {
   isOpen: boolean;
   hideModal: () => void;
   title: string;
-  TitleIcon?: ({ onClick, isActive }: IconProps) => JSX.Element;
+  TitleIcon?: ({ isActive }: IconProps) => JSX.Element;
   popoverFor: HTMLDivElement | null;
 }
 
-export const Popover = ({
-  children,
-  isOpen,
-  hideModal,
-  title,
-  TitleIcon,
-  popoverFor
-}: PopoverProps) => {
+export const Popover = ({ children, isOpen, hideModal, title, TitleIcon, popoverFor }: PopoverProps) => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
 
   if (popoverFor && isOpen) {

@@ -1,8 +1,11 @@
 import { gql, useQuery } from 'urql';
 import { graphql } from '@graphql/gql';
-import { useEffect, useState } from 'react';
-import { BaseMessageFragment, MessagesQueryQueryVariables } from '@graphql/graphql';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { BaseMessageFragment, MessagesQueryQueryVariables, MessageFragmentFragment } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
+import { APIMessage } from 'discord-api-types/v10';
+import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
+import { staticMessages } from '@components/Core/VirtualLists/staticData';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const EmbedFragment = gql`
@@ -149,45 +152,106 @@ const messagesQuery = graphql(`
   }
 `);
 
-export const useMessages = (guild: string, channel: string) => {
-  // useQuery
-  // useSubscriptions
-  // return fetchMore
-  // return {messages, fetchMore, error, isReady, isStale}
+interface UseMessagesProps {
+  guild: string;
+  channel: string;
+  useStaticData?: boolean;
+}
 
+type MessageState = {
+  messages: MessageFragmentFragment[];
+  groupedMessages: APIMessage[][];
+  firstItemIndex: number;
+};
+
+export const useMessages = ({ guild, channel, useStaticData = false }: UseMessagesProps) => {
   const [variables, setVariables] = useState<MessagesQueryQueryVariables>({ guild, channel });
-
-  const [{ data, stale }, fetchHook] = useQuery({
-    query: messagesQuery,
-    variables
-  });
-  const ready = data?.channelV2.id === channel || false;
 
   const [messages, setMessages] = useState<BaseMessageFragment[]>([]);
   const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
 
+  const [{ data }, fetchHook] = useQuery({
+    query: messagesQuery,
+    variables
+  });
+
+  // console.log(data)
+  const ready = data?.channelV2.id === channel || false;
+
   useEffect(() => {
-    // @ts-ignore TODO: Fix this
-    const msgs = ready ? data?.channelV2.messageBunch.messages : [];
-    setNewMessageGroupLength(groupMessages(msgs).length);
-    console.log('grouped', groupMessages(msgs).length);
+    if (!useStaticData) {
+      // @ts-ignore TODO: Fix this
+      const isReadyWithMessages = ready && data?.channelV2.messageBunch?.messages;
 
-    setMessages(prev => (ready ? [...msgs, ...prev] : []));
-  }, [ready, data]);
+      const msgs = isReadyWithMessages ? data?.channelV2.messageBunch?.messages : [];
+      if (msgs.length) {
+        setNewMessageGroupLength(groupMessages(msgs).length);
+        console.log('grouped', groupMessages(msgs).length);
 
-  function fetchMore(before: string) {
-    console.log('before: ', before);
-    if (!ready) return;
+        if (ready) {
+          setMessages(prev => [...msgs, ...prev]);
+        }
+      }
+    } else {
+      const groupedStaticMsgs = groupMessages(staticMessages);
+      setNewMessageGroupLength(groupedStaticMsgs.length);
+      setMessages(prev => [...groupedStaticMsgs, ...prev]);
+    }
+  }, [data, ready, useStaticData]);
 
-    setVariables({ channel, guild, before });
-    fetchHook({ requestPolicy: 'network-only' });
-  }
+  const fetchMore = useCallback(
+    (before: string) => {
+      if (!useStaticData) {
+        if (!ready) return;
+
+        setVariables({ channel, guild, before });
+        fetchHook({ requestPolicy: 'network-only' });
+      }
+    },
+    [channel, fetchHook, guild, ready, useStaticData]
+  );
+
+  const loadMoreMessages = useCallback(() => {
+    fetchMore(messages[0].id);
+  }, [fetchMore, messages]);
+
+  let messageState: MessageState;
+
+  // eslint-disable-next-line prefer-const
+  messageState = useMemo(() => {
+    let firstItemIndex = 100_000;
+
+    if (messages === undefined)
+      return {
+        messages: [],
+        groupedMessages: [],
+        firstItemIndex
+      };
+
+    const grouped = !useStaticData ? groupMessages(messages.map(convertMessageToDiscord)) : messages;
+    firstItemIndex -= grouped.length - 1;
+    return {
+      messages,
+      groupedMessages: grouped,
+      firstItemIndex
+    };
+
+    // return {
+    //   messages,
+    //   groupedMessages: grouped,
+    //   firstItemIndex:
+    //     messageState.firstItemIndex -
+    //     groupMessages(messages.map(convertMessageToDiscord).slice(messageState.messages.length - messages.length)).length
+    // };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [messages]);
 
   return {
-    messages,
+    ...messageState,
+    // messages: messageState.groupedMessages,
     fetchMore,
     newMessageGroupLength,
     isReady: ready,
-    isStale: stale
+    loadMoreMessages
   };
 };

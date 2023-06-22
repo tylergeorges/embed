@@ -55,7 +55,9 @@ export const IconButtonRoot = styled(
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-
+    background: 'transparent',
+    outline: 'none',
+    border: 'none',
     whiteSpace: 'nowrap',
 
     width: '$iconSizeMed',
@@ -64,13 +66,40 @@ export const IconButtonRoot = styled(
     position: 'relative'
   })
 );
+// https://emerald.widgetbot.io/static/media/15e026451fd814e2d1a13e49c8076978.15e02645.png
+export const EmojisIconRoot = styled(
+  'div',
+  'icon-emojis_icon_root',
+  css({
+    backgroundImage: 'url(https://emerald.widgetbot.io/static/media/15e026451fd814e2d1a13e49c8076978.15e02645.png)',
+    backgroundPositionX: 'var(--emoji-x)',
+    backgroundPositionY: 'var(--emoji-y)',
+    // backgroundPositionY: '-22px',
+    backgroundSize: '242px 110px',
+    height: 22,
+    minWidth: 22,
+    filter: 'grayscale(100%)',
+    transition: 'transform 200ms ease, filter 200ms ease',
+    // transition: 'transform 200ms ease',
+    cursor: 'pointer',
+    '&:hover': {
+      transform: 'scale(1.14)',
+      filter: 'grayscale(0%)',
+      backgroundPositionX: 'var(--emoji-x)',
+      backgroundPositionY: 'var(--emoji-y)'
+    }
+  })
+);
 
-export const ThreadsIconRoot = styled(IconRoot, 'thread-hash', {});
-export const ThreadsPanelIconRoot = styled(IconRoot, 'threads-panel_icon', {});
-export const MembersIconRoot = styled(IconRoot, 'text-channel_header_members_button', {});
+export const ThreadsIconRoot = styled(IconRoot, 'icon-thread-hash', {});
+export const ThreadsPanelIconRoot = styled(IconRoot, 'icon-threads-panel', {});
+
+export const MembersIconRoot = styled(IconRoot, 'icon-text-channel_header_members_button', {});
+export const PinIconRoot = styled(IconRoot, 'icon-text-channel_header_pin_button', {});
+
 export const CloseIconRoot = styled(IconRoot, 'icon-close', {});
+export const AddAttachmentsIconRoot = styled(IconRoot, 'icon-add_attachments', {});
 
-export const PinIconRoot = styled(IconRoot, 'text-channel_header_pin_button', {});
 export const SpineIconRoot = styled(
   'svg',
   'thread-spine',
@@ -85,13 +114,16 @@ export const SpineIconRoot = styled(
 );
 
 export const IconButtonChildrenWrapper = styled(
-  'div',
+  'button',
   'icon-button_children_wrapper',
   css({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 999,
+    background: 'transparent',
+    outline: 'none',
+    border: 'none',
     transition: 'background-color ease 150ms',
 
     padding: 3,

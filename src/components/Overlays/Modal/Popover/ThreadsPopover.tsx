@@ -27,16 +27,13 @@ export const ThreadsPopover = ({ children }: ThreadsPopoverProps) => {
     setShowThreadsModal(false);
   };
 
-  const channelThreads = useStoreState(state => state.guild.channelThreads);
+  const guildChannels = useStoreState(state => state.guild.guildChannels);
 
   const { guildId, channelId, router } = useAppRouter();
 
-  const currentChannelThreads = channelThreads[channelId]?.threads ?? [];
+  const currentChannelThreads = guildChannels[channelId]?.threads ?? [];
 
-  const channelHasThreads = useMemo(
-    () => currentChannelThreads.length > 0,
-    [currentChannelThreads.length]
-  );
+  const channelHasThreads = useMemo(() => currentChannelThreads.length > 0, [currentChannelThreads.length]);
   return (
     <>
       <Popover
@@ -48,18 +45,14 @@ export const ThreadsPopover = ({ children }: ThreadsPopoverProps) => {
       >
         {channelHasThreads ? (
           <ThreadsPopoverContent className="popover-threads_content">
-            <ThreadsPopoverListHeader className="popover-threads_list_header">
-              OLDER THREADS
-            </ThreadsPopoverListHeader>
+            <ThreadsPopoverListHeader className="popover-threads_list_header">OLDER THREADS</ThreadsPopoverListHeader>
             <ThreadsPopoverList className="popover-threads_list_container">
               {' '}
               {currentChannelThreads.map(thread => (
                 <ThreadsPopoverListItem
                   className="popover-threads_list_item"
                   key={thread.id}
-                  onClick={() =>
-                    router.push(`/channels/${guildId}/${channelId}?thread=${thread.id}`)
-                  }
+                  onClick={() => router.push(`/channels/${guildId}/${channelId}?thread=${thread.id}`)}
                 >
                   <ThreadName className="popover-threads_list_threadname">{thread.name}</ThreadName>
 

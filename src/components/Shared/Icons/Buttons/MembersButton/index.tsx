@@ -9,12 +9,10 @@ export const MembersButton = () => {
   return (
     <IconButtonWrapper
       tooltipPlacement="bottom"
-      button_label={isMembersListOpen ? 'Hide Member List' : 'Show Member List'}
+      tooltipLabel={isMembersListOpen ? 'Hide Member List' : 'Show Member List'}
+      onClick={() => setMembersListOpen(!isMembersListOpen)}
     >
-      <MembersIcon
-        isActive={isMembersListOpen}
-        onClick={() => setMembersListOpen(!isMembersListOpen)}
-      />
+      <MembersIcon isActive={isMembersListOpen} />
     </IconButtonWrapper>
   );
 };

@@ -10,7 +10,6 @@ export const ChannelHighlighter = () => {
   if (currentChannelYPos) {
     // <BackgroundContainer>
 
-    console.log(currentChannelYPos);
     return (
       <Background
         css={{

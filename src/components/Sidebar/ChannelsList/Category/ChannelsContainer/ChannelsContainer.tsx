@@ -1,6 +1,5 @@
 import { Fragment, RefObject, forwardRef } from 'react';
 import { ChannelsWrapper, ThreadsWrapper } from '@components/Sidebar/ChannelsList/elements';
-import { positionChannel } from '@util/positionChannel';
 import { useStoreState } from '@state';
 import { Category as ICategory } from '@graphql/graphql';
 import { Spine } from '@components/Shared/Icons/Spine';
@@ -16,13 +15,12 @@ interface ChannelsProps {
 /** Component that handles rendering text and thread channels */
 export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
   ({ currentChannelID, isCategoryOpen, category, currentChannelRef, currentThreadID }, ref) => {
-    const guildChannels = useStoreState(state => state.guild.channels!);
+    const channels = useStoreState(state => state.guild.channels!);
 
     return (
       <div ref={ref}>
-        {guildChannels
+        {channels
           .filter(c => c.category?.id === category?.id)
-          .sort((a, b) => positionChannel(a) - positionChannel(b))
           .map(channel => (
             <Fragment key={channel.id}>
               <ChannelsWrapper draggable={false} className="channels-wrapper">

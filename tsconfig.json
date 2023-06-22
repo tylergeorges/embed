@@ -26,14 +26,6 @@
       "types/*": ["./src/types/*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    "src",
-    "pages/**/*",
-    "./src/lib/message-renderer/*.ts",
-    "./src/lib/message-renderer/*.tsx"
-  ],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src", "pages/**/*", "./src/lib/message-renderer/tsconfig.json"],
   "exclude": ["node_modules"]
 }

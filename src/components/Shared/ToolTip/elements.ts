@@ -3,7 +3,7 @@ import { css } from '@stitches';
 
 export const ToolTipContainer = styled(
   'div',
-  'tool-tip_container',
+  'tooltip-container',
   css({
     backgroundColor: '#18191c',
     position: 'absolute',
@@ -13,6 +13,7 @@ export const ToolTipContainer = styled(
     transform: 'scale(0)',
     pointerEvents: 'none',
     transition: 'transform 100ms ease',
+    transformOrigin: 'top',
     variants: {
       visible: {
         false: {
@@ -36,7 +37,7 @@ export const ToolTipContainer = styled(
 
 export const ToolTipContent = styled(
   'span',
-  'tool-tip_content',
+  'tooltip-content',
   css({
     display: 'inline-block',
     fontSize: '$md',
@@ -47,7 +48,7 @@ export const ToolTipContent = styled(
 
 export const ToolTipWrapper = styled(
   'div',
-  'tool-tip_wrapper',
+  'tooltip-wrapper',
   css({
     display: 'flex',
     flexDirection: 'column',

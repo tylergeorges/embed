@@ -203,36 +203,93 @@ export const MessageWrapper = styled(
   })
 );
 
-export const TextBoxWrapper = styled(
-  'div',
-  'text-box_wrapper',
-  css({
-    position: 'relative',
-    paddingLeft: '$xl',
-    paddingRight: '$xl',
-    marginBottom: '$lg',
-    display: 'flex',
-    alignItems: 'center',
-    width: '100%'
-  })
-);
+export const TextBoxWrapper = styled('form', 'textbox-wrapper', {
+  position: 'relative',
+  // padding: '$2xl',
+  // paddingX: '$2xl',
+  marginBottom: '$lg',
+  display: 'flex',
+  alignItems: 'center',
+  borderRadius: '$xs',
+  width: 'calc(100% - 32px)',
+  // width: '100%',
+  // padding: '$md',
+  backgroundColor: '$inputBackground',
+  maxHeight: '50vh',
+  paddingY: '$md'
 
-export const TextBoxInput = styled(
-  'input',
-  'text-box_input',
+  // overflow:"hidden"
+});
+export const TextBoxInner = styled('div', 'textbox-inner', {
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  // overflowY: 'hidden',
+  maxHeight: '50vh',
+  position: 'relative',
+  overflowY: 'auto'
+});
+export const TextBoxButtonWrapper = styled('div', 'textbox-button_wrapper', {
+  display: 'flex',
+  alignItems: 'flex-start',
+  height: '100%',
+  position: 'sticky',
+  top: 0
+});
+
+export const TextBoxInputWrapper = styled(
+  'div',
+  'textbox-input_wrapper',
   css({
     width: '100%',
-    backgroundColor: '$inputBackground',
-
+    // height: '100%',
+    display: 'flex',
+    position: 'relative',
+    marginBottom: '$md',
+    height: 'auto'
+    // overflowY: 'auto'
+    // overflowY: 'hidden'
+    // paddingX: '$md'
+  })
+);
+export const TextBoxInput = styled(
+  'div',
+  'textbox-input',
+  css({
+    width: '100%',
+    backgroundColor: 'transparent',
+    cursorColor: 'white',
+    cursor: 'text',
     border: 'none',
-    borderRadius: '$xs',
+    height: 'auto',
+    // borderRadius: '$xs',
     fontWeight: '$thin',
+    // overflowY: 'auto',
+    wordBreak: 'break-word',
+    overflowWrap: 'break-word',
+
+    // paddingY: '$md',
 
     outline: 'none',
     fontSize: '$lg',
-    padding: '$md',
-    paddingTop: '$sm',
+    textAlign: 'left',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    position: 'relative',
+    display: 'flex',
+    // padding: '$md',
+    // paddingTop: '$sm',
     color: '$textPrimary'
+    // height: '$messageInputSize'
+  })
+);
+export const TextBoxPlaceholder = styled(
+  'span',
+  'textbox-placeholder',
+  css({
+    color: '$textMuted',
+    position: 'absolute',
+    pointerEvents: 'none'
   })
 );
 export const MessageContentOuterWrapper = styled(

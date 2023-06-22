@@ -873,6 +873,7 @@ export type GuildQuery = {
     channels: Array<
       | {
           __typename?: 'AnnouncementChannel';
+          topic?: string | null;
           id: string;
           name: string;
           type: ChannelType;
@@ -889,6 +890,7 @@ export type GuildQuery = {
         }
       | {
           __typename?: 'ForumChannel';
+          topic?: string | null;
           id: string;
           name: string;
           type: ChannelType;
@@ -905,6 +907,7 @@ export type GuildQuery = {
         }
       | {
           __typename?: 'TextChannel';
+          topic?: string | null;
           id: string;
           name: string;
           type: ChannelType;
@@ -1381,6 +1384,41 @@ export const GuildDocument = {
                             { kind: 'Field', name: { kind: 'Name', value: 'position' } }
                           ]
                         }
+                      },
+                      {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TextChannel' } },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'threads' },
+                              selectionSet: { kind: 'SelectionSet', selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }] }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'AnnouncementChannel' } },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'threads' },
+                              selectionSet: { kind: 'SelectionSet', selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }] }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'InlineFragment',
+                        typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'ForumChannel' } },
+                        selectionSet: { kind: 'SelectionSet', selections: [{ kind: 'Field', name: { kind: 'Name', value: 'topic' } }] }
                       },
                       { kind: 'Field', name: { kind: 'Name', value: 'rateLimitPerUser' } }
                     ]

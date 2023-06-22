@@ -1,11 +1,10 @@
 import { PinIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
 import { IconProps } from '../icon.types';
 
-export const PinIcon = ({ onClick, isActive, size, color }: IconProps) => (
+export const PinIcon = ({ isActive, size, color }: IconProps) => (
   <PinIconRoot
     size={size || 'regular'}
     aria-label="Pinned Messages Button"
-    onClick={onClick}
     isActive={isActive}
     color={color || 'light'}
     className="text-channel_header_pin_button text-channel_header_icons"

@@ -18,22 +18,17 @@ export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
     setIsThreadsPanelOpen(true);
     setIsMembersListOpen(false);
     setCurrentThread(thread);
-  }, [
-    setCurrentThread,
-    setIsMembersListOpen,
-    setIsCurrentChannelThread,
-    thread,
-    setIsThreadsPanelOpen
-  ]);
+  }, [setCurrentThread, setIsMembersListOpen, setIsCurrentChannelThread, thread, setIsThreadsPanelOpen]);
 
   return (
     <IconButtonWrapper
       iconBackgroundSize={40}
-      button_label="Open Thread"
+      tooltipLabel="Open Thread"
       tooltipPlacement="top"
       backgroundGlowOnHover
+      onClick={handlePanelClick}
     >
-      <ThreadsPanelIcon onClick={handlePanelClick} customSize={30} />
+      <ThreadsPanelIcon customSize={30} />
     </IconButtonWrapper>
   );
 };

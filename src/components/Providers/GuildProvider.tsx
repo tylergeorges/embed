@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { graphql } from '@graphql/gql';
 import { useQuery } from 'urql';
-import { useStoreActions } from '@state';
+import { useStoreActions, useStoreState } from '@state';
 import { Loading } from '@components/Overlays/Loading';
 import { useAppRouter } from '@lib/hooks';
 
@@ -32,6 +32,25 @@ const guildDocument = graphql(/* GraphQL */ `
           name
           position
         }
+
+        ... on TextChannel {
+          topic
+
+          threads {
+            id
+          }
+        }
+        ... on AnnouncementChannel {
+          topic
+
+          threads {
+            id
+          }
+        }
+        ... on ForumChannel {
+          topic
+        }
+
         rateLimitPerUser
       }
     }
@@ -49,9 +68,12 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
   const setChannels = useStoreActions(state => state.guild.setChannels);
+  const channels = useStoreState(state => state.guild.channels);
 
   useEffect(() => {
-    if (!fetching && data) {
+    // router.push('channels/299881420891881473/309009333436547082');
+
+    if (data && !fetching) {
       setGuildData(data.guild);
       // @ts-expect-error
       setSettings(data.guild.settings);
@@ -60,6 +82,7 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
     }
   }, [data, fetching, setChannels, setGuildData, setSettings]);
 
-  if (fetching && !data) return <Loading />;
+  if (fetching || !data || channels === undefined) return <Loading />;
+
   return <>{children}</>;
 };

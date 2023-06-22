@@ -139,6 +139,31 @@ export const ThreadPanelWrapper = styled(
     }
   })
 );
+export const ThreadsPanelSeperator = styled(
+  'div',
+  'panel-threads_seperator',
+  css({
+    height: '100%',
+    width: 8,
+    transform: `translateX(-8px)`,
+    backgroundColor: '$borderDark',
+    zIndex: 9,
+
+    '@mobile': {
+      true: {
+        opacity: 0
+      }
+    },
+
+    variants: {
+      isOpen: {
+        false: {
+          opacity: 0
+        }
+      }
+    }
+  })
+);
 
 export const Close = styled(
   'button',
@@ -177,23 +202,6 @@ export const Close = styled(
           borderRadius: '50%',
           background: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='rgb(181, 186, 193)' viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e")`
         }
-      }
-    }
-  })
-);
-
-export const ThreadsPanelSeperator = styled(
-  'div',
-  'panel-threads_seperator',
-  css({
-    height: '100%',
-    width: 8,
-    transform: `translateX(-8px)`,
-    backgroundColor: '$borderDark',
-    zIndex: 9,
-    '@mobile': {
-      true: {
-        opacity: 0
       }
     }
   })

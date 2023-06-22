@@ -1,17 +1,37 @@
-import { TextBoxWrapper, TextBoxInput } from './elements';
+import { useCallback, useRef } from 'react';
 
-interface MessageInputProps {
-  /** The name of the current text channel. */
-  channelName: string;
-}
+import { AddAttachmentsButton } from '@components/Shared/Icons/Buttons/AddAttachmentsButton';
+import { EmojisButton } from '@components/Shared/Icons/Buttons/EmojisButton';
+import { MessageInput } from '@components/Core/Container/MessageInput';
+import { TextBoxWrapper, TextBoxButtonWrapper, TextBoxInner } from './elements';
 
-/** This component handles sending messages to the current text channel.
- *
- * @param channelName                  The name of the current text channel.
- */
-export const TextBox = ({ channelName }: MessageInputProps) => (
-  // const { t } = useTranslation();
-  <TextBoxWrapper className="text-box_wrapper">
-    <TextBoxInput placeholder={channelName} className="text-box_input" />
-  </TextBoxWrapper>
-);
+export const TextBox = () => {
+  const imageAttachmentRef = useRef<HTMLInputElement>(null);
+  const attachmentButtonClick = useCallback((e: React.SyntheticEvent) => {
+    e.preventDefault();
+    imageAttachmentRef.current?.click();
+  }, []);
+
+  const addAttachment = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.currentTarget.files) {
+      // TODO: implement adding attachments
+      // const fileUploaded = e.currentTarget.files[0];
+    }
+  };
+
+  return (
+    <TextBoxWrapper className="textbox-wrapper">
+      <TextBoxInner>
+        <TextBoxButtonWrapper>
+          <input hidden type="file" onChange={addAttachment} ref={imageAttachmentRef} />
+          <AddAttachmentsButton onClick={attachmentButtonClick} />
+        </TextBoxButtonWrapper>
+        <MessageInput />
+
+        <TextBoxButtonWrapper>
+          <EmojisButton />
+        </TextBoxButtonWrapper>
+      </TextBoxInner>
+    </TextBoxWrapper>
+  );
+};
