@@ -152,6 +152,24 @@ const messagesQuery = graphql(`
   }
 `);
 
+const newMessageSubscription = graphql(`
+  subscription newMessageSubscription($guild: String!, $channel: String!) {
+    message(guild: $guild, channel: $channel) {
+      ...BaseMessage
+    }
+  }
+`);
+
+// TODO: Copy fragments from old codebase for this.
+const updateMessageSubscription = graphql(`
+  subscription updateMessageSubscription($guild: String!, $channel: String!) {
+    messageUpdate(guild: $guild, channel: $channel) {
+      id
+      content
+    }
+  }
+`);
+
 interface UseMessagesProps {
   guild: string;
   channel: string;
