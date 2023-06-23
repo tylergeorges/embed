@@ -14,11 +14,7 @@ export interface IThread extends Channel {
 }
 
 export type GuildChannels = {
-  [channelId: string]: {
-    threads: Channel[];
-    channelName: string;
-    channelTopic: string;
-  };
+  [channelId: string]: Channel;
 };
 // export type GuildThreads = Record<string, ChannelThreads>;
 
@@ -52,18 +48,17 @@ const guild: GuildStore = {
     const guildChannels: GuildChannels = {};
 
     // Filter for channels that have threads
-    // const channelsWithThreads = state.channels.filter(channel => channel.threads && channel.threads?.length > 0);
-    // const channelsWithThreads = state.channels.filter(channel => channel.threads && channel.threads?.length > 0);
     const channelsLen = state.channels.length;
     // Iterate over channels that have threads and add them to map
     for (let i = 0; i < channelsLen; i += 1) {
+      // @ts-ignore
       const channel = state.channels[i];
 
-      const mapHasChannel = guildChannels[channel.id];
+      const mapHasChannel = guildChannels[String(channel.id)];
       if (mapHasChannel) break;
 
-      guildChannels[channel.id] = { threads: [], channelName: channel.name, channelTopic: channel.topic };
-      guildChannels[channel.id].threads = channel.threads as Channel[];
+      guildChannels[String(channel.id)] = channel;
+      guildChannels[String(channel.id)].threads = channel.threads;
     }
 
     return guildChannels;
@@ -96,7 +91,8 @@ const guild: GuildStore = {
   }),
   setCurrentChannel: action((state, payload) => {
     const currentChannel = state.guildChannels[payload];
-    state.currentChannel = { name: currentChannel.channelName, topic: currentChannel.channelTopic };
+    // @ts-ignore
+    state.currentChannel = { name: currentChannel.name, topic: currentChannel.topic };
   })
 };
 

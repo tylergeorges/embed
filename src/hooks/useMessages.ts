@@ -1,7 +1,12 @@
 import { gql, useQuery } from 'urql';
 import { graphql } from '@graphql/gql';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { BaseMessageFragment, MessagesQueryQueryVariables, MessageFragmentFragment } from '@graphql/graphql';
+import {
+  BaseMessageFragment,
+  MessagesQueryQueryVariables,
+  // @ts-ignore
+  MessageFragmentFragment
+} from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
@@ -176,14 +181,18 @@ export const useMessages = ({ guild, channel, useStaticData = false }: UseMessag
   });
 
   // console.log(data)
-  const ready = data?.channelV2.id === channel || false;
 
+  const ready = data?.channelV2.id === channel || false;
   useEffect(() => {
     if (!useStaticData) {
+      // if (variables === null || variables.channel !== channel) {
+      //   setVariables({ guild, channel });
+      // }
       // @ts-ignore TODO: Fix this
       const isReadyWithMessages = ready && data?.channelV2.messageBunch?.messages;
 
-      const msgs = isReadyWithMessages ? data?.channelV2.messageBunch?.messages : [];
+      // @ts-ignore
+      const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
       if (msgs.length) {
         setNewMessageGroupLength(groupMessages(msgs).length);
         console.log('grouped', groupMessages(msgs).length);
@@ -195,9 +204,11 @@ export const useMessages = ({ guild, channel, useStaticData = false }: UseMessag
     } else {
       const groupedStaticMsgs = groupMessages(staticMessages);
       setNewMessageGroupLength(groupedStaticMsgs.length);
+      // @ts-ignore
       setMessages(prev => [...groupedStaticMsgs, ...prev]);
     }
-  }, [data, ready, useStaticData]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.channelV2, ready, useStaticData]);
 
   const fetchMore = useCallback(
     (before: string) => {
@@ -217,6 +228,7 @@ export const useMessages = ({ guild, channel, useStaticData = false }: UseMessag
 
   let messageState: MessageState;
 
+  // @ts-ignore
   // eslint-disable-next-line prefer-const
   messageState = useMemo(() => {
     let firstItemIndex = 100_000;
@@ -228,7 +240,9 @@ export const useMessages = ({ guild, channel, useStaticData = false }: UseMessag
         firstItemIndex
       };
 
-    const grouped = !useStaticData ? groupMessages(messages.map(convertMessageToDiscord)) : messages;
+    const grouped = !useStaticData
+      ? groupMessages(messages.map(convertMessageToDiscord))
+      : messages;
     firstItemIndex -= grouped.length - 1;
     return {
       messages,

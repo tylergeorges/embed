@@ -1,6 +1,6 @@
 import { Modal } from '@components/Overlays/Modal';
 import { ModalHeader, ModalHeaderContent } from '@components/Overlays/Modal/elements';
-import { Close } from '@components/Sidebar/elements';
+import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { ReactElement } from 'react';
 
 interface InformationModalProps {
@@ -21,7 +21,7 @@ export const InformationModal = ({
   <Modal isOpen={isOpen} title={title} hideModal={hideModal} disableBackdrop={disableBackdrop}>
     <ModalHeader>
       <ModalHeaderContent className="non-dragable">
-        {title} <Close onClick={hideModal} />
+        {title} <IconButton name="Close" backgroundGlowOnHover onClick={hideModal} />
       </ModalHeaderContent>
     </ModalHeader>
 

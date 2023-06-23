@@ -31,9 +31,6 @@ export const ChannelsList = () => {
         type="channels_list"
         channelsListOpen={isChannelsListOpen}
         className="channels-sidebar_wrapper"
-        css={{
-          zIndex: 11
-        }}
         onClick={hideContextMenu}
       >
         <div className="sidebar-header_container">
@@ -43,12 +40,22 @@ export const ChannelsList = () => {
         <div className="sidebar-children_container">
           <ChannelHighlighter />
 
-          {categories.map(category => (
-            <Category currentChannelID={channelId} currentThreadID={threadId} category={category} key={category.id} />
-          ))}
+          {categories
+            .filter(category => category !== null)
+            .map(category => (
+              <Category
+                currentChannelID={channelId}
+                currentThreadID={threadId}
+                category={category}
+                key={category.id}
+              />
+            ))}
         </div>
       </ChannelsSidebarWrapper>
-      <ModalBackdrop isOpen={windowIsMobile ? !!isChannelsListOpen : false} onClick={closeSidebar} />
+      <ModalBackdrop
+        isOpen={windowIsMobile ? !!isChannelsListOpen : false}
+        onClick={closeSidebar}
+      />
     </>
   );
 };

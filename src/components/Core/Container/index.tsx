@@ -33,6 +33,7 @@ export const Container = () => {
     setCurrentChannel(channelId);
 
     if (isCurrentChannelThread && threadId) {
+      // @ts-ignore
       const thread = guildChannels[channelId].threads.find(th => th.id === threadId) as Channel;
       setCurrentThread(thread);
     }
@@ -57,7 +58,13 @@ export const Container = () => {
       setIsChannelsListOpen(false);
       setIsMembersListOpen(false);
     }
-  }, [isChannelsListOpen, isMembersListOpen, windowIsMobile, setIsMembersListOpen, setIsChannelsListOpen]);
+  }, [
+    isChannelsListOpen,
+    isMembersListOpen,
+    windowIsMobile,
+    setIsMembersListOpen,
+    setIsChannelsListOpen
+  ]);
 
   return (
     <TextChannelWrapper

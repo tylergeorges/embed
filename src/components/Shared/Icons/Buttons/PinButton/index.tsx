@@ -1,5 +1,4 @@
-import { IconButtonWrapper } from '@components/Shared/Icons/Buttons/IconButtonWrapper';
-import { PinIcon } from '@components/Shared/Icons/PinIcon';
+import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { useCallback } from 'react';
 
 export const PinButton = () => {
@@ -7,8 +6,11 @@ export const PinButton = () => {
     e.preventDefault();
   }, []);
   return (
-    <IconButtonWrapper tooltipLabel="Pinned Messages" tooltipPlacement="bottom" onClick={handlePinClick}>
-      <PinIcon />
-    </IconButtonWrapper>
+    <IconButton
+      name="Pin"
+      tooltipLabel="Pinned Messages"
+      tooltipPlacement="bottom"
+      onClick={handlePinClick}
+    />
   );
 };

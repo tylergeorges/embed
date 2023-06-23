@@ -5,21 +5,29 @@ import {
   PopoverHeaderContent,
   PopoverContainer
 } from '@components/Overlays/Modal/elements';
-import { IconProps } from '@components/Shared/Icons/icon.types';
-import { Close } from '@components/Sidebar/elements';
+import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
+import { IconProps, Icons } from '@components/Shared/Icons/Icons';
 import { useMediaQuery } from '@lib/hooks';
 import { ReactElement } from 'react';
 
+type TitleIcon = Pick<IconProps, 'name'>['name'];
 interface PopoverProps {
   children: ReactElement<any, any>;
   isOpen: boolean;
   hideModal: () => void;
+  TitleIcon: TitleIcon;
   title: string;
-  TitleIcon?: ({ isActive }: IconProps) => JSX.Element;
   popoverFor: HTMLDivElement | null;
 }
 
-export const Popover = ({ children, isOpen, hideModal, title, TitleIcon, popoverFor }: PopoverProps) => {
+export const Popover = ({
+  children,
+  isOpen,
+  hideModal,
+  title,
+  TitleIcon,
+  popoverFor
+}: PopoverProps) => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
 
   if (popoverFor && isOpen) {
@@ -38,11 +46,11 @@ export const Popover = ({ children, isOpen, hideModal, title, TitleIcon, popover
           <PopoverHeader className="popover-header">
             <PopoverHeaderContent className="popover-header_content non-dragable">
               <PopoverTitleWrapper className="popover-title_container">
-                {TitleIcon && <TitleIcon />}
+                {TitleIcon && <Icons name={TitleIcon} />}
 
                 <PopoverTitle className="popover-title">{title}</PopoverTitle>
               </PopoverTitleWrapper>
-              <Close onClick={hideModal} />
+              <IconButton onClick={hideModal} name="Close" backgroundGlowOnHover tooltipDisabled />
             </PopoverHeaderContent>
           </PopoverHeader>
 

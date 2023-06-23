@@ -1,44 +1,36 @@
 import { styled } from '@stitches/react';
-import { css } from '@stitches';
 
-export const BackgroundContainer = styled(
-  'div',
-  'activechannel-background_container',
-  css({
-    position: 'absolute',
-    // position: 'relative',
-    width: '100%',
-    left: 0,
-    right: 0,
-    zIndex: 1
-  })
-);
-export const Background = styled(
-  'div',
-  'active-channel_background',
-  css({
-    position: 'absolute',
-    backgroundColor: '$primaryOpacity10',
+export const BackgroundContainer = styled('div', 'activechannel-background_container', {
+  position: 'absolute',
+  // position: 'relative',
+  width: '100%',
+  left: 0,
+  right: 0,
+  zIndex: 1
+});
 
-    pointerEvents: 'none',
+export const Background = styled('div', 'active-channel_background', {
+  position: 'absolute',
+  backgroundColor: '$primaryOpacity10',
 
-    transform: 'translateY(var(--yPos))',
+  pointerEvents: 'none',
 
-    variants: {
-      animated: {
-        true: {
-          transition: '350ms ease'
-        },
-        false: {
-          transition: 'none'
-        }
+  transform: 'translateY(var(--yPos))',
+
+  variants: {
+    animated: {
+      true: {
+        transition: '350ms ease'
       },
-      isCurrentChannelThread: {
-        true: {
-          transform: 'translateY(var(--yPos)) scaleX(0.79)  translateX(25px)'
-          // transform: 'translateY(var(--yPos)) scaleX(0.79) scaleY(0.9) translateX(25px)',
-        }
+      false: {
+        transition: 'none'
+      }
+    },
+    isCurrentChannelThread: {
+      true: {
+        transform: 'translateY(var(--yPos)) scaleX(0.79)  translateX(25px)'
+        // transform: 'translateY(var(--yPos)) scaleX(0.79) scaleY(0.9) translateX(25px)',
       }
     }
-  })
-);
+  }
+});

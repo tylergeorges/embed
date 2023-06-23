@@ -72,6 +72,7 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
 
   useEffect(() => {
     if (!guildId) {
+      // router.push('/channels/585454996800405509/585840022511550494');
       router.push('/channels/299881420891881473/309009333436547082');
     }
 
@@ -82,7 +83,7 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
       // @ts-expect-error
       setChannels(data.guild.channels);
     }
-  }, [data, fetching, setChannels, setGuildData, setSettings]);
+  }, [data, fetching, setChannels, setGuildData, setSettings, guildId, router]);
 
   if (fetching || !data || channels === undefined) return <Loading />;
   return <>{children}</>;

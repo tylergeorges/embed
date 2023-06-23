@@ -15,10 +15,13 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
   const [isListRendered, setIsListRendered] = useState(false);
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
+  // const { guildId, channelId } = useAppRouter();
 
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
+    // guild: guildId,
+    // channel: channelId
     guild: '585454996800405509',
-    channel: '585458921888808960'
+    channel: '585840022511550494'
   });
 
   const handleBottomStateChanged = () => {
@@ -29,7 +32,7 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
 
   return (
     <MessageWrapper
-      className="message-wrapper non-dragable"
+      className="message-wrapper "
       draggable={false}
       membersListOpen={isMembersListOpen}
       onClick={onBackdropClick}

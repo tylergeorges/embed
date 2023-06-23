@@ -4,12 +4,12 @@ import {
   ThreadPanelHeaderRoot,
   ThreadPanelHeaderIconContent
 } from '@components/Header/elements';
-import { CloseButton } from '@components/Shared/Icons/Buttons/CloseButton';
 import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
-import { ThreadsIcon } from '@components/Shared/Icons/ThreadsIcon';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback } from 'react';
 import { useMediaQuery, useAppRouter } from '@lib/hooks';
+import { Icons } from '@components/Shared/Icons/Icons';
+import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 
 export const ThreadPanelHeader = () => {
   const setIsThreadsPanelOpen = useStoreActions(state => state.ui.setIsThreadsPanelOpen);
@@ -31,10 +31,10 @@ export const ThreadPanelHeader = () => {
         <ThreadPanelHeaderIconContainer className="panel-thread_header_icon_container">
           <ThreadPanelHeaderIconContent className="panel-thread_header_icon_content">
             {windowIsMobile && <Hamburger />}
-            <ThreadsIcon color="dark" css={{ marginX: '$sm' }} />
+            <Icons name="ThreadHash" color="dark" css={{ marginX: '$sm' }} />
             {currentThread?.name}
           </ThreadPanelHeaderIconContent>
-          <CloseButton onClick={closePanel} color="dark" />
+          <IconButton name="Close" backgroundGlowOnHover onClick={closePanel} />
         </ThreadPanelHeaderIconContainer>
       </ThreadPanelHeaderRoot>
     </Header>

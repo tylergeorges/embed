@@ -28,7 +28,13 @@ interface MessagesListProps {
   handleBottomStateChanged?: (atBottom: boolean) => void;
   startReached?: (index: number) => void;
 }
-export const MessagesList = ({ isReady, groupedMessages, startReached, firstItemIndex, handleBottomStateChanged }: MessagesListProps) => {
+export const MessagesList = ({
+  isReady,
+  groupedMessages,
+  startReached,
+  firstItemIndex,
+  handleBottomStateChanged
+}: MessagesListProps) => {
   const followOutput = (isAtBottom: boolean) => {
     if (isAtBottom) {
       return 'auto'; // can be 'auto' or false to avoid scrolling
@@ -38,7 +44,7 @@ export const MessagesList = ({ isReady, groupedMessages, startReached, firstItem
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100%', boxSizing: 'content-box' }}>
       {isReady && (
         <Virtuoso
           data={groupedMessages}

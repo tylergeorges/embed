@@ -23,9 +23,19 @@
       "@state": ["./src/state"],
       "@state/*": ["./src/state/*"],
       "@stitches": ["./stitches.config.tsx"],
+      "@svg-assets": ["./src/res/images/discordAssets/svgUrls.ts"],
+      "@icons/*": ["./src/res/images/discordAssets/message-renderer-icons/*"],
       "types/*": ["./src/types/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src", "pages/**/*", "./src/lib/message-renderer/tsconfig.json"],
+  "include": [
+    "next-env.d.ts",
+    "./svg.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src",
+    "pages/**/*",
+    "./src/lib/message-renderer/tsconfig.json"
+  ],
   "exclude": ["node_modules"]
 }

@@ -6,7 +6,7 @@ import user, { UserStore } from './stores/user';
 
 export interface RootStore {
   ui: UIStore;
-  guild: GuildStore
+  guild: GuildStore;
   user: UserStore;
 }
 

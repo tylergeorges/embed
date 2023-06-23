@@ -1,6 +1,5 @@
 import { ThreadsPopover } from '@components/Overlays/Modal/Popover/ThreadsPopover';
-import { IconButtonWrapper } from '@components/Shared/Icons/Buttons/IconButtonWrapper';
-import { ThreadsIcon } from '@components/Shared/Icons/ThreadsIcon';
+import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback } from 'react';
 
@@ -11,7 +10,6 @@ export const ThreadsButton = () => {
   const openThreadsModal = useCallback(
     (e: React.SyntheticEvent) => {
       e.preventDefault();
-      console.log('click');
       setShowThreadsModal(!showThreadsModal);
     },
     [setShowThreadsModal, showThreadsModal]
@@ -20,9 +18,13 @@ export const ThreadsButton = () => {
   return (
     <>
       <ThreadsPopover>
-        <IconButtonWrapper tooltipLabel="Threads" tooltipPlacement="bottom" onClick={openThreadsModal}>
-          <ThreadsIcon color="light" />
-        </IconButtonWrapper>
+        <IconButton
+          color="light"
+          tooltipLabel="Threads"
+          name="ThreadHash"
+          tooltipPlacement="bottom"
+          onClick={openThreadsModal}
+        />
       </ThreadsPopover>
     </>
   );

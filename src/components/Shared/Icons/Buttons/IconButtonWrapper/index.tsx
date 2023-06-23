@@ -1,7 +1,10 @@
-import { IconButtonRoot, IconButtonChildrenWrapper } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
+import {
+  IconButtonRoot,
+  IconButtonChildrenWrapper
+} from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
 import { ToolTip } from '@components/Shared/ToolTip';
 
-interface IconButtonWrapperProps {
+export interface IconButtonWrapperProps {
   onClick: (args: any) => void;
   children: React.ReactNode;
   tooltipLabel?: string;
@@ -13,6 +16,7 @@ interface IconButtonWrapperProps {
   backgroundGlowOnHover?: boolean;
 
   iconBackgroundSize?: number;
+  isActive?: boolean;
 }
 
 export const IconButtonWrapper = ({
@@ -23,7 +27,8 @@ export const IconButtonWrapper = ({
   backgroundGlowOnHover,
   iconBackgroundSize,
   tooltipPlacement,
-  onClick
+  onClick,
+  isActive
 }: IconButtonWrapperProps) => {
   if (tooltipDisabled)
     return (
@@ -32,6 +37,7 @@ export const IconButtonWrapper = ({
           className="icon-button_children_wrapper"
           backgroundGlowOnHover={backgroundGlowOnHover ?? false}
           onClick={onClick}
+          isActive={isActive}
           css={
             iconBackgroundSize
               ? {
@@ -48,7 +54,11 @@ export const IconButtonWrapper = ({
 
   return (
     <IconButtonRoot className="icon-button_wrapper_root">
-      <ToolTip placement={tooltipPlacement ?? 'top'} label={tooltipLabel ?? ''} show={alwaysShowTooltip}>
+      <ToolTip
+        placement={tooltipPlacement ?? 'top'}
+        label={tooltipLabel ?? ''}
+        show={alwaysShowTooltip}
+      >
         <IconButtonChildrenWrapper
           className="icon-button_children_wrapper"
           backgroundGlowOnHover={backgroundGlowOnHover ?? false}
@@ -60,6 +70,7 @@ export const IconButtonWrapper = ({
                 }
               : {}
           }
+          isActive={isActive}
           onClick={onClick}
         >
           {children}

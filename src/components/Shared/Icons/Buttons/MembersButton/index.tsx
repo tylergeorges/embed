@@ -1,5 +1,4 @@
-import { IconButtonWrapper } from '@components/Shared/Icons/Buttons/IconButtonWrapper';
-import { MembersIcon } from '@components/Shared/Icons/MembersIcon';
+import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { useStoreActions, useStoreState } from '@state';
 
 export const MembersButton = () => {
@@ -7,12 +6,19 @@ export const MembersButton = () => {
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
   return (
-    <IconButtonWrapper
+    <IconButton
       tooltipPlacement="bottom"
       tooltipLabel={isMembersListOpen ? 'Hide Member List' : 'Show Member List'}
       onClick={() => setMembersListOpen(!isMembersListOpen)}
-    >
-      <MembersIcon isActive={isMembersListOpen} />
-    </IconButtonWrapper>
+      name="Members"
+      isActive={isMembersListOpen}
+    />
   );
 };
+// <IconButtonWrapper
+//   tooltipPlacement="bottom"
+//   tooltipLabel={isMembersListOpen ? 'Hide Member List' : 'Show Member List'}
+//   onClick={() => setMembersListOpen(!isMembersListOpen)}
+// >
+//   <MembersIcon isActive={isMembersListOpen} />
+// </IconButtonWrapper>

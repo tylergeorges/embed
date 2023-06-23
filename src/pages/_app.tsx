@@ -8,7 +8,6 @@ import { client } from '@graphql/client';
 import '../i18n';
 import { GuildProvider } from '@components/Providers';
 import React from 'react';
-// import { MessageRendererProvider } from '@widgetbot/message-renderer';
 
 function App({ Component, pageProps }: AppProps) {
   const globalStyles = globalCss({
@@ -42,8 +41,7 @@ function App({ Component, pageProps }: AppProps) {
       textDecoration: 'none'
     },
     '*, ::after, ::before': {
-      boxSizing: 'border-box',
-      fontFamily: 'GgSans'
+      boxSizing: 'border-box'
     },
 
     /* width */
@@ -111,6 +109,10 @@ function App({ Component, pageProps }: AppProps) {
     }
   });
 
+  //  const MessageRendererRoot = styled('div', {
+  //   '--fonts-main': 'GgSans',
+  //   height: '100%'
+  // });
   globalStyles();
   return (
     <StoreProvider store={store}>
@@ -119,13 +121,45 @@ function App({ Component, pageProps }: AppProps) {
           <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
           </Head>
-          {/* <MessageRendererProvider>
+          {/* <MessageRendererProvider
+            messageButtons={() => []}
+            currentUser={() => null}
+            resolveChannel={id => {
+              const channels = store.getState().guild.guildChannels;
+
+              // console.log(channels[id]);
+              return channels[id] ?? null;
+            }}
+            resolveGuild={() => null}
+            resolveMember={() => null}
+            resolveRole={() => null}
+            resolveUser={() => null}
+            svgUrls={svgUrls}
+            seeThreadOnClick={(messageId, thread) =>
+              alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
+            }
+            userMentionOnClick={user =>
+              alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
+            }
+            seeThreadOnClick={(messageId, thread) =>
+              alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
+            }
+            userMentionOnClick={user =>
+              alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
+            }
+            roleMentionOnClick={role => alert(`Role "${role.name}" mention clicked!`)}
+            channelMentionOnClick={channel => alert(`Channel "${channel.name}" mention clicked!`)}
+            messageComponentButtonOnClick={(message, customId) => {
+              alert(`Button by custom id "${customId}" pressed on message ${message.id}!`);
+            }}
+          >
             {({ themeClass }) => (
-              <div className={themeClass} >
+              <MessageRendererRoot className={themeClass}>
                 <Component {...pageProps} />
-              </div>
+              </MessageRendererRoot>
             )}
           </MessageRendererProvider> */}
+
           <Component {...pageProps} />
         </GuildProvider>
       </GraphQLProvider>

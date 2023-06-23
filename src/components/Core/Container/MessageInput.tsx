@@ -1,4 +1,8 @@
-import { TextBoxInput, TextBoxPlaceholder, TextBoxInputWrapper } from '@components/Core/Container/elements';
+import {
+  TextBoxInput,
+  TextBoxPlaceholder,
+  TextBoxInputWrapper
+} from '@components/Core/Container/elements';
 import { useStoreState } from '@state';
 import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -15,8 +19,14 @@ type ModifierKeys = {
 export const MessageInput = () => {
   const translate = useTranslation();
   const currentChannel = useStoreState(state => state.guild.currentChannel);
-  const [modifierKeys, setModifierKeys] = useState<ModifierKeys>({ Shift: { isHolding: false }, Control: { isHolding: false } });
-  const channelName = useMemo(() => translate.t('input.message', { CHANNEL: currentChannel?.name }), [translate, currentChannel]);
+  const [modifierKeys, setModifierKeys] = useState<ModifierKeys>({
+    Shift: { isHolding: false },
+    Control: { isHolding: false }
+  });
+  const channelName = useMemo(
+    () => translate.t('input.message', { CHANNEL: currentChannel?.name }),
+    [translate, currentChannel]
+  );
   // @ts-ignore
   const [, setMessageContent] = useState('');
 
@@ -27,7 +37,14 @@ export const MessageInput = () => {
   const inputRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key !== 'Shift' && e.key !== 'Enter' && e.key !== 'Backspace' && e.key !== 'a' && e.key !== 'Control') return;
+    if (
+      e.key !== 'Shift' &&
+      e.key !== 'Enter' &&
+      e.key !== 'Backspace' &&
+      e.key !== 'a' &&
+      e.key !== 'Control'
+    )
+      return;
 
     const { key } = e;
 
@@ -63,10 +80,7 @@ export const MessageInput = () => {
         const sel = window.getSelection();
         if (isAllContentSelected && inputRef.current) {
           setIsAllContentSelected(false);
-          //   const textSelected = sel?.toString();
 
-          //   if(textSelected)
-          console.log('reset input height');
           inputRef.current.style.height = `21px`;
         }
 

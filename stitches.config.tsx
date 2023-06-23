@@ -17,9 +17,9 @@ const stitches = createStitches({
       primaryDark: '#72767d',
 
       textPrimary: '#FFFFFF',
-      textMuted: 'rgb(109, 111, 120)',
+      textMuted: 'rgba(255, 255, 255, 0.3)',
 
-      iconDark: 'rgb(128, 132, 142)',
+      iconDark: 'rgba(255, 255, 255, 0.3)',
       iconLight: 'rgb(181,186,193)',
       iconActive: '$primaryOpacity90',
 
@@ -144,9 +144,9 @@ const stitches = createStitches({
       paddingTop: value,
       paddingBottom: value
     }),
-    size: (value: ScaleValue<''>) => ({
-      paddingTop: value,
-      paddingBottom: value
+    size: (value: ScaleValue<'sizes'>) => ({
+      height: value,
+      width: value
     })
   }
 });
