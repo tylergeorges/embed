@@ -7,7 +7,7 @@ import { useContextMenu } from '@lib/hooks';
 import { useStoreState } from '@state';
 import { ThreadPanel } from '@components/Sidebar/ThreadPanel';
 import { ChannelTopicModal } from '@components/Overlays/Modal/InformationModal/ChannelTopicModal';
-import { Container } from '@components/Core/Container';
+import { TextChannelContainer } from '@components/Core/TextChannelContainer';
 import { MessageRendererProvider } from '@widgetbot/message-renderer';
 import { styled } from '@stitches';
 import { APIChannel } from 'discord-api-types/v10';
@@ -20,7 +20,6 @@ const MessageRendererRoot = styled('div', {
 const GuildChannel: NextPage = () => {
   const { disableBrowserMenu } = useContextMenu();
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);
-  const showTopicModal = useStoreState(state => state.ui.showTopicModal);
   const guildChannels = useStoreState(state => state.guild.guildChannels);
   return (
     <MessageRendererProvider
@@ -50,10 +49,10 @@ const GuildChannel: NextPage = () => {
           <Main onContextMenu={disableBrowserMenu}>
             {showContextMenu && <ContextMenu />}
 
-            {showTopicModal && <ChannelTopicModal />}
+            <ChannelTopicModal />
             <InnerMain>
               <ChannelsList />
-              <Container />
+              <TextChannelContainer />
               <ThreadPanel />
             </InnerMain>
           </Main>

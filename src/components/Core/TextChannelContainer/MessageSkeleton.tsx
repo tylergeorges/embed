@@ -8,7 +8,7 @@ import {
   MessageSkeletonContentLongWord,
   MessageSkeletonContentShortWord,
   MessageSkeletonContentMedWord
-} from '@components/Core/Container/elements';
+} from '@components/Core/TextChannelContainer/elements';
 
 const FirstSkeletonLine = () => (
   <MessageSkeletonContentLine className="message-skeleton_content_line">

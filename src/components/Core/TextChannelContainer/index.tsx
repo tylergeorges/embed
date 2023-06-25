@@ -8,7 +8,7 @@ import { TextChannelInnerWrapper, TextChannelWrapper } from './elements';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
 
-export const Container = () => {
+export const TextChannelContainer = () => {
   // Used to check if the screen size is mobile because if it is then the sidebars
   // hover over the text channel and we want to be able to close them by clicking on
   // the text channel.

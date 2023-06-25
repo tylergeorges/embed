@@ -2,8 +2,8 @@ import { useCallback, useRef } from 'react';
 
 import { AddAttachmentsButton } from '@components/Shared/Icons/Buttons/AddAttachmentsButton';
 import { EmojisButton } from '@components/Shared/Icons/Buttons/EmojisButton';
-import { MessageInput } from '@components/Core/Container/MessageInput';
-import { TextBoxWrapper, TextBoxButtonWrapper, TextBoxInner } from './elements';
+import { TextBoxInput } from '@components/Core/TextChannelContainer/TextBox/TextBoxInput';
+import { TextBoxWrapper, TextBoxButtonWrapper, TextBoxInner } from '../elements';
 
 export const TextBox = () => {
   const imageAttachmentRef = useRef<HTMLInputElement>(null);
@@ -26,7 +26,8 @@ export const TextBox = () => {
           <input hidden type="file" onChange={addAttachment} ref={imageAttachmentRef} />
           <AddAttachmentsButton onClick={attachmentButtonClick} />
         </TextBoxButtonWrapper>
-        <MessageInput />
+
+        <TextBoxInput />
 
         <TextBoxButtonWrapper>
           <EmojisButton />

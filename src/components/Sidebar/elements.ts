@@ -13,6 +13,7 @@ export const SidebarWrapper = styled('aside', 'sidebar_wrapper', {
   flexDirection: 'column',
   willChange: 'transform',
   transition: 'transform 300ms ease',
+
   variants: {
     channelsListOpen: {
       false: {

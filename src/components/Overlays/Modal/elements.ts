@@ -7,11 +7,11 @@ const zoomIn = keyframes({
   '50%': { transform: 'scale(1.05)' },
   '100%': { transform: 'scale(1)' }
 });
-const zoomOut = keyframes({
-  '0%': { transform: 'initial' },
-  '50%': { transform: 'scale(1.05)' },
-  '100%': { transform: 'scale(0)' }
-});
+// const zoomOut = keyframes({
+//   '0%': { transform: 'initial' },
+//   '50%': { transform: 'scale(1.05)' },
+//   '100%': { transform: 'scale(0)' }
+// });
 
 export const ModalBackdrop = styled('div', 'modal-backdrop', {
   backgroundColor: 'rgba(0,0,0,0.5)',
@@ -28,7 +28,7 @@ export const ModalBackdrop = styled('div', 'modal-backdrop', {
   variants: {
     isOpen: {
       false: {
-        // transitionDelay: '0.5s',
+        transitionDelay: '0.5s',
         opacity: 0,
         pointerEvents: 'none',
 
@@ -51,7 +51,7 @@ export const ModalContainerWrapper = styled('div', 'modal-container_wrapper', {
   alignItems: 'center',
   justifyContent: 'center',
   pointerEvents: 'none',
-  zIndex: 13,
+  zIndex: -1,
   variants: {
     isOpen: {
       false: {
@@ -60,16 +60,15 @@ export const ModalContainerWrapper = styled('div', 'modal-container_wrapper', {
         transitionDelay: '0.5s',
         zIndex: -1,
         transitionProperty: 'z-index'
+      },
+      true: {
+        zIndex: 13
       }
     }
   }
 });
 
-export const PopoverContainerWrapper = styled(
-  ModalContainerWrapper,
-  'popover-container_wrapper',
-  {}
-);
+export const PopoutContainerWrapper = styled(ModalContainerWrapper, 'popout-container_wrapper', {});
 
 export const ModalContainer = styled('div', 'modal-container', {
   width: 490,
@@ -80,14 +79,17 @@ export const ModalContainer = styled('div', 'modal-container', {
   textAlign: 'left',
   borderRadius: 4,
   pointerEvents: 'all',
-  transition: 'transform 0.5s ease',
+  transition: 'transform 200ms ease',
+  // transition: 'transform 0.5s ease',
   variants: {
     isOpen: {
       false: {
-        animation: `${zoomOut} 0.5s ease`
+        transform: 'scale(0)'
+        // animation: `${zoomOut} 0.5s ease`
       },
       true: {
         animation: `${zoomIn} 0.5s ease`
+        // transform: 'scale(1)'
       }
     }
   }
@@ -106,7 +108,7 @@ export const ModalHeaderContent = styled(HeaderMainContentRoot, 'modal-header_co
   cursor: 'default'
 });
 
-export const PopoverHeader = styled('div', 'popover-header', {
+export const PopoutHeader = styled('div', 'popout-header', {
   backgroundColor: '$backgroundTertiary',
   padding: 0,
   height: 48,
@@ -118,7 +120,7 @@ export const PopoverHeader = styled('div', 'popover-header', {
   width: '100%'
 });
 
-export const PopoverContainer = styled('div', 'popover-container', {
+export const PopoutContainer = styled('div', 'popout-container', {
   backgroundColor: '$backgroundSecondary',
   position: 'absolute',
   animation: 'none',
@@ -162,11 +164,11 @@ export const PopoverContainer = styled('div', 'popover-container', {
   }
 });
 
-export const PopoverHeaderContent = styled(ModalHeaderContent, 'popover-header_content', {
+export const PopoutHeaderContent = styled(ModalHeaderContent, 'popout-header_content', {
   width: '100%'
 });
 
-export const PopoverTitleWrapper = styled(Stretch, 'popover-title_container', {
+export const PopoutTitleWrapper = styled(Stretch, 'popout-title_container', {
   display: 'flex',
   alignItems: 'center',
   width: '100%',
@@ -175,18 +177,18 @@ export const PopoverTitleWrapper = styled(Stretch, 'popover-title_container', {
   // borderRightColor: 'rgba(255,255,255,0.1)'
 });
 
-export const PopoverTitle = styled('span', 'popover-title', {
+export const PopoutTitle = styled('span', 'popout-title', {
   background: 'none',
   padding: 0,
   marginLeft: '$sm'
 });
 
-export const PopoverContentWrapper = styled('div', 'popover-content_container', {
+export const PopoutContentWrapper = styled('div', 'popout-content_container', {
   width: '100%',
   height: '100%'
 });
 
-export const PopoverWrapper = styled(ModalContainerWrapper, 'popover-wrapper', {});
+export const PopoutWrapper = styled(ModalContainerWrapper, 'popout-wrapper', {});
 
 export const ChannelTopicModalContent = styled(
   HeaderMainContentRoot,
@@ -225,18 +227,18 @@ export const NoThreadsIconInner = styled('div', 'popout-no_threads_inner', {
   alignItems: 'center'
 });
 
-export const ThreadsPopoverList = styled('div', 'popover-threads_list_container', {
+export const ThreadsPopoutList = styled('div', 'popout-threads_list_container', {
   height: '100%',
   width: '100%'
 });
 
-export const ThreadName = styled('div', 'popover-threads_list_threadname', {
+export const ThreadName = styled('div', 'popout-threads_list_threadname', {
   width: '100%',
   color: '$primaryOpacity50',
   fontSize: '$lg'
 });
 
-export const ThreadsPopoverListHeader = styled('span', 'popover-threads_list_header', {
+export const ThreadsPopoutListHeader = styled('span', 'popout-threads_list_header', {
   fontSize: '$sm',
   width: '100%',
   fontWeight: '$bold',
@@ -246,7 +248,7 @@ export const ThreadsPopoverListHeader = styled('span', 'popover-threads_list_hea
   display: 'flex'
 });
 
-export const ThreadsPopoverContent = styled('div', 'popover-threads_content', {
+export const ThreadsPopoutContent = styled('div', 'popout-threads_content', {
   width: '100%',
   height: '100%',
   display: 'flex',
@@ -258,7 +260,7 @@ export const ThreadsPopoverContent = styled('div', 'popover-threads_content', {
   boxSizing: 'border-box'
 });
 
-export const ThreadsPopoverListItem = styled('div', 'popover-threads_list_item', {
+export const ThreadsPopoutListItem = styled('div', 'popout-threads_list_item', {
   backgroundColor: '$background',
   width: '100%',
   padding: '$lg',
@@ -276,7 +278,7 @@ export const ThreadsPopoverListItem = styled('div', 'popover-threads_list_item',
   }
 });
 
-export const NoThreadsContent = styled('div', 'popover-no_threads_content', {
+export const NoThreadsContent = styled('div', 'popout-no_threads_content', {
   width: '100%',
   height: '100%',
   display: 'flex',
@@ -288,7 +290,7 @@ export const NoThreadsContent = styled('div', 'popover-no_threads_content', {
   flex: 1
 });
 
-export const NoThreadsHeader = styled('h2', 'popover-no_threads_header', {
+export const NoThreadsHeader = styled('h2', 'popout-no_threads_header', {
   textAlign: 'center',
   fontWeight: '$bold'
 });

@@ -28,7 +28,7 @@ interface MessagesListProps {
   handleBottomStateChanged?: (atBottom: boolean) => void;
   startReached?: (index: number) => void;
 }
-export const MessagesList = ({
+export const MessageRenderer = ({
   isReady,
   groupedMessages,
   startReached,

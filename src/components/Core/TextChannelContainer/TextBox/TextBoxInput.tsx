@@ -1,8 +1,8 @@
 import {
-  TextBoxInput,
+  TextInput,
   TextBoxPlaceholder,
   TextBoxInputWrapper
-} from '@components/Core/Container/elements';
+} from '@components/Core/TextChannelContainer/elements';
 import { useStoreState } from '@state';
 import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ type ModifierKeys = {
   };
 };
 
-export const MessageInput = () => {
+export const TextBoxInput = () => {
   const translate = useTranslation();
   const currentChannel = useStoreState(state => state.guild.currentChannel);
   const [modifierKeys, setModifierKeys] = useState<ModifierKeys>({
@@ -130,7 +130,7 @@ export const MessageInput = () => {
 
   return (
     <TextBoxInputWrapper>
-      <TextBoxInput
+      <TextInput
         onKeyUp={handleKeyUp}
         className="textbox-input"
         contentEditable

@@ -1,4 +1,4 @@
-import { gql, useQuery } from 'urql';
+import { gql, useQuery, useSubscription } from 'urql';
 import { graphql } from '@graphql/gql';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
@@ -166,6 +166,7 @@ const newMessageSubscription = graphql(`
 `);
 
 // TODO: Copy fragments from old codebase for this.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const updateMessageSubscription = graphql(`
   subscription updateMessageSubscription($guild: String!, $channel: String!) {
     messageUpdate(guild: $guild, channel: $channel) {
@@ -179,6 +180,7 @@ interface UseMessagesProps {
   guild: string;
   channel: string;
   useStaticData?: boolean;
+  thread?: string;
 }
 
 type MessageState = {
@@ -187,25 +189,45 @@ type MessageState = {
   firstItemIndex: number;
 };
 
-export const useMessages = ({ guild, channel, useStaticData = false }: UseMessagesProps) => {
+export const useMessages = ({
+  guild,
+  channel,
+  useStaticData = false,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  thread
+}: UseMessagesProps) => {
   const [variables, setVariables] = useState<MessagesQueryQueryVariables>({ guild, channel });
 
   const [messages, setMessages] = useState<BaseMessageFragment[]>([]);
   const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
-
+  // const isClientConnected = useRef(false);
   const [{ data }, fetchHook] = useQuery({
     query: messagesQuery,
     variables
   });
 
-  // console.log(data)
+  const handleNewMessage = (
+    // eslint-disable-next-line @typescript-eslint/default-param-last
+    messages: never[] | undefined = [],
+    response: { message: BaseMessageFragment }
+  ) => {
+    console.log(messages, response);
+    setMessages(prev => [...prev, response.message]);
+  };
+  useSubscription(
+    {
+      variables: { guild, channel },
+      query: newMessageSubscription
+      // context: { requestPolicy: 'network-only' }
+    },
+    // @ts-ignore
+    handleNewMessage
+  );
 
   const ready = data?.channelV2.id === channel || false;
+
   useEffect(() => {
     if (!useStaticData) {
-      // if (variables === null || variables.channel !== channel) {
-      //   setVariables({ guild, channel });
-      // }
       // @ts-ignore TODO: Fix this
       const isReadyWithMessages = ready && data?.channelV2.messageBunch?.messages;
 
@@ -216,6 +238,8 @@ export const useMessages = ({ guild, channel, useStaticData = false }: UseMessag
         console.log('grouped', groupMessages(msgs).length);
 
         if (ready) {
+          // if (!isClientConnected.current) {
+          // }
           setMessages(prev => [...msgs, ...prev]);
         }
       }
@@ -226,7 +250,7 @@ export const useMessages = ({ guild, channel, useStaticData = false }: UseMessag
       setMessages(prev => [...groupedStaticMsgs, ...prev]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.channelV2, ready, useStaticData]);
+  }, [data?.channelV2, useStaticData, ready]);
 
   const fetchMore = useCallback(
     (before: string) => {

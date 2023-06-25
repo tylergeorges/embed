@@ -204,7 +204,7 @@ export const TextBoxWrapper = styled('form', 'textbox-wrapper', {
   // padding: '$md',
   backgroundColor: '$inputBackground',
   maxHeight: '50vh',
-  paddingY: '$md'
+  paddingY: '$sm'
 
   // overflow:"hidden"
 });
@@ -231,13 +231,13 @@ export const TextBoxInputWrapper = styled('div', 'textbox-input_wrapper', {
   display: 'flex',
   position: 'relative',
   marginBottom: '$md',
-  height: 'auto'
+  height: '100%'
   // overflowY: 'auto'
   // overflowY: 'hidden'
   // paddingX: '$md'
 });
 
-export const TextBoxInput = styled('div', 'textbox-input', {
+export const TextInput = styled('div', 'textbox-input', {
   width: '100%',
   backgroundColor: 'transparent',
   cursorColor: 'white',

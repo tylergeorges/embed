@@ -1,4 +1,4 @@
-import { ThreadsPopover } from '@components/Overlays/Modal/Popover/ThreadsPopover';
+import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback } from 'react';
@@ -17,7 +17,7 @@ export const ThreadsButton = () => {
 
   return (
     <>
-      <ThreadsPopover>
+      <ThreadsPopout>
         <IconButton
           color="light"
           tooltipLabel="Threads"
@@ -25,7 +25,7 @@ export const ThreadsButton = () => {
           tooltipPlacement="bottom"
           onClick={openThreadsModal}
         />
-      </ThreadsPopover>
+      </ThreadsPopout>
     </>
   );
 };

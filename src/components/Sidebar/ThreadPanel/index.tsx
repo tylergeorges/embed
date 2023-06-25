@@ -1,7 +1,11 @@
-import { MessageContainer } from '@components/Core/Container/MessageContainer';
+import { MessageContainer } from '@components/Core/TextChannelContainer/MessageContainer';
 import { ThreadPanelHeader } from '@components/Header/ThreadPanelHeader';
 
-import { ThreadsPanelContainer, ThreadsPanelSeperator, ThreadPanelWrapper } from '@components/Sidebar/elements';
+import {
+  ThreadsPanelContainer,
+  ThreadsPanelSeperator,
+  ThreadPanelWrapper
+} from '@components/Sidebar/elements';
 import { useStoreState } from '@state';
 
 export const ThreadPanel = () => {
@@ -16,9 +20,15 @@ export const ThreadPanel = () => {
       }}
       isOpen={isThreadsPanelOpen && isCurrentChannelThread}
     >
-      <ThreadsPanelSeperator className="panel-threads_seperator" isOpen={isThreadsPanelOpen && isCurrentChannelThread} />
+      <ThreadsPanelSeperator
+        className="panel-threads_seperator"
+        isOpen={isThreadsPanelOpen && isCurrentChannelThread}
+      />
 
-      <ThreadsPanelContainer className="thread-panel_wrapper" isOpen={isThreadsPanelOpen && isCurrentChannelThread}>
+      <ThreadsPanelContainer
+        className="thread-panel_wrapper"
+        isOpen={isThreadsPanelOpen && isCurrentChannelThread}
+      >
         <ThreadPanelHeader />
 
         <MessageContainer />

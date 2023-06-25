@@ -1,8 +1,8 @@
-import { TextBox } from '@components/Core/Container/TextBox';
+import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
 
 import { useStoreState } from '@state';
 import { useState } from 'react';
-import { MessagesList } from '@components/Core/VirtualLists/MessagesList';
+import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useMessages } from '@hooks/useMessages';
 import { MessageWrapper } from './elements';
 
@@ -21,7 +21,8 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
     // guild: guildId,
     // channel: channelId
     guild: '585454996800405509',
-    channel: '585840022511550494'
+    channel: '585840022511550494',
+    thread: ''
   });
 
   const handleBottomStateChanged = () => {
@@ -41,13 +42,14 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
         '@small': true
       }}
     >
-      <MessagesList
+      <MessageRenderer
         groupedMessages={groupedMessages}
         startReached={loadMoreMessages}
         isReady={isReady}
         firstItemIndex={firstItemIndex}
         handleBottomStateChanged={handleBottomStateChanged}
       />
+
       <TextBox />
     </MessageWrapper>
   );
