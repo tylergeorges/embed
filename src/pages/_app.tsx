@@ -68,9 +68,7 @@ function App({ Component, pageProps }: AppProps) {
     },
 
     /* Handle on hover */
-    '::-webkit-scrollbar-thumb:hover': {
-      // background: 'white'
-    },
+    '::-webkit-scrollbar-thumb:hover': {},
     '.non-dragable': {
       '-moz-user-select': 'none',
       '-khtml-user-select': 'none',
@@ -91,15 +89,7 @@ function App({ Component, pageProps }: AppProps) {
       width: '$channelNameWidth',
       height: '$channelNameHeight'
     },
-    // '@media (prefers-color-scheme: dark)': {
-    //   html: {
-    //     colorScheme: 'dark'
-    //   },
-    //   body: {
-    //     color: 'white',
-    //     background: 'black'
-    //   }
-    // },
+
     '#__next': {
       width: '100%',
       height: '100%'
@@ -109,10 +99,6 @@ function App({ Component, pageProps }: AppProps) {
     }
   });
 
-  //  const MessageRendererRoot = styled('div', {
-  //   '--fonts-main': 'GgSans',
-  //   height: '100%'
-  // });
   globalStyles();
   return (
     <StoreProvider store={store}>
@@ -121,44 +107,6 @@ function App({ Component, pageProps }: AppProps) {
           <Head>
             <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
           </Head>
-          {/* <MessageRendererProvider
-            messageButtons={() => []}
-            currentUser={() => null}
-            resolveChannel={id => {
-              const channels = store.getState().guild.guildChannels;
-
-              // console.log(channels[id]);
-              return channels[id] ?? null;
-            }}
-            resolveGuild={() => null}
-            resolveMember={() => null}
-            resolveRole={() => null}
-            resolveUser={() => null}
-            svgUrls={svgUrls}
-            seeThreadOnClick={(messageId, thread) =>
-              alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
-            }
-            userMentionOnClick={user =>
-              alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
-            }
-            seeThreadOnClick={(messageId, thread) =>
-              alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
-            }
-            userMentionOnClick={user =>
-              alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
-            }
-            roleMentionOnClick={role => alert(`Role "${role.name}" mention clicked!`)}
-            channelMentionOnClick={channel => alert(`Channel "${channel.name}" mention clicked!`)}
-            messageComponentButtonOnClick={(message, customId) => {
-              alert(`Button by custom id "${customId}" pressed on message ${message.id}!`);
-            }}
-          >
-            {({ themeClass }) => (
-              <MessageRendererRoot className={themeClass}>
-                <Component {...pageProps} />
-              </MessageRendererRoot>
-            )}
-          </MessageRendererProvider> */}
 
           <Component {...pageProps} />
         </GuildProvider>

@@ -3,7 +3,6 @@ import { APIMessage, MessageType } from 'discord-api-types/v10';
 
 function dateToMilli(date: Date) {
   return date.getTime() / 1000;
-  // return Number(new Date(timestamp)) / 1000;
 }
 
 function isGroupRecent(prevMessage: APIMessage, recentMessage: APIMessage, maxGroupTime: number) {
@@ -37,7 +36,6 @@ function messageIsGroupable(prevMessage: APIMessage, recentMessage: APIMessage) 
 export function groupMessages(messages: APIMessage[]): APIMessage[][] {
   const groupedMessages: APIMessage[][] = [];
   const messageLength = messages.length;
-  // const nowTimestamp = new Date() / 1000;
 
   for (let i = 0; i < messageLength; i++) {
     const message = messages[i];

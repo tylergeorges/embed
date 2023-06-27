@@ -11,7 +11,6 @@ export const Main = styled('main', 'main', {
   flexDirection: 'row',
   width: '100%',
   backgroundColor: theme.colors.background,
-  // position: 'relative',
   animation: `${zoomIn} 0.5s ease`,
   justifyItems: 'center'
 });
@@ -19,11 +18,8 @@ export const Main = styled('main', 'main', {
 export const InnerMain = styled('div', 'inner-main', {
   flexDirection: 'row',
   width: '100%',
-  // maxWidth: '100%',
   height: '100%',
   display: 'flex'
-
-  // position: 'relative'
 });
 
 export const Notifications = styled('div', 'notifications', {
@@ -59,59 +55,12 @@ export const Wrapper = styled('div', 'wrapper', {
     content: '',
     height: '100%',
     width: '100%',
-    // zIndex: 8,
     pointerEvents: 'none',
     transition: 'opacity 0.5s ease',
     willChange: 'opacity',
     backgroundColor: 'rgb(0, 0, 0, 0.5)',
     opacity: 0
   }
-
-  // variants: {
-  //   // variant: {
-  //   hideOnMobile: {
-  //     true: {
-  //       '@media only screen and (max-width: 520px)': {
-  //         display: 'none'
-  //       }
-  //     }
-  //   },
-  //   threadFullscreen: {
-  //     false: {
-  //       borderLeft: '8px solid #202225'
-  //     }
-  //   },
-  //   squashed: {
-  //     true: {}
-  //   }
-  //   // }
-  // },
-  // compoundVariants: [
-  //   {
-  //     squashed: true,
-  //     threadFullscreen: true,
-  //     css: {
-  //       '@media (min-width: 521px)': {
-  //         marginLeft: '200px',
-  //         width: 'calc(100% - 250px)'
-  //       },
-  //       '@media (min-width: 521px) and (max-width: 400px), (min-width: 521px) and (max-height: 340px)':
-  //         {
-  //           marginLeft: '180px',
-  //           width: 'calc(100% - 180px)'
-  //         },
-  //       '@media (max-width: 520px)': {
-  //         '&::after': {
-  //           pointerEvents: 'initial',
-  //           opacity: 1
-  //         },
-  //         '*': {
-  //           pointerEvents: 'none !important'
-  //         }
-  //       }
-  //     }
-  //   }
-  // ]
 });
 
 export {};

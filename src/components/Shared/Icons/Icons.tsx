@@ -52,4 +52,3 @@ export const Icons = ({ name, color, css, size, customSize }: IconProps) => (
     <use href={`${iconData[name]}#svg`} height={customSize} />
   </IconRoot>
 );
-// {iconData[name]}

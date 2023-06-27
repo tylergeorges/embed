@@ -7,12 +7,6 @@ const zoomIn = keyframes({
   '50%': { transform: 'scale(1.05)' },
   '100%': { transform: 'scale(1)' }
 });
-// const zoomOut = keyframes({
-//   '0%': { transform: 'initial' },
-//   '50%': { transform: 'scale(1.05)' },
-//   '100%': { transform: 'scale(0)' }
-// });
-
 export const ModalBackdrop = styled('div', 'modal-backdrop', {
   backgroundColor: 'rgba(0,0,0,0.5)',
   width: '100%',
@@ -22,7 +16,6 @@ export const ModalBackdrop = styled('div', 'modal-backdrop', {
   alignItems: 'center',
   justifyContent: 'center',
   zIndex: 10,
-  // animation: `${fadeIn} 0.5s ease`,
   transition: 'opacity 300ms ease',
   opacity: 0,
   variants: {
@@ -32,11 +25,9 @@ export const ModalBackdrop = styled('div', 'modal-backdrop', {
         opacity: 0,
         pointerEvents: 'none',
 
-        // zIndex: -1,
         transitionProperty: 'z-index, opacity'
       },
       true: {
-        // animation: `${fadeIn} 0.5s ease`,
         opacity: 1
       }
     }
@@ -55,8 +46,6 @@ export const ModalContainerWrapper = styled('div', 'modal-container_wrapper', {
   variants: {
     isOpen: {
       false: {
-        //   zIndex: -1
-
         transitionDelay: '0.5s',
         zIndex: -1,
         transitionProperty: 'z-index'
@@ -80,16 +69,13 @@ export const ModalContainer = styled('div', 'modal-container', {
   borderRadius: 4,
   pointerEvents: 'all',
   transition: 'transform 200ms ease',
-  // transition: 'transform 0.5s ease',
   variants: {
     isOpen: {
       false: {
         transform: 'scale(0)'
-        // animation: `${zoomOut} 0.5s ease`
       },
       true: {
         animation: `${zoomIn} 0.5s ease`
-        // transform: 'scale(1)'
       }
     }
   }
@@ -101,7 +87,6 @@ export const ModalHeader = styled('div', 'modal-header', {
 
 export const ModalHeaderContent = styled(HeaderMainContentRoot, 'modal-header_content', {
   fontSize: '100%',
-  // fontSize: '$xl',
   padding: '$xl',
   display: 'flex',
   justifyContent: 'space-between',
@@ -173,8 +158,6 @@ export const PopoutTitleWrapper = styled(Stretch, 'popout-title_container', {
   alignItems: 'center',
   width: '100%',
   height: '100%'
-
-  // borderRightColor: 'rgba(255,255,255,0.1)'
 });
 
 export const PopoutTitle = styled('span', 'popout-title', {

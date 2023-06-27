@@ -61,34 +61,6 @@ const globalStyles = globalCss({
     }
   },
 
-  // @keyframes rcToolTipZoomIn {
-  //   0% {
-  //     opacity: 0;
-  //     transform-origin: 50% 50%;
-  //     transform: scale(0, 0);
-  //   }
-
-  //   100% {
-  //     opacity: 1;
-  //     transform-origin: 50% 50%;
-  //     transform: scale(1, 1);
-  //   }
-  // }
-
-  // @keyframes rcToolTipZoomOut {
-  //   0% {
-  //     opacity: 1;
-  //     transform-origin: 50% 50%;
-  //     transform: scale(1, 1);
-  //   }
-
-  //   100% {
-  //     opacity: 0;
-  //     transform-origin: 50% 50%;
-  //     transform: scale(0, 0);
-  //   }
-  // }
-
   '.rc-tooltip-hidden': {
     display: 'none'
   },
@@ -103,7 +75,8 @@ const globalStyles = globalCss({
     }
   },
 
-  '.rc-tooltip-placement-right, .rc-tooltip-placement-rightTop, .rc-tooltip-placement-rightBottom': {
+  '.rc-tooltip-placement-right, .rc-tooltip-placement-rightTop, .rc-tooltip-placement-rightBottom':
+    {
       padding: '0 5px 0 9px',
       '.rc-tooltip-arrow': {
         left: '4px',
@@ -113,7 +86,8 @@ const globalStyles = globalCss({
       }
     },
 
-  '.rc-tooltip-placement-bottom, .rc-tooltip-placement-bottomLeft, .rc-tooltip-placement-bottomRight': {
+  '.rc-tooltip-placement-bottom, .rc-tooltip-placement-bottomLeft, .rc-tooltip-placement-bottomRight':
+    {
       padding: '9px 0 5px 0',
       '.rc-tooltip-arrow': {
         top: '4px',

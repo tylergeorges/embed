@@ -15,10 +15,3 @@ export const MembersButton = () => {
     />
   );
 };
-// <IconButtonWrapper
-//   tooltipPlacement="bottom"
-//   tooltipLabel={isMembersListOpen ? 'Hide Member List' : 'Show Member List'}
-//   onClick={() => setMembersListOpen(!isMembersListOpen)}
-// >
-//   <MembersIcon isActive={isMembersListOpen} />
-// </IconButtonWrapper>

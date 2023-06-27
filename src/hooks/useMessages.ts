@@ -313,19 +313,11 @@ export const useMessages = ({
       firstItemIndex
     };
 
-    // return {
-    //   messages,
-    //   groupedMessages: grouped,
-    //   firstItemIndex:
-    //     messageState.firstItemIndex -
-    //     groupMessages(messages.map(convertMessageToDiscord).slice(messageState.messages.length - messages.length)).length
-    // };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   return {
     ...messageState,
-    // messages: messageState.groupedMessages,
     fetchMore,
     newMessageGroupLength,
     isReady: ready,

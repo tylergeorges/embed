@@ -1,5 +1,4 @@
 import { theme, styled } from '@stitches';
-// import { styled } from '@stitches/react';
 
 export const Ham = styled('button', 'hamburger', {
   border: 'none',

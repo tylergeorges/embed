@@ -81,7 +81,6 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
             onContextMenu={handleContextMenuClick}
           >
             {channel.type === ChannelType.GuildText && (
-              // <Hash/>
               <Icons name="TextChannelHash" color="dark" size="small" />
             )}
 

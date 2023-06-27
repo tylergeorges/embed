@@ -34,7 +34,6 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
     threadsPanelOpen: {
       true: {
         width: `calc(100% - ${theme.sizes.threadPanelMinWidth} + 8px)`
-        // transform: `translateX(0px)`
       }
     }
   },
@@ -106,7 +105,6 @@ export const TextChannelInnerWrapper = styled('div', 'text-channel_inner_wrapper
 export const MessageWrapper = styled('div', 'message-wrapper', {
   width: '100%',
   height: '100%',
-  // paddingBottom: 10,
   position: 'relative',
   textAlign: 'center',
   alignItems: 'center',
@@ -193,26 +191,19 @@ export const MessageWrapper = styled('div', 'message-wrapper', {
 
 export const TextBoxWrapper = styled('form', 'textbox-wrapper', {
   position: 'relative',
-  // padding: '$2xl',
-  // paddingX: '$2xl',
   marginBottom: '$lg',
   display: 'flex',
   alignItems: 'center',
   borderRadius: '$xs',
   width: 'calc(100% - 32px)',
-  // width: '100%',
-  // padding: '$md',
   backgroundColor: '$inputBackground',
   maxHeight: '50vh',
   paddingY: '$sm'
-
-  // overflow:"hidden"
 });
 export const TextBoxInner = styled('div', 'textbox-inner', {
   width: '100%',
   height: '100%',
   display: 'flex',
-  // overflowY: 'hidden',
   maxHeight: '50vh',
   position: 'relative',
   overflowY: 'auto'
@@ -227,14 +218,10 @@ export const TextBoxButtonWrapper = styled('div', 'textbox-button_wrapper', {
 
 export const TextBoxInputWrapper = styled('div', 'textbox-input_wrapper', {
   width: '100%',
-  // height: '100%',
   display: 'flex',
   position: 'relative',
   marginBottom: '$md',
   height: '100%'
-  // overflowY: 'auto'
-  // overflowY: 'hidden'
-  // paddingX: '$md'
 });
 
 export const TextInput = styled('div', 'textbox-input', {
@@ -244,13 +231,9 @@ export const TextInput = styled('div', 'textbox-input', {
   cursor: 'text',
   border: 'none',
   height: 'auto',
-  // borderRadius: '$xs',
   fontWeight: '$thin',
-  // overflowY: 'auto',
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
-
-  // paddingY: '$md',
 
   outline: 'none',
   fontSize: '$lg',
@@ -259,11 +242,7 @@ export const TextInput = styled('div', 'textbox-input', {
   alignItems: 'center',
   position: 'relative',
   display: 'block',
-  // display: 'flex',
-  // padding: '$md',
-  // paddingTop: '$sm',
   color: '$textPrimary'
-  // height: '$messageInputSize'
 });
 
 export const TextBoxPlaceholder = styled('span', 'textbox-placeholder', {
@@ -276,12 +255,8 @@ export const MessageContentOuterWrapper = styled('div', 'message-content_outer_w
   width: '100%',
   display: 'flex',
   flexDirection: 'row',
-  // marginTop: 17,
   paddingRight: 48,
   paddingLeft: 72,
-  // paddingTop: 2,
-  // paddingBottom: 6,
-  // paddingBottom: 2,
   '&:hover': {
     backgroundColor: 'rgba(0,0,0,0.1)'
   }

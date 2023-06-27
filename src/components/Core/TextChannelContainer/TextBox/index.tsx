@@ -15,7 +15,6 @@ export const TextBox = () => {
   const addAttachment = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
       // TODO: implement adding attachments
-      // const fileUploaded = e.currentTarget.files[0];
     }
   };
 

@@ -3,8 +3,6 @@ import { styled } from '@stitches/react';
 
 export const ContextMenuWrapper = styled('div', 'context-menu_wrapper', {
   backgroundColor: theme.colors.contextMenuBackground,
-  // width: 150,
-  // height: '',
   position: 'absolute',
   zIndex: 12,
   minWidth: 188,

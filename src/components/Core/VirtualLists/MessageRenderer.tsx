@@ -52,9 +52,6 @@ export const MessageRenderer = ({
             overflowX: 'hidden',
             height: '100%'
           }}
-          // initialTopMostItemIndex={groupedMessages.length - 1}
-          // initialTopMostItemIndex={100 - 1}
-          // firstItemIndex={50}
           firstItemIndex={firstItemIndex}
           startReached={startReached}
           atBottomStateChange={handleBottomStateChanged}
