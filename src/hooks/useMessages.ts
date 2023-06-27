@@ -200,28 +200,51 @@ export const useMessages = ({
 
   const [messages, setMessages] = useState<BaseMessageFragment[]>([]);
   const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
-  // const isClientConnected = useRef(false);
   const [{ data }, fetchHook] = useQuery({
     query: messagesQuery,
     variables
   });
 
   const handleNewMessage = (
-    // eslint-disable-next-line @typescript-eslint/default-param-last
-    messages: never[] | undefined = [],
+    // eslint-disable-next-line @typescript-eslint/default-param-last, @typescript-eslint/no-unused-vars
+    _: never[] | undefined = [],
     response: { message: BaseMessageFragment }
   ) => {
-    console.log(messages, response);
+    console.log(response);
     setMessages(prev => [...prev, response.message]);
+  };
+  const handleUpdatedMessage = (
+    // eslint-disable-next-line @typescript-eslint/default-param-last, @typescript-eslint/no-unused-vars
+    _: never[] | undefined = [],
+    response: { messageUpdate: { content: string; id: string } }
+  ) => {
+    const oldMsgs = [...messages];
+    const updatedMessage = response.messageUpdate;
+
+    const messageIdx = messages.findIndex(msg => msg.id === updatedMessage.id);
+
+    const message = oldMsgs[messageIdx];
+
+    message.content = updatedMessage.content;
+    message.editedAt = new Date().toISOString();
+    setMessages(oldMsgs);
   };
   useSubscription(
     {
       variables: { guild, channel },
       query: newMessageSubscription
-      // context: { requestPolicy: 'network-only' }
     },
     // @ts-ignore
     handleNewMessage
+  );
+
+  useSubscription(
+    {
+      variables: { guild, channel },
+      query: updateMessageSubscription
+    },
+    // @ts-ignore
+    handleUpdatedMessage
   );
 
   const ready = data?.channelV2.id === channel || false;
@@ -238,8 +261,6 @@ export const useMessages = ({
         console.log('grouped', groupMessages(msgs).length);
 
         if (ready) {
-          // if (!isClientConnected.current) {
-          // }
           setMessages(prev => [...msgs, ...prev]);
         }
       }
