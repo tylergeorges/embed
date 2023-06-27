@@ -16,7 +16,6 @@ export const ChannelsList = () => {
   const { hideContextMenu } = useContextMenu();
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
 
-  console.log(windowIsMobile);
   const guildName = useStoreState(state => state.guild.data?.name) as string;
   const categories = useStoreState(state => state.guild.categories);
 

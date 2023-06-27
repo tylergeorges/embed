@@ -2,7 +2,6 @@ import { styled } from '@stitches/react';
 
 export const BackgroundContainer = styled('div', 'activechannel-background_container', {
   position: 'absolute',
-  // position: 'relative',
   width: '100%',
   left: 0,
   right: 0,
@@ -29,7 +28,6 @@ export const Background = styled('div', 'active-channel_background', {
     isCurrentChannelThread: {
       true: {
         transform: 'translateY(var(--yPos)) scaleX(0.79)  translateX(25px)'
-        // transform: 'translateY(var(--yPos)) scaleX(0.79) scaleY(0.9) translateX(25px)',
       }
     }
   }

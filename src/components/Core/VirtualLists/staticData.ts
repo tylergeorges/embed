@@ -1,23 +1,20 @@
 import { APIMessage, APIUser, MessageType } from 'discord-api-types/v10';
 
-// const userProfile: UserProfile = {
-//   buttons: [],
-//   __typename: 'UserProfile'
-// };
-
 const user1: APIUser = {
   id: '171654190408531968',
   avatar: 'ef8d310fc178ab15ae4ecb4e16adebed',
   bot: false,
   system: false,
   username: 'kneadle',
-  discriminator: '2645'
+  discriminator: '2645',
+  global_name: 'kneadle'
 };
 const user2: APIUser = {
   id: '96626362277720064',
   avatar: '4eb1d7a4ec7aa51f90061ee150d383b8',
   discriminator: '0001',
   bot: false,
+  global_name: 'daave',
   username: 'daave',
   system: false
 };
@@ -26,7 +23,8 @@ const user3: APIUser = {
   id: '998882498719273090',
   username: 'Discord Developers #api-announcements',
   avatar: '0ad0ccf2bc8dffbaddcf39825c4b5706',
-  discriminator: '0000'
+  discriminator: '0000',
+  global_name: 'Discord Developers #api-announcements'
 };
 
 const users: APIUser[] = [user1, user2, user3];
@@ -87,7 +85,8 @@ export const loadMoreStaticMessages: APIMessage[] = [
         filename: 'flowchart-for-new-permissions.png',
         size: 981134,
         url: 'https://cdn.discordapp.com/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
-        proxy_url: 'https://media.discordapp.net/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
+        proxy_url:
+          'https://media.discordapp.net/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
         width: 8576,
         height: 5074,
         content_type: 'image/png'
@@ -142,7 +141,8 @@ export const loadMoreStaticMessages: APIMessage[] = [
     author: user1,
     attachments: [],
     channel_id: 'wqeqwdsa',
-    content: 'loaded more messages messagesmore messagesmore messagesmore messagesmore messagesmore messages',
+    content:
+      'loaded more messages messagesmore messagesmore messagesmore messagesmore messagesmore messages',
     id: 'wwqeewq',
     embeds: [],
     timestamp: '2022-11-17T19:23:27.904000+00:00',
@@ -201,6 +201,7 @@ export const staticMessages: APIMessage[] = [
       bot: false,
       id: '998882498719273090',
       username: 'Discord Developers #api-announcements',
+      global_name: 'Discord Developers #api-announcements',
       avatar: '0ad0ccf2bc8dffbaddcf39825c4b5706',
       discriminator: '0000'
     },
@@ -211,11 +212,10 @@ export const staticMessages: APIMessage[] = [
         filename: 'flowchart-for-new-permissions.png',
         size: 981134,
         url: 'https://cdn.discordapp.com/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
-        proxy_url: 'https://media.discordapp.net/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
+        proxy_url:
+          'https://media.discordapp.net/attachments/697138785317814292/1042878162901672048/flowchart-for-new-permissions.png',
         width: 106,
         height: 104,
-        // width: 8576,
-        // height: 5074,
         content_type: 'image/png'
       }
     ],

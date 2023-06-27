@@ -3,7 +3,6 @@ import { Virtuoso } from 'react-virtuoso';
 
 export const VirtualList = styled(Virtuoso, 'virtual-list', {
   height: '100%',
-  // height: '100%',
   width: '100%'
 });
 
@@ -29,6 +28,4 @@ export const VirtualListContainer = styled('div', 'list-container', {
 
 export const VirtualListMessageWrapper = styled('div', 'list-message_container', {
   textAlign: 'left'
-  // overflowX: 'hidden'
-  // paddingBottom: 6
 });

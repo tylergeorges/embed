@@ -8,8 +8,6 @@ export const ChannelHighlighter = () => {
   const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
   const { threadId } = useAppRouter();
   if (currentChannelYPos) {
-    // <BackgroundContainer>
-
     return (
       <Background
         css={{
@@ -20,7 +18,6 @@ export const ChannelHighlighter = () => {
         animated={currentChannelYPos !== 0} // Disables animation on initial render of page
       />
     );
-    // </BackgroundContainer>
   }
   return null;
 };

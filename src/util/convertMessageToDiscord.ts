@@ -14,6 +14,7 @@ export const convertMessageToDiscord = (message: BaseMessageFragment): APIMessag
     bot: message.author.bot,
     username: message.author.name,
     avatar: message.author.avatarUrl?.split('/').pop()?.split('.')[0] ?? null,
+    global_name: message.author.name,
     discriminator: message.author.discrim
   },
   attachments: message.attachments.map(a => ({

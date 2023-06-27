@@ -48,7 +48,6 @@ export const CategoryNameContent = styled('div', 'category-name', {
 
 export const CategoryContainer = styled('div', 'category-container', {
   width: '100%',
-  // color: 'rgba(255, 255, 255, 0.7)',
   fontWeight: '$medium',
   paddingTop: '$xl',
   transition: 'translateY 0.5s ease',
@@ -153,10 +152,7 @@ export const ChannelsWrapper = styled('div', 'channels-wrapper', {
 export const ThreadsWrapper = styled(ChannelsWrapper, 'thread-wrapper', {
   display: 'flex',
   flexDirection: 'row',
-  // alignItems: 'center',
   width: '100%',
-  // marginTop: "$2xs",
   marginTop: -6,
-  // marginTop: -10,
   padding: 0
 });

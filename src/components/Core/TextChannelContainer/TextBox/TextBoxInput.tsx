@@ -65,7 +65,6 @@ export const TextBoxInput = () => {
         const currentInputHeight = inputRef.current?.clientHeight;
         const inputHeight = 21;
         inputRef.current.style.height = `${currentInputHeight + inputHeight}px`;
-        // setCursorPos();
         if (showPlaceHolder) {
           setShowPlaceholder(false);
           setIsCursorOnNewLine(true);

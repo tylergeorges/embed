@@ -5,7 +5,6 @@ export const ToolTipContainer = styled('div', 'tooltip-container', {
   position: 'absolute',
   padding: '$sm',
   borderRadius: '$xs',
-  // borderRadius: 8,
   transform: 'scale(0)',
   pointerEvents: 'none',
   transition: 'transform 100ms ease',

@@ -17,11 +17,9 @@ export const SidebarWrapper = styled('aside', 'sidebar_wrapper', {
   variants: {
     channelsListOpen: {
       false: {
-        // animation: `${leftSlideOut} 300ms ease`,
         transform: `translateX(-200px)`
       },
       true: {
-        // animation: `${leftSlideIn} 550ms ease`,
         transform: 'translateX(0)',
         transition: 'transform 300ms ease'
       }
@@ -67,10 +65,7 @@ export const ChannelsSidebarWrapper = styled(SidebarWrapper, 'channels-sidebar_w
 export const MembersSidebarWrapper = styled(SidebarWrapper, 'members-sidebar_wrapper', {
   right: 0,
   boxSizing: 'border-box',
-  // transition: 'transform ease 0.3s',
   zIndex: 1
-  // justifySelf: 'flex-end',
-  // transform: `translateX(0)`
 });
 
 export const ThreadsPanelContainer = styled('div', 'thread-panel_wrapper', {
@@ -105,7 +100,6 @@ export const ThreadsPanelContainer = styled('div', 'thread-panel_wrapper', {
 
 export const ThreadPanelWrapper = styled('div', 'thread-panel_wrapper', {
   height: '100%',
-  // bottom: 0,
   minWidth: '$threadPanelMinWidth',
   right: 0,
   display: 'flex',

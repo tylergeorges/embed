@@ -1,4 +1,4 @@
-import { gql, useQuery, useSubscription } from 'urql';
+import { gql, useQuery } from 'urql';
 import { graphql } from '@graphql/gql';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
@@ -157,14 +157,6 @@ const messagesQuery = graphql(`
   }
 `);
 
-const newMessageSubscription = graphql(`
-  subscription newMessageSubscription($guild: String!, $channel: String!) {
-    message(guild: $guild, channel: $channel) {
-      ...BaseMessage
-    }
-  }
-`);
-
 // TODO: Copy fragments from old codebase for this.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const updateMessageSubscription = graphql(`
@@ -206,24 +198,6 @@ export const useMessages = ({
     variables
   });
 
-  const handleNewMessage = (
-    // eslint-disable-next-line @typescript-eslint/default-param-last
-    messages: never[] | undefined = [],
-    response: { message: BaseMessageFragment }
-  ) => {
-    console.log(messages, response);
-    setMessages(prev => [...prev, response.message]);
-  };
-  useSubscription(
-    {
-      variables: { guild, channel },
-      query: newMessageSubscription
-      // context: { requestPolicy: 'network-only' }
-    },
-    // @ts-ignore
-    handleNewMessage
-  );
-
   const ready = data?.channelV2.id === channel || false;
 
   useEffect(() => {
@@ -235,11 +209,8 @@ export const useMessages = ({
       const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
       if (msgs.length) {
         setNewMessageGroupLength(groupMessages(msgs).length);
-        console.log('grouped', groupMessages(msgs).length);
 
         if (ready) {
-          // if (!isClientConnected.current) {
-          // }
           setMessages(prev => [...msgs, ...prev]);
         }
       }
@@ -292,19 +263,11 @@ export const useMessages = ({
       firstItemIndex
     };
 
-    // return {
-    //   messages,
-    //   groupedMessages: grouped,
-    //   firstItemIndex:
-    //     messageState.firstItemIndex -
-    //     groupMessages(messages.map(convertMessageToDiscord).slice(messageState.messages.length - messages.length)).length
-    // };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   return {
     ...messageState,
-    // messages: messageState.groupedMessages,
     fetchMore,
     newMessageGroupLength,
     isReady: ready,

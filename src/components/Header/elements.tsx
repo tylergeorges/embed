@@ -15,7 +15,6 @@ export const ThreadPanelHeaderContainer = styled(
 );
 
 const Root = styled('header', 'root', {
-  // userSelect: 'none',
   display: 'flex',
   flexShrink: 0,
   zIndex: 8,
@@ -91,7 +90,6 @@ export const GuildHeader = styled(Stretch, 'guild-header', {
 
 export const ChannelHeaderRoot = styled(Stretch, 'text-channel_header', {
   display: 'flex',
-  // position: 'relative',
   width: '100%',
   alignItems: 'center',
   justifyContent: 'center',
@@ -99,7 +97,6 @@ export const ChannelHeaderRoot = styled(Stretch, 'text-channel_header', {
   zIndex: 3,
   paddingLeft: 8,
   paddingRight: 8,
-  // backgroundColor: '$primary',
 
   '.text-channel_header_buttons_container': {
     width: '100%'
@@ -108,8 +105,6 @@ export const ChannelHeaderRoot = styled(Stretch, 'text-channel_header', {
 
 export const ChannelHeaderTopic = styled('div', 'text-channel_header_topic', {
   color: '$textMuted',
-  // color: 'rgba(255,255,255,0.4)',
-  // color: 'rgba(255,255,255,0.4)',
   fontSize: 14,
   margin: 0,
   borderLeftStyle: 'solid',
