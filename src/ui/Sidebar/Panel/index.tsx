@@ -44,7 +44,7 @@ export default class Panel extends React.Component<{}> {
 								<Avatar src={avatar} draggable={false} />
 								<UserTag className="user-tag">
 									<Username>{authStore.user.username}</Username>
-									{("discriminator" in authStore.user && authStore.user.discriminator)
+									{("discriminator" in authStore.user && authStore.user.discriminator && authStore.user.discriminator !== '0')
 										&& (
 											<Discriminator>#{authStore.user.discriminator}</Discriminator>
 										)
