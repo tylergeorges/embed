@@ -1,10 +1,10 @@
 import { useStoreActions, useStoreState } from '@state';
 import { Header } from '@components/Header';
-import { ModalBackdrop } from '@components/Overlays/Modal/elements';
+import { ModalBackdrop } from '@components/Overlays/Modal/styles';
 import { useAppRouter, useContextMenu, useMediaQuery } from '@lib/hooks';
 import { Category } from './Category/Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
-import { ChannelsSidebarWrapper } from '../elements';
+import { ChannelsSidebarWrapper } from '../styles';
 
 /** This component displays the channels for the given guild, it wraps
  *  the guild header and all of the guilds channels.

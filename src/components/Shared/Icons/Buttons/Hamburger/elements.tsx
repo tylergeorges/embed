@@ -27,11 +27,13 @@ export const Ham = styled('button', 'hamburger', {
     backgroundColor: theme.colors.primaryOpacity10,
     borderRadius: '50%'
   },
+
   '&:hover': {
     '&::before': {
       opacity: 1
     }
   },
+
   variants: {
     open: {
       true: {

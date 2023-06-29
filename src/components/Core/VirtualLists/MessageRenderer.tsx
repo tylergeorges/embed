@@ -1,5 +1,5 @@
-import { VirtualListMessageWrapper } from '@components/Core/VirtualLists/elements';
-import { Spinner, SpinnerWrapper } from '@components/Overlays/Loading/elements';
+import * as Styles from '@components/Core/VirtualLists/styles';
+import { Spinner, SpinnerWrapper } from '@components/Overlays/Loading/styles';
 import MessageGroup from '@widgetbot/message-renderer';
 import { APIMessage } from 'discord-api-types/v10';
 import { Components, Virtuoso } from 'react-virtuoso';
@@ -14,10 +14,10 @@ type ListComponents = Components<APIMessage[], any> | undefined;
 const listComponents: ListComponents = { Header: FetchingDataSpinner };
 
 const Message = (index: number, data: APIMessage[]) => (
-  <VirtualListMessageWrapper>
+  <Styles.VirtualListMessageWrapper>
     {/* @ts-ignore */}
     <MessageGroup messages={data} thread={false} />
-  </VirtualListMessageWrapper>
+  </Styles.VirtualListMessageWrapper>
 );
 
 type GroupedMessages = APIMessage[][];

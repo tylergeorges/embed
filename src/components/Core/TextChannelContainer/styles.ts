@@ -9,6 +9,7 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
   transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
   height: '100%',
   width: '100%',
+
   variants: {
     mobile: {
       true: {
@@ -37,6 +38,7 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
       }
     }
   },
+
   compoundVariants: [
     {
       channelsListOpen: true,
@@ -68,16 +70,16 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
       channelsListOpen: true,
       mobile: false,
       css: {
-        width: `calc(100% - ($sideBarWidth + $threadPanelMinWidth + 8px))`,
-        transform: `translateX(200px)`
+        width: `calc(100% - (${theme.sizes.sideBarWidth} + ${theme.sizes.threadPanelMinWidth} + 8px))`,
+        transform: `translateX(${theme.sizes.sideBarWidth})`
       }
     },
     {
       threadsPanelOpen: true,
       mobile: true,
       css: {
-        width: `calc(${theme.sizes.threadPanelMinWidth})`,
-        transform: `translateX(200px)`
+        width: theme.sizes.threadPanelMinWidth,
+        transform: `translateX(${theme.sizes.sideBarWidth})`
       }
     }
   ]
@@ -134,21 +136,22 @@ export const MessageWrapper = styled('div', 'message-wrapper', {
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
-    margin: `${theme.space['2xl']}`
+    margin: theme.space.xxl
   },
 
   '.channel-welcome_header': {
-    fontSize: `${theme.space['2xl']}`,
+    fontSize: theme.space.xxl,
     marginBottom: 0,
     alignSelf: 'center',
     textAlign: 'center'
   },
   '.channel-welcome_subheader': {
     margin: 0,
-    fontSize: '14px',
-    color: `${theme.colors.primaryOpacity50}`,
+    fontSize: theme.fontSizes.md,
+    color: theme.colors.primaryOpacity50,
     textAlign: 'center'
   },
+
   variants: {
     membersListOpen: {
       false: {
@@ -156,7 +159,7 @@ export const MessageWrapper = styled('div', 'message-wrapper', {
         marginRight: 0
       },
       true: {
-        width: 'calc(100% - $sideBarWidth)'
+        width: `calc(100% - ${theme.sizes.sideBarWidth})`
       }
     },
     mobile: {
@@ -168,6 +171,7 @@ export const MessageWrapper = styled('div', 'message-wrapper', {
       }
     }
   },
+
   compoundVariants: [
     {
       membersListOpen: true,
@@ -191,15 +195,16 @@ export const MessageWrapper = styled('div', 'message-wrapper', {
 
 export const TextBoxWrapper = styled('form', 'textbox-wrapper', {
   position: 'relative',
-  marginBottom: '$lg',
+  marginBottom: theme.space.lg,
   display: 'flex',
   alignItems: 'center',
-  borderRadius: '$xs',
+  borderRadius: theme.radii.xs,
   width: 'calc(100% - 32px)',
-  backgroundColor: '$inputBackground',
+  backgroundColor: theme.colors.inputBackground,
   maxHeight: '50vh',
-  paddingY: '$sm'
+  paddingY: theme.space.sm
 });
+
 export const TextBoxInner = styled('div', 'textbox-inner', {
   width: '100%',
   height: '100%',
@@ -208,6 +213,7 @@ export const TextBoxInner = styled('div', 'textbox-inner', {
   position: 'relative',
   overflowY: 'auto'
 });
+
 export const TextBoxButtonWrapper = styled('div', 'textbox-button_wrapper', {
   display: 'flex',
   alignItems: 'flex-start',
@@ -220,7 +226,7 @@ export const TextBoxInputWrapper = styled('div', 'textbox-input_wrapper', {
   width: '100%',
   display: 'flex',
   position: 'relative',
-  marginBottom: '$md',
+  marginBottom: theme.space.md,
   height: '100%'
 });
 
@@ -231,22 +237,22 @@ export const TextInput = styled('div', 'textbox-input', {
   cursor: 'text',
   border: 'none',
   height: 'auto',
-  fontWeight: '$thin',
+  fontWeight: theme.fontWeights.thin,
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
-
   outline: 'none',
-  fontSize: '$lg',
+  fontSize: theme.fontSizes.lg,
   textAlign: 'left',
   justifyContent: 'flex-start',
   alignItems: 'center',
   position: 'relative',
   display: 'block',
-  color: '$textPrimary'
+  color: theme.colors.textPrimary
 });
 
 export const TextBoxPlaceholder = styled('span', 'textbox-placeholder', {
-  color: '$textMuted',
+  color: theme.colors.textMuted,
+
   position: 'absolute',
   pointerEvents: 'none'
 });
@@ -295,7 +301,7 @@ const SkeletonLoader = keyframes({
 
 export const SkeletonLoaderRoot = styled('div', 'skeleton-loader_root', {
   animation: `${SkeletonLoader} 3s infinite ease-in-out`,
-  background: `${theme.colors.primaryOpacity20}`,
+  background: theme.colors.primaryOpacity20,
   pointerEvents: 'none',
   userSelect: 'none'
 });
@@ -307,8 +313,8 @@ export const MessageSkeletonWrapper = styled('div', 'message-skeleton_wrapper', 
   marginTop: 25,
   paddingRight: 48,
   paddingLeft: 72,
-  paddingTop: '$xs',
-  paddingBottom: '$xs'
+  paddingTop: theme.space.xs,
+  paddingBottom: theme.space.xs
 });
 
 export const MessageSkeletonContent = styled('div', 'message-skeleton_content', {

@@ -10,6 +10,7 @@ export const ToolTipContainer = styled('div', 'tooltip-container', {
   pointerEvents: 'none',
   transition: 'transform 100ms ease',
   transformOrigin: 'top',
+
   variants: {
     visible: {
       false: {

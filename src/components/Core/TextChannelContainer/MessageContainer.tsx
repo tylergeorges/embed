@@ -4,7 +4,8 @@ import { useStoreState } from '@state';
 import { useState } from 'react';
 import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useMessages } from '@hooks/useMessages';
-import { MessageWrapper } from './elements';
+import { useAppRouter } from '@lib/hooks';
+import * as Styles from './styles';
 
 interface MessageContainerProps {
   /** Used if the device is mobile and the backdrop over the container is shown. */
@@ -15,11 +16,12 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
   const [isListRendered, setIsListRendered] = useState(false);
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
+  const { channelId, guildId, threadId } = useAppRouter();
 
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
-    guild: '585454996800405509',
-    channel: '585840022511550494',
-    thread: ''
+    guild: guildId,
+    channel: channelId,
+    thread: threadId
   });
 
   const handleBottomStateChanged = () => {
@@ -29,8 +31,7 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
   };
 
   return (
-    <MessageWrapper
-      className="message-wrapper "
+    <Styles.MessageWrapper
       draggable={false}
       membersListOpen={isMembersListOpen}
       onClick={onBackdropClick}
@@ -48,6 +49,6 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
       />
 
       <TextBox />
-    </MessageWrapper>
+    </Styles.MessageWrapper>
   );
 };

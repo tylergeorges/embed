@@ -4,7 +4,7 @@ import { MembersList } from '@components/Sidebar/MembersList';
 import { useCallback, useEffect } from 'react';
 
 import { Channel } from '@graphql/graphql';
-import { TextChannelInnerWrapper, TextChannelWrapper } from './elements';
+import * as Styles from './styles';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
 
@@ -67,7 +67,7 @@ export const TextChannelContainer = () => {
   ]);
 
   return (
-    <TextChannelWrapper
+    <Styles.TextChannelWrapper
       className="text-channel_wrapper"
       mobile={{
         '@initial': false,
@@ -77,7 +77,7 @@ export const TextChannelContainer = () => {
       threadsPanelOpen={isThreadsPanelOpen}
     >
       <TextChannelHeader />
-      <TextChannelInnerWrapper
+      <Styles.TextChannelInnerWrapper
         className="text-channel_inner_wrapper"
         mobile={{
           '@initial': false,
@@ -86,7 +86,7 @@ export const TextChannelContainer = () => {
       >
         <MessageContainer onBackdropClick={hideSidebar} />
         <MembersList />
-      </TextChannelInnerWrapper>
-    </TextChannelWrapper>
+      </Styles.TextChannelInnerWrapper>
+    </Styles.TextChannelWrapper>
   );
 };

@@ -2,7 +2,7 @@ import {
   NoThreadsIconInner,
   NoThreadsIconOuter,
   NoThreadsStars
-} from '@components/Overlays/Modal/elements';
+} from '@components/Overlays/Modal/styles';
 import { Icons } from '@components/Shared/Icons/Icons';
 
 export const NoThreadsIcon = () => (

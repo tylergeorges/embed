@@ -1,10 +1,4 @@
-import {
-  ChannelHeaderRoot,
-  ChannelHeaderNameWrapper,
-  ChannelNameTopicWrapper,
-  ChannelHeaderTopic,
-  ChannelHeaderName
-} from '@components/Header/elements';
+import * as Styles from '@components/Header/styles';
 import { Hash } from '@components/Shared/Channel/elements';
 import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
 import { MembersButton } from '@components/Shared/Icons/Buttons/MembersButton';
@@ -21,21 +15,30 @@ export const ChannelHeader = () => {
     setShowTopicModal(true);
   };
   return (
-    <ChannelHeaderRoot className="text-channel_header">
-      <ChannelHeaderNameWrapper role="dialog" aria-modal="true" className="text-channel_header_name_container">
+    <Styles.ChannelHeaderRoot className="text-channel_header">
+      <Styles.ChannelHeaderNameWrapper
+        role="dialog"
+        aria-modal="true"
+        className="text-channel_header_name_container"
+      >
         <Hamburger />
-        <ChannelNameTopicWrapper className="text-channel_name_topic_container">
+        <Styles.ChannelNameTopicWrapper className="text-channel_name_topic_container">
           <Hash channelHeader />
-          <ChannelHeaderName className="text-channel_header_name">{currentChannel?.name}</ChannelHeaderName>
-          <ChannelHeaderTopic className="text-channel_header_description" onClick={openTopicModal}>
+          <Styles.ChannelHeaderName className="text-channel_header_name">
+            {currentChannel?.name}
+          </Styles.ChannelHeaderName>
+          <Styles.ChannelHeaderTopic
+            className="text-channel_header_description"
+            onClick={openTopicModal}
+          >
             {currentChannel?.topic}
-          </ChannelHeaderTopic>
-        </ChannelNameTopicWrapper>
-      </ChannelHeaderNameWrapper>
+          </Styles.ChannelHeaderTopic>
+        </Styles.ChannelNameTopicWrapper>
+      </Styles.ChannelHeaderNameWrapper>
 
       <ThreadsButton />
       <PinButton />
       <MembersButton />
-    </ChannelHeaderRoot>
+    </Styles.ChannelHeaderRoot>
   );
 };

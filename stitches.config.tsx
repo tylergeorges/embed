@@ -1,5 +1,7 @@
 import { ScaleValue, createStitches } from '@stitches/react';
 
+export const commonComponentId = 'embed';
+
 const stitches = createStitches({
   theme: {
     colors: {
@@ -59,17 +61,17 @@ const stitches = createStitches({
       md: '14px',
       lg: '16px',
       xl: '20px',
-      '2xl': '32px'
+      xxl: '32px'
     },
     space: {
       none: '0px',
-      '2xs': '4px',
+      xxs: '4px',
       xs: '6px',
       sm: '8px',
       md: '12px',
       lg: '16px',
       xl: '24px',
-      '2xl': '32px'
+      xxl: '32px'
     },
     sizes: {
       iconSizeLarge: '30px',
@@ -105,13 +107,13 @@ const stitches = createStitches({
     },
 
     radii: {
-      '2xs': '4px',
+      xxs: '4px',
       xs: '6px',
       sm: '8px',
       md: '12px',
       lg: '16px',
       xl: '24px',
-      '2xl': '32px',
+      xxl: '32px',
       round: '99999999999px'
     },
     singleChannel: {
@@ -124,6 +126,7 @@ const stitches = createStitches({
       enable: false
     }
   },
+
   media: {
     small: 'screen and (max-width: 768px)'
   },

@@ -26,7 +26,7 @@ export const Notifications = styled('div', 'notifications', {
   button: {
     cursor: 'pointer',
     outline: 0,
-    fontWeight: '$medium'
+    fontWeight: `${theme.fontWeights.medium}`
   },
 
   '.notification-br': {

@@ -3,7 +3,7 @@ import { useCallback, useRef } from 'react';
 import { AddAttachmentsButton } from '@components/Shared/Icons/Buttons/AddAttachmentsButton';
 import { EmojisButton } from '@components/Shared/Icons/Buttons/EmojisButton';
 import { TextBoxInput } from '@components/Core/TextChannelContainer/TextBox/TextBoxInput';
-import { TextBoxWrapper, TextBoxButtonWrapper, TextBoxInner } from '../elements';
+import * as Styles from '../styles';
 
 export const TextBox = () => {
   const imageAttachmentRef = useRef<HTMLInputElement>(null);
@@ -19,19 +19,19 @@ export const TextBox = () => {
   };
 
   return (
-    <TextBoxWrapper className="textbox-wrapper">
-      <TextBoxInner>
-        <TextBoxButtonWrapper>
+    <Styles.TextBoxWrapper className="textbox-wrapper">
+      <Styles.TextBoxInner>
+        <Styles.TextBoxButtonWrapper>
           <input hidden type="file" onChange={addAttachment} ref={imageAttachmentRef} />
           <AddAttachmentsButton onClick={attachmentButtonClick} />
-        </TextBoxButtonWrapper>
+        </Styles.TextBoxButtonWrapper>
 
         <TextBoxInput />
 
-        <TextBoxButtonWrapper>
+        <Styles.TextBoxButtonWrapper>
           <EmojisButton />
-        </TextBoxButtonWrapper>
-      </TextBoxInner>
-    </TextBoxWrapper>
+        </Styles.TextBoxButtonWrapper>
+      </Styles.TextBoxInner>
+    </Styles.TextBoxWrapper>
   );
 };

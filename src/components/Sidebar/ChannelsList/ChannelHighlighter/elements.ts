@@ -1,4 +1,4 @@
-import { styled } from '@stitches/react';
+import { theme, styled } from '@stitches';
 
 export const BackgroundContainer = styled('div', 'activechannel-background_container', {
   position: 'absolute',
@@ -10,10 +10,8 @@ export const BackgroundContainer = styled('div', 'activechannel-background_conta
 
 export const Background = styled('div', 'active-channel_background', {
   position: 'absolute',
-  backgroundColor: '$primaryOpacity10',
-
+  backgroundColor: theme.colors.primaryOpacity10,
   pointerEvents: 'none',
-
   transform: 'translateY(var(--yPos))',
 
   variants: {

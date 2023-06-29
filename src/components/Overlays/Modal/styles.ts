@@ -1,4 +1,4 @@
-import { HeaderMainContentRoot, Stretch } from '@components/Header/elements';
+import { HeaderMainContentRoot, Stretch } from '@components/Header/styles';
 import { theme } from '@stitches';
 import { keyframes, styled } from '@stitches/react';
 
@@ -18,6 +18,7 @@ export const ModalBackdrop = styled('div', 'modal-backdrop', {
   zIndex: 10,
   transition: 'opacity 300ms ease',
   opacity: 0,
+
   variants: {
     isOpen: {
       false: {
@@ -43,6 +44,7 @@ export const ModalContainerWrapper = styled('div', 'modal-container_wrapper', {
   justifyContent: 'center',
   pointerEvents: 'none',
   zIndex: -1,
+
   variants: {
     isOpen: {
       false: {
@@ -69,6 +71,7 @@ export const ModalContainer = styled('div', 'modal-container', {
   borderRadius: 4,
   pointerEvents: 'all',
   transition: 'transform 200ms ease',
+
   variants: {
     isOpen: {
       false: {
@@ -87,7 +90,7 @@ export const ModalHeader = styled('div', 'modal-header', {
 
 export const ModalHeaderContent = styled(HeaderMainContentRoot, 'modal-header_content', {
   fontSize: '100%',
-  padding: '$xl',
+  padding: theme.space.xl,
   display: 'flex',
   justifyContent: 'space-between',
   cursor: 'default'
@@ -184,7 +187,7 @@ export const ChannelTopicModalContent = styled(
     flexShrink: 1,
     paddingLeft: '$xl',
     paddingRight: '$lg',
-    paddingBottom: '$2xl',
+    paddingBottom: '$xxl',
     textRendering: 'optimizeLegibility',
     whiteSpace: 'pre-wrap',
     overflowWrap: 'break-word',
@@ -204,7 +207,7 @@ export const NoThreadsIconOuter = styled('div', 'popout-no_threads_outer', {
 
 export const NoThreadsIconInner = styled('div', 'popout-no_threads_inner', {
   position: 'relative',
-  padding: '$2xl',
+  padding: '$xxl',
   display: 'flex',
   borderImageOutset: 'stretch',
   alignItems: 'center'

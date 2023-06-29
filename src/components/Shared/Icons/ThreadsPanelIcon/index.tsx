@@ -1,5 +1,5 @@
 import { ThreadsPanelIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
-import { IconProps } from '../icon.types';
+import { IconProps } from '@components/Shared/Icons/Icons';
 
 export const ThreadsPanelIcon = ({ size, customSize, color }: IconProps) => (
   <ThreadsPanelIconRoot

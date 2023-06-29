@@ -32,9 +32,11 @@ export const Spinner = styled('div', 'spinner', {
     right: 15,
     animation: `${cube} 1.8s infinite ease-in-out`
   },
+
   '&::after': {
     animationDelay: ' -0.9s'
   },
+
   variants: {
     type: {
       fetchingMessages: {
@@ -63,6 +65,7 @@ export const SpinnerWrapper = styled('div', 'spinner-wrapper', {
   '*:first-child': {
     position: 'absolute'
   },
+
   variants: {
     type: {
       fetchingMessages: {

@@ -201,6 +201,7 @@ export const staticMessages: APIMessage[] = [
       bot: false,
       id: '998882498719273090',
       username: 'Discord Developers #api-announcements',
+      global_name: 'Discord Developers #api-announcements',
       avatar: '0ad0ccf2bc8dffbaddcf39825c4b5706',
       discriminator: '0000'
     },

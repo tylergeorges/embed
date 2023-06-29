@@ -82,6 +82,7 @@ export const ThreadsPanelContainer = styled('div', 'thread-panel_wrapper', {
   '@mobile': {
     width: '100%'
   },
+
   variants: {
     isOpen: {
       false: {

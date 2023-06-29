@@ -7,7 +7,7 @@ import {
   ThreadsPopoutList,
   NoThreadsContent,
   NoThreadsHeader
-} from '@components/Overlays/Modal/elements';
+} from '@components/Overlays/Modal/styles';
 import { ThreadsPanelButton } from '@components/Shared/Icons/Buttons/ThreadsPanelButton';
 import { NoThreadsIcon } from '@components/Shared/Icons/NoThreadsIcon';
 import { useAppRouter } from '@lib/hooks';

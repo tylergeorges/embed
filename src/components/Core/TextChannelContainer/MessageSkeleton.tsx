@@ -1,62 +1,53 @@
 /* eslint-disable no-plusplus */
-import {
-  MessageSkeletonContentLine,
-  MessageSkeletonContent,
-  MessageSkeletonUsername,
-  MessageSkeletonAvatar,
-  MessageSkeletonWrapper,
-  MessageSkeletonContentLongWord,
-  MessageSkeletonContentShortWord,
-  MessageSkeletonContentMedWord
-} from '@components/Core/TextChannelContainer/elements';
+import * as Styles from '@components/Core/TextChannelContainer/styles';
 
 const FirstSkeletonLine = () => (
-  <MessageSkeletonContentLine className="message-skeleton_content_line">
-    <MessageSkeletonContentLongWord />
-    <MessageSkeletonContentMedWord />
-    <MessageSkeletonContentLongWord />
-    <MessageSkeletonContentShortWord />
-    <MessageSkeletonContentLongWord />
-    <MessageSkeletonContentLongWord />
-    <MessageSkeletonContentMedWord />
-    <MessageSkeletonContentLongWord />
-    <MessageSkeletonContentMedWord />
-    <MessageSkeletonContentMedWord />
-    <MessageSkeletonContentLongWord />
-  </MessageSkeletonContentLine>
+  <Styles.MessageSkeletonContentLine className="message-skeleton_content_line">
+    <Styles.MessageSkeletonContentLongWord />
+    <Styles.MessageSkeletonContentMedWord />
+    <Styles.MessageSkeletonContentLongWord />
+    <Styles.MessageSkeletonContentShortWord />
+    <Styles.MessageSkeletonContentLongWord />
+    <Styles.MessageSkeletonContentLongWord />
+    <Styles.MessageSkeletonContentMedWord />
+    <Styles.MessageSkeletonContentLongWord />
+    <Styles.MessageSkeletonContentMedWord />
+    <Styles.MessageSkeletonContentMedWord />
+    <Styles.MessageSkeletonContentLongWord />
+  </Styles.MessageSkeletonContentLine>
 );
 
 const SecondSkeletonLine = () => (
-  <MessageSkeletonContentLine className="message-skeleton_content_line">
-    <MessageSkeletonContentMedWord />
-    <MessageSkeletonContentLongWord />
-    <MessageSkeletonContentMedWord />
-    <MessageSkeletonContentLongWord />
-    <MessageSkeletonContentMedWord />
-  </MessageSkeletonContentLine>
+  <Styles.MessageSkeletonContentLine className="message-skeleton_content_line">
+    <Styles.MessageSkeletonContentMedWord />
+    <Styles.MessageSkeletonContentLongWord />
+    <Styles.MessageSkeletonContentMedWord />
+    <Styles.MessageSkeletonContentLongWord />
+    <Styles.MessageSkeletonContentMedWord />
+  </Styles.MessageSkeletonContentLine>
 );
 
 const LastSkeletonLine = () => (
-  <MessageSkeletonContentLine className="message-skeleton_content_line">
-    <MessageSkeletonContentLongWord />
-    <MessageSkeletonContentLongWord />
-    <MessageSkeletonContentMedWord />
-    <MessageSkeletonContentLongWord />
-    <MessageSkeletonContentMedWord />
-    <MessageSkeletonContentMedWord />
-    <MessageSkeletonContentShortWord />
-    <MessageSkeletonContentLongWord />
-  </MessageSkeletonContentLine>
+  <Styles.MessageSkeletonContentLine className="message-skeleton_content_line">
+    <Styles.MessageSkeletonContentLongWord />
+    <Styles.MessageSkeletonContentLongWord />
+    <Styles.MessageSkeletonContentMedWord />
+    <Styles.MessageSkeletonContentLongWord />
+    <Styles.MessageSkeletonContentMedWord />
+    <Styles.MessageSkeletonContentMedWord />
+    <Styles.MessageSkeletonContentShortWord />
+    <Styles.MessageSkeletonContentLongWord />
+  </Styles.MessageSkeletonContentLine>
 );
 
 export const MessageSkeleton = () => (
-  <MessageSkeletonWrapper className="message-skeleton_wrapper">
-    <MessageSkeletonAvatar className="message-skeleton_avatar" />
-    <MessageSkeletonContent className="message-skeleton_content">
-      <MessageSkeletonUsername className="message-skeleton_username" />
+  <Styles.MessageSkeletonWrapper className="message-skeleton_wrapper">
+    <Styles.MessageSkeletonAvatar className="message-skeleton_avatar" />
+    <Styles.MessageSkeletonContent className="message-skeleton_content">
+      <Styles.MessageSkeletonUsername className="message-skeleton_username" />
       <FirstSkeletonLine />
       <SecondSkeletonLine />
       <LastSkeletonLine />
-    </MessageSkeletonContent>
-  </MessageSkeletonWrapper>
+    </Styles.MessageSkeletonContent>
+  </Styles.MessageSkeletonWrapper>
 );

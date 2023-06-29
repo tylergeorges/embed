@@ -1,9 +1,5 @@
 import { Header } from '@components/Header';
-import {
-  ThreadPanelHeaderIconContainer,
-  ThreadPanelHeaderRoot,
-  ThreadPanelHeaderIconContent
-} from '@components/Header/elements';
+import * as Styles from '@components/Header/styles';
 import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback } from 'react';
@@ -27,16 +23,16 @@ export const ThreadPanelHeader = () => {
 
   return (
     <Header isChannelHeader={false} shadowEnabled>
-      <ThreadPanelHeaderRoot className="panel-thread_header_root">
-        <ThreadPanelHeaderIconContainer className="panel-thread_header_icon_container">
-          <ThreadPanelHeaderIconContent className="panel-thread_header_icon_content">
+      <Styles.ThreadPanelHeaderRoot className="panel-thread_header_root">
+        <Styles.ThreadPanelHeaderIconContainer className="panel-thread_header_icon_container">
+          <Styles.ThreadPanelHeaderIconContent className="panel-thread_header_icon_content">
             {windowIsMobile && <Hamburger />}
             <Icons name="ThreadHash" color="dark" css={{ marginX: '$sm' }} />
             {currentThread?.name}
-          </ThreadPanelHeaderIconContent>
+          </Styles.ThreadPanelHeaderIconContent>
           <IconButton name="Close" backgroundGlowOnHover onClick={closePanel} />
-        </ThreadPanelHeaderIconContainer>
-      </ThreadPanelHeaderRoot>
+        </Styles.ThreadPanelHeaderIconContainer>
+      </Styles.ThreadPanelHeaderRoot>
     </Header>
   );
 };

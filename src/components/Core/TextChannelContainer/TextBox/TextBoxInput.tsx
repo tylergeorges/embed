@@ -1,8 +1,4 @@
-import {
-  TextInput,
-  TextBoxPlaceholder,
-  TextBoxInputWrapper
-} from '@components/Core/TextChannelContainer/elements';
+import * as Styles from '@components/Core/TextChannelContainer/styles';
 import { useStoreState } from '@state';
 import { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -128,8 +124,8 @@ export const TextBoxInput = () => {
   };
 
   return (
-    <TextBoxInputWrapper>
-      <TextInput
+    <Styles.TextBoxInputWrapper>
+      <Styles.TextInput
         onKeyUp={handleKeyUp}
         className="textbox-input"
         contentEditable
@@ -139,7 +135,7 @@ export const TextBoxInput = () => {
         inputMode="text"
       />
 
-      {showPlaceHolder && <TextBoxPlaceholder>{channelName}</TextBoxPlaceholder>}
-    </TextBoxInputWrapper>
+      {showPlaceHolder && <Styles.TextBoxPlaceholder>{channelName}</Styles.TextBoxPlaceholder>}
+    </Styles.TextBoxInputWrapper>
   );
 };

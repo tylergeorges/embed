@@ -18,7 +18,13 @@ export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
     setIsThreadsPanelOpen(true);
     setIsMembersListOpen(false);
     setCurrentThread(thread);
-  }, [setCurrentThread, setIsMembersListOpen, setIsCurrentChannelThread, thread, setIsThreadsPanelOpen]);
+  }, [
+    setCurrentThread,
+    setIsMembersListOpen,
+    setIsCurrentChannelThread,
+    thread,
+    setIsThreadsPanelOpen
+  ]);
 
   return (
     <IconButtonWrapper
@@ -28,7 +34,8 @@ export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
       backgroundGlowOnHover
       onClick={handlePanelClick}
     >
-      <ThreadsPanelIcon customSize={30} />
+      {/* TODO: change to panel icon */}
+      <ThreadsPanelIcon customSize={30} name="AddAttachment" />
     </IconButtonWrapper>
   );
 };

@@ -1,7 +1,7 @@
-import { Spinner, SpinnerWrapper } from '@components/Overlays/Loading/elements';
+import * as Styles from '@components/Overlays/Loading/styles';
 
 export const Loading = () => (
-  <SpinnerWrapper>
-    <Spinner />
-  </SpinnerWrapper>
+  <Styles.SpinnerWrapper>
+    <Styles.Spinner />
+  </Styles.SpinnerWrapper>
 );

@@ -1,5 +1,5 @@
 import { Modal } from '@components/Overlays/Modal';
-import { ModalHeader, ModalHeaderContent } from '@components/Overlays/Modal/elements';
+import { ModalHeader, ModalHeaderContent } from '@components/Overlays/Modal/styles';
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { ReactElement } from 'react';
 

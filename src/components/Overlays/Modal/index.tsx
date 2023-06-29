@@ -2,7 +2,7 @@ import {
   ModalBackdrop,
   ModalContainer,
   ModalContainerWrapper
-} from '@components/Overlays/Modal/elements';
+} from '@components/Overlays/Modal/styles';
 import { ReactElement } from 'react';
 
 interface ModalProps {

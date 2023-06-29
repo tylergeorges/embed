@@ -7,9 +7,9 @@ export const CategoryNameContainer = styled('div', 'category-name_container', {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  marginLeft: '$lg',
+  marginLeft: theme.space.lg,
   transition: 'color 100ms ease',
-  color: '$primaryOpacity30',
+  color: theme.colors.primaryOpacity30,
   cursor: 'pointer',
   boxSizing: 'border-box',
   '&:hover': {
@@ -18,8 +18,9 @@ export const CategoryNameContainer = styled('div', 'category-name_container', {
 });
 
 export const CategoryNameArrow = styled('div', 'category-name_arrow', {
-  width: '$iconSizeSmall',
-  height: '$iconSizeSmall',
+  width: theme.sizes.iconSizeSmall,
+  height: theme.sizes.iconSizeSmall,
+
   cursor: 'pointer',
   boxSizing: 'border-box',
   position: 'relative',
@@ -41,15 +42,15 @@ export const CategoryNameArrow = styled('div', 'category-name_arrow', {
 
 export const CategoryNameContent = styled('div', 'category-name', {
   textTransform: 'uppercase',
-  fontSize: '$sm',
+  fontSize: theme.fontSizes.sm,
   alignSelf: 'center',
   boxSizing: 'border-box'
 });
 
 export const CategoryContainer = styled('div', 'category-container', {
   width: '100%',
-  fontWeight: '$medium',
-  paddingTop: '$xl',
+  fontWeight: theme.fontWeights.medium,
+  paddingTop: theme.space.xl,
   transition: 'translateY 0.5s ease',
   boxSizing: 'border-box'
 });
@@ -61,23 +62,25 @@ export const ChannelNameWrapper = styled('div', 'channel-name_wrapper', {
   height: 'auto',
   boxSizing: 'border-box',
   transition: 'max-height 350ms ease',
-  maxHeight: '$channelNameHeight',
+  maxHeight: theme.sizes.channelNameHeight,
 
-  marginTop: '$2xs',
-  marginBottom: '$2xs',
+  marginTop: theme.space.xxs,
+  marginBottom: theme.space.xxs,
 
   variants: {
     isThread: {
       true: {
-        marginLeft: '$lg',
-        paddingLeft: '$lg',
-        paddingRight: '$xs',
-        marginRight: '$sm',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyItems: 'center',
-        paddingTop: '$md'
+
+        marginLeft: theme.space.lg,
+        marginRight: theme.space.sm,
+
+        paddingLeft: theme.space.lg,
+        paddingRight: theme.space.xs,
+        paddingTop: theme.space.md
       }
     },
     isActive: {
@@ -87,6 +90,7 @@ export const ChannelNameWrapper = styled('div', 'channel-name_wrapper', {
       true: {}
     }
   },
+
   compoundVariants: [
     {
       isActive: false,
@@ -124,6 +128,7 @@ export const ChannelNameInner = styled(Link, 'channel-name', {
     backgroundColor: '$primaryOpacity10',
     color: '$primaryOpacity50'
   },
+
   variants: {
     active_state: {
       true: {

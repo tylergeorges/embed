@@ -109,6 +109,7 @@ export const IconButtonChildrenWrapper = styled('button', 'icon-button_children_
     }
   },
   padding: 3,
+
   variants: {
     backgroundGlowOnHover: {
       true: {
