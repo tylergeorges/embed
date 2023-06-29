@@ -203,6 +203,7 @@ export const useMessages = ({
 
     // @ts-ignore
     const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
+    console.log(msgs);
     if (msgs.length) {
       setNewMessageGroupLength(groupMessages(msgs).length);
 
@@ -211,7 +212,7 @@ export const useMessages = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.channelV2, ready]);
+  }, [data, ready]);
 
   const fetchMore = useCallback(
     (before: string) => {

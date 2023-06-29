@@ -23,7 +23,7 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
           .filter(c => c.category?.id === category?.id)
           .map(channel => (
             <Fragment key={channel.id}>
-              <Styles.ChannelsWrapper draggable={false} className="channels-wrapper">
+              <Styles.ChannelsWrapper draggable={false}>
                 <Channel
                   channel={channel}
                   isActive={!currentThreadID && channel.id === currentChannelID}
@@ -35,7 +35,7 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
               {channel.threads?.map(thread => (
                 <Fragment key={thread.id}>
                   {currentThreadID === thread.id && (
-                    <Styles.ThreadsWrapper className="thread-wrapper">
+                    <Styles.ThreadsWrapper>
                       <Spine />
                       <Channel
                         isThread

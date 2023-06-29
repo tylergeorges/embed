@@ -29,9 +29,8 @@ export const IconButtonWrapper = ({
 }: IconButtonWrapperProps) => {
   if (tooltipDisabled)
     return (
-      <Styles.IconButtonRoot className="icon-button_wrapper_root">
+      <Styles.IconButtonRoot>
         <Styles.IconButtonChildrenWrapper
-          className="icon-button_children_wrapper"
           backgroundGlowOnHover={backgroundGlowOnHover ?? false}
           onClick={onClick}
           isActive={isActive}
@@ -51,14 +50,13 @@ export const IconButtonWrapper = ({
     );
 
   return (
-    <Styles.IconButtonRoot className="icon-button_wrapper_root">
+    <Styles.IconButtonRoot>
       <ToolTip
         placement={tooltipPlacement ?? 'top'}
         label={tooltipLabel ?? ''}
         show={alwaysShowTooltip}
       >
         <Styles.IconButtonChildrenWrapper
-          className="icon-button_children_wrapper"
           backgroundGlowOnHover={backgroundGlowOnHover ?? false}
           css={
             backgroundGlowSize

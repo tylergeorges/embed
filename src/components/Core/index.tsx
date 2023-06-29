@@ -1,11 +1,14 @@
-import { styled, theme, keyframes } from '@stitches';
+import { styled, theme, keyframes, commonComponentId } from '@stitches';
 
 const zoomIn = keyframes({
   from: { scale: '0.90', opacity: 0 },
   to: { scale: 'initial', opacity: 1 }
 });
 
-export const Main = styled('main', 'main', {
+export const Main = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'main'
+})('main', {
   height: '100%',
   display: 'flex',
   flexDirection: 'row',
@@ -15,14 +18,20 @@ export const Main = styled('main', 'main', {
   justifyItems: 'center'
 });
 
-export const InnerMain = styled('div', 'inner-main', {
+export const InnerMain = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'inner-main'
+})('div', {
   flexDirection: 'row',
   width: '100%',
   height: '100%',
   display: 'flex'
 });
 
-export const Wrapper = styled('div', 'wrapper', {
+export const Wrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'wrapper'
+})('div', {
   display: 'flex',
   flexDirection: 'column',
   height: '100%',
@@ -39,5 +48,3 @@ export const Wrapper = styled('div', 'wrapper', {
     opacity: 0
   }
 });
-
-export {};

@@ -46,9 +46,9 @@ export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
           left
         }
       : {};
+
   return (
     <Styles.ToolTipWrapper
-      className="tooltip-wrapper"
       onTouchStart={undefined}
       onMouseEnter={toggleTooltip}
       onMouseLeave={toggleTooltip}
@@ -56,13 +56,12 @@ export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
       <div ref={childrenConRef}>{children}</div>
 
       <Styles.ToolTipContainer
-        className="tooltip-container"
         visible={show || showToolTip}
         placement={placement}
         ref={tooltipRef}
         css={tooltipXPos}
       >
-        <Styles.ToolTipContent className="tooltip-content">{label}</Styles.ToolTipContent>
+        <Styles.ToolTipContent>{label}</Styles.ToolTipContent>
       </Styles.ToolTipContainer>
     </Styles.ToolTipWrapper>
   );

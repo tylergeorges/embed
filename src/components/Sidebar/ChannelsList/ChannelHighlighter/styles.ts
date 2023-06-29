@@ -1,15 +1,9 @@
-import { theme } from '@stitches';
-import { styled } from '@stitches/react';
+import { commonComponentId, theme, styled } from '@stitches';
 
-export const BackgroundContainer = styled('div', 'activechannel-background_container', {
-  position: 'absolute',
-  width: '100%',
-  left: 0,
-  right: 0,
-  zIndex: 1
-});
-
-export const Background = styled('div', 'active-channel_background', {
+export const Background = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'active-channel_background'
+})('div', {
   position: 'absolute',
   backgroundColor: theme.colors.primaryOpacity10,
 

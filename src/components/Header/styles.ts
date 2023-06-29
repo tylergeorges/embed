@@ -1,18 +1,23 @@
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 
-export const ChannelHeaderContainer = styled('div', 'text-channel_header_container', {
+export const ChannelHeaderContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_header_container'
+})('div', {
   width: '100%',
   display: 'flex',
   backgroundColor: theme.colors.background
 });
 
-export const ThreadPanelHeaderContainer = styled(
-  ChannelHeaderContainer,
-  'panel-thread_header_container',
-  {}
-);
+export const ThreadPanelHeaderContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'panel-thread_header_container'
+})(ChannelHeaderContainer, {});
 
-export const HeaderRoot = styled('header', 'header-root', {
+export const HeaderRoot = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'header-root'
+})('header', {
   display: 'flex',
   flexShrink: 0,
   justifyContent: 'center',
@@ -37,15 +42,24 @@ export const HeaderRoot = styled('header', 'header-root', {
   }
 });
 
-export const HeaderMainContentRoot = styled('h1', 'header-main_content_root', {
+export const HeaderMainContentRoot = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'header-main_content_root'
+})('h1', {
   fontWeight: theme.fontWeights.bold,
   fontSize: theme.fontSizes.lg,
   margin: 0
 });
 
-export const GuildHeaderName = styled(HeaderMainContentRoot, 'guild-header_name', {});
+export const GuildHeaderName = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'guild-header_name'
+})(HeaderMainContentRoot, {});
 
-export const ChannelHeaderName = styled(HeaderMainContentRoot, 'text-channel_header_name', {
+export const ChannelHeaderName = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_header_name'
+})(HeaderMainContentRoot, {
   marginRight: theme.space.xl,
   textOverflow: 'ellipsis',
   boxSizing: 'border-box',
@@ -55,55 +69,46 @@ export const ChannelHeaderName = styled(HeaderMainContentRoot, 'text-channel_hea
   userSelect: 'none'
 });
 
-export const SingleChannel = styled('div', 'single-channel', {
-  [`& ${theme.singleChannel.enable}`]: {
-    display: 'none'
-  }
-});
-
-export const Inner = styled('div', 'inner', {
-  display: 'flex',
-  flexShrink: '1',
-  flexGrow: 1,
-  minWidth: 0,
-  height: '47px',
-  padding: '10px 0',
-
-  '@media (max-width: 270px), (max-height: 300px)': {
-    height: '41px',
-    padding: '7px 0'
-  }
-});
-
-export const Stretch = styled('div', 'stretch', {
+export const Stretch = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'stretch'
+})('div', {
   diplay: 'flex',
   flexGrow: 1,
   flexShrink: 1,
   width: 0
 });
 
-export const GuildHeader = styled(Stretch, 'guild-header', {
+export const GuildHeader = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'guild-header'
+})(Stretch, {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center'
 });
 
-export const ChannelHeaderRoot = styled(Stretch, 'text-channel_header', {
+export const ChannelHeaderRoot = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_header'
+})(Stretch, {
   display: 'flex',
   width: '100%',
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'row',
   zIndex: 3,
-  paddingLeft: 8,
-  paddingRight: 8,
+  paddingX: theme.space.sm,
 
   '.text-channel_header_buttons_container': {
     width: '100%'
   }
 });
 
-export const ChannelHeaderTopic = styled('div', 'text-channel_header_topic', {
+export const ChannelHeaderTopic = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_header_topic'
+})('div', {
   margin: 0,
   paddingX: theme.space.lg,
 
@@ -122,13 +127,19 @@ export const ChannelHeaderTopic = styled('div', 'text-channel_header_topic', {
   cursor: 'pointer'
 });
 
-export const ChannelHeaderNameWrapper = styled('div', 'text-channel_header_name_container', {
+export const ChannelHeaderNameWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_header_name_container'
+})('div', {
   width: '100%',
   display: 'flex',
   alignItems: 'center'
 });
 
-export const ChannelNameTopicWrapper = styled(Stretch, 'text-channel_name_topic_container', {
+export const ChannelNameTopicWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_name_topic_container'
+})(Stretch, {
   display: 'flex',
   alignItems: 'center',
 
@@ -137,23 +148,33 @@ export const ChannelNameTopicWrapper = styled(Stretch, 'text-channel_name_topic_
   wordBreak: 'break-word'
 });
 
-export const ThreadPanelHeaderRoot = styled(ChannelHeaderRoot, 'panel-thread_header_root', {
+export const ThreadPanelHeaderRoot = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'panel-thread_header_root'
+})(ChannelHeaderRoot, {
   backgroundColor: theme.colors.background,
   height: theme.sizes.headerHeight,
-
+  boxShadow: theme.shadows.headerDropShadow,
   margin: 0,
   padding: 0,
-  paddingRight: 8
+  width: '100%',
+  paddingRight: theme.space.sm
 });
 
-export const ThreadPanelHeaderIconContainer = styled('div', 'panel-thread_header_icon_container', {
+export const ThreadPanelHeaderIconContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'panel-thread_header_icon_container'
+})('div', {
   width: '100%',
   display: 'flex',
   height: '100%',
   alignItems: 'center'
 });
 
-export const ThreadPanelHeaderIconContent = styled('div', 'panel-thread_header_icon_content', {
+export const ThreadPanelHeaderIconContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'panel-thread_header_icon_content'
+})('div', {
   width: '100%',
   height: '100%',
   display: 'flex',

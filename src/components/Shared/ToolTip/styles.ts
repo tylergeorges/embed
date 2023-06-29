@@ -1,7 +1,9 @@
-import { styled } from '@stitches/react';
-import { theme } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 
-export const ToolTipContainer = styled('div', 'tooltip-container', {
+export const ToolTipContainer = styled.withConfig({
+  displayName: 'tooltip-container',
+  componentId: commonComponentId
+})('div', {
   position: 'absolute',
   transform: 'scale(0)',
   transformOrigin: 'top',
@@ -34,7 +36,10 @@ export const ToolTipContainer = styled('div', 'tooltip-container', {
   }
 });
 
-export const ToolTipContent = styled('span', 'tooltip-content', {
+export const ToolTipContent = styled.withConfig({
+  displayName: 'tooltip-content',
+  componentId: commonComponentId
+})('span', {
   position: 'relative',
   display: 'inline-block',
 
@@ -42,7 +47,10 @@ export const ToolTipContent = styled('span', 'tooltip-content', {
   textAlign: 'center'
 });
 
-export const ToolTipWrapper = styled('div', 'tooltip-wrapper', {
+export const ToolTipWrapper = styled.withConfig({
+  displayName: 'tooltip-wrapper',
+  componentId: commonComponentId
+})('div', {
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',

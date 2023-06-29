@@ -16,25 +16,16 @@ export const ChannelHeader = () => {
     setShowTopicModal(true);
   };
   return (
-    <Styles.ChannelHeaderRoot className="text-channel_header">
-      <Styles.ChannelHeaderNameWrapper
-        role="dialog"
-        aria-modal="true"
-        className="text-channel_header_name_container"
-      >
+    <Styles.ChannelHeaderRoot>
+      <Styles.ChannelHeaderNameWrapper role="dialog" aria-modal="true">
         <Hamburger />
 
-        <Styles.ChannelNameTopicWrapper className="text-channel_name_topic_container">
+        <Styles.ChannelNameTopicWrapper>
           <Hash channelHeader />
 
-          <Styles.ChannelHeaderName className="text-channel_header_name">
-            {currentChannel?.name}
-          </Styles.ChannelHeaderName>
+          <Styles.ChannelHeaderName>{currentChannel?.name}</Styles.ChannelHeaderName>
 
-          <Styles.ChannelHeaderTopic
-            className="text-channel_header_description"
-            onClick={openTopicModal}
-          >
+          <Styles.ChannelHeaderTopic onClick={openTopicModal}>
             {currentChannel?.topic}
           </Styles.ChannelHeaderTopic>
         </Styles.ChannelNameTopicWrapper>

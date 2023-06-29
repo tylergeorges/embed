@@ -1,5 +1,5 @@
-import { theme } from '@stitches';
-import { keyframes, styled } from '@stitches/react';
+import { commonComponentId, theme, styled } from '@stitches';
+import { keyframes } from '@stitches/react';
 
 const cube = keyframes({
   '25%': {
@@ -19,7 +19,10 @@ const cube = keyframes({
   }
 });
 
-export const Spinner = styled('div', 'spinner', {
+export const Spinner = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'spinner'
+})('div', {
   '&::after, &::before': {
     content: '',
     backgroundColor: theme.colors.accent,
@@ -56,7 +59,10 @@ export const Spinner = styled('div', 'spinner', {
   }
 });
 
-export const SpinnerWrapper = styled('div', 'spinner-wrapper', {
+export const SpinnerWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'spinner-wrapper'
+})('div', {
   width: '100%',
   height: '100%',
   backgroundColor: theme.colors.background,

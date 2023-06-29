@@ -1,7 +1,10 @@
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 // import { styled } from '@stitches/react';
 
-export const Ham = styled('button', 'hamburger', {
+export const Ham = styled.withConfig({
+  displayName: 'hamburger',
+  componentId: commonComponentId
+})('button', {
   position: 'relative',
 
   width: theme.sizes.iconSizeSmall,
@@ -86,7 +89,10 @@ export const Ham = styled('button', 'hamburger', {
   }
 });
 
-export const Burger = styled('div', 'burger', {
+export const Burger = styled.withConfig({
+  displayName: 'burger',
+  componentId: commonComponentId
+})('div', {
   '&, &::before, &::after': {
     content: '',
     backgroundColor: theme.colors.accent,

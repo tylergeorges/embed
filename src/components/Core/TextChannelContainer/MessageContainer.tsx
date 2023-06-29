@@ -30,7 +30,6 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
 
   return (
     <Styles.MessageWrapper
-      className="message-wrapper "
       draggable={false}
       membersListOpen={isMembersListOpen}
       onClick={onBackdropClick}

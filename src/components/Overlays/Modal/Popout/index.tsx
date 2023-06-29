@@ -32,17 +32,16 @@ export const Popout = ({
           isOpen={isOpen}
           aria-label={title}
           role="dialog"
-          className="popout-container"
           css={{
             right: `calc(${popoutFor?.clientLeft}px + 80px)`
           }}
         >
-          <Styles.PopoutHeader className="popout-header">
-            <Styles.PopoutHeaderContent className="popout-header_content non-dragable">
-              <Styles.PopoutTitleWrapper className="popout-title_container">
+          <Styles.PopoutHeader>
+            <Styles.PopoutHeaderContent>
+              <Styles.PopoutTitleWrapper>
                 {TitleIcon && <Icons name={TitleIcon} />}
 
-                <Styles.PopoutTitle className="popout-title">{title}</Styles.PopoutTitle>
+                <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
               </Styles.PopoutTitleWrapper>
               <IconButton onClick={hideModal} name="Close" backgroundGlowOnHover tooltipDisabled />
             </Styles.PopoutHeaderContent>

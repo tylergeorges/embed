@@ -109,7 +109,7 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
   ]);
 
   return (
-    <Styles.CategoryContainer className="category-container" draggable={false}>
+    <Styles.CategoryContainer draggable={false}>
       <CategoryName
         category={category}
         isCategoryOpen={isCategoryOpen}

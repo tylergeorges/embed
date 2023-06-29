@@ -1,6 +1,9 @@
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 
-export const IconRoot = styled('svg', 'button-icons', {
+export const IconRoot = styled.withConfig({
+  displayName: 'button-icons',
+  componentId: commonComponentId
+})('svg', {
   justifySelf: 'flex-end',
 
   variants: {
@@ -49,7 +52,10 @@ export const IconRoot = styled('svg', 'button-icons', {
   }
 });
 
-export const IconButtonRoot = styled('div', 'icon-button_wrapper_root', {
+export const IconButtonRoot = styled.withConfig({
+  displayName: 'icon-button_wrapper_root',
+  componentId: commonComponentId
+})('div', {
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
@@ -66,7 +72,10 @@ export const IconButtonRoot = styled('div', 'icon-button_wrapper_root', {
   whiteSpace: 'nowrap'
 });
 
-export const EmojisIconRoot = styled('div', 'icon-emojis_icon_root', {
+export const EmojisIconRoot = styled.withConfig({
+  displayName: 'icon-emojis_icon_root',
+  componentId: commonComponentId
+})('div', {
   backgroundImage:
     'url(https://emerald.widgetbot.io/static/media/15e026451fd814e2d1a13e49c8076978.15e02645.png)',
   backgroundPositionX: 'var(--emoji-x)',
@@ -88,7 +97,10 @@ export const EmojisIconRoot = styled('div', 'icon-emojis_icon_root', {
   }
 });
 
-export const SpineIconRoot = styled('svg', 'thread-spine', {
+export const SpineIconRoot = styled.withConfig({
+  displayName: 'thread-spine',
+  componentId: commonComponentId
+})('svg', {
   position: 'absolute',
   justifySelf: 'flex-start',
   left: 30,
@@ -99,7 +111,10 @@ export const SpineIconRoot = styled('svg', 'thread-spine', {
   marginTop: 16
 });
 
-export const IconButtonChildrenWrapper = styled('button', 'icon-button_children_wrapper', {
+export const IconButtonChildrenWrapper = styled.withConfig({
+  displayName: 'icon-button_children_wrapper',
+  componentId: commonComponentId
+})('button', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',

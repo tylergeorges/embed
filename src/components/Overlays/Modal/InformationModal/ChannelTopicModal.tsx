@@ -18,9 +18,7 @@ export const ChannelTopicModal = () => {
       hideModal={hideTopicModal}
       title={`#${currentChannel?.name}`}
     >
-      <Styles.ChannelTopicModalContent className="modal-channel_topic_content">
-        {currentChannel?.topic}
-      </Styles.ChannelTopicModalContent>
+      <Styles.ChannelTopicModalContent>{currentChannel?.topic}</Styles.ChannelTopicModalContent>
     </InformationModal>
   );
 };

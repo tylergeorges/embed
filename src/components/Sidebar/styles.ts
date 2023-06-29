@@ -1,6 +1,9 @@
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 
-export const SidebarWrapper = styled('aside', 'sidebar_wrapper', {
+export const SidebarWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'sidebar_wrapper'
+})('aside', {
   position: 'absolute',
   display: 'flex',
   flexDirection: 'column',
@@ -60,18 +63,27 @@ export const SidebarWrapper = styled('aside', 'sidebar_wrapper', {
   }
 });
 
-export const ChannelsSidebarWrapper = styled(SidebarWrapper, 'channels-sidebar_wrapper', {
+export const ChannelsSidebarWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channels-sidebar_wrapper'
+})(SidebarWrapper, {
   boxSizing: 'border-box',
   zIndex: 11
 });
 
-export const MembersSidebarWrapper = styled(SidebarWrapper, 'members-sidebar_wrapper', {
+export const MembersSidebarWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'members-sidebar_wrapper'
+})(SidebarWrapper, {
   right: 0,
   boxSizing: 'border-box',
   zIndex: 1
 });
 
-export const ThreadsPanelContainer = styled('div', 'thread-panel_wrapper', {
+export const ThreadsPanelContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'thread-panel_container'
+})('div', {
   position: 'absolute',
   display: 'flex',
   flexDirection: 'column',
@@ -85,7 +97,7 @@ export const ThreadsPanelContainer = styled('div', 'thread-panel_wrapper', {
 
   backgroundColor: theme.colors.background,
 
-  '@mobile': {
+  '@small': {
     width: '100%'
   },
 
@@ -107,7 +119,10 @@ export const ThreadsPanelContainer = styled('div', 'thread-panel_wrapper', {
   }
 });
 
-export const ThreadPanelWrapper = styled('div', 'thread-panel_wrapper', {
+export const ThreadPanelWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'thread-panel_wrapper'
+})('div', {
   position: 'absolute',
   display: 'flex',
   flexDirection: 'row',
@@ -135,7 +150,10 @@ export const ThreadPanelWrapper = styled('div', 'thread-panel_wrapper', {
   }
 });
 
-export const ThreadsPanelSeperator = styled('div', 'panel-threads_seperator', {
+export const ThreadsPanelSeperator = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'panel-threads_seperator'
+})('div', {
   transform: `translateX(-8px)`,
 
   height: '100%',
@@ -144,7 +162,7 @@ export const ThreadsPanelSeperator = styled('div', 'panel-threads_seperator', {
   backgroundColor: theme.colors.borderDark,
   zIndex: 9,
 
-  '@mobile': {
+  '@small': {
     true: {
       opacity: 0
     }

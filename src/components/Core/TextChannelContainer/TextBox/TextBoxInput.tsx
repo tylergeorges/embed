@@ -127,7 +127,6 @@ export const TextBoxInput = () => {
     <Styles.TextBoxInputWrapper>
       <Styles.TextInput
         onKeyUp={handleKeyUp}
-        className="textbox-input"
         contentEditable
         onKeyDown={handleKeyDown}
         onInput={handleInputChange}

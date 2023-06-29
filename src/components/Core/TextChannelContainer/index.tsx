@@ -43,7 +43,6 @@ export const TextChannelContainer = () => {
 
   return (
     <Styles.TextChannelWrapper
-      className="text-channel_wrapper"
       mobile={{
         '@initial': false,
         '@small': true
@@ -53,7 +52,6 @@ export const TextChannelContainer = () => {
     >
       <TextChannelHeader />
       <Styles.TextChannelInnerWrapper
-        className="text-channel_inner_wrapper"
         mobile={{
           '@initial': false,
           '@small': true

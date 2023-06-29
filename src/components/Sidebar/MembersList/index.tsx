@@ -5,7 +5,7 @@ export const MembersList = () => {
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
   return (
     <Styles.MembersSidebarWrapper
-      className="members-sidebar_wrapper non-dragable"
+      className="non-dragable"
       membersListOpen={isMembersListOpen}
       type="members_list"
     >

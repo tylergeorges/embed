@@ -14,7 +14,7 @@ export const Thread = forwardRef<HTMLAnchorElement, ThreadProps>(
     <Styles.ThreadNameInner
       active_state={isActive}
       href={`${currentChannelUrl}?thread=${thread.id}`}
-      className="thread-name channel-name"
+      className=" channel-name"
       ref={ref}
       draggable={false}
       onContextMenu={handleContextMenuClick}

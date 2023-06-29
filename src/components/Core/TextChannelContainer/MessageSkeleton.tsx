@@ -2,7 +2,7 @@
 import * as Styles from '@components/Core/TextChannelContainer/styles';
 
 const FirstSkeletonLine = () => (
-  <Styles.MessageSkeletonContentLine className="message-skeleton_content_line">
+  <Styles.MessageSkeletonContentLine>
     <Styles.MessageSkeletonContentLongWord />
     <Styles.MessageSkeletonContentMedWord />
     <Styles.MessageSkeletonContentLongWord />
@@ -18,7 +18,7 @@ const FirstSkeletonLine = () => (
 );
 
 const SecondSkeletonLine = () => (
-  <Styles.MessageSkeletonContentLine className="message-skeleton_content_line">
+  <Styles.MessageSkeletonContentLine>
     <Styles.MessageSkeletonContentMedWord />
     <Styles.MessageSkeletonContentLongWord />
     <Styles.MessageSkeletonContentMedWord />
@@ -28,7 +28,7 @@ const SecondSkeletonLine = () => (
 );
 
 const LastSkeletonLine = () => (
-  <Styles.MessageSkeletonContentLine className="message-skeleton_content_line">
+  <Styles.MessageSkeletonContentLine>
     <Styles.MessageSkeletonContentLongWord />
     <Styles.MessageSkeletonContentLongWord />
     <Styles.MessageSkeletonContentMedWord />
@@ -41,10 +41,10 @@ const LastSkeletonLine = () => (
 );
 
 export const MessageSkeleton = () => (
-  <Styles.MessageSkeletonWrapper className="message-skeleton_wrapper">
-    <Styles.MessageSkeletonAvatar className="message-skeleton_avatar" />
-    <Styles.MessageSkeletonContent className="message-skeleton_content">
-      <Styles.MessageSkeletonUsername className="message-skeleton_username" />
+  <Styles.MessageSkeletonWrapper>
+    <Styles.MessageSkeletonAvatar />
+    <Styles.MessageSkeletonContent>
+      <Styles.MessageSkeletonUsername />
       <FirstSkeletonLine />
       <SecondSkeletonLine />
       <LastSkeletonLine />

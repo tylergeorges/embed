@@ -1,5 +1,7 @@
 import { ScaleValue, createStitches } from '@stitches/react';
 
+export const commonComponentId = 'embed';
+
 const stitches = createStitches({
   theme: {
     colors: {

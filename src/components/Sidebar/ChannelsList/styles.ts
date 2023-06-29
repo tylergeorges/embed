@@ -1,8 +1,11 @@
 // ! Imported from the library instead of custom config because of weird bugs
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 import Link from 'next/link';
 
-export const CategoryNameContainer = styled('div', 'category-name_container', {
+export const CategoryNameContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'category-name_container'
+})('div', {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
@@ -20,7 +23,10 @@ export const CategoryNameContainer = styled('div', 'category-name_container', {
   }
 });
 
-export const CategoryNameArrow = styled('div', 'category-name_arrow', {
+export const CategoryNameArrow = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'category-name_arrow'
+})('div', {
   position: 'relative',
   display: 'inline-block',
   boxSizing: 'border-box',
@@ -45,14 +51,20 @@ export const CategoryNameArrow = styled('div', 'category-name_arrow', {
   }
 });
 
-export const CategoryNameContent = styled('div', 'category-name', {
+export const CategoryNameContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'category-name'
+})('div', {
   textTransform: 'uppercase',
   fontSize: theme.fontSizes.sm,
   alignSelf: 'center',
   boxSizing: 'border-box'
 });
 
-export const CategoryContainer = styled('div', 'category-container', {
+export const CategoryContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'category-container'
+})('div', {
   width: '100%',
   boxSizing: 'border-box',
 
@@ -62,7 +74,10 @@ export const CategoryContainer = styled('div', 'category-container', {
   transition: 'translateY 0.5s ease'
 });
 
-export const ChannelNameWrapper = styled('div', 'channel-name_wrapper', {
+export const ChannelNameWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channel-name_wrapper'
+})('div', {
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
@@ -127,7 +142,10 @@ export const ChannelNameWrapper = styled('div', 'channel-name_wrapper', {
   ]
 });
 
-export const ChannelNameInner = styled(Link, 'channel-name', {
+export const ChannelNameInner = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channel-name'
+})(Link, {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
@@ -158,11 +176,17 @@ export const ChannelNameInner = styled(Link, 'channel-name', {
   }
 });
 
-export const ThreadNameInner = styled(ChannelNameInner, 'thread-name', {
+export const ThreadNameInner = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'thread-name'
+})(ChannelNameInner, {
   width: '100%'
 });
 
-export const ChannelsWrapper = styled('div', 'channels-wrapper', {
+export const ChannelsWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channels-wrapper'
+})('div', {
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
@@ -170,7 +194,10 @@ export const ChannelsWrapper = styled('div', 'channels-wrapper', {
   overflow: 'hidden'
 });
 
-export const ThreadsWrapper = styled(ChannelsWrapper, 'thread-wrapper', {
+export const ThreadsWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'thread-wrapper'
+})(ChannelsWrapper, {
   display: 'flex',
   flexDirection: 'row',
   width: '100%',

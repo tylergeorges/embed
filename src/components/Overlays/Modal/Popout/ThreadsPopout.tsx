@@ -41,24 +41,19 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
         popoutFor={childrenRef.current}
       >
         {channelHasThreads ? (
-          <Styles.ThreadsPopoutContent className="popout-threads_content">
-            <Styles.ThreadsPopoutListHeader className="popout-threads_list_header">
-              OLDER THREADS
-            </Styles.ThreadsPopoutListHeader>
+          <Styles.ThreadsPopoutContent>
+            <Styles.ThreadsPopoutListHeader>OLDER THREADS</Styles.ThreadsPopoutListHeader>
 
-            <Styles.ThreadsPopoutList className="popout-threads_list_container">
+            <Styles.ThreadsPopoutList>
               {' '}
               {currentChannelThreads.map(thread => (
                 <Styles.ThreadsPopoutListItem
-                  className="popout-threads_list_item"
                   key={thread.id}
                   onClick={() =>
                     router.push(`/channels/${guildId}/${channelId}?thread=${thread.id}`)
                   }
                 >
-                  <Styles.ThreadName className="popout-threads_list_threadname">
-                    {thread.name}
-                  </Styles.ThreadName>
+                  <Styles.ThreadName>{thread.name}</Styles.ThreadName>
 
                   <ThreadsPanelButton thread={thread} />
                 </Styles.ThreadsPopoutListItem>
@@ -66,7 +61,7 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
             </Styles.ThreadsPopoutList>
           </Styles.ThreadsPopoutContent>
         ) : (
-          <Styles.NoThreadsContent className="popout-no_threads_content">
+          <Styles.NoThreadsContent>
             <NoThreadsIcon />
             <Styles.NoThreadsHeader>There are no threads.</Styles.NoThreadsHeader>
           </Styles.NoThreadsContent>

@@ -30,7 +30,6 @@ export const ChannelsList = () => {
       <Styles.ChannelsSidebarWrapper
         type="channels_list"
         channelsListOpen={isChannelsListOpen}
-        className="channels-sidebar_wrapper"
         onClick={hideContextMenu}
       >
         <div className="sidebar-header_container">

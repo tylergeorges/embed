@@ -1,8 +1,11 @@
 import { keyframes } from '@stitches/react';
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 import Image from 'next/image';
 
-export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
+export const TextChannelWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_wrapper'
+})('div', {
   display: 'flex',
   flexDirection: 'column',
   position: 'relative',
@@ -100,7 +103,10 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
   ]
 });
 
-export const TextChannelInnerWrapper = styled('div', 'text-channel_inner_wrapper', {
+export const TextChannelInnerWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_inner_wrapper'
+})('div', {
   position: 'relative',
   display: 'flex',
   flexDirection: 'row',
@@ -121,7 +127,10 @@ export const TextChannelInnerWrapper = styled('div', 'text-channel_inner_wrapper
   }
 });
 
-export const MessageWrapper = styled('div', 'message-wrapper', {
+export const MessageWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-wrapper'
+})('div', {
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
@@ -224,7 +233,10 @@ export const MessageWrapper = styled('div', 'message-wrapper', {
   ]
 });
 
-export const TextBoxWrapper = styled('form', 'textbox-wrapper', {
+export const TextBoxWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-wrapper'
+})('form', {
   position: 'relative',
   display: 'flex',
   alignItems: 'center',
@@ -239,7 +251,10 @@ export const TextBoxWrapper = styled('form', 'textbox-wrapper', {
   marginBottom: theme.space.lg
 });
 
-export const TextBoxInner = styled('div', 'textbox-inner', {
+export const TextBoxInner = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-inner'
+})('div', {
   display: 'flex',
   position: 'relative',
 
@@ -250,7 +265,10 @@ export const TextBoxInner = styled('div', 'textbox-inner', {
   overflowY: 'auto'
 });
 
-export const TextBoxButtonWrapper = styled('div', 'textbox-button_wrapper', {
+export const TextBoxButtonWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-button_wrapper'
+})('div', {
   position: 'sticky',
   display: 'flex',
   alignItems: 'flex-start',
@@ -260,7 +278,10 @@ export const TextBoxButtonWrapper = styled('div', 'textbox-button_wrapper', {
   top: 0
 });
 
-export const TextBoxInputWrapper = styled('div', 'textbox-input_wrapper', {
+export const TextBoxInputWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-input_wrapper'
+})('div', {
   display: 'flex',
   position: 'relative',
 
@@ -270,7 +291,10 @@ export const TextBoxInputWrapper = styled('div', 'textbox-input_wrapper', {
   marginBottom: theme.space.md
 });
 
-export const TextInput = styled('div', 'textbox-input', {
+export const TextInput = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-input'
+})('div', {
   cursor: 'text',
   cursorColor: 'white',
 
@@ -295,13 +319,19 @@ export const TextInput = styled('div', 'textbox-input', {
   fontSize: theme.fontSizes.lg
 });
 
-export const TextBoxPlaceholder = styled('span', 'textbox-placeholder', {
+export const TextBoxPlaceholder = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-placeholder'
+})('span', {
   position: 'absolute',
   color: theme.colors.textMuted,
   pointerEvents: 'none'
 });
 
-export const MessageContentOuterWrapper = styled('div', 'message-content_outer_wrapper', {
+export const MessageContentOuterWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-content_outer_wrapper'
+})('div', {
   display: 'flex',
   flexDirection: 'row',
 
@@ -315,12 +345,18 @@ export const MessageContentOuterWrapper = styled('div', 'message-content_outer_w
   }
 });
 
-export const MessageContent = styled('div', 'message-content', {
+export const MessageContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-content'
+})('div', {
   position: 'relative',
   textAlign: 'left'
 });
 
-export const MessageAvatar = styled(Image, 'message-avatar', {
+export const MessageAvatar = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-avatar'
+})(Image, {
   position: 'absolute',
   left: theme.space.lg,
 
@@ -328,7 +364,10 @@ export const MessageAvatar = styled(Image, 'message-avatar', {
   pointerEvents: 'none'
 });
 
-export const MessageUsername = styled('h3', 'message-username', {
+export const MessageUsername = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-username'
+})('h3', {
   fontSize: theme.fontSizes.lg,
   margin: 0,
   pointerEvents: 'none',
@@ -347,14 +386,20 @@ const SkeletonLoader = keyframes({
   }
 });
 
-export const SkeletonLoaderRoot = styled('div', 'skeleton-loader_root', {
+export const SkeletonLoaderRoot = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'skeleton-loader_root'
+})('div', {
   animation: `${SkeletonLoader} 3s infinite ease-in-out`,
   background: theme.colors.primaryOpacity20,
   pointerEvents: 'none',
   userSelect: 'none'
 });
 
-export const MessageSkeletonWrapper = styled('div', 'message-skeleton_wrapper', {
+export const MessageSkeletonWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-skeleton_wrapper'
+})('div', {
   display: 'flex',
   flexDirection: 'row',
 
@@ -368,7 +413,10 @@ export const MessageSkeletonWrapper = styled('div', 'message-skeleton_wrapper', 
   paddingBottom: theme.space.xs
 });
 
-export const MessageSkeletonContent = styled('div', 'message-skeleton_content', {
+export const MessageSkeletonContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-skeleton_content'
+})('div', {
   position: 'relative',
   display: 'flex',
   flexDirection: 'column',
@@ -380,7 +428,10 @@ export const MessageSkeletonContent = styled('div', 'message-skeleton_content', 
   userSelect: 'none'
 });
 
-export const MessageSkeletonContentLine = styled('div', 'message-skeleton_content_line', {
+export const MessageSkeletonContentLine = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-skeleton_content_line'
+})('div', {
   position: 'relative',
   textAlign: 'left',
   display: 'flex',
@@ -395,7 +446,10 @@ export const MessageSkeletonContentLine = styled('div', 'message-skeleton_conten
   borderRadius: theme.radii.sm
 });
 
-export const MessageSkeletonContentWord = styled('div', 'message-skeleton_content_word', {
+export const MessageSkeletonContentWord = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-skeleton_content_word'
+})('div', {
   position: 'relative',
 
   height: theme.sizes.iconSizeMed,
@@ -411,33 +465,33 @@ export const MessageSkeletonContentWord = styled('div', 'message-skeleton_conten
   pointerEvents: 'none'
 });
 
-export const MessageSkeletonContentLongWord = styled(
-  MessageSkeletonContentWord,
-  'message-skeleton_content_word',
-  {
-    position: 'relative',
+export const MessageSkeletonContentLongWord = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-skeleton_content_word'
+})(MessageSkeletonContentWord, {
+  position: 'relative',
 
-    width: 100
-  }
-);
+  width: 100
+});
 
-export const MessageSkeletonContentShortWord = styled(
-  MessageSkeletonContentWord,
-  'message-skeleton_content_word',
-  {
-    width: 24
-  }
-);
+export const MessageSkeletonContentShortWord = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-skeleton_content_word'
+})(MessageSkeletonContentWord, {
+  width: 24
+});
 
-export const MessageSkeletonContentMedWord = styled(
-  MessageSkeletonContentWord,
-  'message-skeleton_content_word',
-  {
-    width: 50
-  }
-);
+export const MessageSkeletonContentMedWord = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-skeleton_content_word'
+})(MessageSkeletonContentWord, {
+  width: 50
+});
 
-export const MessageSkeletonUsername = styled(SkeletonLoaderRoot, 'message-skeleton_username', {
+export const MessageSkeletonUsername = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-skeleton_username'
+})(SkeletonLoaderRoot, {
   fontSize: theme.fontSizes.lg,
 
   width: 150,
@@ -454,7 +508,10 @@ export const MessageSkeletonUsername = styled(SkeletonLoaderRoot, 'message-skele
   animationDelay: '1s'
 });
 
-export const MessageSkeletonAvatar = styled(SkeletonLoaderRoot, 'message-skeleton_avatar', {
+export const MessageSkeletonAvatar = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-skeleton_avatar'
+})(SkeletonLoaderRoot, {
   position: 'absolute',
   left: theme.space.lg,
 

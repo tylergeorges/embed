@@ -19,7 +19,7 @@ export const TextBox = () => {
   };
 
   return (
-    <Styles.TextBoxWrapper className="textbox-wrapper">
+    <Styles.TextBoxWrapper>
       <Styles.TextBoxInner>
         <Styles.TextBoxButtonWrapper>
           <input hidden type="file" onChange={addAttachment} ref={imageAttachmentRef} />

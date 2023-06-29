@@ -58,7 +58,7 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
         key={channel.id}
         draggable={false}
         onClick={handleChannelClick}
-        className="channel-name_wrapper non-dragable"
+        className="non-dragable"
         isActive={isActive}
         isCategoryOpen={isCategoryOpen}
         isThread={isThread}
@@ -78,6 +78,8 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
             href={`${currentGuildUrl}/${channel.id}`}
             ref={isActive ? ref : null}
             draggable={false}
+            // ! USES CLASS FROM GLOBAL CSS SO THE CHANNEL HIGHLIGHTER AND CHANNEL NAME
+            // ! GET FORMATTED THE SAME
             className="channel-name"
             onContextMenu={handleContextMenuClick}
           >

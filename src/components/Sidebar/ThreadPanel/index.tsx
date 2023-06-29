@@ -15,12 +15,9 @@ export const ThreadPanel = () => {
       }}
       isOpen={isThreadsPanelOpen}
     >
-      <Styles.ThreadsPanelSeperator
-        className="panel-threads_seperator"
-        isOpen={isThreadsPanelOpen}
-      />
+      <Styles.ThreadsPanelSeperator isOpen={isThreadsPanelOpen} />
 
-      <Styles.ThreadsPanelContainer className="thread-panel_wrapper" isOpen={isThreadsPanelOpen}>
+      <Styles.ThreadsPanelContainer>
         <ThreadPanelHeader />
 
         <MessageContainer />

@@ -6,7 +6,7 @@ import * as Styles from '@components/Header/styles';
  * @param channel The name of the current text channel.
  */
 export const TextChannelHeader = () => (
-  <Styles.ChannelHeaderContainer className="text-channel_header_container">
+  <Styles.ChannelHeaderContainer>
     <Header name="placeholder-name" shadowEnabled isChannelHeader />
   </Styles.ChannelHeaderContainer>
 );
