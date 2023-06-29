@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { Category } from '@graphql/graphql';
-import { CategoryNameContent, CategoryNameContainer, CategoryNameArrow } from '../elements';
+import * as Styles from '../styles';
 
 interface CategoryNameProps {
   toggleIsOpen: () => void;
@@ -10,16 +10,16 @@ interface CategoryNameProps {
 
 export const CategoryName = forwardRef<HTMLDivElement, CategoryNameProps>(
   ({ toggleIsOpen, category, isCategoryOpen }, ref) => (
-    <CategoryNameContainer ref={ref} className="category-name_container non-dragable">
-      <CategoryNameArrow opened={isCategoryOpen} className="category-name_arrow" />
-      <CategoryNameContent
+    <Styles.CategoryNameContainer ref={ref} className="category-name_container non-dragable">
+      <Styles.CategoryNameArrow opened={isCategoryOpen} className="category-name_arrow" />
+      <Styles.CategoryNameContent
         onClick={toggleIsOpen}
         draggable={false}
         className="category-name non-dragable"
       >
         {category.name}
-      </CategoryNameContent>
-    </CategoryNameContainer>
+      </Styles.CategoryNameContent>
+    </Styles.CategoryNameContainer>
   )
 );
 

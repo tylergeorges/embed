@@ -2,45 +2,55 @@ import { theme, styled } from '@stitches';
 // import { styled } from '@stitches/react';
 
 export const Ham = styled('button', 'hamburger', {
+  position: 'relative',
+
+  width: theme.sizes.iconSizeSmall,
+  height: theme.sizes.iconSizeMed,
+  flexShrink: 0,
+
+  marginX: theme.space.sm,
+
   border: 'none',
   background: 'none',
-  flexShrink: 0,
   color: theme.colors.accent,
-  marginLeft: '$sm',
-  marginRight: '$xs',
-  position: 'relative',
-  width: '$iconSizeSmall',
-  height: '$iconSizeMed',
+
   cursor: 'pointer',
   transition: '0.3s',
   outline: 'none',
 
   '&::before': {
     position: 'absolute',
-    content: '',
     display: 'block',
+    content: '',
     top: -8,
     left: -10,
+
     width: 40,
     height: 40,
+
+    borderRadius: '50%',
+
     opacity: 0,
     transition: 'opacity 0.1s ease',
-    backgroundColor: theme.colors.primaryOpacity10,
-    borderRadius: '50%'
+    backgroundColor: theme.colors.primaryOpacity10
   },
+
   '&:hover': {
     '&::before': {
       opacity: 1
     }
   },
+
   variants: {
     open: {
       true: {
         transform: 'rotate(-180deg)',
+
         '&::before': {
           top: -7,
           left: -9
         },
+
         div: {
           '&::before': {
             width: 15,
@@ -48,6 +58,7 @@ export const Ham = styled('button', 'hamburger', {
             top: -4.8,
             right: -3
           },
+
           '&::after': {
             top: 4.8,
             width: 15,
@@ -57,9 +68,11 @@ export const Ham = styled('button', 'hamburger', {
         }
       }
     },
+
     thread: {
       true: {
         color: 'transparent',
+
         div: {
           '&::before, &::after': {
             color: theme.colors.accent,

@@ -1,4 +1,4 @@
-import { EmojisIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
+import { EmojisIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/styles';
 import { useState } from 'react';
 
 export const EmojisIcon = () => {
@@ -25,5 +25,10 @@ export const EmojisIcon = () => {
 
     setCurrentEmojiPos({ x: `${newEmojiX}px`, y: `${newEmojiY}px` });
   };
-  return <EmojisIconRoot onMouseOver={getRandEmoji} css={{ '--emoji-x': currentEmojiPos.x, '--emoji-y': currentEmojiPos.y }} />;
+  return (
+    <EmojisIconRoot
+      onMouseOver={getRandEmoji}
+      css={{ '--emoji-x': currentEmojiPos.x, '--emoji-y': currentEmojiPos.y }}
+    />
+  );
 };

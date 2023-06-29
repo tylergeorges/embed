@@ -10,7 +10,6 @@ import {
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
-import { staticMessages } from '@components/Core/VirtualLists/staticData';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const EmbedFragment = gql`
@@ -171,7 +170,6 @@ const updateMessageSubscription = graphql(`
 interface UseMessagesProps {
   guild: string;
   channel: string;
-  useStaticData?: boolean;
   thread?: string;
 }
 
@@ -184,7 +182,6 @@ type MessageState = {
 export const useMessages = ({
   guild,
   channel,
-  useStaticData = false,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   thread
 }: UseMessagesProps) => {
@@ -201,38 +198,29 @@ export const useMessages = ({
   const ready = data?.channelV2.id === channel || false;
 
   useEffect(() => {
-    if (!useStaticData) {
-      // @ts-ignore TODO: Fix this
-      const isReadyWithMessages = ready && data?.channelV2.messageBunch?.messages;
+    // @ts-ignore TODO: Fix this
+    const isReadyWithMessages = ready && data?.channelV2.messageBunch?.messages;
 
-      // @ts-ignore
-      const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
-      if (msgs.length) {
-        setNewMessageGroupLength(groupMessages(msgs).length);
+    // @ts-ignore
+    const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
+    if (msgs.length) {
+      setNewMessageGroupLength(groupMessages(msgs).length);
 
-        if (ready) {
-          setMessages(prev => [...msgs, ...prev]);
-        }
+      if (ready) {
+        setMessages(prev => [...msgs, ...prev]);
       }
-    } else {
-      const groupedStaticMsgs = groupMessages(staticMessages);
-      setNewMessageGroupLength(groupedStaticMsgs.length);
-      // @ts-ignore
-      setMessages(prev => [...groupedStaticMsgs, ...prev]);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data?.channelV2, useStaticData, ready]);
+  }, [data?.channelV2, ready]);
 
   const fetchMore = useCallback(
     (before: string) => {
-      if (!useStaticData) {
-        if (!ready) return;
+      if (!ready) return;
 
-        setVariables({ channel, guild, before });
-        fetchHook({ requestPolicy: 'network-only' });
-      }
+      setVariables({ channel, guild, before });
+      fetchHook({ requestPolicy: 'network-only' });
     },
-    [channel, fetchHook, guild, ready, useStaticData]
+    [channel, fetchHook, guild, ready]
   );
 
   const loadMoreMessages = useCallback(() => {
@@ -253,9 +241,7 @@ export const useMessages = ({
         firstItemIndex
       };
 
-    const grouped = !useStaticData
-      ? groupMessages(messages.map(convertMessageToDiscord))
-      : messages;
+    const grouped = groupMessages(messages.map(convertMessageToDiscord));
     firstItemIndex -= grouped.length - 1;
     return {
       messages,

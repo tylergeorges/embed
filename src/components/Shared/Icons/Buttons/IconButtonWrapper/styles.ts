@@ -6,33 +6,43 @@ export const IconRoot = styled('svg', 'button-icons', {
   variants: {
     size: {
       small: {
-        width: '$iconSizeSmall',
-        height: '$iconSizeSmall'
+        width: theme.sizes.iconSizeSmall,
+        height: theme.sizes.iconSizeSmall
       },
+
       regular: {
-        width: '$iconSizeMed',
-        height: '$iconSizeMed'
+        width: theme.sizes.iconSizeMed,
+        height: theme.sizes.iconSizeMed
       },
+
       large: {
-        width: '$iconSizeXl',
-        height: '$iconSizeXl'
+        width: theme.sizes.iconSizeXl,
+        height: theme.sizes.iconSizeXl
       }
     },
+
+    type: {
+      headerIcon: {
+        marginX: theme.space.sm
+      }
+    },
+
     color: {
       light: {
         path: {
-          fill: '$iconLight'
+          fill: theme.colors.iconLight
         },
         use: {
-          color: '$iconLight'
+          color: theme.colors.iconLight
         }
       },
+
       dark: {
         path: {
-          fill: '$iconDark'
+          fill: theme.colors.iconDark
         },
         use: {
-          color: '$iconDark'
+          color: theme.colors.iconDark
         }
       }
     }
@@ -40,53 +50,52 @@ export const IconRoot = styled('svg', 'button-icons', {
 });
 
 export const IconButtonRoot = styled('div', 'icon-button_wrapper_root', {
+  position: 'relative',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+
+  width: theme.sizes.iconSizeMed,
+  height: theme.sizes.iconSizeMed,
+
+  marginX: theme.space.sm,
+
   background: 'transparent',
   outline: 'none',
   border: 'none',
-  whiteSpace: 'nowrap',
-
-  width: '$iconSizeMed',
-  height: '$iconSizeMed',
-  marginX: '$sm',
-  position: 'relative'
+  whiteSpace: 'nowrap'
 });
+
 export const EmojisIconRoot = styled('div', 'icon-emojis_icon_root', {
   backgroundImage:
     'url(https://emerald.widgetbot.io/static/media/15e026451fd814e2d1a13e49c8076978.15e02645.png)',
   backgroundPositionX: 'var(--emoji-x)',
   backgroundPositionY: 'var(--emoji-y)',
   backgroundSize: '242px 110px',
+
   height: 22,
   minWidth: 22,
+
   filter: 'grayscale(100%)',
-  transition: 'transform 200ms ease, filter 200ms ease',
+  transition: 'scale  200ms ease, filter 200ms ease',
   cursor: 'pointer',
+
   '&:hover': {
-    transform: 'scale(1.14)',
+    scale: '1.14',
     filter: 'grayscale(0%)',
     backgroundPositionX: 'var(--emoji-x)',
     backgroundPositionY: 'var(--emoji-y)'
   }
 });
 
-export const ThreadsIconRoot = styled(IconRoot, 'icon-thread-hash', {});
-export const ThreadsPanelIconRoot = styled(IconRoot, 'icon-threads-panel', {});
-
-export const MembersIconRoot = styled(IconRoot, 'icon-text-channel_header_members_button', {});
-export const PinIconRoot = styled(IconRoot, 'icon-text-channel_header_pin_button', {});
-
-export const CloseIconRoot = styled(IconRoot, 'icon-close', {});
-export const AddAttachmentsIconRoot = styled(IconRoot, 'icon-add_attachments', {});
-
 export const SpineIconRoot = styled('svg', 'thread-spine', {
-  width: 12,
-  height: 11,
   position: 'absolute',
   justifySelf: 'flex-start',
   left: 30,
+
+  width: 12,
+  height: 11,
+
   marginTop: 16
 });
 
@@ -94,36 +103,44 @@ export const IconButtonChildrenWrapper = styled('button', 'icon-button_children_
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  borderRadius: 999,
+
+  borderRadius: theme.radii.round,
+
+  padding: theme.space.xxs,
+
   cursor: 'pointer',
   background: 'transparent',
   outline: 'none',
   border: 'none',
   transition: 'background-color ease 150ms',
+
   '&:hover': {
     path: {
       fill: theme.colors.primaryOpacity80
     },
+
     use: {
       color: theme.colors.primaryOpacity80
     }
   },
-  padding: 3,
+
   variants: {
     backgroundGlowOnHover: {
       true: {
         '&:hover': {
-          backgroundColor: 'rgba(255,255,255,0.2)'
+          backgroundColor: theme.colors.primaryOpacity20
         }
       }
     },
+
     isActive: {
       true: {
         path: {
-          fill: '$iconActive'
+          fill: theme.colors.iconActive
         },
+
         use: {
-          color: '$iconActive'
+          color: theme.colors.iconActive
         }
       }
     }

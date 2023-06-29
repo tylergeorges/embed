@@ -1,10 +1,4 @@
-import {
-  PopoutTitle,
-  PopoutTitleWrapper,
-  PopoutHeader,
-  PopoutHeaderContent,
-  PopoutContainer
-} from '@components/Overlays/Modal/elements';
+import * as Styles from '@components/Overlays/Modal/styles';
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { IconProps, Icons } from '@components/Shared/Icons/Icons';
 import { useMediaQuery } from '@lib/hooks';
@@ -33,7 +27,7 @@ export const Popout = ({
   if (popoutFor && isOpen) {
     return (
       <>
-        <PopoutContainer
+        <Styles.PopoutContainer
           isMobile={windowIsMobile}
           isOpen={isOpen}
           aria-label={title}
@@ -43,19 +37,19 @@ export const Popout = ({
             right: `calc(${popoutFor?.clientLeft}px + 80px)`
           }}
         >
-          <PopoutHeader className="popout-header">
-            <PopoutHeaderContent className="popout-header_content non-dragable">
-              <PopoutTitleWrapper className="popout-title_container">
+          <Styles.PopoutHeader className="popout-header">
+            <Styles.PopoutHeaderContent className="popout-header_content non-dragable">
+              <Styles.PopoutTitleWrapper className="popout-title_container">
                 {TitleIcon && <Icons name={TitleIcon} />}
 
-                <PopoutTitle className="popout-title">{title}</PopoutTitle>
-              </PopoutTitleWrapper>
+                <Styles.PopoutTitle className="popout-title">{title}</Styles.PopoutTitle>
+              </Styles.PopoutTitleWrapper>
               <IconButton onClick={hideModal} name="Close" backgroundGlowOnHover tooltipDisabled />
-            </PopoutHeaderContent>
-          </PopoutHeader>
+            </Styles.PopoutHeaderContent>
+          </Styles.PopoutHeader>
 
           {children}
-        </PopoutContainer>
+        </Styles.PopoutContainer>
       </>
     );
   }

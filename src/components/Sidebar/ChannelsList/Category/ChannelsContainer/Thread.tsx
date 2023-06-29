@@ -1,4 +1,4 @@
-import { ThreadNameInner } from '@components/Sidebar/ChannelsList/elements';
+import * as Styles from '@components/Sidebar/ChannelsList/styles';
 
 import { IThread } from '@state/stores/guild';
 import { forwardRef } from 'react';
@@ -11,7 +11,7 @@ interface ThreadProps {
 }
 export const Thread = forwardRef<HTMLAnchorElement, ThreadProps>(
   ({ thread, handleContextMenuClick, isActive, currentChannelUrl }, ref) => (
-    <ThreadNameInner
+    <Styles.ThreadNameInner
       active_state={isActive}
       href={`${currentChannelUrl}?thread=${thread.id}`}
       className="thread-name channel-name"
@@ -20,7 +20,7 @@ export const Thread = forwardRef<HTMLAnchorElement, ThreadProps>(
       onContextMenu={handleContextMenuClick}
     >
       {thread.name}
-    </ThreadNameInner>
+    </Styles.ThreadNameInner>
   )
 );
 

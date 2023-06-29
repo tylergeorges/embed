@@ -2,8 +2,8 @@ import { Category as ICategory } from '@graphql/graphql';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStoreActions, useStoreState } from '@state';
 import { ChannelsContainer } from '@components/Sidebar/ChannelsList/Category/ChannelsContainer/ChannelsContainer';
+import * as Styles from '../styles';
 import { CategoryName } from './CategoryName';
-import { CategoryContainer } from '../elements';
 
 interface CategoryProps {
   /** Category we are rendering channels for. */
@@ -36,14 +36,13 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
   useEffect(() => {
     const currentChannelIsThread = !!currentThreadID;
 
-    setIsCurrentChannelThread(currentChannelIsThread);
     setIsThreadsPanelOpen(currentChannelIsThread);
 
     // ! Sets the initial ActiveBackground component's position
     if (currentChannelRef.current) {
-      setCurrentChannelYPos(currentChannelRef.current.offsetTop - 4);
+      setCurrentChannelYPos(currentChannelRef.current.offsetTop);
 
-      setInitChannelYPos(currentChannelRef.current.offsetTop - 4);
+      setInitChannelYPos(currentChannelRef.current.offsetTop);
     }
 
     if (channelsConRef.current) {
@@ -110,7 +109,7 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
   ]);
 
   return (
-    <CategoryContainer className="category-container" draggable={false}>
+    <Styles.CategoryContainer className="category-container" draggable={false}>
       <CategoryName
         category={category}
         isCategoryOpen={isCategoryOpen}
@@ -126,6 +125,6 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
         currentThreadID={currentThreadID ?? ''}
         currentChannelRef={currentChannelRef}
       />
-    </CategoryContainer>
+    </Styles.CategoryContainer>
   );
 };

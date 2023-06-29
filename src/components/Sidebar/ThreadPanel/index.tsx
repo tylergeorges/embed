@@ -1,38 +1,30 @@
+import * as Styles from '@components/Sidebar/styles';
 import { MessageContainer } from '@components/Core/TextChannelContainer/MessageContainer';
 import { ThreadPanelHeader } from '@components/Header/ThreadPanelHeader';
 
-import {
-  ThreadsPanelContainer,
-  ThreadsPanelSeperator,
-  ThreadPanelWrapper
-} from '@components/Sidebar/elements';
 import { useStoreState } from '@state';
 
 export const ThreadPanel = () => {
   const isThreadsPanelOpen = useStoreState(state => state.ui.isThreadsPanelOpen);
-  const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
 
   return (
-    <ThreadPanelWrapper
+    <Styles.ThreadPanelWrapper
       mobile={{
         '@initial': false,
         '@small': true
       }}
-      isOpen={isThreadsPanelOpen && isCurrentChannelThread}
+      isOpen={isThreadsPanelOpen}
     >
-      <ThreadsPanelSeperator
+      <Styles.ThreadsPanelSeperator
         className="panel-threads_seperator"
-        isOpen={isThreadsPanelOpen && isCurrentChannelThread}
+        isOpen={isThreadsPanelOpen}
       />
 
-      <ThreadsPanelContainer
-        className="thread-panel_wrapper"
-        isOpen={isThreadsPanelOpen && isCurrentChannelThread}
-      >
+      <Styles.ThreadsPanelContainer className="thread-panel_wrapper" isOpen={isThreadsPanelOpen}>
         <ThreadPanelHeader />
 
         <MessageContainer />
-      </ThreadsPanelContainer>
-    </ThreadPanelWrapper>
+      </Styles.ThreadsPanelContainer>
+    </Styles.ThreadPanelWrapper>
   );
 };

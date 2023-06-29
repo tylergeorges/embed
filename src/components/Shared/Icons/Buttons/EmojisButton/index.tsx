@@ -5,6 +5,7 @@ export const EmojisButton = () => {
   const addEmoji = (e: React.SyntheticEvent) => {
     e.preventDefault();
   };
+
   return (
     <IconButtonWrapper tooltipDisabled onClick={addEmoji}>
       <EmojisIcon />

@@ -32,6 +32,7 @@ import SvgIconPause from './message-renderer-icons/button-icons/icon-pause.svg';
 import SvgIconFullscreen from './message-renderer-icons/button-icons/icon-fullscreen.svg';
 import SvgIconMembers from './message-renderer-icons/button-icons/icon-members.svg';
 import SvgAddAttachment from './message-renderer-icons/button-icons/icon-add-attachment.svg';
+import SvgThreadPanel from './message-renderer-icons/button-icons/icon-thread-panel.svg';
 
 // ! MESSAGE ICONS
 import SvgIconUnknownReply from './message-renderer-icons/message-icons/icon-unknown-reply.svg';
@@ -92,6 +93,7 @@ export const svgUrls = {
   IconLinkExternal: SvgIconLinkExternal.src,
   IconMembers: SvgIconMembers.src,
   IconAddAttachment: SvgAddAttachment.src,
+  IconThreadPanel: SvgThreadPanel.src,
 
   // ! CHANNEL ICONS
   IconTextChannel: SvgIconTextChannel.src,

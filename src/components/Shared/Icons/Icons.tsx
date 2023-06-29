@@ -1,10 +1,12 @@
-import { IconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
+import { IconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/styles';
 import { CSS } from '@stitches/react';
 import { svgUrls } from '@svg-assets';
 
 const iconData = {
   ThreadHash: svgUrls.IconThreadChannel,
   ThreadSpine: svgUrls.IconThreadSpine,
+  ThreadPanel: svgUrls.IconThreadPanel,
+
   TextChannelHash: svgUrls.IconTextChannel,
 
   Pin: svgUrls.IconPin,
@@ -41,11 +43,13 @@ export interface IconProps {
       })
     | undefined;
   customSize?: number;
+  type?: 'headerIcon';
 }
-export const Icons = ({ name, color, css, size, customSize }: IconProps) => (
+export const Icons = ({ name, color, css, size, customSize, type }: IconProps) => (
   <IconRoot
     css={css}
     size={size ?? 'regular'}
+    type={type}
     color={color ?? 'light'}
     viewBox={customSize ? `0 0 ${customSize}px ${customSize}px` : '0 0 24 24'}
   >

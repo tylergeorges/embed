@@ -1,5 +1,5 @@
 import { Modal } from '@components/Overlays/Modal';
-import { ModalHeader, ModalHeaderContent } from '@components/Overlays/Modal/elements';
+import * as Styles from '@components/Overlays/Modal/styles';
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { ReactElement } from 'react';
 
@@ -19,11 +19,18 @@ export const InformationModal = ({
   disableBackdrop
 }: InformationModalProps) => (
   <Modal isOpen={isOpen} title={title} hideModal={hideModal} disableBackdrop={disableBackdrop}>
-    <ModalHeader>
-      <ModalHeaderContent className="non-dragable">
-        {title} <IconButton name="Close" backgroundGlowOnHover onClick={hideModal} />
-      </ModalHeaderContent>
-    </ModalHeader>
+    <Styles.ModalHeader>
+      <Styles.ModalHeaderContent className="non-dragable">
+        {title}{' '}
+        <IconButton
+          name="Close"
+          tooltipDisabled
+          backgroundGlowOnHover
+          backgroundGlowSize={35}
+          onClick={hideModal}
+        />
+      </Styles.ModalHeaderContent>
+    </Styles.ModalHeader>
 
     {children}
   </Modal>

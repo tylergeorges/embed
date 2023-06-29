@@ -1,4 +1,4 @@
-import { ContextMenuWrapper, ContextMenuItem } from '@components/Overlays/ContextMenu/elements';
+import * as Styles from '@components/Overlays/ContextMenu/styles';
 import { useStoreActions, useStoreState } from '@state';
 
 export const ContextMenu = () => {
@@ -17,13 +17,13 @@ export const ContextMenu = () => {
   };
 
   return (
-    <ContextMenuWrapper
+    <Styles.ContextMenuWrapper
       css={{
         left: contextMenuData.xPos,
         top: contextMenuData.yPos
       }}
     >
-      <ContextMenuItem onClick={copyToClipboard}>Copy Link</ContextMenuItem>
-    </ContextMenuWrapper>
+      <Styles.ContextMenuItem onClick={copyToClipboard}>Copy Link</Styles.ContextMenuItem>
+    </Styles.ContextMenuWrapper>
   );
 };

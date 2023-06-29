@@ -1,8 +1,4 @@
-import {
-  ModalBackdrop,
-  ModalContainer,
-  ModalContainerWrapper
-} from '@components/Overlays/Modal/elements';
+import * as Styles from '@components/Overlays/Modal/styles';
 import { ReactElement } from 'react';
 
 interface ModalProps {
@@ -15,9 +11,11 @@ interface ModalProps {
 
 export const Modal = ({ children, isOpen, title, disableBackdrop, hideModal }: ModalProps) => (
   <>
-    {!disableBackdrop && <ModalBackdrop isOpen={isOpen} onClick={hideModal} css={{ zIndex: 12 }} />}
-    <ModalContainerWrapper isOpen={isOpen} role="dialog" aria-label={title}>
-      <ModalContainer isOpen={isOpen}>{children}</ModalContainer>
-    </ModalContainerWrapper>
+    {!disableBackdrop && (
+      <Styles.ModalBackdrop isOpen={isOpen} onClick={hideModal} css={{ zIndex: 12 }} />
+    )}
+    <Styles.ModalContainerWrapper isOpen={isOpen} role="dialog" aria-label={title}>
+      <Styles.ModalContainer isOpen={isOpen}>{children}</Styles.ModalContainer>
+    </Styles.ModalContainerWrapper>
   </>
 );

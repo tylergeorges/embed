@@ -1,4 +1,4 @@
-import { GuildHeader, GuildHeaderName, HeaderRoot } from '@components/Header/elements';
+import * as Styles from '@components/Header/styles';
 import { ChannelHeader } from '@components/Header/ChannelHeader';
 import { ReactNode } from 'react';
 
@@ -22,15 +22,15 @@ export interface HeaderProps {
 
 /** Reusable Header component. */
 export const Header = ({ name, shadowEnabled, isChannelHeader, children }: HeaderProps) => (
-  <HeaderRoot shadowEnabled={shadowEnabled} className="header-root">
+  <Styles.HeaderRoot shadowEnabled={shadowEnabled} className="header-root">
     {isChannelHeader ? (
       <ChannelHeader />
     ) : (
       children || (
-        <GuildHeader className="guild-header">
-          <GuildHeaderName className="guild-header_name">{name}</GuildHeaderName>
-        </GuildHeader>
+        <Styles.GuildHeader className="guild-header">
+          <Styles.GuildHeaderName className="guild-header_name">{name}</Styles.GuildHeaderName>
+        </Styles.GuildHeader>
       )
     )}
-  </HeaderRoot>
+  </Styles.HeaderRoot>
 );

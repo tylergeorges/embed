@@ -4,7 +4,7 @@ import { useStoreState } from '@state';
 import { useState } from 'react';
 import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useMessages } from '@hooks/useMessages';
-import { MessageWrapper } from './elements';
+import * as Styles from './styles';
 
 interface MessageContainerProps {
   /** Used if the device is mobile and the backdrop over the container is shown. */
@@ -29,7 +29,7 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
   };
 
   return (
-    <MessageWrapper
+    <Styles.MessageWrapper
       className="message-wrapper "
       draggable={false}
       membersListOpen={isMembersListOpen}
@@ -48,6 +48,6 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
       />
 
       <TextBox />
-    </MessageWrapper>
+    </Styles.MessageWrapper>
   );
 };

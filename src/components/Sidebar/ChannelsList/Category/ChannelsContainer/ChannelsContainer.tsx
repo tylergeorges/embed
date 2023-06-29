@@ -1,5 +1,5 @@
 import { Fragment, RefObject, forwardRef } from 'react';
-import { ChannelsWrapper, ThreadsWrapper } from '@components/Sidebar/ChannelsList/elements';
+import * as Styles from '@components/Sidebar/ChannelsList/styles';
 import { useStoreState } from '@state';
 import { Category as ICategory } from '@graphql/graphql';
 import { Spine } from '@components/Shared/Icons/Spine';
@@ -23,19 +23,19 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
           .filter(c => c.category?.id === category?.id)
           .map(channel => (
             <Fragment key={channel.id}>
-              <ChannelsWrapper draggable={false} className="channels-wrapper">
+              <Styles.ChannelsWrapper draggable={false} className="channels-wrapper">
                 <Channel
                   channel={channel}
                   isActive={!currentThreadID && channel.id === currentChannelID}
                   isCategoryOpen={isCategoryOpen}
                   ref={currentChannelRef}
                 />
-              </ChannelsWrapper>
+              </Styles.ChannelsWrapper>
 
               {channel.threads?.map(thread => (
                 <Fragment key={thread.id}>
                   {currentThreadID === thread.id && (
-                    <ThreadsWrapper className="thread-wrapper">
+                    <Styles.ThreadsWrapper className="thread-wrapper">
                       <Spine />
                       <Channel
                         isThread
@@ -44,7 +44,7 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
                         isCategoryOpen={isCategoryOpen}
                         ref={currentChannelRef}
                       />
-                    </ThreadsWrapper>
+                    </Styles.ThreadsWrapper>
                   )}
                 </Fragment>
               ))}

@@ -79,15 +79,14 @@ function App({ Component, pageProps }: AppProps) {
       'user-select': 'none'
     },
     '.channel-name': {
-      marginLeft: '$sm',
-      marginRight: '$sm',
-      paddingRight: '$lg',
-      paddingLeft: '$lg',
-      marginTop: '$2xs',
-      marginBottom: '$2xs',
-      borderRadius: '$2xs',
-      width: '$channelNameWidth',
-      height: '$channelNameHeight'
+      width: theme.sizes.channelNameWidth,
+      height: theme.sizes.channelNameHeight,
+
+      marginX: theme.space.sm,
+      marginY: theme.space.xxs,
+      paddingX: theme.space.lg,
+
+      borderRadius: theme.radii.xxs
     },
 
     '#__next': {

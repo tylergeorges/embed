@@ -1,8 +1,8 @@
 import { styled, theme, keyframes } from '@stitches';
 
 const zoomIn = keyframes({
-  from: { transform: 'scale(0.90)', opacity: 0 },
-  to: { transform: 'initial', opacity: 1 }
+  from: { scale: '0.90', opacity: 0 },
+  to: { scale: 'initial', opacity: 1 }
 });
 
 export const Main = styled('main', 'main', {
@@ -22,28 +22,6 @@ export const InnerMain = styled('div', 'inner-main', {
   display: 'flex'
 });
 
-export const Notifications = styled('div', 'notifications', {
-  button: {
-    cursor: 'pointer',
-    outline: 0,
-    fontWeight: '$medium'
-  },
-
-  '.notification-br': {
-    bottom: theme.url.height ? `calc(100% - ${theme.url.height}px)` : '0'
-  },
-
-  '.notification': {
-    backgroundColor: `${theme.colors.primaryOpacity10} !important`,
-    minHeight: '60px',
-    height: 'auto !important'
-  },
-
-  '.notification-dismiss': {
-    backgroundColor: `${theme.colors.primaryOpacity50} !important`
-  }
-});
-
 export const Wrapper = styled('div', 'wrapper', {
   display: 'flex',
   flexDirection: 'column',
@@ -57,7 +35,6 @@ export const Wrapper = styled('div', 'wrapper', {
     width: '100%',
     pointerEvents: 'none',
     transition: 'opacity 0.5s ease',
-    willChange: 'opacity',
     backgroundColor: 'rgb(0, 0, 0, 0.5)',
     opacity: 0
   }

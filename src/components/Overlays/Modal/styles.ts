@@ -1,24 +1,27 @@
-import { HeaderMainContentRoot, Stretch } from '@components/Header/elements';
-import { theme } from '@stitches';
-import { keyframes, styled } from '@stitches/react';
+import { HeaderMainContentRoot, Stretch } from '@components/Header/styles';
+import { theme, styled } from '@stitches';
+import { keyframes } from '@stitches/react';
 
 const zoomIn = keyframes({
-  '0%': { transform: 'scale(0.5)' },
-  '50%': { transform: 'scale(1.05)' },
-  '100%': { transform: 'scale(1)' }
+  '0%': { scale: '0.5' },
+  '50%': { scale: '1.05' },
+  '100%': { scale: '1' }
 });
 
 export const ModalBackdrop = styled('div', 'modal-backdrop', {
-  backgroundColor: 'rgba(0,0,0,0.5)',
   width: '100%',
   height: '100%',
+
   position: 'absolute',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+
   zIndex: 10,
   transition: 'opacity 300ms ease',
   opacity: 0,
+  backgroundColor: 'rgba(0,0,0,0.5)',
+
   variants: {
     isOpen: {
       false: {
@@ -44,11 +47,13 @@ export const ModalContainerWrapper = styled('div', 'modal-container_wrapper', {
   justifyContent: 'center',
   pointerEvents: 'none',
   zIndex: -1,
+
   variants: {
     isOpen: {
       false: {
-        transitionDelay: '0.5s',
         zIndex: -1,
+
+        transitionDelay: '0.5s',
         transitionProperty: 'z-index'
       },
       true: {
@@ -61,15 +66,19 @@ export const ModalContainerWrapper = styled('div', 'modal-container_wrapper', {
 export const PopoutContainerWrapper = styled(ModalContainerWrapper, 'popout-container_wrapper', {});
 
 export const ModalContainer = styled('div', 'modal-container', {
-  width: 490,
-  backgroundColor: theme.colors.background,
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
   textAlign: 'left',
+
+  width: 490,
+
   borderRadius: 4,
+
   pointerEvents: 'all',
   transition: 'transform 200ms ease',
+  backgroundColor: theme.colors.background,
+
   variants: {
     isOpen: {
       false: {
@@ -87,49 +96,59 @@ export const ModalHeader = styled('div', 'modal-header', {
 });
 
 export const ModalHeaderContent = styled(HeaderMainContentRoot, 'modal-header_content', {
-  fontSize: '100%',
-  padding: '$xl',
   display: 'flex',
   justifyContent: 'space-between',
+
+  fontSize: '100%',
+
+  padding: theme.space.xl,
+
   cursor: 'default'
 });
 
 export const PopoutHeader = styled('div', 'popout-header', {
-  backgroundColor: '$backgroundTertiary',
-  padding: 0,
-  height: 48,
   display: 'flex',
-  alignItems: 'center',
-  borderTopRightRadius: 8,
-  borderTopLeftRadius: 8,
   flexDirection: 'row',
-  width: '100%'
+  alignItems: 'center',
+
+  width: '100%',
+  height: 48,
+
+  padding: 0,
+
+  borderTopRightRadius: theme.radii.sm,
+  borderTopLeftRadius: theme.radii.sm,
+
+  backgroundColor: theme.colors.backgroundTertiary
 });
 
 export const PopoutContainer = styled('div', 'popout-container', {
-  backgroundColor: '$backgroundSecondary',
   position: 'absolute',
-  animation: 'none',
-  minHeight: 400,
-  maxHeight: '80vh',
-  maxWidth: 600,
-  height: '20%',
-  width: '35vw',
-  top: 48,
   display: 'flex',
   flexDirection: 'column',
   textAlign: 'left',
-  borderRadius: 4,
-  pointerEvents: 'all',
-  transition: 'transform 300ms ease',
-  borderBottomRightRadius: 8,
-  borderBottomLeftRadius: 8,
-  boxSizing: 'border-box',
-  zIndex: 1,
-
   alignSelf: 'center',
   justifySelf: 'center',
-  boxShadow: '$dropShadow',
+  top: 48,
+
+  height: '20%',
+  minHeight: 400,
+  maxHeight: '80vh',
+  maxWidth: 600,
+  width: '35vw',
+
+  backgroundColor: theme.colors.backgroundSecondary,
+
+  borderRadius: theme.radii.sm,
+
+  boxSizing: 'border-box',
+
+  animation: 'none',
+  transition: 'transform 300ms ease',
+  zIndex: 1,
+
+  pointerEvents: 'all',
+  boxShadow: theme.shadows.dropShadow,
 
   variants: {
     isOpen: {
@@ -164,7 +183,7 @@ export const PopoutTitleWrapper = styled(Stretch, 'popout-title_container', {
 export const PopoutTitle = styled('span', 'popout-title', {
   background: 'none',
   padding: 0,
-  marginLeft: '$sm'
+  marginLeft: theme.space.sm
 });
 
 export const PopoutContentWrapper = styled('div', 'popout-content_container', {
@@ -178,18 +197,23 @@ export const ChannelTopicModalContent = styled(
   HeaderMainContentRoot,
   'modal-channel_topic_content',
   {
-    fontSize: '$lg',
+    fontSize: theme.fontSizes.lg,
+    lineHeight: '20px',
+
     color: 'rgba(255,255,255,0.7)',
+
     height: '100%',
+
     flexGrow: 1,
     flexShrink: 1,
-    paddingLeft: '$xl',
-    paddingRight: '$lg',
-    paddingBottom: '$2xl',
+
+    paddingLeft: theme.space.xl,
+    paddingRight: theme.space.lg,
+    paddingBottom: theme.space.xxl,
+
     textRendering: 'optimizeLegibility',
     whiteSpace: 'pre-wrap',
-    overflowWrap: 'break-word',
-    lineHeight: '20px'
+    overflowWrap: 'break-word'
   }
 );
 
@@ -200,15 +224,17 @@ export const NoThreadsStars = styled('svg', 'popout-no_threads_stars', {
 
 export const NoThreadsIconOuter = styled('div', 'popout-no_threads_outer', {
   position: 'relative',
-  marginBottom: '$xl'
+  marginBottom: theme.space.xl
 });
 
 export const NoThreadsIconInner = styled('div', 'popout-no_threads_inner', {
-  position: 'relative',
-  padding: '$2xl',
   display: 'flex',
-  borderImageOutset: 'stretch',
-  alignItems: 'center'
+  position: 'relative',
+  alignItems: 'center',
+
+  padding: theme.space.xxl,
+
+  borderImageOutset: 'stretch'
 });
 
 export const ThreadsPopoutList = styled('div', 'popout-threads_list_container', {
@@ -218,47 +244,53 @@ export const ThreadsPopoutList = styled('div', 'popout-threads_list_container', 
 
 export const ThreadName = styled('div', 'popout-threads_list_threadname', {
   width: '100%',
-  color: '$primaryOpacity50',
-  fontSize: '$lg'
+  color: theme.colors.primaryOpacity50,
+  fontSize: theme.fontSizes.lg
 });
 
 export const ThreadsPopoutListHeader = styled('span', 'popout-threads_list_header', {
-  fontSize: '$sm',
+  display: 'flex',
+  color: theme.colors.primaryOpacity50,
+
+  fontSize: theme.fontSizes.sm,
+  fontWeight: theme.fontWeights.bold,
+
   width: '100%',
-  fontWeight: '$bold',
-  marginBottom: '$lg',
-  marginTop: '$lg',
-  color: '$primaryOpacity50',
-  display: 'flex'
+  marginY: theme.space.lg
 });
 
 export const ThreadsPopoutContent = styled('div', 'popout-threads_content', {
   width: '100%',
   height: '100%',
+
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  paddingRight: '$lg',
-  paddingLeft: '$lg',
-  position: 'relative',
+
+  paddingX: theme.space.lg,
+
   overflowY: 'auto',
   boxSizing: 'border-box'
 });
 
 export const ThreadsPopoutListItem = styled('div', 'popout-threads_list_item', {
-  backgroundColor: '$background',
+  backgroundColor: theme.colors.background,
   width: '100%',
-  padding: '$lg',
-  marginBottom: '$lg',
-  borderRadius: '$md',
+
+  padding: theme.space.lg,
+  marginBottom: theme.space.lg,
+
+  borderRadius: theme.radii.md,
   borderWidth: '1px',
   borderStyle: 'solid',
   borderColor: 'transparent',
+
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'row',
   cursor: 'pointer',
   '&:hover': {
-    borderColor: 'rgba(255, 255, 255, 0.1)'
+    borderColor: theme.colors.primaryOpacity10
   }
 });
 
@@ -276,5 +308,5 @@ export const NoThreadsContent = styled('div', 'popout-no_threads_content', {
 
 export const NoThreadsHeader = styled('h2', 'popout-no_threads_header', {
   textAlign: 'center',
-  fontWeight: '$bold'
+  fontWeight: theme.fontWeights.bold
 });

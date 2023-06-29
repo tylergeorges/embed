@@ -32,21 +32,25 @@ export const Spinner = styled('div', 'spinner', {
     right: 15,
     animation: `${cube} 1.8s infinite ease-in-out`
   },
+
   '&::after': {
     animationDelay: ' -0.9s'
   },
+
   variants: {
     type: {
       fetchingMessages: {
+        justifySelf: 'center',
+        alignSelf: 'center',
+
         height: 70,
+
         '&::after, &::before': {
           width: 10,
           height: 10,
           bottom: 0,
           top: 20
-        },
-        alignSelf: 'center',
-        justifySelf: 'center'
+        }
       }
     }
   }
@@ -60,9 +64,11 @@ export const SpinnerWrapper = styled('div', 'spinner-wrapper', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+
   '*:first-child': {
     position: 'absolute'
   },
+
   variants: {
     type: {
       fetchingMessages: {

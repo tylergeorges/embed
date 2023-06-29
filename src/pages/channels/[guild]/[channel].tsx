@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import type { NextPage } from 'next';
-import { Main, InnerMain } from '@components/Core';
+import * as Styles from '@components/Core';
 import { ChannelsList } from '@components/Sidebar/ChannelsList';
 import { ContextMenu } from '@components/Overlays/ContextMenu';
 import { useContextMenu } from '@lib/hooks';
@@ -17,6 +17,7 @@ const MessageRendererRoot = styled('div', {
   '--fonts-main': 'GgSans',
   height: '100%'
 });
+
 const GuildChannel: NextPage = () => {
   const { disableBrowserMenu } = useContextMenu();
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);
@@ -46,16 +47,16 @@ const GuildChannel: NextPage = () => {
     >
       {({ themeClass }) => (
         <MessageRendererRoot className={themeClass}>
-          <Main onContextMenu={disableBrowserMenu}>
+          <Styles.Main onContextMenu={disableBrowserMenu}>
             {showContextMenu && <ContextMenu />}
 
             <ChannelTopicModal />
-            <InnerMain>
+            <Styles.InnerMain>
               <ChannelsList />
               <TextChannelContainer />
               <ThreadPanel />
-            </InnerMain>
-          </Main>
+            </Styles.InnerMain>
+          </Styles.Main>
         </MessageRendererRoot>
       )}
     </MessageRendererProvider>

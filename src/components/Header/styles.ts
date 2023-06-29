@@ -1,11 +1,9 @@
-import { styled } from '@stitches/react';
-import { theme } from '@stitches';
-import { Hash, NSFW, NSFWNews, NSFWVoice, News, Rules, Voice } from '../Shared/Channel/elements';
+import { theme, styled } from '@stitches';
 
 export const ChannelHeaderContainer = styled('div', 'text-channel_header_container', {
   width: '100%',
   display: 'flex',
-  backgroundColor: '$background'
+  backgroundColor: theme.colors.background
 });
 
 export const ThreadPanelHeaderContainer = styled(
@@ -14,22 +12,24 @@ export const ThreadPanelHeaderContainer = styled(
   {}
 );
 
-const Root = styled('header', 'root', {
+export const HeaderRoot = styled('header', 'header-root', {
   display: 'flex',
   flexShrink: 0,
+  justifyContent: 'center',
+  alignItems: 'center',
+
+  height: theme.sizes.headerHeight,
+  width: '100%',
+
   zIndex: 8,
-  height: '$headerHeight',
 
   variants: {
     shadowEnabled: {
       true: {
-        boxShadow: '$headerDropShadow',
-        backgroundColor: '$background',
-        alignItems: 'center',
-        display: 'flex',
-        justifyContent: 'center',
-        width: '100%'
+        boxShadow: theme.shadows.headerDropShadow,
+        backgroundColor: theme.colors.background
       },
+
       false: {
         backgroundColor: 'transparent'
       }
@@ -38,14 +38,15 @@ const Root = styled('header', 'root', {
 });
 
 export const HeaderMainContentRoot = styled('h1', 'header-main_content_root', {
-  fontWeight: '$bold',
-  fontSize: '$lg',
+  fontWeight: theme.fontWeights.bold,
+  fontSize: theme.fontSizes.lg,
   margin: 0
 });
 
 export const GuildHeaderName = styled(HeaderMainContentRoot, 'guild-header_name', {});
+
 export const ChannelHeaderName = styled(HeaderMainContentRoot, 'text-channel_header_name', {
-  marginRight: '$xl',
+  marginRight: theme.space.xl,
   textOverflow: 'ellipsis',
   boxSizing: 'border-box',
   alignSelf: 'center',
@@ -53,8 +54,6 @@ export const ChannelHeaderName = styled(HeaderMainContentRoot, 'text-channel_hea
   pointerEvents: 'none',
   userSelect: 'none'
 });
-
-export const HeaderRoot = styled(Root, 'header-root', {});
 
 export const SingleChannel = styled('div', 'single-channel', {
   [`& ${theme.singleChannel.enable}`]: {
@@ -69,6 +68,7 @@ export const Inner = styled('div', 'inner', {
   minWidth: 0,
   height: '47px',
   padding: '10px 0',
+
   '@media (max-width: 270px), (max-height: 300px)': {
     height: '41px',
     padding: '7px 0'
@@ -104,14 +104,16 @@ export const ChannelHeaderRoot = styled(Stretch, 'text-channel_header', {
 });
 
 export const ChannelHeaderTopic = styled('div', 'text-channel_header_topic', {
-  color: '$textMuted',
-  fontSize: 14,
   margin: 0,
+  paddingX: theme.space.lg,
+
+  color: theme.colors.textMuted,
+  fontSize: theme.fontSizes.md,
+
   borderLeftStyle: 'solid',
   borderLeftWidth: 1,
-  borderLeftColor: 'rgba(255,255,255,0.1)',
-  paddingLeft: 15,
-  paddingRight: 15,
+  borderLeftColor: theme.colors.primaryOpacity10,
+
   wordBreak: 'break-word',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -129,43 +131,16 @@ export const ChannelHeaderNameWrapper = styled('div', 'text-channel_header_name_
 export const ChannelNameTopicWrapper = styled(Stretch, 'text-channel_name_topic_container', {
   display: 'flex',
   alignItems: 'center',
+
   height: '100%',
-  overflow: 'hidden',
+
   wordBreak: 'break-word'
 });
 
-const name = (hash: typeof Hash) =>
-  styled(hash, 'name', {
-    fontFamily: 'var(--font-display)',
-    fontSize: 18,
-    fontWeight: '$bold',
-    height: 25,
-    margin: '0 15px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    flexShrink: 0,
-
-    backgroundPosition: '0 50%',
-    paddingLeft: 25,
-
-    '@media (max-width: 350px)': {
-      background: 'none',
-      paddingLeft: 0
-    },
-
-    '@media (max-width: 330px)': {
-      flexShrink: 1
-    },
-
-    '@media (max-width: 270px)': {
-      fontSize: 16
-    }
-  });
-
 export const ThreadPanelHeaderRoot = styled(ChannelHeaderRoot, 'panel-thread_header_root', {
-  backgroundColor: '$background',
-  height: '$headerHeight',
+  backgroundColor: theme.colors.background,
+  height: theme.sizes.headerHeight,
+
   margin: 0,
   padding: 0,
   paddingRight: 8
@@ -184,19 +159,5 @@ export const ThreadPanelHeaderIconContent = styled('div', 'panel-thread_header_i
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  fontWeight: '$bold'
+  fontWeight: theme.fontWeights.bold
 });
-
-export const Name = name(Hash);
-
-export const NewsName = name(News);
-
-export const NSFWName = name(NSFW);
-
-export const NSFWNewsName = name(NSFWNews);
-
-export const RulesName = name(Rules);
-
-export const VoiceName = name(Voice);
-
-export const NSFWVoiceName = name(NSFWVoice);

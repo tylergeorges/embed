@@ -1,33 +1,39 @@
 // ! Imported from the library instead of custom config because of weird bugs
-import { theme } from '@stitches';
-import { styled } from '@stitches/react';
+import { theme, styled } from '@stitches';
 import Link from 'next/link';
 
 export const CategoryNameContainer = styled('div', 'category-name_container', {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  marginLeft: '$lg',
+
+  marginLeft: theme.space.lg,
+
+  color: theme.colors.primaryOpacity30,
+
   transition: 'color 100ms ease',
-  color: '$primaryOpacity30',
   cursor: 'pointer',
   boxSizing: 'border-box',
+
   '&:hover': {
     color: theme.colors.primaryOpacity60
   }
 });
 
 export const CategoryNameArrow = styled('div', 'category-name_arrow', {
-  width: '$iconSizeSmall',
-  height: '$iconSizeSmall',
-  cursor: 'pointer',
-  boxSizing: 'border-box',
   position: 'relative',
   display: 'inline-block',
+  boxSizing: 'border-box',
+
   backgroundImage: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' width='105.167' fill='rgba(255,255,255,0.3)' height='61.651' id='chevron-down'%3e%3cpath d='M2.868 3.155c3.955-4.046 9.458-4.363 14.291 0l35.434 33.971L88.026 3.155c4.834-4.363 10.347-4.046 14.269 0a10.77 10.77 0 0 1 0 14.643c-3.683 3.791-42.568 40.817-42.568 40.817a9.917 9.917 0 0 1-14.286 0S6.574 21.589 2.874 17.798a10.764 10.764 0 0 1 0-14.643Z'%3e%3c/path%3e%3c/svg%3e")`,
   backgroundSize: '60%',
   backgroundPosition: '50% 50%',
   backgroundRepeat: 'no-repeat',
+
+  width: theme.sizes.iconSizeSmall,
+  height: theme.sizes.iconSizeSmall,
+
+  cursor: 'pointer',
   transition: 'transform 0.15s ease',
 
   variants: {
@@ -41,56 +47,66 @@ export const CategoryNameArrow = styled('div', 'category-name_arrow', {
 
 export const CategoryNameContent = styled('div', 'category-name', {
   textTransform: 'uppercase',
-  fontSize: '$sm',
+  fontSize: theme.fontSizes.sm,
   alignSelf: 'center',
   boxSizing: 'border-box'
 });
 
 export const CategoryContainer = styled('div', 'category-container', {
   width: '100%',
-  fontWeight: '$medium',
-  paddingTop: '$xl',
-  transition: 'translateY 0.5s ease',
-  boxSizing: 'border-box'
+  boxSizing: 'border-box',
+
+  paddingTop: theme.space.xl,
+
+  fontWeight: theme.fontWeights.medium,
+  transition: 'translateY 0.5s ease'
 });
 
 export const ChannelNameWrapper = styled('div', 'channel-name_wrapper', {
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-  height: 'auto',
-  boxSizing: 'border-box',
-  transition: 'max-height 350ms ease',
-  maxHeight: '$channelNameHeight',
 
-  marginTop: '$2xs',
-  marginBottom: '$2xs',
+  height: 'auto',
+  maxHeight: theme.sizes.channelNameHeight,
+
+  boxSizing: 'border-box',
+
+  marginY: theme.space.xxs,
+
+  transition: 'max-height 350ms ease',
 
   variants: {
     isThread: {
       true: {
-        marginLeft: '$lg',
-        paddingLeft: '$lg',
-        paddingRight: '$xs',
-        marginRight: '$sm',
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyItems: 'center',
-        paddingTop: '$md'
+
+        marginLeft: theme.space.lg,
+        marginRight: theme.space.sm,
+
+        paddingTop: theme.space.md,
+        paddingLeft: theme.space.lg,
+        paddingRight: theme.space.xs
       }
     },
+
     isActive: {
       false: {}
     },
+
     isCategoryOpen: {
       true: {}
     }
   },
+
   compoundVariants: [
     {
       isActive: false,
       isCategoryOpen: false,
+
       css: {
         position: 'relative',
         overflow: 'hidden',
@@ -102,6 +118,7 @@ export const ChannelNameWrapper = styled('div', 'channel-name_wrapper', {
     {
       isActive: false,
       isCategoryOpen: true,
+
       css: {
         position: 'relative',
         top: 0
@@ -111,24 +128,28 @@ export const ChannelNameWrapper = styled('div', 'channel-name_wrapper', {
 });
 
 export const ChannelNameInner = styled(Link, 'channel-name', {
-  transition: '100ms ease',
-  fontSize: '$lg',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
+
+  fontSize: theme.fontSizes.lg,
+  fontWeight: theme.fontWeights.thin,
+  color: theme.colors.primaryOpacity30,
+
   boxSizing: 'border-box',
-  color: '$primaryOpacity30',
-  fontWeight: '$thin',
+  transition: '100ms ease',
 
   '&:hover': {
-    backgroundColor: '$primaryOpacity10',
-    color: '$primaryOpacity50'
+    backgroundColor: theme.colors.primaryOpacity10,
+    color: theme.colors.primaryOpacity50
   },
+
   variants: {
     active_state: {
       true: {
-        color: '$primaryOpacity70',
+        color: theme.colors.primaryOpacity70,
         backgroundColor: 'transparent',
+
         '&:hover': {
           backgroundColor: 'transparent'
         }

@@ -1,12 +1,12 @@
-import { forwardRef, useCallback, useMemo } from 'react';
+import { forwardRef, useCallback } from 'react';
 import { useStoreActions, useStoreState } from '@state';
 import { ChannelType, Channel as IChannel } from '@graphql/graphql';
-import { Fourm, News } from '@components/Shared/Channel/elements';
+import { Fourm, News } from '@components/Shared/Channel/styles';
 import { Thread } from '@components/Sidebar/ChannelsList/Category/ChannelsContainer/Thread';
 import { IThread } from '@state/stores/guild';
 import { useAppRouter } from '@lib/hooks';
 import { Icons } from '@components/Shared/Icons/Icons';
-import { ChannelNameWrapper, ChannelNameInner } from '../../elements';
+import * as Styles from '../../styles';
 
 interface ChannelNameProps {
   /** Check if the channel is the current channel selected. */
@@ -29,7 +29,8 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
     const { channelId } = useAppRouter();
 
-    const currentGuildUrl = useMemo(() => `/channels/${guildID}`, [guildID]);
+    const currentGuildUrl = `/channels/${guildID}`;
+
     /** Sets the new select component's y position because we clicked on a new
      *  channel.
      */
@@ -53,7 +54,7 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     );
 
     return (
-      <ChannelNameWrapper
+      <Styles.ChannelNameWrapper
         key={channel.id}
         draggable={false}
         onClick={handleChannelClick}
@@ -72,7 +73,7 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
             currentChannelUrl={`${currentGuildUrl}/${channelId}`}
           />
         ) : (
-          <ChannelNameInner
+          <Styles.ChannelNameInner
             active_state={isActive}
             href={`${currentGuildUrl}/${channel.id}`}
             ref={isActive ? ref : null}
@@ -89,9 +90,9 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
             {channel.type === ChannelType.GuildForum && <Fourm />}
 
             {channel.name}
-          </ChannelNameInner>
+          </Styles.ChannelNameInner>
         )}
-      </ChannelNameWrapper>
+      </Styles.ChannelNameWrapper>
     );
   }
 );

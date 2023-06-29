@@ -1,14 +1,18 @@
 import { styled } from '@stitches/react';
+import { theme } from '@stitches';
 
 export const ToolTipContainer = styled('div', 'tooltip-container', {
-  backgroundColor: '#18191c',
   position: 'absolute',
-  padding: '$sm',
-  borderRadius: '$xs',
   transform: 'scale(0)',
-  pointerEvents: 'none',
-  transition: 'transform 100ms ease',
   transformOrigin: 'top',
+
+  padding: theme.space.sm,
+
+  borderRadius: theme.radii.xs,
+  pointerEvents: 'none',
+  backgroundColor: theme.colors.tooltipBackground,
+  transition: 'transform 100ms ease',
+
   variants: {
     visible: {
       false: {
@@ -18,6 +22,7 @@ export const ToolTipContainer = styled('div', 'tooltip-container', {
         transform: 'scale(0.85)'
       }
     },
+
     placement: {
       top: {
         top: -40
@@ -30,15 +35,16 @@ export const ToolTipContainer = styled('div', 'tooltip-container', {
 });
 
 export const ToolTipContent = styled('span', 'tooltip-content', {
-  display: 'inline-block',
-  fontSize: '$md',
   position: 'relative',
+  display: 'inline-block',
+
+  fontSize: theme.fontSizes.md,
   textAlign: 'center'
 });
 
 export const ToolTipWrapper = styled('div', 'tooltip-wrapper', {
+  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center',
-  position: 'relative'
+  alignItems: 'center'
 });

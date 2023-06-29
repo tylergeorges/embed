@@ -1,6 +1,6 @@
 import { useStoreState } from '@state';
 import { useAppRouter } from '@lib/hooks';
-import { Background } from './elements';
+import * as Styles from './styles';
 
 /** Animated background for the current selected channel. */
 export const ChannelHighlighter = () => {
@@ -9,7 +9,7 @@ export const ChannelHighlighter = () => {
   const { threadId } = useAppRouter();
   if (currentChannelYPos) {
     return (
-      <Background
+      <Styles.Background
         css={{
           '--yPos': `${currentChannelYPos}px`
         }}

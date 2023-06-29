@@ -6,17 +6,22 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
   display: 'flex',
   flexDirection: 'column',
   position: 'relative',
-  transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
+
   height: '100%',
   width: '100%',
+
+  transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
+
   variants: {
     mobile: {
       true: {
-        transition: 'transform 0.3s ease 0s',
-        transform: `translateX(0px)`,
         width: '100%',
-        height: '100%'
+        height: '100%',
+
+        transition: 'transform 0.3s ease 0s',
+        transform: `translateX(0px)`
       },
+
       false: {
         transform: `translateX(${theme.sizes.sideBarWidth})`
       }
@@ -27,23 +32,28 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
         transform: `translateX(${theme.sizes.sideBarWidth})`,
         width: `calc(100% - ${theme.sizes.sideBarWidth})`
       },
+
       false: {
         transform: 'translateX(0px)'
       }
     },
+
     threadsPanelOpen: {
       true: {
         width: `calc(100% - ${theme.sizes.threadPanelMinWidth} + 8px)`
       }
     }
   },
+
   compoundVariants: [
     {
       channelsListOpen: true,
       mobile: true,
+
       css: {
         transform: `translateX(0px)`,
         width: '100%',
+
         '&::after': {
           transition: 'opacity 0.5s ease 0s',
           content: '',
@@ -51,127 +61,152 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
         }
       }
     },
+
     {
       channelsListOpen: true,
       mobile: false,
+
       css: {
+        width: `calc(100% - ${theme.sizes.sideBarWidth})`,
+
         '&::after': {
           transition: 'opacity 0.5s ease 0s',
           content: '',
           opacity: 1
-        },
-        width: `calc(100% - ${theme.sizes.sideBarWidth})`
+        }
       }
     },
+
     {
       threadsPanelOpen: true,
       channelsListOpen: true,
       mobile: false,
+
       css: {
-        width: `calc(100% - ($sideBarWidth + $threadPanelMinWidth + 8px))`,
-        transform: `translateX(200px)`
+        width: `calc(100% - (${theme.sizes.sideBarWidth} + ${theme.sizes.threadPanelMinWidth} + 8px))`,
+        transform: `translateX(${theme.sizes.sideBarWidth})`
       }
     },
+
     {
       threadsPanelOpen: true,
       mobile: true,
+
       css: {
-        width: `calc(${theme.sizes.threadPanelMinWidth})`,
-        transform: `translateX(200px)`
+        width: theme.sizes.threadPanelMinWidth,
+        transform: `translateX(${theme.sizes.sideBarWidth})`
       }
     }
   ]
 });
 
 export const TextChannelInnerWrapper = styled('div', 'text-channel_inner_wrapper', {
+  position: 'relative',
+  display: 'flex',
+  flexDirection: 'row',
+
   height: '100%',
   width: '100%',
-  display: 'flex',
-  position: 'relative',
-  flexDirection: 'row',
 
   variants: {
     mobile: {
       true: {
-        transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
-        margin: 0,
         width: '100%',
-        height: '100%'
+        height: '100%',
+
+        transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
+        margin: 0
       }
     }
   }
 });
 
 export const MessageWrapper = styled('div', 'message-wrapper', {
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  textAlign: 'center',
+
   width: '100%',
   height: '100%',
-  position: 'relative',
-  textAlign: 'center',
-  alignItems: 'center',
-  display: 'flex',
-  flexDirection: 'column',
+
   transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
   zIndex: 0,
 
   '&::after': {
-    content: '',
+    position: 'absolute',
     top: 0,
     left: 0,
-    position: 'absolute',
+
     height: '100%',
     width: '100%',
-    pointerEvents: 'none',
+
+    content: '',
+
     opacity: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+
     transition: 'opacity 0.5s ease 0s',
     willChange: 'opacity',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    pointerEvents: 'none'
   },
 
   '.channel-welcome_header_con': {
-    width: '100%',
     display: 'block',
-    flexDirection: 'column',
     justifyContent: 'center',
+    flexDirection: 'column',
     alignItems: 'center',
     textAlign: 'center',
-    margin: `${theme.space['2xl']}`
+
+    width: '100%',
+    margin: theme.space.xxl
   },
 
   '.channel-welcome_header': {
-    fontSize: `${theme.space['2xl']}`,
-    marginBottom: 0,
     alignSelf: 'center',
-    textAlign: 'center'
+    textAlign: 'center',
+
+    marginBottom: 0,
+    fontSize: theme.space.xxl
   },
+
   '.channel-welcome_subheader': {
     margin: 0,
-    fontSize: '14px',
-    color: `${theme.colors.primaryOpacity50}`,
+
+    fontSize: theme.fontSizes.md,
+    color: theme.colors.primaryOpacity50,
     textAlign: 'center'
   },
+
   variants: {
     membersListOpen: {
       false: {
         width: '100%',
         marginRight: 0
       },
+
       true: {
-        width: 'calc(100% - $sideBarWidth)'
+        width: `calc(100% - ${theme.sizes.sideBarWidth})`
       }
     },
+
     mobile: {
       true: {
-        transition: 'transform 0.3s ease 0s',
-        transform: `translateX(0px)`,
         width: '100%',
-        height: '100%'
+        height: '100%',
+
+        transition: 'transform 0.3s ease 0s',
+        transform: `translateX(0px)`
       }
     }
   },
+
   compoundVariants: [
     {
       membersListOpen: true,
       mobile: true,
+
       css: {
         marginRight: 'none',
         width: '100%',
@@ -191,72 +226,90 @@ export const MessageWrapper = styled('div', 'message-wrapper', {
 
 export const TextBoxWrapper = styled('form', 'textbox-wrapper', {
   position: 'relative',
-  marginBottom: '$lg',
   display: 'flex',
   alignItems: 'center',
-  borderRadius: '$xs',
+
   width: 'calc(100% - 32px)',
-  backgroundColor: '$inputBackground',
   maxHeight: '50vh',
-  paddingY: '$sm'
+
+  borderRadius: theme.radii.xs,
+  backgroundColor: theme.colors.inputBackground,
+
+  paddingY: theme.space.sm,
+  marginBottom: theme.space.lg
 });
+
 export const TextBoxInner = styled('div', 'textbox-inner', {
+  display: 'flex',
+  position: 'relative',
+
   width: '100%',
   height: '100%',
-  display: 'flex',
   maxHeight: '50vh',
-  position: 'relative',
+
   overflowY: 'auto'
 });
+
 export const TextBoxButtonWrapper = styled('div', 'textbox-button_wrapper', {
+  position: 'sticky',
   display: 'flex',
   alignItems: 'flex-start',
+
   height: '100%',
-  position: 'sticky',
+
   top: 0
 });
 
 export const TextBoxInputWrapper = styled('div', 'textbox-input_wrapper', {
-  width: '100%',
   display: 'flex',
   position: 'relative',
-  marginBottom: '$md',
-  height: '100%'
+
+  width: '100%',
+  height: '100%',
+
+  marginBottom: theme.space.md
 });
 
 export const TextInput = styled('div', 'textbox-input', {
-  width: '100%',
-  backgroundColor: 'transparent',
-  cursorColor: 'white',
   cursor: 'text',
-  border: 'none',
-  height: 'auto',
-  fontWeight: '$thin',
-  wordBreak: 'break-word',
-  overflowWrap: 'break-word',
+  cursorColor: 'white',
 
-  outline: 'none',
-  fontSize: '$lg',
-  textAlign: 'left',
+  border: 'none',
+  backgroundColor: 'transparent',
+
+  height: 'auto',
+  width: '100%',
+
+  display: 'block',
+  position: 'relative',
   justifyContent: 'flex-start',
   alignItems: 'center',
-  position: 'relative',
-  display: 'block',
-  color: '$textPrimary'
+
+  color: theme.colors.textPrimary,
+  fontWeight: theme.fontWeights.thin,
+  wordBreak: 'break-word',
+  overflowWrap: 'break-word',
+  textAlign: 'left',
+
+  outline: 'none',
+  fontSize: theme.fontSizes.lg
 });
 
 export const TextBoxPlaceholder = styled('span', 'textbox-placeholder', {
-  color: '$textMuted',
   position: 'absolute',
+  color: theme.colors.textMuted,
   pointerEvents: 'none'
 });
 
 export const MessageContentOuterWrapper = styled('div', 'message-content_outer_wrapper', {
-  width: '100%',
   display: 'flex',
   flexDirection: 'row',
+
+  width: '100%',
+
   paddingRight: 48,
   paddingLeft: 72,
+
   '&:hover': {
     backgroundColor: 'rgba(0,0,0,0.1)'
   }
@@ -268,14 +321,15 @@ export const MessageContent = styled('div', 'message-content', {
 });
 
 export const MessageAvatar = styled(Image, 'message-avatar', {
-  borderRadius: 999,
   position: 'absolute',
-  left: 16,
+  left: theme.space.lg,
+
+  borderRadius: theme.radii.round,
   pointerEvents: 'none'
 });
 
 export const MessageUsername = styled('h3', 'message-username', {
-  fontSize: 16,
+  fontSize: theme.fontSizes.lg,
   margin: 0,
   pointerEvents: 'none',
   userSelect: 'none'
@@ -295,27 +349,32 @@ const SkeletonLoader = keyframes({
 
 export const SkeletonLoaderRoot = styled('div', 'skeleton-loader_root', {
   animation: `${SkeletonLoader} 3s infinite ease-in-out`,
-  background: `${theme.colors.primaryOpacity20}`,
+  background: theme.colors.primaryOpacity20,
   pointerEvents: 'none',
   userSelect: 'none'
 });
 
 export const MessageSkeletonWrapper = styled('div', 'message-skeleton_wrapper', {
-  width: '100%',
   display: 'flex',
   flexDirection: 'row',
-  marginTop: 25,
+
+  width: '100%',
+
+  marginTop: theme.space.xl,
+
   paddingRight: 48,
   paddingLeft: 72,
-  paddingTop: '$xs',
-  paddingBottom: '$xs'
+  paddingTop: theme.space.xs,
+  paddingBottom: theme.space.xs
 });
 
 export const MessageSkeletonContent = styled('div', 'message-skeleton_content', {
   position: 'relative',
-  textAlign: 'left',
   display: 'flex',
   flexDirection: 'column',
+
+  textAlign: 'left',
+
   backgroundColor: 'transparent',
   pointerEvents: 'none',
   userSelect: 'none'
@@ -324,25 +383,32 @@ export const MessageSkeletonContent = styled('div', 'message-skeleton_content', 
 export const MessageSkeletonContentLine = styled('div', 'message-skeleton_content_line', {
   position: 'relative',
   textAlign: 'left',
-  color: 'transparent',
-  width: '100%',
-  borderRadius: 10,
   display: 'flex',
   flexDirection: 'row',
-  height: 22,
-  marginTop: 5
+
+  width: '100%',
+  height: theme.sizes.iconSizeMed,
+
+  marginTop: theme.space.xxs,
+
+  color: 'transparent',
+  borderRadius: theme.radii.sm
 });
 
 export const MessageSkeletonContentWord = styled('div', 'message-skeleton_content_word', {
   position: 'relative',
+
+  height: theme.sizes.iconSizeMed,
+
+  marginTop: theme.space.sm,
+  marginRight: theme.space.sm,
+
+  borderRadius: theme.radii.lg,
+
   color: 'transparent',
-  borderRadius: 10,
   background: theme.colors.primaryOpacity10,
   animation: `${SkeletonLoader} 2s infinite ease-in-out`,
-  pointerEvents: 'none',
-  height: 22,
-  marginTop: 5,
-  marginRight: 5
+  pointerEvents: 'none'
 });
 
 export const MessageSkeletonContentLongWord = styled(
@@ -372,23 +438,28 @@ export const MessageSkeletonContentMedWord = styled(
 );
 
 export const MessageSkeletonUsername = styled(SkeletonLoaderRoot, 'message-skeleton_username', {
-  fontSize: 16,
-  margin: 0,
-  color: 'transparent',
+  fontSize: theme.fontSizes.lg,
+
   width: 150,
+  height: 22,
+
+  margin: 0,
+
+  borderRadius: theme.radii.sm,
+
+  color: 'transparent',
   pointerEvents: 'none',
   userSelect: 'none',
-  borderRadius: 10,
-  height: 22,
   background: theme.colors.primaryOpacity10,
   animationDelay: '1s'
 });
 
 export const MessageSkeletonAvatar = styled(SkeletonLoaderRoot, 'message-skeleton_avatar', {
-  borderRadius: 999,
   position: 'absolute',
-  left: 16,
+  left: theme.space.lg,
 
   width: 40,
-  height: 40
+  height: 40,
+
+  borderRadius: theme.radii.round
 });

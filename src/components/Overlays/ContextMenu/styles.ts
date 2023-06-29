@@ -1,15 +1,19 @@
-import { theme } from '@stitches';
-import { styled } from '@stitches/react';
+import { theme, styled } from '@stitches';
 
 export const ContextMenuWrapper = styled('div', 'context-menu_wrapper', {
   backgroundColor: theme.colors.contextMenuBackground,
   position: 'absolute',
-  zIndex: 12,
+
   minWidth: 188,
   maxWidth: 320,
-  boxShadow: '$dropShadow',
-  borderRadius: '$xs',
-  padding: '$xs',
+
+  padding: theme.space.xs,
+
+  borderRadius: theme.radii.xs,
+
+  boxShadow: theme.shadows.dropShadow,
+  zIndex: 12,
+
   variants: {
     visible: {
       false: {
@@ -22,14 +26,14 @@ export const ContextMenuWrapper = styled('div', 'context-menu_wrapper', {
 export const ContextMenuItem = styled('div', 'context-menu_item', {
   width: '100%',
   minHeight: 32,
-  paddingTop: '$md',
-  paddingBottom: '$md',
-  paddingLeft: '$lg',
-  paddingRight: '$lg',
+
+  paddingY: theme.space.md,
+  paddingX: theme.space.lg,
 
   cursor: 'pointer',
-  fontSize: '$md',
-  borderRadius: 2,
+  fontSize: theme.fontSizes.md,
+  borderRadius: theme.radii.xxs,
+
   '&:hover': {
     backgroundColor: theme.colors.accent
   }

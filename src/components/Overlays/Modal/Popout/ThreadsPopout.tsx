@@ -1,13 +1,5 @@
 import { Popout } from '@components/Overlays/Modal/Popout/index';
-import {
-  ThreadsPopoutListItem,
-  ThreadsPopoutContent,
-  ThreadsPopoutListHeader,
-  ThreadName,
-  ThreadsPopoutList,
-  NoThreadsContent,
-  NoThreadsHeader
-} from '@components/Overlays/Modal/elements';
+import * as Styles from '@components/Overlays/Modal/styles';
 import { ThreadsPanelButton } from '@components/Shared/Icons/Buttons/ThreadsPanelButton';
 import { NoThreadsIcon } from '@components/Shared/Icons/NoThreadsIcon';
 import { useAppRouter } from '@lib/hooks';
@@ -36,7 +28,8 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
     () => currentChannelThreads.length > 0,
     [currentChannelThreads.length]
   );
-  if (!showThreadsModal) return null;
+
+  // if (!showThreadsModal) return null;
 
   return (
     <>
@@ -48,32 +41,35 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
         popoutFor={childrenRef.current}
       >
         {channelHasThreads ? (
-          <ThreadsPopoutContent className="popout-threads_content">
-            <ThreadsPopoutListHeader className="popout-threads_list_header">
+          <Styles.ThreadsPopoutContent className="popout-threads_content">
+            <Styles.ThreadsPopoutListHeader className="popout-threads_list_header">
               OLDER THREADS
-            </ThreadsPopoutListHeader>
-            <ThreadsPopoutList className="popout-threads_list_container">
+            </Styles.ThreadsPopoutListHeader>
+
+            <Styles.ThreadsPopoutList className="popout-threads_list_container">
               {' '}
               {currentChannelThreads.map(thread => (
-                <ThreadsPopoutListItem
+                <Styles.ThreadsPopoutListItem
                   className="popout-threads_list_item"
                   key={thread.id}
                   onClick={() =>
                     router.push(`/channels/${guildId}/${channelId}?thread=${thread.id}`)
                   }
                 >
-                  <ThreadName className="popout-threads_list_threadname">{thread.name}</ThreadName>
+                  <Styles.ThreadName className="popout-threads_list_threadname">
+                    {thread.name}
+                  </Styles.ThreadName>
 
                   <ThreadsPanelButton thread={thread} />
-                </ThreadsPopoutListItem>
+                </Styles.ThreadsPopoutListItem>
               ))}
-            </ThreadsPopoutList>
-          </ThreadsPopoutContent>
+            </Styles.ThreadsPopoutList>
+          </Styles.ThreadsPopoutContent>
         ) : (
-          <NoThreadsContent className="popout-no_threads_content">
+          <Styles.NoThreadsContent className="popout-no_threads_content">
             <NoThreadsIcon />
-            <NoThreadsHeader>There are no threads.</NoThreadsHeader>
-          </NoThreadsContent>
+            <Styles.NoThreadsHeader>There are no threads.</Styles.NoThreadsHeader>
+          </Styles.NoThreadsContent>
         )}
       </Popout>
 

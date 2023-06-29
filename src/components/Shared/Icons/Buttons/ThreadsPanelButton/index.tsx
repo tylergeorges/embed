@@ -1,5 +1,4 @@
-import { IconButtonWrapper } from '@components/Shared/Icons/Buttons/IconButtonWrapper';
-import { ThreadsPanelIcon } from '@components/Shared/Icons/ThreadsPanelIcon';
+import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { Channel } from '@graphql/graphql';
 import { useStoreActions } from '@state';
 import { useCallback } from 'react';
@@ -18,17 +17,23 @@ export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
     setIsThreadsPanelOpen(true);
     setIsMembersListOpen(false);
     setCurrentThread(thread);
-  }, [setCurrentThread, setIsMembersListOpen, setIsCurrentChannelThread, thread, setIsThreadsPanelOpen]);
+  }, [
+    setCurrentThread,
+    setIsMembersListOpen,
+    setIsCurrentChannelThread,
+    thread,
+    setIsThreadsPanelOpen
+  ]);
 
   return (
-    <IconButtonWrapper
-      iconBackgroundSize={40}
+    <IconButton
+      color="light"
+      backgroundGlowSize={40}
       tooltipLabel="Open Thread"
-      tooltipPlacement="top"
       backgroundGlowOnHover
+      name="ThreadPanel"
+      tooltipPlacement="bottom"
       onClick={handlePanelClick}
-    >
-      <ThreadsPanelIcon customSize={30} />
-    </IconButtonWrapper>
+    />
   );
 };

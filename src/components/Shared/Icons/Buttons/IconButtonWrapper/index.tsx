@@ -1,7 +1,4 @@
-import {
-  IconButtonRoot,
-  IconButtonChildrenWrapper
-} from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
+import * as Styles from '@components/Shared/Icons/Buttons/IconButtonWrapper/styles';
 import { ToolTip } from '@components/Shared/ToolTip';
 
 export interface IconButtonWrapperProps {
@@ -15,7 +12,7 @@ export interface IconButtonWrapperProps {
   /** Illuminates a circle background on hover */
   backgroundGlowOnHover?: boolean;
 
-  iconBackgroundSize?: number;
+  backgroundGlowSize?: number;
   isActive?: boolean;
 }
 
@@ -25,48 +22,49 @@ export const IconButtonWrapper = ({
   alwaysShowTooltip,
   tooltipDisabled,
   backgroundGlowOnHover,
-  iconBackgroundSize,
+  backgroundGlowSize,
   tooltipPlacement,
   onClick,
   isActive
 }: IconButtonWrapperProps) => {
   if (tooltipDisabled)
     return (
-      <IconButtonRoot className="icon-button_wrapper_root">
-        <IconButtonChildrenWrapper
+      <Styles.IconButtonRoot className="icon-button_wrapper_root">
+        <Styles.IconButtonChildrenWrapper
           className="icon-button_children_wrapper"
           backgroundGlowOnHover={backgroundGlowOnHover ?? false}
           onClick={onClick}
           isActive={isActive}
           css={
-            iconBackgroundSize
+            backgroundGlowSize
               ? {
-                  width: iconBackgroundSize,
-                  height: iconBackgroundSize
+                  position: 'absolute',
+                  width: backgroundGlowSize,
+                  height: backgroundGlowSize
                 }
               : {}
           }
         >
           {children}
-        </IconButtonChildrenWrapper>
-      </IconButtonRoot>
+        </Styles.IconButtonChildrenWrapper>
+      </Styles.IconButtonRoot>
     );
 
   return (
-    <IconButtonRoot className="icon-button_wrapper_root">
+    <Styles.IconButtonRoot className="icon-button_wrapper_root">
       <ToolTip
         placement={tooltipPlacement ?? 'top'}
         label={tooltipLabel ?? ''}
         show={alwaysShowTooltip}
       >
-        <IconButtonChildrenWrapper
+        <Styles.IconButtonChildrenWrapper
           className="icon-button_children_wrapper"
           backgroundGlowOnHover={backgroundGlowOnHover ?? false}
           css={
-            iconBackgroundSize
+            backgroundGlowSize
               ? {
-                  width: iconBackgroundSize,
-                  height: iconBackgroundSize
+                  width: backgroundGlowSize,
+                  height: backgroundGlowSize
                 }
               : {}
           }
@@ -74,8 +72,8 @@ export const IconButtonWrapper = ({
           onClick={onClick}
         >
           {children}
-        </IconButtonChildrenWrapper>
+        </Styles.IconButtonChildrenWrapper>
       </ToolTip>
-    </IconButtonRoot>
+    </Styles.IconButtonRoot>
   );
 };

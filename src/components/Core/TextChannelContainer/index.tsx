@@ -3,55 +3,30 @@ import { useMediaQuery, useAppRouter } from '@lib/hooks';
 import { MembersList } from '@components/Sidebar/MembersList';
 import { useCallback, useEffect } from 'react';
 
-import { Channel } from '@graphql/graphql';
-import { TextChannelInnerWrapper, TextChannelWrapper } from './elements';
+import * as Styles from './styles';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
 
 export const TextChannelContainer = () => {
-  // Used to check if the screen size is mobile because if it is then the sidebars
-  // hover over the text channel and we want to be able to close them by clicking on
-  // the text channel.
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
-  const { threadId, channelId } = useAppRouter();
+  const { channelId } = useAppRouter();
 
-  // boolean check for sidebar lists
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
   const isThreadsPanelOpen = useStoreState(state => state.ui.isThreadsPanelOpen);
-  const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
 
-  const guildChannels = useStoreState(state => state.guild.guildChannels);
-
-  // actions to set sidebar lists state
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
   const setCurrentChannel = useStoreActions(state => state.guild.setCurrentChannel);
-  const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
 
   useEffect(() => {
     setCurrentChannel(channelId);
 
-    if (isCurrentChannelThread && threadId) {
-      // @ts-ignore
-      const thread = guildChannels[channelId].threads.find(th => th.id === threadId) as Channel;
-      setCurrentThread(thread);
-    }
-
+    // Used to hide members list if the threads panel is open
     if (!isThreadsPanelOpen) {
       setIsMembersListOpen(!windowIsMobile);
     }
-  }, [
-    windowIsMobile,
-    setIsMembersListOpen,
-    isThreadsPanelOpen,
-    setCurrentChannel,
-    threadId,
-    channelId,
-    isCurrentChannelThread,
-    setCurrentThread,
-    guildChannels
-  ]);
+  }, [windowIsMobile, setIsMembersListOpen, isThreadsPanelOpen, setCurrentChannel, channelId]);
 
   const hideSidebar = useCallback(() => {
     if ((windowIsMobile && isChannelsListOpen) || (windowIsMobile && isMembersListOpen)) {
@@ -67,7 +42,7 @@ export const TextChannelContainer = () => {
   ]);
 
   return (
-    <TextChannelWrapper
+    <Styles.TextChannelWrapper
       className="text-channel_wrapper"
       mobile={{
         '@initial': false,
@@ -77,7 +52,7 @@ export const TextChannelContainer = () => {
       threadsPanelOpen={isThreadsPanelOpen}
     >
       <TextChannelHeader />
-      <TextChannelInnerWrapper
+      <Styles.TextChannelInnerWrapper
         className="text-channel_inner_wrapper"
         mobile={{
           '@initial': false,
@@ -86,7 +61,7 @@ export const TextChannelContainer = () => {
       >
         <MessageContainer onBackdropClick={hideSidebar} />
         <MembersList />
-      </TextChannelInnerWrapper>
-    </TextChannelWrapper>
+      </Styles.TextChannelInnerWrapper>
+    </Styles.TextChannelWrapper>
   );
 };

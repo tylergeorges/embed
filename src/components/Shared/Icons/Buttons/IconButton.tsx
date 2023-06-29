@@ -16,7 +16,7 @@ export const IconButton = ({
   css,
   backgroundGlowOnHover,
   isActive,
-  iconBackgroundSize,
+  backgroundGlowSize,
   size,
   tooltipDisabled,
   tooltipLabel,
@@ -25,7 +25,7 @@ export const IconButton = ({
 }: Props) => (
   <IconButtonWrapper
     tooltipLabel={tooltipLabel}
-    iconBackgroundSize={iconBackgroundSize}
+    backgroundGlowSize={backgroundGlowSize}
     tooltipPlacement={tooltipPlacement}
     onClick={onClick}
     alwaysShowTooltip={alwaysShowTooltip}

@@ -1,16 +1,18 @@
-import { theme } from '@stitches';
-import { styled } from '@stitches/react';
+import { theme, styled } from '@stitches';
 
 export const SidebarWrapper = styled('aside', 'sidebar_wrapper', {
   position: 'absolute',
-  backgroundColor: '$backgroundSecondary',
-  boxSizing: 'border-box',
-  zIndex: 9,
-  width: theme.sizes.sideBarWidth,
-  maxWidth: theme.sizes.sideBarWidth,
-  height: '100%',
   display: 'flex',
   flexDirection: 'column',
+
+  height: '100%',
+  width: theme.sizes.sideBarWidth,
+  maxWidth: theme.sizes.sideBarWidth,
+
+  boxSizing: 'border-box',
+  zIndex: 9,
+
+  backgroundColor: theme.colors.backgroundSecondary,
   willChange: 'transform',
   transition: 'transform 300ms ease',
 
@@ -33,6 +35,7 @@ export const SidebarWrapper = styled('aside', 'sidebar_wrapper', {
         transform: `translateX(0)`
       }
     },
+
     type: {
       members_list: {},
       channels_list: {
@@ -69,26 +72,32 @@ export const MembersSidebarWrapper = styled(SidebarWrapper, 'members-sidebar_wra
 });
 
 export const ThreadsPanelContainer = styled('div', 'thread-panel_wrapper', {
+  position: 'absolute',
+  display: 'flex',
+  flexDirection: 'column',
+  bottom: 0,
+
   width: '100%',
   height: '100%',
-  bottom: 0,
-  display: 'flex',
+
   zIndex: 2,
   transition: 'transform ease 0.3s',
-  position: 'absolute',
 
-  backgroundColor: '$background',
-  flexDirection: 'column',
+  backgroundColor: theme.colors.background,
+
   '@mobile': {
     width: '100%'
   },
+
   variants: {
     isOpen: {
       false: {
         transform: `translateX(100%)`
       },
+
       true: {
         width: '100%',
+
         '@mobile': {
           width: '100%',
           transform: `translateX(-2%)`
@@ -99,15 +108,17 @@ export const ThreadsPanelContainer = styled('div', 'thread-panel_wrapper', {
 });
 
 export const ThreadPanelWrapper = styled('div', 'thread-panel_wrapper', {
-  height: '100%',
-  minWidth: '$threadPanelMinWidth',
-  right: 0,
+  position: 'absolute',
   display: 'flex',
+  flexDirection: 'row',
+  right: 0,
+
+  height: '100%',
+  minWidth: theme.sizes.threadPanelMinWidth,
+
   zIndex: 2,
   transition: 'transform ease 0.3s',
-  position: 'absolute',
-  backgroundColor: '$background',
-  flexDirection: 'row',
+  backgroundColor: theme.colors.background,
 
   variants: {
     isOpen: {
@@ -115,20 +126,22 @@ export const ThreadPanelWrapper = styled('div', 'thread-panel_wrapper', {
         transform: `translateX(100%)`
       }
     },
+
     mobile: {
       true: {
         width: '100%'
-      },
-      false: {}
+      }
     }
   }
 });
 
 export const ThreadsPanelSeperator = styled('div', 'panel-threads_seperator', {
+  transform: `translateX(-8px)`,
+
   height: '100%',
   width: 8,
-  transform: `translateX(-8px)`,
-  backgroundColor: '$borderDark',
+
+  backgroundColor: theme.colors.borderDark,
   zIndex: 9,
 
   '@mobile': {
@@ -141,44 +154,6 @@ export const ThreadsPanelSeperator = styled('div', 'panel-threads_seperator', {
     isOpen: {
       false: {
         opacity: 0
-      }
-    }
-  }
-});
-
-export const Close = styled('button', 'sidebar_close', {
-  right: 0,
-  height: '$iconSizeLarge',
-  width: '$iconSizeLarge',
-
-  background: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='rgba(255,255,255,0.3)' viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e")`,
-  backgroundSize: '50%',
-  backgroundPosition: '50% 50%',
-  backgroundRepeat: 'no-repeat',
-  border: 'none',
-  outline: 'none',
-  cursor: 'pointer',
-  borderRadius: '50%',
-
-  '&:hover, &:focus': {
-    backgroundColor: theme.colors.primaryOpacity10
-  },
-
-  variants: {
-    color: {
-      light: {
-        right: 0,
-        height: '$iconSizeSmall',
-        width: '$iconSizeSmall',
-
-        backgroundSize: '50%',
-        backgroundPosition: '50% 50%',
-        backgroundRepeat: 'no-repeat',
-        border: 'none',
-        outline: 'none',
-        cursor: 'pointer',
-        borderRadius: '50%',
-        background: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='rgb(181, 186, 193)' viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e")`
       }
     }
   }

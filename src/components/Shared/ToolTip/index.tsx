@@ -1,4 +1,4 @@
-import { ToolTipWrapper, ToolTipContent, ToolTipContainer } from '@components/Shared/ToolTip/elements';
+import * as Styles from '@components/Shared/ToolTip/styles';
 import { useEffect, useRef, useState } from 'react';
 
 interface ToolTipProps {
@@ -16,11 +16,8 @@ export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
   const [left, setLeft] = useState(0);
   const [visited, setVisited] = useState(false);
 
-  const openToolTip = () => {
-    setShowToolTip(true);
-  };
-  const hideToolTip = () => {
-    setShowToolTip(false);
+  const toggleTooltip = () => {
+    setShowToolTip(prev => !prev);
   };
 
   useEffect(() => {
@@ -43,25 +40,30 @@ export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [left]);
 
+  const tooltipXPos =
+    left !== 0
+      ? {
+          left
+        }
+      : {};
   return (
-    <ToolTipWrapper className="tooltip-wrapper" onTouchStart={undefined} onMouseEnter={openToolTip} onMouseLeave={hideToolTip}>
+    <Styles.ToolTipWrapper
+      className="tooltip-wrapper"
+      onTouchStart={undefined}
+      onMouseEnter={toggleTooltip}
+      onMouseLeave={toggleTooltip}
+    >
       <div ref={childrenConRef}>{children}</div>
 
-      <ToolTipContainer
+      <Styles.ToolTipContainer
         className="tooltip-container"
         visible={show || showToolTip}
         placement={placement}
         ref={tooltipRef}
-        css={
-          left !== 0
-            ? {
-                left
-              }
-            : {}
-        }
+        css={tooltipXPos}
       >
-        <ToolTipContent className="tooltip-content">{label}</ToolTipContent>
-      </ToolTipContainer>
-    </ToolTipWrapper>
+        <Styles.ToolTipContent className="tooltip-content">{label}</Styles.ToolTipContent>
+      </Styles.ToolTipContainer>
+    </Styles.ToolTipWrapper>
   );
 };

@@ -1,3 +1,4 @@
+import { theme } from '@stitches';
 import { styled } from '@stitches/react';
 
 export const BackgroundContainer = styled('div', 'activechannel-background_container', {
@@ -10,7 +11,7 @@ export const BackgroundContainer = styled('div', 'activechannel-background_conta
 
 export const Background = styled('div', 'active-channel_background', {
   position: 'absolute',
-  backgroundColor: '$primaryOpacity10',
+  backgroundColor: theme.colors.primaryOpacity10,
 
   pointerEvents: 'none',
 
@@ -25,6 +26,7 @@ export const Background = styled('div', 'active-channel_background', {
         transition: 'none'
       }
     },
+
     isCurrentChannelThread: {
       true: {
         transform: 'translateY(var(--yPos)) scaleX(0.79)  translateX(25px)'
