@@ -254,6 +254,7 @@ export const EditedBase = styled.span`
 interface ContentBaseProps {
   isReplyContent?: boolean;
 }
+
 export const ContentBase = styled.span`
   color: ${({theme}) => theme.colors._primary.fade(1 - 0.827).string()};
   
@@ -269,6 +270,11 @@ export const ContentBase = styled.span`
               display: flex;
               max-width: calc(100% - 72px);
               align-items: center;
+              
+              .heading {
+                display: inline;
+                font-size: 100%;
+              }
 
               &:hover {
                 opacity: 1;

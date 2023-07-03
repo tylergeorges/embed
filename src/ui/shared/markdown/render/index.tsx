@@ -1,13 +1,13 @@
 import memoize from 'memoizee'
 import * as R from 'ramda'
 import baseRules from '@ui/shared/markdown/render/ast'
-import { Code, Highlighter, Link, QuoteContainer, QuoteBar, Quote } from '@ui/shared/markdown/render/elements'
+import { Code, Highlighter, Link, QuoteContainer, QuoteBar, Quote, Heading1, Heading2, Heading3 } from '@ui/shared/markdown/render/elements'
 import {
   astToString,
   flattenAst,
   recurse
 } from '@ui/shared/markdown/render/util'
-import SimpleMarkdown from 'simple-markdown'
+import SimpleMarkdown, { defaultRules } from "simple-markdown";
 import TextSpoiler from "@ui/shared/markdown/render/elements/TextSpoiler";
 import { Message_author, Message_mentions } from '@generated'
 import { Timestamp } from './elements/Timestamp'
@@ -39,6 +39,43 @@ function createRules(rule: { [key: string]: any }) {
 
   return {
     ...rule,
+    heading: {
+      ...defaultRules.heading,
+      match: (source, state) => {
+        const prevCaptureStr =
+          state.prevCapture === null ? "" : state.prevCapture[0];
+        const isStartOfLineCapture = /(?:^|\n)( *)$/.exec(prevCaptureStr);
+
+        if (isStartOfLineCapture) {
+          source = isStartOfLineCapture[1] + source;
+          return /^ *(#{1,3})([^\n]+?)(?:\n+|$)/.exec(source);
+        }
+
+        return null;
+      },
+      react(node, parse, state) {
+        switch (node.level) {
+          case 1:
+            return (
+              <Heading1 key={state.key} className="heading">
+                {parse(node.content, state)}
+              </Heading1>
+            );
+          case 2:
+            return (
+              <Heading2 key={state.key} className="heading">
+                {parse(node.content, state)}
+              </Heading2>
+            );
+          default:
+            return (
+              <Heading3 key={state.key} className="heading">
+                {parse(node.content, state)}
+              </Heading3>
+            );
+        }
+      },
+    },
     s: {
       order: rule.u.order,
       match: SimpleMarkdown.inlineRegex(/^~~([\s\S]+?)~~(?!_)/),
