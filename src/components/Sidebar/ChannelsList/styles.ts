@@ -176,6 +176,17 @@ export const ChannelNameInner = styled.withConfig({
   }
 });
 
+export const ChannelNameContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channel-name_content'
+})('div', {
+  textOverflow: 'ellipsis',
+  display: 'inline-block',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  width: '100%'
+});
+
 export const ThreadNameInner = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'thread-name'

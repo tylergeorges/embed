@@ -2,20 +2,17 @@ import { Category as ICategory } from '@graphql/graphql';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStoreActions, useStoreState } from '@state';
 import { ChannelsContainer } from '@components/Sidebar/ChannelsList/Category/ChannelsContainer/ChannelsContainer';
+import { useAppRouter } from '@lib/hooks';
 import * as Styles from '../styles';
 import { CategoryName } from './CategoryName';
 
 interface CategoryProps {
   /** Category we are rendering channels for. */
   category: ICategory;
-  /** The channel's snowflake id. */
-  currentChannelID: string;
-  /** The current threads id */
-  currentThreadID?: string;
 }
 
-/** This component renders a category and its channels. */
-export const Category = ({ category, currentChannelID, currentThreadID }: CategoryProps) => {
+/** This component renders a category and it's channels. */
+export const Category = ({ category }: CategoryProps) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   // Refs
   const currentChannelRef = useRef<HTMLAnchorElement>(null);
@@ -32,16 +29,12 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
   // Ref used to get the height of the container that holds the channel names
   const channelsConRef = useRef<HTMLDivElement>(null);
   const [channelsConHeight, setChannelsConHeight] = useState(0);
+  const { threadId, channelId } = useAppRouter();
 
   useEffect(() => {
-    const currentChannelIsThread = !!currentThreadID;
-
-    setIsThreadsPanelOpen(currentChannelIsThread);
-
     // ! Sets the initial ActiveBackground component's position
     if (currentChannelRef.current) {
       setCurrentChannelYPos(currentChannelRef.current.offsetTop);
-
       setInitChannelYPos(currentChannelRef.current.offsetTop);
     }
 
@@ -49,55 +42,61 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
       setChannelsConHeight(channelsConRef.current.offsetHeight);
     }
   }, [
+    channelId,
+    threadId,
     setCurrentChannelYPos,
     setInitChannelYPos,
-    currentThreadID,
     setIsThreadsPanelOpen,
     setIsCurrentChannelThread
   ]);
 
   const toggleIsOpen = useCallback(() => {
-    // If this category has an active channel
-    const isActiveCategory = !!currentChannelRef.current;
+    const currentChannel = currentChannelRef.current;
+    const categoryElement = categoryRef.current;
 
-    // If category with active channel is below this one
-    const activeCategoryIsBelow =
-      categoryRef.current && initChannelYPos > categoryRef.current.offsetTop;
+    if (currentChannel) {
+      const isActiveCategory = !!currentChannel;
+      // If category with active channel is below this one
+      const activeCategoryIsBelow = currentChannel && initChannelYPos > currentChannel.offsetTop;
 
-    // When we close the category
-    if (isCategoryOpen) {
-      const channelHeight = 25;
-      // const channelHeight = 23;
+      // When we close the category
+      if (isCategoryOpen) {
+        // Font height
+        const channelHeight = 22;
 
-      if (!isActiveCategory && activeCategoryIsBelow) {
-        // When closing a category that isnt the active category
-        // and the active category is below this one, update the
-        // channels initial Y and current Y
+        if (!isActiveCategory && activeCategoryIsBelow) {
+          setCurrentChannelYPos(currentChannelY - channelsConHeight);
+          setInitChannelYPos(initChannelYPos - channelsConHeight);
+        }
 
-        setCurrentChannelYPos(currentChannelY - channelsConHeight);
-        setInitChannelYPos(initChannelYPos - channelsConHeight);
+        // When closing an active channel
+        if (isActiveCategory && categoryElement) {
+          const isCurrentChannelThread = !!threadId;
+
+          if (isCurrentChannelThread) {
+            // For threads
+            // threadHeight = Channel Height * 2 - 10
+            const threadHeight = 54;
+            setCurrentChannelYPos(categoryElement.offsetTop + threadHeight);
+          } else {
+            setCurrentChannelYPos(categoryElement.offsetTop + channelHeight);
+          }
+        }
+        setIsCategoryOpen(false);
       }
-      // When closing an active channel
-      if (isActiveCategory && categoryRef.current) {
-        setCurrentChannelYPos(categoryRef.current.offsetTop + channelHeight);
-      }
-      setIsCategoryOpen(false);
-    }
-    // When we open the category
-    else {
-      // When opening an active category
-      if (isActiveCategory) {
-        setCurrentChannelYPos(initChannelYPos);
-      }
 
-      // When opening a category that isnt active and the active
-      // category is below this one
-      if (!isActiveCategory && activeCategoryIsBelow) {
-        setInitChannelYPos(initChannelYPos + channelsConHeight);
+      // When we re-open the category
+      else {
+        if (isActiveCategory) {
+          setCurrentChannelYPos(initChannelYPos);
+        } else if (!isActiveCategory && activeCategoryIsBelow) {
+          setInitChannelYPos(initChannelYPos + channelsConHeight);
 
-        setCurrentChannelYPos(currentChannelY + channelsConHeight);
+          setCurrentChannelYPos(currentChannelY + channelsConHeight);
+        }
+
+        setIsCategoryOpen(true);
       }
-      setIsCategoryOpen(true);
     }
   }, [
     isCategoryOpen,
@@ -105,7 +104,8 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
     setCurrentChannelYPos,
     currentChannelY,
     channelsConHeight,
-    setInitChannelYPos
+    setInitChannelYPos,
+    threadId
   ]);
 
   return (
@@ -119,10 +119,10 @@ export const Category = ({ category, currentChannelID, currentThreadID }: Catego
 
       <ChannelsContainer
         ref={channelsConRef}
-        currentChannelID={currentChannelID}
+        currentChannelID={channelId}
         isCategoryOpen={isCategoryOpen}
         category={category}
-        currentThreadID={currentThreadID ?? ''}
+        currentThreadID={threadId ?? ''}
         currentChannelRef={currentChannelRef}
       />
     </Styles.CategoryContainer>

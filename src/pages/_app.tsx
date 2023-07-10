@@ -86,7 +86,11 @@ function App({ Component, pageProps }: AppProps) {
       marginY: theme.space.xxs,
       paddingX: theme.space.lg,
 
-      borderRadius: theme.radii.xxs
+      borderRadius: theme.radii.xxs,
+
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden'
     },
 
     '#__next': {

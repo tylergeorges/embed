@@ -3,64 +3,79 @@ import { useEffect, useRef, useState } from 'react';
 
 interface ToolTipProps {
   label: string;
-  children: React.ReactNode;
+
+  children: ({ childRef }: { childRef: React.RefObject<HTMLDivElement> }) => React.ReactNode;
+
   placement: 'top' | 'bottom';
-  /** Use when testing */
-  show?: boolean;
+
+  tooltipEnabled?: boolean;
 }
 
-export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
+export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipProps) => {
   const [showToolTip, setShowToolTip] = useState(false);
+
+  const visitedRef = useRef(false);
+
   const childrenConRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
-  const [left, setLeft] = useState(0);
-  const [visited, setVisited] = useState(false);
 
-  const toggleTooltip = () => {
-    setShowToolTip(prev => !prev);
+  const openTooltip = () => {
+    if (!tooltipEnabled) {
+      setShowToolTip(false);
+    } else {
+      setShowToolTip(true);
+    }
+  };
+  const hideTooltip = () => {
+    setShowToolTip(false);
   };
 
-  useEffect(() => {
+  function getTooltipPosition() {
     const childrenRef = childrenConRef.current;
     const tooltipElement = tooltipRef.current;
 
-    if (childrenRef && tooltipElement && !visited) {
-      setVisited(true);
+    if (childrenRef && tooltipElement) {
+      const childRect = childrenRef.getBoundingClientRect();
+      const tooltipOffscreen = childRect.x + tooltipElement.offsetWidth >= window.innerWidth;
 
-      const tooltipFor = childrenRef.getBoundingClientRect();
-      const labelX = Math.floor(tooltipFor.x + tooltipElement.offsetWidth);
+      if (tooltipOffscreen) {
+        const newX =
+          childrenRef.offsetLeft + (window.innerWidth - childRect.x - tooltipElement.clientWidth);
 
-      const isTooltipOffscreen = labelX >= window.innerWidth;
-
-      if (isTooltipOffscreen && left === 0 && !visited) {
-        const moveAmount = labelX - window.innerWidth;
-        setLeft(tooltipElement.offsetLeft - moveAmount);
+        tooltipElement.style.left = `${newX}px`;
       }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [left]);
+  }
+  useEffect(() => {
+    // Bounding client X position changes from initial render
+    const getPosTimeout = setTimeout(() => {
+      if (!visitedRef.current) {
+        visitedRef.current = true;
+        getTooltipPosition();
+      } else {
+        clearTimeout(getPosTimeout);
+      }
+    }, 400);
 
-  const tooltipXPos =
-    left !== 0
-      ? {
-          left
-        }
-      : {};
+    window.addEventListener('resize', getTooltipPosition);
+
+    return () => {
+      window.removeEventListener('resize', getTooltipPosition);
+      clearTimeout(getPosTimeout);
+    };
+  }, []);
 
   return (
     <Styles.ToolTipWrapper
       onTouchStart={undefined}
-      onMouseEnter={toggleTooltip}
-      onMouseLeave={toggleTooltip}
+      onMouseEnter={openTooltip}
+      onMouseLeave={hideTooltip}
     >
-      <div ref={childrenConRef}>{children}</div>
+      <Styles.ToolTipChildWrapper>
+        {children({ childRef: childrenConRef })}
+      </Styles.ToolTipChildWrapper>
 
-      <Styles.ToolTipContainer
-        visible={show || showToolTip}
-        placement={placement}
-        ref={tooltipRef}
-        css={tooltipXPos}
-      >
+      <Styles.ToolTipContainer visible={showToolTip} placement={placement} ref={tooltipRef}>
         <Styles.ToolTipContent>{label}</Styles.ToolTipContent>
       </Styles.ToolTipContainer>
     </Styles.ToolTipWrapper>

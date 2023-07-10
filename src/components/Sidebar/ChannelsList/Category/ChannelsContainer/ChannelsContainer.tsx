@@ -26,9 +26,10 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
               <Styles.ChannelsWrapper draggable={false}>
                 <Channel
                   channel={channel}
-                  isActive={!currentThreadID && channel.id === currentChannelID}
+                  isActive={channel.id === currentChannelID}
                   isCategoryOpen={isCategoryOpen}
                   ref={currentChannelRef}
+                  channelHasActiveThread={!!currentThreadID && channel.id === currentChannelID}
                 />
               </Styles.ChannelsWrapper>
 
@@ -43,6 +44,9 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
                         isActive={thread.id === currentThreadID}
                         isCategoryOpen={isCategoryOpen}
                         ref={currentChannelRef}
+                        channelHasActiveThread={
+                          !!currentThreadID && channel.id === currentChannelID
+                        }
                       />
                     </Styles.ThreadsWrapper>
                   )}

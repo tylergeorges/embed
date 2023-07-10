@@ -44,8 +44,9 @@ export interface IconProps {
     | undefined;
   customSize?: number;
   type?: 'headerIcon';
+  iconContent?: string | null;
 }
-export const Icons = ({ name, color, css, size, customSize, type }: IconProps) => (
+export const Icons = ({ name, color, css, size, customSize, type, iconContent }: IconProps) => (
   <IconRoot
     css={css}
     size={size ?? 'regular'}
@@ -54,5 +55,6 @@ export const Icons = ({ name, color, css, size, customSize, type }: IconProps) =
     viewBox={customSize ? `0 0 ${customSize}px ${customSize}px` : '0 0 24 24'}
   >
     <use href={`${iconData[name]}#svg`} height={customSize} />
+    {iconContent}
   </IconRoot>
 );

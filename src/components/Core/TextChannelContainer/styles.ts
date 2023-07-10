@@ -259,7 +259,6 @@ export const TextBoxInner = styled.withConfig({
   position: 'relative',
 
   width: '100%',
-  height: '100%',
   maxHeight: '50vh',
 
   overflowY: 'auto'
@@ -301,10 +300,8 @@ export const TextInput = styled.withConfig({
   border: 'none',
   backgroundColor: 'transparent',
 
-  height: 'auto',
   width: '100%',
 
-  display: 'block',
   position: 'relative',
   justifyContent: 'flex-start',
   alignItems: 'center',

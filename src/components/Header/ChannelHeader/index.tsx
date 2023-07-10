@@ -9,12 +9,12 @@ import { useStoreActions, useStoreState } from '@state';
 
 export const ChannelHeader = () => {
   const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const currentChannel = useStoreState(state => state.guild.currentChannel);
 
   const openTopicModal = () => {
     setShowTopicModal(true);
   };
+
   return (
     <Styles.ChannelHeaderRoot>
       <Styles.ChannelHeaderNameWrapper role="dialog" aria-modal="true">

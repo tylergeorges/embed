@@ -1,6 +1,6 @@
 import * as Styles from '@components/Core/TextChannelContainer/styles';
 import { useStoreState } from '@state';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type ModifierKeys = {
@@ -19,11 +19,7 @@ export const TextBoxInput = () => {
     Shift: { isHolding: false },
     Control: { isHolding: false }
   });
-  const channelName = useMemo(
-    () => translate.t('input.message', { CHANNEL: currentChannel?.name }),
-    [translate, currentChannel]
-  );
-  // @ts-ignore
+
   const [, setMessageContent] = useState('');
 
   const [showPlaceHolder, setShowPlaceholder] = useState(true);
@@ -31,6 +27,8 @@ export const TextBoxInput = () => {
   const [isAllContentSelected, setIsAllContentSelected] = useState(false);
 
   const inputRef = useRef<HTMLDivElement>(null);
+
+  if (!currentChannel) return <></>;
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (
@@ -134,7 +132,11 @@ export const TextBoxInput = () => {
         inputMode="text"
       />
 
-      {showPlaceHolder && <Styles.TextBoxPlaceholder>{channelName}</Styles.TextBoxPlaceholder>}
+      {showPlaceHolder && (
+        <Styles.TextBoxPlaceholder>
+          {translate.t('input.message', { CHANNEL: currentChannel.name })}
+        </Styles.TextBoxPlaceholder>
+      )}
     </Styles.TextBoxInputWrapper>
   );
 };

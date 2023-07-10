@@ -29,8 +29,6 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
     [currentChannelThreads.length]
   );
 
-  // if (!showThreadsModal) return null;
-
   return (
     <>
       <Popout

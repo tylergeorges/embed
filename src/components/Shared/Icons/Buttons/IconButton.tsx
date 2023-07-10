@@ -4,13 +4,12 @@ import {
 } from '@components/Shared/Icons/Buttons/IconButtonWrapper';
 import { IconProps, Icons } from '@components/Shared/Icons/Icons';
 
-interface Props extends IconProps, Omit<IconButtonWrapperProps, 'children'> {
+interface IconButtonProps extends IconProps, Omit<IconButtonWrapperProps, 'children'> {
   onClick: (arg0: any) => void;
 }
 
 export const IconButton = ({
   onClick,
-  alwaysShowTooltip,
   name,
   color,
   css,
@@ -21,17 +20,20 @@ export const IconButton = ({
   tooltipDisabled,
   tooltipLabel,
   tooltipPlacement,
-  customSize
-}: Props) => (
+  customSize,
+  iconContent,
+  tooltipDisabledIfActive
+}: IconButtonProps) => (
   <IconButtonWrapper
     tooltipLabel={tooltipLabel}
-    backgroundGlowSize={backgroundGlowSize}
     tooltipPlacement={tooltipPlacement}
-    onClick={onClick}
-    alwaysShowTooltip={alwaysShowTooltip}
+    tooltipDisabledIfActive={tooltipDisabledIfActive}
     tooltipDisabled={tooltipDisabled}
     backgroundGlowOnHover={backgroundGlowOnHover}
+    backgroundGlowSize={backgroundGlowSize}
+    onClick={onClick}
     isActive={isActive}
+    iconContent={iconContent}
   >
     <Icons size={size} color={color} name={name} css={css} customSize={customSize} />
   </IconButtonWrapper>

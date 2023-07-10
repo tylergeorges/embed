@@ -1,5 +1,4 @@
 import { theme, styled, commonComponentId } from '@stitches';
-// import { styled } from '@stitches/react';
 
 export const Ham = styled.withConfig({
   displayName: 'hamburger',

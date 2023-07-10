@@ -189,7 +189,6 @@ export const useMessages = ({
 
   const [messages, setMessages] = useState<BaseMessageFragment[]>([]);
   const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
-  // const isClientConnected = useRef(false);
   const [{ data }, fetchHook] = useQuery({
     query: messagesQuery,
     variables
@@ -203,7 +202,6 @@ export const useMessages = ({
 
     // @ts-ignore
     const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
-    console.log(msgs);
     if (msgs.length) {
       setNewMessageGroupLength(groupMessages(msgs).length);
 

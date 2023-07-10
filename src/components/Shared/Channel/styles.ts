@@ -1,4 +1,3 @@
-// import { styled } from '@stitches/react';
 import { commonComponentId, theme, styled } from '@stitches';
 
 const IconRoot = styled.withConfig({
@@ -14,7 +13,6 @@ const IconRoot = styled.withConfig({
   backgroundSize: '20px 20px',
   backgroundRepeat: 'no-repeat'
 });
-//
 
 // TODO: Remove these and use the Icons and IconButton component instead.
 export const Hash = styled.withConfig({

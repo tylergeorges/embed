@@ -12,21 +12,25 @@ interface ChannelNameProps {
   /** Check if the channel is the current channel selected. */
   isActive: boolean;
 
-  channel: IChannel | IThread;
-
   isCategoryOpen: boolean;
+
+  channelHasActiveThread: boolean;
+
+  channel: IChannel | IThread;
 
   isThread?: boolean;
 }
 
 /** Component that handles rendering of each channel name. */
 export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
-  ({ channel, isActive, isCategoryOpen, isThread }, ref) => {
+  ({ channel, isActive, isCategoryOpen, isThread, channelHasActiveThread }, ref) => {
     const guildID = useStoreState(state => state.guild.data!.id) as string;
+
     const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
     const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
     const setContextMenuData = useStoreActions(state => state.ui.setContextMenuData);
     const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
+
     const { channelId } = useAppRouter();
 
     const currentGuildUrl = `/channels/${guildID}`;
@@ -74,24 +78,24 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
           />
         ) : (
           <Styles.ChannelNameInner
-            active_state={isActive}
+            active_state={isActive && !channelHasActiveThread}
             href={`${currentGuildUrl}/${channel.id}`}
-            ref={isActive ? ref : null}
+            ref={isActive && !channelHasActiveThread ? ref : null}
             draggable={false}
-            // ! USES CLASS FROM GLOBAL CSS SO THE CHANNEL HIGHLIGHTER AND CHANNEL NAME
+            // ! USES CLASSNAME FROM GLOBAL CSS SO THE CHANNEL HIGHLIGHTER AND CHANNEL NAME
             // ! GET FORMATTED THE SAME
             className="channel-name"
             onContextMenu={handleContextMenuClick}
           >
-            {channel.type === ChannelType.GuildText && (
-              <Icons name="TextChannelHash" color="dark" size="small" />
-            )}
+            <div>
+              {channel.type === ChannelType.GuildText && (
+                <Icons name="TextChannelHash" color="dark" size="small" />
+              )}
+              {channel.type === ChannelType.GuildAnnouncement && <News />}
+              {channel.type === ChannelType.GuildForum && <Fourm />}
+            </div>
 
-            {channel.type === ChannelType.GuildAnnouncement && <News />}
-
-            {channel.type === ChannelType.GuildForum && <Fourm />}
-
-            {channel.name}
+            <Styles.ChannelNameContent> {channel.name}</Styles.ChannelNameContent>
           </Styles.ChannelNameInner>
         )}
       </Styles.ChannelNameWrapper>

@@ -5,7 +5,6 @@ export const IconRoot = styled.withConfig({
   componentId: commonComponentId
 })('svg', {
   justifySelf: 'flex-end',
-
   variants: {
     size: {
       small: {
@@ -61,6 +60,7 @@ export const IconButtonRoot = styled.withConfig({
   alignItems: 'center',
   justifyContent: 'center',
 
+  cursor: 'pointer',
   width: theme.sizes.iconSizeMed,
   height: theme.sizes.iconSizeMed,
 
@@ -69,7 +69,39 @@ export const IconButtonRoot = styled.withConfig({
   background: 'transparent',
   outline: 'none',
   border: 'none',
-  whiteSpace: 'nowrap'
+  whiteSpace: 'nowrap',
+
+  '&:hover': {
+    path: {
+      fill: theme.colors.primaryOpacity80
+    },
+
+    use: {
+      color: theme.colors.primaryOpacity80
+    }
+  },
+
+  variants: {
+    backgroundGlowOnHover: {
+      true: {
+        '&:hover': {
+          backgroundColor: theme.colors.primaryOpacity20
+        }
+      }
+    },
+
+    isActive: {
+      true: {
+        path: {
+          fill: theme.colors.iconActive
+        },
+
+        use: {
+          color: theme.colors.iconActive
+        }
+      }
+    }
+  }
 });
 
 export const EmojisIconRoot = styled.withConfig({
@@ -121,13 +153,14 @@ export const IconButtonChildrenWrapper = styled.withConfig({
 
   borderRadius: theme.radii.round,
 
-  padding: theme.space.xxs,
+  padding: theme.space.xs,
 
   cursor: 'pointer',
   background: 'transparent',
   outline: 'none',
   border: 'none',
   transition: 'background-color ease 150ms',
+  color: 'white',
 
   '&:hover': {
     path: {
@@ -160,4 +193,15 @@ export const IconButtonChildrenWrapper = styled.withConfig({
       }
     }
   }
+});
+
+export const IconButtonContentWrapper = styled.withConfig({
+  displayName: 'icon-button_content_wrapper',
+  componentId: commonComponentId
+})('span', {
+  position: 'relative',
+
+  color: theme.colors.primaryOpacity70,
+  fontSize: theme.fontSizes.md,
+  marginLeft: theme.space.sm
 });

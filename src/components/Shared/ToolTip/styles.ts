@@ -14,6 +14,7 @@ export const ToolTipContainer = styled.withConfig({
   pointerEvents: 'none',
   backgroundColor: theme.colors.tooltipBackground,
   transition: 'transform 100ms ease',
+  zIndex: 2,
 
   variants: {
     visible: {
@@ -43,7 +44,7 @@ export const ToolTipContent = styled.withConfig({
   position: 'relative',
   display: 'inline-block',
 
-  fontSize: theme.fontSizes.md,
+  fontSize: theme.fontSizes.lg,
   textAlign: 'center'
 });
 
@@ -51,8 +52,26 @@ export const ToolTipWrapper = styled.withConfig({
   displayName: 'tooltip-wrapper',
   componentId: commonComponentId
 })('div', {
-  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center'
+});
+
+export const ToolTipChildWrapper = styled.withConfig({
+  displayName: 'tooltip-child_wrapper',
+  componentId: commonComponentId
+})('div', {
+  display: 'flex',
   alignItems: 'center'
+});
+
+export const ToolTipChildrenWrapper = styled.withConfig({
+  displayName: 'tooltip-children_wrapper',
+  componentId: commonComponentId
+})('div', {
+  position: 'relative',
+
+  width: theme.sizes.iconSizeSmall,
+  height: theme.sizes.iconSizeSmall
 });

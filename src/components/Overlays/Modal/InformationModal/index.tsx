@@ -21,7 +21,8 @@ export const InformationModal = ({
   <Modal isOpen={isOpen} title={title} hideModal={hideModal} disableBackdrop={disableBackdrop}>
     <Styles.ModalHeader>
       <Styles.ModalHeaderContent className="non-dragable">
-        {title}{' '}
+        {title}
+
         <IconButton
           name="Close"
           tooltipDisabled
