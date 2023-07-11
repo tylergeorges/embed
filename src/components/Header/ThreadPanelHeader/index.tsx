@@ -1,10 +1,10 @@
 import * as Styles from '@components/Header/styles';
-import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
+import { Hamburger } from '@icons/Buttons/Hamburger';
+import { Icons } from '@icons/index';
+import { CloseButton } from '@icons/Buttons/CloseButton';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback } from 'react';
 import { useMediaQuery, useAppRouter } from '@lib/hooks';
-import { Icons } from '@components/Shared/Icons/Icons';
-import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 
 export const ThreadPanelHeader = () => {
   const setIsThreadsPanelOpen = useStoreActions(state => state.ui.setIsThreadsPanelOpen);
@@ -30,12 +30,7 @@ export const ThreadPanelHeader = () => {
           <Icons name="ThreadHash" color="dark" type="headerIcon" />
           {currentThread.name}
         </Styles.ThreadPanelHeaderIconContent>
-        <IconButton
-          name="Close"
-          backgroundGlowOnHover
-          onClick={closePanel}
-          backgroundGlowSize={30}
-        />
+        <CloseButton onClick={closePanel} />
       </Styles.ThreadPanelHeaderIconContainer>
     </Styles.ThreadPanelHeaderRoot>
   );

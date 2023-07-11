@@ -13,23 +13,26 @@ interface CategoryProps {
 
 /** This component renders a category and it's channels. */
 export const Category = ({ category }: CategoryProps) => {
+  const { threadId, channelId } = useAppRouter();
+
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
+  const [channelsConHeight, setChannelsConHeight] = useState(0);
   // Refs
   const currentChannelRef = useRef<HTMLAnchorElement>(null);
   const categoryRef = useRef<HTMLDivElement>(null);
+  // Ref used to get the height of the container that holds the channel names
+  const channelsConRef = useRef<HTMLDivElement>(null);
 
   const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
   const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
 
   const setIsCurrentChannelThread = useStoreActions(state => state.ui.setIsCurrentChannelThread);
+
+  // TODO: find out why this breaks channel highlighter when thread is opened and its not a dep in useEffect
   const setIsThreadsPanelOpen = useStoreActions(state => state.ui.setIsThreadsPanelOpen);
+
   const initChannelYPos = useStoreState(state => state.ui.initChannelYPos);
   const currentChannelY = useStoreState(state => state.ui.currentChannelYPos);
-
-  // Ref used to get the height of the container that holds the channel names
-  const channelsConRef = useRef<HTMLDivElement>(null);
-  const [channelsConHeight, setChannelsConHeight] = useState(0);
-  const { threadId, channelId } = useAppRouter();
 
   useEffect(() => {
     // ! Sets the initial ActiveBackground component's position
@@ -51,52 +54,48 @@ export const Category = ({ category }: CategoryProps) => {
   ]);
 
   const toggleIsOpen = useCallback(() => {
-    const currentChannel = currentChannelRef.current;
-    const categoryElement = categoryRef.current;
+    const isActiveCategory = !!currentChannelRef.current;
 
-    if (currentChannel) {
-      const isActiveCategory = !!currentChannel;
-      // If category with active channel is below this one
-      const activeCategoryIsBelow = currentChannel && initChannelYPos > currentChannel.offsetTop;
+    // If category with active channel is below this one
+    const activeCategoryIsBelow =
+      categoryRef.current && initChannelYPos > categoryRef.current.offsetTop;
 
-      // When we close the category
-      if (isCategoryOpen) {
-        // Font height
-        const channelHeight = 22;
+    // When we close the category
+    if (isCategoryOpen) {
+      // Channel name font height
+      const channelHeight = 22;
 
-        if (!isActiveCategory && activeCategoryIsBelow) {
-          setCurrentChannelYPos(currentChannelY - channelsConHeight);
-          setInitChannelYPos(initChannelYPos - channelsConHeight);
-        }
-
-        // When closing an active channel
-        if (isActiveCategory && categoryElement) {
-          const isCurrentChannelThread = !!threadId;
-
-          if (isCurrentChannelThread) {
-            // For threads
-            // threadHeight = Channel Height * 2 - 10
-            const threadHeight = 54;
-            setCurrentChannelYPos(categoryElement.offsetTop + threadHeight);
-          } else {
-            setCurrentChannelYPos(categoryElement.offsetTop + channelHeight);
-          }
-        }
-        setIsCategoryOpen(false);
+      if (!isActiveCategory && activeCategoryIsBelow) {
+        setCurrentChannelYPos(currentChannelY - channelsConHeight);
+        setInitChannelYPos(initChannelYPos - channelsConHeight);
       }
+
+      // When closing an active channel
+      if (isActiveCategory && categoryRef.current) {
+        const isCurrentChannelThread = !!threadId;
+
+        if (isCurrentChannelThread) {
+          // For threads
+          // threadHeight = Channel Height * 2 - 10
+          const threadHeight = 54;
+          setCurrentChannelYPos(categoryRef.current.offsetTop + threadHeight);
+        } else {
+          setCurrentChannelYPos(categoryRef.current.offsetTop + channelHeight);
+        }
+      }
+      setIsCategoryOpen(false);
 
       // When we re-open the category
-      else {
-        if (isActiveCategory) {
-          setCurrentChannelYPos(initChannelYPos);
-        } else if (!isActiveCategory && activeCategoryIsBelow) {
-          setInitChannelYPos(initChannelYPos + channelsConHeight);
+    } else {
+      if (isActiveCategory && categoryRef.current) {
+        setCurrentChannelYPos(initChannelYPos);
+      } else if (!isActiveCategory && activeCategoryIsBelow && categoryRef.current) {
+        setInitChannelYPos(initChannelYPos + channelsConHeight);
 
-          setCurrentChannelYPos(currentChannelY + channelsConHeight);
-        }
-
-        setIsCategoryOpen(true);
+        setCurrentChannelYPos(currentChannelY + channelsConHeight);
       }
+
+      setIsCategoryOpen(true);
     }
   }, [
     isCategoryOpen,

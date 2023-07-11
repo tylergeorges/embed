@@ -21,7 +21,9 @@ type IconNames = keyof typeof iconData;
 
 export interface IconProps {
   name: IconNames;
+
   css?: CSS;
+
   size?:
     | 'small'
     | 'large'
@@ -33,6 +35,7 @@ export interface IconProps {
         [x: string]: 'small' | 'large' | 'regular' | undefined;
       })
     | undefined;
+
   color?:
     | 'dark'
     | 'light'
@@ -42,17 +45,33 @@ export interface IconProps {
         [x: string]: 'dark' | 'light' | undefined;
       })
     | undefined;
+
   customSize?: number;
+
   type?: 'headerIcon';
+
   iconContent?: string | null;
+
+  customViewbox?: string;
 }
-export const Icons = ({ name, color, css, size, customSize, type, iconContent }: IconProps) => (
+export const Icons = ({
+  name,
+  color,
+  css,
+  size,
+  customSize,
+  type,
+  iconContent,
+  customViewbox
+}: IconProps) => (
   <IconRoot
     css={css}
-    size={size ?? 'regular'}
+    // css={css ? (customSize ? { ...css, width: customSize, height: customSize } : css) : {}}
+    size={size || 'regular'}
     type={type}
     color={color ?? 'light'}
-    viewBox={customSize ? `0 0 ${customSize}px ${customSize}px` : '0 0 24 24'}
+    viewBox={customViewbox || (customSize ? `0 0 ${customSize} ${customSize}` : '0 0 24 24')}
+    // viewBox={customSize ? `0 0 ${customSize}px ${customSize}px` : '0 0 24 24'}
   >
     <use href={`${iconData[name]}#svg`} height={customSize} />
     {iconContent}

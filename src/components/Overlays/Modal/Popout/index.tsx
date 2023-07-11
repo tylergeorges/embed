@@ -1,8 +1,8 @@
 import * as Styles from '@components/Overlays/Modal/styles';
-import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
-import { IconProps, Icons } from '@components/Shared/Icons/Icons';
+import { IconProps, Icons } from '@components/Shared/Icons';
 import { useMediaQuery } from '@lib/hooks';
 import { ReactElement } from 'react';
+import { CloseButton } from '@icons/Buttons/CloseButton';
 
 type TitleIcon = Pick<IconProps, 'name'>['name'];
 interface PopoutProps {
@@ -26,31 +26,30 @@ export const Popout = ({
 
   if (popoutFor && isOpen) {
     return (
-      <>
-        <Styles.PopoutContainer
-          isMobile={windowIsMobile}
-          isOpen={isOpen}
-          aria-label={title}
-          role="dialog"
-          css={{
-            right: `calc(${popoutFor?.clientLeft}px + 80px)`
-          }}
-        >
-          <Styles.PopoutHeader>
-            <Styles.PopoutHeaderContent>
-              <Styles.PopoutTitleWrapper>
-                {TitleIcon && <Icons name={TitleIcon} />}
+      <Styles.PopoutContainer
+        isMobile={windowIsMobile}
+        isOpen={isOpen}
+        aria-label={title}
+        role="dialog"
+        css={{
+          right: `calc(${popoutFor?.clientLeft}px + 80px)`
+        }}
+      >
+        <Styles.PopoutHeader>
+          <Styles.PopoutHeaderContent>
+            <Styles.PopoutTitleWrapper>
+              {TitleIcon && <Icons name={TitleIcon} />}
 
-                <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
-              </Styles.PopoutTitleWrapper>
-              <IconButton onClick={hideModal} name="Close" backgroundGlowOnHover tooltipDisabled />
-            </Styles.PopoutHeaderContent>
-          </Styles.PopoutHeader>
+              <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
+            </Styles.PopoutTitleWrapper>
 
-          {children}
-        </Styles.PopoutContainer>
-      </>
+            <CloseButton onClick={hideModal} />
+          </Styles.PopoutHeaderContent>
+        </Styles.PopoutHeader>
+
+        {children}
+      </Styles.PopoutContainer>
     );
   }
-  return null;
+  return <></>;
 };

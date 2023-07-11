@@ -5,22 +5,20 @@ import { NoThreadsIcon } from '@components/Shared/Icons/NoThreadsIcon';
 import { useAppRouter } from '@lib/hooks';
 import { useStoreState, useStoreActions } from '@state';
 import { ReactElement, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ThreadsPopoutProps {
   children: ReactElement<any, any>;
 }
 export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
-  const showThreadsModal = useStoreState(state => state.ui.showThreadsModal);
-  const setShowThreadsModal = useStoreActions(state => state.ui.setShowThreadsModal);
-  const childrenRef = useRef<HTMLDivElement>(null);
-
-  const hideThreadsModal = () => {
-    setShowThreadsModal(false);
-  };
-
-  const guildChannels = useStoreState(state => state.guild.guildChannels);
-
+  const translate = useTranslation();
   const { guildId, channelId, router } = useAppRouter();
+
+  const showThreadsModal = useStoreState(state => state.ui.showThreadsModal);
+  const guildChannels = useStoreState(state => state.guild.guildChannels);
+  const setShowThreadsModal = useStoreActions(state => state.ui.setShowThreadsModal);
+
+  const childrenRef = useRef<HTMLDivElement>(null);
 
   const currentChannelThreads = guildChannels[channelId]?.threads ?? [];
 
@@ -29,10 +27,14 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
     [currentChannelThreads.length]
   );
 
+  const hideThreadsModal = () => {
+    setShowThreadsModal(false);
+  };
+
   return (
     <>
       <Popout
-        title="Threads"
+        title={translate.t('threads.label')}
         TitleIcon="ThreadHash"
         isOpen={showThreadsModal}
         hideModal={hideThreadsModal}
@@ -40,7 +42,9 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
       >
         {channelHasThreads ? (
           <Styles.ThreadsPopoutContent>
-            <Styles.ThreadsPopoutListHeader>OLDER THREADS</Styles.ThreadsPopoutListHeader>
+            <Styles.ThreadsPopoutListHeader>
+              {translate.t('olderthreads.label')}
+            </Styles.ThreadsPopoutListHeader>
 
             <Styles.ThreadsPopoutList>
               {' '}
@@ -61,7 +65,7 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
         ) : (
           <Styles.NoThreadsContent>
             <NoThreadsIcon />
-            <Styles.NoThreadsHeader>There are no threads.</Styles.NoThreadsHeader>
+            <Styles.NoThreadsHeader>{translate.t('nothreads')}</Styles.NoThreadsHeader>
           </Styles.NoThreadsContent>
         )}
       </Popout>

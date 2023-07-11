@@ -2,7 +2,6 @@ import * as Styles from '@components/Core/TextChannelContainer/styles';
 import { useStoreState } from '@state';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import '../../../../i18n';
 
 type ModifierKeys = {
   Shift: {

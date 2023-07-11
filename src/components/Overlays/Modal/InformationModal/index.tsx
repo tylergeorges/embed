@@ -1,7 +1,7 @@
 import { Modal } from '@components/Overlays/Modal';
 import * as Styles from '@components/Overlays/Modal/styles';
-import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { ReactElement } from 'react';
+import { CloseButton } from '@icons/Buttons/CloseButton';
 
 interface InformationModalProps {
   children: ReactElement<any, any>;
@@ -23,13 +23,7 @@ export const InformationModal = ({
       <Styles.ModalHeaderContent className="non-dragable">
         {title}
 
-        <IconButton
-          name="Close"
-          tooltipDisabled
-          backgroundGlowOnHover
-          backgroundGlowSize={35}
-          onClick={hideModal}
-        />
+        <CloseButton onClick={hideModal} />
       </Styles.ModalHeaderContent>
     </Styles.ModalHeader>
 

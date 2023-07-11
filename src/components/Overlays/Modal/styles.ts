@@ -20,7 +20,7 @@ export const ModalBackdrop = styled.withConfig({
   alignItems: 'center',
   justifyContent: 'center',
 
-  zIndex: 10,
+  zIndex: 12,
   transition: 'opacity 300ms ease',
   opacity: 0,
   backgroundColor: 'rgba(0,0,0,0.5)',
@@ -142,7 +142,8 @@ export const PopoutHeader = styled.withConfig({
   borderTopRightRadius: theme.radii.sm,
   borderTopLeftRadius: theme.radii.sm,
 
-  backgroundColor: theme.colors.backgroundTertiary
+  backgroundColor: theme.colors.backgroundTertiary,
+  userSelect: 'none'
 });
 
 export const PopoutContainer = styled.withConfig({
@@ -241,7 +242,7 @@ export const ChannelTopicModalContent = styled.withConfig({
   fontSize: theme.fontSizes.lg,
   lineHeight: '20px',
 
-  color: 'rgba(255,255,255,0.7)',
+  color: theme.colors.primaryOpacity70,
 
   height: '100%',
 
@@ -257,20 +258,13 @@ export const ChannelTopicModalContent = styled.withConfig({
   overflowWrap: 'break-word'
 });
 
-export const NoThreadsStars = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'popout-no_threads_stars'
-})('svg', {
-  left: -10,
-  position: 'absolute'
-});
-
 export const NoThreadsIconOuter = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'popout-no_threads_outer'
 })('div', {
   position: 'relative',
-  marginBottom: theme.space.xl
+  marginBottom: theme.space.xl,
+  userSelect: 'none'
 });
 
 export const NoThreadsIconInner = styled.withConfig({
@@ -283,7 +277,18 @@ export const NoThreadsIconInner = styled.withConfig({
 
   padding: theme.space.xxl,
 
-  borderImageOutset: 'stretch'
+  borderImageOutset: 'stretch',
+  userSelect: 'none'
+});
+
+export const NoThreadsHashWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-no_threads_hash_wrapper'
+})('div', {
+  padding: theme.space.xxl,
+  backgroundColor: theme.colors.background,
+  borderRadius: theme.radii.round,
+  userSelect: 'none'
 });
 
 export const ThreadsPopoutList = styled.withConfig({
@@ -363,16 +368,17 @@ export const NoThreadsContent = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'popout-no_threads_content'
 })('div', {
+  position: 'relative',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
   alignSelf: 'center',
   justifySelf: 'center',
-  flex: 1,
 
   width: '100%',
-  height: '100%'
+  height: '100%',
+  userSelect: 'none'
 });
 
 export const NoThreadsHeader = styled.withConfig({
@@ -380,5 +386,6 @@ export const NoThreadsHeader = styled.withConfig({
   displayName: 'popout-no_threads_header'
 })('h2', {
   textAlign: 'center',
-  fontWeight: theme.fontWeights.bold
+  fontWeight: theme.fontWeights.bold,
+  userSelect: 'none'
 });

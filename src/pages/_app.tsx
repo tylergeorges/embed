@@ -5,10 +5,8 @@ import { Provider as GraphQLProvider } from 'urql';
 import { store } from '@state/store';
 import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
-import '../i18n';
-import '../../translate.d.ts';
 import { GuildProvider } from '@components/Providers';
-import React from 'react';
+import '../i18n';
 
 function App({ Component, pageProps }: AppProps) {
   const globalStyles = globalCss({

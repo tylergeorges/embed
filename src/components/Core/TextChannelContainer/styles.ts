@@ -161,33 +161,6 @@ export const MessageWrapper = styled.withConfig({
     pointerEvents: 'none'
   },
 
-  '.channel-welcome_header_con': {
-    display: 'block',
-    justifyContent: 'center',
-    flexDirection: 'column',
-    alignItems: 'center',
-    textAlign: 'center',
-
-    width: '100%',
-    margin: theme.space.xxl
-  },
-
-  '.channel-welcome_header': {
-    alignSelf: 'center',
-    textAlign: 'center',
-
-    marginBottom: 0,
-    fontSize: theme.space.xxl
-  },
-
-  '.channel-welcome_subheader': {
-    margin: 0,
-
-    fontSize: theme.fontSizes.md,
-    color: theme.colors.primaryOpacity50,
-    textAlign: 'center'
-  },
-
   variants: {
     membersListOpen: {
       false: {

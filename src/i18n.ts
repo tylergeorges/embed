@@ -24,13 +24,13 @@ const resources = loadLanguageFiles(['en-US']);
 i18next.use(initReactI18next).init({
   resources,
 
-  lng: 'en-GB',
-  fallbackLng: 'en-GB',
+  lng: 'en-US',
+  fallbackLng: 'en-US',
   interpolation: {
     escapeValue: false, // React already protects against this, so we don't need to do it here
     prefix: '{',
     suffix: '}'
   },
 
-  debug: process.env.NODE_ENV === 'development' // process.env.NODE_ENV === 'development'
+  debug: false // process.env.NODE_ENV === 'development'
 });

@@ -20,16 +20,16 @@
       "@components/*": ["./src/components/*"],
       "@graphql/*": ["./src/graphql/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@icons/*": ["./src/components/Shared/Icons/*"],
       "@state": ["./src/state"],
       "@state/*": ["./src/state/*"],
       "@stitches": ["./stitches.config.tsx"],
       "@svg-assets": ["./src/res/images/discordAssets/svgUrls.ts"],
-      "@icons/*": ["./src/res/images/discordAssets/message-renderer-icons/*"],
+      "@icon-svgs/*": ["./src/res/images/discordAssets/message-renderer-icons/*"],
       "types/*": ["./src/types/*"]
     }
   },
   "include": [
-    "translate.d.ts",
     "next-env.d.ts",
     "./svg.d.ts",
     "**/*.ts",

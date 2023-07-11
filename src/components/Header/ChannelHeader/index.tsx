@@ -22,7 +22,6 @@ export const ChannelHeader = () => {
 
         <Styles.ChannelNameTopicWrapper>
           <Hash channelHeader />
-
           <Styles.ChannelHeaderName>{currentChannel?.name}</Styles.ChannelHeaderName>
 
           <Styles.ChannelHeaderTopic onClick={openTopicModal}>

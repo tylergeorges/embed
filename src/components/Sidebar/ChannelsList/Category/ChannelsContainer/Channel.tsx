@@ -5,7 +5,7 @@ import { Fourm, News } from '@components/Shared/Channel/styles';
 import { Thread } from '@components/Sidebar/ChannelsList/Category/ChannelsContainer/Thread';
 import { IThread } from '@state/stores/guild';
 import { useAppRouter } from '@lib/hooks';
-import { Icons } from '@components/Shared/Icons/Icons';
+import { Icons } from '@components/Shared/Icons';
 import * as Styles from '../../styles';
 
 interface ChannelNameProps {
