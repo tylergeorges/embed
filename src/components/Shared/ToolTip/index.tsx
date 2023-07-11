@@ -1,5 +1,6 @@
 import * as Styles from '@components/Shared/ToolTip/styles';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ToolTipProps {
   label: string;
@@ -14,6 +15,7 @@ interface ToolTipProps {
 export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipProps) => {
   const [showToolTip, setShowToolTip] = useState(false);
 
+  const translate = useTranslation();
   const visitedRef = useRef(false);
 
   const childrenConRef = useRef<HTMLDivElement>(null);
@@ -76,7 +78,7 @@ export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipP
       </Styles.ToolTipChildWrapper>
 
       <Styles.ToolTipContainer visible={showToolTip} placement={placement} ref={tooltipRef}>
-        <Styles.ToolTipContent>{label}</Styles.ToolTipContent>
+        <Styles.ToolTipContent>{translate.t(label)}</Styles.ToolTipContent>
       </Styles.ToolTipContainer>
     </Styles.ToolTipWrapper>
   );

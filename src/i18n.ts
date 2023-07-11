@@ -19,18 +19,7 @@ function loadLanguageFiles(languages: string[]) {
   return result;
 }
 
-const resources = loadLanguageFiles([
-  'en-GB',
-  'en-US',
-  'en-PT',
-  'es-ES',
-  'de-DE',
-  'fr-FR',
-  'pt-PT',
-  'ru-RU',
-  'vi-VN',
-  'zh-CN'
-]);
+const resources = loadLanguageFiles(['en-US']);
 
 i18next.use(initReactI18next).init({
   resources,
@@ -43,5 +32,5 @@ i18next.use(initReactI18next).init({
     suffix: '}'
   },
 
-  debug: false // process.env.NODE_ENV === 'development'
+  debug: process.env.NODE_ENV === 'development' // process.env.NODE_ENV === 'development'
 });

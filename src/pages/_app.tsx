@@ -6,6 +6,7 @@ import { store } from '@state/store';
 import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
 import '../i18n';
+import '../../translate.d.ts';
 import { GuildProvider } from '@components/Providers';
 import React from 'react';
 
