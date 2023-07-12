@@ -1,5 +1,6 @@
-import { SpineIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/styles';
+import { SpineIconRoot } from '@icons/Buttons/IconButtonWrapper/styles';
 
+// TODO: Move to svg assets file
 export const Spine = () => (
   <SpineIconRoot width="12" height="11" viewBox="0 0 12 11" fill="none" aria-hidden="true">
     <path

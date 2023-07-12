@@ -1,13 +1,12 @@
 import { Category as ICategory } from '@graphql/graphql';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStoreActions, useStoreState } from '@state';
-import { ChannelsContainer } from '@components/Sidebar/ChannelsList/Category/ChannelsContainer/ChannelsContainer';
-import { useAppRouter } from '@lib/hooks';
+import { ChannelsContainer } from '@components/Sidebar/ChannelsList/Category/ChannelsContainer';
+import { useAppRouter } from '@hooks/useAppRouter';
 import * as Styles from '../styles';
 import { CategoryName } from './CategoryName';
 
 interface CategoryProps {
-  /** Category we are rendering channels for. */
   category: ICategory;
 }
 
@@ -17,12 +16,14 @@ export const Category = ({ category }: CategoryProps) => {
 
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   const [channelsConHeight, setChannelsConHeight] = useState(0);
+
   // Refs
   const currentChannelRef = useRef<HTMLAnchorElement>(null);
   const categoryRef = useRef<HTMLDivElement>(null);
   // Ref used to get the height of the container that holds the channel names
   const channelsConRef = useRef<HTMLDivElement>(null);
 
+  // Actions
   const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
   const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
 
@@ -31,6 +32,7 @@ export const Category = ({ category }: CategoryProps) => {
   // TODO: find out why this breaks channel highlighter when thread is opened and its not a dep in useEffect
   const setIsThreadsPanelOpen = useStoreActions(state => state.ui.setIsThreadsPanelOpen);
 
+  // State
   const initChannelYPos = useStoreState(state => state.ui.initChannelYPos);
   const currentChannelY = useStoreState(state => state.ui.currentChannelYPos);
 

@@ -15,7 +15,6 @@ export const ThreadPanelHeaderContainer = styled.withConfig({
 })(ChannelHeaderContainer, {});
 
 export const HeaderRoot = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'header-root'
 })('header', {
   display: 'flex',
@@ -26,7 +25,7 @@ export const HeaderRoot = styled.withConfig({
   height: theme.sizes.headerHeight,
   width: '100%',
 
-  zIndex: 8,
+  // zIndex: 8,
 
   variants: {
     shadowEnabled: {
@@ -70,7 +69,6 @@ export const ChannelHeaderName = styled.withConfig({
 });
 
 export const Stretch = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'stretch'
 })('div', {
   diplay: 'flex',
@@ -80,7 +78,6 @@ export const Stretch = styled.withConfig({
 });
 
 export const GuildHeader = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'guild-header'
 })(Stretch, {
   display: 'flex',
@@ -89,7 +86,6 @@ export const GuildHeader = styled.withConfig({
 });
 
 export const ChannelHeaderRoot = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'text-channel_header'
 })(Stretch, {
   display: 'flex',
@@ -97,7 +93,7 @@ export const ChannelHeaderRoot = styled.withConfig({
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'row',
-  zIndex: 3,
+  zIndex: theme.zIndices.modal,
   paddingX: theme.space.sm,
 
   '.text-channel_header_buttons_container': {

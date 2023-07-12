@@ -1,6 +1,7 @@
-import { useAppRouter } from '@lib/hooks';
+import React from 'react';
+import { useAppRouter } from '@hooks/useAppRouter';
 import { getEnvVar } from '@util/env';
-import type { NextPage } from 'next';
+import { NextPage } from 'next';
 
 const GuildIndex: NextPage = () => {
   const { guildId } = useAppRouter();

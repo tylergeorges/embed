@@ -1,9 +1,7 @@
 /* eslint-disable no-alert */
-import type { NextPage } from 'next';
-import * as Styles from '@components/Core';
+import React from 'react';
 import { ChannelsList } from '@components/Sidebar/ChannelsList';
 import { ContextMenu } from '@components/Overlays/ContextMenu';
-import { useContextMenu } from '@lib/hooks';
 import { useStoreState } from '@state';
 import { ThreadPanel } from '@components/Sidebar/ThreadPanel';
 import { ChannelTopicModal } from '@components/Overlays/Modal/InformationModal/ChannelTopicModal';
@@ -11,17 +9,22 @@ import { TextChannelContainer } from '@components/Core/TextChannelContainer';
 import { MessageRendererProvider } from '@widgetbot/message-renderer';
 import { styled } from '@stitches';
 import { APIChannel } from 'discord-api-types/v10';
-import { svgUrls } from '../../../res/images/discordAssets/svgUrls';
+import * as Styles from '@components/Core/styles';
+import { svgUrls } from '@svg-assets';
+import { useContextMenu } from '@hooks/useContextMenu';
 
 const MessageRendererRoot = styled('div', {
   '--fonts-main': 'GgSans',
-  height: '100%'
+  height: '100%',
+  width: '100%'
 });
 
-const GuildChannel: NextPage = () => {
-  const { disableBrowserMenu } = useContextMenu();
+export default function GuildChannel() {
+  const { disableBrowserMenu, hideContextMenu } = useContextMenu();
+
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);
   const guildChannels = useStoreState(state => state.guild.guildChannels);
+
   return (
     <MessageRendererProvider
       messageButtons={() => []}
@@ -49,18 +52,16 @@ const GuildChannel: NextPage = () => {
         <MessageRendererRoot className={themeClass}>
           <Styles.Main onContextMenu={disableBrowserMenu}>
             {showContextMenu && <ContextMenu />}
-
-            <ChannelTopicModal />
-            <Styles.InnerMain>
+            <Styles.InnerMain onClick={hideContextMenu}>
+              <ChannelTopicModal />
               <ChannelsList />
+
               <TextChannelContainer />
-              <ThreadPanel />
             </Styles.InnerMain>
+            <ThreadPanel />
           </Styles.Main>
         </MessageRendererRoot>
       )}
     </MessageRendererProvider>
   );
-};
-
-export default GuildChannel;
+}

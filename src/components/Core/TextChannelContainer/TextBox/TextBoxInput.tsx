@@ -15,6 +15,7 @@ type ModifierKeys = {
 export const TextBoxInput = () => {
   const translate = useTranslation();
   const currentChannel = useStoreState(state => state.guild.currentChannel);
+
   const [modifierKeys, setModifierKeys] = useState<ModifierKeys>({
     Shift: { isHolding: false },
     Control: { isHolding: false }
@@ -27,8 +28,6 @@ export const TextBoxInput = () => {
   const [isAllContentSelected, setIsAllContentSelected] = useState(false);
 
   const inputRef = useRef<HTMLDivElement>(null);
-
-  if (!currentChannel) return <></>;
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (
@@ -134,7 +133,7 @@ export const TextBoxInput = () => {
 
       {showPlaceHolder && (
         <Styles.TextBoxPlaceholder>
-          {translate.t('input.message', { CHANNEL: currentChannel.name })}
+          {translate.t('input.message', { CHANNEL: currentChannel?.name })}
         </Styles.TextBoxPlaceholder>
       )}
     </Styles.TextBoxInputWrapper>

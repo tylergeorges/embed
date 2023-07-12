@@ -14,7 +14,7 @@ export const ToolTipContainer = styled.withConfig({
   pointerEvents: 'none',
   backgroundColor: theme.colors.tooltipBackground,
   transition: 'transform 100ms ease',
-  zIndex: 2,
+  zIndex: theme.zIndices.tooltip,
 
   variants: {
     visible: {
@@ -28,7 +28,7 @@ export const ToolTipContainer = styled.withConfig({
 
     placement: {
       top: {
-        top: -40
+        top: -50
       },
       bottom: {
         top: 30
@@ -38,8 +38,7 @@ export const ToolTipContainer = styled.withConfig({
 });
 
 export const ToolTipContent = styled.withConfig({
-  displayName: 'tooltip-content',
-  componentId: commonComponentId
+  displayName: 'tooltip-content'
 })('span', {
   position: 'relative',
   display: 'inline-block',
@@ -62,16 +61,5 @@ export const ToolTipChildWrapper = styled.withConfig({
   displayName: 'tooltip-child_wrapper',
   componentId: commonComponentId
 })('div', {
-  display: 'flex',
   alignItems: 'center'
-});
-
-export const ToolTipChildrenWrapper = styled.withConfig({
-  displayName: 'tooltip-children_wrapper',
-  componentId: commonComponentId
-})('div', {
-  position: 'relative',
-
-  width: theme.sizes.iconSizeSmall,
-  height: theme.sizes.iconSizeSmall
 });

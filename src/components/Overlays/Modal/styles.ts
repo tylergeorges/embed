@@ -8,9 +8,8 @@ const zoomIn = keyframes({
   '100%': { scale: '1' }
 });
 
-export const ModalBackdrop = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'modal-backdrop'
+export const Backdrop = styled.withConfig({
+  displayName: 'backdrop'
 })('div', {
   width: '100%',
   height: '100%',
@@ -20,25 +19,98 @@ export const ModalBackdrop = styled.withConfig({
   alignItems: 'center',
   justifyContent: 'center',
 
-  zIndex: 12,
   transition: 'opacity 300ms ease',
   opacity: 0,
-  backgroundColor: 'rgba(0,0,0,0.5)',
-
+  backgroundColor: theme.colors.backDrop,
   variants: {
     isOpen: {
       false: {
-        transitionDelay: '0.5s',
         opacity: 0,
         pointerEvents: 'none',
 
-        transitionProperty: 'z-index, opacity'
+        transitionProperty: 'z-index, opacity',
+        zIndex: theme.zIndices.negative
       },
-      true: {
+      true: {}
+    },
+
+    mobile: {
+      true: {},
+
+      false: {
+        opacity: 0,
+
+        transitionProperty: 'z-index, opacity',
+        zIndex: theme.zIndices.negative
+      }
+    },
+
+    type: {
+      modal: {
+        zIndex: theme.zIndices.modalBackdrop
+      }
+    },
+
+    isChannelsListOpen: {
+      true: {},
+      false: {}
+    },
+
+    isMembersListOpen: {
+      true: {},
+      false: {}
+    }
+  },
+
+  compoundVariants: [
+    {
+      isOpen: true,
+      type: 'modal',
+      css: {
+        zIndex: theme.zIndices.modalBackdrop,
         opacity: 1
       }
+    },
+    {
+      mobile: true,
+      isMembersListOpen: true,
+
+      css: {
+        zIndex: theme.zIndices.membersSidebarBackdrop,
+        opacity: 1
+      }
+    },
+
+    {
+      mobile: true,
+      isChannelsListOpen: true,
+
+      css: {
+        zIndex: theme.zIndices.channelsSidebarBackdrop,
+        opacity: 1
+      }
+    },
+
+    {
+      mobile: false,
+      isMembersListOpen: true,
+
+      css: {
+        zIndex: theme.zIndices.negative,
+        opacity: 0
+      }
+    },
+
+    {
+      mobile: false,
+      isChannelsListOpen: true,
+
+      css: {
+        zIndex: theme.zIndices.negative,
+        opacity: 0
+      }
     }
-  }
+  ]
 });
 
 export const ModalContainerWrapper = styled.withConfig({
@@ -54,30 +126,30 @@ export const ModalContainerWrapper = styled.withConfig({
   height: '100%',
 
   pointerEvents: 'none',
-  zIndex: -1,
+  zIndex: theme.zIndices.negative,
 
   variants: {
     isOpen: {
       false: {
-        zIndex: -1,
+        zIndex: theme.zIndices.negative,
 
         transitionDelay: '0.5s',
         transitionProperty: 'z-index'
       },
       true: {
-        zIndex: 13
+        zIndex: theme.zIndices.modal
       }
     }
   }
 });
 
 export const PopoutContainerWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'popout-container_wrapper'
-})(ModalContainerWrapper, {});
+})(ModalContainerWrapper, {
+  zIndex: theme.zIndices.modal
+});
 
 export const ModalContainer = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'modal-container'
 })('div', {
   display: 'flex',
@@ -92,6 +164,7 @@ export const ModalContainer = styled.withConfig({
   pointerEvents: 'all',
   transition: 'transform 200ms ease',
   backgroundColor: theme.colors.background,
+  zIndex: theme.zIndices.modal,
 
   variants: {
     isOpen: {
@@ -106,14 +179,12 @@ export const ModalContainer = styled.withConfig({
 });
 
 export const ModalHeader = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'modal-header'
 })('div', {
   width: '100%'
 });
 
 export const ModalHeaderContent = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'modal-header_content'
 })(HeaderMainContentRoot, {
   display: 'flex',
@@ -127,7 +198,6 @@ export const ModalHeaderContent = styled.withConfig({
 });
 
 export const PopoutHeader = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'popout-header'
 })('div', {
   display: 'flex',
@@ -147,7 +217,6 @@ export const PopoutHeader = styled.withConfig({
 });
 
 export const PopoutContainer = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'popout-container'
 })('div', {
   position: 'absolute',
@@ -172,7 +241,7 @@ export const PopoutContainer = styled.withConfig({
 
   animation: 'none',
   transition: 'transform 300ms ease',
-  zIndex: 1,
+  zIndex: theme.zIndices.modal,
 
   pointerEvents: 'all',
   boxShadow: theme.shadows.dropShadow,
@@ -180,15 +249,18 @@ export const PopoutContainer = styled.withConfig({
   variants: {
     isOpen: {
       true: {},
+
       false: {
         display: 'none'
       }
     },
+
     isMobile: {
       true: {
-        width: '65vw !important',
+        width: '65vw',
         minWidth: 260
       },
+
       false: {
         minWidth: 480
       }

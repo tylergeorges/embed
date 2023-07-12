@@ -1,7 +1,6 @@
-import { theme, styled, commonComponentId } from '@stitches';
+import { theme, styled } from '@stitches';
 
 export const ContextMenuWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'context-menu_wrapper'
 })('div', {
   backgroundColor: theme.colors.contextMenuBackground,
@@ -10,12 +9,15 @@ export const ContextMenuWrapper = styled.withConfig({
   minWidth: 188,
   maxWidth: 320,
 
-  padding: theme.space.xs,
+  // @ts-ignore
+  // We access the value property directly so the proper size gets applied
+  paddingY: theme.space.xs.value,
+  paddingX: theme.space.sm,
 
   borderRadius: theme.radii.xs,
 
   boxShadow: theme.shadows.dropShadow,
-  zIndex: 12,
+  zIndex: theme.zIndices.modal,
 
   variants: {
     visible: {
@@ -27,20 +29,30 @@ export const ContextMenuWrapper = styled.withConfig({
 });
 
 export const ContextMenuItem = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'context-menu_item'
 })('div', {
   width: '100%',
-  minHeight: 32,
+  marginY: theme.space.xs,
+  paddingX: theme.space.sm,
 
-  paddingY: theme.space.md,
-  paddingX: theme.space.lg,
+  // @ts-ignore
+  // We access the value property directly so the proper size gets applied
+  paddingY: theme.space.xs.value,
 
-  cursor: 'pointer',
   fontSize: theme.fontSizes.md,
+  color: theme.colors.primaryOpacity70,
+
   borderRadius: theme.radii.xxs,
 
+  cursor: 'pointer',
+
   '&:hover': {
-    backgroundColor: theme.colors.accent
+    backgroundColor: theme.colors.accent,
+    color: theme.colors.primary
   }
+});
+export const ContextMenuItemLabel = styled.withConfig({
+  displayName: 'context-menu_item_label'
+})('div', {
+  width: '100%'
 });

@@ -1,5 +1,5 @@
-import { Modal } from '@components/Overlays/Modal';
 import * as Styles from '@components/Overlays/Modal/styles';
+import { Modal } from '@components/Overlays/Modal';
 import { ReactElement } from 'react';
 import { CloseButton } from '@icons/Buttons/CloseButton';
 

@@ -7,9 +7,9 @@ export const MembersList = () => {
     <Styles.MembersSidebarWrapper
       className="non-dragable"
       membersListOpen={isMembersListOpen}
-      type="members_list"
+      type="membersList"
     >
-      <div>ONLINE</div>
+      <div />
     </Styles.MembersSidebarWrapper>
   );
 };

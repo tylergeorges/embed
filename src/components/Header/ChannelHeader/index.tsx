@@ -1,10 +1,10 @@
 import * as Styles from '@components/Header/styles';
 import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
-import { Hash } from '@components/Shared/Channel/styles';
 import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
 import { MembersButton } from '@components/Shared/Icons/Buttons/MembersButton';
 import { PinButton } from '@components/Shared/Icons/Buttons/PinButton';
 import { ThreadsButton } from '@components/Shared/Icons/Buttons/ThreadsButton';
+import { Hash } from '@components/Shared/Icons/styles';
 import { useStoreActions, useStoreState } from '@state';
 
 export const ChannelHeader = () => {

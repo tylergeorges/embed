@@ -1,6 +1,6 @@
 import * as Styles from '@components/Overlays/Modal/styles';
 import { IconProps, Icons } from '@components/Shared/Icons';
-import { useMediaQuery } from '@lib/hooks';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 import { ReactElement } from 'react';
 import { CloseButton } from '@icons/Buttons/CloseButton';
 

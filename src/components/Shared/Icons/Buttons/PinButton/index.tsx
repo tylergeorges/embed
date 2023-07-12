@@ -1,4 +1,4 @@
-import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
+import { IconButton } from '@icons/Buttons/IconButton';
 import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 

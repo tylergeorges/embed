@@ -2,7 +2,6 @@ import { InformationModal } from '@components/Overlays/Modal/InformationModal';
 import * as Styles from '@components/Overlays/Modal/styles';
 import { useStoreActions, useStoreState } from '@state';
 
-/** Modal for a Text Channel's Topic  */
 export const ChannelTopicModal = () => {
   const showTopicModal = useStoreState(state => state.ui.showTopicModal);
   const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);

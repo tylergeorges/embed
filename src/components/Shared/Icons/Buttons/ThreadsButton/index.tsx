@@ -1,5 +1,5 @@
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
-import { useAppRouter } from '@lib/hooks';
+import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback } from 'react';
 

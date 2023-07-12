@@ -1,4 +1,4 @@
-import { EmojisIconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/styles';
+import { EmojisIconRoot } from '@icons/Buttons/IconButtonWrapper/styles';
 import { useState } from 'react';
 
 export const EmojisIcon = () => {

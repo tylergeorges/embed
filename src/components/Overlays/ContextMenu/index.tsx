@@ -1,7 +1,20 @@
 import * as Styles from '@components/Overlays/ContextMenu/styles';
 import { useStoreActions, useStoreState } from '@state';
+import { useTranslation } from 'react-i18next';
+
+interface MenuItemProps {
+  itemLabel: string;
+  onClick: () => void;
+}
+const MenuItem = ({ itemLabel, onClick }: MenuItemProps) => (
+  <Styles.ContextMenuItem onClick={onClick}>
+    <Styles.ContextMenuItemLabel>{itemLabel}</Styles.ContextMenuItemLabel>
+  </Styles.ContextMenuItem>
+);
 
 export const ContextMenu = () => {
+  const translate = useTranslation();
+
   const contextMenuData = useStoreState(state => state.ui.contextMenuData);
   const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
 
@@ -23,7 +36,7 @@ export const ContextMenu = () => {
         top: contextMenuData.yPos
       }}
     >
-      <Styles.ContextMenuItem onClick={copyToClipboard}>Copy Link</Styles.ContextMenuItem>
+      <MenuItem itemLabel={translate.t('contextmenu.copylink')} onClick={copyToClipboard} />
     </Styles.ContextMenuWrapper>
   );
 };

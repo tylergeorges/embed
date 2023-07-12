@@ -1,8 +1,10 @@
 import { useStoreActions, useStoreState } from '@state';
-import { useMediaQuery, useAppRouter } from '@lib/hooks';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { useAppRouter } from '@hooks/useAppRouter';
 import { MembersList } from '@components/Sidebar/MembersList';
 import { useCallback, useEffect } from 'react';
 
+import { Backdrop } from '@components/Overlays/Modal/styles';
 import * as Styles from './styles';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
@@ -22,7 +24,7 @@ export const TextChannelContainer = () => {
   useEffect(() => {
     setCurrentChannel(channelId);
 
-    // Used to hide members list if the threads panel is open
+    // Used to hide mmbers list if the threads panel is open
     if (!isThreadsPanelOpen) {
       setIsMembersListOpen(!windowIsMobile);
     }
@@ -57,7 +59,17 @@ export const TextChannelContainer = () => {
           '@small': true
         }}
       >
-        <MessageContainer onBackdropClick={hideSidebar} />
+        <MessageContainer />
+        <Backdrop
+          onClick={hideSidebar}
+          mobile={{
+            '@initial': false,
+            '@small': true
+          }}
+          isMembersListOpen={isMembersListOpen}
+          isOpen={!isChannelsListOpen && isMembersListOpen && windowIsMobile}
+        />
+
         <MembersList />
       </Styles.TextChannelInnerWrapper>
     </Styles.TextChannelWrapper>

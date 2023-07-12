@@ -1,5 +1,5 @@
 import * as Styles from '@components/Overlays/Loading/styles';
-import { useContextMenu } from '@lib/hooks';
+import { useContextMenu } from '@hooks/useContextMenu';
 
 export const Loading = () => {
   const { disableBrowserMenu } = useContextMenu();

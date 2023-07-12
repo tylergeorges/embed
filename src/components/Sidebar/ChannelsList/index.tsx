@@ -1,10 +1,11 @@
 import { useStoreActions, useStoreState } from '@state';
 import { Header } from '@components/Header';
-import { ModalBackdrop } from '@components/Overlays/Modal/styles';
-import { useContextMenu, useMediaQuery } from '@lib/hooks';
-import { Category } from './Category/Category';
-import { ChannelHighlighter } from './ChannelHighlighter';
+import { useContextMenu } from '@hooks/useContextMenu';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { Backdrop } from '@components/Overlays/Modal/styles';
 import * as Styles from '../styles';
+import { Category } from './Category';
+import { ChannelHighlighter } from './ChannelHighlighter';
 
 export const ChannelsList = () => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
@@ -23,8 +24,17 @@ export const ChannelsList = () => {
 
   return (
     <>
+      <Backdrop
+        onClick={closeChannelsList}
+        mobile={{
+          '@initial': false,
+          '@small': true
+        }}
+        isChannelsListOpen={isChannelsListOpen}
+        isOpen={isChannelsListOpen && windowIsMobile}
+      />
       <Styles.ChannelsSidebarWrapper
-        type="channels_list"
+        type="channelsList"
         channelsListOpen={isChannelsListOpen}
         onClick={hideContextMenu}
       >
@@ -42,10 +52,6 @@ export const ChannelsList = () => {
             ))}
         </div>
       </Styles.ChannelsSidebarWrapper>
-      <ModalBackdrop
-        isOpen={windowIsMobile ? isChannelsListOpen : false}
-        onClick={closeChannelsList}
-      />
     </>
   );
 };

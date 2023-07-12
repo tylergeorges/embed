@@ -19,6 +19,8 @@ const stitches = createStitches({
       primaryOpacity90: 'rgba(255, 255, 255, 0.9)',
       primaryOpacity100: 'rgba(255, 255, 255, 1.0)',
 
+      backDrop: 'rgba(0,0,0,0.7)',
+
       textPrimary: '#FFFFFF',
       textMuted: 'rgba(255, 255, 255, 0.3)',
 
@@ -85,6 +87,9 @@ const stitches = createStitches({
       /** 0px */
       none: '0px',
 
+      /** 2px */
+      xxxs: '2px',
+
       /** 4px */
       xxs: '4px',
 
@@ -129,7 +134,7 @@ const stitches = createStitches({
       /** width: 200px */
       sideBarWidth: '200px',
 
-      /** min-width: 200px */
+      /** min-width: 400px */
       threadPanelMinWidth: '400px',
 
       /** width: calc(100% - 16px) */
@@ -148,6 +153,34 @@ const stitches = createStitches({
       headerHeight: '48px'
     },
 
+    zIndices: {
+      /** -1 */
+      negative: -1,
+
+      /** 0 */
+      none: 0,
+
+      /** 10 */
+      tooltip: 10,
+
+      /** 20 */
+      membersSidebarBackdrop: 20,
+
+      /** 30 */
+      membersSidebar: 30,
+
+      /** 40 */
+      channelsSidebarBackdrop: 40,
+
+      /** 50 */
+      channelsSidebar: 50,
+
+      /** 60 */
+      modalBackdrop: 60,
+
+      /** 70 */
+      modal: 70
+    },
     shadows: {
       dropShadow: 'rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
       headerDropShadow:
@@ -171,6 +204,9 @@ const stitches = createStitches({
     },
 
     radii: {
+      /** 2px */
+      xxxs: '2px',
+
       /** border-radius: 4px */
       xxs: '4px',
 

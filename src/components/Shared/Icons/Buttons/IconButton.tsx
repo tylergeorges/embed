@@ -1,8 +1,5 @@
-import {
-  IconButtonWrapper,
-  IconButtonWrapperProps
-} from '@components/Shared/Icons/Buttons/IconButtonWrapper';
-import { IconProps, Icons } from '@components/Shared/Icons';
+import { IconButtonWrapper, IconButtonWrapperProps } from '@icons/Buttons/IconButtonWrapper';
+import { IconProps, Icons } from '@icons/index';
 
 interface IconButtonProps extends IconProps, Omit<IconButtonWrapperProps, 'children'> {
   onClick: (arg0: any) => void;

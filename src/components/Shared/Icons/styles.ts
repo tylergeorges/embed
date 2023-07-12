@@ -1,4 +1,4 @@
-import { commonComponentId, theme, styled } from '@stitches';
+import { commonComponentId, styled, theme } from '@stitches';
 
 const IconRoot = styled.withConfig({
   displayName: 'icon-root',

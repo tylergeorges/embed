@@ -1,8 +1,8 @@
 import { theme, styled, commonComponentId } from '@stitches';
 
 export const SidebarWrapper = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'sidebar_wrapper'
+  displayName: 'sidebar_wrapper',
+  componentId: commonComponentId
 })('aside', {
   position: 'absolute',
   display: 'flex',
@@ -13,7 +13,6 @@ export const SidebarWrapper = styled.withConfig({
   maxWidth: theme.sizes.sideBarWidth,
 
   boxSizing: 'border-box',
-  zIndex: 9,
 
   backgroundColor: theme.colors.backgroundSecondary,
   willChange: 'transform',
@@ -40,8 +39,13 @@ export const SidebarWrapper = styled.withConfig({
     },
 
     type: {
-      members_list: {},
-      channels_list: {
+      membersList: {
+        zIndex: theme.zIndices.membersSidebar
+      },
+
+      channelsList: {
+        zIndex: theme.zIndices.channelsSidebar,
+
         '.sidebar-header_container': {
           textAlign: 'center',
           position: 'relative'
@@ -50,12 +54,11 @@ export const SidebarWrapper = styled.withConfig({
         '.sidebar-children_container': {
           position: 'relative',
           width: '100%',
-          maxWidth: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           height: '100%',
-          marginBottom: '1.5rem',
+          marginBottom: theme.space.xl,
           overflowY: 'auto'
         }
       }
@@ -64,24 +67,21 @@ export const SidebarWrapper = styled.withConfig({
 });
 
 export const ChannelsSidebarWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'channels-sidebar_wrapper'
 })(SidebarWrapper, {
   boxSizing: 'border-box',
-  zIndex: 11
+  zIndex: theme.zIndices.channelsSidebar
 });
 
 export const MembersSidebarWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'members-sidebar_wrapper'
 })(SidebarWrapper, {
   right: 0,
   boxSizing: 'border-box',
-  zIndex: 1
+  zIndex: theme.zIndices.membersSidebar
 });
 
 export const ThreadsPanelContainer = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'thread-panel_container'
 })('div', {
   position: 'absolute',
@@ -92,7 +92,7 @@ export const ThreadsPanelContainer = styled.withConfig({
   width: '100%',
   height: '100%',
 
-  zIndex: 2,
+  zIndex: theme.zIndices.modal,
   transition: 'transform ease 0.3s',
 
   backgroundColor: theme.colors.background,
@@ -131,7 +131,7 @@ export const ThreadPanelWrapper = styled.withConfig({
   height: '100%',
   minWidth: theme.sizes.threadPanelMinWidth,
 
-  zIndex: 2,
+  zIndex: theme.zIndices.modal,
   transition: 'transform ease 0.3s',
   backgroundColor: theme.colors.background,
 
@@ -160,7 +160,7 @@ export const ThreadsPanelSeperator = styled.withConfig({
   width: 8,
 
   backgroundColor: theme.colors.borderDark,
-  zIndex: 9,
+  zIndex: theme.zIndices.modal,
 
   '@small': {
     true: {

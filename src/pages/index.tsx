@@ -1,8 +1,7 @@
-import { useAppRouter } from '@lib/hooks';
-import type { NextPage } from 'next';
+import { useAppRouter } from '@hooks/useAppRouter';
 import { useEffect } from 'react';
 
-const Home: NextPage = () => {
+function Home() {
   const { router } = useAppRouter();
 
   useEffect(() => {
@@ -10,6 +9,5 @@ const Home: NextPage = () => {
   }, [router]);
 
   return <></>;
-};
-
+}
 export default Home;

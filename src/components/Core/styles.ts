@@ -19,13 +19,12 @@ export const Main = styled.withConfig({
 });
 
 export const InnerMain = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'inner-main'
 })('div', {
-  flexDirection: 'row',
   width: '100%',
   height: '100%',
-  display: 'flex'
+  display: 'flex',
+  position: 'relative'
 });
 
 export const Wrapper = styled.withConfig({

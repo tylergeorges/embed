@@ -2,14 +2,18 @@ import { Fragment, RefObject, forwardRef } from 'react';
 import * as Styles from '@components/Sidebar/ChannelsList/styles';
 import { useStoreState } from '@state';
 import { Category as ICategory } from '@graphql/graphql';
-import { Spine } from '@components/Shared/Icons/Spine';
+import { Spine } from '@icons/Spine';
 import { Channel } from './Channel';
 
 interface ChannelsProps {
   currentChannelID: string;
+
   currentThreadID: string;
+
   isCategoryOpen: boolean;
+
   category: ICategory;
+
   currentChannelRef: RefObject<HTMLAnchorElement>;
 }
 /** Component that handles rendering text and thread channels */

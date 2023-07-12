@@ -1,12 +1,12 @@
 import { forwardRef, useCallback } from 'react';
 import { useStoreActions, useStoreState } from '@state';
 import { ChannelType, Channel as IChannel } from '@graphql/graphql';
-import { Fourm, News } from '@components/Shared/Channel/styles';
 import { Thread } from '@components/Sidebar/ChannelsList/Category/ChannelsContainer/Thread';
 import { IThread } from '@state/stores/guild';
-import { useAppRouter } from '@lib/hooks';
+import { useAppRouter } from '@hooks/useAppRouter';
 import { Icons } from '@components/Shared/Icons';
-import * as Styles from '../../styles';
+import * as Styles from '@components/Sidebar/ChannelsList/styles';
+import { Fourm, News } from '@icons/styles';
 
 interface ChannelNameProps {
   /** Check if the channel is the current channel selected. */

@@ -4,7 +4,8 @@ import { Icons } from '@icons/index';
 import { CloseButton } from '@icons/Buttons/CloseButton';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback } from 'react';
-import { useMediaQuery, useAppRouter } from '@lib/hooks';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { useAppRouter } from '@hooks/useAppRouter';
 
 export const ThreadPanelHeader = () => {
   const setIsThreadsPanelOpen = useStoreActions(state => state.ui.setIsThreadsPanelOpen);

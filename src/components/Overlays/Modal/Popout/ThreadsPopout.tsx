@@ -1,8 +1,8 @@
 import { Popout } from '@components/Overlays/Modal/Popout/index';
 import * as Styles from '@components/Overlays/Modal/styles';
-import { ThreadsPanelButton } from '@components/Shared/Icons/Buttons/ThreadsPanelButton';
-import { NoThreadsIcon } from '@components/Shared/Icons/NoThreadsIcon';
-import { useAppRouter } from '@lib/hooks';
+import { ThreadsPanelButton } from '@icons/Buttons/ThreadsPanelButton';
+import { NoThreadsIcon } from '@icons/NoThreadsIcon';
+import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreState, useStoreActions } from '@state';
 import { ReactElement, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';

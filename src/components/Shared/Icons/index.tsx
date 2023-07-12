@@ -1,4 +1,4 @@
-import { IconRoot } from '@components/Shared/Icons/Buttons/IconButtonWrapper/styles';
+import { IconRoot } from '@icons/Buttons/IconButtonWrapper/styles';
 import { CSS } from '@stitches/react';
 import { svgUrls } from '@svg-assets';
 
@@ -66,12 +66,10 @@ export const Icons = ({
 }: IconProps) => (
   <IconRoot
     css={css}
-    // css={css ? (customSize ? { ...css, width: customSize, height: customSize } : css) : {}}
     size={size || 'regular'}
     type={type}
     color={color ?? 'light'}
     viewBox={customViewbox || (customSize ? `0 0 ${customSize} ${customSize}` : '0 0 24 24')}
-    // viewBox={customSize ? `0 0 ${customSize}px ${customSize}px` : '0 0 24 24'}
   >
     <use href={`${iconData[name]}#svg`} height={customSize} />
     {iconContent}

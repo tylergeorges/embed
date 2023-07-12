@@ -1,4 +1,3 @@
-// ! Imported from the library instead of custom config because of weird bugs
 import { theme, styled, commonComponentId } from '@stitches';
 import Link from 'next/link';
 
@@ -62,7 +61,6 @@ export const CategoryNameContent = styled.withConfig({
 });
 
 export const CategoryContainer = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'category-container'
 })('div', {
   width: '100%',
@@ -75,17 +73,10 @@ export const CategoryContainer = styled.withConfig({
 });
 
 export const ChannelNameWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'channel-name_wrapper'
 })('div', {
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
-
   height: 'auto',
   maxHeight: theme.sizes.channelNameHeight,
-
-  boxSizing: 'border-box',
 
   marginY: theme.space.xxs,
 
@@ -130,6 +121,7 @@ export const ChannelNameWrapper = styled.withConfig({
         padding: 0
       }
     },
+
     {
       isActive: false,
       isCategoryOpen: true,

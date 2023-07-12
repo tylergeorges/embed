@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export const useMediaQuery = (query: string) => {
+export const useMediaQuery = (query: string = 'screen and (max-width: 768px)') => {
   const [matchesQuery, setMatchesQuery] = useState<boolean>(window.matchMedia(query).matches);
 
   useEffect(() => {

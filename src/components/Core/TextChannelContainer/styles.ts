@@ -3,7 +3,6 @@ import { theme, styled, commonComponentId } from '@stitches';
 import Image from 'next/image';
 
 export const TextChannelWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'text-channel_wrapper'
 })('div', {
   display: 'flex',
@@ -55,13 +54,7 @@ export const TextChannelWrapper = styled.withConfig({
 
       css: {
         transform: `translateX(0px)`,
-        width: '100%',
-
-        '&::after': {
-          transition: 'opacity 0.5s ease 0s',
-          content: '',
-          opacity: 1
-        }
+        width: '100%'
       }
     },
 
@@ -70,13 +63,7 @@ export const TextChannelWrapper = styled.withConfig({
       mobile: false,
 
       css: {
-        width: `calc(100% - ${theme.sizes.sideBarWidth})`,
-
-        '&::after': {
-          transition: 'opacity 0.5s ease 0s',
-          content: '',
-          opacity: 1
-        }
+        width: `calc(100% - ${theme.sizes.sideBarWidth})`
       }
     },
 
@@ -128,7 +115,6 @@ export const TextChannelInnerWrapper = styled.withConfig({
 });
 
 export const MessageWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'message-wrapper'
 })('div', {
   position: 'relative',
@@ -141,25 +127,7 @@ export const MessageWrapper = styled.withConfig({
   height: '100%',
 
   transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
-  zIndex: 0,
-
-  '&::after': {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-
-    height: '100%',
-    width: '100%',
-
-    content: '',
-
-    opacity: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-
-    transition: 'opacity 0.5s ease 0s',
-    willChange: 'opacity',
-    pointerEvents: 'none'
-  },
+  zIndex: theme.zIndices.none,
 
   variants: {
     membersListOpen: {
@@ -194,13 +162,7 @@ export const MessageWrapper = styled.withConfig({
         width: '100%',
         height: '100%',
         transition: 'transform 0.3s ease 0s',
-        transform: `translateX(0px)`,
-
-        '&::after': {
-          content: '',
-          transition: 'opacity 0.5s ease 0s',
-          opacity: 1
-        }
+        transform: `translateX(0px)`
       }
     }
   ]

@@ -1,5 +1,5 @@
 import { useStoreState } from '@state';
-import { useAppRouter } from '@lib/hooks';
+import { useAppRouter } from '@hooks/useAppRouter';
 import * as Styles from './styles';
 
 /** Animated background for the current selected channel. */
