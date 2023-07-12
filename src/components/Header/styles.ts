@@ -87,24 +87,23 @@ export const ChannelHeaderRoot = styled.withConfig({
   displayName: 'text-channel_header'
 })(Stretch, {
   display: 'flex',
-  width: '100%',
+  flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-  flexDirection: 'row',
-  zIndex: theme.zIndices.modal,
+
+  width: '100%',
   paddingX: theme.space.sm,
 
-  '.text-channel_header_buttons_container': {
-    width: '100%'
-  }
+  zIndex: theme.zIndices.modal
 });
 
 export const ChannelHeaderTopic = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'text-channel_header_topic'
 })('div', {
   margin: 0,
-  paddingX: theme.space.lg,
+  // ignoring this error because if we dont access the value property it outputs incorrect values.
+  // @ts-ignore
+  paddingX: theme.space.sm.value,
 
   color: theme.colors.textMuted,
   fontSize: theme.fontSizes.md,
@@ -122,7 +121,6 @@ export const ChannelHeaderTopic = styled.withConfig({
 });
 
 export const ChannelHeaderNameWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'text-channel_header_name_container'
 })('div', {
   width: '100%',
@@ -131,7 +129,6 @@ export const ChannelHeaderNameWrapper = styled.withConfig({
 });
 
 export const ChannelNameTopicWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'text-channel_name_topic_container'
 })(Stretch, {
   display: 'flex',

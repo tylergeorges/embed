@@ -1,10 +1,11 @@
 import * as Styles from '@components/Header/styles';
 import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
+import { Icons } from '@components/Shared/Icons';
 import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
 import { MembersButton } from '@components/Shared/Icons/Buttons/MembersButton';
 import { PinButton } from '@components/Shared/Icons/Buttons/PinButton';
 import { ThreadsButton } from '@components/Shared/Icons/Buttons/ThreadsButton';
-import { Hash } from '@components/Shared/Icons/styles';
+import * as SkeletonStyles from '@components/Shared/SkeletonLoaders';
 import { useStoreActions, useStoreState } from '@state';
 
 export const ChannelHeader = () => {
@@ -21,12 +22,24 @@ export const ChannelHeader = () => {
         <Hamburger />
 
         <Styles.ChannelNameTopicWrapper>
-          <Hash channelHeader />
-          <Styles.ChannelHeaderName>{currentChannel?.name}</Styles.ChannelHeaderName>
+          {currentChannel ? (
+            <Icons name="TextChannelHash" size="small" color="dark" />
+          ) : (
+            <SkeletonStyles.SkeletonLine size="xs" borderRadius="round" />
+          )}
+          {currentChannel ? (
+            <Styles.ChannelHeaderName>{currentChannel.name}</Styles.ChannelHeaderName>
+          ) : (
+            <SkeletonStyles.SkeletonLine size="lg" borderRadius="semiRound" />
+          )}
 
-          <Styles.ChannelHeaderTopic onClick={openTopicModal}>
-            {currentChannel?.topic}
-          </Styles.ChannelHeaderTopic>
+          {currentChannel ? (
+            <Styles.ChannelHeaderTopic onClick={openTopicModal}>
+              {currentChannel.topic}
+            </Styles.ChannelHeaderTopic>
+          ) : (
+            <SkeletonStyles.SkeletonLine size="xxl" borderRadius="round" />
+          )}
         </Styles.ChannelNameTopicWrapper>
       </Styles.ChannelHeaderNameWrapper>
 

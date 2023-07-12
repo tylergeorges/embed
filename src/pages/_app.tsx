@@ -22,7 +22,8 @@ const globalStyles = globalCss({
     width: '100%',
     height: '100%',
     overflow: 'hidden',
-    backgroundColor: theme.colors.background
+    backgroundColor: theme.colors.background,
+    boxSizing: 'border-box'
   },
   body: {
     padding: 0,
@@ -33,20 +34,25 @@ const globalStyles = globalCss({
     height: '100%',
     color: 'white',
     backgroundColor: theme.colors.background,
-    overflow: 'hidden'
+    overflow: 'hidden',
+    boxSizing: 'border-box'
   },
   a: {
     color: 'inherit',
     textDecoration: 'none'
   },
+
   '*, ::after, ::before': {
-    boxSizing: 'border-box'
+    boxSizing: 'inherit',
+    scrollbarWidth: 'thin',
+    scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.2)'
   },
 
   /* width */
   '::-webkit-scrollbar': {
     width: 16,
-    height: 16
+    height: 16,
+    borderRadius: 8
   },
 
   /* Track */
@@ -59,11 +65,40 @@ const globalStyles = globalCss({
 
   /* Handle */
   '::-webkit-scrollbar-thumb': {
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    minHeight: 40,
     backgroundClip: 'padding-box',
-    border: '4px solid transparent',
-    borderRadius: 8
+    borderWidth: '4px',
+    borderStyle: 'solid',
+    borderColor: 'transparent',
+
+    borderRadius: 8,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    visibility: 'none'
+  },
+
+  '.scrollbar-thin': {
+    scrollbarWidth: 'thin',
+
+    '&::-webkit-scrollbar-thumb': {
+      backgroundClip: 'padding-box',
+      borderWidth: '2px',
+      borderStyle: 'solid',
+      borderColor: 'transparent',
+      borderRadius: 4,
+      backgroundColor: 'rgba(0,0,0,0.4)',
+      minHeight: 40,
+      visibility: 'none'
+    },
+
+    '&::-webkit-scrollbar-track': {
+      backgroundColor: 'transparent',
+      visibility: 'none'
+    },
+
+    '&::-webkit-scrollbar': {
+      width: 8,
+      height: 8,
+      visibility: 'none'
+    }
   },
 
   /* Handle on hover */
@@ -78,18 +113,15 @@ const globalStyles = globalCss({
     'user-select': 'none'
   },
   '.channel-name': {
-    width: theme.sizes.channelNameWidth,
     height: theme.sizes.channelNameHeight,
-
-    marginX: theme.space.sm,
-    marginY: theme.space.xxs,
-    paddingX: theme.space.lg,
+    width: '100%',
 
     borderRadius: theme.radii.xxs,
 
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    transition: 'transform 350ms ease'
   },
 
   '#__next': {

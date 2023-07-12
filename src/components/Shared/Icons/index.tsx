@@ -8,6 +8,9 @@ const iconData = {
   ThreadPanel: svgUrls.IconThreadPanel,
 
   TextChannelHash: svgUrls.IconTextChannel,
+  NewsChannelIcon: svgUrls.IconNewsChannel,
+  RulesChannelIcon: svgUrls.IconRulesChannel,
+  FourmChannelIcon: svgUrls.IconForumChannel,
 
   Pin: svgUrls.IconPin,
   AddAttachment: svgUrls.IconAddAttachment,
@@ -46,32 +49,22 @@ export interface IconProps {
       })
     | undefined;
 
-  customSize?: number;
-
   type?: 'headerIcon';
 
   iconContent?: string | null;
 
   customViewbox?: string;
 }
-export const Icons = ({
-  name,
-  color,
-  css,
-  size,
-  customSize,
-  type,
-  iconContent,
-  customViewbox
-}: IconProps) => (
+
+export const Icons = ({ name, color, css, size, type, iconContent, customViewbox }: IconProps) => (
   <IconRoot
     css={css}
     size={size || 'regular'}
     type={type}
-    color={color ?? 'light'}
-    viewBox={customViewbox || (customSize ? `0 0 ${customSize} ${customSize}` : '0 0 24 24')}
+    color={color || 'light'}
+    viewBox={customViewbox || '0 0 24 24'}
   >
-    <use href={`${iconData[name]}#svg`} height={customSize} />
+    <use href={`${iconData[name]}#svg`} />
     {iconContent}
   </IconRoot>
 );

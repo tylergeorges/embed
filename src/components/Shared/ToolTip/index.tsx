@@ -45,6 +45,8 @@ export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipP
           childrenRef.offsetLeft + (window.innerWidth - childRect.x - tooltipElement.clientWidth);
 
         tooltipElement.style.left = `${newX}px`;
+      } else {
+        tooltipElement.style.left = `${childrenRef.offsetLeft - childrenRef.offsetWidth}px`;
       }
     }
   }

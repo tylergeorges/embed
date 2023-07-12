@@ -39,6 +39,7 @@ export const Category = ({ category }: CategoryProps) => {
   useEffect(() => {
     // ! Sets the initial ActiveBackground component's position
     if (currentChannelRef.current) {
+      console.log(currentChannelRef.current.offsetTop, currentChannelRef.current.clientTop);
       setCurrentChannelYPos(currentChannelRef.current.offsetTop);
       setInitChannelYPos(currentChannelRef.current.offsetTop);
     }
@@ -65,7 +66,7 @@ export const Category = ({ category }: CategoryProps) => {
     // When we close the category
     if (isCategoryOpen) {
       // Channel name font height
-      const channelHeight = 22;
+      const channelHeight = 21;
 
       if (!isActiveCategory && activeCategoryIsBelow) {
         setCurrentChannelYPos(currentChannelY - channelsConHeight);

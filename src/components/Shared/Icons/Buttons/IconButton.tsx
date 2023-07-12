@@ -17,7 +17,6 @@ export const IconButton = ({
   tooltipDisabled,
   tooltipLabel,
   tooltipPlacement,
-  customSize,
   iconContent,
   tooltipDisabledIfActive
 }: IconButtonProps) => (
@@ -32,6 +31,6 @@ export const IconButton = ({
     isActive={isActive}
     iconContent={iconContent}
   >
-    <Icons size={size} color={color} name={name} css={css} customSize={customSize} />
+    <Icons size={size} color={color} name={name} css={css} />
   </IconButtonWrapper>
 );

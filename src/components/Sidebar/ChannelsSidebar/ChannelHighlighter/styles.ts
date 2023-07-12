@@ -1,7 +1,6 @@
-import { commonComponentId, theme, styled } from '@stitches';
+import { theme, styled } from '@stitches';
 
 export const Background = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'active-channel_background'
 })('div', {
   position: 'absolute',
@@ -10,11 +9,14 @@ export const Background = styled.withConfig({
   pointerEvents: 'none',
 
   transform: 'translateY(var(--yPos))',
+  padding: 0,
+  margin: 0,
+  width: `calc(100% - ${theme.space.lg.value})`,
 
   variants: {
     animated: {
       true: {
-        transition: '350ms ease'
+        transition: 'transform 350ms ease'
       },
       false: {
         transition: 'none'
@@ -23,7 +25,7 @@ export const Background = styled.withConfig({
 
     isCurrentChannelThread: {
       true: {
-        transform: 'translateY(var(--yPos)) scaleX(0.79)  translateX(25px)'
+        transform: `translateY(var(--yPos)) scaleX(0.84)  translateX(20px)`
       }
     }
   }

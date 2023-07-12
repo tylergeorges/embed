@@ -1,5 +1,4 @@
-import { keyframes } from '@stitches/react';
-import { theme, styled, commonComponentId } from '@stitches';
+import { theme, styled } from '@stitches';
 import Image from 'next/image';
 
 export const TextChannelWrapper = styled.withConfig({
@@ -91,7 +90,6 @@ export const TextChannelWrapper = styled.withConfig({
 });
 
 export const TextChannelInnerWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'text-channel_inner_wrapper'
 })('div', {
   position: 'relative',
@@ -169,7 +167,6 @@ export const MessageWrapper = styled.withConfig({
 });
 
 export const TextBoxWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'textbox-wrapper'
 })('form', {
   position: 'relative',
@@ -187,7 +184,6 @@ export const TextBoxWrapper = styled.withConfig({
 });
 
 export const TextBoxInner = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'textbox-inner'
 })('div', {
   display: 'flex',
@@ -200,7 +196,6 @@ export const TextBoxInner = styled.withConfig({
 });
 
 export const TextBoxButtonWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'textbox-button_wrapper'
 })('div', {
   position: 'sticky',
@@ -213,7 +208,6 @@ export const TextBoxButtonWrapper = styled.withConfig({
 });
 
 export const TextBoxInputWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'textbox-input_wrapper'
 })('div', {
   display: 'flex',
@@ -226,7 +220,6 @@ export const TextBoxInputWrapper = styled.withConfig({
 });
 
 export const TextInput = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'textbox-input'
 })('div', {
   cursor: 'text',
@@ -252,7 +245,6 @@ export const TextInput = styled.withConfig({
 });
 
 export const TextBoxPlaceholder = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'textbox-placeholder'
 })('span', {
   position: 'absolute',
@@ -261,7 +253,6 @@ export const TextBoxPlaceholder = styled.withConfig({
 });
 
 export const MessageContentOuterWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'message-content_outer_wrapper'
 })('div', {
   display: 'flex',
@@ -278,7 +269,6 @@ export const MessageContentOuterWrapper = styled.withConfig({
 });
 
 export const MessageContent = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'message-content'
 })('div', {
   position: 'relative',
@@ -286,7 +276,6 @@ export const MessageContent = styled.withConfig({
 });
 
 export const MessageAvatar = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'message-avatar'
 })(Image, {
   position: 'absolute',
@@ -297,158 +286,10 @@ export const MessageAvatar = styled.withConfig({
 });
 
 export const MessageUsername = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'message-username'
 })('h3', {
   fontSize: theme.fontSizes.lg,
   margin: 0,
   pointerEvents: 'none',
   userSelect: 'none'
-});
-
-const SkeletonLoader = keyframes({
-  '0%': {
-    opacity: '40%'
-  },
-  '50%': {
-    opacity: '80%'
-  },
-  '100%': {
-    opacity: '40%'
-  }
-});
-
-export const SkeletonLoaderRoot = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'skeleton-loader_root'
-})('div', {
-  animation: `${SkeletonLoader} 3s infinite ease-in-out`,
-  background: theme.colors.primaryOpacity20,
-  pointerEvents: 'none',
-  userSelect: 'none'
-});
-
-export const MessageSkeletonWrapper = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'message-skeleton_wrapper'
-})('div', {
-  display: 'flex',
-  flexDirection: 'row',
-
-  width: '100%',
-
-  marginTop: theme.space.xl,
-
-  paddingRight: 48,
-  paddingLeft: 72,
-  paddingTop: theme.space.xs,
-  paddingBottom: theme.space.xs
-});
-
-export const MessageSkeletonContent = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'message-skeleton_content'
-})('div', {
-  position: 'relative',
-  display: 'flex',
-  flexDirection: 'column',
-
-  textAlign: 'left',
-
-  backgroundColor: 'transparent',
-  pointerEvents: 'none',
-  userSelect: 'none'
-});
-
-export const MessageSkeletonContentLine = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'message-skeleton_content_line'
-})('div', {
-  position: 'relative',
-  textAlign: 'left',
-  display: 'flex',
-  flexDirection: 'row',
-
-  width: '100%',
-  height: theme.sizes.iconSizeMed,
-
-  marginTop: theme.space.xxs,
-
-  color: 'transparent',
-  borderRadius: theme.radii.sm
-});
-
-export const MessageSkeletonContentWord = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'message-skeleton_content_word'
-})('div', {
-  position: 'relative',
-
-  height: theme.sizes.iconSizeMed,
-
-  marginTop: theme.space.sm,
-  marginRight: theme.space.sm,
-
-  borderRadius: theme.radii.lg,
-
-  color: 'transparent',
-  background: theme.colors.primaryOpacity10,
-  animation: `${SkeletonLoader} 2s infinite ease-in-out`,
-  pointerEvents: 'none'
-});
-
-export const MessageSkeletonContentLongWord = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'message-skeleton_content_word'
-})(MessageSkeletonContentWord, {
-  position: 'relative',
-
-  width: 100
-});
-
-export const MessageSkeletonContentShortWord = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'message-skeleton_content_word'
-})(MessageSkeletonContentWord, {
-  width: 24
-});
-
-export const MessageSkeletonContentMedWord = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'message-skeleton_content_word'
-})(MessageSkeletonContentWord, {
-  width: 50
-});
-
-export const MessageSkeletonUsername = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'message-skeleton_username'
-})(SkeletonLoaderRoot, {
-  fontSize: theme.fontSizes.lg,
-
-  width: 150,
-  height: 22,
-
-  margin: 0,
-
-  borderRadius: theme.radii.sm,
-
-  color: 'transparent',
-  pointerEvents: 'none',
-  userSelect: 'none',
-  background: theme.colors.primaryOpacity10,
-  animationDelay: '1s'
-});
-
-export const MessageSkeletonAvatar = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'message-skeleton_avatar'
-})(SkeletonLoaderRoot, {
-  position: 'absolute',
-  left: theme.space.lg,
-
-  width: 40,
-  height: 40,
-
-  borderRadius: theme.radii.round
 });

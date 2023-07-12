@@ -1,17 +1,15 @@
-import { theme, styled, commonComponentId } from '@stitches';
+import { theme, styled } from '@stitches';
 import Link from 'next/link';
 
 export const CategoryNameContainer = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'category-name_container'
 })('div', {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-
-  marginLeft: theme.space.lg,
-
+  position: 'relative',
   color: theme.colors.primaryOpacity40,
+  paddingRight: theme.space.sm,
 
   transition: 'color 100ms ease',
   cursor: 'pointer',
@@ -23,7 +21,6 @@ export const CategoryNameContainer = styled.withConfig({
 });
 
 export const CategoryNameArrow = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'category-name_arrow'
 })('div', {
   position: 'relative',
@@ -51,7 +48,6 @@ export const CategoryNameArrow = styled.withConfig({
 });
 
 export const CategoryNameContent = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'category-name'
 })('div', {
   textTransform: 'uppercase',
@@ -65,7 +61,6 @@ export const CategoryContainer = styled.withConfig({
 })('div', {
   width: '100%',
   boxSizing: 'border-box',
-
   paddingTop: theme.space.xl,
 
   fontWeight: theme.fontWeights.medium,
@@ -77,10 +72,13 @@ export const ChannelNameWrapper = styled.withConfig({
 })('div', {
   height: 'auto',
   maxHeight: theme.sizes.channelNameHeight,
-
+  overflow: 'hidden',
   marginY: theme.space.xxs,
 
   transition: 'max-height 350ms ease',
+  // @ts-ignore
+  paddingX: theme.space.sm.value,
+  width: '100%',
 
   variants: {
     isThread: {
@@ -89,18 +87,22 @@ export const ChannelNameWrapper = styled.withConfig({
         flexDirection: 'row',
         alignItems: 'center',
         justifyItems: 'center',
+        width: '100%',
+        marginLeft: theme.space.xxl.value,
 
-        marginLeft: theme.space.lg,
-        marginRight: theme.space.sm,
-
-        paddingTop: theme.space.md,
-        paddingLeft: theme.space.lg,
-        paddingRight: theme.space.xs
+        // @ts-ignore
+        paddingY: theme.space.xs.value
       }
     },
 
     isActive: {
-      false: {}
+      false: {
+        color: theme.colors.textMuted.value
+      },
+
+      true: {
+        color: theme.colors.active
+      }
     },
 
     isCategoryOpen: {
@@ -115,7 +117,7 @@ export const ChannelNameWrapper = styled.withConfig({
 
       css: {
         position: 'relative',
-        overflow: 'hidden',
+        // overflow: 'hidden',
         maxHeight: 0,
         margin: 0,
         padding: 0
@@ -135,41 +137,44 @@ export const ChannelNameWrapper = styled.withConfig({
 });
 
 export const ChannelNameInner = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'channel-name'
 })(Link, {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
 
+  // @ts-ignore
+  paddingX: theme.space.xxs.value,
+  width: '100%',
   fontSize: theme.fontSizes.lg,
   fontWeight: theme.fontWeights.thin,
-  color: theme.colors.primaryOpacity30,
-
   boxSizing: 'border-box',
   transition: '100ms ease',
-
-  '&:hover': {
-    backgroundColor: theme.colors.primaryOpacity10,
-    color: theme.colors.primaryOpacity50
-  },
+  marginBottom: theme.space.xxs.value,
 
   variants: {
-    active_state: {
-      true: {
-        color: theme.colors.primaryOpacity70,
-        backgroundColor: 'transparent',
+    isActive: {
+      true: {},
 
+      false: {
+        color: theme.colors.textMuted.value,
         '&:hover': {
-          backgroundColor: 'transparent'
+          backgroundColor: theme.colors.primaryOpacity10,
+          color: theme.colors.primaryOpacity50
         }
       }
     }
   }
 });
 
+export const ChannelNameIconWrapper = styled.withConfig({
+  displayName: 'channel-name_icon_wrapper'
+})('div', {
+  size: theme.sizes.iconSizeSmall,
+  marginRight: theme.space.xs.value
+});
+
 export const ChannelNameContent = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'channel-name_content'
 })('div', {
   textOverflow: 'ellipsis',
@@ -180,30 +185,29 @@ export const ChannelNameContent = styled.withConfig({
 });
 
 export const ThreadNameInner = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'thread-name'
 })(ChannelNameInner, {
-  width: '100%'
+  margin: theme.space.none
 });
 
 export const ChannelsWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'channels-wrapper'
 })('div', {
   display: 'flex',
   flexDirection: 'column',
   width: '100%',
-  boxSizing: 'border-box',
-  overflow: 'hidden'
+  boxSizing: 'border-box'
 });
 
 export const ThreadsWrapper = styled.withConfig({
-  componentId: commonComponentId,
   displayName: 'thread-wrapper'
 })(ChannelsWrapper, {
   display: 'flex',
   flexDirection: 'row',
+  alignItems: 'center',
+
   width: '100%',
-  marginTop: -6,
-  padding: 0
+  height: '100%',
+
+  paddingX: theme.space.sm
 });

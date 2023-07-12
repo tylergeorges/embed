@@ -12,7 +12,7 @@ interface ThreadProps {
 export const Thread = forwardRef<HTMLAnchorElement, ThreadProps>(
   ({ thread, handleContextMenuClick, isActive, currentChannelUrl }, ref) => (
     <Styles.ThreadNameInner
-      active_state={isActive}
+      isActive={isActive}
       href={`${currentChannelUrl}?thread=${thread.id}`}
       className="channel-name"
       ref={ref}

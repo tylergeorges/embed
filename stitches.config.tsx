@@ -22,11 +22,11 @@ const stitches = createStitches({
       backDrop: 'rgba(0,0,0,0.7)',
 
       textPrimary: '#FFFFFF',
-      textMuted: 'rgba(255, 255, 255, 0.3)',
+      textMuted: '$primaryOpacity30',
 
-      iconDark: 'rgba(255, 255, 255, 0.3)',
       iconLight: 'rgb(181,186,193)',
       iconActive: '$primaryOpacity90',
+      active: 'rgba(255, 255, 255, 0.9)',
 
       systemMessageDark: '#999999',
       interactiveNormal: '#dcddde',
@@ -113,6 +113,30 @@ const stitches = createStitches({
     },
 
     sizes: {
+      /** 0px */
+      none: '0px',
+
+      /** 16px */
+      xxs: '16px',
+
+      /** 24px */
+      xs: '24px',
+
+      /** 56px */
+      sm: '56px',
+
+      /** 77px */
+      md: '77px',
+
+      /** 100px */
+      lg: '100px',
+
+      /** 112px */
+      xl: '112px',
+
+      /** 175px */
+      xxl: '175px',
+
       /** 30px */
       iconSizeLarge: '30px',
 
@@ -131,8 +155,8 @@ const stitches = createStitches({
       /** 34px */
       threadButton: '34px',
 
-      /** width: 200px */
-      sideBarWidth: '200px',
+      /** width: 240px */
+      sideBarWidth: '240px',
 
       /** min-width: 400px */
       threadPanelMinWidth: '400px',

@@ -1,25 +1,20 @@
 import { theme, styled, commonComponentId } from '@stitches';
 
 export const IconRoot = styled.withConfig({
-  displayName: 'button-icons',
-  componentId: commonComponentId
+  displayName: 'button-icons'
 })('svg', {
-  justifySelf: 'flex-end',
   variants: {
     size: {
       small: {
-        width: theme.sizes.iconSizeSmall,
-        height: theme.sizes.iconSizeSmall
+        size: theme.sizes.iconSizeSmall
       },
 
       regular: {
-        width: theme.sizes.iconSizeMed,
-        height: theme.sizes.iconSizeMed
+        width: theme.sizes.iconSizeMed.value
       },
 
       large: {
-        width: theme.sizes.iconSizeXl,
-        height: theme.sizes.iconSizeXl
+        size: theme.sizes.iconSizeXl
       }
     },
 
@@ -32,19 +27,25 @@ export const IconRoot = styled.withConfig({
     color: {
       light: {
         path: {
-          fill: theme.colors.iconLight
+          fill: theme.colors.iconLight.value,
+          color: theme.colors.iconLight.value
         },
+
         use: {
-          color: theme.colors.iconLight
+          color: theme.colors.iconLight.value,
+          fill: theme.colors.iconLight.value
         }
       },
 
       dark: {
-        path: {
-          fill: theme.colors.iconDark
-        },
         use: {
-          color: theme.colors.iconDark
+          fill: theme.colors.textMuted.value,
+          color: theme.colors.textMuted.value
+        },
+
+        path: {
+          fill: theme.colors.textMuted.value,
+          color: theme.colors.textMuted.value
         }
       }
     }
@@ -52,8 +53,7 @@ export const IconRoot = styled.withConfig({
 });
 
 export const IconButtonRoot = styled.withConfig({
-  displayName: 'icon-button_wrapper_root',
-  componentId: commonComponentId
+  displayName: 'icon-button_wrapper_root'
 })('div', {
   position: 'relative',
   display: 'flex',
@@ -61,8 +61,7 @@ export const IconButtonRoot = styled.withConfig({
   justifyContent: 'center',
 
   cursor: 'pointer',
-  width: theme.sizes.iconSizeMed,
-  height: theme.sizes.iconSizeMed,
+  size: theme.sizes.iconSizeMed,
 
   marginX: theme.space.sm,
 
@@ -93,11 +92,13 @@ export const IconButtonRoot = styled.withConfig({
     isActive: {
       true: {
         path: {
-          fill: theme.colors.iconActive
+          fill: theme.colors.iconActive,
+          color: theme.colors.iconActive
         },
 
         use: {
-          color: theme.colors.iconActive
+          color: theme.colors.iconActive,
+          fill: theme.colors.iconActive
         }
       }
     }
@@ -129,23 +130,8 @@ export const EmojisIconRoot = styled.withConfig({
   }
 });
 
-export const SpineIconRoot = styled.withConfig({
-  displayName: 'thread-spine',
-  componentId: commonComponentId
-})('svg', {
-  position: 'absolute',
-  justifySelf: 'flex-start',
-  left: 30,
-
-  width: 12,
-  height: 11,
-
-  marginTop: 16
-});
-
 export const IconButtonChildrenWrapper = styled.withConfig({
-  displayName: 'icon-button_children_wrapper',
-  componentId: commonComponentId
+  displayName: 'icon-button_children_wrapper'
 })('button', {
   display: 'flex',
   alignItems: 'center',
@@ -196,12 +182,29 @@ export const IconButtonChildrenWrapper = styled.withConfig({
 });
 
 export const IconButtonContentWrapper = styled.withConfig({
-  displayName: 'icon-button_content_wrapper',
-  componentId: commonComponentId
+  displayName: 'icon-button_content_wrapper'
 })('span', {
   position: 'relative',
 
   color: theme.colors.primaryOpacity70,
   fontSize: theme.fontSizes.md,
   marginLeft: theme.space.sm
+});
+
+export const ThreadSpineSvgWrapper = styled.withConfig({
+  displayName: 'thread-spine_svg_wrapper'
+})(IconRoot, {
+  bottom: 4,
+  position: 'absolute',
+  width: 12,
+  height: 11
+});
+
+export const ThreadSpineWrapper = styled.withConfig({
+  displayName: 'thread-spine_wrapper'
+})('div', {
+  position: 'absolute',
+  left: 22,
+  width: 12,
+  height: 11
 });

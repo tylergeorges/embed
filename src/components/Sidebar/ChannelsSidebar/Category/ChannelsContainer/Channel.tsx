@@ -6,7 +6,6 @@ import { IThread } from '@state/stores/guild';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { Icons } from '@components/Shared/Icons';
 import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
-import { Fourm, News } from '@icons/styles';
 
 interface ChannelNameProps {
   /** Check if the channel is the current channel selected. */
@@ -78,24 +77,27 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
           />
         ) : (
           <Styles.ChannelNameInner
-            active_state={isActive && !channelHasActiveThread}
+            isActive={isActive && !channelHasActiveThread}
             href={`${currentGuildUrl}/${channel.id}`}
             ref={isActive && !channelHasActiveThread ? ref : null}
             draggable={false}
             // ! USES CLASSNAME FROM GLOBAL CSS SO THE CHANNEL HIGHLIGHTER AND CHANNEL NAME
             // ! GET FORMATTED THE SAME
-            className="channel-name"
-            onContextMenu={handleContextMenuClick}
+            className="channel-name non-draggable"
           >
-            <div>
+            <Styles.ChannelNameIconWrapper draggable={false}>
               {channel.type === ChannelType.GuildText && (
                 <Icons name="TextChannelHash" color="dark" size="small" />
               )}
-              {channel.type === ChannelType.GuildAnnouncement && <News />}
-              {channel.type === ChannelType.GuildForum && <Fourm />}
-            </div>
+              {channel.type === ChannelType.GuildAnnouncement && (
+                <Icons name="NewsChannelIcon" color="dark" size="small" />
+              )}
+              {channel.type === ChannelType.GuildForum && (
+                <Icons name="FourmChannelIcon" color="dark" size="small" />
+              )}
+            </Styles.ChannelNameIconWrapper>
 
-            <Styles.ChannelNameContent> {channel.name}</Styles.ChannelNameContent>
+            <Styles.ChannelNameContent draggable={false}> {channel.name}</Styles.ChannelNameContent>
           </Styles.ChannelNameInner>
         )}
       </Styles.ChannelNameWrapper>

@@ -15,9 +15,11 @@ export const ChannelTopicModal = () => {
     <InformationModal
       isOpen={showTopicModal}
       hideModal={hideTopicModal}
-      title={`#${currentChannel?.name}`}
+      title={(currentChannel && currentChannel.name) || ''}
     >
-      <Styles.ChannelTopicModalContent>{currentChannel?.topic}</Styles.ChannelTopicModalContent>
+      <Styles.ChannelTopicModalContent>
+        {(currentChannel && currentChannel.topic) || ''}
+      </Styles.ChannelTopicModalContent>
     </InformationModal>
   );
 };

@@ -1,8 +1,7 @@
 import { theme, styled, commonComponentId } from '@stitches';
 
 export const SidebarWrapper = styled.withConfig({
-  displayName: 'sidebar_wrapper',
-  componentId: commonComponentId
+  displayName: 'sidebar_wrapper'
 })('aside', {
   position: 'absolute',
   display: 'flex',
@@ -21,7 +20,7 @@ export const SidebarWrapper = styled.withConfig({
   variants: {
     channelsListOpen: {
       false: {
-        transform: `translateX(-200px)`
+        transform: `translateX(-${theme.sizes.sideBarWidth.value})`
       },
       true: {
         transform: 'translateX(0)',
@@ -53,21 +52,20 @@ export const SidebarWrapper = styled.withConfig({
 export const ChannelsSidebarWrapper = styled.withConfig({
   displayName: 'channels-sidebar_wrapper'
 })(SidebarWrapper, {
-  boxSizing: 'border-box',
   zIndex: theme.zIndices.channelsSidebar
 });
 
 export const ChannelsChildrenWrapper = styled.withConfig({
   displayName: 'channels-children_container'
 })('div', {
-  position: 'relative',
   width: '100%',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
   height: '100%',
   marginBottom: theme.space.xl,
-  overflowY: 'auto'
+  position: 'relative',
+  overflowY: 'scroll'
 });
 
 export const GuildHeaderWrapper = styled.withConfig({

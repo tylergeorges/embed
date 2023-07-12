@@ -2,7 +2,7 @@ import { Fragment, RefObject, forwardRef } from 'react';
 import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
 import { useStoreState } from '@state';
 import { Category as ICategory } from '@graphql/graphql';
-import { Spine } from '@icons/Spine';
+import { ThreadSpine } from '@components/Shared/Icons/ThreadSpine';
 import { Channel } from './Channel';
 
 interface ChannelsProps {
@@ -41,7 +41,7 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
                 <Fragment key={thread.id}>
                   {currentThreadID === thread.id && (
                     <Styles.ThreadsWrapper>
-                      <Spine />
+                      {thread.id === currentThreadID && <ThreadSpine />}
                       <Channel
                         isThread
                         channel={thread}

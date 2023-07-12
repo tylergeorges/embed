@@ -37,14 +37,14 @@ export const ChannelsSidebar = () => {
         type="channelsList"
         channelsListOpen={isChannelsListOpen}
         onClick={hideContextMenu}
+        className="scrollbar-thin"
       >
         <Styles.GuildHeaderWrapper>
           <Header name={guildName} isChannelHeader={false} />
         </Styles.GuildHeaderWrapper>
 
-        <Styles.ChannelsChildrenWrapper>
+        <Styles.ChannelsChildrenWrapper className="scrollbar-thin">
           <ChannelHighlighter />
-
           {categories
             .filter(category => category !== null)
             .map(category => (

@@ -1,12 +1,11 @@
-import { theme, styled, commonComponentId } from '@stitches';
+import { theme, styled } from '@stitches';
 
 export const ToolTipContainer = styled.withConfig({
-  displayName: 'tooltip-container',
-  componentId: commonComponentId
+  displayName: 'tooltip-container'
 })('div', {
   position: 'absolute',
   transform: 'scale(0)',
-  transformOrigin: 'top',
+  transformOrigin: 'center',
 
   padding: theme.space.sm,
 
@@ -48,8 +47,7 @@ export const ToolTipContent = styled.withConfig({
 });
 
 export const ToolTipWrapper = styled.withConfig({
-  displayName: 'tooltip-wrapper',
-  componentId: commonComponentId
+  displayName: 'tooltip-wrapper'
 })('div', {
   display: 'flex',
   flexDirection: 'column',
@@ -58,8 +56,7 @@ export const ToolTipWrapper = styled.withConfig({
 });
 
 export const ToolTipChildWrapper = styled.withConfig({
-  displayName: 'tooltip-child_wrapper',
-  componentId: commonComponentId
+  displayName: 'tooltip-child_wrapper'
 })('div', {
   alignItems: 'center'
 });

@@ -49,6 +49,9 @@ import SvgThreadHash from './message-renderer-icons/channel-icons/icon-thread-ha
 import SvgThreadSpine from './message-renderer-icons/channel-icons/icon-thread-spine.svg';
 import SvgIconVoiceChannel from './message-renderer-icons/channel-icons/icon-voice-channel.svg';
 import SvgIconStageChannel from './message-renderer-icons/channel-icons/icon-stage-channel.svg';
+import SvgIconNewsChannel from './message-renderer-icons/channel-icons/icon-news-channel.svg';
+import SvgIconFourmChannel from './message-renderer-icons/channel-icons/icon-forum-channel.svg';
+import SvgIconRulesChannel from './message-renderer-icons/channel-icons/icon-rules-channel.svg';
 
 export const svgUrls = {
   // ! FILE ICONS
@@ -101,5 +104,8 @@ export const svgUrls = {
   IconThreadChannel: SvgThreadHash.src,
   IconThreadSpine: SvgThreadSpine.src,
   IconVoiceChannel: SvgIconVoiceChannel.src,
-  IconStageChannel: SvgIconStageChannel.src
+  IconStageChannel: SvgIconStageChannel.src,
+  IconNewsChannel: SvgIconNewsChannel.src,
+  IconForumChannel: SvgIconFourmChannel.src,
+  IconRulesChannel: SvgIconRulesChannel.src
 };
