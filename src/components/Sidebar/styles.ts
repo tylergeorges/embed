@@ -44,23 +44,7 @@ export const SidebarWrapper = styled.withConfig({
       },
 
       channelsList: {
-        zIndex: theme.zIndices.channelsSidebar,
-
-        '.sidebar-header_container': {
-          textAlign: 'center',
-          position: 'relative'
-        },
-
-        '.sidebar-children_container': {
-          position: 'relative',
-          width: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          height: '100%',
-          marginBottom: theme.space.xl,
-          overflowY: 'auto'
-        }
+        zIndex: theme.zIndices.channelsSidebar
       }
     }
   }
@@ -71,6 +55,26 @@ export const ChannelsSidebarWrapper = styled.withConfig({
 })(SidebarWrapper, {
   boxSizing: 'border-box',
   zIndex: theme.zIndices.channelsSidebar
+});
+
+export const ChannelsChildrenWrapper = styled.withConfig({
+  displayName: 'channels-children_container'
+})('div', {
+  position: 'relative',
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  height: '100%',
+  marginBottom: theme.space.xl,
+  overflowY: 'auto'
+});
+
+export const GuildHeaderWrapper = styled.withConfig({
+  displayName: 'guild-header_wrapper'
+})('div', {
+  textAlign: 'center',
+  position: 'relative'
 });
 
 export const MembersSidebarWrapper = styled.withConfig({

@@ -7,7 +7,7 @@ import * as Styles from '../styles';
 import { Category } from './Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
 
-export const ChannelsList = () => {
+export const ChannelsSidebar = () => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
   const { hideContextMenu } = useContextMenu();
 
@@ -38,11 +38,11 @@ export const ChannelsList = () => {
         channelsListOpen={isChannelsListOpen}
         onClick={hideContextMenu}
       >
-        <div className="sidebar-header_container">
+        <Styles.GuildHeaderWrapper>
           <Header name={guildName} isChannelHeader={false} />
-        </div>
+        </Styles.GuildHeaderWrapper>
 
-        <div className="sidebar-children_container">
+        <Styles.ChannelsChildrenWrapper>
           <ChannelHighlighter />
 
           {categories
@@ -50,7 +50,7 @@ export const ChannelsList = () => {
             .map(category => (
               <Category category={category} key={category.id} />
             ))}
-        </div>
+        </Styles.ChannelsChildrenWrapper>
       </Styles.ChannelsSidebarWrapper>
     </>
   );

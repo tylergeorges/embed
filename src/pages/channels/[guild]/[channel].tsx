@@ -1,6 +1,6 @@
 /* eslint-disable no-alert */
 import React from 'react';
-import { ChannelsList } from '@components/Sidebar/ChannelsList';
+import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
 import { ContextMenu } from '@components/Overlays/ContextMenu';
 import { useStoreState } from '@state';
 import { ThreadPanel } from '@components/Sidebar/ThreadPanel';
@@ -54,7 +54,7 @@ export default function GuildChannel() {
             {showContextMenu && <ContextMenu />}
             <Styles.InnerMain onClick={hideContextMenu}>
               <ChannelTopicModal />
-              <ChannelsList />
+              <ChannelsSidebar />
 
               <TextChannelContainer />
             </Styles.InnerMain>

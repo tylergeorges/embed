@@ -1,11 +1,11 @@
 import { forwardRef, useCallback } from 'react';
 import { useStoreActions, useStoreState } from '@state';
 import { ChannelType, Channel as IChannel } from '@graphql/graphql';
-import { Thread } from '@components/Sidebar/ChannelsList/Category/ChannelsContainer/Thread';
+import { Thread } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Thread';
 import { IThread } from '@state/stores/guild';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { Icons } from '@components/Shared/Icons';
-import * as Styles from '@components/Sidebar/ChannelsList/styles';
+import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
 import { Fourm, News } from '@icons/styles';
 
 interface ChannelNameProps {

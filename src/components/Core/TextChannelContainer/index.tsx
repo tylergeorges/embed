@@ -1,7 +1,7 @@
 import { useStoreActions, useStoreState } from '@state';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { MembersList } from '@components/Sidebar/MembersList';
+import { MembersSidebar } from '@components/Sidebar/MembersSidebar';
 import { useCallback, useEffect } from 'react';
 
 import { Backdrop } from '@components/Overlays/Modal/styles';
@@ -70,7 +70,7 @@ export const TextChannelContainer = () => {
           isOpen={!isChannelsListOpen && isMembersListOpen && windowIsMobile}
         />
 
-        <MembersList />
+        <MembersSidebar />
       </Styles.TextChannelInnerWrapper>
     </Styles.TextChannelWrapper>
   );

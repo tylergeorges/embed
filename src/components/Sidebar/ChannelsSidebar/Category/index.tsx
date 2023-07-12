@@ -1,8 +1,8 @@
 import { Category as ICategory } from '@graphql/graphql';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useStoreActions, useStoreState } from '@state';
-import { ChannelsContainer } from '@components/Sidebar/ChannelsList/Category/ChannelsContainer';
 import { useAppRouter } from '@hooks/useAppRouter';
+import { ChannelsContainer } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer';
 import * as Styles from '../styles';
 import { CategoryName } from './CategoryName';
 

@@ -1,4 +1,4 @@
-import * as Styles from '@components/Sidebar/ChannelsList/styles';
+import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
 
 import { IThread } from '@state/stores/guild';
 import { forwardRef } from 'react';

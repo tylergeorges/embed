@@ -11,7 +11,7 @@ interface CategoryNameProps {
 export const CategoryName = forwardRef<HTMLDivElement, CategoryNameProps>(
   ({ toggleIsOpen, category, isCategoryOpen }, ref) => (
     <Styles.CategoryNameContainer ref={ref} className="non-dragable" onClick={toggleIsOpen}>
-      <Styles.CategoryNameArrow opened={isCategoryOpen} className="category-name_arrow" />
+      <Styles.CategoryNameArrow opened={isCategoryOpen} />
       <Styles.CategoryNameContent draggable={false} className="non-dragable" onClick={toggleIsOpen}>
         {category.name}
       </Styles.CategoryNameContent>

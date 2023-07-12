@@ -1,5 +1,5 @@
 import { Fragment, RefObject, forwardRef } from 'react';
-import * as Styles from '@components/Sidebar/ChannelsList/styles';
+import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
 import { useStoreState } from '@state';
 import { Category as ICategory } from '@graphql/graphql';
 import { Spine } from '@icons/Spine';
