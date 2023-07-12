@@ -185,10 +185,14 @@ export const useMessages = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   thread
 }: UseMessagesProps) => {
-  const [variables, setVariables] = useState<MessagesQueryQueryVariables>({ guild, channel });
+  const [variables, setVariables] = useState<MessagesQueryQueryVariables>({
+    guild: '',
+    channel: ''
+  });
 
   const [messages, setMessages] = useState<BaseMessageFragment[]>([]);
   const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
+
   const [{ data }, fetchHook] = useQuery({
     query: messagesQuery,
     variables
@@ -197,8 +201,16 @@ export const useMessages = ({
   const ready = data?.channelV2.id === channel || false;
 
   useEffect(() => {
-    // @ts-ignore TODO: Fix this
+    // @ts-ignore
     const isReadyWithMessages = ready && data?.channelV2.messageBunch?.messages;
+    if (variables.channel !== channel) {
+      setMessages([]);
+    }
+
+    if (variables.channel !== channel || variables.guild !== guild) {
+      setVariables({ channel, guild });
+    }
+    // @ts-ignore TODO: Fix this
 
     // @ts-ignore
     const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
@@ -207,10 +219,13 @@ export const useMessages = ({
 
       if (ready) {
         setMessages(prev => [...msgs, ...prev]);
+      } else {
+        setMessages([]);
       }
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, ready]);
+  }, [data, channel, guild, ready]);
 
   const fetchMore = useCallback(
     (before: string) => {

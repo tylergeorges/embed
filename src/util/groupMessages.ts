@@ -21,9 +21,13 @@ export function groupMessages(messages: APIMessage[]): APIMessage[][] {
     } else if (i > 0) {
       const prevMessageGroup = groupedMessages[groupedMessages.length - 1];
 
-      const prevMsgGroupAuthorId = prevMessageGroup[0].author.id;
+      const prevMsgGroupAuthor = prevMessageGroup[0].author;
 
-      if (prevMsgGroupAuthorId === message.author.id) {
+      const sameAuthor =
+        prevMsgGroupAuthor.id === message.author.id &&
+        prevMsgGroupAuthor.username === message.author.username;
+
+      if (sameAuthor) {
         prevMessageGroup.push(message);
       } else {
         groupedMessages.push([message]);

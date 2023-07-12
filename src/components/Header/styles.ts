@@ -25,8 +25,6 @@ export const HeaderRoot = styled.withConfig({
   height: theme.sizes.headerHeight,
   width: '100%',
 
-  // zIndex: 8,
-
   variants: {
     shadowEnabled: {
       true: {

@@ -4,16 +4,18 @@ import { useStoreState } from '@state';
 import { useState } from 'react';
 import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useMessages } from '@hooks/useMessages';
+import { useAppRouter } from '@hooks/useAppRouter';
 import * as Styles from './styles';
 
 export const MessageContainer = () => {
   const [isListRendered, setIsListRendered] = useState(false);
 
+  const { channelId, guildId } = useAppRouter();
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
-    guild: '585454996800405509',
-    channel: '585840022511550494',
+    guild: guildId,
+    channel: channelId,
     thread: ''
   });
 
