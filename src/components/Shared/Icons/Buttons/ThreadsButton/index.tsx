@@ -1,7 +1,6 @@
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreActions, useStoreState } from '@state';
-import { useCallback } from 'react';
 
 export const ThreadsButton = () => {
   const setShowThreadsModal = useStoreActions(state => state.ui.setShowThreadsModal);
@@ -12,13 +11,10 @@ export const ThreadsButton = () => {
 
   const channelThreadsLength = String(guildChannels[channelId].threads?.length);
 
-  const openThreadsModal = useCallback(
-    (e: React.SyntheticEvent) => {
-      e.preventDefault();
-      setShowThreadsModal(!showThreadsModal);
-    },
-    [setShowThreadsModal, showThreadsModal]
-  );
+  const openThreadsModal = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    setShowThreadsModal(!showThreadsModal);
+  };
 
   return (
     <IconButton

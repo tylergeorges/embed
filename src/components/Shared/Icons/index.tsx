@@ -1,5 +1,4 @@
 import { IconRoot } from '@icons/Buttons/IconButtonWrapper/styles';
-import { CSS } from '@stitches/react';
 import { svgUrls } from '@svg-assets';
 
 const iconData = {
@@ -22,32 +21,8 @@ const iconData = {
 
 type IconNames = keyof typeof iconData;
 
-export interface IconProps {
+export interface IconProps extends React.ComponentProps<typeof IconRoot> {
   name: IconNames;
-
-  css?: CSS;
-
-  size?:
-    | 'small'
-    | 'large'
-    | 'regular'
-    | ({
-        '@initial'?: 'small' | 'large' | 'regular' | undefined;
-        '@small'?: 'small' | 'large' | 'regular' | undefined;
-      } & {
-        [x: string]: 'small' | 'large' | 'regular' | undefined;
-      })
-    | undefined;
-
-  color?:
-    | 'dark'
-    | 'light'
-    | ({
-        '@initial'?: 'dark' | 'light' | undefined;
-      } & {
-        [x: string]: 'dark' | 'light' | undefined;
-      })
-    | undefined;
 
   type?: 'headerIcon';
 
