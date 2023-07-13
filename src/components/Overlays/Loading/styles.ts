@@ -41,8 +41,8 @@ export const Spinner = styled.withConfig({
   },
 
   variants: {
-    type: {
-      fetchingMessages: {
+    isFetchingMessages: {
+      true: {
         justifySelf: 'center',
         alignSelf: 'center',
 
@@ -76,8 +76,8 @@ export const SpinnerWrapper = styled.withConfig({
   },
 
   variants: {
-    type: {
-      fetchingMessages: {
+    isFetchingMessages: {
+      true: {
         position: 'relative',
         width: '100%',
         height: 80

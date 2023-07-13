@@ -4,8 +4,8 @@ import { Components } from 'react-virtuoso';
 
 function FetchingDataSpinner() {
   return (
-    <LoadingStyles.SpinnerWrapper type="fetchingMessages">
-      <LoadingStyles.Spinner type="fetchingMessages" />
+    <LoadingStyles.SpinnerWrapper isFetchingMessages>
+      <LoadingStyles.Spinner isFetchingMessages />
     </LoadingStyles.SpinnerWrapper>
   );
 }
