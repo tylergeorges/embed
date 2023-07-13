@@ -41,6 +41,15 @@ export const IconButtonWrapper = ({
   tooltipDisabledIfActive,
   iconContent
 }: IconButtonWrapperProps) => {
+  // Style for if the background glow should be a certain size
+  const customBgGlowSizeStyle = backgroundGlowSize
+    ? {
+        width: backgroundGlowSize,
+        height: backgroundGlowSize,
+        borderRadius: theme.radii.round
+      }
+    : {};
+
   if (tooltipDisabled) {
     return (
       <Styles.IconButtonRoot>
@@ -48,15 +57,7 @@ export const IconButtonWrapper = ({
           backgroundGlowOnHover={backgroundGlowOnHover ?? false}
           onClick={onClick}
           isActive={isActive}
-          css={
-            backgroundGlowSize
-              ? {
-                  position: 'absolute',
-                  width: backgroundGlowSize,
-                  height: backgroundGlowSize
-                }
-              : {}
-          }
+          css={customBgGlowSizeStyle}
         >
           <div>{children}</div>
           {iconContent && <IconContent content={iconContent} />}
@@ -77,15 +78,7 @@ export const IconButtonWrapper = ({
             backgroundGlowOnHover={backgroundGlowOnHover ?? false}
             onClick={onClick}
             isActive={isActive}
-            css={
-              backgroundGlowSize
-                ? {
-                    width: backgroundGlowSize,
-                    height: backgroundGlowSize,
-                    borderRadius: theme.radii.round
-                  }
-                : {}
-            }
+            css={customBgGlowSizeStyle}
           >
             <div ref={childRef}>{children}</div>
             {iconContent && <IconContent content={iconContent} />}
