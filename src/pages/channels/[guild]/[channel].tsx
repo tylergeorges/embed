@@ -20,7 +20,7 @@ const MessageRendererRoot = styled('div', {
 });
 
 export default function GuildChannel() {
-  const { disableBrowserMenu, hideContextMenu } = useContextMenu();
+  const { disableBrowserMenu } = useContextMenu();
 
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);
   const guildChannels = useStoreState(state => state.guild.guildChannels);
@@ -52,7 +52,7 @@ export default function GuildChannel() {
         <MessageRendererRoot className={themeClass}>
           <Styles.Main onContextMenu={disableBrowserMenu}>
             {showContextMenu && <ContextMenu />}
-            <Styles.InnerMain onClick={hideContextMenu}>
+            <Styles.InnerMain>
               <ChannelTopicModal />
               <ChannelsSidebar />
 
