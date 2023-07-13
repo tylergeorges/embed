@@ -13,6 +13,7 @@ export const Background = styled.withConfig({
   padding: 0,
   margin: 0,
   width: `calc(100% - ${theme.space.lg.value})`,
+  zIndex: theme.zIndices.channelsSidebar,
 
   variants: {
     animated: {

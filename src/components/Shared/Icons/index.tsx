@@ -22,7 +22,7 @@ const iconData = {
 type IconNames = keyof typeof iconData;
 
 export interface IconProps extends React.ComponentProps<typeof IconRoot> {
-  name: IconNames;
+  icon: IconNames;
 
   type?: 'headerIcon';
 
@@ -31,7 +31,7 @@ export interface IconProps extends React.ComponentProps<typeof IconRoot> {
   customViewbox?: string;
 }
 
-export const Icons = ({ name, color, css, size, type, iconContent, customViewbox }: IconProps) => (
+export const Icons = ({ icon, color, css, size, type, iconContent, customViewbox }: IconProps) => (
   <>
     <IconRoot
       css={css}
@@ -40,7 +40,7 @@ export const Icons = ({ name, color, css, size, type, iconContent, customViewbox
       color={color ?? 'light'}
       viewBox={customViewbox ?? '0 0 24 24'}
     >
-      <use href={`${iconData[name]}#svg`} />
+      <use href={`${iconData[icon]}#svg`} />
       {iconContent}
     </IconRoot>
   </>

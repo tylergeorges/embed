@@ -12,8 +12,6 @@ export const SidebarWrapper = styled.withConfig({
   width: theme.sizes.sideBarWidth,
   maxWidth: theme.sizes.sideBarWidth,
 
-  // boxSizing: 'border-box',
-
   backgroundColor: theme.colors.backgroundSecondary,
   willChange: 'transform',
   transition: 'transform 300ms ease',

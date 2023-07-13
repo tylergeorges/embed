@@ -1,6 +1,6 @@
 import * as Styles from '@components/Shared/ToolTip/styles';
+import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface ToolTipProps {
   label: string;
@@ -15,9 +15,7 @@ interface ToolTipProps {
 export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipProps) => {
   const [showToolTip, setShowToolTip] = useState(false);
 
-  const translate = useTranslation();
   const visitedRef = useRef(false);
-
   const childrenConRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
@@ -28,6 +26,7 @@ export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipP
       setShowToolTip(true);
     }
   };
+
   const hideTooltip = () => {
     setShowToolTip(false);
   };
@@ -38,35 +37,53 @@ export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipP
 
     if (childrenRef && tooltipElement) {
       const childRect = childrenRef.getBoundingClientRect();
+      const childLeft = childrenRef.clientLeft;
+
+      const tooltipWidth = tooltipElement.offsetWidth;
       const tooltipOffscreen = childRect.x + tooltipElement.offsetWidth >= window.innerWidth;
 
-      if (tooltipOffscreen) {
-        const newX =
-          childrenRef.offsetLeft + (window.innerWidth - childRect.x - tooltipElement.clientWidth);
+      const tooltipYPos =
+        placement === 'bottom'
+          ? // ! Fallback incase clientTop is 0
+            childrenRef.clientTop + tooltipElement.clientHeight
+          : childrenRef.clientTop - tooltipElement.clientHeight;
 
-        tooltipElement.style.left = `${newX}px`;
+      if (tooltipOffscreen) {
+        const tooltipXPos = childLeft + (window.innerWidth - childRect.x - tooltipWidth);
+
+        tooltipElement.style.left = `${tooltipXPos}px`;
+        tooltipElement.style.top = `${tooltipYPos}px`;
       } else {
-        tooltipElement.style.left = `${childrenRef.offsetLeft - childrenRef.offsetWidth}px`;
+        const tooltipXPos =
+          childrenRef.offsetLeft - tooltipElement.offsetWidth / 2 + childrenRef.clientWidth / 2;
+
+        tooltipElement.style.top = `${tooltipYPos}px`;
+        tooltipElement.style.left = `${tooltipXPos}px`;
       }
     }
   }
   useEffect(() => {
+    const throttledGetPos = throttle(getTooltipPosition, 300);
+
     // Bounding client X position changes from initial render
     const getPosTimeout = setTimeout(() => {
       if (!visitedRef.current) {
         visitedRef.current = true;
-        getTooltipPosition();
+        throttledGetPos();
       } else {
         clearTimeout(getPosTimeout);
       }
-    }, 400);
+    }, 250);
 
-    window.addEventListener('resize', getTooltipPosition);
+    window.addEventListener('resize', throttledGetPos);
 
     return () => {
-      window.removeEventListener('resize', getTooltipPosition);
+      window.removeEventListener('resize', throttledGetPos);
       clearTimeout(getPosTimeout);
+      throttledGetPos.cancel();
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -79,8 +96,8 @@ export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipP
         {children({ childRef: childrenConRef })}
       </Styles.ToolTipChildWrapper>
 
-      <Styles.ToolTipContainer visible={showToolTip} placement={placement} ref={tooltipRef}>
-        <Styles.ToolTipContent>{translate.t(label)}</Styles.ToolTipContent>
+      <Styles.ToolTipContainer visible={showToolTip} ref={tooltipRef}>
+        <Styles.ToolTipContent>{label}</Styles.ToolTipContent>
       </Styles.ToolTipContainer>
     </Styles.ToolTipWrapper>
   );

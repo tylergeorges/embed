@@ -7,7 +7,11 @@ import { useMessages } from '@hooks/useMessages';
 import { useAppRouter } from '@hooks/useAppRouter';
 import * as Styles from './styles';
 
-export const MessageContainer = () => {
+interface MessageContainerProps {
+  channelIsThread?: boolean;
+}
+
+export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
   const [isListRendered, setIsListRendered] = useState(false);
 
   const { channelId, guildId } = useAppRouter();
@@ -42,7 +46,7 @@ export const MessageContainer = () => {
         handleBottomStateChanged={handleBottomStateChanged}
       />
 
-      <TextBox />
+      <TextBox channelIsThread={channelIsThread} />
     </Styles.MessageWrapper>
   );
 };

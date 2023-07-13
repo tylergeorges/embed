@@ -7,7 +7,6 @@ export const CategoryNameContainer = styled.withConfig({
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
-  position: 'relative',
   color: theme.colors.primaryOpacity40,
   paddingRight: theme.space.sm,
 
@@ -74,7 +73,6 @@ export const ChannelNameWrapper = styled.withConfig({
   maxHeight: theme.sizes.channelNameHeight,
   overflow: 'hidden',
   marginY: theme.space.xxs,
-
   transition: 'max-height 350ms ease',
   // @ts-ignore
   paddingX: theme.space.sm.value,
@@ -117,7 +115,6 @@ export const ChannelNameWrapper = styled.withConfig({
       isCategoryOpen: false,
 
       css: {
-        position: 'relative',
         maxHeight: 0,
         margin: 0,
         padding: 0
@@ -129,7 +126,6 @@ export const ChannelNameWrapper = styled.withConfig({
       isCategoryOpen: true,
 
       css: {
-        position: 'relative',
         top: 0
       }
     }
@@ -137,6 +133,7 @@ export const ChannelNameWrapper = styled.withConfig({
 });
 
 export const ChannelNameInner = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'channel-name'
 })(Link, {
   display: 'flex',
@@ -156,6 +153,7 @@ export const ChannelNameInner = styled.withConfig({
     isActive: {
       false: {
         color: theme.colors.textMuted.value,
+
         '&:hover': {
           backgroundColor: theme.colors.primaryOpacity10,
           color: theme.colors.primaryOpacity50

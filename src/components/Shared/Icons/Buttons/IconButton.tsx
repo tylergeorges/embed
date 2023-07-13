@@ -7,7 +7,7 @@ interface IconButtonProps extends IconProps, Omit<IconButtonWrapperProps, 'child
 
 export const IconButton = ({
   onClick,
-  name,
+  icon,
   color,
   css,
   backgroundGlowOnHover,
@@ -31,6 +31,6 @@ export const IconButton = ({
     isActive={isActive}
     iconContent={iconContent}
   >
-    <Icons size={size} color={color} name={name} css={css} />
+    <Icons size={size} color={color} icon={icon} css={css} />
   </IconButtonWrapper>
 );

@@ -19,7 +19,6 @@ export const HeaderRoot = styled.withConfig({
   displayName: 'header-root'
 })('header', {
   display: 'flex',
-  flexShrink: 0,
   justifyContent: 'center',
   alignItems: 'center',
 

@@ -20,7 +20,7 @@ export const ThreadPanel = () => {
       <Styles.ThreadsPanelContainer>
         <ThreadPanelHeader />
 
-        <MessageContainer />
+        <MessageContainer channelIsThread />
       </Styles.ThreadsPanelContainer>
     </Styles.ThreadPanelWrapper>
   );

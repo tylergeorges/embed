@@ -23,7 +23,7 @@ export const ChannelHeader = () => {
 
         <Styles.ChannelNameTopicWrapper>
           {currentChannel ? (
-            <Icons name="TextChannelHash" size="small" color="dark" />
+            <Icons icon="TextChannelHash" size="small" color="dark" />
           ) : (
             <SkeletonStyles.SkeletonLine size="xs" borderRadius="round" />
           )}

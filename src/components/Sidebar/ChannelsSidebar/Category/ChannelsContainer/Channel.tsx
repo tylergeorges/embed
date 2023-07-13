@@ -1,5 +1,5 @@
-import { forwardRef, useCallback } from 'react';
-import { useStoreActions, useStoreState } from '@state';
+import { forwardRef } from 'react';
+import { useStoreActions } from '@state';
 import { ChannelType, Channel as IChannel } from '@graphql/graphql';
 import { Thread } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Thread';
 import { IThread } from '@state/stores/guild';
@@ -23,38 +23,27 @@ interface ChannelNameProps {
 /** Component that handles rendering of each channel name. */
 export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
   ({ channel, isActive, isCategoryOpen, isThread, channelHasActiveThread }, ref) => {
-    const guildID = useStoreState(state => state.guild.data!.id) as string;
-
     const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
     const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
     const setContextMenuData = useStoreActions(state => state.ui.setContextMenuData);
     const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
 
-    const { channelId } = useAppRouter();
+    const { channelId, guildId } = useAppRouter();
 
-    const currentGuildUrl = `/channels/${guildID}`;
-
-    /** Sets the new select component's y position because we clicked on a new
-     *  channel.
-     */
-    const handleChannelClick = useCallback((e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const handleChannelClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       setCurrentChannelYPos(e.currentTarget.offsetTop);
       setInitChannelYPos(e.currentTarget.offsetTop);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    };
 
-    const handleContextMenuClick = useCallback(
-      (e: React.MouseEvent) => {
-        e.preventDefault();
-        setContextMenuData({
-          xPos: e.clientX,
-          yPos: e.clientY,
-          channelLink: `https://discord.com/channels/${guildID}/${channel.id}`
-        });
-        setShowContextMenu(true);
-      },
-      [channel.id, guildID, setShowContextMenu, setContextMenuData]
-    );
+    const handleContextMenuClick = (e: React.MouseEvent) => {
+      e.preventDefault();
+      setContextMenuData({
+        xPos: e.clientX,
+        yPos: e.clientY,
+        channelLink: `https://discord.com/channels/${guildId}/${channel.id}`
+      });
+      setShowContextMenu(true);
+    };
 
     return (
       <Styles.ChannelNameWrapper
@@ -73,13 +62,15 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
             ref={isActive ? ref : null}
             handleContextMenuClick={handleContextMenuClick}
             thread={channel as IThread}
-            currentChannelUrl={`${currentGuildUrl}/${channelId}`}
+            currentChannelUrl={`/channels/${guildId}/${channelId}`}
           />
         ) : (
           <Styles.ChannelNameInner
             isActive={isActive && !channelHasActiveThread}
-            href={`${currentGuildUrl}/${channel.id}`}
-            ref={isActive && !channelHasActiveThread ? ref : null}
+            href={`/channels/${guildId}/${channel.id}`}
+            // Dont set ref if the channel has a thread opened
+            // eslint-disable-next-line no-nested-ternary
+            ref={isActive ? (channelHasActiveThread ? null : ref) : null}
             draggable={false}
             // ! USES CLASSNAME FROM GLOBAL CSS SO THE CHANNEL HIGHLIGHTER AND CHANNEL NAME
             // ! GET FORMATTED THE SAME
@@ -87,13 +78,13 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
           >
             <Styles.ChannelNameIconWrapper draggable={false}>
               {channel.type === ChannelType.GuildText && (
-                <Icons name="TextChannelHash" color="dark" size="small" />
+                <Icons icon="TextChannelHash" color="dark" size="small" />
               )}
               {channel.type === ChannelType.GuildAnnouncement && (
-                <Icons name="NewsChannelIcon" color="dark" size="small" />
+                <Icons icon="NewsChannelIcon" color="dark" size="small" />
               )}
               {channel.type === ChannelType.GuildForum && (
-                <Icons name="FourmChannelIcon" color="dark" size="small" />
+                <Icons icon="FourmChannelIcon" color="dark" size="small" />
               )}
             </Styles.ChannelNameIconWrapper>
 

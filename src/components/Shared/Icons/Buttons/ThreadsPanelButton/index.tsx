@@ -1,7 +1,6 @@
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { Channel } from '@graphql/graphql';
 import { useStoreActions } from '@state';
-import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ThreadsPanelButtonProps {
@@ -16,27 +15,21 @@ export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
   const setIsThreadsPanelOpen = useStoreActions(state => state.ui.setIsThreadsPanelOpen);
 
-  const handlePanelClick = useCallback(() => {
+  const handlePanelClick = () => {
     setIsCurrentChannelThread(true);
     setIsThreadsPanelOpen(true);
     setIsMembersListOpen(false);
     setCurrentThread(thread);
-  }, [
-    setCurrentThread,
-    setIsMembersListOpen,
-    setIsCurrentChannelThread,
-    thread,
-    setIsThreadsPanelOpen
-  ]);
+  };
 
   return (
     <IconButton
+      icon="ThreadPanel"
       color="light"
+      backgroundGlowOnHover
       backgroundGlowSize={40}
       tooltipLabel={translate.t('openthread.tooltip') as string}
-      backgroundGlowOnHover
-      name="ThreadPanel"
-      tooltipPlacement="bottom"
+      tooltipPlacement="top"
       onClick={handlePanelClick}
     />
   );

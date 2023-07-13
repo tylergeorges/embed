@@ -4,7 +4,8 @@ import { useMediaQuery } from '@hooks/useMediaQuery';
 import { ReactElement } from 'react';
 import { CloseButton } from '@icons/Buttons/CloseButton';
 
-type TitleIcon = Pick<IconProps, 'name'>['name'];
+type TitleIcon = Pick<IconProps, 'icon'>['icon'];
+
 interface PopoutProps {
   children: ReactElement<any, any>;
   isOpen: boolean;
@@ -39,7 +40,7 @@ export const Popout = ({
       <Styles.PopoutHeader>
         <Styles.PopoutHeaderContent>
           <Styles.PopoutTitleWrapper>
-            {TitleIcon && <Icons name={TitleIcon} />}
+            {TitleIcon && <Icons icon={TitleIcon} />}
 
             <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
           </Styles.PopoutTitleWrapper>

@@ -12,8 +12,13 @@ type ModifierKeys = {
   };
 };
 
-export const TextBoxInput = () => {
+interface TextBoxInputProps {
+  channelIsThread?: boolean;
+}
+
+export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
   const translate = useTranslation();
+  const currentThread = useStoreState(state => state.guild.currentThread);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
 
   const [modifierKeys, setModifierKeys] = useState<ModifierKeys>({
@@ -133,7 +138,9 @@ export const TextBoxInput = () => {
 
       {showPlaceHolder && (
         <Styles.TextBoxPlaceholder>
-          {translate.t('input.message', { CHANNEL: currentChannel?.name })}
+          {translate.t('input.message', {
+            CHANNEL: channelIsThread ? currentThread?.name : currentChannel?.name
+          })}
         </Styles.TextBoxPlaceholder>
       )}
     </Styles.TextBoxInputWrapper>

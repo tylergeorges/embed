@@ -20,7 +20,6 @@ export interface HeaderProps {
   children?: ReactNode;
 }
 
-/** Reusable Header component. */
 export const Header = ({ name, shadowEnabled, isChannelHeader, children }: HeaderProps) => (
   <Styles.HeaderRoot shadowEnabled={shadowEnabled}>
     {children && children}

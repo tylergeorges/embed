@@ -6,7 +6,7 @@ export const PinButton = () => {
 
   return (
     <IconButton
-      name="Pin"
+      icon="Pin"
       tooltipLabel={translate.t('pinnedmessages.tooltip') as string}
       tooltipPlacement="bottom"
       onClick={e => e.preventDefault()}

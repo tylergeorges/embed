@@ -5,15 +5,13 @@ export const ToolTipContainer = styled.withConfig({
   displayName: 'tooltip-container'
 })('div', {
   position: 'absolute',
-  transform: 'scale(0)',
-  transformOrigin: 'center',
 
   padding: theme.space.sm,
 
   borderRadius: theme.radii.xs,
   pointerEvents: 'none',
   backgroundColor: theme.colors.tooltipBackground,
-  transition: 'transform 100ms ease',
+  transition: 'transform 125ms ease',
   zIndex: theme.zIndices.tooltip,
 
   variants: {
@@ -28,10 +26,11 @@ export const ToolTipContainer = styled.withConfig({
 
     placement: {
       top: {
-        top: -50
+        transformOrigin: 'bottom'
       },
+
       bottom: {
-        top: 30
+        transformOrigin: 'top'
       }
     }
   }
@@ -41,11 +40,9 @@ export const ToolTipContent = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'tooltip-content'
 })('span', {
-  position: 'relative',
-  display: 'inline-block',
-
   fontSize: theme.fontSizes.lg,
-  textAlign: 'center'
+  textAlign: 'center',
+  position: 'relative'
 });
 
 export const ToolTipWrapper = styled.withConfig({
@@ -55,12 +52,14 @@ export const ToolTipWrapper = styled.withConfig({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'center',
+  position: 'relative'
 });
 
 export const ToolTipChildWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'tooltip-child_wrapper'
 })('div', {
-  alignItems: 'center'
+  alignItems: 'center',
+  position: 'relative'
 });

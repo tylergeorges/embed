@@ -16,7 +16,7 @@ export const MembersButton = () => {
           : (translate.t('showmembers.tooltip') as string)
       }
       onClick={() => setMembersListOpen(!isMembersListOpen)}
-      name="Members"
+      icon="Members"
       isActive={isMembersListOpen}
     />
   );

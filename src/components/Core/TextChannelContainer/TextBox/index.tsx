@@ -5,7 +5,11 @@ import { TextBoxInput } from '@components/Core/TextChannelContainer/TextBox/Text
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import * as Styles from '../styles';
 
-export const TextBox = () => {
+interface TextBoxProps {
+  channelIsThread?: boolean;
+}
+
+export const TextBox = ({ channelIsThread }: TextBoxProps) => {
   const fileAttachmentRef = useRef<HTMLInputElement>(null);
 
   const attachmentButtonClick = (e: React.SyntheticEvent) => {
@@ -35,11 +39,11 @@ export const TextBox = () => {
             tooltipDisabled
             onClick={attachmentButtonClick}
             isActive={false}
-            name="AddAttachment"
+            icon="AddAttachment"
           />
         </Styles.TextBoxButtonWrapper>
 
-        <TextBoxInput />
+        <TextBoxInput channelIsThread={channelIsThread} />
 
         <Styles.TextBoxButtonWrapper>
           <EmojisButton />

@@ -173,7 +173,7 @@ export const TextBoxWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'textbox-wrapper'
 })('form', {
-  position: 'relative',
+  // position: 'relative',
   display: 'flex',
   alignItems: 'center',
 
@@ -192,7 +192,7 @@ export const TextBoxInner = styled.withConfig({
   displayName: 'textbox-inner'
 })('div', {
   display: 'flex',
-  position: 'relative',
+  // position: 'relative',
 
   width: '100%',
   maxHeight: '50vh',

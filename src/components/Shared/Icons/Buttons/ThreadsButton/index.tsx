@@ -18,9 +18,9 @@ export const ThreadsButton = () => {
 
   return (
     <IconButton
+      icon="ThreadHash"
       color="light"
       tooltipLabel="Threads"
-      name="ThreadHash"
       tooltipPlacement="bottom"
       tooltipDisabledIfActive
       isActive={showThreadsModal}

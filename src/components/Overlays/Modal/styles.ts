@@ -371,7 +371,8 @@ export const ThreadsPopoutList = styled.withConfig({
   displayName: 'popout-threads_list_container'
 })('div', {
   height: '100%',
-  width: '100%'
+  width: '100%',
+  position: 'relative'
 });
 
 export const ThreadName = styled.withConfig({
@@ -404,7 +405,6 @@ export const ThreadsPopoutContent = styled.withConfig({
   width: '100%',
   height: '100%',
 
-  position: 'relative',
   display: 'flex',
   flexDirection: 'column',
 
@@ -434,6 +434,7 @@ export const ThreadsPopoutListItem = styled.withConfig({
   flexDirection: 'row',
   cursor: 'pointer',
 
+  position: 'relative',
   '&:hover': {
     borderColor: theme.colors.primaryOpacity10
   }
