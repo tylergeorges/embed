@@ -1,7 +1,8 @@
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 import Image from 'next/image';
 
 export const TextChannelWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'text-channel_wrapper'
 })('div', {
   display: 'flex',
@@ -90,6 +91,7 @@ export const TextChannelWrapper = styled.withConfig({
 });
 
 export const TextChannelInnerWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'text-channel_inner_wrapper'
 })('div', {
   position: 'relative',
@@ -113,6 +115,7 @@ export const TextChannelInnerWrapper = styled.withConfig({
 });
 
 export const MessageWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'message-wrapper'
 })('div', {
   position: 'relative',
@@ -167,6 +170,7 @@ export const MessageWrapper = styled.withConfig({
 });
 
 export const TextBoxWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'textbox-wrapper'
 })('form', {
   position: 'relative',
@@ -184,6 +188,7 @@ export const TextBoxWrapper = styled.withConfig({
 });
 
 export const TextBoxInner = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'textbox-inner'
 })('div', {
   display: 'flex',
@@ -196,6 +201,7 @@ export const TextBoxInner = styled.withConfig({
 });
 
 export const TextBoxButtonWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'textbox-button_wrapper'
 })('div', {
   position: 'sticky',
@@ -208,6 +214,7 @@ export const TextBoxButtonWrapper = styled.withConfig({
 });
 
 export const TextBoxInputWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'textbox-input_wrapper'
 })('div', {
   display: 'flex',
@@ -220,6 +227,7 @@ export const TextBoxInputWrapper = styled.withConfig({
 });
 
 export const TextInput = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'textbox-input'
 })('div', {
   cursor: 'text',
@@ -245,6 +253,7 @@ export const TextInput = styled.withConfig({
 });
 
 export const TextBoxPlaceholder = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'textbox-placeholder'
 })('span', {
   position: 'absolute',
@@ -253,6 +262,7 @@ export const TextBoxPlaceholder = styled.withConfig({
 });
 
 export const MessageContentOuterWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'message-content_outer_wrapper'
 })('div', {
   display: 'flex',
@@ -269,6 +279,7 @@ export const MessageContentOuterWrapper = styled.withConfig({
 });
 
 export const MessageContent = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'message-content'
 })('div', {
   position: 'relative',
@@ -276,6 +287,7 @@ export const MessageContent = styled.withConfig({
 });
 
 export const MessageAvatar = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'message-avatar'
 })(Image, {
   position: 'absolute',
@@ -286,6 +298,7 @@ export const MessageAvatar = styled.withConfig({
 });
 
 export const MessageUsername = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'message-username'
 })('h3', {
   fontSize: theme.fontSizes.lg,

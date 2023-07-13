@@ -19,6 +19,7 @@ export const Main = styled.withConfig({
 });
 
 export const InnerMain = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'inner-main'
 })('div', {
   width: '100%',

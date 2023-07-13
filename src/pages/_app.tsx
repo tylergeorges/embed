@@ -44,62 +44,62 @@ const globalStyles = globalCss({
 
   '*, ::after, ::before': {
     boxSizing: 'inherit',
-    scrollbarWidth: 'thin',
+    // scrollbarWidth: 'thin',
     scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.2)'
   },
 
-  /* width */
-  '::-webkit-scrollbar': {
-    width: 16,
-    height: 16,
-    borderRadius: 8
-  },
+  // /* width */
+  // '::-webkit-scrollbar': {
+  //   width: 16,
+  //   height: 16,
+  //   borderRadius: 8
+  // },
 
-  /* Track */
-  '::-webkit-scrollbar-track': {
-    borderRadius: 8,
-    backgroundClip: 'padding-box',
-    border: '4px solid transparent',
-    backgroundColor: 'rgba(0,0,0,0.2)'
-  },
+  // /* Track */
+  // '::-webkit-scrollbar-track': {
+  //   borderRadius: 8,
+  //   backgroundClip: 'padding-box',
+  //   border: '4px solid transparent',
+  //   backgroundColor: 'rgba(0,0,0,0.2)'
+  // },
 
-  /* Handle */
-  '::-webkit-scrollbar-thumb': {
-    backgroundClip: 'padding-box',
-    borderWidth: '4px',
-    borderStyle: 'solid',
-    borderColor: 'transparent',
+  // /* Handle */
+  // '::-webkit-scrollbar-thumb': {
+  //   backgroundClip: 'padding-box',
+  //   borderWidth: '4px',
+  //   borderStyle: 'solid',
+  //   borderColor: 'transparent',
 
-    borderRadius: 8,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-    visibility: 'none'
-  },
+  //   borderRadius: 8,
+  //   backgroundColor: 'rgba(0,0,0,0.4)',
+  //   visibility: 'none'
+  // },
 
-  '.scrollbar-thin': {
-    scrollbarWidth: 'thin',
+  // '.scrollbar-thin': {
+  //   scrollbarWidth: 'thin',
 
-    '&::-webkit-scrollbar-thumb': {
-      backgroundClip: 'padding-box',
-      borderWidth: '2px',
-      borderStyle: 'solid',
-      borderColor: 'transparent',
-      borderRadius: 4,
-      backgroundColor: 'rgba(0,0,0,0.4)',
-      minHeight: 40,
-      visibility: 'none'
-    },
+  //   '&::-webkit-scrollbar-thumb': {
+  //     backgroundClip: 'padding-box',
+  //     borderWidth: '2px',
+  //     borderStyle: 'solid',
+  //     borderColor: 'transparent',
+  //     borderRadius: 4,
+  //     backgroundColor: 'rgba(0,0,0,0.4)',
+  //     minHeight: 40,
+  //     visibility: 'none'
+  //   },
 
-    '&::-webkit-scrollbar-track': {
-      backgroundColor: 'transparent',
-      visibility: 'none'
-    },
+  //   '&::-webkit-scrollbar-track': {
+  //     backgroundColor: 'transparent',
+  //     visibility: 'none'
+  //   },
 
-    '&::-webkit-scrollbar': {
-      width: 8,
-      height: 8,
-      visibility: 'none'
-    }
-  },
+  //   '&::-webkit-scrollbar': {
+  //     width: 8,
+  //     height: 8,
+  //     visibility: 'none'
+  //   }
+  // },
 
   /* Handle on hover */
   '::-webkit-scrollbar-thumb:hover': {},
@@ -112,6 +112,7 @@ const globalStyles = globalCss({
     '-ms-user-select': 'none' /* Internet Explorer/Edge */,
     'user-select': 'none'
   },
+
   '.channel-name': {
     height: theme.sizes.channelNameHeight,
     width: '100%',

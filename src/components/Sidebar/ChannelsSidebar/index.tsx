@@ -43,7 +43,7 @@ export const ChannelsSidebar = () => {
           <Header name={guildName} isChannelHeader={false} />
         </Styles.GuildHeaderWrapper>
 
-        <Styles.ChannelsChildrenWrapper className="scrollbar-thin">
+        <Styles.ChannelsChildrenWrapper>
           <ChannelHighlighter />
           {categories
             .filter(category => category !== null)

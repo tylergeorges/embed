@@ -29,6 +29,7 @@ export const VirtualListContentContainer = styled.withConfig({
 });
 
 export const VirtualListContainer = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'list-container'
 })('div', {
   position: 'relative',

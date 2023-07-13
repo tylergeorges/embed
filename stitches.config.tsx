@@ -1,6 +1,6 @@
 import { ScaleValue, createStitches } from '@stitches/react';
 
-export const commonComponentId = 'embed';
+export const commonComponentId = process.env.NODE_ENV === 'development' ? undefined : 'embed';
 
 const stitches = createStitches({
   theme: {

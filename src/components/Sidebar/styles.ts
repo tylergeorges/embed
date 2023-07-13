@@ -1,6 +1,7 @@
 import { theme, styled, commonComponentId } from '@stitches';
 
 export const SidebarWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'sidebar_wrapper'
 })('aside', {
   position: 'absolute',
@@ -11,7 +12,7 @@ export const SidebarWrapper = styled.withConfig({
   width: theme.sizes.sideBarWidth,
   maxWidth: theme.sizes.sideBarWidth,
 
-  boxSizing: 'border-box',
+  // boxSizing: 'border-box',
 
   backgroundColor: theme.colors.backgroundSecondary,
   willChange: 'transform',
@@ -50,12 +51,14 @@ export const SidebarWrapper = styled.withConfig({
 });
 
 export const ChannelsSidebarWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'channels-sidebar_wrapper'
 })(SidebarWrapper, {
   zIndex: theme.zIndices.channelsSidebar
 });
 
 export const ChannelsChildrenWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'channels-children_container'
 })('div', {
   width: '100%',
@@ -63,12 +66,11 @@ export const ChannelsChildrenWrapper = styled.withConfig({
   flexDirection: 'column',
   alignItems: 'center',
   height: '100%',
-  marginBottom: theme.space.xl,
-  position: 'relative',
-  overflowY: 'scroll'
+  position: 'relative'
 });
 
 export const GuildHeaderWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'guild-header_wrapper'
 })('div', {
   textAlign: 'center',
@@ -76,6 +78,7 @@ export const GuildHeaderWrapper = styled.withConfig({
 });
 
 export const MembersSidebarWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'members-sidebar_wrapper'
 })(SidebarWrapper, {
   right: 0,
@@ -84,6 +87,7 @@ export const MembersSidebarWrapper = styled.withConfig({
 });
 
 export const ThreadsPanelContainer = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'thread-panel_container'
 })('div', {
   position: 'absolute',

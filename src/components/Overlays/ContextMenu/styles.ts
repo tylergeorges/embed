@@ -1,6 +1,7 @@
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 
 export const ContextMenuWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'context-menu_wrapper'
 })('div', {
   backgroundColor: theme.colors.contextMenuBackground,
@@ -29,6 +30,7 @@ export const ContextMenuWrapper = styled.withConfig({
 });
 
 export const ContextMenuItem = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'context-menu_item'
 })('div', {
   width: '100%',
@@ -51,7 +53,9 @@ export const ContextMenuItem = styled.withConfig({
     color: theme.colors.primary
   }
 });
+
 export const ContextMenuItemLabel = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'context-menu_item_label'
 })('div', {
   width: '100%'

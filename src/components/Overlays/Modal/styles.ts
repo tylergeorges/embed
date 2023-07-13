@@ -9,6 +9,7 @@ const zoomIn = keyframes({
 });
 
 export const Backdrop = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'backdrop'
 })('div', {
   width: '100%',
@@ -144,12 +145,14 @@ export const ModalContainerWrapper = styled.withConfig({
 });
 
 export const PopoutContainerWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'popout-container_wrapper'
 })(ModalContainerWrapper, {
   zIndex: theme.zIndices.modal
 });
 
 export const ModalContainer = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'modal-container'
 })('div', {
   display: 'flex',
@@ -179,12 +182,14 @@ export const ModalContainer = styled.withConfig({
 });
 
 export const ModalHeader = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'modal-header'
 })('div', {
   width: '100%'
 });
 
 export const ModalHeaderContent = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'modal-header_content'
 })(HeaderMainContentRoot, {
   display: 'flex',
@@ -198,6 +203,7 @@ export const ModalHeaderContent = styled.withConfig({
 });
 
 export const PopoutHeader = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'popout-header'
 })('div', {
   display: 'flex',
@@ -217,6 +223,7 @@ export const PopoutHeader = styled.withConfig({
 });
 
 export const PopoutContainer = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'popout-container'
 })('div', {
   position: 'absolute',

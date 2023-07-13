@@ -1,6 +1,7 @@
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 
 export const Background = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'active-channel_background'
 })('div', {
   position: 'absolute',

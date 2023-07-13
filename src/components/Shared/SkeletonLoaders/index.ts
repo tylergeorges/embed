@@ -1,4 +1,4 @@
-import { styled, theme, keyframes } from '@stitches';
+import { styled, theme, keyframes, commonComponentId } from '@stitches';
 
 const SkeletonLoader = keyframes({
   '0%': {
@@ -13,6 +13,7 @@ const SkeletonLoader = keyframes({
 });
 
 export const SkeletonLoaderRoot = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'skeleton-loader_root'
 })('div', {
   animation: `${SkeletonLoader} 3s infinite ease-in-out`,
@@ -22,6 +23,7 @@ export const SkeletonLoaderRoot = styled.withConfig({
 });
 
 export const MessageSkeletonWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'message-skeleton_wrapper'
 })('div', {
   display: 'flex',
@@ -38,6 +40,7 @@ export const MessageSkeletonWrapper = styled.withConfig({
 });
 
 export const MessageSkeletonContent = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'message-skeleton_content'
 })('div', {
   position: 'relative',
@@ -91,6 +94,7 @@ export const SkeletonLine = styled.withConfig({
 });
 
 export const MessageSkeletonUsername = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'message-skeleton_username'
 })(SkeletonLoaderRoot, {
   fontSize: theme.fontSizes.lg,
@@ -110,6 +114,7 @@ export const MessageSkeletonUsername = styled.withConfig({
 });
 
 export const MessageSkeletonAvatar = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'message-skeleton_avatar'
 })(SkeletonLoaderRoot, {
   position: 'absolute',

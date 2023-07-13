@@ -1,4 +1,4 @@
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 import Link from 'next/link';
 
 export const CategoryNameContainer = styled.withConfig({
@@ -175,6 +175,7 @@ export const ChannelNameIconWrapper = styled.withConfig({
 });
 
 export const ChannelNameContent = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'channel-name_content'
 })('div', {
   textOverflow: 'ellipsis',
@@ -185,12 +186,14 @@ export const ChannelNameContent = styled.withConfig({
 });
 
 export const ThreadNameInner = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'thread-name'
 })(ChannelNameInner, {
   margin: theme.space.none
 });
 
 export const ChannelsWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'channels-wrapper'
 })('div', {
   display: 'flex',
@@ -200,6 +203,7 @@ export const ChannelsWrapper = styled.withConfig({
 });
 
 export const ThreadsWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'thread-wrapper'
 })(ChannelsWrapper, {
   display: 'flex',

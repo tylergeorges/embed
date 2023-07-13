@@ -15,6 +15,7 @@ export const ThreadPanelHeaderContainer = styled.withConfig({
 })(ChannelHeaderContainer, {});
 
 export const HeaderRoot = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'header-root'
 })('header', {
   display: 'flex',
@@ -67,6 +68,7 @@ export const ChannelHeaderName = styled.withConfig({
 });
 
 export const Stretch = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'stretch'
 })('div', {
   diplay: 'flex',
@@ -76,6 +78,7 @@ export const Stretch = styled.withConfig({
 });
 
 export const GuildHeader = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'guild-header'
 })(Stretch, {
   display: 'flex',
@@ -84,6 +87,7 @@ export const GuildHeader = styled.withConfig({
 });
 
 export const ChannelHeaderRoot = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'text-channel_header'
 })(Stretch, {
   display: 'flex',
@@ -98,6 +102,7 @@ export const ChannelHeaderRoot = styled.withConfig({
 });
 
 export const ChannelHeaderTopic = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'text-channel_header_topic'
 })('div', {
   margin: 0,
@@ -121,6 +126,7 @@ export const ChannelHeaderTopic = styled.withConfig({
 });
 
 export const ChannelHeaderNameWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'text-channel_header_name_container'
 })('div', {
   width: '100%',
@@ -129,6 +135,7 @@ export const ChannelHeaderNameWrapper = styled.withConfig({
 });
 
 export const ChannelNameTopicWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'text-channel_name_topic_container'
 })(Stretch, {
   display: 'flex',
