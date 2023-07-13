@@ -1,8 +1,7 @@
 import * as Styles from '@components/Overlays/Modal/styles';
-import { ReactElement } from 'react';
 
 interface ModalProps {
-  children: ReactElement<any, any>[];
+  children: React.ReactNode;
   isOpen: boolean;
   title: string;
   disableBackdrop?: boolean;

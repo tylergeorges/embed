@@ -205,6 +205,7 @@ const stitches = createStitches({
       /** 70 */
       modal: 70
     },
+
     shadows: {
       dropShadow: 'rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
       headerDropShadow:

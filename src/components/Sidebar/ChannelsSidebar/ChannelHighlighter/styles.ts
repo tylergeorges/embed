@@ -19,6 +19,7 @@ export const Background = styled.withConfig({
       true: {
         transition: 'transform 350ms ease'
       },
+
       false: {
         transition: 'none'
       }

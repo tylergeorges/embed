@@ -2,7 +2,7 @@ import { HeaderMainContentRoot, Stretch } from '@components/Header/styles';
 import { theme, styled, commonComponentId } from '@stitches';
 import { keyframes } from '@stitches/react';
 
-const zoomIn = keyframes({
+const zoomInBounce = keyframes({
   '0%': { scale: '0.5' },
   '50%': { scale: '1.05' },
   '100%': { scale: '1' }
@@ -31,13 +31,10 @@ export const Backdrop = styled.withConfig({
 
         transitionProperty: 'z-index, opacity',
         zIndex: theme.zIndices.negative
-      },
-      true: {}
+      }
     },
 
     mobile: {
-      true: {},
-
       false: {
         opacity: 0,
 
@@ -52,6 +49,7 @@ export const Backdrop = styled.withConfig({
       }
     },
 
+    // TODO: Find a better way of doing this do avoid empty variant styles as this is only used for the compound variants
     isChannelsListOpen: {
       true: {},
       false: {}
@@ -175,7 +173,7 @@ export const ModalContainer = styled.withConfig({
         transform: 'scale(0)'
       },
       true: {
-        animation: `${zoomIn} 0.5s ease`
+        animation: `${zoomInBounce} 0.5s ease`
       }
     }
   }
@@ -255,8 +253,6 @@ export const PopoutContainer = styled.withConfig({
 
   variants: {
     isOpen: {
-      true: {},
-
       false: {
         display: 'none'
       }

@@ -4,7 +4,7 @@ import { ThreadsPanelButton } from '@icons/Buttons/ThreadsPanelButton';
 import { NoThreadsIcon } from '@icons/NoThreadsIcon';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreState, useStoreActions } from '@state';
-import { ReactElement, useMemo, useRef } from 'react';
+import { ReactElement, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface ThreadsPopoutProps {
@@ -22,11 +22,6 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
 
   const currentChannelThreads = guildChannels[channelId]?.threads ?? [];
 
-  const channelHasThreads = useMemo(
-    () => currentChannelThreads.length > 0,
-    [currentChannelThreads.length]
-  );
-
   const hideThreadsModal = () => {
     setShowThreadsModal(false);
   };
@@ -40,7 +35,7 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
         hideModal={hideThreadsModal}
         popoutFor={childrenRef.current}
       >
-        {channelHasThreads ? (
+        {currentChannelThreads.length > 0 ? (
           <Styles.ThreadsPopoutContent>
             <Styles.ThreadsPopoutListHeader>
               {translate.t('olderthreads.label')}

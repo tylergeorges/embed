@@ -2,7 +2,7 @@ import { IconButtonWrapper, IconButtonWrapperProps } from '@icons/Buttons/IconBu
 import { IconProps, Icons } from '@icons/index';
 
 interface IconButtonProps extends IconProps, Omit<IconButtonWrapperProps, 'children'> {
-  onClick: (arg0: any) => void;
+  onClick: (e: React.SyntheticEvent) => void;
 }
 
 export const IconButton = ({

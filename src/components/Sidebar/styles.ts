@@ -23,6 +23,7 @@ export const SidebarWrapper = styled.withConfig({
       false: {
         transform: `translateX(-${theme.sizes.sideBarWidth.value})`
       },
+
       true: {
         transform: 'translateX(0)',
         transition: 'transform 300ms ease'
@@ -33,6 +34,7 @@ export const SidebarWrapper = styled.withConfig({
       false: {
         transform: `translateX(150%)`
       },
+
       true: {
         transform: `translateX(0)`
       }

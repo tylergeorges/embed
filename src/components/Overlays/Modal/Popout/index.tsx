@@ -24,32 +24,31 @@ export const Popout = ({
 }: PopoutProps) => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
 
-  if (popoutFor && isOpen) {
-    return (
-      <Styles.PopoutContainer
-        isMobile={windowIsMobile}
-        isOpen={isOpen}
-        aria-label={title}
-        role="dialog"
-        css={{
-          right: `calc(${popoutFor?.clientLeft}px + 80px)`
-        }}
-      >
-        <Styles.PopoutHeader>
-          <Styles.PopoutHeaderContent>
-            <Styles.PopoutTitleWrapper>
-              {TitleIcon && <Icons name={TitleIcon} />}
+  if (!popoutFor || !isOpen) return <></>;
 
-              <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
-            </Styles.PopoutTitleWrapper>
+  return (
+    <Styles.PopoutContainer
+      isMobile={windowIsMobile}
+      isOpen={isOpen}
+      aria-label={title}
+      role="dialog"
+      css={{
+        right: `calc(${popoutFor.clientLeft}px + 80px)`
+      }}
+    >
+      <Styles.PopoutHeader>
+        <Styles.PopoutHeaderContent>
+          <Styles.PopoutTitleWrapper>
+            {TitleIcon && <Icons name={TitleIcon} />}
 
-            <CloseButton onClick={hideModal} />
-          </Styles.PopoutHeaderContent>
-        </Styles.PopoutHeader>
+            <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
+          </Styles.PopoutTitleWrapper>
 
-        {children}
-      </Styles.PopoutContainer>
-    );
-  }
-  return <></>;
+          <CloseButton onClick={hideModal} />
+        </Styles.PopoutHeaderContent>
+      </Styles.PopoutHeader>
+
+      {children}
+    </Styles.PopoutContainer>
+  );
 };

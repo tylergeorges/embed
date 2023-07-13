@@ -105,6 +105,7 @@ export const ChannelNameWrapper = styled.withConfig({
       }
     },
 
+    // TODO: Find a better way of using compound variants to avoid empty variant styles
     isCategoryOpen: {
       true: {}
     }
@@ -117,7 +118,6 @@ export const ChannelNameWrapper = styled.withConfig({
 
       css: {
         position: 'relative',
-        // overflow: 'hidden',
         maxHeight: 0,
         margin: 0,
         padding: 0
@@ -154,8 +154,6 @@ export const ChannelNameInner = styled.withConfig({
 
   variants: {
     isActive: {
-      true: {},
-
       false: {
         color: theme.colors.textMuted.value,
         '&:hover': {

@@ -1,6 +1,8 @@
 import { theme, styled, commonComponentId } from '@stitches';
+import Image from 'next/image';
 
 export const IconRoot = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'button-icons'
 })('svg', {
   variants: {
@@ -53,6 +55,7 @@ export const IconRoot = styled.withConfig({
 });
 
 export const IconButtonRoot = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'icon-button_wrapper_root'
 })('div', {
   position: 'relative',
@@ -108,29 +111,40 @@ export const IconButtonRoot = styled.withConfig({
 export const EmojisIconRoot = styled.withConfig({
   displayName: 'icon-emojis_icon_root',
   componentId: commonComponentId
-})('div', {
-  backgroundImage:
-    'url(https://emerald.widgetbot.io/static/media/15e026451fd814e2d1a13e49c8076978.15e02645.png)',
-  backgroundPositionX: 'var(--emoji-x)',
-  backgroundPositionY: 'var(--emoji-y)',
-  backgroundSize: '242px 110px',
-
-  height: 22,
-  minWidth: 22,
-
-  filter: 'grayscale(100%)',
-  transition: 'scale  200ms ease, filter 200ms ease',
+})(Image, {
+  position: 'absolute',
+  transform: 'translateX(var(--emoji-x)) translateY(var(--emoji-y))',
   cursor: 'pointer',
 
+  filter: 'grayscale(100%)',
+  transition: 'filter 200ms ease',
+
   '&:hover': {
-    scale: '1.14',
     filter: 'grayscale(0%)',
-    backgroundPositionX: 'var(--emoji-x)',
-    backgroundPositionY: 'var(--emoji-y)'
+    transform: 'translateX(var(--emoji-x)) translateY(var(--emoji-y))'
+  }
+});
+
+export const EmojisIconWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'icon-emojis_icon_wrapper'
+})('div', {
+  // Each emoji in the grid is 22x22
+  height: 22,
+  width: 22,
+
+  transition: 'scale  200ms ease',
+
+  overflow: 'hidden',
+  position: 'relative',
+
+  '&:hover': {
+    scale: '1.14'
   }
 });
 
 export const IconButtonChildrenWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'icon-button_children_wrapper'
 })('button', {
   display: 'flex',
@@ -182,6 +196,7 @@ export const IconButtonChildrenWrapper = styled.withConfig({
 });
 
 export const IconButtonContentWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'icon-button_content_wrapper'
 })('span', {
   position: 'relative',
@@ -192,6 +207,7 @@ export const IconButtonContentWrapper = styled.withConfig({
 });
 
 export const ThreadSpineSvgWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'thread-spine_svg_wrapper'
 })(IconRoot, {
   bottom: 4,
@@ -201,6 +217,7 @@ export const ThreadSpineSvgWrapper = styled.withConfig({
 });
 
 export const ThreadSpineWrapper = styled.withConfig({
+  componentId: commonComponentId,
   displayName: 'thread-spine_wrapper'
 })('div', {
   position: 'absolute',
