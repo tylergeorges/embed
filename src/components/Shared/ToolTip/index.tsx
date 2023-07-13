@@ -31,39 +31,42 @@ export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipP
     setShowToolTip(false);
   };
 
-  function getTooltipPosition() {
+  useEffect(() => {
     const childrenRef = childrenConRef.current;
     const tooltipElement = tooltipRef.current;
 
-    if (childrenRef && tooltipElement) {
-      const childRect = childrenRef.getBoundingClientRect();
-      const childLeft = childrenRef.clientLeft;
+    const getTooltipPosition = () => {
+      if (childrenRef && tooltipElement) {
+        const childRect = childrenRef.getBoundingClientRect();
+        const childLeft = childrenRef.clientLeft;
 
-      const tooltipWidth = tooltipElement.offsetWidth;
-      const tooltipOffscreen = childRect.x + tooltipElement.offsetWidth >= window.innerWidth;
+        const tooltipWidth = tooltipElement.offsetWidth;
 
-      const tooltipYPos =
-        placement === 'bottom'
-          ? // ! Fallback incase clientTop is 0
-            childrenRef.clientTop + tooltipElement.clientHeight
-          : childrenRef.clientTop - tooltipElement.clientHeight;
+        const tooltipOffscreen = childRect.x + tooltipElement.offsetWidth >= window.innerWidth;
 
-      if (tooltipOffscreen) {
-        const tooltipXPos = childLeft + (window.innerWidth - childRect.x - tooltipWidth);
+        const tooltipYPos =
+          placement === 'bottom'
+            ? childrenRef.offsetTop + tooltipElement.clientHeight
+            : childrenRef.clientTop - tooltipElement.clientHeight;
 
-        tooltipElement.style.left = `${tooltipXPos}px`;
-        tooltipElement.style.top = `${tooltipYPos}px`;
-      } else {
-        const tooltipXPos =
-          childrenRef.offsetLeft - tooltipElement.offsetWidth / 2 + childrenRef.clientWidth / 2;
+        if (tooltipOffscreen) {
+          const tooltipXPos = childLeft + (window.innerWidth - childRect.x - tooltipWidth);
 
-        tooltipElement.style.top = `${tooltipYPos}px`;
-        tooltipElement.style.left = `${tooltipXPos}px`;
+          tooltipElement.style.left = `${tooltipXPos}px`;
+          tooltipElement.style.top = `${tooltipYPos}px`;
+        } else {
+          const tooltipXPos =
+            childrenRef.offsetLeft - tooltipElement.offsetWidth / 2 + childrenRef.clientWidth / 2;
+
+          tooltipElement.style.left = `${tooltipXPos}px`;
+          tooltipElement.style.top = `${tooltipYPos}px`;
+        }
       }
-    }
-  }
-  useEffect(() => {
-    const throttledGetPos = throttle(getTooltipPosition, 300);
+    };
+
+    const throttledGetPos = throttle(() => {
+      getTooltipPosition();
+    }, 500);
 
     // Bounding client X position changes from initial render
     const getPosTimeout = setTimeout(() => {

@@ -1,4 +1,5 @@
-import { IconButtonWrapper, IconButtonWrapperProps } from '@icons/Buttons/IconButtonWrapper';
+import { IconButtonWrapper } from '@icons/Buttons/IconButtonWrapper';
+import { IconButtonWrapperProps } from '@icons/Buttons/IconButtonWrapper/button.types';
 import { IconProps, Icons } from '@icons/index';
 
 type IconButtonProps = Omit<IconButtonWrapperProps, 'children'> &
