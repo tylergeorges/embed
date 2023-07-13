@@ -198,7 +198,7 @@ export const useMessages = ({
     variables
   });
 
-  const ready = data?.channelV2.id === channel || false;
+  const ready = data?.channelV2.id === channel;
 
   useEffect(() => {
     // @ts-ignore

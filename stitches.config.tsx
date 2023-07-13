@@ -254,18 +254,6 @@ const stitches = createStitches({
 
       /** border-radius: 99999999999px */
       round: '99999999999px'
-    },
-
-    singleChannel: {
-      enable: false
-    },
-
-    url: {
-      height: 0
-    },
-
-    readOnly: {
-      enable: false
     }
   },
 

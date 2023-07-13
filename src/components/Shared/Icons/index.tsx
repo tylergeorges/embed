@@ -59,10 +59,10 @@ export interface IconProps {
 export const Icons = ({ name, color, css, size, type, iconContent, customViewbox }: IconProps) => (
   <IconRoot
     css={css}
-    size={size || 'regular'}
+    size={size ?? 'regular'}
     type={type}
-    color={color || 'light'}
-    viewBox={customViewbox || '0 0 24 24'}
+    color={color ?? 'light'}
+    viewBox={customViewbox ?? '0 0 24 24'}
   >
     <use href={`${iconData[name]}#svg`} />
     {iconContent}
