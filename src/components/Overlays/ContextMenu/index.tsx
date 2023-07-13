@@ -19,12 +19,9 @@ export const ContextMenu = () => {
   const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
 
   const copyToClipboard = () => {
-    navigator.clipboard
-      .writeText(contextMenuData?.channelLink || '')
-      .then(() => {})
-      .catch(err => {
-        console.error('Could not copy channel link: ', err);
-      });
+    navigator.clipboard.writeText(contextMenuData.channelLink ?? '').catch(err => {
+      console.error('Could not copy channel link: ', err);
+    });
 
     setShowContextMenu(false);
   };
