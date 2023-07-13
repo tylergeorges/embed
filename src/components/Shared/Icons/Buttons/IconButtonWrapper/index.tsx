@@ -1,8 +1,8 @@
 import * as Styles from '@components/Shared/Icons/Buttons/IconButtonWrapper/styles';
 import { ToolTip } from '@components/Shared/ToolTip';
-import { theme } from '@stitches';
 
-export interface IconButtonWrapperProps {
+export interface IconButtonWrapperProps
+  extends React.ComponentProps<typeof Styles.IconButtonChildrenWrapper> {
   onClick: (args: any) => void;
 
   children: React.ReactNode;
@@ -12,11 +12,6 @@ export interface IconButtonWrapperProps {
   tooltipPlacement?: 'top' | 'bottom';
 
   tooltipDisabled?: boolean;
-
-  /** Illuminates a circle background on hover */
-  backgroundGlowOnHover?: boolean;
-
-  backgroundGlowSize?: number;
 
   isActive?: boolean;
 
@@ -33,7 +28,6 @@ export const IconButtonWrapper = ({
   tooltipLabel,
   children,
   tooltipDisabled,
-  backgroundGlowOnHover,
   backgroundGlowSize,
   tooltipPlacement,
   onClick,
@@ -42,22 +36,14 @@ export const IconButtonWrapper = ({
   iconContent
 }: IconButtonWrapperProps) => {
   // Style for if the background glow should be a certain size
-  const customBgGlowSizeStyle = backgroundGlowSize
-    ? {
-        width: backgroundGlowSize,
-        height: backgroundGlowSize,
-        borderRadius: theme.radii.round
-      }
-    : {};
 
   if (tooltipDisabled) {
     return (
       <Styles.IconButtonRoot>
         <Styles.IconButtonChildrenWrapper
-          backgroundGlowOnHover={backgroundGlowOnHover ?? false}
           onClick={onClick}
+          backgroundGlowSize={backgroundGlowSize}
           isActive={isActive}
-          css={customBgGlowSizeStyle}
         >
           <div>{children}</div>
           {iconContent && <IconContent content={iconContent} />}
@@ -75,10 +61,9 @@ export const IconButtonWrapper = ({
       >
         {({ childRef }) => (
           <Styles.IconButtonChildrenWrapper
-            backgroundGlowOnHover={backgroundGlowOnHover ?? false}
+            backgroundGlowSize={backgroundGlowSize}
             onClick={onClick}
             isActive={isActive}
-            css={customBgGlowSizeStyle}
           >
             <div ref={childRef}>{children}</div>
             {iconContent && <IconContent content={iconContent} />}

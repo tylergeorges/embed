@@ -137,17 +137,17 @@ const stitches = createStitches({
       /** 175px */
       xxl: '175px',
 
-      /** 30px */
-      iconSizeLarge: '30px',
+      /** 40px */
+      iconSizeXl: '40px',
 
-      /** 20px */
-      iconSizeSmall: '20px',
+      /** 32px */
+      iconSizeLarge: '32px',
 
       /** 24px */
       iconSizeMed: '24px',
 
-      /** 36px */
-      iconSizeXl: '36px',
+      /** 20px */
+      iconSizeSmall: '20px',
 
       /** 16px */
       messageTypeIcon: '16px',

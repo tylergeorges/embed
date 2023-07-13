@@ -120,8 +120,38 @@ export const IconButtonChildrenWrapper = styled.withConfig({
   },
 
   variants: {
-    backgroundGlowOnHover: {
-      true: {
+    backgroundGlowSize: {
+      sm: {
+        size: theme.sizes.iconSizeSmall,
+        borderRadius: theme.radii.round,
+
+        '&:hover': {
+          backgroundColor: theme.colors.primaryOpacity20
+        }
+      },
+
+      md: {
+        size: theme.sizes.iconSizeMed,
+        borderRadius: theme.radii.round,
+
+        '&:hover': {
+          backgroundColor: theme.colors.primaryOpacity20
+        }
+      },
+
+      lg: {
+        size: theme.sizes.iconSizeLarge,
+        borderRadius: theme.radii.round,
+
+        '&:hover': {
+          backgroundColor: theme.colors.primaryOpacity20
+        }
+      },
+
+      xl: {
+        size: theme.sizes.iconSizeXl,
+        borderRadius: theme.radii.round,
+
         '&:hover': {
           backgroundColor: theme.colors.primaryOpacity20
         }

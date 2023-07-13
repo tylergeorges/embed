@@ -1,16 +1,16 @@
 import { IconButtonWrapper, IconButtonWrapperProps } from '@icons/Buttons/IconButtonWrapper';
 import { IconProps, Icons } from '@icons/index';
 
-interface IconButtonProps extends IconProps, Omit<IconButtonWrapperProps, 'children'> {
-  onClick: (e: React.SyntheticEvent) => void;
-}
+type IconButtonProps = Omit<IconButtonWrapperProps, 'children'> &
+  IconProps & {
+    onClick: (e: React.SyntheticEvent) => void;
+  };
 
 export const IconButton = ({
   onClick,
   icon,
   color,
   css,
-  backgroundGlowOnHover,
   isActive,
   backgroundGlowSize,
   size,
@@ -25,7 +25,6 @@ export const IconButton = ({
     tooltipPlacement={tooltipPlacement}
     tooltipDisabledIfActive={tooltipDisabledIfActive}
     tooltipDisabled={tooltipDisabled}
-    backgroundGlowOnHover={backgroundGlowOnHover}
     backgroundGlowSize={backgroundGlowSize}
     onClick={onClick}
     isActive={isActive}

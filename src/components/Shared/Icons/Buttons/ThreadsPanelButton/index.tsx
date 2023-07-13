@@ -26,8 +26,7 @@ export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
     <IconButton
       icon="ThreadPanel"
       color="light"
-      backgroundGlowOnHover
-      backgroundGlowSize={40}
+      backgroundGlowSize="xl"
       tooltipLabel={translate.t('openthread.tooltip') as string}
       tooltipPlacement="top"
       onClick={handlePanelClick}
