@@ -28,27 +28,12 @@ export const IconRoot = styled.withConfig({
 
     color: {
       light: {
-        path: {
-          fill: theme.colors.iconLight.value,
-          color: theme.colors.iconLight.value
-        },
-
-        use: {
-          color: theme.colors.iconLight.value,
-          fill: theme.colors.iconLight.value
-        }
+        color: theme.colors.iconLight.value
       },
 
       dark: {
-        use: {
-          fill: theme.colors.textMuted.value,
-          color: theme.colors.textMuted.value
-        },
-
-        path: {
-          fill: theme.colors.textMuted.value,
-          color: theme.colors.textMuted.value
-        }
+        // TODO: Find out why we need to access .value for it to work properly
+        color: theme.colors.textMuted.value
       }
     }
   }
@@ -71,46 +56,12 @@ export const IconButtonRoot = styled.withConfig({
   background: 'transparent',
   outline: 'none',
   border: 'none',
-  whiteSpace: 'nowrap',
-
-  '&:hover': {
-    path: {
-      fill: theme.colors.primaryOpacity80
-    },
-
-    use: {
-      color: theme.colors.primaryOpacity80
-    }
-  },
-
-  variants: {
-    backgroundGlowOnHover: {
-      true: {
-        '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity20
-        }
-      }
-    },
-
-    isActive: {
-      true: {
-        path: {
-          fill: theme.colors.iconActive,
-          color: theme.colors.iconActive
-        },
-
-        use: {
-          color: theme.colors.iconActive,
-          fill: theme.colors.iconActive
-        }
-      }
-    }
-  }
+  whiteSpace: 'nowrap'
 });
 
 export const EmojisIconRoot = styled.withConfig({
-  displayName: 'icon-emojis_icon_root',
-  componentId: commonComponentId
+  componentId: commonComponentId,
+  displayName: 'icon-emojis_icon_root'
 })(Image, {
   position: 'absolute',
   transform: 'translateX(var(--emoji-x)) translateY(var(--emoji-y))',
@@ -163,10 +114,6 @@ export const IconButtonChildrenWrapper = styled.withConfig({
   color: 'white',
 
   '&:hover': {
-    path: {
-      fill: theme.colors.primaryOpacity80
-    },
-
     use: {
       color: theme.colors.primaryOpacity80
     }
@@ -183,10 +130,6 @@ export const IconButtonChildrenWrapper = styled.withConfig({
 
     isActive: {
       true: {
-        path: {
-          fill: theme.colors.iconActive
-        },
-
         use: {
           color: theme.colors.iconActive
         }
