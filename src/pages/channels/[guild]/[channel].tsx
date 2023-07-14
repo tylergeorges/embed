@@ -1,10 +1,7 @@
 /* eslint-disable no-alert */
 import React from 'react';
 import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
-import { ContextMenu } from '@components/Overlays/ContextMenu';
 import { useStoreState } from '@state';
-import { ThreadPanel } from '@components/Sidebar/ThreadPanel';
-import { ChannelTopicModal } from '@components/Overlays/Modal/InformationModal/ChannelTopicModal';
 import { TextChannelContainer } from '@components/Core/TextChannelContainer';
 import { MessageRendererProvider } from '@widgetbot/message-renderer';
 import { styled } from '@stitches';
@@ -12,6 +9,7 @@ import { APIChannel } from 'discord-api-types/v10';
 import * as Styles from '@components/Core/styles';
 import { svgUrls } from '@svg-assets';
 import { useContextMenu } from '@hooks/useContextMenu';
+import dynamic from 'next/dynamic';
 
 const MessageRendererRoot = styled('div', {
   '--fonts-main': 'GgSans',
@@ -19,10 +17,28 @@ const MessageRendererRoot = styled('div', {
   width: '100%'
 });
 
+// dynamic imports since they are conditionally rendered, helps with bundle size
+const ChannelTopicModal = dynamic(() =>
+  import('@components/Overlays/Modal/InformationModal/ChannelTopicModal').then(
+    mod => mod.ChannelTopicModal
+  )
+);
+
+const ThreadPanel = dynamic(() =>
+  import('@components/Sidebar/ThreadPanel').then(mod => mod.ThreadPanel)
+);
+
+const ContextMenu = dynamic(() =>
+  import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
+);
+
 export default function GuildChannel() {
   const { disableBrowserMenu } = useContextMenu();
 
+  const isThreadPanelOpen = useStoreState(state => state.ui.isThreadsPanelOpen);
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);
+  const showTopicModal = useStoreState(state => state.ui.showTopicModal);
+
   const guildChannels = useStoreState(state => state.guild.guildChannels);
 
   return (
@@ -52,13 +68,14 @@ export default function GuildChannel() {
         <MessageRendererRoot className={themeClass}>
           <Styles.Main onContextMenu={disableBrowserMenu}>
             {showContextMenu && <ContextMenu />}
+
             <Styles.InnerMain>
-              <ChannelTopicModal />
+              {showTopicModal && <ChannelTopicModal />}
               <ChannelsSidebar />
 
               <TextChannelContainer />
             </Styles.InnerMain>
-            <ThreadPanel />
+            {isThreadPanelOpen && <ThreadPanel />}
           </Styles.Main>
         </MessageRendererRoot>
       )}
