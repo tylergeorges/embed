@@ -103,15 +103,6 @@ const globalStyles = globalCss({
 
   /* Handle on hover */
   '::-webkit-scrollbar-thumb:hover': {},
-  '.non-dragable': {
-    '-moz-user-select': 'none',
-    '-khtml-user-select': 'none',
-    '-webkit-user-select': 'none',
-    '-webkit-touch-callout': 'none' /* iOS Safari */,
-    ' -khtml-user-select': 'none' /* Konqueror HTML */,
-    '-ms-user-select': 'none' /* Internet Explorer/Edge */,
-    'user-select': 'none'
-  },
 
   '.channel-name': {
     height: theme.sizes.channelNameHeight,
@@ -122,7 +113,8 @@ const globalStyles = globalCss({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    transition: 'transform 350ms ease'
+    transition: 'transform ease',
+    transitionDuration: theme.transitions.defaultDuration
   },
 
   '#__next': {

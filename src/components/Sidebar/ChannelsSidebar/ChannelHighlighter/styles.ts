@@ -18,7 +18,9 @@ export const Background = styled.withConfig({
   variants: {
     animated: {
       true: {
-        transition: 'transform 350ms ease'
+        transition: 'transform',
+        transitionTimingFunction: 'ease',
+        transitionDuration: theme.transitions.defaultDuration
       },
 
       false: {

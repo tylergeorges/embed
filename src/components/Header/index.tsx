@@ -21,8 +21,8 @@ export interface HeaderProps {
 }
 
 export const Header = ({ name, shadowEnabled, isChannelHeader, children }: HeaderProps) => (
-  <Styles.HeaderRoot shadowEnabled={shadowEnabled}>
-    {children && children}
+  <Styles.HeaderRoot shadowEnabled={shadowEnabled} draggable={false}>
+    {children}
     {isChannelHeader ? (
       <ChannelHeader />
     ) : (

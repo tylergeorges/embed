@@ -4,7 +4,7 @@ import { useMediaQuery } from '@hooks/useMediaQuery';
 import { ReactElement } from 'react';
 import { CloseButton } from '@icons/Buttons/CloseButton';
 
-type TitleIcon = Pick<IconProps, 'icon'>['icon'];
+type TitleIcon = IconProps['icon'];
 
 interface PopoutProps {
   children: ReactElement<any, any>;

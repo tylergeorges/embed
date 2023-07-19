@@ -11,7 +11,10 @@ export const ToolTipContainer = styled.withConfig({
   borderRadius: theme.radii.xs,
   pointerEvents: 'none',
   backgroundColor: theme.colors.tooltipBackground,
-  transition: 'transform 125ms ease',
+
+  transition: 'transform  ease',
+  transitionDuration: theme.transitions.fastestDuration,
+
   zIndex: theme.zIndices.tooltip,
 
   variants: {
@@ -31,6 +34,12 @@ export const ToolTipContainer = styled.withConfig({
 
       bottom: {
         transformOrigin: 'top'
+      }
+    },
+
+    mobile: {
+      true: {
+        opacity: 0
       }
     }
   }
@@ -53,7 +62,9 @@ export const ToolTipWrapper = styled.withConfig({
   flexDirection: 'column',
   alignItems: 'center',
   justifyContent: 'center',
-  position: 'relative'
+  position: 'relative',
+
+  userSelect: 'none'
 });
 
 export const ToolTipChildWrapper = styled.withConfig({

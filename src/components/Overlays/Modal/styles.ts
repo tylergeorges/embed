@@ -20,9 +20,11 @@ export const Backdrop = styled.withConfig({
   alignItems: 'center',
   justifyContent: 'center',
 
-  transition: 'opacity 300ms ease',
+  transition: theme.transitions.defaultOpacity,
+
   opacity: 0,
   backgroundColor: theme.colors.backDrop,
+
   variants: {
     isOpen: {
       false: {
@@ -132,7 +134,7 @@ export const ModalContainerWrapper = styled.withConfig({
       false: {
         zIndex: theme.zIndices.negative,
 
-        transitionDelay: '0.5s',
+        transitionDelay: theme.transitions.longerDuration,
         transitionProperty: 'z-index'
       },
       true: {
@@ -163,17 +165,17 @@ export const ModalContainer = styled.withConfig({
   borderRadius: 4,
 
   pointerEvents: 'all',
-  transition: 'transform 200ms ease',
   backgroundColor: theme.colors.background,
   zIndex: theme.zIndices.modal,
 
   variants: {
     isOpen: {
       false: {
-        transform: 'scale(0)'
+        // Scaling to 0 is not performant, so we trigger it to render on GPU with translate3d
+        transform: 'scale(0) rotate(0deg) translate3d(0,0,0)'
       },
       true: {
-        animation: `${zoomInBounce} 0.5s ease`
+        animation: `${zoomInBounce} ${theme.transitions.longerDuration}  ease`
       }
     }
   }
@@ -192,6 +194,7 @@ export const ModalHeaderContent = styled.withConfig({
 })(HeaderMainContentRoot, {
   display: 'flex',
   justifyContent: 'space-between',
+  userSelect: 'none',
 
   fontSize: '100%',
 
@@ -245,7 +248,7 @@ export const PopoutContainer = styled.withConfig({
   boxSizing: 'border-box',
 
   animation: 'none',
-  transition: 'transform 300ms ease',
+  transition: theme.transitions.defaultTransform,
   zIndex: theme.zIndices.modal,
 
   pointerEvents: 'all',

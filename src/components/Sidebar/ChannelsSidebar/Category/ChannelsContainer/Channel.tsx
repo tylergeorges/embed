@@ -1,11 +1,11 @@
 import { forwardRef } from 'react';
 import { useStoreActions } from '@state';
-import { ChannelType, Channel as IChannel } from '@graphql/graphql';
+import { Channel as IChannel } from '@graphql/graphql';
 import { Thread } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Thread';
 import { IThread } from '@state/stores/guild';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { Icons } from '@components/Shared/Icons';
 import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
+import { ChannelIcon } from './ChannelIcon';
 
 interface ChannelNameProps {
   /** Check if the channel is the current channel selected. */
@@ -50,7 +50,6 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
         key={channel.id}
         draggable={false}
         onClick={handleChannelClick}
-        className="non-dragable"
         isActive={isActive}
         isCategoryOpen={isCategoryOpen}
         isThread={isThread}
@@ -74,18 +73,10 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
             draggable={false}
             // ! USES CLASSNAME FROM GLOBAL CSS SO THE CHANNEL HIGHLIGHTER AND CHANNEL NAME
             // ! GET FORMATTED THE SAME
-            className="channel-name non-draggable"
+            className="channel-name"
           >
             <Styles.ChannelNameIconWrapper draggable={false}>
-              {channel.type === ChannelType.GuildText && (
-                <Icons icon="TextChannelHash" color="dark" size="small" />
-              )}
-              {channel.type === ChannelType.GuildAnnouncement && (
-                <Icons icon="NewsChannelIcon" color="dark" size="small" />
-              )}
-              {channel.type === ChannelType.GuildForum && (
-                <Icons icon="FourmChannelIcon" color="dark" size="small" />
-              )}
+              <ChannelIcon channelType={channel.type} />
             </Styles.ChannelNameIconWrapper>
 
             <Styles.ChannelNameContent draggable={false}> {channel.name}</Styles.ChannelNameContent>

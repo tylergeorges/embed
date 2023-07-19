@@ -12,7 +12,9 @@ export const ChannelHeaderContainer = styled.withConfig({
 export const ThreadPanelHeaderContainer = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'panel-thread_header_container'
-})(ChannelHeaderContainer, {});
+})(ChannelHeaderContainer, {
+  userSelect: 'none'
+});
 
 export const HeaderRoot = styled.withConfig({
   componentId: commonComponentId,
@@ -121,7 +123,8 @@ export const ChannelHeaderTopic = styled.withConfig({
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   alignSelf: 'center',
-  cursor: 'pointer'
+  cursor: 'pointer',
+  userSelect: 'none'
 });
 
 export const ChannelHeaderNameWrapper = styled.withConfig({
@@ -149,13 +152,17 @@ export const ThreadPanelHeaderRoot = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'panel-thread_header_root'
 })(ChannelHeaderRoot, {
-  backgroundColor: theme.colors.background,
   height: theme.sizes.headerHeight,
-  boxShadow: theme.shadows.headerDropShadow,
+  width: '100%',
+
   margin: 0,
   padding: 0,
-  width: '100%',
-  paddingRight: theme.space.sm
+  paddingRight: theme.space.sm,
+
+  backgroundColor: theme.colors.background,
+  boxShadow: theme.shadows.headerDropShadow,
+
+  userSelect: 'none'
 });
 
 export const ThreadPanelHeaderIconContainer = styled.withConfig({

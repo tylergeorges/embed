@@ -232,6 +232,7 @@ export const useMessages = ({
       if (!ready) return;
 
       setVariables({ channel, guild, before });
+
       fetchHook({ requestPolicy: 'network-only' });
     },
     [channel, fetchHook, guild, ready]

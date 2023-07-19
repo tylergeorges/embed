@@ -23,22 +23,19 @@ export const ChannelHeader = () => {
 
         <Styles.ChannelNameTopicWrapper>
           {currentChannel ? (
-            <Icons icon="TextChannelHash" size="small" color="dark" />
+            <>
+              <Icons icon="TextChannelHash" size="small" color="dark" />
+              <Styles.ChannelHeaderName>{currentChannel.name}</Styles.ChannelHeaderName>
+              <Styles.ChannelHeaderTopic onClick={openTopicModal}>
+                {currentChannel.topic}
+              </Styles.ChannelHeaderTopic>
+            </>
           ) : (
-            <SkeletonStyles.SkeletonLine size="xs" borderRadius="round" />
-          )}
-          {currentChannel ? (
-            <Styles.ChannelHeaderName>{currentChannel.name}</Styles.ChannelHeaderName>
-          ) : (
-            <SkeletonStyles.SkeletonLine size="lg" borderRadius="semiRound" />
-          )}
-
-          {currentChannel ? (
-            <Styles.ChannelHeaderTopic onClick={openTopicModal}>
-              {currentChannel.topic}
-            </Styles.ChannelHeaderTopic>
-          ) : (
-            <SkeletonStyles.SkeletonLine size="xxl" borderRadius="round" />
+            <>
+              <SkeletonStyles.SkeletonLine size="xs" borderRadius="round" />
+              <SkeletonStyles.SkeletonLine size="lg" borderRadius="semiRound" />
+              <SkeletonStyles.SkeletonLine size="xxl" borderRadius="round" />
+            </>
           )}
         </Styles.ChannelNameTopicWrapper>
       </Styles.ChannelHeaderNameWrapper>

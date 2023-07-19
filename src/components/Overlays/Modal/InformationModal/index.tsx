@@ -20,7 +20,7 @@ export const InformationModal = ({
 }: InformationModalProps) => (
   <Modal isOpen={isOpen} title={title} hideModal={hideModal} disableBackdrop={disableBackdrop}>
     <Styles.ModalHeader>
-      <Styles.ModalHeaderContent className="non-dragable">
+      <Styles.ModalHeaderContent>
         {title}
 
         <CloseButton onClick={hideModal} />

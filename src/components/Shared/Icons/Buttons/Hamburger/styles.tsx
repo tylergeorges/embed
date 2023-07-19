@@ -16,8 +16,10 @@ export const Ham = styled.withConfig({
   background: 'none',
   color: theme.colors.accent,
 
+  transitionDuration: theme.transitions.defaultDuration,
+  transitionTimingFunction: 'ease',
+
   cursor: 'pointer',
-  transition: '0.3s',
   outline: 'none',
 
   '&::before': {
@@ -33,7 +35,7 @@ export const Ham = styled.withConfig({
     borderRadius: '50%',
 
     opacity: 0,
-    transition: 'opacity 0.1s ease',
+    transition: `opacity ${theme.transitions.fastestDuration} ease`,
     backgroundColor: theme.colors.primaryOpacity10
   },
 
@@ -101,7 +103,9 @@ export const Burger = styled.withConfig({
     width: '100%',
     top: 'calc(50% - 2px)',
     right: 0,
-    transition: '0.3s'
+
+    transitionDuration: theme.transitions.defaultDuration,
+    transitionTimingFunction: 'ease'
   },
 
   '&::before': {

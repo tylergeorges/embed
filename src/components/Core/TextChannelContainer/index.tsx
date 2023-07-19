@@ -15,7 +15,9 @@ export const TextChannelContainer = () => {
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
-  const isThreadsPanelOpen = useStoreState(state => state.ui.isThreadsPanelOpen);
+  const isTransitionedThreadsPanelOpen = useStoreState(
+    state => state.ui.isTransitionedThreadsPanelOpen
+  );
 
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
@@ -24,11 +26,17 @@ export const TextChannelContainer = () => {
   useEffect(() => {
     setCurrentChannel(channelId);
 
-    // Used to hide mmbers list if the threads panel is open
-    if (!isThreadsPanelOpen) {
+    // Used to hide members list if the threads panel is open
+    if (!isTransitionedThreadsPanelOpen) {
       setIsMembersListOpen(!windowIsMobile);
     }
-  }, [windowIsMobile, setIsMembersListOpen, isThreadsPanelOpen, setCurrentChannel, channelId]);
+  }, [
+    windowIsMobile,
+    setIsMembersListOpen,
+    isTransitionedThreadsPanelOpen,
+    setCurrentChannel,
+    channelId
+  ]);
 
   const hideSidebar = useCallback(() => {
     if ((windowIsMobile && isChannelsListOpen) || (windowIsMobile && isMembersListOpen)) {
@@ -50,16 +58,12 @@ export const TextChannelContainer = () => {
         '@small': true
       }}
       channelsListOpen={isChannelsListOpen}
-      threadsPanelOpen={isThreadsPanelOpen}
+      threadsPanelOpen={isTransitionedThreadsPanelOpen}
     >
       <TextChannelHeader />
-      <Styles.TextChannelInnerWrapper
-        mobile={{
-          '@initial': false,
-          '@small': true
-        }}
-      >
+      <Styles.TextChannelInnerWrapper>
         <MessageContainer />
+
         <Backdrop
           onClick={hideSidebar}
           mobile={{

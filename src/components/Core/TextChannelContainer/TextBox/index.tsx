@@ -17,9 +17,7 @@ export const TextBox = ({ channelIsThread }: TextBoxProps) => {
 
     const fileAttachmentElement = fileAttachmentRef.current;
 
-    if (fileAttachmentElement) {
-      fileAttachmentElement.click();
-    }
+    fileAttachmentElement?.click();
   };
 
   const addAttachment = (e: React.ChangeEvent<HTMLInputElement>) => {

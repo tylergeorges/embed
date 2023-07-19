@@ -4,6 +4,17 @@ export const commonComponentId = process.env.NODE_ENV === 'development' ? undefi
 
 const stitches = createStitches({
   theme: {
+    transitions: {
+      fastestDuration: '100ms',
+      fasterDuration: '200ms',
+      defaultDuration: '300ms',
+      longerDuration: '500ms',
+
+      defaultTransform: 'transform $defaultDuration ease',
+      defaultOpacity: 'opacity $defaultDuration ease',
+      widthAndTransform: 'transform $defaultDuration ease, width $defaultDuration ease'
+    },
+
     colors: {
       primary: 'rgba(255, 255, 255, 1.0)',
       primaryDark: '#72767d',

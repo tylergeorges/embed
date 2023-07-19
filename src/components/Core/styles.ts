@@ -14,7 +14,7 @@ export const Main = styled.withConfig({
   flexDirection: 'row',
   width: '100%',
   backgroundColor: theme.colors.background,
-  animation: `${zoomIn} 0.5s ease`,
+  animation: `${zoomIn} ${theme.transitions.longerDuration} ease`,
   justifyItems: 'center'
 });
 

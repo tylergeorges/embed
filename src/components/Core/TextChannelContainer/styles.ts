@@ -12,7 +12,7 @@ export const TextChannelWrapper = styled.withConfig({
   height: '100%',
   width: '100%',
 
-  transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
+  transition: theme.transitions.widthAndTransform,
 
   variants: {
     mobile: {
@@ -20,7 +20,7 @@ export const TextChannelWrapper = styled.withConfig({
         width: '100%',
         height: '100%',
 
-        transition: 'transform 0.3s ease 0s',
+        transition: theme.transitions.defaultTransform,
         transform: `translateX(0px)`
       },
 
@@ -73,6 +73,7 @@ export const TextChannelWrapper = styled.withConfig({
       mobile: false,
 
       css: {
+        // 8px is the length of the panel separator
         width: `calc(100% - (${theme.sizes.sideBarWidth} + ${theme.sizes.threadPanelMinWidth} + 8px))`,
         transform: `translateX(${theme.sizes.sideBarWidth})`
       }
@@ -99,19 +100,7 @@ export const TextChannelInnerWrapper = styled.withConfig({
   flexDirection: 'row',
 
   height: '100%',
-  width: '100%',
-
-  variants: {
-    mobile: {
-      true: {
-        width: '100%',
-        height: '100%',
-
-        transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
-        margin: 0
-      }
-    }
-  }
+  width: '100%'
 });
 
 export const MessageWrapper = styled.withConfig({
@@ -127,7 +116,7 @@ export const MessageWrapper = styled.withConfig({
   width: '100%',
   height: '100%',
 
-  transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
+  transition: theme.transitions.widthAndTransform,
   zIndex: theme.zIndices.none,
 
   variants: {
@@ -147,7 +136,7 @@ export const MessageWrapper = styled.withConfig({
         width: '100%',
         height: '100%',
 
-        transition: 'transform 0.3s ease 0s',
+        transition: theme.transitions.defaultTransform,
         transform: `translateX(0px)`
       }
     }
@@ -162,7 +151,7 @@ export const MessageWrapper = styled.withConfig({
         marginRight: 'none',
         width: '100%',
         height: '100%',
-        transition: 'transform 0.3s ease 0s',
+        transition: theme.transitions.defaultTransform,
         transform: `translateX(0px)`
       }
     }
@@ -173,7 +162,6 @@ export const TextBoxWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'textbox-wrapper'
 })('form', {
-  // position: 'relative',
   display: 'flex',
   alignItems: 'center',
 
@@ -184,7 +172,9 @@ export const TextBoxWrapper = styled.withConfig({
   backgroundColor: theme.colors.inputBackground,
 
   paddingY: theme.space.sm,
-  marginBottom: theme.space.lg
+  marginBottom: theme.space.lg,
+
+  userSelect: 'none'
 });
 
 export const TextBoxInner = styled.withConfig({
@@ -192,7 +182,6 @@ export const TextBoxInner = styled.withConfig({
   displayName: 'textbox-inner'
 })('div', {
   display: 'flex',
-  // position: 'relative',
 
   width: '100%',
   maxHeight: '50vh',
@@ -231,7 +220,6 @@ export const TextInput = styled.withConfig({
   displayName: 'textbox-input'
 })('div', {
   cursor: 'text',
-  cursorColor: 'white',
 
   border: 'none',
   backgroundColor: 'transparent',

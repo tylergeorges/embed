@@ -12,9 +12,11 @@ export const SidebarWrapper = styled.withConfig({
   width: theme.sizes.sideBarWidth,
   maxWidth: theme.sizes.sideBarWidth,
 
+  userSelect: 'none',
+
   backgroundColor: theme.colors.backgroundSecondary,
   willChange: 'transform',
-  transition: 'transform 300ms ease',
+  transition: theme.transitions.defaultTransform,
 
   variants: {
     channelsListOpen: {
@@ -24,7 +26,7 @@ export const SidebarWrapper = styled.withConfig({
 
       true: {
         transform: 'translateX(0)',
-        transition: 'transform 300ms ease'
+        transition: theme.transitions.defaultTransform
       }
     },
 
@@ -93,36 +95,13 @@ export const ThreadsPanelContainer = styled.withConfig({
   position: 'absolute',
   display: 'flex',
   flexDirection: 'column',
-  bottom: 0,
 
   width: '100%',
   height: '100%',
 
-  zIndex: theme.zIndices.modal,
-  transition: 'transform ease 0.3s',
+  transition: theme.transitions.defaultTransform,
 
-  backgroundColor: theme.colors.background,
-
-  '@small': {
-    width: '100%'
-  },
-
-  variants: {
-    isOpen: {
-      false: {
-        transform: `translateX(100%)`
-      },
-
-      true: {
-        width: '100%',
-
-        '@mobile': {
-          width: '100%',
-          transform: `translateX(-2%)`
-        }
-      }
-    }
-  }
+  backgroundColor: theme.colors.background
 });
 
 export const ThreadPanelWrapper = styled.withConfig({
@@ -138,7 +117,7 @@ export const ThreadPanelWrapper = styled.withConfig({
   minWidth: theme.sizes.threadPanelMinWidth,
 
   zIndex: theme.zIndices.modal,
-  transition: 'transform ease 0.3s',
+  transition: theme.transitions.defaultTransform,
   backgroundColor: theme.colors.background,
 
   variants: {
@@ -168,15 +147,15 @@ export const ThreadsPanelSeperator = styled.withConfig({
   backgroundColor: theme.colors.borderDark,
   zIndex: theme.zIndices.modal,
 
-  '@small': {
-    true: {
-      opacity: 0
-    }
-  },
-
   variants: {
     isOpen: {
       false: {
+        opacity: 0
+      }
+    },
+
+    mobile: {
+      true: {
         opacity: 0
       }
     }

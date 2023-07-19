@@ -10,7 +10,9 @@ export const CategoryNameContainer = styled.withConfig({
   color: theme.colors.primaryOpacity40,
   paddingRight: theme.space.sm,
 
-  transition: 'color 100ms ease',
+  transition: 'color  ease',
+  transitionDuration: theme.transitions.fastestDuration,
+
   cursor: 'pointer',
   boxSizing: 'border-box',
 
@@ -35,7 +37,8 @@ export const CategoryNameArrow = styled.withConfig({
   height: theme.sizes.iconSizeSmall,
 
   cursor: 'pointer',
-  transition: 'transform 0.15s ease',
+  transition: 'transform  ase',
+  transitionDuration: theme.transitions.fastestDuration,
 
   variants: {
     opened: {
@@ -63,7 +66,7 @@ export const CategoryContainer = styled.withConfig({
   paddingTop: theme.space.xl,
 
   fontWeight: theme.fontWeights.medium,
-  transition: 'translateY 0.5s ease'
+  transition: `translateY ${theme.transitions.longerDuration} ease`
 });
 
 export const ChannelNameWrapper = styled.withConfig({
@@ -73,10 +76,14 @@ export const ChannelNameWrapper = styled.withConfig({
   maxHeight: theme.sizes.channelNameHeight,
   overflow: 'hidden',
   marginY: theme.space.xxs,
-  transition: 'max-height 350ms ease',
+  transition: 'max-height ease',
+  transitionDuration: theme.transitions.defaultDuration,
+
   // @ts-ignore
   paddingX: theme.space.sm.value,
   width: '100%',
+
+  userSelect: 'none',
 
   variants: {
     isThread: {
@@ -134,11 +141,13 @@ export const ChannelNameWrapper = styled.withConfig({
 
 export const ChannelNameInner = styled.withConfig({
   componentId: commonComponentId,
-  displayName: 'channel-name'
+  displayName: 'channel-name_inner'
 })(Link, {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
+
+  userSelect: 'none',
 
   // @ts-ignore
   paddingX: theme.space.xxs.value,
@@ -146,7 +155,10 @@ export const ChannelNameInner = styled.withConfig({
   fontSize: theme.fontSizes.lg,
   fontWeight: theme.fontWeights.thin,
   boxSizing: 'border-box',
-  transition: '100ms ease',
+
+  transitionTimingFunction: 'ease',
+  transitionDuration: theme.transitions.fastestDuration,
+
   marginBottom: theme.space.xxs.value,
 
   variants: {

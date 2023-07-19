@@ -68,7 +68,7 @@ export const EmojisIconRoot = styled.withConfig({
   cursor: 'pointer',
 
   filter: 'grayscale(100%)',
-  transition: 'filter 200ms ease',
+  transition: `filter ${theme.transitions.fasterDuration} ease`,
 
   '&:hover': {
     filter: 'grayscale(0%)',
@@ -84,7 +84,8 @@ export const EmojisIconWrapper = styled.withConfig({
   height: 22,
   width: 22,
 
-  transition: 'scale  200ms ease',
+  transition: `scale ease`,
+  transitionDuration: theme.transitions.fasterDuration,
 
   overflow: 'hidden',
   position: 'relative',
@@ -197,4 +198,14 @@ export const ThreadSpineWrapper = styled.withConfig({
   left: 22,
   width: 12,
   height: 11
+});
+
+export const StarsIconRoot = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'icon-stars'
+})('svg', {
+  position: 'absolute',
+  width: 104,
+  height: 80,
+  left: -1
 });

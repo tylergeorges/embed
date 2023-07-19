@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { ThreadsPanelButton } from '@icons/Buttons/ThreadsPanelButton';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreActions } from '@state';
-import { Fragment } from 'react';
 
 interface ChannelThreadsProps {
   threads: Channel[];
@@ -41,9 +40,7 @@ export const ChannelThreads = ({ threads }: ChannelThreadsProps) => {
       <Styles.ThreadsPopoutList>
         {' '}
         {threads.map(thread => (
-          <Fragment key={thread.id}>
-            <ThreadPopoutItem thread={thread} />
-          </Fragment>
+          <ThreadPopoutItem thread={thread} key={thread.id} />
         ))}
       </Styles.ThreadsPopoutList>
     </Styles.ThreadsPopoutContent>

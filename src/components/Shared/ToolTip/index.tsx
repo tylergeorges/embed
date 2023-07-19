@@ -1,4 +1,5 @@
 import * as Styles from '@components/Shared/ToolTip/styles';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 
@@ -14,6 +15,8 @@ interface ToolTipProps {
 
 export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipProps) => {
   const [showToolTip, setShowToolTip] = useState(false);
+
+  const windowIsMobile = useMediaQuery();
 
   const visitedRef = useRef(false);
   const childrenConRef = useRef<HTMLDivElement>(null);
@@ -78,7 +81,9 @@ export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipP
       }
     }, 250);
 
-    window.addEventListener('resize', throttledGetPos);
+    if (!windowIsMobile) {
+      window.addEventListener('resize', throttledGetPos);
+    }
 
     return () => {
       window.removeEventListener('resize', throttledGetPos);
@@ -92,14 +97,21 @@ export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipP
   return (
     <Styles.ToolTipWrapper
       onTouchStart={undefined}
-      onMouseEnter={openTooltip}
-      onMouseLeave={hideTooltip}
+      onMouseEnter={!windowIsMobile ? openTooltip : undefined}
+      onMouseLeave={!windowIsMobile ? hideTooltip : undefined}
     >
       <Styles.ToolTipChildWrapper>
         {children({ childRef: childrenConRef })}
       </Styles.ToolTipChildWrapper>
 
-      <Styles.ToolTipContainer visible={showToolTip} ref={tooltipRef}>
+      <Styles.ToolTipContainer
+        mobile={{
+          '@initial': false,
+          '@small': true
+        }}
+        visible={showToolTip}
+        ref={tooltipRef}
+      >
         <Styles.ToolTipContent>{label}</Styles.ToolTipContent>
       </Styles.ToolTipContainer>
     </Styles.ToolTipWrapper>

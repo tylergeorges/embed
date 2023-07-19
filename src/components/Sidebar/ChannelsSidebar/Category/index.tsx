@@ -28,7 +28,7 @@ export const Category = ({ category }: CategoryProps) => {
   const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
 
   // TODO: find out why this breaks channel highlighter when thread is opened and its not a dep in useEffect
-  const setIsThreadsPanelOpen = useStoreActions(state => state.ui.setIsThreadsPanelOpen);
+  // const setIsThreadsPanelOpen = useStoreActions(state => state.ui.setIsThreadsPanelOpen);
 
   // State
   const initChannelYPos = useStoreState(state => state.ui.initChannelYPos);
@@ -37,7 +37,7 @@ export const Category = ({ category }: CategoryProps) => {
   useEffect(() => {
     // ! Sets the initial ActiveBackground component's position
 
-    setIsThreadsPanelOpen(!!threadId);
+    // setIsThreadsPanelOpen(!!threadId);
 
     if (currentChannelRef.current) {
       setCurrentChannelYPos(currentChannelRef.current.offsetTop);
@@ -47,7 +47,7 @@ export const Category = ({ category }: CategoryProps) => {
     if (channelsConRef.current) {
       setChannelsConHeight(channelsConRef.current.offsetHeight);
     }
-  }, [channelId, threadId, setCurrentChannelYPos, setInitChannelYPos, setIsThreadsPanelOpen]);
+  }, [channelId, threadId, setCurrentChannelYPos, setInitChannelYPos]);
 
   const toggleIsOpen = useCallback(() => {
     const isActiveCategory = !!currentChannelRef.current;
