@@ -31,6 +31,7 @@ const ThreadPanel = dynamic(() =>
 const ContextMenu = dynamic(() =>
   import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
 );
+
 export default function GuildChannel() {
   const { disableBrowserMenu } = useContextMenu();
 

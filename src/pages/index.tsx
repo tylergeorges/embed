@@ -1,7 +1,7 @@
 import { useAppRouter } from '@hooks/useAppRouter';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-function Home() {
+export default function Home() {
   const { router } = useAppRouter();
 
   useEffect(() => {
@@ -10,4 +10,3 @@ function Home() {
 
   return <></>;
 }
-export default Home;

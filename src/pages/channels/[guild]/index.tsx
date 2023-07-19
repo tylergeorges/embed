@@ -1,9 +1,8 @@
 import React from 'react';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { getEnvVar } from '@util/env';
-import { NextPage } from 'next';
 
-const GuildIndex: NextPage = () => {
+export default function GuildIndex() {
   const { guildId } = useAppRouter();
 
   const apiUrl = getEnvVar('CUSTOM_SERVER_ENDPOINT');
@@ -18,6 +17,4 @@ const GuildIndex: NextPage = () => {
     );
   }
   return <div>ERROR - api url returned undefined</div>;
-};
-
-export default GuildIndex;
+}
