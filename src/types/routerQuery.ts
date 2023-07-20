@@ -6,4 +6,6 @@ export interface RouterQuery extends ParsedUrlQuery {
   channel: string;
   /** The current guild's id */
   guild: string;
+  /** The current thread's id */
+  thread?: string;
 }

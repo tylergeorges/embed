@@ -1,0 +1,44 @@
+fragment Embed on Embed {
+  title
+  description
+  url
+  timestamp
+  color
+  type
+  author {
+    url
+    name
+    proxyIconUrl
+  }
+  fields {
+    value
+    name
+    inline
+  }
+  image {
+    url
+    proxyUrl
+    width
+    height
+  }
+  provider {
+    name
+    url
+  }
+  footer {
+    proxyIconUrl
+    text
+  }
+  thumbnail {
+    height
+    width
+    url
+    proxyUrl
+  }
+  video {
+    height
+    width
+    url
+    proxyUrl
+  }
+}

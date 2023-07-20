@@ -1,0 +1,11 @@
+#import "./BaseMessage.graphql"
+
+# Message data is in BaseMessage, this just adds referencedMessage for a nested message object
+
+fragment Message on Message {
+  ...BaseMessage
+
+  referencedMessage {
+    ...BaseMessage
+  }
+}

@@ -1,145 +1,307 @@
-import { createStitches } from '@stitches/react';
-import React, { ForwardedRef, forwardRef } from 'react';
-import OverridableStyledComponent, { Element } from '@components/Core/OverridableStyledComponent';
+import { ScaleValue, createStitches } from '@stitches/react';
 
-// @media screen and (max-width: 578px)
-
-// @sm	@media (min-width: 640px)
-// @md	@media (min-width: 768px)
-// @lg	@media (min-width: 1024px)
-// @xl	@media (min-width: 1280px)
-// @xxl	@media (min-width: 1536px)
-
-// screen and
+export const commonComponentId = process.env.NODE_ENV === 'development' ? undefined : 'embed';
 
 const stitches = createStitches({
-  media: {
-    sm: '(min-width: 640px)',
-    md: '(min-width: 768px)',
-    lg: '(min-width: 1024px)',
-    xl: '(min-width: 1280px)',
-    xxl: '(min-width: 1536px)',
-    sm_screen: 'screen and (max-width: 640px)',
-    md_screen: 'screen  and (max-width: 768px)',
-    lg_screen: 'screen and (max-width: 1024px)',
-    xl_screen: 'screen and (max-width: 1280px)',
-    xxl_screen: 'screen and (max-width: 1536px)'
-  },
   theme: {
+    transitions: {
+      fastestDuration: '100ms',
+      fasterDuration: '200ms',
+      defaultDuration: '300ms',
+      longerDuration: '500ms',
+
+      defaultTransform: 'transform $defaultDuration ease',
+      defaultOpacity: 'opacity $defaultDuration ease',
+      widthAndTransform: 'transform $defaultDuration ease, width $defaultDuration ease'
+    },
+
     colors: {
+      primary: 'rgba(255, 255, 255, 1.0)',
+      primaryDark: '#72767d',
+
       primaryOpacity10: 'rgba(255, 255, 255, 0.1)',
       primaryOpacity20: 'rgba(255, 255, 255, 0.2)',
       primaryOpacity30: 'rgba(255, 255, 255, 0.3)',
+      primaryOpacity40: 'rgba(255, 255, 255, 0.4)',
       primaryOpacity50: 'rgba(255, 255, 255, 0.5)',
       primaryOpacity60: 'rgba(255, 255, 255, 0.6)',
+      primaryOpacity70: 'rgba(255, 255, 255, 0.7)',
       primaryOpacity80: 'rgba(255, 255, 255, 0.8)',
       primaryOpacity90: 'rgba(255, 255, 255, 0.9)',
       primaryOpacity100: 'rgba(255, 255, 255, 1.0)',
-      primary: 'rgba(255, 255, 255, 1.0)',
-      primaryDark: '#72767d',
+
+      backDrop: 'rgba(0,0,0,0.7)',
+
+      textPrimary: '#FFFFFF',
+      textMuted: '$primaryOpacity30',
+
+      iconLight: 'rgb(181,186,193)',
+      iconActive: '$primaryOpacity90',
+      active: 'rgba(255, 255, 255, 0.9)',
+
       systemMessageDark: '#999999',
-      textMuted: 'rgb(163, 166, 170)',
       interactiveNormal: '#dcddde',
       accent: '#5865f2',
       accentOpacity60: '#5865f299',
-      background: '#36393f',
+
+      background: '#313338',
       backgroundOpacity10: '#36393f1a',
-      backgroundSecondary: '#2f3136',
-      backgroundTertiary: '#202225',
-      messageHover: 'rgba(0, 0, 0, .05)',
-      link: '#00b0f4',
+      backgroundSecondary: '#2b2d31',
+      backgroundSecondaryAlt: '#232428',
+      backgroundTertiary: '#232428',
+
       mentioned: 'rgba(250, 166, 26, 0.1)',
       mentionedHover: 'rgba(250, 168, 26, 0.08)',
       mentionedBorder: '#faa81a',
+
+      inputBackground: 'rgba(255, 255, 255, 0.03)',
+
+      contextMenuBackground: '#111214',
+      messageHover: 'rgba(0, 0, 0, .05)',
+      link: '#00b0f4',
+
       tooltipBackground: '#18191c',
       tooltipForeground: '#dcddde',
+
       transparentBlack: 'rgba(0, 0, 0, 0.6)',
       blackSpoilerHover: 'rgba(0, 0, 0, 0.9)',
       spines: '#4f545c',
-      attachmentBorder: 'rgba(27, 29, 32, 0.5)',
+      borderDark: 'rgb(30, 31, 34)',
       danger: '#ed4245'
     },
+
     fonts: {
       main: 'Open Sans, sans-serif'
     },
+
     fontSizes: {
+      /** font-size: 10px */
       xs: '10px',
-      s: '12px',
-      m: '14px',
-      l: '16px'
+
+      /** font-size: 12px */
+      sm: '12px',
+
+      /** font-size: 14px */
+      md: '14px',
+
+      /** font-size: 16px */
+      lg: '16px',
+
+      /** font-size: 20px */
+      xl: '20px',
+
+      /** font-size: 32px */
+      xxl: '32px'
     },
+
     space: {
-      xxs: '1px',
-      xs: '2px',
-      sm: '4px',
-      md: '6px',
-      lg: '8px',
-      xl: '12px',
-      xxl: '16px'
+      /** 0px */
+      none: '0px',
+
+      /** 2px */
+      xxxs: '2px',
+
+      /** 4px */
+      xxs: '4px',
+
+      /** 6px */
+      xs: '6px',
+
+      /** 8px */
+      sm: '8px',
+
+      /** 12px */
+      md: '12px',
+
+      /** 16px */
+      lg: '16px',
+
+      /** 24px */
+      xl: '24px',
+
+      /** 32px */
+      xxl: '32px'
     },
+
     sizes: {
-      messageLeftPadding: '72px',
-      threadButton: '34px',
+      /** 0px */
+      none: '0px',
+
+      /** 16px */
+      xxs: '16px',
+
+      /** 24px */
+      xs: '24px',
+
+      /** 56px */
+      sm: '56px',
+
+      /** 77px */
+      md: '77px',
+
+      /** 100px */
+      lg: '100px',
+
+      /** 112px */
+      xl: '112px',
+
+      /** 175px */
+      xxl: '175px',
+
+      /** 40px */
+      iconSizeXl: '40px',
+
+      /** 32px */
+      iconSizeLarge: '32px',
+
+      /** 24px */
+      iconSizeMed: '24px',
+
+      /** 20px */
+      iconSizeSmall: '20px',
+
+      /** 16px */
       messageTypeIcon: '16px',
-      sideBarWidth: '200px',
+
+      /** 34px */
+      threadButton: '34px',
+
+      /** width: 240px */
+      sideBarWidth: '240px',
+
+      /** width: 8px */
+      panelSeperatorWidth: '8px',
+
+      /** min-width: 400px */
+      threadPanelMinWidth: '400px',
+
+      /** width: calc(100% - 16px) */
+      channelNameWidth: 'calc(100% - 16px)',
+
+      /** height: 32px */
       channelNameHeight: '32px',
-      messageInputSize: '44px'
+
+      /** padding-left: 72px */
+      messageLeftPadding: '72px',
+
+      /** 44px */
+      messageInputSize: '44px',
+
+      /** height: 48px */
+      headerHeight: '48px'
     },
+
+    zIndices: {
+      /** -1 */
+      negative: -1,
+
+      /** 0 */
+      none: 0,
+
+      /** 10 */
+      tooltip: 10,
+
+      /** 20 */
+      membersSidebarBackdrop: 20,
+
+      /** 30 */
+      membersSidebar: 30,
+
+      /** 40 */
+      channelsSidebarBackdrop: 40,
+
+      /** 50 */
+      channelsSidebar: 50,
+
+      /** 60 */
+      modalBackdrop: 60,
+
+      /** 70 */
+      modal: 70
+    },
+
+    shadows: {
+      dropShadow: 'rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
+      headerDropShadow:
+        '0 2px 4px -1px rgba(0, 0, 0, 0.1), 0px 4px 5px 0px rgba(0, 0, 0, 0.12), 0px 1px 10px 0px rgba(0, 0, 0, 0.09), 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06)'
+    },
+
+    fontWeights: {
+      /** font-weight: 400 */
+      thin: 400,
+
+      /** font-weight: 500 */
+      medium: 500,
+
+      /** font-weight: 600 */
+      bold: 600
+    },
+
     borderWidths: {
+      /** border-width: 2px */
       spines: '2px'
     },
-    media: {
-      mobile: '(min-width: 520px)'
-    },
-    singleChannel: {
-      enable: false
-    },
-    url: {
-      height: 0
-    },
-    readOnly: {
-      enable: false
+
+    radii: {
+      /** 2px */
+      xxxs: '2px',
+
+      /** border-radius: 4px */
+      xxs: '4px',
+
+      /** border-radius: 6px */
+      xs: '6px',
+
+      /** border-radius: 8px */
+      sm: '8px',
+
+      /** 1border-radius: 2px */
+      md: '12px',
+
+      /** border-radius: 16px */
+      lg: '16px',
+
+      /** border-radius: 24px */
+      xl: '24px',
+
+      /** border-radius: 32px */
+      xxl: '32px',
+
+      /** border-radius: 99999999999px */
+      round: '99999999999px'
     }
+  },
+
+  media: {
+    small: 'screen and (max-width: 768px)'
+  },
+
+  utils: {
+    marginX: (value: ScaleValue<'space'>) => ({
+      marginLeft: value,
+      marginRight: value
+    }),
+
+    marginY: (value: ScaleValue<'space'>) => ({
+      marginTop: value,
+      marginBottom: value
+    }),
+
+    paddingX: (value: ScaleValue<'space'>) => ({
+      paddingLeft: value,
+      paddingRight: value
+    }),
+
+    paddingY: (value: ScaleValue<'space'>) => ({
+      paddingTop: value,
+      paddingBottom: value
+    }),
+
+    size: (value: ScaleValue<'sizes'>) => ({
+      height: value,
+      width: value
+    })
   }
 });
 
-export function styled<
-  Comp extends Element,
-  Css extends string | ((args: { as?: Element } & Record<string, unknown>) => string)
->(component: Comp, overrideClassName: string, cssClass: Css) {
-  type ToReturnProps<TStitchesProps extends { as?: Element }> = React.ComponentProps<
-    TStitchesProps extends { as: Element } ? TStitchesProps['as'] : Comp
-  > & {
-    stitchesProps?: TStitchesProps &
-      (Css extends (arg: infer P) => string ? P : {}) &
-      (React.ComponentProps<Comp> extends { stitchesProps: infer P } ? P : {});
-  };
-
-  function ComponentToReturn<TStitchesProps extends { as?: Element }>(
-    props: ToReturnProps<TStitchesProps>,
-    ref: ForwardedRef<Comp>
-  ) {
-    const { stitchesProps, ...restOfProps } = props;
-
-    const actualClassName = cssClass instanceof Function ? cssClass(stitchesProps) : cssClass;
-
-    return (
-      // @ts-expect-error TS2322
-      <OverridableStyledComponent
-        component={component}
-        className={actualClassName}
-        overrideClassName={overrideClassName}
-        innerRef={ref}
-        {...restOfProps}
-      />
-    );
-  }
-
-  const refForwarded = forwardRef(ComponentToReturn);
-
-  refForwarded.toString = () => `.${overrideClassName}`;
-
-  return refForwarded;
-}
-
-export const { theme, globalCss, keyframes, css, getCssText } = stitches;
+export const { theme, globalCss, keyframes, css, getCssText, styled } = stitches;

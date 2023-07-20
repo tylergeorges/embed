@@ -1,5 +1,3 @@
-const { withSentryConfig } = require('@sentry/nextjs');
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -7,6 +5,7 @@ const nextConfig = {
   images: {
     unoptimized: true
   }
+
   // sentry: {
   //   hideSourceMaps: false
   // }

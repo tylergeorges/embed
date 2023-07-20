@@ -1,1 +1,0 @@
-export { GuildProvider } from './GuildProvider';
