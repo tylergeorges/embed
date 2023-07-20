@@ -156,9 +156,6 @@ export const ChannelNameInner = styled.withConfig({
   fontWeight: theme.fontWeights.thin,
   boxSizing: 'border-box',
 
-  transitionTimingFunction: 'ease',
-  transitionDuration: theme.transitions.fastestDuration,
-
   marginBottom: theme.space.xxs.value,
 
   variants: {

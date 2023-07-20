@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import React from 'react';
+import React, { memo } from 'react';
 import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
 import { useStoreState } from '@state';
 import { TextChannelContainer } from '@components/Core/TextChannelContainer';
@@ -32,7 +32,7 @@ const ContextMenu = dynamic(() =>
   import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
 );
 
-export default function GuildChannel() {
+function GuildChannel() {
   const { disableBrowserMenu } = useContextMenu();
 
   const isDomThreadsPanelOpen = useStoreState(state => state.ui.isDomThreadsPanelOpen);
@@ -85,3 +85,5 @@ export default function GuildChannel() {
     </>
   );
 }
+
+export default memo(GuildChannel);

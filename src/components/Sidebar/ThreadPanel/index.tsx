@@ -3,7 +3,7 @@ import { MessageContainer } from '@components/Core/TextChannelContainer/MessageC
 import { ThreadPanelHeader } from '@components/Header/ThreadPanelHeader';
 
 import { useStoreActions, useStoreState } from '@state';
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useAppRouter } from '@hooks/useAppRouter';
 
 // TODO: Make a ModalProvider component system to prevent having to do this for every modal
@@ -38,9 +38,9 @@ export const ThreadPanel = () => {
   };
 
   // Transition panel off page but not DOM
-  const startPanelHideTransition = () => {
+  const startPanelHideTransition = useCallback(() => {
     setIsTransitionedThreadsPanelOpen(false);
-  };
+  }, [setIsTransitionedThreadsPanelOpen]);
 
   return (
     <Styles.ThreadPanelWrapper

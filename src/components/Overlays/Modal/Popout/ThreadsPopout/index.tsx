@@ -1,7 +1,7 @@
 import { Popout } from '@components/Overlays/Modal/Popout/index';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreState, useStoreActions } from '@state';
-import { ReactElement, useRef } from 'react';
+import { ReactElement, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ChannelThreads } from './ChannelThreads';
 import { NoThreads } from './NoThreads';
@@ -22,9 +22,9 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
 
   const currentChannelThreads = guildChannels[channelId]?.threads ?? [];
 
-  const hideThreadsModal = () => {
+  const hideThreadsModal = useCallback(() => {
     setShowThreadsModal(false);
-  };
+  }, [setShowThreadsModal]);
 
   return (
     <>
