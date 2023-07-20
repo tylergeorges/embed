@@ -1,7 +1,7 @@
 import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
 
 import { useStoreState } from '@state';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useMessages } from '@hooks/useMessages';
 import { useAppRouter } from '@hooks/useAppRouter';
@@ -17,9 +17,6 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
   const { channelId, guildId } = useAppRouter();
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
-  useEffect(() => {
-    console.log('message container render');
-  }, []);
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
     guild: guildId,
     channel: channelId,

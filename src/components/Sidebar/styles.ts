@@ -139,10 +139,10 @@ export const ThreadsPanelSeperator = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'panel-threads_seperator'
 })('div', {
-  transform: `translateX(-8px)`,
+  transform: `translateX(-${theme.sizes.panelSeperatorWidth})`,
 
   height: '100%',
-  width: 8,
+  width: theme.sizes.panelSeperatorWidth,
 
   backgroundColor: theme.colors.borderDark,
   zIndex: theme.zIndices.modal,

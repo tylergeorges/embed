@@ -169,6 +169,9 @@ const stitches = createStitches({
       /** width: 240px */
       sideBarWidth: '240px',
 
+      /** width: 8px */
+      panelSeperatorWidth: '8px',
+
       /** min-width: 400px */
       threadPanelMinWidth: '400px',
 

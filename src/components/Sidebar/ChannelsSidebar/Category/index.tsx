@@ -10,7 +10,6 @@ interface CategoryProps {
   category: ICategory;
 }
 
-/** This component renders a category and it's channels. */
 export const Category = ({ category }: CategoryProps) => {
   const { threadId, channelId } = useAppRouter();
 
@@ -27,17 +26,12 @@ export const Category = ({ category }: CategoryProps) => {
   const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
   const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
 
-  // TODO: find out why this breaks channel highlighter when thread is opened and its not a dep in useEffect
-  // const setIsThreadsPanelOpen = useStoreActions(state => state.ui.setIsThreadsPanelOpen);
-
   // State
   const initChannelYPos = useStoreState(state => state.ui.initChannelYPos);
   const currentChannelY = useStoreState(state => state.ui.currentChannelYPos);
 
   useEffect(() => {
     // ! Sets the initial ActiveBackground component's position
-
-    // setIsThreadsPanelOpen(!!threadId);
 
     if (currentChannelRef.current) {
       setCurrentChannelYPos(currentChannelRef.current.offsetTop);

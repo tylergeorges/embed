@@ -42,7 +42,7 @@ export const TextChannelWrapper = styled.withConfig({
 
     threadsPanelOpen: {
       true: {
-        width: `calc(100% - ${theme.sizes.threadPanelMinWidth} + 8px)`
+        width: `calc(100% - ${theme.sizes.threadPanelMinWidth} + ${theme.sizes.panelSeperatorWidth})`
       }
     }
   },
@@ -73,8 +73,7 @@ export const TextChannelWrapper = styled.withConfig({
       mobile: false,
 
       css: {
-        // 8px is the length of the panel separator
-        width: `calc(100% - (${theme.sizes.sideBarWidth} + ${theme.sizes.threadPanelMinWidth} + 8px))`,
+        width: `calc(100% - (${theme.sizes.sideBarWidth} + ${theme.sizes.threadPanelMinWidth} + ${theme.sizes.panelSeperatorWidth}))`,
         transform: `translateX(${theme.sizes.sideBarWidth})`
       }
     },
