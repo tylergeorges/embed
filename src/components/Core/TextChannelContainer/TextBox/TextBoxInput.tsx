@@ -35,14 +35,7 @@ export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
   const inputRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (
-      e.key !== 'Shift' &&
-      e.key !== 'Enter' &&
-      e.key !== 'Backspace' &&
-      e.key !== 'a' &&
-      e.key !== 'Control'
-    )
-      return;
+    if (!['Shift', 'Enter', 'Backspace', 'a', 'Control'].includes(e.key)) return;
 
     const { key } = e;
 

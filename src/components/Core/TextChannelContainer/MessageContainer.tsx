@@ -20,7 +20,7 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
     guild: guildId,
     channel: channelId,
-    thread: ''
+    thread: undefined
   });
 
   const handleBottomStateChanged = () => {
