@@ -22,6 +22,7 @@ import {
 } from './types/provider.types';
 import { ModalReducerAction } from './types/reducer.types';
 
+// We reassign this with dispatch returned from useReducer so functions can dispatch
 let dispatch: React.Dispatch<ModalReducerAction> = () => {
   throw Error('Dispatch not set.');
 };
@@ -72,6 +73,8 @@ export const hide: ModalHide = (modalId, hideWithDelay) => {
   // remove from DOM
   if (hideWithDelay) {
     const backdropDuration = modalDuration * 2;
+
+    // Wait for element's exit transition to finish then remove from DOM
     hideTimeout = setTimeout(() => {
       dispatch(removeModalFromDOM(modalId));
     }, backdropDuration);
@@ -82,9 +85,11 @@ export const hide: ModalHide = (modalId, hideWithDelay) => {
   }
 };
 
+// Register modal
 export const register: ModalRegister = (modalId, modalElement, openByDefault) => {
   if (!modalIds.includes(modalId)) {
     domModals[modalId] = { Comp: modalElement, isOpen: openByDefault ?? false };
+
     visibleModals[modalId] = { Comp: modalElement, isOpen: openByDefault ?? false };
 
     modalIds.push(modalId);
@@ -114,12 +119,12 @@ function ModalProvider({ children }: ModalProviderWrapperProps) {
           .map(id => {
             const DomModal = modalState.domModals[id];
 
-            const hideModal = () => {
-              hide(id);
-            };
-
             if (DomModal && DomModal.isOpen) {
               const TransitionedModal = modalState.visibleModals[id];
+
+              const hideModal = () => {
+                hide(id);
+              };
 
               return (
                 <Fragment key={id}>
@@ -131,6 +136,7 @@ function ModalProvider({ children }: ModalProviderWrapperProps) {
                 </Fragment>
               );
             }
+
             return <></>;
           })}
       </Main>
@@ -138,7 +144,7 @@ function ModalProvider({ children }: ModalProviderWrapperProps) {
   );
 }
 
-const config = {
+const modalProviderConfig = {
   register,
   show,
   hide,
@@ -148,4 +154,4 @@ const config = {
   context: ModalContextState
 };
 
-export default config;
+export default modalProviderConfig;

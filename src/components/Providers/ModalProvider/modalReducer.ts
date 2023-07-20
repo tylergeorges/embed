@@ -80,6 +80,7 @@ export function showModal(modalId: string, props?: React.ComponentProps<any>) {
     }
   } as const;
 }
+
 export function addToDom(modalId: string, props?: React.ComponentProps<any>) {
   return {
     type: 'addToDOM',
@@ -89,6 +90,7 @@ export function addToDom(modalId: string, props?: React.ComponentProps<any>) {
     }
   } as const;
 }
+
 export function hideModal(modalId: string) {
   return {
     type: 'hide',
@@ -97,6 +99,7 @@ export function hideModal(modalId: string) {
     }
   } as const;
 }
+
 export function removeModalFromDOM(modalId: string) {
   return {
     type: 'removeFromDOM',
