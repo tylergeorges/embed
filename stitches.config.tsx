@@ -12,7 +12,8 @@ const stitches = createStitches({
 
       defaultTransform: 'transform $defaultDuration ease',
       defaultOpacity: 'opacity $defaultDuration ease',
-      widthAndTransform: 'transform $defaultDuration ease, width $defaultDuration ease'
+      widthAndTransform: 'transform $defaultDuration ease, width $defaultDuration ease',
+      marginAndTransform: 'transform $defaultDuration ease, margin $defaultDuration ease'
     },
 
     colors: {

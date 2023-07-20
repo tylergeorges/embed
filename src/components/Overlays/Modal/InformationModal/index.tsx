@@ -21,8 +21,7 @@ export const InformationModal = ({
   <Modal isOpen={isOpen} title={title} hideModal={hideModal} disableBackdrop={disableBackdrop}>
     <Styles.ModalHeader>
       <Styles.ModalHeaderContent>
-        {title}
-
+        #{title}
         <CloseButton onClick={hideModal} />
       </Styles.ModalHeaderContent>
     </Styles.ModalHeader>

@@ -5,7 +5,10 @@ import { MembersSidebar } from '@components/Sidebar/MembersSidebar';
 import { useCallback, useEffect } from 'react';
 
 import { Backdrop } from '@components/Overlays/Modal/styles';
+import ModalProvider from '@components/Providers/ModalProvider';
+import { useIsModalOpen } from '@hooks/useIsModalOpen';
 import * as Styles from './styles';
+
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
 
@@ -14,42 +17,28 @@ export const TextChannelContainer = () => {
   const { channelId } = useAppRouter();
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
-  const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
-  const isTransitionedThreadsPanelOpen = useStoreState(
-    state => state.ui.isTransitionedThreadsPanelOpen
-  );
+  const isChannelsListOpen = useIsModalOpen('sidebar-channels-list');
+  const isThreadsPanelOpen = useIsModalOpen('sidebar-threads-panel');
 
-  const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
+
   const setCurrentChannel = useStoreActions(state => state.guild.setCurrentChannel);
 
   useEffect(() => {
     setCurrentChannel(channelId);
 
     // Used to hide members list if the threads panel is open
-    if (!isTransitionedThreadsPanelOpen) {
+    if (!isThreadsPanelOpen) {
       setIsMembersListOpen(!windowIsMobile);
     }
-  }, [
-    windowIsMobile,
-    setIsMembersListOpen,
-    isTransitionedThreadsPanelOpen,
-    setCurrentChannel,
-    channelId
-  ]);
+  }, [windowIsMobile, setIsMembersListOpen, isThreadsPanelOpen, setCurrentChannel, channelId]);
 
   const hideSidebar = useCallback(() => {
     if ((windowIsMobile && isChannelsListOpen) || (windowIsMobile && isMembersListOpen)) {
-      setIsChannelsListOpen(false);
+      ModalProvider.hide('sidebar-channels-list');
       setIsMembersListOpen(false);
     }
-  }, [
-    isChannelsListOpen,
-    isMembersListOpen,
-    windowIsMobile,
-    setIsMembersListOpen,
-    setIsChannelsListOpen
-  ]);
+  }, [isChannelsListOpen, isMembersListOpen, windowIsMobile, setIsMembersListOpen]);
 
   return (
     <Styles.TextChannelWrapper
@@ -58,7 +47,7 @@ export const TextChannelContainer = () => {
         '@small': true
       }}
       channelsListOpen={isChannelsListOpen}
-      threadsPanelOpen={isTransitionedThreadsPanelOpen}
+      threadsPanelOpen={isThreadsPanelOpen}
     >
       <TextChannelHeader />
       <Styles.TextChannelInnerWrapper>

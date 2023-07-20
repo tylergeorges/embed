@@ -8,6 +8,7 @@ import { client } from '@graphql/client';
 import GuildProvider from '@components/Providers/GuildProvider';
 import '../i18n';
 import React from 'react';
+import ModalProvider from '@components/Providers/ModalProvider';
 
 const globalStyles = globalCss({
   '@font-face': {
@@ -134,7 +135,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <StoreProvider store={store}>
         <GraphQLProvider value={client}>
           <GuildProvider>
-            <Component {...pageProps} />
+            <ModalProvider.Provider>
+              <Component {...pageProps} />
+            </ModalProvider.Provider>
           </GuildProvider>
         </GraphQLProvider>
       </StoreProvider>

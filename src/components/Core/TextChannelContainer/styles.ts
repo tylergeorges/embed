@@ -12,7 +12,8 @@ export const TextChannelWrapper = styled.withConfig({
   height: '100%',
   width: '100%',
 
-  transition: theme.transitions.widthAndTransform,
+  transition: theme.transitions.defaultTransform,
+  // transition: theme.transitions.widthAndTransform,
 
   variants: {
     mobile: {
@@ -117,6 +118,7 @@ export const MessageWrapper = styled.withConfig({
   height: '100%',
 
   transition: theme.transitions.widthAndTransform,
+  // transition: theme.transitions.widthAndTransform,
   zIndex: theme.zIndices.none,
 
   variants: {
@@ -151,7 +153,7 @@ export const MessageWrapper = styled.withConfig({
         marginRight: 'none',
         width: '100%',
         height: '100%',
-        transition: theme.transitions.defaultTransform,
+        transition: 'transform 0.3s ease 0s',
         transform: `translateX(0px)`
       }
     }

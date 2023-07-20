@@ -7,6 +7,11 @@ const zoomInBounce = keyframes({
   '50%': { scale: '1.05' },
   '100%': { scale: '1' }
 });
+const zoomOutBounce = keyframes({
+  '0%': { scale: '1' },
+  '50%': { scale: '1.05' },
+  '100%': { scale: '0' }
+});
 
 export const Backdrop = styled.withConfig({
   componentId: commonComponentId,
@@ -70,6 +75,13 @@ export const Backdrop = styled.withConfig({
       css: {
         zIndex: theme.zIndices.modalBackdrop,
         opacity: 1
+      }
+    },
+    {
+      isOpen: false,
+      type: 'modal',
+      css: {
+        transitionDelay: theme.transitions.longerDuration
       }
     },
     {
@@ -171,8 +183,7 @@ export const ModalContainer = styled.withConfig({
   variants: {
     isOpen: {
       false: {
-        // Scaling to 0 is not performant, so we trigger it to render on GPU with translate3d
-        transform: 'scale(0) rotate(0deg) translate3d(0,0,0)'
+        animation: `${zoomOutBounce} ${theme.transitions.longerDuration}  ease`
       },
       true: {
         animation: `${zoomInBounce} ${theme.transitions.longerDuration}  ease`

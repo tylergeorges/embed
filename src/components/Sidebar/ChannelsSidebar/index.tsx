@@ -1,25 +1,27 @@
-import { useStoreActions, useStoreState } from '@state';
+import { useStoreState } from '@state';
 import { Header } from '@components/Header';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { Backdrop } from '@components/Overlays/Modal/styles';
+import ModalProvider from '@components/Providers/ModalProvider';
 import * as Styles from '../styles';
 import { Category } from './Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
 
-export const ChannelsSidebar = () => {
-  const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
-  const { hideContextMenu } = useContextMenu();
+interface ChannelsSidebarProps {
+  isOpen: boolean;
+}
 
-  const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
-
+export const ChannelsSidebar = ({ isOpen }: ChannelsSidebarProps) => {
   const guildName = useStoreState(state => state.guild.data?.name) as string;
   const categories = useStoreState(state => state.guild.categories);
 
-  const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
+  const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
+
+  const { hideContextMenu, disableBrowserMenu } = useContextMenu();
 
   const closeChannelsList = () => {
-    setIsChannelsListOpen(false);
+    ModalProvider.hide('sidebar-channels-list');
   };
 
   return (
@@ -30,14 +32,15 @@ export const ChannelsSidebar = () => {
           '@initial': false,
           '@small': true
         }}
-        isChannelsListOpen={isChannelsListOpen}
-        isOpen={isChannelsListOpen && windowIsMobile}
+        isChannelsListOpen={isOpen}
+        isOpen={isOpen && windowIsMobile}
       />
       <Styles.ChannelsSidebarWrapper
         type="channelsList"
-        channelsListOpen={isChannelsListOpen}
+        channelsListOpen={isOpen}
         onClick={hideContextMenu}
         className="scrollbar-thin"
+        onContextMenu={disableBrowserMenu}
       >
         <Styles.GuildHeaderWrapper>
           <Header name={guildName} isChannelHeader={false} />

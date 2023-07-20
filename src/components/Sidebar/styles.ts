@@ -109,6 +109,8 @@ export const ThreadPanelWrapper = styled.withConfig({
   displayName: 'thread-panel_wrapper'
 })('div', {
   position: 'absolute',
+  // position: 'relative',
+
   display: 'flex',
   flexDirection: 'row',
   right: 0,

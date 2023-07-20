@@ -37,6 +37,7 @@ export const EmojisIcon = () => {
       <EmojisIconRoot
         width={242}
         height={110}
+        priority
         alt="Emojis Image"
         src={EmojisImage}
         // Used to  choose an emoji from the image which is an emoji grid

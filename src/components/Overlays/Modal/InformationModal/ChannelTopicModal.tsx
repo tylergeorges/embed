@@ -1,25 +1,31 @@
 import { InformationModal } from '@components/Overlays/Modal/InformationModal';
 import * as Styles from '@components/Overlays/Modal/styles';
-import { useStoreActions, useStoreState } from '@state';
+import ModalProvider from '@components/Providers/ModalProvider';
 
-export const ChannelTopicModal = () => {
-  const showTopicModal = useStoreState(state => state.ui.showTopicModal);
-  const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);
-  const currentChannel = useStoreState(state => state.guild.currentChannel);
+interface ChannelTopicModalProps {
+  currentChannel: {
+    name: string;
+    topic: string;
+  };
 
+  hideModal: () => void;
+
+  isOpen: boolean;
+}
+export const ChannelTopicModal = ({
+  currentChannel,
+  hideModal,
+  isOpen
+}: ChannelTopicModalProps) => {
   const hideTopicModal = () => {
-    setShowTopicModal(false);
+    ModalProvider.hide('channel-topic-modal', true);
+
+    hideModal();
   };
 
   return (
-    <InformationModal
-      isOpen={showTopicModal}
-      hideModal={hideTopicModal}
-      title={currentChannel?.name ?? ''}
-    >
-      <Styles.ChannelTopicModalContent>
-        {currentChannel?.topic ?? ''}
-      </Styles.ChannelTopicModalContent>
+    <InformationModal isOpen={isOpen} hideModal={hideTopicModal} title={currentChannel?.name ?? ''}>
+      <Styles.ChannelTopicModalContent>{currentChannel.topic}</Styles.ChannelTopicModalContent>
     </InformationModal>
   );
 };

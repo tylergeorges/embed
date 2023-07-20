@@ -1,7 +1,6 @@
 import * as Styles from '@components/Overlays/Modal/styles';
 import { IconProps, Icons } from '@components/Shared/Icons';
-import { useMediaQuery } from '@hooks/useMediaQuery';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useRef } from 'react';
 import { CloseButton } from '@icons/Buttons/CloseButton';
 
 type TitleIcon = IconProps['icon'];
@@ -23,19 +22,27 @@ export const Popout = ({
   TitleIcon,
   popoutFor
 }: PopoutProps) => {
-  const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
+  const popoutRef = useRef<HTMLDivElement>(null);
 
-  if (!popoutFor || !isOpen) return <></>;
+  useEffect(() => {
+    const popout = popoutRef.current;
+
+    if (popout && popoutFor) {
+      const right = popoutFor.clientLeft + 80;
+      popout.style.right = `${right}px`;
+    }
+  }, [popoutFor]);
 
   return (
     <Styles.PopoutContainer
-      isMobile={windowIsMobile}
+      isMobile={{
+        '@initial': false,
+        '@small': true
+      }}
       isOpen={isOpen}
       aria-label={title}
       role="dialog"
-      css={{
-        right: `calc(${popoutFor.clientLeft}px + 80px)`
-      }}
+      ref={popoutRef}
     >
       <Styles.PopoutHeader>
         <Styles.PopoutHeaderContent>

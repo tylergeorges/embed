@@ -1,3 +1,4 @@
+import ModalProvider from '@components/Providers/ModalProvider';
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { Channel } from '@graphql/graphql';
 import { useStoreActions } from '@state';
@@ -15,13 +16,11 @@ export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
 
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
 
-  const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
-
   const handlePanelClick = () => {
     setIsCurrentChannelThread(true);
 
     // Adds element to DOM
-    setIsDomThreadsPanelOpen(true);
+    ModalProvider.show('sidebar-threads-panel');
 
     setIsMembersListOpen(false);
     setCurrentThread(thread);

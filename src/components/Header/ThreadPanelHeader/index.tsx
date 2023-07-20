@@ -6,16 +6,12 @@ import { useStoreState } from '@state';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 
 interface ThreadPanelHeaderProps {
-  startPanelHideTransition: () => void;
+  handleClose: () => void;
 }
-export const ThreadPanelHeader = ({ startPanelHideTransition }: ThreadPanelHeaderProps) => {
+export const ThreadPanelHeader = ({ handleClose }: ThreadPanelHeaderProps) => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
 
   const currentThread = useStoreState(state => state.guild.currentThread);
-
-  const closePanel = () => {
-    startPanelHideTransition();
-  };
 
   return (
     <Styles.ThreadPanelHeaderRoot>
@@ -25,7 +21,7 @@ export const ThreadPanelHeader = ({ startPanelHideTransition }: ThreadPanelHeade
           <Icons icon="ThreadHash" color="dark" type="headerIcon" />
           {currentThread?.name}
         </Styles.ThreadPanelHeaderIconContent>
-        <CloseButton onClick={closePanel} />
+        <CloseButton onClick={handleClose} />
       </Styles.ThreadPanelHeaderIconContainer>
     </Styles.ThreadPanelHeaderRoot>
   );
