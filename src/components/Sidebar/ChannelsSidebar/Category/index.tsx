@@ -26,12 +26,23 @@ export const Category = ({ category }: CategoryProps) => {
   const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
   const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
 
+  const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
+
+  const setIsTransitionedThreadsPanelOpen = useStoreActions(
+    state => state.ui.setIsTransitionedThreadsPanelOpen
+  );
+
   // State
   const initChannelYPos = useStoreState(state => state.ui.initChannelYPos);
   const currentChannelY = useStoreState(state => state.ui.currentChannelYPos);
 
   useEffect(() => {
     // ! Sets the initial ActiveBackground component's position
+
+    if (!threadId) {
+      setIsTransitionedThreadsPanelOpen(false);
+      setIsDomThreadsPanelOpen(false);
+    }
 
     if (currentChannelRef.current) {
       setCurrentChannelYPos(currentChannelRef.current.offsetTop);
@@ -41,7 +52,14 @@ export const Category = ({ category }: CategoryProps) => {
     if (channelsConRef.current) {
       setChannelsConHeight(channelsConRef.current.offsetHeight);
     }
-  }, [channelId, threadId, setCurrentChannelYPos, setInitChannelYPos]);
+  }, [
+    channelId,
+    threadId,
+    setCurrentChannelYPos,
+    setInitChannelYPos,
+    setIsDomThreadsPanelOpen,
+    setIsTransitionedThreadsPanelOpen
+  ]);
 
   const toggleIsOpen = useCallback(() => {
     const isActiveCategory = !!currentChannelRef.current;

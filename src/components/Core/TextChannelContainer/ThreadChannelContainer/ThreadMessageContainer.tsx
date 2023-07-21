@@ -5,19 +5,20 @@ import { useCallback, useState } from 'react';
 import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
-import * as Styles from './styles';
+import * as Styles from '../styles';
 
-export const MessageContainer = () => {
+export const ThreadMessageContainer = () => {
   const [isListRendered, setIsListRendered] = useState(false);
 
-  const { channelId, guildId } = useAppRouter();
+  const { channelId, guildId, threadId } = useAppRouter();
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
     // guild: '585454996800405509',
     // channel: '585840022511550494',
     guild: guildId,
-    channel: channelId
+    channel: channelId,
+    threadId
   });
 
   const handleBottomStateChanged = useCallback(() => {
@@ -43,7 +44,7 @@ export const MessageContainer = () => {
         handleBottomStateChanged={handleBottomStateChanged}
       />
 
-      <TextBox />
+      <TextBox channelIsThread />
     </Styles.MessageWrapper>
   );
 };

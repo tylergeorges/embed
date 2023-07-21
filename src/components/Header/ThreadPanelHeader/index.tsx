@@ -13,10 +13,6 @@ export const ThreadPanelHeader = ({ startPanelHideTransition }: ThreadPanelHeade
 
   const currentThread = useStoreState(state => state.guild.currentThread);
 
-  const closePanel = () => {
-    startPanelHideTransition();
-  };
-
   return (
     <Styles.ThreadPanelHeaderRoot>
       <Styles.ThreadPanelHeaderIconContainer>
@@ -25,7 +21,7 @@ export const ThreadPanelHeader = ({ startPanelHideTransition }: ThreadPanelHeade
           <Icons icon="ThreadHash" color="dark" type="headerIcon" />
           {currentThread?.name}
         </Styles.ThreadPanelHeaderIconContent>
-        <CloseButton onClick={closePanel} />
+        <CloseButton onClick={startPanelHideTransition} />
       </Styles.ThreadPanelHeaderIconContainer>
     </Styles.ThreadPanelHeaderRoot>
   );
