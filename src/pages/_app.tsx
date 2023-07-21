@@ -1,3 +1,5 @@
+import '../wdyr';
+
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { StoreProvider } from 'easy-peasy';

@@ -1,15 +1,10 @@
-import { IconButton } from '@icons/Buttons/IconButton';
+import IconButton from '@icons/Buttons/IconButton';
 import { useTranslation } from 'react-i18next';
 
 export const PinButton = () => {
   const translate = useTranslation();
 
-  return (
-    <IconButton
-      icon="Pin"
-      tooltipLabel={translate.t('pinnedmessages.tooltip') as string}
-      tooltipPlacement="bottom"
-      onClick={e => e.preventDefault()}
-    />
-  );
+  const pinLabel = translate.t('pinnedmessages.tooltip') as string;
+
+  return <IconButton icon="Pin" tooltipLabel={pinLabel} tooltipPlacement="bottom" />;
 };

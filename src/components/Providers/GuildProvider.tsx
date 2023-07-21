@@ -3,7 +3,7 @@ import { graphql } from '@graphql/gql';
 import { useQuery } from 'urql';
 import { useStoreActions, useStoreState } from '@state';
 import { Loading } from '@components/Overlays/Loading';
-import { useAppRouter } from '@hooks/useAppRouter';
+import { useRouter } from 'next/router';
 
 interface GuildProviderProps {
   children: React.ReactNode;
@@ -58,16 +58,18 @@ const guildDocument = graphql(/* GraphQL */ `
 `);
 
 export default function GuildProvider({ children }: GuildProviderProps) {
-  const { guildId, router } = useAppRouter();
+  const router = useRouter();
+  const { guild: guildId, channel: channelId } = router.query;
 
   const [{ data, fetching }] = useQuery({
     query: guildDocument,
-    variables: { id: guildId }
+    variables: { id: guildId as string }
   });
 
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
   const setChannels = useStoreActions(state => state.guild.setChannels);
+  const setCurrentChannel = useStoreActions(state => state.guild.setCurrentChannel);
   const channels = useStoreState(state => state.guild.channels);
 
   useEffect(() => {
@@ -81,8 +83,12 @@ export default function GuildProvider({ children }: GuildProviderProps) {
       setSettings(data.guild.settings);
       // @ts-expect-error
       setChannels(data.guild.channels);
+
+      setCurrentChannel(channelId as string);
     }
-  }, [data, fetching, setChannels, setGuildData, setSettings, guildId, router]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, fetching, setChannels, setGuildData, setSettings, guildId, router, channelId]);
 
   if (fetching || !data || channels === undefined) return <Loading />;
 

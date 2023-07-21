@@ -1,9 +1,9 @@
 import * as Styles from '@icons/Buttons/IconButtonWrapper/styles';
-import { ToolTip } from '@components/Shared/ToolTip';
-import { IconButtonInner } from './IconButtonInner';
+import ToolTip from '@components/Shared/ToolTip';
+import IconButtonInner from './IconButtonInner';
 import { IconButtonWrapperProps } from './button.types';
 
-export const IconButtonWrapper = ({
+const IconButtonWrapper = ({
   tooltipLabel,
   children,
   tooltipDisabled,
@@ -44,3 +44,8 @@ export const IconButtonWrapper = ({
     )}
   </Styles.IconButtonRoot>
 );
+
+IconButtonWrapper.displayName = 'IconButtonWrapper';
+IconButtonWrapper.whyDidYouRender = true;
+
+export default IconButtonWrapper;

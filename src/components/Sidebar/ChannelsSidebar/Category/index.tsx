@@ -1,18 +1,16 @@
 import { Category as ICategory } from '@graphql/graphql';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import { useStoreActions, useStoreState } from '@state';
-import { useAppRouter } from '@hooks/useAppRouter';
 import { ChannelsContainer } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer';
+import { useRouter } from 'next/router';
 import * as Styles from '../styles';
-import { CategoryName } from './CategoryName';
+import CategoryName from './CategoryName';
 
 interface CategoryProps {
   category: ICategory;
 }
 
-export const Category = ({ category }: CategoryProps) => {
-  const { threadId, channelId } = useAppRouter();
-
+const Category = memo(({ category }: CategoryProps) => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(true);
   const [channelsConHeight, setChannelsConHeight] = useState(0);
 
@@ -25,6 +23,10 @@ export const Category = ({ category }: CategoryProps) => {
   // Actions
   const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
   const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
+
+  // const isCurrentChannelThread = useStoreActions(state => state.ui.setIsCurrentChannelThread);
+
+  const { threadId } = useRef(useRouter().query).current;
 
   // State
   const initChannelYPos = useStoreState(state => state.ui.initChannelYPos);
@@ -41,7 +43,7 @@ export const Category = ({ category }: CategoryProps) => {
     if (channelsConRef.current) {
       setChannelsConHeight(channelsConRef.current.offsetHeight);
     }
-  }, [channelId, threadId, setCurrentChannelYPos, setInitChannelYPos]);
+  }, [setCurrentChannelYPos, setInitChannelYPos]);
 
   const toggleIsOpen = useCallback(() => {
     const isActiveCategory = !!currentChannelRef.current;
@@ -62,9 +64,7 @@ export const Category = ({ category }: CategoryProps) => {
 
       // When closing an active channel
       if (isActiveCategory && categoryRef.current) {
-        const isCurrentChannelThread = !!threadId;
-
-        if (isCurrentChannelThread) {
+        if (threadId) {
           // For threads
           // threadHeight = Channel Height * 2 - 10
           const threadHeight = 54;
@@ -90,11 +90,11 @@ export const Category = ({ category }: CategoryProps) => {
   }, [
     isCategoryOpen,
     initChannelYPos,
-    setCurrentChannelYPos,
     currentChannelY,
+    threadId,
     channelsConHeight,
-    setInitChannelYPos,
-    threadId
+    setCurrentChannelYPos,
+    setInitChannelYPos
   ]);
 
   return (
@@ -114,4 +114,9 @@ export const Category = ({ category }: CategoryProps) => {
       />
     </Styles.CategoryContainer>
   );
-};
+});
+
+Category.displayName = 'Category';
+Category.whyDidYouRender = true;
+
+export default Category;

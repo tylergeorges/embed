@@ -1,24 +1,24 @@
-import { useRef } from 'react';
+import { memo, useCallback, useRef } from 'react';
 
 import { EmojisButton } from '@components/Shared/Icons/Buttons/EmojisButton';
 import { TextBoxInput } from '@components/Core/TextChannelContainer/TextBox/TextBoxInput';
-import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
+import IconButton from '@components/Shared/Icons/Buttons/IconButton';
 import * as Styles from '../styles';
 
 interface TextBoxProps {
   channelIsThread?: boolean;
 }
 
-export const TextBox = ({ channelIsThread }: TextBoxProps) => {
+export const TextBox = memo(({ channelIsThread }: TextBoxProps) => {
   const fileAttachmentRef = useRef<HTMLInputElement>(null);
 
-  const attachmentButtonClick = (e: React.SyntheticEvent) => {
+  const attachmentButtonClick = useCallback((e: React.SyntheticEvent) => {
     e.preventDefault();
 
     const fileAttachmentElement = fileAttachmentRef.current;
 
     fileAttachmentElement?.click();
-  };
+  }, []);
 
   const addAttachment = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.currentTarget;
@@ -49,4 +49,7 @@ export const TextBox = ({ channelIsThread }: TextBoxProps) => {
       </Styles.TextBoxInner>
     </Styles.TextBoxWrapper>
   );
-};
+});
+
+TextBox.displayName = 'TextBox';
+TextBox.whyDidYouRender = true;

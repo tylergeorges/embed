@@ -1,10 +1,9 @@
 import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
 
 import { useStoreState } from '@state';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useMessages } from '@hooks/useMessages';
-import { useAppRouter } from '@hooks/useAppRouter';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
@@ -14,20 +13,21 @@ interface MessageContainerProps {
 export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
   const [isListRendered, setIsListRendered] = useState(false);
 
-  const { channelId, guildId } = useAppRouter();
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
+  const currentChannel = useStoreState(state => state.guild.currentChannel);
+  const currentGuild = useStoreState(state => state.guild.data);
 
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
-    guild: guildId,
-    channel: channelId,
+    guild: currentGuild?.id ?? '',
+    channel: currentChannel?.id ?? '',
     thread: undefined
   });
 
-  const handleBottomStateChanged = () => {
+  const handleBottomStateChanged = useCallback(() => {
     if (!isListRendered) {
       setIsListRendered(true);
     }
-  };
+  }, [isListRendered]);
 
   return (
     <Styles.MessageWrapper

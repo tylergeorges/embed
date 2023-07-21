@@ -1,6 +1,4 @@
-import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
-
-import React from 'react';
+import IconButton from '@components/Shared/Icons/Buttons/IconButton';
 
 interface CloseButtonProps {
   onClick: () => void;

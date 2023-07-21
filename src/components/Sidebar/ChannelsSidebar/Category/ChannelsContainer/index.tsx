@@ -3,8 +3,8 @@ import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
 import { useStoreState } from '@state';
 import { Category as ICategory } from '@graphql/graphql';
 import { ThreadSpine } from '@components/Shared/Icons/ThreadSpine';
-import { useAppRouter } from '@hooks/useAppRouter';
-import { Channel } from './Channel';
+import { useRouter } from 'next/router';
+import Channel from './Channel';
 
 interface ChannelsProps {
   isCategoryOpen: boolean;
@@ -13,11 +13,13 @@ interface ChannelsProps {
 
   currentChannelRef: RefObject<HTMLAnchorElement>;
 }
+
 /** Component that handles rendering text and thread channels */
 export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
   ({ isCategoryOpen, category, currentChannelRef }, ref) => {
     const channels = useStoreState(state => state.guild.channels!);
-    const { threadId, channelId } = useAppRouter();
+    const currentChannel = useStoreState(state => state.guild.currentChannel);
+    const { channel: channelId, threadId } = useRouter().query;
 
     return (
       <div ref={ref}>
@@ -28,7 +30,7 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
               <Styles.ChannelsWrapper draggable={false}>
                 <Channel
                   channel={channel}
-                  isActive={channel.id === channelId}
+                  isActive={channel.id === currentChannel?.id}
                   isCategoryOpen={isCategoryOpen}
                   ref={currentChannelRef}
                   channelHasActiveThread={!!threadId && channel.id === channelId}

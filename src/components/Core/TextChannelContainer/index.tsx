@@ -1,42 +1,26 @@
 import { useStoreActions, useStoreState } from '@state';
 import { useMediaQuery } from '@hooks/useMediaQuery';
-import { useAppRouter } from '@hooks/useAppRouter';
 import { MembersSidebar } from '@components/Sidebar/MembersSidebar';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 
 import { Backdrop } from '@components/Overlays/Modal/styles';
 import * as Styles from './styles';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
 
-export const TextChannelContainer = () => {
+const TextChannelContainer = () => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
-  const { channelId } = useAppRouter();
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
+
   const isTransitionedThreadsPanelOpen = useStoreState(
     state => state.ui.isTransitionedThreadsPanelOpen
   );
 
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
+
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
-  const setCurrentChannel = useStoreActions(state => state.guild.setCurrentChannel);
-
-  useEffect(() => {
-    setCurrentChannel(channelId);
-
-    // Used to hide members list if the threads panel is open
-    if (!isTransitionedThreadsPanelOpen) {
-      setIsMembersListOpen(!windowIsMobile);
-    }
-  }, [
-    windowIsMobile,
-    setIsMembersListOpen,
-    isTransitionedThreadsPanelOpen,
-    setCurrentChannel,
-    channelId
-  ]);
 
   const hideSidebar = useCallback(() => {
     if ((windowIsMobile && isChannelsListOpen) || (windowIsMobile && isMembersListOpen)) {
@@ -79,3 +63,8 @@ export const TextChannelContainer = () => {
     </Styles.TextChannelWrapper>
   );
 };
+
+TextChannelContainer.displayName = 'TextChannelContainer';
+TextChannelContainer.whyDidYouRender = true;
+
+export default TextChannelContainer;

@@ -3,7 +3,7 @@ import * as Styles from '@icons/Buttons/IconButtonWrapper/styles';
 
 type IconButtonInnerProps = Partial<IconButtonWrapperProps>;
 
-export const IconButtonInner = ({
+const IconButtonInner = ({
   backgroundGlowSize,
   iconContent,
   isActive,
@@ -21,3 +21,8 @@ export const IconButtonInner = ({
     )}
   </Styles.IconButtonChildrenWrapper>
 );
+
+IconButtonInner.displayName = 'IconButtonInner';
+IconButtonInner.whyDidYouRender = true;
+
+export default IconButtonInner;

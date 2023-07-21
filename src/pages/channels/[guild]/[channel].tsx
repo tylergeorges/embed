@@ -1,8 +1,8 @@
 /* eslint-disable no-alert */
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
-import { useStoreState } from '@state';
-import { TextChannelContainer } from '@components/Core/TextChannelContainer';
+import { useStoreState, useStoreActions } from '@state';
+import TextChannelContainer from '@components/Core/TextChannelContainer';
 import { MessageRendererProvider } from '@widgetbot/message-renderer';
 import { styled } from '@stitches';
 import { APIChannel } from 'discord-api-types/v10';
@@ -10,6 +10,8 @@ import * as Styles from '@components/Core/styles';
 import { svgUrls } from '@svg-assets';
 import { useContextMenu } from '@hooks/useContextMenu';
 import dynamic from 'next/dynamic';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { useAppRouter } from '@hooks/useAppRouter';
 
 const MessageRendererRoot = styled('div', {
   '--fonts-main': 'GgSans',
@@ -32,6 +34,35 @@ const ContextMenu = dynamic(() =>
   import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
 );
 
+const CurrentChannelProvider = () => {
+  const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
+
+  const { channelId } = useAppRouter();
+  const isTransitionedThreadsPanelOpen = useStoreState(
+    state => state.ui.isTransitionedThreadsPanelOpen
+  );
+  const setCurrentChannel = useStoreActions(state => state.guild.setCurrentChannel);
+
+  const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
+
+  useEffect(() => {
+    setCurrentChannel(channelId);
+
+    // Used to hide members list if the threads panel is open
+    if (!isTransitionedThreadsPanelOpen) {
+      setIsMembersListOpen(!windowIsMobile);
+    }
+  }, [
+    windowIsMobile,
+    setIsMembersListOpen,
+    isTransitionedThreadsPanelOpen,
+    setCurrentChannel,
+    channelId
+  ]);
+
+  return <></>;
+};
+
 function GuildChannel() {
   const { disableBrowserMenu } = useContextMenu();
 
@@ -44,6 +75,7 @@ function GuildChannel() {
 
   return (
     <>
+      <CurrentChannelProvider />
       <MessageRendererProvider
         messageButtons={() => []}
         currentUser={() => null}

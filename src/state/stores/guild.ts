@@ -24,7 +24,7 @@ export interface GuildStore {
   channels?: Channel[];
   categories: Computed<GuildStore, Category[]>;
   currentThread: Channel | undefined;
-  currentChannel: { name: string; topic: string } | undefined;
+  currentChannel: { name: string; topic: string; id: string } | undefined;
 
   setData: Action<GuildStore, IGuild>;
   setSettings: Action<GuildStore, GuildSettings>;
@@ -91,7 +91,11 @@ const guild: GuildStore = {
   setCurrentChannel: action((state, payload) => {
     const currentChannel = state.guildChannels[payload];
     // @ts-ignore
-    state.currentChannel = { name: currentChannel.name, topic: currentChannel.topic };
+    state.currentChannel = {
+      name: currentChannel.name,
+      topic: currentChannel.topic,
+      id: currentChannel.id
+    };
   })
 };
 
