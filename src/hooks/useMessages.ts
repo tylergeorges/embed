@@ -1,4 +1,4 @@
-import { useQuery } from 'urql';
+import { useQuery, useSubscription } from 'urql';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   BaseMessageFragment,
@@ -9,7 +9,11 @@ import {
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
-import { messagesQuery } from '@hooks/messagesQuery';
+import {
+  messagesQuery,
+  newMessageSubscription,
+  updateMessageSubscription
+} from '@hooks/messagesQuery';
 
 type MessageState = {
   messages: MessageFragmentFragment[];
@@ -40,6 +44,50 @@ export const useMessages = ({
     query: messagesQuery,
     variables
   });
+
+  const handleNewMessage = (
+    // eslint-disable-next-line @typescript-eslint/default-param-last, @typescript-eslint/no-unused-vars
+    _: never[] | undefined = [],
+    response: { message: BaseMessageFragment }
+  ) => {
+    console.log(response);
+    setMessages(prev => [...prev, response.message]);
+  };
+
+  const handleUpdatedMessage = (
+    // eslint-disable-next-line @typescript-eslint/default-param-last, @typescript-eslint/no-unused-vars
+    _: never[] | undefined = [],
+    response: { messageUpdate: { content: string; id: string } }
+  ) => {
+    const oldMsgs = [...messages];
+    const updatedMessage = response.messageUpdate;
+
+    const messageIdx = messages.findIndex(msg => msg.id === updatedMessage.id);
+
+    const message = oldMsgs[messageIdx];
+
+    message.content = updatedMessage.content;
+    message.editedAt = new Date().toISOString();
+    setMessages(oldMsgs);
+  };
+
+  useSubscription(
+    {
+      variables: { guild, channel },
+      query: newMessageSubscription
+    },
+    // @ts-ignore
+    handleNewMessage
+  );
+
+  useSubscription(
+    {
+      variables: { guild, channel },
+      query: updateMessageSubscription
+    },
+    // @ts-ignore
+    handleUpdatedMessage
+  );
 
   const ready = data?.channelV2.id === channel;
 

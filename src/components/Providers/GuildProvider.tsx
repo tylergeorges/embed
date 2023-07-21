@@ -72,7 +72,7 @@ export default function GuildProvider({ children }: GuildProviderProps) {
 
   useEffect(() => {
     if (!guildId) {
-      router.push('/channels/299881420891881473/355719584830980096');
+      router.push('/channels/299881420891881473/368427726358446110');
     }
 
     if (data && !fetching) {

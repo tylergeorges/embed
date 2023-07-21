@@ -156,3 +156,11 @@ export const updateMessageSubscription = graphql(`
     }
   }
 `);
+
+export const newMessageSubscription = graphql(`
+  subscription newMessageSubscription($guild: String!, $channel: String!) {
+    message(guild: $guild, channel: $channel) {
+      ...BaseMessage
+    }
+  }
+`);
