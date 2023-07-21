@@ -1,5 +1,5 @@
 import { useStoreActions, useStoreState } from '@state';
-import { Burger, Ham } from './elements';
+import * as Styles from './styles';
 
 interface Props {
   thread?: boolean;
@@ -10,7 +10,7 @@ export const Hamburger = ({ thread = false }: Props) => {
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
 
   return (
-    <Ham
+    <Styles.Ham
       open={isChannelsListOpen}
       thread={thread}
       // @ts-ignore
@@ -21,7 +21,7 @@ export const Hamburger = ({ thread = false }: Props) => {
         setIsChannelsListOpen(!isChannelsListOpen);
       }}
     >
-      <Burger />
-    </Ham>
+      <Styles.Burger />
+    </Styles.Ham>
   );
 };

@@ -1,56 +1,41 @@
 import { useStoreActions, useStoreState } from '@state';
-import { useMediaQuery, useAppRouter } from '@lib/hooks';
-import { MembersList } from '@components/Sidebar/MembersList';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { useAppRouter } from '@hooks/useAppRouter';
+import { MembersSidebar } from '@components/Sidebar/MembersSidebar';
 import { useCallback, useEffect } from 'react';
 
-import { Channel } from '@graphql/graphql';
+import { Backdrop } from '@components/Overlays/Modal/styles';
 import * as Styles from './styles';
 import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
 
 export const TextChannelContainer = () => {
-  // Used to check if the screen size is mobile because if it is then the sidebars
-  // hover over the text channel and we want to be able to close them by clicking on
-  // the text channel.
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
-  const { threadId, channelId } = useAppRouter();
+  const { channelId } = useAppRouter();
 
-  // boolean check for sidebar lists
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
-  const isThreadsPanelOpen = useStoreState(state => state.ui.isThreadsPanelOpen);
-  const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
+  const isTransitionedThreadsPanelOpen = useStoreState(
+    state => state.ui.isTransitionedThreadsPanelOpen
+  );
 
-  const guildChannels = useStoreState(state => state.guild.guildChannels);
-
-  // actions to set sidebar lists state
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
   const setCurrentChannel = useStoreActions(state => state.guild.setCurrentChannel);
-  const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
 
   useEffect(() => {
     setCurrentChannel(channelId);
 
-    if (isCurrentChannelThread && threadId) {
-      // @ts-ignore
-      const thread = guildChannels[channelId].threads.find(th => th.id === threadId) as Channel;
-      setCurrentThread(thread);
-    }
-
-    if (!isThreadsPanelOpen) {
+    // Used to hide members list if the threads panel is open
+    if (!isTransitionedThreadsPanelOpen) {
       setIsMembersListOpen(!windowIsMobile);
     }
   }, [
     windowIsMobile,
     setIsMembersListOpen,
-    isThreadsPanelOpen,
+    isTransitionedThreadsPanelOpen,
     setCurrentChannel,
-    threadId,
-    channelId,
-    isCurrentChannelThread,
-    setCurrentThread,
-    guildChannels
+    channelId
   ]);
 
   const hideSidebar = useCallback(() => {
@@ -68,24 +53,28 @@ export const TextChannelContainer = () => {
 
   return (
     <Styles.TextChannelWrapper
-      className="text-channel_wrapper"
       mobile={{
         '@initial': false,
         '@small': true
       }}
       channelsListOpen={isChannelsListOpen}
-      threadsPanelOpen={isThreadsPanelOpen}
+      threadsPanelOpen={isTransitionedThreadsPanelOpen}
     >
       <TextChannelHeader />
-      <Styles.TextChannelInnerWrapper
-        className="text-channel_inner_wrapper"
-        mobile={{
-          '@initial': false,
-          '@small': true
-        }}
-      >
-        <MessageContainer onBackdropClick={hideSidebar} />
-        <MembersList />
+      <Styles.TextChannelInnerWrapper>
+        <MessageContainer />
+
+        <Backdrop
+          onClick={hideSidebar}
+          mobile={{
+            '@initial': false,
+            '@small': true
+          }}
+          isMembersListOpen={isMembersListOpen}
+          isOpen={!isChannelsListOpen && isMembersListOpen && windowIsMobile}
+        />
+
+        <MembersSidebar />
       </Styles.TextChannelInnerWrapper>
     </Styles.TextChannelWrapper>
   );

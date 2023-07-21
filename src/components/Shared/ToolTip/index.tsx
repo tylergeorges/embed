@@ -1,25 +1,36 @@
 import * as Styles from '@components/Shared/ToolTip/styles';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import throttle from 'lodash.throttle';
 import { useEffect, useRef, useState } from 'react';
 
 interface ToolTipProps {
   label: string;
-  children: React.ReactNode;
+
+  children: ({ childRef }: { childRef: React.RefObject<HTMLDivElement> }) => React.ReactNode;
+
   placement: 'top' | 'bottom';
-  /** Use when testing */
-  show?: boolean;
+
+  tooltipEnabled?: boolean;
 }
 
-export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
+export const ToolTip = ({ label, children, placement, tooltipEnabled }: ToolTipProps) => {
   const [showToolTip, setShowToolTip] = useState(false);
+
+  const windowIsMobile = useMediaQuery();
+
+  const visitedRef = useRef(false);
   const childrenConRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
-  const [left, setLeft] = useState(0);
-  const [visited, setVisited] = useState(false);
 
-  const openToolTip = () => {
-    setShowToolTip(true);
+  const openTooltip = () => {
+    if (!tooltipEnabled) {
+      setShowToolTip(false);
+    } else {
+      setShowToolTip(true);
+    }
   };
-  const hideToolTip = () => {
+
+  const hideTooltip = () => {
     setShowToolTip(false);
   };
 
@@ -27,45 +38,81 @@ export const ToolTip = ({ label, children, placement, show }: ToolTipProps) => {
     const childrenRef = childrenConRef.current;
     const tooltipElement = tooltipRef.current;
 
-    if (childrenRef && tooltipElement && !visited) {
-      setVisited(true);
+    const getTooltipPosition = () => {
+      if (childrenRef && tooltipElement) {
+        const childRect = childrenRef.getBoundingClientRect();
+        const childLeft = childrenRef.clientLeft;
 
-      const tooltipFor = childrenRef.getBoundingClientRect();
-      const labelX = Math.floor(tooltipFor.x + tooltipElement.offsetWidth);
+        const tooltipWidth = tooltipElement.offsetWidth;
 
-      const isTooltipOffscreen = labelX >= window.innerWidth;
+        const tooltipOffscreen = childRect.x + tooltipElement.offsetWidth >= window.innerWidth;
 
-      if (isTooltipOffscreen && left === 0 && !visited) {
-        const moveAmount = labelX - window.innerWidth;
-        setLeft(tooltipElement.offsetLeft - moveAmount);
+        const tooltipYPos =
+          placement === 'bottom'
+            ? childrenRef.offsetTop + tooltipElement.clientHeight
+            : childrenRef.clientTop - tooltipElement.clientHeight;
+
+        if (tooltipOffscreen) {
+          const tooltipXPos = childLeft + (window.innerWidth - childRect.x - tooltipWidth);
+
+          tooltipElement.style.left = `${tooltipXPos}px`;
+          tooltipElement.style.top = `${tooltipYPos}px`;
+        } else {
+          const tooltipXPos =
+            childrenRef.offsetLeft - tooltipElement.offsetWidth / 2 + childrenRef.clientWidth / 2;
+
+          tooltipElement.style.left = `${tooltipXPos}px`;
+          tooltipElement.style.top = `${tooltipYPos}px`;
+        }
       }
+    };
+
+    const throttledGetPos = throttle(() => {
+      getTooltipPosition();
+    }, 500);
+
+    // Bounding client X position changes from initial render
+    const getPosTimeout = setTimeout(() => {
+      if (!visitedRef.current) {
+        visitedRef.current = true;
+        throttledGetPos();
+      } else {
+        clearTimeout(getPosTimeout);
+      }
+    }, 250);
+
+    if (!windowIsMobile) {
+      window.addEventListener('resize', throttledGetPos);
     }
+
+    return () => {
+      window.removeEventListener('resize', throttledGetPos);
+      clearTimeout(getPosTimeout);
+      throttledGetPos.cancel();
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [left]);
+  }, []);
 
   return (
     <Styles.ToolTipWrapper
-      className="tooltip-wrapper"
       onTouchStart={undefined}
-      onMouseEnter={openToolTip}
-      onMouseLeave={hideToolTip}
+      onMouseEnter={!windowIsMobile ? openTooltip : undefined}
+      onMouseLeave={!windowIsMobile ? hideTooltip : undefined}
     >
-      <div ref={childrenConRef}>{children}</div>
+      <Styles.ToolTipChildWrapper>
+        {children({ childRef: childrenConRef })}
+      </Styles.ToolTipChildWrapper>
 
       <Styles.ToolTipContainer
-        className="tooltip-container"
-        visible={show || showToolTip}
-        placement={placement}
+        mobile={{
+          '@initial': false,
+          '@small': true
+        }}
+        visible={showToolTip}
         ref={tooltipRef}
-        css={
-          left !== 0
-            ? {
-                left
-              }
-            : {}
-        }
       >
-        <Styles.ToolTipContent className="tooltip-content">{label}</Styles.ToolTipContent>
+        <Styles.ToolTipContent>{label}</Styles.ToolTipContent>
       </Styles.ToolTipContainer>
     </Styles.ToolTipWrapper>
   );

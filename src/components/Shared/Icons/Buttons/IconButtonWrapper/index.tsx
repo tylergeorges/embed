@@ -1,81 +1,46 @@
-import {
-  IconButtonRoot,
-  IconButtonChildrenWrapper
-} from '@components/Shared/Icons/Buttons/IconButtonWrapper/elements';
+import * as Styles from '@icons/Buttons/IconButtonWrapper/styles';
 import { ToolTip } from '@components/Shared/ToolTip';
-
-export interface IconButtonWrapperProps {
-  onClick: (args: any) => void;
-  children: React.ReactNode;
-  tooltipLabel?: string;
-  tooltipPlacement?: 'top' | 'bottom';
-  tooltipDisabled?: boolean;
-  /** Use when testing  */
-  alwaysShowTooltip?: boolean;
-  /** Illuminates a circle background on hover */
-  backgroundGlowOnHover?: boolean;
-
-  iconBackgroundSize?: number;
-  isActive?: boolean;
-}
+import { IconButtonInner } from './IconButtonInner';
+import { IconButtonWrapperProps } from './button.types';
 
 export const IconButtonWrapper = ({
   tooltipLabel,
   children,
-  alwaysShowTooltip,
   tooltipDisabled,
-  backgroundGlowOnHover,
-  iconBackgroundSize,
+  backgroundGlowSize,
   tooltipPlacement,
   onClick,
-  isActive
-}: IconButtonWrapperProps) => {
-  if (tooltipDisabled)
-    return (
-      <IconButtonRoot className="icon-button_wrapper_root">
-        <IconButtonChildrenWrapper
-          className="icon-button_children_wrapper"
-          backgroundGlowOnHover={backgroundGlowOnHover ?? false}
-          onClick={onClick}
-          isActive={isActive}
-          css={
-            iconBackgroundSize
-              ? {
-                  width: iconBackgroundSize,
-                  height: iconBackgroundSize
-                }
-              : {}
-          }
-        >
-          {children}
-        </IconButtonChildrenWrapper>
-      </IconButtonRoot>
-    );
-
-  return (
-    <IconButtonRoot className="icon-button_wrapper_root">
-      <ToolTip
-        placement={tooltipPlacement ?? 'top'}
-        label={tooltipLabel ?? ''}
-        show={alwaysShowTooltip}
+  isActive,
+  tooltipDisabledIfActive,
+  iconContent
+}: IconButtonWrapperProps) => (
+  <Styles.IconButtonRoot>
+    {tooltipDisabled ? (
+      <IconButtonInner
+        onClick={onClick}
+        backgroundGlowSize={backgroundGlowSize}
+        isActive={isActive}
+        iconContent={iconContent}
       >
-        <IconButtonChildrenWrapper
-          className="icon-button_children_wrapper"
-          backgroundGlowOnHover={backgroundGlowOnHover ?? false}
-          css={
-            iconBackgroundSize
-              ? {
-                  width: iconBackgroundSize,
-                  height: iconBackgroundSize
-                }
-              : {}
-          }
-          isActive={isActive}
-          onClick={onClick}
-        >
-          {children}
-        </IconButtonChildrenWrapper>
+        {children}
+      </IconButtonInner>
+    ) : (
+      <ToolTip
+        placement={tooltipPlacement ?? 'bottom'}
+        label={tooltipLabel ?? ''}
+        tooltipEnabled={tooltipDisabledIfActive ? !isActive : true}
+      >
+        {({ childRef }) => (
+          <IconButtonInner
+            onClick={onClick}
+            backgroundGlowSize={backgroundGlowSize}
+            isActive={isActive}
+            iconContent={iconContent}
+          >
+            <div ref={childRef}>{children}</div>
+          </IconButtonInner>
+        )}
       </ToolTip>
-    </IconButtonRoot>
-  );
-};
+    )}
+  </Styles.IconButtonRoot>
+);

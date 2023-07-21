@@ -1,38 +1,36 @@
-import {
-  IconButtonWrapper,
-  IconButtonWrapperProps
-} from '@components/Shared/Icons/Buttons/IconButtonWrapper';
-import { IconProps, Icons } from '@components/Shared/Icons/Icons';
+import { IconButtonWrapper } from '@icons/Buttons/IconButtonWrapper';
+import { IconButtonWrapperProps } from '@icons/Buttons/IconButtonWrapper/button.types';
+import { IconProps, Icons } from '@icons/index';
 
-interface Props extends IconProps, Omit<IconButtonWrapperProps, 'children'> {
-  onClick: (arg0: any) => void;
-}
+type IconButtonProps = Omit<IconButtonWrapperProps, 'children'> &
+  IconProps & {
+    onClick: (e: React.SyntheticEvent) => void;
+  };
 
 export const IconButton = ({
   onClick,
-  alwaysShowTooltip,
-  name,
+  icon,
   color,
   css,
-  backgroundGlowOnHover,
   isActive,
-  iconBackgroundSize,
+  backgroundGlowSize,
   size,
   tooltipDisabled,
   tooltipLabel,
   tooltipPlacement,
-  customSize
-}: Props) => (
+  iconContent,
+  tooltipDisabledIfActive
+}: IconButtonProps) => (
   <IconButtonWrapper
     tooltipLabel={tooltipLabel}
-    iconBackgroundSize={iconBackgroundSize}
     tooltipPlacement={tooltipPlacement}
-    onClick={onClick}
-    alwaysShowTooltip={alwaysShowTooltip}
+    tooltipDisabledIfActive={tooltipDisabledIfActive}
     tooltipDisabled={tooltipDisabled}
-    backgroundGlowOnHover={backgroundGlowOnHover}
+    backgroundGlowSize={backgroundGlowSize}
+    onClick={onClick}
     isActive={isActive}
+    iconContent={iconContent}
   >
-    <Icons size={size} color={color} name={name} css={css} customSize={customSize} />
+    <Icons size={size} color={color} icon={icon} css={css} />
   </IconButtonWrapper>
 );

@@ -12,7 +12,8 @@ export interface UIStore {
   currentChannelYPos: number;
 
   isCurrentChannelThread: boolean | undefined;
-  isThreadsPanelOpen: boolean | undefined;
+  isTransitionedThreadsPanelOpen: boolean | undefined;
+  isDomThreadsPanelOpen: boolean | undefined;
 
   isMembersListOpen: boolean;
   isChannelsListOpen: boolean;
@@ -27,7 +28,9 @@ export interface UIStore {
   setIsChannelsListOpen: Action<UIStore, boolean>;
   setIsMembersListOpen: Action<UIStore, boolean>;
   setIsCurrentChannelThread: Action<UIStore, boolean>;
-  setIsThreadsPanelOpen: Action<UIStore, boolean>;
+
+  setIsDomThreadsPanelOpen: Action<UIStore, boolean>;
+  setIsTransitionedThreadsPanelOpen: Action<UIStore, boolean>;
 
   setCurrentChannelYPos: Action<UIStore, number>;
   setInitChannelYPos: Action<UIStore, number>;
@@ -42,7 +45,8 @@ export interface UIStore {
 const ui: UIStore = {
   // State
   isChannelsListOpen: true,
-  isThreadsPanelOpen: false,
+  isDomThreadsPanelOpen: false,
+  isTransitionedThreadsPanelOpen: false,
   isMembersListOpen: true,
 
   isCurrentChannelThread: undefined,
@@ -64,19 +68,30 @@ const ui: UIStore = {
   setIsMembersListOpen: action((state, payload) => {
     state.isMembersListOpen = payload;
     if (payload) {
-      state.isThreadsPanelOpen = false;
+      state.isDomThreadsPanelOpen = false;
+      state.isTransitionedThreadsPanelOpen = false;
     }
   }),
+
   setIsCurrentChannelThread: action((state, payload) => {
     state.isCurrentChannelThread = payload;
   }),
-  setIsThreadsPanelOpen: action((state, payload) => {
+
+  setIsDomThreadsPanelOpen: action((state, payload) => {
     if (state.isCurrentChannelThread && payload) {
-      state.isThreadsPanelOpen = true;
+      state.isDomThreadsPanelOpen = true;
     } else {
-      state.isThreadsPanelOpen = false;
+      state.isDomThreadsPanelOpen = false;
     }
   }),
+  setIsTransitionedThreadsPanelOpen: action((state, payload) => {
+    if (state.isCurrentChannelThread && payload) {
+      state.isTransitionedThreadsPanelOpen = true;
+    } else {
+      state.isTransitionedThreadsPanelOpen = false;
+    }
+  }),
+
   setShowTopicModal: action((state, payload) => {
     state.showTopicModal = payload;
   }),
@@ -97,9 +112,11 @@ const ui: UIStore = {
   setInitChannelYPos: action((state, payload) => {
     state.initChannelYPos = payload;
   }),
+
   setShowContextMenu: action((state, payload) => {
     state.showContextMenu = payload;
   }),
+
   setContextMenuData: action((state, payload) => {
     state.contextMenuData = payload;
   })

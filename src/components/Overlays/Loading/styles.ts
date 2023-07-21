@@ -1,5 +1,5 @@
-import { theme } from '@stitches';
-import { keyframes, styled } from '@stitches/react';
+import { commonComponentId, theme, styled } from '@stitches';
+import { keyframes } from '@stitches/react';
 
 const cube = keyframes({
   '25%': {
@@ -19,7 +19,10 @@ const cube = keyframes({
   }
 });
 
-export const Spinner = styled('div', 'spinner', {
+export const Spinner = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'spinner'
+})('div', {
   '&::after, &::before': {
     content: '',
     backgroundColor: theme.colors.accent,
@@ -38,23 +41,28 @@ export const Spinner = styled('div', 'spinner', {
   },
 
   variants: {
-    type: {
-      fetchingMessages: {
+    isFetchingMessages: {
+      true: {
+        justifySelf: 'center',
+        alignSelf: 'center',
+
         height: 70,
+
         '&::after, &::before': {
           width: 10,
           height: 10,
           bottom: 0,
           top: 20
-        },
-        alignSelf: 'center',
-        justifySelf: 'center'
+        }
       }
     }
   }
 });
 
-export const SpinnerWrapper = styled('div', 'spinner-wrapper', {
+export const SpinnerWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'spinner-wrapper'
+})('div', {
   width: '100%',
   height: '100%',
   backgroundColor: theme.colors.background,
@@ -62,13 +70,14 @@ export const SpinnerWrapper = styled('div', 'spinner-wrapper', {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+
   '*:first-child': {
     position: 'absolute'
   },
 
   variants: {
-    type: {
-      fetchingMessages: {
+    isFetchingMessages: {
+      true: {
         position: 'relative',
         width: '100%',
         height: 80

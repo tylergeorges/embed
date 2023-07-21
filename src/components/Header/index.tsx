@@ -20,17 +20,15 @@ export interface HeaderProps {
   children?: ReactNode;
 }
 
-/** Reusable Header component. */
 export const Header = ({ name, shadowEnabled, isChannelHeader, children }: HeaderProps) => (
-  <Styles.HeaderRoot shadowEnabled={shadowEnabled} className="header-root">
+  <Styles.HeaderRoot shadowEnabled={shadowEnabled} draggable={false}>
+    {children}
     {isChannelHeader ? (
       <ChannelHeader />
     ) : (
-      children || (
-        <Styles.GuildHeader className="guild-header">
-          <Styles.GuildHeaderName className="guild-header_name">{name}</Styles.GuildHeaderName>
-        </Styles.GuildHeader>
-      )
+      <Styles.GuildHeader>
+        <Styles.GuildHeaderName>{name}</Styles.GuildHeaderName>
+      </Styles.GuildHeader>
     )}
   </Styles.HeaderRoot>
 );

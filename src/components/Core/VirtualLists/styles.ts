@@ -1,31 +1,46 @@
-import { styled } from '@stitches/react';
+import { commonComponentId, theme, styled } from '@stitches';
 import { Virtuoso } from 'react-virtuoso';
 
-export const VirtualList = styled(Virtuoso, 'virtual-list', {
-  height: '100%',
-  width: '100%'
+export const VirtualList = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'virtual-list'
+})(Virtuoso, {
+  overflowX: 'hidden',
+  height: '100%'
 });
 
-export const VirtualListContentContainer = styled('div', 'list-content_container', {
-  overflowWrap: 'break-word',
-  paddingTop: 2,
-  paddingBottom: 2,
-  paddingLeft: 72,
-  paddingRight: 48,
-  marginTop: 17,
+export const VirtualListContentContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'list-content_container'
+})('div', {
   position: 'absolute',
-
   display: 'flex',
   flexDirection: 'row',
-  alignItems: 'flex-start'
+  alignItems: 'flex-start',
+
+  overflowWrap: 'break-word',
+
+  marginTop: theme.space.lg,
+
+  paddingTop: theme.space.xxs,
+  paddingBottom: theme.space.xxs,
+  paddingLeft: 72,
+  paddingRight: 48
 });
 
-export const VirtualListContainer = styled('div', 'list-container', {
-  flex: 1,
+export const VirtualListContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'list-container'
+})('div', {
+  position: 'relative',
   width: '100%',
-  position: 'relative'
+  height: '100%',
+  boxSizing: 'content-box'
 });
 
-export const VirtualListMessageWrapper = styled('div', 'list-message_container', {
+export const VirtualListMessageWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'list-message_container'
+})('div', {
   textAlign: 'left'
 });

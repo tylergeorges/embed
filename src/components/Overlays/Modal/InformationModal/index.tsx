@@ -1,7 +1,8 @@
+import * as Styles from '@components/Overlays/Modal/styles';
 import { Modal } from '@components/Overlays/Modal';
-import { ModalHeader, ModalHeaderContent } from '@components/Overlays/Modal/styles';
-import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
+
 import { ReactElement } from 'react';
+import { CloseButton } from '@icons/Buttons/CloseButton';
 
 interface InformationModalProps {
   children: ReactElement<any, any>;
@@ -19,11 +20,13 @@ export const InformationModal = ({
   disableBackdrop
 }: InformationModalProps) => (
   <Modal isOpen={isOpen} title={title} hideModal={hideModal} disableBackdrop={disableBackdrop}>
-    <ModalHeader>
-      <ModalHeaderContent className="non-dragable">
-        {title} <IconButton name="Close" backgroundGlowOnHover onClick={hideModal} />
-      </ModalHeaderContent>
-    </ModalHeader>
+    <Styles.ModalHeader>
+      <Styles.ModalHeaderContent>
+        {title}
+
+        <CloseButton onClick={hideModal} />
+      </Styles.ModalHeaderContent>
+    </Styles.ModalHeader>
 
     {children}
   </Modal>

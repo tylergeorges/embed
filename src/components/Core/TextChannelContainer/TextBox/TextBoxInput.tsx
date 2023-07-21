@@ -1,6 +1,6 @@
 import * as Styles from '@components/Core/TextChannelContainer/styles';
 import { useStoreState } from '@state';
-import { useMemo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 type ModifierKeys = {
@@ -12,18 +12,20 @@ type ModifierKeys = {
   };
 };
 
-export const TextBoxInput = () => {
+interface TextBoxInputProps {
+  channelIsThread?: boolean;
+}
+
+export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
   const translate = useTranslation();
+  const currentThread = useStoreState(state => state.guild.currentThread);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
+
   const [modifierKeys, setModifierKeys] = useState<ModifierKeys>({
     Shift: { isHolding: false },
     Control: { isHolding: false }
   });
-  const channelName = useMemo(
-    () => translate.t('input.message', { CHANNEL: currentChannel?.name }),
-    [translate, currentChannel]
-  );
-  // @ts-ignore
+
   const [, setMessageContent] = useState('');
 
   const [showPlaceHolder, setShowPlaceholder] = useState(true);
@@ -33,14 +35,7 @@ export const TextBoxInput = () => {
   const inputRef = useRef<HTMLDivElement>(null);
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (
-      e.key !== 'Shift' &&
-      e.key !== 'Enter' &&
-      e.key !== 'Backspace' &&
-      e.key !== 'a' &&
-      e.key !== 'Control'
-    )
-      return;
+    if (!['Shift', 'Enter', 'Backspace', 'a', 'Control'].includes(e.key)) return;
 
     const { key } = e;
 
@@ -127,7 +122,6 @@ export const TextBoxInput = () => {
     <Styles.TextBoxInputWrapper>
       <Styles.TextInput
         onKeyUp={handleKeyUp}
-        className="textbox-input"
         contentEditable
         onKeyDown={handleKeyDown}
         onInput={handleInputChange}
@@ -135,7 +129,13 @@ export const TextBoxInput = () => {
         inputMode="text"
       />
 
-      {showPlaceHolder && <Styles.TextBoxPlaceholder>{channelName}</Styles.TextBoxPlaceholder>}
+      {showPlaceHolder && (
+        <Styles.TextBoxPlaceholder>
+          {translate.t('input.message', {
+            CHANNEL: channelIsThread ? currentThread?.name : currentChannel?.name
+          })}
+        </Styles.TextBoxPlaceholder>
+      )}
     </Styles.TextBoxInputWrapper>
   );
 };

@@ -32,6 +32,7 @@ import SvgIconPause from './message-renderer-icons/button-icons/icon-pause.svg';
 import SvgIconFullscreen from './message-renderer-icons/button-icons/icon-fullscreen.svg';
 import SvgIconMembers from './message-renderer-icons/button-icons/icon-members.svg';
 import SvgAddAttachment from './message-renderer-icons/button-icons/icon-add-attachment.svg';
+import SvgThreadPanel from './message-renderer-icons/button-icons/icon-thread-panel.svg';
 
 // ! MESSAGE ICONS
 import SvgIconUnknownReply from './message-renderer-icons/message-icons/icon-unknown-reply.svg';
@@ -48,6 +49,9 @@ import SvgThreadHash from './message-renderer-icons/channel-icons/icon-thread-ha
 import SvgThreadSpine from './message-renderer-icons/channel-icons/icon-thread-spine.svg';
 import SvgIconVoiceChannel from './message-renderer-icons/channel-icons/icon-voice-channel.svg';
 import SvgIconStageChannel from './message-renderer-icons/channel-icons/icon-stage-channel.svg';
+import SvgIconNewsChannel from './message-renderer-icons/channel-icons/icon-news-channel.svg';
+import SvgIconFourmChannel from './message-renderer-icons/channel-icons/icon-forum-channel.svg';
+import SvgIconRulesChannel from './message-renderer-icons/channel-icons/icon-rules-channel.svg';
 
 export const svgUrls = {
   // ! FILE ICONS
@@ -92,6 +96,7 @@ export const svgUrls = {
   IconLinkExternal: SvgIconLinkExternal.src,
   IconMembers: SvgIconMembers.src,
   IconAddAttachment: SvgAddAttachment.src,
+  IconThreadPanel: SvgThreadPanel.src,
 
   // ! CHANNEL ICONS
   IconTextChannel: SvgIconTextChannel.src,
@@ -99,5 +104,8 @@ export const svgUrls = {
   IconThreadChannel: SvgThreadHash.src,
   IconThreadSpine: SvgThreadSpine.src,
   IconVoiceChannel: SvgIconVoiceChannel.src,
-  IconStageChannel: SvgIconStageChannel.src
+  IconStageChannel: SvgIconStageChannel.src,
+  IconNewsChannel: SvgIconNewsChannel.src,
+  IconForumChannel: SvgIconFourmChannel.src,
+  IconRulesChannel: SvgIconRulesChannel.src
 };

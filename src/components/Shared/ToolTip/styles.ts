@@ -1,15 +1,21 @@
-import { styled } from '@stitches/react';
+import { theme, styled, commonComponentId } from '@stitches';
 
-export const ToolTipContainer = styled('div', 'tooltip-container', {
-  backgroundColor: '#18191c',
+export const ToolTipContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'tooltip-container'
+})('div', {
   position: 'absolute',
-  padding: '$sm',
-  borderRadius: '$xs',
-  // borderRadius: 8,
-  transform: 'scale(0)',
+
+  padding: theme.space.sm,
+
+  borderRadius: theme.radii.xs,
   pointerEvents: 'none',
-  transition: 'transform 100ms ease',
-  transformOrigin: 'top',
+  backgroundColor: theme.colors.tooltipBackground,
+
+  transition: 'transform  ease',
+  transitionDuration: theme.transitions.fastestDuration,
+
+  zIndex: theme.zIndices.tooltip,
 
   variants: {
     visible: {
@@ -20,27 +26,51 @@ export const ToolTipContainer = styled('div', 'tooltip-container', {
         transform: 'scale(0.85)'
       }
     },
+
     placement: {
       top: {
-        top: -40
+        transformOrigin: 'bottom'
       },
+
       bottom: {
-        top: 30
+        transformOrigin: 'top'
+      }
+    },
+
+    mobile: {
+      true: {
+        opacity: 0
       }
     }
   }
 });
 
-export const ToolTipContent = styled('span', 'tooltip-content', {
-  display: 'inline-block',
-  fontSize: '$md',
-  position: 'relative',
-  textAlign: 'center'
+export const ToolTipContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'tooltip-content'
+})('span', {
+  fontSize: theme.fontSizes.lg,
+  textAlign: 'center',
+  position: 'relative'
 });
 
-export const ToolTipWrapper = styled('div', 'tooltip-wrapper', {
+export const ToolTipWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'tooltip-wrapper'
+})('div', {
   display: 'flex',
   flexDirection: 'column',
+  alignItems: 'center',
+  justifyContent: 'center',
+  position: 'relative',
+
+  userSelect: 'none'
+});
+
+export const ToolTipChildWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'tooltip-child_wrapper'
+})('div', {
   alignItems: 'center',
   position: 'relative'
 });

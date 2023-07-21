@@ -3,25 +3,24 @@ import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
 import { useStoreState } from '@state';
 import { useState } from 'react';
 import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
+import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
-import { useAppRouter } from '@lib/hooks';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
-  /** Used if the device is mobile and the backdrop over the container is shown. */
-  onBackdropClick?: () => void;
+  channelIsThread?: boolean;
 }
 
-export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => {
+export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
   const [isListRendered, setIsListRendered] = useState(false);
 
+  const { channelId, guildId } = useAppRouter();
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
-  const { channelId, guildId, threadId } = useAppRouter();
 
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
     guild: guildId,
     channel: channelId,
-    thread: threadId
+    thread: undefined
   });
 
   const handleBottomStateChanged = () => {
@@ -34,7 +33,6 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
     <Styles.MessageWrapper
       draggable={false}
       membersListOpen={isMembersListOpen}
-      onClick={onBackdropClick}
       mobile={{
         '@initial': false,
         '@small': true
@@ -48,7 +46,7 @@ export const MessageContainer = ({ onBackdropClick }: MessageContainerProps) => 
         handleBottomStateChanged={handleBottomStateChanged}
       />
 
-      <TextBox />
+      <TextBox channelIsThread={channelIsThread} />
     </Styles.MessageWrapper>
   );
 };

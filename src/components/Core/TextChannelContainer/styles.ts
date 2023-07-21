@@ -1,23 +1,29 @@
-import { keyframes } from '@stitches/react';
-import { theme, styled } from '@stitches';
+import { theme, styled, commonComponentId } from '@stitches';
 import Image from 'next/image';
 
-export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
+export const TextChannelWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_wrapper'
+})('div', {
   display: 'flex',
   flexDirection: 'column',
   position: 'relative',
-  transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
+
   height: '100%',
   width: '100%',
+
+  transition: theme.transitions.widthAndTransform,
 
   variants: {
     mobile: {
       true: {
-        transition: 'transform 0.3s ease 0s',
-        transform: `translateX(0px)`,
         width: '100%',
-        height: '100%'
+        height: '100%',
+
+        transition: theme.transitions.defaultTransform,
+        transform: `translateX(0px)`
       },
+
       false: {
         transform: `translateX(${theme.sizes.sideBarWidth})`
       }
@@ -32,9 +38,10 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
         transform: 'translateX(0px)'
       }
     },
+
     threadsPanelOpen: {
       true: {
-        width: `calc(100% - ${theme.sizes.threadPanelMinWidth} + 8px)`
+        width: `calc(100% - ${theme.sizes.threadPanelMinWidth} + ${theme.sizes.panelSeperatorWidth})`
       }
     }
   },
@@ -43,40 +50,37 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
     {
       channelsListOpen: true,
       mobile: true,
+
       css: {
         transform: `translateX(0px)`,
-        width: '100%',
-        '&::after': {
-          transition: 'opacity 0.5s ease 0s',
-          content: '',
-          opacity: 1
-        }
+        width: '100%'
       }
     },
+
     {
       channelsListOpen: true,
       mobile: false,
+
       css: {
-        '&::after': {
-          transition: 'opacity 0.5s ease 0s',
-          content: '',
-          opacity: 1
-        },
         width: `calc(100% - ${theme.sizes.sideBarWidth})`
       }
     },
+
     {
       threadsPanelOpen: true,
       channelsListOpen: true,
       mobile: false,
+
       css: {
-        width: `calc(100% - (${theme.sizes.sideBarWidth} + ${theme.sizes.threadPanelMinWidth} + 8px))`,
+        width: `calc(100% - (${theme.sizes.sideBarWidth} + ${theme.sizes.threadPanelMinWidth} + ${theme.sizes.panelSeperatorWidth}))`,
         transform: `translateX(${theme.sizes.sideBarWidth})`
       }
     },
+
     {
       threadsPanelOpen: true,
       mobile: true,
+
       css: {
         width: theme.sizes.threadPanelMinWidth,
         transform: `translateX(${theme.sizes.sideBarWidth})`
@@ -85,72 +89,33 @@ export const TextChannelWrapper = styled('div', 'text-channel_wrapper', {
   ]
 });
 
-export const TextChannelInnerWrapper = styled('div', 'text-channel_inner_wrapper', {
-  height: '100%',
-  width: '100%',
-  display: 'flex',
+export const TextChannelInnerWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_inner_wrapper'
+})('div', {
   position: 'relative',
+  display: 'flex',
   flexDirection: 'row',
 
-  variants: {
-    mobile: {
-      true: {
-        transition: 'margin 0.3s ease 0s, width 0.3s ease 0s',
-        margin: 0,
-        width: '100%',
-        height: '100%'
-      }
-    }
-  }
+  height: '100%',
+  width: '100%'
 });
 
-export const MessageWrapper = styled('div', 'message-wrapper', {
+export const MessageWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-wrapper'
+})('div', {
+  position: 'relative',
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+  textAlign: 'center',
+
   width: '100%',
   height: '100%',
-  position: 'relative',
-  textAlign: 'center',
-  alignItems: 'center',
-  display: 'flex',
-  flexDirection: 'column',
-  transition: 'transform 0.3s ease 0s, width 0.3s ease 0s',
-  zIndex: 0,
 
-  '&::after': {
-    content: '',
-    top: 0,
-    left: 0,
-    position: 'absolute',
-    height: '100%',
-    width: '100%',
-    pointerEvents: 'none',
-    opacity: 0,
-    transition: 'opacity 0.5s ease 0s',
-    willChange: 'opacity',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
-  },
-
-  '.channel-welcome_header_con': {
-    width: '100%',
-    display: 'block',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    textAlign: 'center',
-    margin: theme.space.xxl
-  },
-
-  '.channel-welcome_header': {
-    fontSize: theme.space.xxl,
-    marginBottom: 0,
-    alignSelf: 'center',
-    textAlign: 'center'
-  },
-  '.channel-welcome_subheader': {
-    margin: 0,
-    fontSize: theme.fontSizes.md,
-    color: theme.colors.primaryOpacity50,
-    textAlign: 'center'
-  },
+  transition: theme.transitions.widthAndTransform,
+  zIndex: theme.zIndices.none,
 
   variants: {
     membersListOpen: {
@@ -162,12 +127,14 @@ export const MessageWrapper = styled('div', 'message-wrapper', {
         width: `calc(100% - ${theme.sizes.sideBarWidth})`
       }
     },
+
     mobile: {
       true: {
-        transition: 'transform 0.3s ease 0s',
-        transform: `translateX(0px)`,
         width: '100%',
-        height: '100%'
+        height: '100%',
+
+        transition: theme.transitions.defaultTransform,
+        transform: `translateX(0px)`
       }
     }
   },
@@ -180,221 +147,146 @@ export const MessageWrapper = styled('div', 'message-wrapper', {
         marginRight: 'none',
         width: '100%',
         height: '100%',
-        transition: 'transform 0.3s ease 0s',
-        transform: `translateX(0px)`,
-
-        '&::after': {
-          content: '',
-          transition: 'opacity 0.5s ease 0s',
-          opacity: 1
-        }
+        transition: theme.transitions.defaultTransform,
+        transform: `translateX(0px)`
       }
     }
   ]
 });
 
-export const TextBoxWrapper = styled('form', 'textbox-wrapper', {
-  position: 'relative',
-  marginBottom: theme.space.lg,
+export const TextBoxWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-wrapper'
+})('form', {
   display: 'flex',
   alignItems: 'center',
-  borderRadius: theme.radii.xs,
+
   width: 'calc(100% - 32px)',
-  backgroundColor: theme.colors.inputBackground,
   maxHeight: '50vh',
-  paddingY: theme.space.sm
+
+  borderRadius: theme.radii.xs,
+  backgroundColor: theme.colors.inputBackground,
+
+  paddingY: theme.space.sm,
+  marginBottom: theme.space.lg,
+
+  userSelect: 'none'
 });
 
-export const TextBoxInner = styled('div', 'textbox-inner', {
-  width: '100%',
-  height: '100%',
+export const TextBoxInner = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-inner'
+})('div', {
   display: 'flex',
+
+  width: '100%',
   maxHeight: '50vh',
-  position: 'relative',
+
   overflowY: 'auto'
 });
 
-export const TextBoxButtonWrapper = styled('div', 'textbox-button_wrapper', {
+export const TextBoxButtonWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-button_wrapper'
+})('div', {
+  position: 'sticky',
   display: 'flex',
   alignItems: 'flex-start',
+
   height: '100%',
-  position: 'sticky',
+
   top: 0
 });
 
-export const TextBoxInputWrapper = styled('div', 'textbox-input_wrapper', {
-  width: '100%',
+export const TextBoxInputWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-input_wrapper'
+})('div', {
   display: 'flex',
   position: 'relative',
-  marginBottom: theme.space.md,
-  height: '100%'
+
+  width: '100%',
+  height: '100%',
+
+  marginBottom: theme.space.md
 });
 
-export const TextInput = styled('div', 'textbox-input', {
-  width: '100%',
-  backgroundColor: 'transparent',
-  cursorColor: 'white',
+export const TextInput = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-input'
+})('div', {
   cursor: 'text',
+
   border: 'none',
-  height: 'auto',
+  backgroundColor: 'transparent',
+
+  width: '100%',
+
+  position: 'relative',
+  justifyContent: 'flex-start',
+  alignItems: 'center',
+
+  color: theme.colors.textPrimary,
   fontWeight: theme.fontWeights.thin,
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
-  outline: 'none',
-  fontSize: theme.fontSizes.lg,
   textAlign: 'left',
-  justifyContent: 'flex-start',
-  alignItems: 'center',
-  position: 'relative',
-  display: 'block',
-  color: theme.colors.textPrimary
+
+  outline: 'none',
+  fontSize: theme.fontSizes.lg
 });
 
-export const TextBoxPlaceholder = styled('span', 'textbox-placeholder', {
-  color: theme.colors.textMuted,
-
+export const TextBoxPlaceholder = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'textbox-placeholder'
+})('span', {
   position: 'absolute',
+  color: theme.colors.textMuted,
   pointerEvents: 'none'
 });
 
-export const MessageContentOuterWrapper = styled('div', 'message-content_outer_wrapper', {
-  width: '100%',
+export const MessageContentOuterWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-content_outer_wrapper'
+})('div', {
   display: 'flex',
   flexDirection: 'row',
+
+  width: '100%',
+
   paddingRight: 48,
   paddingLeft: 72,
+
   '&:hover': {
     backgroundColor: 'rgba(0,0,0,0.1)'
   }
 });
 
-export const MessageContent = styled('div', 'message-content', {
+export const MessageContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-content'
+})('div', {
   position: 'relative',
   textAlign: 'left'
 });
 
-export const MessageAvatar = styled(Image, 'message-avatar', {
-  borderRadius: 999,
+export const MessageAvatar = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-avatar'
+})(Image, {
   position: 'absolute',
-  left: 16,
+  left: theme.space.lg,
+
+  borderRadius: theme.radii.round,
   pointerEvents: 'none'
 });
 
-export const MessageUsername = styled('h3', 'message-username', {
-  fontSize: 16,
+export const MessageUsername = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'message-username'
+})('h3', {
+  fontSize: theme.fontSizes.lg,
   margin: 0,
   pointerEvents: 'none',
   userSelect: 'none'
-});
-
-const SkeletonLoader = keyframes({
-  '0%': {
-    opacity: '40%'
-  },
-  '50%': {
-    opacity: '80%'
-  },
-  '100%': {
-    opacity: '40%'
-  }
-});
-
-export const SkeletonLoaderRoot = styled('div', 'skeleton-loader_root', {
-  animation: `${SkeletonLoader} 3s infinite ease-in-out`,
-  background: theme.colors.primaryOpacity20,
-  pointerEvents: 'none',
-  userSelect: 'none'
-});
-
-export const MessageSkeletonWrapper = styled('div', 'message-skeleton_wrapper', {
-  width: '100%',
-  display: 'flex',
-  flexDirection: 'row',
-  marginTop: 25,
-  paddingRight: 48,
-  paddingLeft: 72,
-  paddingTop: theme.space.xs,
-  paddingBottom: theme.space.xs
-});
-
-export const MessageSkeletonContent = styled('div', 'message-skeleton_content', {
-  position: 'relative',
-  textAlign: 'left',
-  display: 'flex',
-  flexDirection: 'column',
-  backgroundColor: 'transparent',
-  pointerEvents: 'none',
-  userSelect: 'none'
-});
-
-export const MessageSkeletonContentLine = styled('div', 'message-skeleton_content_line', {
-  position: 'relative',
-  textAlign: 'left',
-  color: 'transparent',
-  width: '100%',
-  borderRadius: 10,
-  display: 'flex',
-  flexDirection: 'row',
-  height: 22,
-  marginTop: 5
-});
-
-export const MessageSkeletonContentWord = styled('div', 'message-skeleton_content_word', {
-  position: 'relative',
-  color: 'transparent',
-  borderRadius: 10,
-  background: theme.colors.primaryOpacity10,
-  animation: `${SkeletonLoader} 2s infinite ease-in-out`,
-  pointerEvents: 'none',
-  height: 22,
-  marginTop: 5,
-  marginRight: 5
-});
-
-export const MessageSkeletonContentLongWord = styled(
-  MessageSkeletonContentWord,
-  'message-skeleton_content_word',
-  {
-    position: 'relative',
-
-    width: 100
-  }
-);
-
-export const MessageSkeletonContentShortWord = styled(
-  MessageSkeletonContentWord,
-  'message-skeleton_content_word',
-  {
-    width: 24
-  }
-);
-
-export const MessageSkeletonContentMedWord = styled(
-  MessageSkeletonContentWord,
-  'message-skeleton_content_word',
-  {
-    width: 50
-  }
-);
-
-export const MessageSkeletonUsername = styled(SkeletonLoaderRoot, 'message-skeleton_username', {
-  fontSize: 16,
-  margin: 0,
-  color: 'transparent',
-  width: 150,
-  pointerEvents: 'none',
-  userSelect: 'none',
-  borderRadius: 10,
-  height: 22,
-  background: theme.colors.primaryOpacity10,
-  animationDelay: '1s'
-});
-
-export const MessageSkeletonAvatar = styled(SkeletonLoaderRoot, 'message-skeleton_avatar', {
-  borderRadius: 999,
-  position: 'absolute',
-  left: 16,
-
-  width: 40,
-  height: 40
 });

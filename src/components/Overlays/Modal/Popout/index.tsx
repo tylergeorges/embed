@@ -1,10 +1,11 @@
 import * as Styles from '@components/Overlays/Modal/styles';
-import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
-import { IconProps, Icons } from '@components/Shared/Icons/Icons';
-import { useMediaQuery } from '@lib/hooks';
-import { ReactElement } from 'react';
+import { IconProps, Icons } from '@components/Shared/Icons';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+import { ReactElement, memo } from 'react';
+import { CloseButton } from '@icons/Buttons/CloseButton';
 
-type TitleIcon = Pick<IconProps, 'name'>['name'];
+type TitleIcon = IconProps['icon'];
+
 interface PopoutProps {
   children: ReactElement<any, any>;
   isOpen: boolean;
@@ -14,44 +15,38 @@ interface PopoutProps {
   popoutFor: HTMLDivElement | null;
 }
 
-export const Popout = ({
-  children,
-  isOpen,
-  hideModal,
-  title,
-  TitleIcon,
-  popoutFor
-}: PopoutProps) => {
-  const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
+export const Popout = memo(
+  ({ children, isOpen, hideModal, title, TitleIcon, popoutFor }: PopoutProps) => {
+    const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
 
-  if (popoutFor && isOpen) {
+    if (!popoutFor || !isOpen) return <></>;
+
     return (
-      <>
-        <Styles.PopoutContainer
-          isMobile={windowIsMobile}
-          isOpen={isOpen}
-          aria-label={title}
-          role="dialog"
-          className="popout-container"
-          css={{
-            right: `calc(${popoutFor?.clientLeft}px + 80px)`
-          }}
-        >
-          <Styles.PopoutHeader className="popout-header">
-            <Styles.PopoutHeaderContent className="popout-header_content non-dragable">
-              <Styles.PopoutTitleWrapper className="popout-title_container">
-                {TitleIcon && <Icons name={TitleIcon} />}
+      <Styles.PopoutContainer
+        isMobile={windowIsMobile}
+        isOpen={isOpen}
+        aria-label={title}
+        role="dialog"
+        css={{
+          right: `calc(${popoutFor.clientLeft}px + 80px)`
+        }}
+      >
+        <Styles.PopoutHeader>
+          <Styles.PopoutHeaderContent>
+            <Styles.PopoutTitleWrapper>
+              {TitleIcon && <Icons icon={TitleIcon} />}
 
-                <Styles.PopoutTitle className="popout-title">{title}</Styles.PopoutTitle>
-              </Styles.PopoutTitleWrapper>
-              <IconButton onClick={hideModal} name="Close" backgroundGlowOnHover tooltipDisabled />
-            </Styles.PopoutHeaderContent>
-          </Styles.PopoutHeader>
+              <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
+            </Styles.PopoutTitleWrapper>
 
-          {children}
-        </Styles.PopoutContainer>
-      </>
+            <CloseButton onClick={hideModal} />
+          </Styles.PopoutHeaderContent>
+        </Styles.PopoutHeader>
+
+        {children}
+      </Styles.PopoutContainer>
     );
   }
-  return null;
-};
+);
+
+Popout.displayName = 'Popout';

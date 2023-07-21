@@ -1,42 +1,49 @@
 import * as Styles from '@components/Header/styles';
-import { Hash } from '@components/Shared/Channel/elements';
+import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
+import { Icons } from '@components/Shared/Icons';
 import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
 import { MembersButton } from '@components/Shared/Icons/Buttons/MembersButton';
 import { PinButton } from '@components/Shared/Icons/Buttons/PinButton';
 import { ThreadsButton } from '@components/Shared/Icons/Buttons/ThreadsButton';
+import * as SkeletonStyles from '@components/Shared/SkeletonLoaders';
 import { useStoreActions, useStoreState } from '@state';
 
 export const ChannelHeader = () => {
   const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const currentChannel = useStoreState(state => state.guild.currentChannel);
 
   const openTopicModal = () => {
     setShowTopicModal(true);
   };
+
   return (
-    <Styles.ChannelHeaderRoot className="text-channel_header">
-      <Styles.ChannelHeaderNameWrapper
-        role="dialog"
-        aria-modal="true"
-        className="text-channel_header_name_container"
-      >
+    <Styles.ChannelHeaderRoot>
+      <Styles.ChannelHeaderNameWrapper role="dialog" aria-modal="true">
         <Hamburger />
-        <Styles.ChannelNameTopicWrapper className="text-channel_name_topic_container">
-          <Hash channelHeader />
-          <Styles.ChannelHeaderName className="text-channel_header_name">
-            {currentChannel?.name}
-          </Styles.ChannelHeaderName>
-          <Styles.ChannelHeaderTopic
-            className="text-channel_header_description"
-            onClick={openTopicModal}
-          >
-            {currentChannel?.topic}
-          </Styles.ChannelHeaderTopic>
+
+        <Styles.ChannelNameTopicWrapper>
+          {currentChannel ? (
+            <>
+              <Icons icon="TextChannelHash" size="small" color="dark" />
+              <Styles.ChannelHeaderName>{currentChannel.name}</Styles.ChannelHeaderName>
+              <Styles.ChannelHeaderTopic onClick={openTopicModal}>
+                {currentChannel.topic}
+              </Styles.ChannelHeaderTopic>
+            </>
+          ) : (
+            <>
+              <SkeletonStyles.SkeletonLine size="xs" borderRadius="round" />
+              <SkeletonStyles.SkeletonLine size="lg" borderRadius="semiRound" />
+              <SkeletonStyles.SkeletonLine size="xxl" borderRadius="round" />
+            </>
+          )}
         </Styles.ChannelNameTopicWrapper>
       </Styles.ChannelHeaderNameWrapper>
 
-      <ThreadsButton />
+      <ThreadsPopout>
+        <ThreadsButton />
+      </ThreadsPopout>
+
       <PinButton />
       <MembersButton />
     </Styles.ChannelHeaderRoot>

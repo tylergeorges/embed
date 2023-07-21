@@ -1,41 +1,40 @@
-import { IconButtonWrapper } from '@components/Shared/Icons/Buttons/IconButtonWrapper';
-import { ThreadsPanelIcon } from '@components/Shared/Icons/ThreadsPanelIcon';
+import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { Channel } from '@graphql/graphql';
 import { useStoreActions } from '@state';
-import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface ThreadsPanelButtonProps {
   thread: Channel;
 }
 export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
-  const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
-  const setIsCurrentChannelThread = useStoreActions(state => state.ui.setIsCurrentChannelThread);
-  const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
-  const setIsThreadsPanelOpen = useStoreActions(state => state.ui.setIsThreadsPanelOpen);
+  const translate = useTranslation();
 
-  const handlePanelClick = useCallback(() => {
+  const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
+
+  const setIsCurrentChannelThread = useStoreActions(state => state.ui.setIsCurrentChannelThread);
+
+  const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
+
+  const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
+
+  const handlePanelClick = () => {
     setIsCurrentChannelThread(true);
-    setIsThreadsPanelOpen(true);
+
+    // Adds element to DOM
+    setIsDomThreadsPanelOpen(true);
+
     setIsMembersListOpen(false);
     setCurrentThread(thread);
-  }, [
-    setCurrentThread,
-    setIsMembersListOpen,
-    setIsCurrentChannelThread,
-    thread,
-    setIsThreadsPanelOpen
-  ]);
+  };
 
   return (
-    <IconButtonWrapper
-      iconBackgroundSize={40}
-      tooltipLabel="Open Thread"
+    <IconButton
+      icon="ThreadPanel"
+      color="light"
+      backgroundGlowSize="xl"
+      tooltipLabel={translate.t('openthread.tooltip') as string}
       tooltipPlacement="top"
-      backgroundGlowOnHover
       onClick={handlePanelClick}
-    >
-      {/* TODO: change to panel icon */}
-      <ThreadsPanelIcon customSize={30} name="AddAttachment" />
-    </IconButtonWrapper>
+    />
   );
 };

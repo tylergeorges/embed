@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { graphql } from '@graphql/gql';
 import { useQuery } from 'urql';
 import { useStoreActions, useStoreState } from '@state';
 import { Loading } from '@components/Overlays/Loading';
-import { useAppRouter } from '@lib/hooks';
+import { useAppRouter } from '@hooks/useAppRouter';
 
 interface GuildProviderProps {
   children: React.ReactNode;
@@ -57,7 +57,7 @@ const guildDocument = graphql(/* GraphQL */ `
   }
 `);
 
-export const GuildProvider = ({ children }: GuildProviderProps) => {
+export default function GuildProvider({ children }: GuildProviderProps) {
   const { guildId, router } = useAppRouter();
 
   const [{ data, fetching }] = useQuery({
@@ -72,8 +72,7 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
 
   useEffect(() => {
     if (!guildId) {
-      // router.push('/channels/585454996800405509/585840022511550494');
-      router.push('/channels/299881420891881473/309009333436547082');
+      router.push('/channels/299881420891881473/355719584830980096');
     }
 
     if (data && !fetching) {
@@ -86,5 +85,6 @@ export const GuildProvider = ({ children }: GuildProviderProps) => {
   }, [data, fetching, setChannels, setGuildData, setSettings, guildId, router]);
 
   if (fetching || !data || channels === undefined) return <Loading />;
+
   return <>{children}</>;
-};
+}

@@ -1,27 +1,32 @@
-import { theme } from '@stitches';
-import { styled } from '@stitches/react';
+import { theme, styled, commonComponentId } from '@stitches';
 
-export const SidebarWrapper = styled('aside', 'sidebar_wrapper', {
+export const SidebarWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'sidebar_wrapper'
+})('aside', {
   position: 'absolute',
-  backgroundColor: '$backgroundSecondary',
-  boxSizing: 'border-box',
-  zIndex: 9,
-  width: theme.sizes.sideBarWidth,
-  maxWidth: theme.sizes.sideBarWidth,
-  height: '100%',
   display: 'flex',
   flexDirection: 'column',
+
+  height: '100%',
+  width: theme.sizes.sideBarWidth,
+  maxWidth: theme.sizes.sideBarWidth,
+
+  userSelect: 'none',
+
+  backgroundColor: theme.colors.backgroundSecondary,
   willChange: 'transform',
-  transition: 'transform 300ms ease',
+  transition: theme.transitions.defaultTransform,
 
   variants: {
     channelsListOpen: {
       false: {
-        transform: `translateX(-200px)`
+        transform: `translateX(-${theme.sizes.sideBarWidth.value})`
       },
+
       true: {
         transform: 'translateX(0)',
-        transition: 'transform 300ms ease'
+        transition: theme.transitions.defaultTransform
       }
     },
 
@@ -33,82 +38,86 @@ export const SidebarWrapper = styled('aside', 'sidebar_wrapper', {
         transform: `translateX(0)`
       }
     },
-    type: {
-      members_list: {},
-      channels_list: {
-        '.sidebar-header_container': {
-          textAlign: 'center',
-          position: 'relative'
-        },
 
-        '.sidebar-children_container': {
-          position: 'relative',
-          width: '100%',
-          maxWidth: '100%',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          height: '100%',
-          marginBottom: '1.5rem',
-          overflowY: 'auto'
-        }
+    type: {
+      membersList: {
+        zIndex: theme.zIndices.membersSidebar
+      },
+
+      channelsList: {
+        zIndex: theme.zIndices.channelsSidebar
       }
     }
   }
 });
 
-export const ChannelsSidebarWrapper = styled(SidebarWrapper, 'channels-sidebar_wrapper', {
-  boxSizing: 'border-box',
-  zIndex: 11
+export const ChannelsSidebarWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channels-sidebar_wrapper'
+})(SidebarWrapper, {
+  zIndex: theme.zIndices.channelsSidebar
 });
 
-export const MembersSidebarWrapper = styled(SidebarWrapper, 'members-sidebar_wrapper', {
+export const ChannelsChildrenWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channels-children_container'
+})('div', {
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  height: '100%',
+  position: 'relative'
+});
+
+export const GuildHeaderWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'guild-header_wrapper'
+})('div', {
+  textAlign: 'center',
+  position: 'relative'
+});
+
+export const MembersSidebarWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'members-sidebar_wrapper'
+})(SidebarWrapper, {
   right: 0,
   boxSizing: 'border-box',
-  zIndex: 1
+  zIndex: theme.zIndices.membersSidebar
 });
 
-export const ThreadsPanelContainer = styled('div', 'thread-panel_wrapper', {
+export const ThreadsPanelContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'thread-panel_container'
+})('div', {
+  position: 'absolute',
+  display: 'flex',
+  flexDirection: 'column',
+
   width: '100%',
   height: '100%',
-  bottom: 0,
-  display: 'flex',
-  zIndex: 2,
-  transition: 'transform ease 0.3s',
-  position: 'absolute',
 
-  backgroundColor: '$background',
-  flexDirection: 'column',
-  '@mobile': {
-    width: '100%'
-  },
+  transition: theme.transitions.defaultTransform,
 
-  variants: {
-    isOpen: {
-      false: {
-        transform: `translateX(100%)`
-      },
-      true: {
-        width: '100%',
-        '@mobile': {
-          width: '100%',
-          transform: `translateX(-2%)`
-        }
-      }
-    }
-  }
+  backgroundColor: theme.colors.background
 });
 
-export const ThreadPanelWrapper = styled('div', 'thread-panel_wrapper', {
-  height: '100%',
-  minWidth: '$threadPanelMinWidth',
-  right: 0,
-  display: 'flex',
-  zIndex: 2,
-  transition: 'transform ease 0.3s',
+export const ThreadPanelWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'thread-panel_wrapper'
+})('div', {
   position: 'absolute',
-  backgroundColor: '$background',
+  display: 'flex',
   flexDirection: 'row',
+  right: 0,
+
+  height: '100%',
+  minWidth: theme.sizes.threadPanelMinWidth,
+
+  zIndex: theme.zIndices.modal,
+  transition: theme.transitions.defaultTransform,
+  backgroundColor: theme.colors.background,
 
   variants: {
     isOpen: {
@@ -116,70 +125,37 @@ export const ThreadPanelWrapper = styled('div', 'thread-panel_wrapper', {
         transform: `translateX(100%)`
       }
     },
+
     mobile: {
       true: {
         width: '100%'
-      },
-      false: {}
+      }
     }
   }
 });
 
-export const ThreadsPanelSeperator = styled('div', 'panel-threads_seperator', {
-  height: '100%',
-  width: 8,
-  transform: `translateX(-8px)`,
-  backgroundColor: '$borderDark',
-  zIndex: 9,
+export const ThreadsPanelSeperator = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'panel-threads_seperator'
+})('div', {
+  transform: `translateX(-${theme.sizes.panelSeperatorWidth})`,
 
-  '@mobile': {
-    true: {
-      opacity: 0
-    }
-  },
+  height: '100%',
+  width: theme.sizes.panelSeperatorWidth,
+
+  backgroundColor: theme.colors.borderDark,
+  zIndex: theme.zIndices.modal,
 
   variants: {
     isOpen: {
       false: {
         opacity: 0
       }
-    }
-  }
-});
+    },
 
-export const Close = styled('button', 'sidebar_close', {
-  right: 0,
-  height: '$iconSizeLarge',
-  width: '$iconSizeLarge',
-
-  background: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='rgba(255,255,255,0.3)' viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e")`,
-  backgroundSize: '50%',
-  backgroundPosition: '50% 50%',
-  backgroundRepeat: 'no-repeat',
-  border: 'none',
-  outline: 'none',
-  cursor: 'pointer',
-  borderRadius: '50%',
-
-  '&:hover, &:focus': {
-    backgroundColor: theme.colors.primaryOpacity10
-  },
-
-  variants: {
-    color: {
-      light: {
-        right: 0,
-        height: '$iconSizeSmall',
-        width: '$iconSizeSmall',
-
-        backgroundSize: '50%',
-        backgroundPosition: '50% 50%',
-        backgroundRepeat: 'no-repeat',
-        border: 'none',
-        outline: 'none',
-        cursor: 'pointer',
-        borderRadius: '50%',
-        background: `url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' fill='rgb(181, 186, 193)' viewBox='0 0 44 44'%3e%3cpath d='M38.8 0L44 5.2 5.2 44 0 38.8 38.8 0z'/%3e%3cpath d='M5.2 0L44 38.8 38.8 44 0 5.2 5.2 0z'/%3e%3c/svg%3e")`
+    mobile: {
+      true: {
+        opacity: 0
       }
     }
   }

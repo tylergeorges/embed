@@ -1,33 +1,23 @@
+import { listComponents } from '@components/Core/VirtualLists/listComponents';
 import * as Styles from '@components/Core/VirtualLists/styles';
-import { Spinner, SpinnerWrapper } from '@components/Overlays/Loading/styles';
 import MessageGroup from '@widgetbot/message-renderer';
 import { APIMessage } from 'discord-api-types/v10';
-import { Components, Virtuoso } from 'react-virtuoso';
-
-const FetchingDataSpinner = () => (
-  <SpinnerWrapper type="fetchingMessages">
-    <Spinner type="fetchingMessages" />
-  </SpinnerWrapper>
-);
-type ListComponents = Components<APIMessage[], any> | undefined;
-
-const listComponents: ListComponents = { Header: FetchingDataSpinner };
+import { Virtuoso } from 'react-virtuoso';
 
 const Message = (index: number, data: APIMessage[]) => (
   <Styles.VirtualListMessageWrapper>
-    {/* @ts-ignore */}
     <MessageGroup messages={data} thread={false} />
   </Styles.VirtualListMessageWrapper>
 );
 
-type GroupedMessages = APIMessage[][];
 interface MessagesListProps {
-  groupedMessages: GroupedMessages;
+  groupedMessages: APIMessage[][];
   firstItemIndex: number;
   isReady: boolean;
   handleBottomStateChanged?: (atBottom: boolean) => void;
   startReached?: (index: number) => void;
 }
+
 export const MessageRenderer = ({
   isReady,
   groupedMessages,
@@ -44,14 +34,10 @@ export const MessageRenderer = ({
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', boxSizing: 'content-box' }}>
+    <Styles.VirtualListContainer>
       {isReady && (
         <Virtuoso
           data={groupedMessages}
-          style={{
-            overflowX: 'hidden',
-            height: '100%'
-          }}
           firstItemIndex={firstItemIndex}
           startReached={startReached}
           atBottomStateChange={handleBottomStateChanged}
@@ -63,6 +49,6 @@ export const MessageRenderer = ({
           followOutput={followOutput}
         />
       )}
-    </div>
+    </Styles.VirtualListContainer>
   );
 };

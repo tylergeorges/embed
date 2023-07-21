@@ -1,150 +1,272 @@
 import { HeaderMainContentRoot, Stretch } from '@components/Header/styles';
-import { theme } from '@stitches';
-import { keyframes, styled } from '@stitches/react';
+import { theme, styled, commonComponentId } from '@stitches';
+import { keyframes } from '@stitches/react';
 
-const zoomIn = keyframes({
-  '0%': { transform: 'scale(0.5)' },
-  '50%': { transform: 'scale(1.05)' },
-  '100%': { transform: 'scale(1)' }
+const zoomInBounce = keyframes({
+  '0%': { scale: '0.5' },
+  '50%': { scale: '1.05' },
+  '100%': { scale: '1' }
 });
-export const ModalBackdrop = styled('div', 'modal-backdrop', {
-  backgroundColor: 'rgba(0,0,0,0.5)',
+
+export const Backdrop = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'backdrop'
+})('div', {
   width: '100%',
   height: '100%',
+
   position: 'absolute',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  zIndex: 10,
-  transition: 'opacity 300ms ease',
+
+  transition: theme.transitions.defaultOpacity,
+
   opacity: 0,
+  backgroundColor: theme.colors.backDrop,
 
   variants: {
     isOpen: {
       false: {
-        transitionDelay: '0.5s',
         opacity: 0,
         pointerEvents: 'none',
 
-        transitionProperty: 'z-index, opacity'
-      },
-      true: {
+        transitionProperty: 'z-index, opacity',
+        zIndex: theme.zIndices.negative
+      }
+    },
+
+    mobile: {
+      false: {
+        opacity: 0,
+
+        transitionProperty: 'z-index, opacity',
+        zIndex: theme.zIndices.negative
+      }
+    },
+
+    type: {
+      modal: {
+        zIndex: theme.zIndices.modalBackdrop
+      }
+    },
+
+    // TODO: Find a better way of doing this do avoid empty variant styles as this is only used for the compound variants
+    isChannelsListOpen: {
+      true: {},
+      false: {}
+    },
+
+    isMembersListOpen: {
+      true: {},
+      false: {}
+    }
+  },
+
+  compoundVariants: [
+    {
+      isOpen: true,
+      type: 'modal',
+      css: {
+        zIndex: theme.zIndices.modalBackdrop,
         opacity: 1
       }
+    },
+    {
+      mobile: true,
+      isMembersListOpen: true,
+
+      css: {
+        zIndex: theme.zIndices.membersSidebarBackdrop,
+        opacity: 1
+      }
+    },
+
+    {
+      mobile: true,
+      isChannelsListOpen: true,
+
+      css: {
+        zIndex: theme.zIndices.channelsSidebarBackdrop,
+        opacity: 1
+      }
+    },
+
+    {
+      mobile: false,
+      isMembersListOpen: true,
+
+      css: {
+        zIndex: theme.zIndices.negative,
+        opacity: 0
+      }
+    },
+
+    {
+      mobile: false,
+      isChannelsListOpen: true,
+
+      css: {
+        zIndex: theme.zIndices.negative,
+        opacity: 0
+      }
     }
-  }
+  ]
 });
 
-export const ModalContainerWrapper = styled('div', 'modal-container_wrapper', {
-  width: '100%',
-  height: '100%',
+export const ModalContainerWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-container_wrapper'
+})('div', {
   position: 'absolute',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+
+  width: '100%',
+  height: '100%',
+
   pointerEvents: 'none',
-  zIndex: -1,
+  zIndex: theme.zIndices.negative,
 
   variants: {
     isOpen: {
       false: {
-        transitionDelay: '0.5s',
-        zIndex: -1,
+        zIndex: theme.zIndices.negative,
+
+        transitionDelay: theme.transitions.longerDuration,
         transitionProperty: 'z-index'
       },
       true: {
-        zIndex: 13
+        zIndex: theme.zIndices.modal
       }
     }
   }
 });
 
-export const PopoutContainerWrapper = styled(ModalContainerWrapper, 'popout-container_wrapper', {});
+export const PopoutContainerWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-container_wrapper'
+})(ModalContainerWrapper, {
+  zIndex: theme.zIndices.modal
+});
 
-export const ModalContainer = styled('div', 'modal-container', {
-  width: 490,
-  backgroundColor: theme.colors.background,
+export const ModalContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-container'
+})('div', {
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'flex-start',
   textAlign: 'left',
+
+  width: 490,
+
   borderRadius: 4,
+
   pointerEvents: 'all',
-  transition: 'transform 200ms ease',
+  backgroundColor: theme.colors.background,
+  zIndex: theme.zIndices.modal,
 
   variants: {
     isOpen: {
       false: {
-        transform: 'scale(0)'
+        // Scaling to 0 is not performant, so we trigger it to render on GPU with translate3d
+        transform: 'scale(0) rotate(0deg) translate3d(0,0,0)'
       },
       true: {
-        animation: `${zoomIn} 0.5s ease`
+        animation: `${zoomInBounce} ${theme.transitions.longerDuration}  ease`
       }
     }
   }
 });
 
-export const ModalHeader = styled('div', 'modal-header', {
+export const ModalHeader = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-header'
+})('div', {
   width: '100%'
 });
 
-export const ModalHeaderContent = styled(HeaderMainContentRoot, 'modal-header_content', {
-  fontSize: '100%',
-  padding: theme.space.xl,
+export const ModalHeaderContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-header_content'
+})(HeaderMainContentRoot, {
   display: 'flex',
   justifyContent: 'space-between',
+  userSelect: 'none',
+
+  fontSize: '100%',
+
+  padding: theme.space.xl,
+
   cursor: 'default'
 });
 
-export const PopoutHeader = styled('div', 'popout-header', {
-  backgroundColor: '$backgroundTertiary',
-  padding: 0,
-  height: 48,
+export const PopoutHeader = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-header'
+})('div', {
   display: 'flex',
-  alignItems: 'center',
-  borderTopRightRadius: 8,
-  borderTopLeftRadius: 8,
   flexDirection: 'row',
-  width: '100%'
+  alignItems: 'center',
+
+  width: '100%',
+  height: 48,
+
+  padding: 0,
+
+  borderTopRightRadius: theme.radii.sm,
+  borderTopLeftRadius: theme.radii.sm,
+
+  backgroundColor: theme.colors.backgroundTertiary,
+  userSelect: 'none'
 });
 
-export const PopoutContainer = styled('div', 'popout-container', {
-  backgroundColor: '$backgroundSecondary',
+export const PopoutContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-container'
+})('div', {
   position: 'absolute',
-  animation: 'none',
-  minHeight: 400,
-  maxHeight: '80vh',
-  maxWidth: 600,
-  height: '20%',
-  width: '35vw',
-  top: 48,
   display: 'flex',
   flexDirection: 'column',
   textAlign: 'left',
-  borderRadius: 4,
-  pointerEvents: 'all',
-  transition: 'transform 300ms ease',
-  borderBottomRightRadius: 8,
-  borderBottomLeftRadius: 8,
-  boxSizing: 'border-box',
-  zIndex: 1,
-
   alignSelf: 'center',
   justifySelf: 'center',
-  boxShadow: '$dropShadow',
+  top: 48,
+
+  height: '20%',
+  minHeight: 400,
+  maxHeight: '80vh',
+  maxWidth: 600,
+  width: '35vw',
+
+  backgroundColor: theme.colors.backgroundSecondary,
+
+  borderRadius: theme.radii.sm,
+
+  boxSizing: 'border-box',
+
+  animation: 'none',
+  transition: theme.transitions.defaultTransform,
+  zIndex: theme.zIndices.modal,
+
+  pointerEvents: 'all',
+  boxShadow: theme.shadows.dropShadow,
 
   variants: {
     isOpen: {
-      true: {},
       false: {
         display: 'none'
       }
     },
+
     isMobile: {
       true: {
-        width: '65vw !important',
+        width: '65vw',
         minWidth: 260
       },
+
       false: {
         minWidth: 480
       }
@@ -152,131 +274,197 @@ export const PopoutContainer = styled('div', 'popout-container', {
   }
 });
 
-export const PopoutHeaderContent = styled(ModalHeaderContent, 'popout-header_content', {
+export const PopoutHeaderContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-header_content'
+})(ModalHeaderContent, {
   width: '100%'
 });
 
-export const PopoutTitleWrapper = styled(Stretch, 'popout-title_container', {
+export const PopoutTitleWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-title_container'
+})(Stretch, {
   display: 'flex',
   alignItems: 'center',
   width: '100%',
   height: '100%'
 });
 
-export const PopoutTitle = styled('span', 'popout-title', {
+export const PopoutTitle = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-title'
+})('span', {
   background: 'none',
   padding: 0,
-  marginLeft: '$sm'
+  marginLeft: theme.space.sm
 });
 
-export const PopoutContentWrapper = styled('div', 'popout-content_container', {
+export const PopoutContentWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-content_container'
+})('div', {
   width: '100%',
   height: '100%'
 });
 
-export const PopoutWrapper = styled(ModalContainerWrapper, 'popout-wrapper', {});
+export const PopoutWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-wrapper'
+})(ModalContainerWrapper, {});
 
-export const ChannelTopicModalContent = styled(
-  HeaderMainContentRoot,
-  'modal-channel_topic_content',
-  {
-    fontSize: '$lg',
-    color: 'rgba(255,255,255,0.7)',
-    height: '100%',
-    flexGrow: 1,
-    flexShrink: 1,
-    paddingLeft: '$xl',
-    paddingRight: '$lg',
-    paddingBottom: '$xxl',
-    textRendering: 'optimizeLegibility',
-    whiteSpace: 'pre-wrap',
-    overflowWrap: 'break-word',
-    lineHeight: '20px'
-  }
-);
+export const ChannelTopicModalContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-channel_topic_content'
+})(HeaderMainContentRoot, {
+  fontSize: theme.fontSizes.lg,
+  lineHeight: '20px',
 
-export const NoThreadsStars = styled('svg', 'popout-no_threads_stars', {
-  left: -10,
-  position: 'absolute'
+  color: theme.colors.primaryOpacity70,
+
+  height: '100%',
+
+  flexGrow: 1,
+  flexShrink: 1,
+
+  paddingLeft: theme.space.xl,
+  paddingRight: theme.space.lg,
+  paddingBottom: theme.space.xxl,
+
+  textRendering: 'optimizeLegibility',
+  whiteSpace: 'pre-wrap',
+  overflowWrap: 'break-word'
 });
 
-export const NoThreadsIconOuter = styled('div', 'popout-no_threads_outer', {
+export const NoThreadsIconOuter = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-no_threads_outer'
+})('div', {
   position: 'relative',
-  marginBottom: '$xl'
+  marginBottom: theme.space.xl,
+  userSelect: 'none'
 });
 
-export const NoThreadsIconInner = styled('div', 'popout-no_threads_inner', {
-  position: 'relative',
-  padding: '$xxl',
+export const NoThreadsIconInner = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-no_threads_inner'
+})('div', {
   display: 'flex',
+  position: 'relative',
+  alignItems: 'center',
+
+  padding: theme.space.xxl,
+
   borderImageOutset: 'stretch',
-  alignItems: 'center'
+  userSelect: 'none'
 });
 
-export const ThreadsPopoutList = styled('div', 'popout-threads_list_container', {
+export const NoThreadsHashWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-no_threads_hash_wrapper'
+})('div', {
+  padding: theme.space.xxl,
+  backgroundColor: theme.colors.background,
+  borderRadius: theme.radii.round,
+  userSelect: 'none'
+});
+
+export const ThreadsPopoutList = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-threads_list_container'
+})('div', {
   height: '100%',
-  width: '100%'
-});
-
-export const ThreadName = styled('div', 'popout-threads_list_threadname', {
   width: '100%',
-  color: '$primaryOpacity50',
-  fontSize: '$lg'
+  position: 'relative'
 });
 
-export const ThreadsPopoutListHeader = styled('span', 'popout-threads_list_header', {
-  fontSize: '$sm',
+export const ThreadName = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-threads_list_threadname'
+})('div', {
   width: '100%',
-  fontWeight: '$bold',
-  marginBottom: '$lg',
-  marginTop: '$lg',
-  color: '$primaryOpacity50',
-  display: 'flex'
+  color: theme.colors.primaryOpacity50,
+  fontSize: theme.fontSizes.lg
 });
 
-export const ThreadsPopoutContent = styled('div', 'popout-threads_content', {
+export const ThreadsPopoutListHeader = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-threads_list_header'
+})('span', {
+  display: 'flex',
+  color: theme.colors.primaryOpacity50,
+
+  fontSize: theme.fontSizes.sm,
+  fontWeight: theme.fontWeights.bold,
+
+  width: '100%',
+  marginY: theme.space.lg
+});
+
+export const ThreadsPopoutContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-threads_content'
+})('div', {
   width: '100%',
   height: '100%',
+
   display: 'flex',
   flexDirection: 'column',
-  paddingRight: '$lg',
-  paddingLeft: '$lg',
-  position: 'relative',
+
+  paddingX: theme.space.lg,
+
   overflowY: 'auto',
   boxSizing: 'border-box'
 });
 
-export const ThreadsPopoutListItem = styled('div', 'popout-threads_list_item', {
-  backgroundColor: '$background',
+export const ThreadsPopoutListItem = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-threads_list_item'
+})('div', {
+  backgroundColor: theme.colors.background,
   width: '100%',
-  padding: '$lg',
-  marginBottom: '$lg',
-  borderRadius: '$md',
+
+  padding: theme.space.lg,
+  marginBottom: theme.space.lg,
+
+  borderRadius: theme.radii.md,
   borderWidth: '1px',
   borderStyle: 'solid',
   borderColor: 'transparent',
+
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'row',
   cursor: 'pointer',
+
+  position: 'relative',
   '&:hover': {
-    borderColor: 'rgba(255, 255, 255, 0.1)'
+    borderColor: theme.colors.primaryOpacity10
   }
 });
 
-export const NoThreadsContent = styled('div', 'popout-no_threads_content', {
-  width: '100%',
-  height: '100%',
+export const NoThreadsContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-no_threads_content'
+})('div', {
+  position: 'relative',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
-  alignSelf: 'center',
   flexDirection: 'column',
+  alignSelf: 'center',
   justifySelf: 'center',
-  flex: 1
+
+  width: '100%',
+  height: '100%',
+  userSelect: 'none'
 });
 
-export const NoThreadsHeader = styled('h2', 'popout-no_threads_header', {
+export const NoThreadsHeader = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-no_threads_header'
+})('h2', {
   textAlign: 'center',
-  fontWeight: '$bold'
+  fontWeight: theme.fontWeights.bold,
+  userSelect: 'none'
 });

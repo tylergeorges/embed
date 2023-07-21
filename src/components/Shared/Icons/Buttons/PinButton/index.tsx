@@ -1,16 +1,15 @@
-import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
-import { useCallback } from 'react';
+import { IconButton } from '@icons/Buttons/IconButton';
+import { useTranslation } from 'react-i18next';
 
 export const PinButton = () => {
-  const handlePinClick = useCallback((e: React.SyntheticEvent) => {
-    e.preventDefault();
-  }, []);
+  const translate = useTranslation();
+
   return (
     <IconButton
-      name="Pin"
-      tooltipLabel="Pinned Messages"
+      icon="Pin"
+      tooltipLabel={translate.t('pinnedmessages.tooltip') as string}
       tooltipPlacement="bottom"
-      onClick={handlePinClick}
+      onClick={e => e.preventDefault()}
     />
   );
 };

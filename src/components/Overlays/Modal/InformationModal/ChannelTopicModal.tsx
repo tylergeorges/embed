@@ -1,8 +1,7 @@
 import { InformationModal } from '@components/Overlays/Modal/InformationModal';
-import { ChannelTopicModalContent } from '@components/Overlays/Modal/styles';
+import * as Styles from '@components/Overlays/Modal/styles';
 import { useStoreActions, useStoreState } from '@state';
 
-/** Modal for a Text Channel's Topic  */
 export const ChannelTopicModal = () => {
   const showTopicModal = useStoreState(state => state.ui.showTopicModal);
   const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);
@@ -16,11 +15,11 @@ export const ChannelTopicModal = () => {
     <InformationModal
       isOpen={showTopicModal}
       hideModal={hideTopicModal}
-      title={`#${currentChannel?.name}`}
+      title={currentChannel?.name ?? ''}
     >
-      <ChannelTopicModalContent className="modal-channel_topic_content">
-        {currentChannel?.topic}
-      </ChannelTopicModalContent>
+      <Styles.ChannelTopicModalContent>
+        {currentChannel?.topic ?? ''}
+      </Styles.ChannelTopicModalContent>
     </InformationModal>
   );
 };

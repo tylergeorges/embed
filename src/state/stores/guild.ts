@@ -16,7 +16,6 @@ export interface IThread extends Channel {
 export type GuildChannels = {
   [channelId: string]: Channel;
 };
-// export type GuildThreads = Record<string, ChannelThreads>;
 
 export interface GuildStore {
   guildChannels: Computed<GuildStore, GuildChannels>;
