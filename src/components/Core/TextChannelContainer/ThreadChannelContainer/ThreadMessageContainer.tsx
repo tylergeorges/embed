@@ -5,6 +5,8 @@ import { useCallback, useState } from 'react';
 import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
+import { BaseMessageFragment } from '@graphql/graphql';
+import { useThreadsSub } from '@hooks/useThreadSub';
 import * as Styles from '../styles';
 
 export const ThreadMessageContainer = () => {
@@ -12,14 +14,22 @@ export const ThreadMessageContainer = () => {
 
   const { channelId, guildId, threadId } = useAppRouter();
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
+  const [messages, setMessages] = useState<BaseMessageFragment[]>([]);
 
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
-    // guild: '585454996800405509',
-    // channel: '585840022511550494',
     guild: guildId,
     channel: channelId,
     threadId,
-    type: 'thread'
+    messages,
+    setMessages
+  });
+
+  useThreadsSub({
+    guild: guildId,
+    channel: channelId,
+    threadId,
+    messages,
+    setMessages
   });
 
   const handleBottomStateChanged = useCallback(() => {
@@ -38,7 +48,7 @@ export const ThreadMessageContainer = () => {
       }}
     >
       <MessageRenderer
-        groupedMessages={groupedMessages}
+        messages={groupedMessages}
         startReached={loadMoreMessages}
         isReady={isReady}
         firstItemIndex={firstItemIndex}

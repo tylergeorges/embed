@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import * as Styles from '@components/Header/styles';
 import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
 import { Icons } from '@components/Shared/Icons';
@@ -11,6 +12,9 @@ import { useStoreActions, useStoreState } from '@state';
 export const ChannelHeader = () => {
   const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
+  const currentThread = useStoreState(state => state.guild.currentThread);
+
+  const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
 
   const openTopicModal = () => {
     setShowTopicModal(true);
@@ -22,13 +26,18 @@ export const ChannelHeader = () => {
         <Hamburger />
 
         <Styles.ChannelNameTopicWrapper>
-          {currentChannel ? (
+          {!isCurrentChannelThread && currentChannel ? (
             <>
               <Icons icon="TextChannelHash" size="small" color="dark" />
               <Styles.ChannelHeaderName>{currentChannel.name}</Styles.ChannelHeaderName>
               <Styles.ChannelHeaderTopic onClick={openTopicModal}>
                 {currentChannel.topic}
               </Styles.ChannelHeaderTopic>
+            </>
+          ) : isCurrentChannelThread && currentThread ? (
+            <>
+              <Icons icon="TextChannelHash" size="small" color="dark" />
+              <Styles.ChannelHeaderName>{currentThread.name}</Styles.ChannelHeaderName>
             </>
           ) : (
             <>

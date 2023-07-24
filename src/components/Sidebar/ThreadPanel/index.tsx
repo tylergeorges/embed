@@ -49,7 +49,7 @@ export const ThreadPanel = () => {
   const startPanelHideTransition = useCallback(() => {
     setIsTransitionedThreadsPanelOpen(false);
 
-    router.push(`/channels/${guildId}/${channelId}`, undefined, { shallow: true });
+    router.push(`/channels/${guildId}/${channelId}`);
 
     removeFromDOMTimeout.current = setTimeout(() => {
       setIsDomThreadsPanelOpen(false);

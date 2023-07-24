@@ -8,37 +8,36 @@ const socketScheme = getEnvVar('CUSTOM_SERVER_ENDPOINT')?.includes('127.0.0.1')
 
 const WS_URL = `${socketScheme}${getEnvVar('CUSTOM_SERVER_ENDPOINT')}/api/graphql`;
 
-const subClient: SubscriptionClient = new SubscriptionClient(WS_URL, {
+const subClient = new SubscriptionClient(WS_URL, {
   reconnect: true,
   timeout: 10000,
   reconnectionAttempts: 3
 });
 
-// export const client = createClient({
-//   url: `https://${getEnvVar('CUSTOM_SERVER_ENDPOINT')}/api/graphql`,
+let threadSubClient: SubscriptionClient;
 
-//   exchanges: [
-//     fetchExchange,
-//     cacheExchange,
-//     subscriptionExchange({
-//       forwardSubscription: request =>
-//         new SubscriptionClient(WS_URL, {
-//           reconnect: true,
-//           timeout: 10000,
-//           reconnectionAttempts: 3
-//         }).request(request)
-//     })
-//   ]
-//   // TODO: Pass auth header when auth is implemented on frontend.
-// });
 export const client = createClient({
   url: `https://${getEnvVar('CUSTOM_SERVER_ENDPOINT')}/api/graphql`,
-
   exchanges: [
     fetchExchange,
     cacheExchange,
+
     subscriptionExchange({
-      forwardSubscription: request => subClient.request(request)
+      forwardSubscription: request => {
+        const isThreadQuery = request.query.includes('Thread');
+
+        if (!isThreadQuery) return subClient.request(request);
+
+        if (!threadSubClient) {
+          threadSubClient = new SubscriptionClient(WS_URL, {
+            reconnect: true,
+            timeout: 10000,
+            reconnectionAttempts: 3
+          });
+        }
+
+        return threadSubClient.request(request);
+      }
     })
   ]
   // TODO: Pass auth header when auth is implemented on frontend.

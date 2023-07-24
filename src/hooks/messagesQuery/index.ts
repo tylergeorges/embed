@@ -157,7 +157,22 @@ export const messagesQuery = graphql(`
 // TODO: Copy fragments from old codebase for this.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const updateMessageSubscription = graphql(`
-  subscription updateMessageSubscription($channel: String!, $guild: String!, $threadId: String) {
+  subscription updateMessageSubscription($channel: String!, $guild: String!) {
+    messageUpdate(channel: $channel, guild: $guild) {
+      id
+      content
+    }
+  }
+`);
+
+// TODO: Copy fragments from old codebase for this.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export const updateThreadMessageSubscription = graphql(`
+  subscription updateThreadMessageSubscription(
+    $channel: String!
+    $guild: String!
+    $threadId: String
+  ) {
     messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {
       id
       content
@@ -173,8 +188,24 @@ export const newMessageSubscription = graphql(`
   }
 `);
 
+export const newThreadMessageSubscription = graphql(`
+  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {
+    message(guild: $guild, channel: $channel, threadId: $threadId) {
+      ...BaseMessage
+    }
+  }
+`);
+
 export const deletedMessageSubscription = graphql(`
-  subscription MessageDeleted($channel: String!, $guild: String!, $threadId: String) {
+  subscription MessageDeleted($channel: String!, $guild: String!) {
+    messageDelete(channel: $channel, guild: $guild) {
+      id
+    }
+  }
+`);
+
+export const deletedThreadMessageSubscription = graphql(`
+  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {
     messageDelete(channel: $channel, guild: $guild, threadId: $threadId) {
       id
     }

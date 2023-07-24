@@ -5,13 +5,14 @@ import { MembersSidebar } from '@components/Sidebar/MembersSidebar';
 import { useCallback, useEffect } from 'react';
 
 import { Backdrop } from '@components/Overlays/Modal/styles';
+import { ThreadMessageContainer } from '@components/Core/TextChannelContainer/ThreadChannelContainer/ThreadMessageContainer';
 import * as Styles from './styles';
 import { MessageContainer } from './MessageContainer';
 import { TextChannelHeader } from './TextChannelHeader';
 
 export const TextChannelContainer = () => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
-  const { channelId } = useAppRouter();
+  const { channelId, threadId } = useAppRouter();
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
@@ -19,13 +20,13 @@ export const TextChannelContainer = () => {
     state => state.ui.isTransitionedThreadsPanelOpen
   );
 
+  const isCurrentChannelThread = useStoreState(state => state.ui.isCurrentChannelThread);
+
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
   const setCurrentChannel = useStoreActions(state => state.guild.setCurrentChannel);
 
   useEffect(() => {
-    setCurrentChannel(channelId);
-
     // Used to hide members list if the threads panel is open
     if (!isTransitionedThreadsPanelOpen) {
       setIsMembersListOpen(!windowIsMobile);
@@ -35,7 +36,8 @@ export const TextChannelContainer = () => {
     setIsMembersListOpen,
     isTransitionedThreadsPanelOpen,
     setCurrentChannel,
-    channelId
+    channelId,
+    threadId
   ]);
 
   const hideSidebar = useCallback(() => {
@@ -62,7 +64,7 @@ export const TextChannelContainer = () => {
     >
       <TextChannelHeader />
       <Styles.TextChannelInnerWrapper>
-        <MessageContainer />
+        {!isCurrentChannelThread ? <MessageContainer /> : <ThreadMessageContainer />}
 
         <Backdrop
           onClick={hideSidebar}

@@ -85,9 +85,11 @@ const guild: GuildStore = {
     const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
     state.channels = sortedChannels;
   }),
+
   setCurrentThread: action((state, payload) => {
     state.currentThread = payload;
   }),
+
   setCurrentChannel: action((state, payload) => {
     const currentChannel = state.guildChannels[payload];
     // @ts-ignore
