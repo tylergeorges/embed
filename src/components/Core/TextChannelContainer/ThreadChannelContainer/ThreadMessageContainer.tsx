@@ -18,7 +18,8 @@ export const ThreadMessageContainer = () => {
     // channel: '585840022511550494',
     guild: guildId,
     channel: channelId,
-    threadId
+    threadId,
+    type: 'thread'
   });
 
   const handleBottomStateChanged = useCallback(() => {

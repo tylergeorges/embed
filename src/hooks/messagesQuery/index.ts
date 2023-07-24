@@ -131,84 +131,6 @@ const MessageFragment = gql`
   }
 `;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const UpdatedMessageFragment = gql`
-  fragment UpdatedMessage on UpdatedMessage {
-    id
-    content
-    type
-    flags
-    createdAt
-    editedAt
-
-    author {
-      avatarUrl
-      bot
-      discrim
-      id
-      flags
-      name
-      roles
-    }
-
-    attachments {
-      url
-      height
-      width
-      filename
-      size
-    }
-
-    stickers {
-      id
-      name
-      formatType
-      lottieData
-    }
-
-    reactions {
-      count
-      emojiId
-      emojiName
-      animated
-    }
-
-    messageReference {
-      guildId
-      channelId
-      messageId
-    }
-
-    embeds {
-      ...Embed
-    }
-
-    mentions {
-      id
-      type
-      name
-    }
-
-    interaction {
-      name
-      user {
-        id
-        username
-        discriminator
-        avatarUrl
-      }
-    }
-
-    thread {
-      id
-      name
-      archivedAt
-      locked
-      messageCount
-    }
-  }
-`;
-
 export const messagesQuery = graphql(`
   query messagesQuery($guild: String!, $channel: String!, $threadId: String, $before: String) {
     channelV2(guild: $guild, id: $channel) {
@@ -237,7 +159,8 @@ export const messagesQuery = graphql(`
 export const updateMessageSubscription = graphql(`
   subscription updateMessageSubscription($channel: String!, $guild: String!, $threadId: String) {
     messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {
-      ...UpdatedMessage
+      id
+      content
     }
   }
 `);

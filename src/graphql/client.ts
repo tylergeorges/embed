@@ -7,8 +7,30 @@ const socketScheme = getEnvVar('CUSTOM_SERVER_ENDPOINT')?.includes('127.0.0.1')
   : 'wss://';
 
 const WS_URL = `${socketScheme}${getEnvVar('CUSTOM_SERVER_ENDPOINT')}/api/graphql`;
-let subClient: SubscriptionClient;
 
+const subClient: SubscriptionClient = new SubscriptionClient(WS_URL, {
+  reconnect: true,
+  timeout: 10000,
+  reconnectionAttempts: 3
+});
+
+// export const client = createClient({
+//   url: `https://${getEnvVar('CUSTOM_SERVER_ENDPOINT')}/api/graphql`,
+
+//   exchanges: [
+//     fetchExchange,
+//     cacheExchange,
+//     subscriptionExchange({
+//       forwardSubscription: request =>
+//         new SubscriptionClient(WS_URL, {
+//           reconnect: true,
+//           timeout: 10000,
+//           reconnectionAttempts: 3
+//         }).request(request)
+//     })
+//   ]
+//   // TODO: Pass auth header when auth is implemented on frontend.
+// });
 export const client = createClient({
   url: `https://${getEnvVar('CUSTOM_SERVER_ENDPOINT')}/api/graphql`,
 
@@ -16,15 +38,7 @@ export const client = createClient({
     fetchExchange,
     cacheExchange,
     subscriptionExchange({
-      forwardSubscription: request => {
-        console.log(request);
-        if (!subClient) {
-          // make sure only one subscription client is created
-
-          subClient = new SubscriptionClient(WS_URL, { reconnect: true, timeout: 30000 });
-        }
-        return subClient.request(request);
-      }
+      forwardSubscription: request => subClient.request(request)
     })
   ]
   // TODO: Pass auth header when auth is implemented on frontend.

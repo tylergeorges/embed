@@ -10,6 +10,7 @@ import * as Styles from '@components/Core/styles';
 import { svgUrls } from '@svg-assets';
 import { useContextMenu } from '@hooks/useContextMenu';
 import dynamic from 'next/dynamic';
+import GuildProvider from '@components/Providers/GuildProvider';
 
 const MessageRendererRoot = styled('div', {
   '--fonts-main': 'GgSans',
@@ -43,7 +44,7 @@ function GuildChannel() {
   const guildChannels = useStoreState(state => state.guild.guildChannels);
 
   return (
-    <>
+    <GuildProvider>
       <MessageRendererProvider
         messageButtons={() => []}
         currentUser={() => null}
@@ -82,7 +83,7 @@ function GuildChannel() {
           </MessageRendererRoot>
         )}
       </MessageRendererProvider>
-    </>
+    </GuildProvider>
   );
 }
 

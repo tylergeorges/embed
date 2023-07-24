@@ -1077,77 +1077,6 @@ export type BaseMessageFragment = {
   } | null;
 } & { ' $fragmentName'?: 'BaseMessageFragment' };
 
-export type UpdatedMessageFragment = {
-  __typename?: 'UpdatedMessage';
-  id: string;
-  content?: string | null;
-  type?: MessageType | null;
-  flags?: number | null;
-  createdAt?: any | null;
-  editedAt?: any | null;
-  author?: {
-    __typename?: 'User';
-    avatarUrl: string;
-    bot: boolean;
-    discrim: string;
-    id: string;
-    flags?: number | null;
-    name: string;
-    roles?: Array<string> | null;
-  } | null;
-  attachments?: Array<{
-    __typename?: 'Attachment';
-    url: string;
-    height?: number | null;
-    width?: number | null;
-    filename: string;
-    size: number;
-  }> | null;
-  stickers?: Array<{
-    __typename?: 'Sticker';
-    id: string;
-    name: string;
-    formatType: FormatType;
-    lottieData?: string | null;
-  }> | null;
-  reactions?: Array<{
-    __typename?: 'Reaction';
-    count: number;
-    emojiId?: string | null;
-    emojiName?: string | null;
-    animated?: boolean | null;
-  }> | null;
-  messageReference?: {
-    __typename?: 'MessageReference';
-    guildId?: string | null;
-    channelId: string;
-    messageId?: string | null;
-  } | null;
-  embeds?: Array<
-    { __typename?: 'Embed' } & { ' $fragmentRefs'?: { EmbedFragment: EmbedFragment } }
-  > | null;
-  mentions?: Array<{ __typename?: 'Mention'; id: string; type: MentionType; name: string }> | null;
-  interaction?: {
-    __typename?: 'MessageInteraction';
-    name: string;
-    user: {
-      __typename?: 'Author';
-      id: string;
-      username: string;
-      discriminator: string;
-      avatarUrl: string;
-    };
-  } | null;
-  thread?: {
-    __typename?: 'Thread';
-    id: string;
-    name: string;
-    archivedAt?: any | null;
-    locked: boolean;
-    messageCount: number;
-  } | null;
-} & { ' $fragmentName'?: 'UpdatedMessageFragment' };
-
 export type MessagesQueryQueryVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
@@ -1195,11 +1124,7 @@ export type UpdateMessageSubscriptionSubscriptionVariables = Exact<{
 
 export type UpdateMessageSubscriptionSubscription = {
   __typename?: 'Subscription';
-  messageUpdate?:
-    | ({ __typename?: 'UpdatedMessage' } & {
-        ' $fragmentRefs'?: { UpdatedMessageFragment: UpdatedMessageFragment };
-      })
-    | null;
+  messageUpdate?: { __typename?: 'UpdatedMessage'; id: string; content?: string | null } | null;
 };
 
 export type NewMessageSubscriptionSubscriptionVariables = Exact<{
@@ -1485,153 +1410,6 @@ export const BaseMessageFragmentDoc = {
     ...EmbedFragmentDoc.definitions
   ]
 } as unknown as DocumentNode<BaseMessageFragment, unknown>;
-export const UpdatedMessageFragmentDoc = {
-  kind: 'Document',
-  definitions: [
-    {
-      kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'UpdatedMessage' },
-      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdatedMessage' } },
-      selectionSet: {
-        kind: 'SelectionSet',
-        selections: [
-          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'editedAt' } },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'author' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'roles' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'attachments' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'width' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'filename' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'size' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'stickers' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'formatType' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'lottieData' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'reactions' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'count' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'emojiId' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'emojiName' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'animated' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'messageReference' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'guildId' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'channelId' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'messageId' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'embeds' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'Embed' } }]
-            }
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'mentions' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'interaction' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                {
-                  kind: 'Field',
-                  name: { kind: 'Name', value: 'user' },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'discriminator' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } }
-                    ]
-                  }
-                }
-              ]
-            }
-          },
-          {
-            kind: 'Field',
-            name: { kind: 'Name', value: 'thread' },
-            selectionSet: {
-              kind: 'SelectionSet',
-              selections: [
-                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'archivedAt' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'locked' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'messageCount' } }
-              ]
-            }
-          }
-        ]
-      }
-    },
-    ...EmbedFragmentDoc.definitions
-  ]
-} as unknown as DocumentNode<UpdatedMessageFragment, unknown>;
 export const GuildDocument = {
   kind: 'Document',
   definitions: [
@@ -1987,14 +1765,14 @@ export const UpdateMessageSubscriptionDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
-                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'UpdatedMessage' } }
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'content' } }
               ]
             }
           }
         ]
       }
-    },
-    ...UpdatedMessageFragmentDoc.definitions
+    }
   ]
 } as unknown as DocumentNode<
   UpdateMessageSubscriptionSubscription,

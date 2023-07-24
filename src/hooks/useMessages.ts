@@ -24,19 +24,23 @@ type MessageState = {
 
 interface UseMessagesProps {
   guild: string;
+
   channel: string;
+
   threadId?: string;
+
+  /** Used for testing  */
+  type?: string;
 }
 
 export const useMessages = ({
   guild,
   channel,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  threadId
+  threadId,
+  type
 }: UseMessagesProps) => {
   const currentChannelId = useRef('');
-
-  // const beforeRef = useRef('');
 
   const [variables, setVariables] = useState<MessagesQueryQueryVariables>({
     guild,
@@ -46,65 +50,38 @@ export const useMessages = ({
 
   const [messages, setMessages] = useState<BaseMessageFragment[]>([]);
   const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
-  const isFetching = useRef(false);
+  // let messages = [];
 
   const [{ data }, fetchHook] = useQuery({
     query: messagesQuery,
     variables
   });
-  const ready = data?.channelV2.id === channel;
-
-  const handleNewMessage = (
-    // eslint-disable-next-line @typescript-eslint/default-param-last, @typescript-eslint/no-unused-vars
-    _: never[] | undefined = [],
-    response: { message: BaseMessageFragment }
-  ) => {
-    // We check this so regular text channel messages dont get added to thread channels
-    if (response.message.channelId === currentChannelId.current) {
-      setMessages(prev => [...prev, response.message]);
-    }
-  };
-
-  const handleUpdatedMessage = (
-    // eslint-disable-next-line @typescript-eslint/default-param-last, @typescript-eslint/no-unused-vars
-    _: never[] | undefined = [],
-    response: { messageUpdate: { content: string; id: string } }
-  ) => {
-    console.log(response, _);
-    const oldMessages = [...messages];
-    const updatedMessage = response.messageUpdate;
-
-    const messageIdx = oldMessages.findIndex(msg => msg.id === updatedMessage.id);
-
-    // If -1 item doesnt exist in array
-    if (messageIdx >= 0) {
-      const messageToUpdate = oldMessages[messageIdx];
-      console.log(messageIdx);
-
-      messageToUpdate.content = updatedMessage.content;
-      messageToUpdate.editedAt = new Date().toISOString();
-
-      setMessages(oldMessages);
-    }
-  };
-
-  const handleDeletedMessage = (
-    // eslint-disable-next-line @typescript-eslint/default-param-last, @typescript-eslint/no-unused-vars
-    _: never[] | undefined = [],
-    response: { messageDelete: { id: string } }
-  ) => {
-    const messageId = response.messageDelete.id;
-
-    setMessages(oldMsgs => oldMsgs.filter(msg => msg.id !== messageId));
-  };
 
   useSubscription(
     {
       variables,
       query: newMessageSubscription
     },
-    // @ts-ignore
-    handleNewMessage
+
+    (prev, data) => {
+      const message = data.message as BaseMessageFragment;
+      console.log(message, threadId, currentChannelId.current, 'type ', type);
+
+      if (message) {
+        const messageChannelId = message.channelId;
+
+        // We check this so regular text channel messages dont get added to thread channels
+        if (threadId && messageChannelId === threadId) {
+          // messages.push(message);
+          setMessages(prev => [...prev, message]);
+        } else if (!threadId && messageChannelId === channel) {
+          setMessages(prev => [...prev, message]);
+          // messages.push(message);
+        }
+      }
+
+      return data;
+    }
   );
 
   useSubscription(
@@ -112,8 +89,19 @@ export const useMessages = ({
       variables,
       query: deletedMessageSubscription
     },
-    // @ts-ignore
-    handleDeletedMessage
+    (prev, data) => {
+      const { messageDelete } = data;
+
+      if (messageDelete) {
+        const messageId = messageDelete.id;
+
+        setMessages(oldMsgs => oldMsgs.filter(msg => msg.id !== messageId));
+
+        // messages = messages.filter(msg => msg.id !== messageId);
+      }
+
+      return data;
+    }
   );
 
   useSubscription(
@@ -121,22 +109,71 @@ export const useMessages = ({
       variables,
       query: updateMessageSubscription
     },
-    // @ts-ignore
-    handleUpdatedMessage
+    (prev, data) => {
+      const updatedMessage = data.messageUpdate;
+
+      if (updatedMessage && typeof updatedMessage.content === 'string') {
+        const oldMessages = [...messages];
+
+        const messageIdx = oldMessages.findIndex(msg => msg.id === updatedMessage.id);
+
+        // If -1 item doesnt exist in array
+        if (messageIdx >= 0) {
+          const messageToUpdate = oldMessages[messageIdx];
+          console.log(messageIdx);
+
+          messageToUpdate.content = updatedMessage.content;
+          messageToUpdate.editedAt = new Date().toISOString();
+
+          setMessages(oldMessages);
+          // messages = oldMessages;
+
+          // Object.assign(messages, oldMessages);
+        }
+      }
+      return data;
+    }
   );
 
+  const isReady = data?.channelV2.id === channel;
+
+  // const apiMsgs = data?.channelV2?.messageBunch?.messages ?? [];
+
+  // const isReadyWithMessages =
+  //   isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
+
+  // messages = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
   useEffect(() => {
-    if (!currentChannelId.current) {
-      currentChannelId.current = threadId ?? channel;
-    }
-    // @ts-ignore
-    const isReadyWithMessages = ready && data?.channelV2.messageBunch?.messages;
+    // if (!isSubscribed.current) {
+    //   isSubscribed.current = true;
+    //   fetchHook();
+    //   subToNewMsgs();
+    //   subToUpdatedMsgs();
+    //   subToDeletedMsgs();
+    // }
+
+    // if (!currentChannelId.current) {
+    //   currentChannelId.current = threadId ?? channel;
+    // }
+
+    // if (data?.channelV2.id === channel) {
+    //   setIsReady(true);
+    // }
     if (
       variables.channel !== channel ||
       variables.guild !== guild ||
       variables.threadId !== threadId
     ) {
       setVariables({ channel, guild, threadId });
+    }
+    const apiMsgs = data?.channelV2?.messageBunch?.messages ?? [];
+    // @ts-ignore
+    const isReadyWithMessages =
+      isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
+    // const isReadyWithMessages = isReady && data?.channelV2.messageBunch?.messages;
+
+    if (variables.channel !== channel || variables.threadId !== threadId) {
+      setMessages([]);
     }
 
     // @ts-ignore TODO: Fix this
@@ -145,44 +182,55 @@ export const useMessages = ({
     const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
 
     if (msgs.length) {
-      setNewMessageGroupLength(groupMessages(msgs).length);
-
-      if (ready) {
+      if (isReadyWithMessages) {
+        setNewMessageGroupLength(groupMessages(msgs).length);
+        // TODO: find out why this causes so many renders
         setMessages(prev => [...msgs, ...prev]);
-        isFetching.current = false;
+
+        console.log(msgs[msgs.length - 1], messages[messages.length - 1]);
+        // isFetching.current = false;
       }
 
       //     // messages = [...msgs, prev];
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready, data]);
+  }, [data, isReady]);
+
+  // useEffect(() => {
+  //   const apiMsgs = data?.channelV2?.messageBunch?.messages ?? [];
+  //   // @ts-ignore
+  //   const isReadyWithMessages =
+  //     isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
+
+  //   // @ts-ignore
+  //   const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
+
+  //   if (msgs.length) {
+  //     if (isReadyWithMessages) {
+  //       setNewMessageGroupLength(groupMessages(msgs).length);
+  //       // TODO: find out why this causes so many renders
+  //       setMessages(prev => [...msgs, ...prev]);
+
+  //       console.log(msgs[msgs.length - 1], messages[messages.length - 1]);
+  //       // isFetching.current = false;
+  //     }
+
+  //     //     // messages = [...msgs, prev];
+  //   }
+  // }, []);
 
   const fetchMore = useCallback(
     (before: string) => {
-      if (!ready) return;
+      if (!isReady) return;
 
-      // if (before !== beforeRef) {
-      setVariables({ threadId, guild, channel, before });
+      setVariables({ channel, guild, before, threadId });
 
-      if (!isFetching.current) {
-        isFetching.current = true;
-        console.log('fetching');
-        fetchHook({ requestPolicy: 'network-only' });
-      }
-      // setMessages(prev => [...data.channelV2?.messageBunch?.messages, ...prev]);
-      // }
-
-      // setMessages(prev => [...prev, ...data.channelV2?.messageBunch?.messages]);
+      fetchHook({ requestPolicy: 'network-only' });
     },
-    [channel, fetchHook, guild, threadId, ready]
+    [channel, fetchHook, guild, isReady, threadId]
   );
 
   const loadMoreMessages = useCallback(() => {
-    const lastMsg = messages[messages.length - newMessageGroupLength]?.id;
-
-    console.log('last ', lastMsg);
-
     fetchMore(messages[0].id);
   }, [fetchMore, messages]);
 
@@ -215,7 +263,7 @@ export const useMessages = ({
     ...messageState,
     fetchMore,
     newMessageGroupLength,
-    isReady: ready,
+    isReady,
     loadMoreMessages
   };
 };

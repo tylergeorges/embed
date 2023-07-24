@@ -17,7 +17,8 @@ export const MessageContainer = () => {
     // guild: '585454996800405509',
     // channel: '585840022511550494',
     guild: guildId,
-    channel: channelId
+    channel: channelId,
+    type: 'text-channel'
   });
 
   const handleBottomStateChanged = useCallback(() => {
