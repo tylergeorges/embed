@@ -74,7 +74,7 @@ const ui: UIStore = {
   }),
 
   setIsCurrentChannelThread: action((state, payload) => {
-    state.isCurrentChannelThread = payload && !state.isDomThreadsPanelOpen;
+    state.isCurrentChannelThread = payload;
   }),
 
   setIsDomThreadsPanelOpen: action((state, payload) => {

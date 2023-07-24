@@ -28,8 +28,6 @@ export const Category = ({ category }: CategoryProps) => {
 
   const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
 
-  const setCurrentChannel = useStoreActions(state => state.guild.setCurrentChannel);
-
   const setIsTransitionedThreadsPanelOpen = useStoreActions(
     state => state.ui.setIsTransitionedThreadsPanelOpen
   );
@@ -44,8 +42,6 @@ export const Category = ({ category }: CategoryProps) => {
     if (!threadId) {
       setIsTransitionedThreadsPanelOpen(false);
       setIsDomThreadsPanelOpen(false);
-
-      setCurrentChannel(channelId);
     }
 
     if (currentChannelRef.current) {
