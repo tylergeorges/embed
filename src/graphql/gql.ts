@@ -13,9 +13,9 @@ const documents = {
     types.MessagesQueryDocument,
   '\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdate(channel: $channel, guild: $guild) {\n      id\n      content\n    }\n  }\n':
     types.UpdateMessageSubscriptionDocument,
-  '\n  subscription updateThreadMessageSubscription($channel: String!, $guild: String!, $threadId: String) {\n    messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n':
+  '\n  subscription updateThreadMessageSubscription(\n    $channel: String!\n    $guild: String!\n    $threadId: String\n  ) {\n    messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n':
     types.UpdateThreadMessageSubscriptionDocument,
-  '\n  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId:String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n':
+  '\n  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n':
     types.NewMessageSubscriptionDocument,
   '\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n':
     types.NewThreadMessageSubscriptionDocument,
@@ -41,11 +41,11 @@ export function graphql(
   source: '\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdate(channel: $channel, guild: $guild) {\n      id\n      content\n    }\n  }\n'
 ): typeof documents['\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdate(channel: $channel, guild: $guild) {\n      id\n      content\n    }\n  }\n'];
 export function graphql(
-  source: '\n  subscription updateThreadMessageSubscription($channel: String!, $guild: String!, $threadId: String) {\n    messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n'
-): typeof documents['\n  subscription updateThreadMessageSubscription($channel: String!, $guild: String!, $threadId: String) {\n    messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n'];
+  source: '\n  subscription updateThreadMessageSubscription(\n    $channel: String!\n    $guild: String!\n    $threadId: String\n  ) {\n    messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n'
+): typeof documents['\n  subscription updateThreadMessageSubscription(\n    $channel: String!\n    $guild: String!\n    $threadId: String\n  ) {\n    messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n'];
 export function graphql(
-  source: '\n  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId:String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'
-): typeof documents['\n  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId:String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'];
+  source: '\n  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'
+): typeof documents['\n  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'];
 export function graphql(
   source: '\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'
 ): typeof documents['\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'];
