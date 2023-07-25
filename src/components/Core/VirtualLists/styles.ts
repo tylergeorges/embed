@@ -42,5 +42,6 @@ export const VirtualListMessageWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'list-message_container'
 })('div', {
-  textAlign: 'left'
+  textAlign: 'left',
+  marginTop: theme.space.lg
 });
