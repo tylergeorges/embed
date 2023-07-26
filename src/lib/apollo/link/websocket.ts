@@ -6,12 +6,15 @@ try {
   ls = localStorage
 } catch (e) {}
 
+const queryParams = new URLSearchParams(location.search)
+
 const wsLink = new WebSocketLink({
   uri: WS_URL,
   options: {
     reconnect: true,
     connectionParams: {
-      authToken: ls?.getItem('token') || ''
+      authToken: ls?.getItem('token') || '',
+      settingsGroup: queryParams.get('settings-group') || ''
     }
   }
 });
