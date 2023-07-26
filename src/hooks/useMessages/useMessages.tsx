@@ -66,7 +66,12 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
   const notifications = queryParams.get('notifications') === 'true'
 
-  const channels = notifications && generalStore.guild && generalStore.settings && !generalStore.settings?.singleChannel
+  const channels = notifications
+                && generalStore.guild
+                && generalStore.settings
+                && !generalStore.settings.singleChannel
+                && !generalStore.settings.hideSidebar
+                && !thread
     ? generalStore.guild?.channels.map(c => c.id)
     : [channel]
 
@@ -113,7 +118,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
   });
 
   useSubscription<MessageUpdated, MessageUpdatedVariables>(MESSAGE_UPDATED, {
-    variables: { channel, guild, threadId: thread },
+    variables: { channels: [channel], guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, (data?: { channel: Messages_channel }) => {
@@ -145,7 +150,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
   });
 
   useSubscription<MessageDeleted, MessageDeletedVariables>(MESSAGE_DELETED, {
-    variables: { channel, guild, threadId: thread },
+    variables: { channels: [channel], guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, (data?: { channel: Messages_channel }) => {
@@ -171,7 +176,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
   });
 
   useSubscription<MessagesBulkDeleted, MessagesBulkDeletedVariables>(MESSAGES_BULK_DELETED, {
-    variables: { channel, guild, threadId: thread },
+    variables: { channels: [channel], guild, threadId: thread },
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
         produce(prev, (data?: { channel: Messages_channel }) => {

@@ -337,7 +337,7 @@ export interface MessageUpdated {
 }
 
 export interface MessageUpdatedVariables {
-  channel: string;
+  channels?: string[] | null;
   guild: string;
   threadId?: string | null;
 }
