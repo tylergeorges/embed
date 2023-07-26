@@ -21,7 +21,7 @@ const documents = {
     types.NewThreadMessageSubscriptionDocument,
   '\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDelete(channel: $channel, guild: $guild) {\n      id\n    }\n  }\n':
     types.MessageDeletedDocument,
-  '\n  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {\n    messageDelete(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n':
+  '\n  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {\n    messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n':
     types.ThreadMessageDeletedDocument
 };
 
@@ -53,8 +53,8 @@ export function graphql(
   source: '\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDelete(channel: $channel, guild: $guild) {\n      id\n    }\n  }\n'
 ): typeof documents['\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDelete(channel: $channel, guild: $guild) {\n      id\n    }\n  }\n'];
 export function graphql(
-  source: '\n  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {\n    messageDelete(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n'
-): typeof documents['\n  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {\n    messageDelete(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n'];
+  source: '\n  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {\n    messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n'
+): typeof documents['\n  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {\n    messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n'];
 
 export function graphql(source: string): unknown;
 export function graphql(source: string) {

@@ -46,10 +46,10 @@ export const useThreadsSub = ({
       query: deletedThreadMessageSubscription
     },
     (prev, data) => {
-      const { messageDelete } = data;
+      const { messageDeleteV2 } = data;
 
-      if (messageDelete) {
-        const messageId = messageDelete.id;
+      if (messageDeleteV2) {
+        const messageId = messageDeleteV2.id;
 
         setMessages(oldMsgs => oldMsgs.filter(msg => msg.id !== messageId));
       }

@@ -28,7 +28,6 @@ interface UseMessagesProps {
 export const useMessages = ({
   guild,
   channel,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   threadId,
   setMessages,
   messages

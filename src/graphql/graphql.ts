@@ -1222,7 +1222,7 @@ export type ThreadMessageDeletedSubscriptionVariables = Exact<{
 
 export type ThreadMessageDeletedSubscription = {
   __typename?: 'Subscription';
-  messageDelete?: { __typename?: 'DeletedMessage'; id: string } | null;
+  messageDeleteV2?: { __typename?: 'DeletedMessage'; id: string } | null;
 };
 
 export const EmbedFragmentDoc = {
@@ -2127,12 +2127,15 @@ export const ThreadMessageDeletedDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'messageDelete' },
+            name: { kind: 'Name', value: 'messageDeleteV2' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'channel' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } }
+                name: { kind: 'Name', value: 'channels' },
+                value: {
+                  kind: 'ListValue',
+                  values: [{ kind: 'Variable', name: { kind: 'Name', value: 'channel' } }]
+                }
               },
               {
                 kind: 'Argument',

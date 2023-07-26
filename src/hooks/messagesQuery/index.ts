@@ -202,7 +202,7 @@ export const deletedMessageSubscription = graphql(`
 
 export const deletedThreadMessageSubscription = graphql(`
   subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {
-    messageDelete(channel: $channel, guild: $guild, threadId: $threadId) {
+    messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {
       id
     }
   }
