@@ -48,7 +48,7 @@ export const Post = styled.button`
 
     &:hover {
         transform: translateY(-2px);
-        box-shadow: 0 8px 16px hsl(black/0.24);
+        box-shadow: 0px 8px 16px 0 rgba(0, 0, 0, 0.24);
     }
 `
 
