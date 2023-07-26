@@ -13,11 +13,11 @@ const documents = {
     types.MessagesQueryDocument,
   '\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdate(channel: $channel, guild: $guild) {\n      id\n      content\n    }\n  }\n':
     types.UpdateMessageSubscriptionDocument,
-  '\n  subscription updateThreadMessageSubscription(\n    $channel: String!\n    $guild: String!\n    $threadId: String\n  ) {\n    messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n':
-    types.UpdateThreadMessageSubscriptionDocument,
-  '\n  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n':
+  '\n  subscription updateThreadMsgSubscription($channel: String!, $guild: String!, $threadId: String) {\n    messageUpdateV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n':
+    types.UpdateThreadMsgSubscriptionDocument,
+  '\n  subscription newMessageSubscription($guild: String!, $channel: String!) {\n    message(guild: $guild, channel: $channel) {\n      ...BaseMessage\n    }\n  }\n':
     types.NewMessageSubscriptionDocument,
-  '\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n':
+  '\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    messageV2(channels: [$channel], threadId: $threadId, guild: $guild) {\n      ...BaseMessage\n    }\n  }\n':
     types.NewThreadMessageSubscriptionDocument,
   '\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDelete(channel: $channel, guild: $guild) {\n      id\n    }\n  }\n':
     types.MessageDeletedDocument,
@@ -41,14 +41,14 @@ export function graphql(
   source: '\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdate(channel: $channel, guild: $guild) {\n      id\n      content\n    }\n  }\n'
 ): typeof documents['\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdate(channel: $channel, guild: $guild) {\n      id\n      content\n    }\n  }\n'];
 export function graphql(
-  source: '\n  subscription updateThreadMessageSubscription(\n    $channel: String!\n    $guild: String!\n    $threadId: String\n  ) {\n    messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n'
-): typeof documents['\n  subscription updateThreadMessageSubscription(\n    $channel: String!\n    $guild: String!\n    $threadId: String\n  ) {\n    messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n'];
+  source: '\n  subscription updateThreadMsgSubscription($channel: String!, $guild: String!, $threadId: String) {\n    messageUpdateV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n'
+): typeof documents['\n  subscription updateThreadMsgSubscription($channel: String!, $guild: String!, $threadId: String) {\n    messageUpdateV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n'];
 export function graphql(
-  source: '\n  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'
-): typeof documents['\n  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'];
+  source: '\n  subscription newMessageSubscription($guild: String!, $channel: String!) {\n    message(guild: $guild, channel: $channel) {\n      ...BaseMessage\n    }\n  }\n'
+): typeof documents['\n  subscription newMessageSubscription($guild: String!, $channel: String!) {\n    message(guild: $guild, channel: $channel) {\n      ...BaseMessage\n    }\n  }\n'];
 export function graphql(
-  source: '\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'
-): typeof documents['\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    message(guild: $guild, channel: $channel, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'];
+  source: '\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    messageV2(channels: [$channel], threadId: $threadId, guild: $guild) {\n      ...BaseMessage\n    }\n  }\n'
+): typeof documents['\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    messageV2(channels: [$channel], threadId: $threadId, guild: $guild) {\n      ...BaseMessage\n    }\n  }\n'];
 export function graphql(
   source: '\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDelete(channel: $channel, guild: $guild) {\n      id\n    }\n  }\n'
 ): typeof documents['\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDelete(channel: $channel, guild: $guild) {\n      id\n    }\n  }\n'];

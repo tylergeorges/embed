@@ -30,8 +30,7 @@ export const useThreadsSub = ({
     },
 
     (prev, data) => {
-      const message = data.message as BaseMessageFragment;
-      console.log(prev, data);
+      const message = data.messageV2 as BaseMessageFragment;
 
       if (message && message.channelId === threadId) {
         setMessages(prev => [...prev, message]);
@@ -65,7 +64,7 @@ export const useThreadsSub = ({
       query: updateThreadMessageSubscription
     },
     (prev, data) => {
-      const updatedMessage = data.messageUpdate;
+      const updatedMessage = data.messageUpdateV2;
 
       if (updatedMessage && typeof updatedMessage.content === 'string') {
         const oldMessages = [...messages];
@@ -75,7 +74,6 @@ export const useThreadsSub = ({
         // If -1 item doesnt exist in array
         if (messageIdx >= 0) {
           const messageToUpdate = oldMessages[messageIdx];
-          console.log(messageIdx);
 
           messageToUpdate.content = updatedMessage.content;
           messageToUpdate.editedAt = new Date().toISOString();

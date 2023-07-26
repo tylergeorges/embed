@@ -346,6 +346,14 @@ export type GuildSettings = {
   theme?: Maybe<ThemeSettings>;
 };
 
+export type GuildTokenSettings = {
+  __typename?: 'GuildTokenSettings';
+  channelId?: Maybe<Scalars['String']>;
+  guildId: Scalars['String'];
+  settings: GuildSettings;
+  threadId?: Maybe<Scalars['String']>;
+};
+
 export type JoinMember = Action & {
   __typename?: 'JoinMember';
   group: DirectGroupChat;
@@ -532,6 +540,7 @@ export type Query = {
   directUsers: Array<User>;
   getChats: Array<Chat>;
   getMessagesForChat: Array<Message>;
+  getTokenSettings: GuildTokenSettings;
   guild: Guild;
   hello: Scalars['String'];
   settings: GuildSettings;
@@ -560,6 +569,10 @@ export type QueryGetMessagesForChatArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
   isGroup?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type QueryGetTokenSettingsArgs = {
+  token: Scalars['String'];
 };
 
 export type QueryGuildArgs = {
@@ -614,10 +627,17 @@ export type Subscription = {
   __typename?: 'Subscription';
   action?: Maybe<Action>;
   directMessage?: Maybe<Message>;
+  /** @deprecated Use messageV2 instead */
   message?: Maybe<Message>;
+  /** @deprecated Use messageDeleteV2 instead */
   messageDelete?: Maybe<DeletedMessage>;
+  /** @deprecated Use messageDeleteBulkV2 instead */
   messageDeleteBulk?: Maybe<BulkDeletedMessages>;
+  messageDeleteBulkV2?: Maybe<BulkDeletedMessages>;
+  messageDeleteV2?: Maybe<DeletedMessage>;
+  /** @deprecated Use messageUpdateV2 instead */
   messageUpdate?: Maybe<UpdatedMessage>;
+  messageUpdateV2?: Maybe<UpdatedMessage>;
   messageV2?: Maybe<Message>;
 };
 
@@ -647,8 +667,26 @@ export type SubscriptionMessageDeleteBulkArgs = {
   threadId?: InputMaybe<Scalars['String']>;
 };
 
+export type SubscriptionMessageDeleteBulkV2Args = {
+  channels?: InputMaybe<Array<Scalars['String']>>;
+  guild: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
+};
+
+export type SubscriptionMessageDeleteV2Args = {
+  channels?: InputMaybe<Array<Scalars['String']>>;
+  guild: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
+};
+
 export type SubscriptionMessageUpdateArgs = {
   channel: Scalars['String'];
+  guild: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
+};
+
+export type SubscriptionMessageUpdateV2Args = {
+  channels?: InputMaybe<Array<Scalars['String']>>;
   guild: Scalars['String'];
   threadId?: InputMaybe<Scalars['String']>;
 };
@@ -1126,21 +1164,20 @@ export type UpdateMessageSubscriptionSubscription = {
   messageUpdate?: { __typename?: 'UpdatedMessage'; id: string; content?: string | null } | null;
 };
 
-export type UpdateThreadMessageSubscriptionSubscriptionVariables = Exact<{
+export type UpdateThreadMsgSubscriptionSubscriptionVariables = Exact<{
   channel: Scalars['String'];
   guild: Scalars['String'];
   threadId?: InputMaybe<Scalars['String']>;
 }>;
 
-export type UpdateThreadMessageSubscriptionSubscription = {
+export type UpdateThreadMsgSubscriptionSubscription = {
   __typename?: 'Subscription';
-  messageUpdate?: { __typename?: 'UpdatedMessage'; id: string; content?: string | null } | null;
+  messageUpdateV2?: { __typename?: 'UpdatedMessage'; id: string; content?: string | null } | null;
 };
 
 export type NewMessageSubscriptionSubscriptionVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
-  threadId?: InputMaybe<Scalars['String']>;
 }>;
 
 export type NewMessageSubscriptionSubscription = {
@@ -1160,7 +1197,7 @@ export type NewThreadMessageSubscriptionSubscriptionVariables = Exact<{
 
 export type NewThreadMessageSubscriptionSubscription = {
   __typename?: 'Subscription';
-  message?:
+  messageV2?:
     | ({ __typename?: 'Message' } & {
         ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
       })
@@ -1803,13 +1840,13 @@ export const UpdateMessageSubscriptionDocument = {
   UpdateMessageSubscriptionSubscription,
   UpdateMessageSubscriptionSubscriptionVariables
 >;
-export const UpdateThreadMessageSubscriptionDocument = {
+export const UpdateThreadMsgSubscriptionDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'subscription',
-      name: { kind: 'Name', value: 'updateThreadMessageSubscription' },
+      name: { kind: 'Name', value: 'updateThreadMsgSubscription' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -1838,12 +1875,15 @@ export const UpdateThreadMessageSubscriptionDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'messageUpdate' },
+            name: { kind: 'Name', value: 'messageUpdateV2' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'channel' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } }
+                name: { kind: 'Name', value: 'channels' },
+                value: {
+                  kind: 'ListValue',
+                  values: [{ kind: 'Variable', name: { kind: 'Name', value: 'channel' } }]
+                }
               },
               {
                 kind: 'Argument',
@@ -1869,8 +1909,8 @@ export const UpdateThreadMessageSubscriptionDocument = {
     }
   ]
 } as unknown as DocumentNode<
-  UpdateThreadMessageSubscriptionSubscription,
-  UpdateThreadMessageSubscriptionSubscriptionVariables
+  UpdateThreadMsgSubscriptionSubscription,
+  UpdateThreadMsgSubscriptionSubscriptionVariables
 >;
 export const NewMessageSubscriptionDocument = {
   kind: 'Document',
@@ -1895,11 +1935,6 @@ export const NewMessageSubscriptionDocument = {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
           }
-        },
-        {
-          kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } },
-          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
         }
       ],
       selectionSet: {
@@ -1918,11 +1953,6 @@ export const NewMessageSubscriptionDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'channel' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'threadId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
               }
             ],
             selectionSet: {
@@ -1974,22 +2004,25 @@ export const NewThreadMessageSubscriptionDocument = {
         selections: [
           {
             kind: 'Field',
-            name: { kind: 'Name', value: 'message' },
+            name: { kind: 'Name', value: 'messageV2' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'guild' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
-              },
-              {
-                kind: 'Argument',
-                name: { kind: 'Name', value: 'channel' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } }
+                name: { kind: 'Name', value: 'channels' },
+                value: {
+                  kind: 'ListValue',
+                  values: [{ kind: 'Variable', name: { kind: 'Name', value: 'channel' } }]
+                }
               },
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'threadId' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'guild' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
               }
             ],
             selectionSet: {

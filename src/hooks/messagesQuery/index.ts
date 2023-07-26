@@ -168,12 +168,8 @@ export const updateMessageSubscription = graphql(`
 // TODO: Copy fragments from old codebase for this.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const updateThreadMessageSubscription = graphql(`
-  subscription updateThreadMessageSubscription(
-    $channel: String!
-    $guild: String!
-    $threadId: String
-  ) {
-    messageUpdate(channel: $channel, guild: $guild, threadId: $threadId) {
+  subscription updateThreadMsgSubscription($channel: String!, $guild: String!, $threadId: String) {
+    messageUpdateV2(channels: [$channel], guild: $guild, threadId: $threadId) {
       id
       content
     }
@@ -181,8 +177,8 @@ export const updateThreadMessageSubscription = graphql(`
 `);
 
 export const newMessageSubscription = graphql(`
-  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId: String) {
-    message(guild: $guild, channel: $channel, threadId: $threadId) {
+  subscription newMessageSubscription($guild: String!, $channel: String!) {
+    message(guild: $guild, channel: $channel) {
       ...BaseMessage
     }
   }
@@ -190,7 +186,7 @@ export const newMessageSubscription = graphql(`
 
 export const newThreadMessageSubscription = graphql(`
   subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {
-    message(guild: $guild, channel: $channel, threadId: $threadId) {
+    messageV2(channels: [$channel], threadId: $threadId, guild: $guild) {
       ...BaseMessage
     }
   }

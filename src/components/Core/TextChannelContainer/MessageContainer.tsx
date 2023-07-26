@@ -18,8 +18,7 @@ export const MessageContainer = () => {
     guild,
     channel,
     messages,
-    setMessages,
-    threadId: undefined
+    setMessages
   });
 
   useSub({

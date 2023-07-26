@@ -12,13 +12,12 @@ interface UseSubArgs {
   channel: string;
   messages: BaseMessageFragment[];
   setMessages: Dispatch<SetStateAction<BaseMessageFragment[]>>;
-  threadId?: string;
 }
 
-export const useSub = ({ messages, setMessages, threadId, channel, guild }: UseSubArgs) => {
+export const useSub = ({ messages, setMessages, channel, guild }: UseSubArgs) => {
   useSubscription(
     {
-      variables: { guild, channel, threadId },
+      variables: { guild, channel },
       query: newMessageSubscription
     },
 
@@ -35,7 +34,7 @@ export const useSub = ({ messages, setMessages, threadId, channel, guild }: UseS
 
   useSubscription(
     {
-      variables: { threadId, guild, channel },
+      variables: { guild, channel },
       query: deletedMessageSubscription
     },
     (prev, data) => {
@@ -53,7 +52,7 @@ export const useSub = ({ messages, setMessages, threadId, channel, guild }: UseS
 
   useSubscription(
     {
-      variables: { threadId, guild, channel },
+      variables: { guild, channel },
       query: updateMessageSubscription
     },
     (prev, data) => {
@@ -66,7 +65,6 @@ export const useSub = ({ messages, setMessages, threadId, channel, guild }: UseS
 
         if (messageIdx >= 0) {
           const messageToUpdate = oldMessages[messageIdx];
-          console.log(messageIdx);
 
           messageToUpdate.content = updatedMessage.content;
           messageToUpdate.editedAt = new Date().toISOString();
