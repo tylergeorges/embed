@@ -53,6 +53,7 @@ export const useMessages = ({
     // @ts-ignore
     const isReadyWithMessages =
       isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
+
     if (variables.channel !== channel || variables.threadId !== threadId) {
       setMessages([]);
     }

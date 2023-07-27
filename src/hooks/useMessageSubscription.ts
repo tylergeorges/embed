@@ -1,17 +1,19 @@
 import { useSubscription } from 'urql';
 import { Dispatch, SetStateAction } from 'react';
-import { BaseMessageFragment } from '@graphql/graphql';
+import { BaseMessageFragment, UpdatedMessage } from '@graphql/graphql';
 import {
   deletedMessageSubscription,
   newMessageSubscription,
   updateMessageSubscription
 } from '@hooks/messagesQuery';
 
+type StateMessages = BaseMessageFragment | UpdatedMessage;
+
 interface UseSubArgs {
   guild: string;
   channel: string;
-  messages: BaseMessageFragment[];
-  setMessages: Dispatch<SetStateAction<BaseMessageFragment[]>>;
+  messages: Array<StateMessages>;
+  setMessages: Dispatch<SetStateAction<Array<StateMessages>>>;
 }
 
 export const useMessageSubscription = ({ messages, setMessages, channel, guild }: UseSubArgs) => {
@@ -23,7 +25,6 @@ export const useMessageSubscription = ({ messages, setMessages, channel, guild }
 
     (prev, data) => {
       const message = data.messageV2 as BaseMessageFragment;
-      console.log(message);
 
       if (message) {
         setMessages(prev => [...prev, message]);
@@ -40,7 +41,6 @@ export const useMessageSubscription = ({ messages, setMessages, channel, guild }
     },
     (prev, data) => {
       const { messageDeleteV2 } = data;
-      console.log(messageDeleteV2);
 
       if (messageDeleteV2) {
         const messageId = messageDeleteV2.id;
@@ -58,7 +58,7 @@ export const useMessageSubscription = ({ messages, setMessages, channel, guild }
       query: updateMessageSubscription
     },
     (prev, data) => {
-      const updatedMessage = data.messageUpdateV2;
+      const updatedMessage = data.messageUpdateV2 as UpdatedMessage;
 
       if (updatedMessage && typeof updatedMessage.content === 'string') {
         const oldMessages = [...messages];
@@ -66,10 +66,7 @@ export const useMessageSubscription = ({ messages, setMessages, channel, guild }
         const messageIdx = oldMessages.findIndex(msg => msg.id === updatedMessage.id);
 
         if (messageIdx >= 0) {
-          const messageToUpdate = oldMessages[messageIdx];
-
-          messageToUpdate.content = updatedMessage.content;
-          messageToUpdate.editedAt = new Date().toISOString();
+          oldMessages[messageIdx] = updatedMessage;
 
           setMessages(oldMessages);
         }

@@ -157,10 +157,72 @@ export const messagesQuery = graphql(`
 // TODO: Copy fragments from old codebase for this.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const updateMessageSubscription = graphql(`
-  subscription updateMessageSubscription($channel: String!, $guild: String!) {
-    messageUpdateV2(channels: [$channel], guild: $guild) {
+  subscription updateMessageSubscription($guild: String!, $channel: String!) {
+    messageUpdateV2(guild: $guild, channels: [$channel]) {
       id
       content
+      type
+      flags
+      createdAt
+      editedAt
+
+      author {
+        avatarUrl
+        bot
+        discrim
+        id
+        flags
+        name
+        roles
+      }
+
+      attachments {
+        url
+        height
+        width
+        filename
+        size
+      }
+
+      stickers {
+        id
+        name
+        formatType
+        lottieData
+      }
+
+      reactions {
+        count
+        emojiId
+        emojiName
+        animated
+      }
+
+      messageReference {
+        guildId
+        channelId
+        messageId
+      }
+
+      embeds {
+        ...Embed
+      }
+
+      mentions {
+        id
+        type
+        name
+      }
+
+      interaction {
+        name
+        user {
+          id
+          username
+          discriminator
+          avatarUrl
+        }
+      }
     }
   }
 `);
@@ -172,13 +234,83 @@ export const updateThreadMessageSubscription = graphql(`
     messageUpdateV2(channels: [$channel], guild: $guild, threadId: $threadId) {
       id
       content
+      type
+      flags
+      createdAt
+      editedAt
+
+      author {
+        avatarUrl
+        bot
+        discrim
+        id
+        flags
+        name
+        roles
+      }
+
+      attachments {
+        url
+        height
+        width
+        filename
+        size
+      }
+
+      stickers {
+        id
+        name
+        formatType
+        lottieData
+      }
+
+      reactions {
+        count
+        emojiId
+        emojiName
+        animated
+      }
+
+      messageReference {
+        guildId
+        channelId
+        messageId
+      }
+
+      embeds {
+        ...Embed
+      }
+
+      mentions {
+        id
+        type
+        name
+      }
+
+      interaction {
+        name
+        user {
+          id
+          username
+          discriminator
+          avatarUrl
+        }
+      }
+
+      thread {
+        id
+        name
+        archivedAt
+        locked
+        messageCount
+      }
     }
   }
 `);
 
 export const newMessageSubscription = graphql(`
-  subscription newMessageSubscription($guild: String!) {
-    messageV2(guild: $guild) {
+  subscription newMessageSubscription($guild: String!, $channel: String!) {
+    messageV2(guild: $guild, channels: [$channel]) {
       ...BaseMessage
     }
   }

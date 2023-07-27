@@ -1,5 +1,5 @@
 import { useSubscription } from 'urql';
-import { BaseMessageFragment } from '@graphql/graphql';
+import { BaseMessageFragment, UpdatedMessage } from '@graphql/graphql';
 
 import {
   newThreadMessageSubscription,
@@ -8,11 +8,13 @@ import {
 } from '@hooks/messagesQuery';
 import { Dispatch, SetStateAction } from 'react';
 
+type StateMessages = BaseMessageFragment | UpdatedMessage;
+
 interface UseThreadsSubArgs {
   guild: string;
   channel: string;
-  messages: BaseMessageFragment[];
-  setMessages: Dispatch<SetStateAction<BaseMessageFragment[]>>;
+  messages: Array<StateMessages>;
+  setMessages: Dispatch<SetStateAction<Array<StateMessages>>>;
   threadId?: string;
 }
 
@@ -32,7 +34,6 @@ export const useThreadSubscription = ({
     (prev, data) => {
       const message = data.messageV2 as BaseMessageFragment;
 
-      console.log(message);
       if (message && message.channelId === threadId) {
         setMessages(prev => [...prev, message]);
       }
@@ -48,7 +49,6 @@ export const useThreadSubscription = ({
     },
     (prev, data) => {
       const { messageDeleteV2 } = data;
-      console.log(messageDeleteV2);
       if (messageDeleteV2) {
         const messageId = messageDeleteV2.id;
 
@@ -65,19 +65,15 @@ export const useThreadSubscription = ({
       query: updateThreadMessageSubscription
     },
     (prev, data) => {
-      const updatedMessage = data.messageUpdateV2;
+      const updatedMessage = data.messageUpdateV2 as UpdatedMessage;
 
       if (updatedMessage && typeof updatedMessage.content === 'string') {
         const oldMessages = [...messages];
 
         const messageIdx = oldMessages.findIndex(msg => msg.id === updatedMessage.id);
 
-        // If -1 item doesnt exist in array
         if (messageIdx >= 0) {
-          const messageToUpdate = oldMessages[messageIdx];
-
-          messageToUpdate.content = updatedMessage.content;
-          messageToUpdate.editedAt = new Date().toISOString();
+          oldMessages[messageIdx] = updatedMessage;
 
           setMessages(oldMessages);
         }
