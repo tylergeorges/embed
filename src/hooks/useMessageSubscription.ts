@@ -6,20 +6,26 @@ import {
   newMessageSubscription,
   updateMessageSubscription
 } from '@hooks/messagesQuery';
-
-type StateMessages = BaseMessageFragment | UpdatedMessage;
+import { StateMessages } from 'types/messages.types';
 
 interface UseSubArgs {
   guild: string;
   channel: string;
   messages: Array<StateMessages>;
   setMessages: Dispatch<SetStateAction<Array<StateMessages>>>;
+  threadId?: string;
 }
 
-export const useMessageSubscription = ({ messages, setMessages, channel, guild }: UseSubArgs) => {
+export const useMessageSubscription = ({
+  messages,
+  setMessages,
+  channel,
+  guild,
+  threadId
+}: UseSubArgs) => {
   useSubscription(
     {
-      variables: { guild, channel },
+      variables: { guild, channel, threadId },
       query: newMessageSubscription
     },
 
@@ -36,7 +42,7 @@ export const useMessageSubscription = ({ messages, setMessages, channel, guild }
 
   useSubscription(
     {
-      variables: { guild, channel },
+      variables: { guild, channel, threadId },
       query: deletedMessageSubscription
     },
     (prev, data) => {
@@ -54,7 +60,7 @@ export const useMessageSubscription = ({ messages, setMessages, channel, guild }
 
   useSubscription(
     {
-      variables: { guild, channel },
+      variables: { guild, channel, threadId },
       query: updateMessageSubscription
     },
     (prev, data) => {

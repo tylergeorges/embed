@@ -10,6 +10,7 @@ import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
 import { messagesQuery } from '@hooks/messagesQuery';
+import { StateMessages } from 'types/messages.types';
 
 type MessageState = {
   messages: MessageFragmentFragment[];
@@ -20,8 +21,8 @@ type MessageState = {
 interface UseMessagesProps {
   guild: string;
   channel: string;
-  messages: BaseMessageFragment[];
-  setMessages: Dispatch<SetStateAction<BaseMessageFragment[]>>;
+  messages: StateMessages[];
+  setMessages: Dispatch<SetStateAction<StateMessages[]>>;
   threadId?: string;
 }
 
@@ -99,7 +100,9 @@ export const useMessages = ({
         firstItemIndex
       };
 
-    const grouped = groupMessages(messages.map(convertMessageToDiscord));
+    const grouped = groupMessages(
+      messages.map(msg => convertMessageToDiscord(msg as BaseMessageFragment))
+    );
     firstItemIndex -= grouped.length - 1;
 
     return {

@@ -5,14 +5,14 @@ import { useCallback, useState } from 'react';
 import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
-import { BaseMessageFragment } from '@graphql/graphql';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
+import { StateMessages } from 'types/messages.types';
 import * as Styles from './styles';
 
 export const MessageContainer = () => {
   const [isListRendered, setIsListRendered] = useState(false);
   const { channelId: channel, guildId: guild } = useAppRouter();
-  const [messages, setMessages] = useState<BaseMessageFragment[]>([]);
+  const [messages, setMessages] = useState<StateMessages[]>([]);
 
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
     guild,

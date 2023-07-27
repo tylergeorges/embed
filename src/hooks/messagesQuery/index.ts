@@ -157,8 +157,8 @@ export const messagesQuery = graphql(`
 // TODO: Copy fragments from old codebase for this.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const updateMessageSubscription = graphql(`
-  subscription updateMessageSubscription($guild: String!, $channel: String!) {
-    messageUpdateV2(guild: $guild, channels: [$channel]) {
+  subscription updateMessageSubscription($guild: String!, $channel: String!, $threadId: String) {
+    messageUpdateV2(guild: $guild, channels: [$channel], threadId: $threadId) {
       id
       content
       type
@@ -222,102 +222,13 @@ export const updateMessageSubscription = graphql(`
           discriminator
           avatarUrl
         }
-      }
-    }
-  }
-`);
-
-// TODO: Copy fragments from old codebase for this.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const updateThreadMessageSubscription = graphql(`
-  subscription updateThreadMsgSubscription($channel: String!, $guild: String!, $threadId: String) {
-    messageUpdateV2(channels: [$channel], guild: $guild, threadId: $threadId) {
-      id
-      content
-      type
-      flags
-      createdAt
-      editedAt
-
-      author {
-        avatarUrl
-        bot
-        discrim
-        id
-        flags
-        name
-        roles
-      }
-
-      attachments {
-        url
-        height
-        width
-        filename
-        size
-      }
-
-      stickers {
-        id
-        name
-        formatType
-        lottieData
-      }
-
-      reactions {
-        count
-        emojiId
-        emojiName
-        animated
-      }
-
-      messageReference {
-        guildId
-        channelId
-        messageId
-      }
-
-      embeds {
-        ...Embed
-      }
-
-      mentions {
-        id
-        type
-        name
-      }
-
-      interaction {
-        name
-        user {
-          id
-          username
-          discriminator
-          avatarUrl
-        }
-      }
-
-      thread {
-        id
-        name
-        archivedAt
-        locked
-        messageCount
       }
     }
   }
 `);
 
 export const newMessageSubscription = graphql(`
-  subscription newMessageSubscription($guild: String!, $channel: String!) {
-    messageV2(guild: $guild, channels: [$channel]) {
-      ...BaseMessage
-    }
-  }
-`);
-
-export const newThreadMessageSubscription = graphql(`
-  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {
+  subscription newMessageSubscription($guild: String!, $channel: String!, $threadId: String) {
     messageV2(channels: [$channel], guild: $guild, threadId: $threadId) {
       ...BaseMessage
     }
@@ -325,15 +236,7 @@ export const newThreadMessageSubscription = graphql(`
 `);
 
 export const deletedMessageSubscription = graphql(`
-  subscription MessageDeleted($channel: String!, $guild: String!) {
-    messageDeleteV2(channels: [$channel], guild: $guild) {
-      id
-    }
-  }
-`);
-
-export const deletedThreadMessageSubscription = graphql(`
-  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {
+  subscription MessageDeleted($guild: String!, $channel: String!, $threadId: String) {
     messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {
       id
     }

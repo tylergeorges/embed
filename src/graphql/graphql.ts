@@ -1157,6 +1157,7 @@ export type MessagesQueryQuery = {
 export type UpdateMessageSubscriptionSubscriptionVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
 }>;
 
 export type UpdateMessageSubscriptionSubscription = {
@@ -1318,6 +1319,7 @@ export type UpdateThreadMsgSubscriptionSubscription = {
 export type NewMessageSubscriptionSubscriptionVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
 }>;
 
 export type NewMessageSubscriptionSubscription = {
@@ -1345,8 +1347,9 @@ export type NewThreadMessageSubscriptionSubscription = {
 };
 
 export type MessageDeletedSubscriptionVariables = Exact<{
-  channel: Scalars['String'];
   guild: Scalars['String'];
+  channel: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
 }>;
 
 export type MessageDeletedSubscription = {
@@ -1944,6 +1947,11 @@ export const UpdateMessageSubscriptionDocument = {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
           }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
         }
       ],
       selectionSet: {
@@ -1965,6 +1973,11 @@ export const UpdateMessageSubscriptionDocument = {
                   kind: 'ListValue',
                   values: [{ kind: 'Variable', name: { kind: 'Name', value: 'channel' } }]
                 }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'threadId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
               }
             ],
             selectionSet: {
@@ -2324,6 +2337,11 @@ export const NewMessageSubscriptionDocument = {
             kind: 'NonNullType',
             type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
           }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
         }
       ],
       selectionSet: {
@@ -2335,16 +2353,21 @@ export const NewMessageSubscriptionDocument = {
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'guild' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
-              },
-              {
-                kind: 'Argument',
                 name: { kind: 'Name', value: 'channels' },
                 value: {
                   kind: 'ListValue',
                   values: [{ kind: 'Variable', name: { kind: 'Name', value: 'channel' } }]
                 }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'guild' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'threadId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
               }
             ],
             selectionSet: {
@@ -2441,6 +2464,14 @@ export const MessageDeletedDocument = {
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } },
           type: {
             kind: 'NonNullType',
@@ -2449,11 +2480,8 @@ export const MessageDeletedDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } },
-          type: {
-            kind: 'NonNullType',
-            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
-          }
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
         }
       ],
       selectionSet: {
@@ -2475,6 +2503,11 @@ export const MessageDeletedDocument = {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'guild' },
                 value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'threadId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
               }
             ],
             selectionSet: {
