@@ -2,11 +2,13 @@ import { createClient, cacheExchange, fetchExchange, subscriptionExchange } from
 import { getEnvVar } from '@util/env';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 
-const socketScheme = getEnvVar('CUSTOM_SERVER_ENDPOINT')?.includes('127.0.0.1')
-  ? 'ws://'
-  : 'wss://';
+const serverEndpoint = getEnvVar('CUSTOM_SERVER_ENDPOINT');
+const isDev = serverEndpoint?.includes('127.0.0.1');
 
-const WS_URL = `${socketScheme}${getEnvVar('CUSTOM_SERVER_ENDPOINT')}/api/graphql`;
+const socketScheme = isDev ? 'ws://' : 'wss://';
+const httpScheme = isDev ? 'http://' : 'https://';
+
+const WS_URL = `${socketScheme}${serverEndpoint}/api/graphql`;
 
 const subClient = new SubscriptionClient(WS_URL, {
   reconnect: true,
@@ -15,7 +17,7 @@ const subClient = new SubscriptionClient(WS_URL, {
 });
 
 export const client = createClient({
-  url: `https://${getEnvVar('CUSTOM_SERVER_ENDPOINT')}/api/graphql`,
+  url: `${httpScheme}${serverEndpoint}/api/graphql`,
   exchanges: [
     fetchExchange,
     cacheExchange,

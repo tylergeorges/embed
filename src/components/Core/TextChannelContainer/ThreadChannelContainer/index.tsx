@@ -12,7 +12,6 @@ export const ThreadChannelContainer = ({
 }: ThreadChannelContainerProps) => (
   <Styles.ThreadsPanelContainer>
     <ThreadPanelHeader startPanelHideTransition={startPanelHideTransition} />
-
     <ThreadMessageContainer />
   </Styles.ThreadsPanelContainer>
 );

@@ -17,12 +17,13 @@ interface UseSubArgs {
 export const useSub = ({ messages, setMessages, channel, guild }: UseSubArgs) => {
   useSubscription(
     {
-      variables: { guild, channel },
+      variables: { guild },
       query: newMessageSubscription
     },
 
     (prev, data) => {
-      const message = data.message as BaseMessageFragment;
+      const message = data.messageV2 as BaseMessageFragment;
+      console.log(message);
 
       if (message) {
         setMessages(prev => [...prev, message]);
@@ -38,10 +39,11 @@ export const useSub = ({ messages, setMessages, channel, guild }: UseSubArgs) =>
       query: deletedMessageSubscription
     },
     (prev, data) => {
-      const { messageDelete } = data;
+      const { messageDeleteV2 } = data;
+      console.log(messageDeleteV2);
 
-      if (messageDelete) {
-        const messageId = messageDelete.id;
+      if (messageDeleteV2) {
+        const messageId = messageDeleteV2.id;
 
         setMessages(oldMsgs => oldMsgs.filter(msg => msg.id !== messageId));
       }
@@ -56,7 +58,7 @@ export const useSub = ({ messages, setMessages, channel, guild }: UseSubArgs) =>
       query: updateMessageSubscription
     },
     (prev, data) => {
-      const updatedMessage = data.messageUpdate;
+      const updatedMessage = data.messageUpdateV2;
 
       if (updatedMessage && typeof updatedMessage.content === 'string') {
         const oldMessages = [...messages];

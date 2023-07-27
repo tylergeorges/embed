@@ -32,6 +32,7 @@ export const useThreadsSub = ({
     (prev, data) => {
       const message = data.messageV2 as BaseMessageFragment;
 
+      console.log(message);
       if (message && message.channelId === threadId) {
         setMessages(prev => [...prev, message]);
       }
@@ -47,7 +48,7 @@ export const useThreadsSub = ({
     },
     (prev, data) => {
       const { messageDeleteV2 } = data;
-
+      console.log(messageDeleteV2);
       if (messageDeleteV2) {
         const messageId = messageDeleteV2.id;
 

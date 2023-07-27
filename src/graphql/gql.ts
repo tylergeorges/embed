@@ -11,15 +11,15 @@ const documents = {
     types.BaseMessageFragmentDoc,
   '\n  query messagesQuery($guild: String!, $channel: String!, $threadId: String, $before: String) {\n    channelV2(guild: $guild, id: $channel) {\n      id\n      ... on TextChannel {\n        messageBunch(threadId: $threadId, before: $before) {\n          messages {\n            ...BaseMessage\n          }\n        }\n      }\n      ... on ThreadChannel {\n        # This is not currently used but it resolves type issues\n        messageBunch(threadId: $threadId, before: $before) {\n          messages {\n            ...BaseMessage\n          }\n        }\n      }\n    }\n  }\n':
     types.MessagesQueryDocument,
-  '\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdate(channel: $channel, guild: $guild) {\n      id\n      content\n    }\n  }\n':
+  '\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdateV2(channels: [$channel], guild: $guild) {\n      id\n      content\n    }\n  }\n':
     types.UpdateMessageSubscriptionDocument,
   '\n  subscription updateThreadMsgSubscription($channel: String!, $guild: String!, $threadId: String) {\n    messageUpdateV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n':
     types.UpdateThreadMsgSubscriptionDocument,
-  '\n  subscription newMessageSubscription($guild: String!, $channel: String!) {\n    message(guild: $guild, channel: $channel) {\n      ...BaseMessage\n    }\n  }\n':
+  '\n  subscription newMessageSubscription($guild: String!) {\n    messageV2(guild: $guild) {\n      ...BaseMessage\n    }\n  }\n':
     types.NewMessageSubscriptionDocument,
-  '\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    messageV2(channels: [$channel], threadId: $threadId, guild: $guild) {\n      ...BaseMessage\n    }\n  }\n':
+  '\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    messageV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n':
     types.NewThreadMessageSubscriptionDocument,
-  '\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDelete(channel: $channel, guild: $guild) {\n      id\n    }\n  }\n':
+  '\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDeleteV2(channels: [$channel], guild: $guild) {\n      id\n    }\n  }\n':
     types.MessageDeletedDocument,
   '\n  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {\n    messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n':
     types.ThreadMessageDeletedDocument
@@ -38,20 +38,20 @@ export function graphql(
   source: '\n  query messagesQuery($guild: String!, $channel: String!, $threadId: String, $before: String) {\n    channelV2(guild: $guild, id: $channel) {\n      id\n      ... on TextChannel {\n        messageBunch(threadId: $threadId, before: $before) {\n          messages {\n            ...BaseMessage\n          }\n        }\n      }\n      ... on ThreadChannel {\n        # This is not currently used but it resolves type issues\n        messageBunch(threadId: $threadId, before: $before) {\n          messages {\n            ...BaseMessage\n          }\n        }\n      }\n    }\n  }\n'
 ): typeof documents['\n  query messagesQuery($guild: String!, $channel: String!, $threadId: String, $before: String) {\n    channelV2(guild: $guild, id: $channel) {\n      id\n      ... on TextChannel {\n        messageBunch(threadId: $threadId, before: $before) {\n          messages {\n            ...BaseMessage\n          }\n        }\n      }\n      ... on ThreadChannel {\n        # This is not currently used but it resolves type issues\n        messageBunch(threadId: $threadId, before: $before) {\n          messages {\n            ...BaseMessage\n          }\n        }\n      }\n    }\n  }\n'];
 export function graphql(
-  source: '\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdate(channel: $channel, guild: $guild) {\n      id\n      content\n    }\n  }\n'
-): typeof documents['\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdate(channel: $channel, guild: $guild) {\n      id\n      content\n    }\n  }\n'];
+  source: '\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdateV2(channels: [$channel], guild: $guild) {\n      id\n      content\n    }\n  }\n'
+): typeof documents['\n  subscription updateMessageSubscription($channel: String!, $guild: String!) {\n    messageUpdateV2(channels: [$channel], guild: $guild) {\n      id\n      content\n    }\n  }\n'];
 export function graphql(
   source: '\n  subscription updateThreadMsgSubscription($channel: String!, $guild: String!, $threadId: String) {\n    messageUpdateV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n'
 ): typeof documents['\n  subscription updateThreadMsgSubscription($channel: String!, $guild: String!, $threadId: String) {\n    messageUpdateV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n      content\n    }\n  }\n'];
 export function graphql(
-  source: '\n  subscription newMessageSubscription($guild: String!, $channel: String!) {\n    message(guild: $guild, channel: $channel) {\n      ...BaseMessage\n    }\n  }\n'
-): typeof documents['\n  subscription newMessageSubscription($guild: String!, $channel: String!) {\n    message(guild: $guild, channel: $channel) {\n      ...BaseMessage\n    }\n  }\n'];
+  source: '\n  subscription newMessageSubscription($guild: String!) {\n    messageV2(guild: $guild) {\n      ...BaseMessage\n    }\n  }\n'
+): typeof documents['\n  subscription newMessageSubscription($guild: String!) {\n    messageV2(guild: $guild) {\n      ...BaseMessage\n    }\n  }\n'];
 export function graphql(
-  source: '\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    messageV2(channels: [$channel], threadId: $threadId, guild: $guild) {\n      ...BaseMessage\n    }\n  }\n'
-): typeof documents['\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    messageV2(channels: [$channel], threadId: $threadId, guild: $guild) {\n      ...BaseMessage\n    }\n  }\n'];
+  source: '\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    messageV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'
+): typeof documents['\n  subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {\n    messageV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n'];
 export function graphql(
-  source: '\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDelete(channel: $channel, guild: $guild) {\n      id\n    }\n  }\n'
-): typeof documents['\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDelete(channel: $channel, guild: $guild) {\n      id\n    }\n  }\n'];
+  source: '\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDeleteV2(channels: [$channel], guild: $guild) {\n      id\n    }\n  }\n'
+): typeof documents['\n  subscription MessageDeleted($channel: String!, $guild: String!) {\n    messageDeleteV2(channels: [$channel], guild: $guild) {\n      id\n    }\n  }\n'];
 export function graphql(
   source: '\n  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {\n    messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n'
 ): typeof documents['\n  subscription ThreadMessageDeleted($channel: String!, $guild: String!, $threadId: String) {\n    messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n'];

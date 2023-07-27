@@ -158,7 +158,7 @@ export const messagesQuery = graphql(`
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const updateMessageSubscription = graphql(`
   subscription updateMessageSubscription($channel: String!, $guild: String!) {
-    messageUpdate(channel: $channel, guild: $guild) {
+    messageUpdateV2(channels: [$channel], guild: $guild) {
       id
       content
     }
@@ -177,8 +177,8 @@ export const updateThreadMessageSubscription = graphql(`
 `);
 
 export const newMessageSubscription = graphql(`
-  subscription newMessageSubscription($guild: String!, $channel: String!) {
-    message(guild: $guild, channel: $channel) {
+  subscription newMessageSubscription($guild: String!) {
+    messageV2(guild: $guild) {
       ...BaseMessage
     }
   }
@@ -186,7 +186,7 @@ export const newMessageSubscription = graphql(`
 
 export const newThreadMessageSubscription = graphql(`
   subscription newThreadMessageSubscription($guild: String!, $channel: String!, $threadId: String) {
-    messageV2(channels: [$channel], threadId: $threadId, guild: $guild) {
+    messageV2(channels: [$channel], guild: $guild, threadId: $threadId) {
       ...BaseMessage
     }
   }
@@ -194,7 +194,7 @@ export const newThreadMessageSubscription = graphql(`
 
 export const deletedMessageSubscription = graphql(`
   subscription MessageDeleted($channel: String!, $guild: String!) {
-    messageDelete(channel: $channel, guild: $guild) {
+    messageDeleteV2(channels: [$channel], guild: $guild) {
       id
     }
   }
