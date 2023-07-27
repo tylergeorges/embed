@@ -9,23 +9,29 @@ import { useMessageSubscription } from '@hooks/useMessageSubscription';
 import { StateMessages } from 'types/messages.types';
 import * as Styles from './styles';
 
-export const MessageContainer = () => {
+interface MessageContainerProps {
+  channelIsThread?: boolean;
+}
+
+export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
   const [isListRendered, setIsListRendered] = useState(false);
-  const { channelId: channel, guildId: guild } = useAppRouter();
+  const { channelId: channel, guildId: guild, threadId } = useAppRouter();
   const [messages, setMessages] = useState<StateMessages[]>([]);
 
   const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
     guild,
     channel,
     messages,
-    setMessages
+    setMessages,
+    threadId: channelIsThread ? threadId : undefined
   });
 
   useMessageSubscription({
     messages,
     guild,
     channel,
-    setMessages
+    setMessages,
+    threadId: channelIsThread ? threadId : undefined
   });
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);

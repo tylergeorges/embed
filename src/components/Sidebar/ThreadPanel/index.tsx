@@ -3,7 +3,8 @@ import * as Styles from '@components/Sidebar/styles';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback, useEffect, useRef } from 'react';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { ThreadChannelContainer } from '@components/Core/TextChannelContainer/ThreadChannelContainer';
+import { MessageContainer } from '@components/Core/TextChannelContainer/MessageContainer';
+import { ThreadPanelHeader } from '@components/Header/ThreadPanelHeader';
 
 // TODO: Make a ModalProvider component system to prevent having to do this for every modal
 export const ThreadPanel = () => {
@@ -75,7 +76,11 @@ export const ThreadPanel = () => {
         isOpen={isTransitionedThreadsPanelOpen}
       />
 
-      <ThreadChannelContainer startPanelHideTransition={startPanelHideTransition} />
+      <Styles.ThreadsPanelContainer>
+        <ThreadPanelHeader startPanelHideTransition={startPanelHideTransition} />
+
+        <MessageContainer channelIsThread />
+      </Styles.ThreadsPanelContainer>
     </Styles.ThreadPanelWrapper>
   );
 };
