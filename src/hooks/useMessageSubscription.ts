@@ -11,8 +11,8 @@ import { StateMessages } from 'types/messages.types';
 interface UseSubArgs {
   guild: string;
   channel: string;
-  messages: Array<StateMessages>;
-  setMessages: Dispatch<SetStateAction<Array<StateMessages>>>;
+  messages: StateMessages[];
+  setMessages: Dispatch<SetStateAction<StateMessages[]>>;
   threadId?: string;
 }
 
