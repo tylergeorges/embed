@@ -16,7 +16,7 @@ interface UseThreadsSubArgs {
   threadId?: string;
 }
 
-export const useThreadsSub = ({
+export const useThreadSubscription = ({
   messages,
   setMessages,
   threadId,

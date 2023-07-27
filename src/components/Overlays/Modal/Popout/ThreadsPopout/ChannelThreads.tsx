@@ -13,11 +13,9 @@ const ThreadPopoutItem = ({ thread }: { thread: Channel }) => {
   const { router, channelId, guildId } = useAppRouter();
 
   const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
-  const setIsCurrentChannelThread = useStoreActions(state => state.ui.setIsCurrentChannelThread);
 
   const handleThreadClick = () => {
     setCurrentThread(thread);
-    setIsCurrentChannelThread(true);
 
     router.push(`/channels/${guildId}/${channelId}?thread=${thread.id}`);
   };

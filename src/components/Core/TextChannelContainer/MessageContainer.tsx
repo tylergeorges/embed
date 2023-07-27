@@ -6,7 +6,7 @@ import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
 import { BaseMessageFragment } from '@graphql/graphql';
-import { useSub } from '@hooks/useSub';
+import { useMessageSubscription } from '@hooks/useMessageSubscription';
 import * as Styles from './styles';
 
 export const MessageContainer = () => {
@@ -21,12 +21,13 @@ export const MessageContainer = () => {
     setMessages
   });
 
-  useSub({
+  useMessageSubscription({
     messages,
     guild,
     channel,
     setMessages
   });
+
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
   const handleBottomStateChanged = useCallback(() => {

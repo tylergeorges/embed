@@ -6,7 +6,7 @@ import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
 import { BaseMessageFragment } from '@graphql/graphql';
-import { useThreadsSub } from '@hooks/useThreadSub';
+import { useThreadSubscription } from '@hooks/useThreadSubscription';
 import * as Styles from '../styles';
 
 export const ThreadMessageContainer = () => {
@@ -24,7 +24,7 @@ export const ThreadMessageContainer = () => {
     setMessages
   });
 
-  useThreadsSub({
+  useThreadSubscription({
     guild: guildId,
     channel: channelId,
     threadId,

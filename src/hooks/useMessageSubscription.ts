@@ -14,10 +14,10 @@ interface UseSubArgs {
   setMessages: Dispatch<SetStateAction<BaseMessageFragment[]>>;
 }
 
-export const useSub = ({ messages, setMessages, channel, guild }: UseSubArgs) => {
+export const useMessageSubscription = ({ messages, setMessages, channel, guild }: UseSubArgs) => {
   useSubscription(
     {
-      variables: { guild },
+      variables: { guild, channel },
       query: newMessageSubscription
     },
 
