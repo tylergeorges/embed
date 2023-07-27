@@ -43,5 +43,5 @@ export const VirtualListMessageWrapper = styled.withConfig({
   displayName: 'list-message_container'
 })('div', {
   textAlign: 'left',
-  marginTop: theme.space.lg
+  marginTop: '1.0625rem'
 });
