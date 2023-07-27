@@ -1225,13 +1225,13 @@ export type MessagesQueryQuery = {
     | { __typename?: 'VoiceChannel'; id: string };
 };
 
-export type UpdateMessageSubscriptionSubscriptionVariables = Exact<{
+export type MessageUpdatedSubscriptionVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
   threadId?: InputMaybe<Scalars['String']>;
 }>;
 
-export type UpdateMessageSubscriptionSubscription = {
+export type MessageUpdatedSubscription = {
   __typename?: 'Subscription';
   messageUpdateV2?:
     | ({ __typename?: 'UpdatedMessage' } & {
@@ -1240,13 +1240,13 @@ export type UpdateMessageSubscriptionSubscription = {
     | null;
 };
 
-export type NewMessageSubscriptionSubscriptionVariables = Exact<{
+export type NewMessageSubscriptionVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
   threadId?: InputMaybe<Scalars['String']>;
 }>;
 
-export type NewMessageSubscriptionSubscription = {
+export type NewMessageSubscription = {
   __typename?: 'Subscription';
   messageV2?:
     | ({ __typename?: 'Message' } & {
@@ -1969,13 +1969,13 @@ export const MessagesQueryDocument = {
     ...BaseMessageFragmentDoc.definitions
   ]
 } as unknown as DocumentNode<MessagesQueryQuery, MessagesQueryQueryVariables>;
-export const UpdateMessageSubscriptionDocument = {
+export const MessageUpdatedDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'subscription',
-      name: { kind: 'Name', value: 'updateMessageSubscription' },
+      name: { kind: 'Name', value: 'MessageUpdated' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -2037,17 +2037,14 @@ export const UpdateMessageSubscriptionDocument = {
     },
     ...UpdatedMessageFragmentDoc.definitions
   ]
-} as unknown as DocumentNode<
-  UpdateMessageSubscriptionSubscription,
-  UpdateMessageSubscriptionSubscriptionVariables
->;
-export const NewMessageSubscriptionDocument = {
+} as unknown as DocumentNode<MessageUpdatedSubscription, MessageUpdatedSubscriptionVariables>;
+export const NewMessageDocument = {
   kind: 'Document',
   definitions: [
     {
       kind: 'OperationDefinition',
       operation: 'subscription',
-      name: { kind: 'Name', value: 'newMessageSubscription' },
+      name: { kind: 'Name', value: 'NewMessage' },
       variableDefinitions: [
         {
           kind: 'VariableDefinition',
@@ -2107,10 +2104,7 @@ export const NewMessageSubscriptionDocument = {
     },
     ...BaseMessageFragmentDoc.definitions
   ]
-} as unknown as DocumentNode<
-  NewMessageSubscriptionSubscription,
-  NewMessageSubscriptionSubscriptionVariables
->;
+} as unknown as DocumentNode<NewMessageSubscription, NewMessageSubscriptionVariables>;
 export const MessageDeletedDocument = {
   kind: 'Document',
   definitions: [
