@@ -34,7 +34,6 @@ export const SidebarWrapper = styled.withConfig({
       false: {
         transform: `translateX(150%)`
       },
-
       true: {
         transform: `translateX(0)`
       }

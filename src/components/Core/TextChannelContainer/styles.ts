@@ -34,7 +34,6 @@ export const TextChannelWrapper = styled.withConfig({
         transform: `translateX(${theme.sizes.sideBarWidth})`,
         width: `calc(100% - ${theme.sizes.sideBarWidth})`
       },
-
       false: {
         transform: 'translateX(0px)'
       }
@@ -124,7 +123,6 @@ export const MessageWrapper = styled.withConfig({
         width: '100%',
         marginRight: 0
       },
-
       true: {
         width: `calc(100% - ${theme.sizes.sideBarWidth})`
       }
@@ -145,7 +143,6 @@ export const MessageWrapper = styled.withConfig({
     {
       membersListOpen: true,
       mobile: true,
-
       css: {
         marginRight: 'none',
         width: '100%',

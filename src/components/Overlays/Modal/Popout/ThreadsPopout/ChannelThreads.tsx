@@ -16,6 +16,7 @@ const ThreadPopoutItem = ({ thread }: { thread: Channel }) => {
 
   const handleThreadClick = () => {
     setCurrentThread(thread);
+
     router.push(`/channels/${guildId}/${channelId}?thread=${thread.id}`);
   };
 

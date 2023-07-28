@@ -6,8 +6,8 @@ import { useCallback, useEffect } from 'react';
 
 import { Backdrop } from '@components/Overlays/Modal/styles';
 import * as Styles from './styles';
-import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
+import { TextChannelHeader } from './TextChannelHeader';
 
 export const TextChannelContainer = () => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');

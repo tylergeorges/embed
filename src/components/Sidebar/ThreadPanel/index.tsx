@@ -1,14 +1,17 @@
 import * as Styles from '@components/Sidebar/styles';
-import { MessageContainer } from '@components/Core/TextChannelContainer/MessageContainer';
-import { ThreadPanelHeader } from '@components/Header/ThreadPanelHeader';
 
 import { useStoreActions, useStoreState } from '@state';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useAppRouter } from '@hooks/useAppRouter';
+import { MessageContainer } from '@components/Core/TextChannelContainer/MessageContainer';
+import { ThreadPanelHeader } from '@components/Header/ThreadPanelHeader';
 
 // TODO: Make a ModalProvider component system to prevent having to do this for every modal
 export const ThreadPanel = () => {
   const { channelId, guildId, router } = useAppRouter();
+  const threadPanelRef = useRef<HTMLDivElement>(null);
+  const removeFromDOMTimeout = useRef<NodeJS.Timeout>();
+  const transitionDuration = useRef(0);
 
   const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
 
@@ -23,24 +26,38 @@ export const ThreadPanel = () => {
 
   useEffect(() => {
     // We set this to true after element is in DOM so the transition is shown
-    if (isDomThreadsPanelOpen) {
+    if (isDomThreadsPanelOpen && !isTransitionedThreadsPanelOpen) {
       setIsTransitionedThreadsPanelOpen(true);
     }
+
+    if (threadPanelRef.current && transitionDuration.current === 0) {
+      const durationString = getComputedStyle(threadPanelRef.current).transitionDuration;
+
+      const duration = Number(durationString.split('s')[0][2]) * 100;
+      transitionDuration.current = duration;
+    }
+
+    return () => {
+      if (removeFromDOMTimeout.current) {
+        clearTimeout(removeFromDOMTimeout.current);
+      }
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDomThreadsPanelOpen]);
+  }, []);
 
   // Remove panel entirely from DOM after it's been transitioned off screen
-  const closePanel = () => {
-    if (isTransitionedThreadsPanelOpen) return;
 
-    setIsDomThreadsPanelOpen(false);
-    router.push(`/channels/${guildId}/${channelId}`);
-  };
-
-  // Transition panel off page but not DOM
   const startPanelHideTransition = useCallback(() => {
     setIsTransitionedThreadsPanelOpen(false);
-  }, [setIsTransitionedThreadsPanelOpen]);
+
+    router.push(`/channels/${guildId}/${channelId}`);
+
+    removeFromDOMTimeout.current = setTimeout(() => {
+      setIsDomThreadsPanelOpen(false);
+    }, transitionDuration.current);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Styles.ThreadPanelWrapper
@@ -48,8 +65,8 @@ export const ThreadPanel = () => {
         '@initial': false,
         '@small': true
       }}
-      onTransitionEnd={closePanel}
       isOpen={isTransitionedThreadsPanelOpen}
+      ref={threadPanelRef}
     >
       <Styles.ThreadsPanelSeperator
         mobile={{
