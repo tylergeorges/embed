@@ -9,11 +9,6 @@ import { MessageType, FormatType, MentionType } from "./globalTypes";
 // GraphQL query operation: Messages
 // ====================================================
 
-export interface Messages_channel_ThreadChannel {
-  __typename: "ThreadChannel";
-  id: string;
-}
-
 export interface Messages_channel_TextChannel_messageBunch_messages_author {
   __typename: "User";
   avatarUrl: string;
