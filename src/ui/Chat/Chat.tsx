@@ -56,7 +56,6 @@ export const Chat = observer((props: ChatProps) => {
       title: Locale.translate('notif.channelunavailable'),
       message: Locale.translate('notif.channelunavailable.desc'),
       autoDismiss: 0,
-
     });
     return null;
   }

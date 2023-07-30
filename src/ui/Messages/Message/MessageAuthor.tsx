@@ -26,25 +26,25 @@ interface MessageAuthorProps {
   disableProfile?: boolean;
 }
 
+export const convertColor = memoize(
+  (color: number) =>
+    color > 0 ? `#${color.toString(16).padStart(6, '0')}` : undefined
+);
+
+export const getDominantRoleColor = memoize(
+  (roleIds: string[] | null): number | null => {
+    if (roleIds === null) return null;
+
+    const [role] = roleIds
+      .map(id => generalStore.guild?.roles.find(r => r.id === id))
+      .filter(r => r !== undefined && r.color !== 0)
+      .sort((a, b) => b.position - a.position);
+
+    return role?.color ?? null;
+  }
+);
+
 class MessageAuthor extends PureComponent<MessageAuthorProps> {
-  private convertColor = memoize(
-    (color: number) =>
-      color > 0 ? `#${color.toString(16).padStart(6, '0')}` : undefined
-  );
-
-  private getDominantRoleColor = memoize(
-    (roleIds: string[] | null): number | null => {
-      if (roleIds === null) return null;
-
-      const [role] = roleIds
-        .map(id => generalStore.guild?.roles.find(r => r.id === id))
-        .filter(r => r !== undefined && r.color !== 0)
-        .sort((a, b) => b.position - a.position);
-
-      return role?.color ?? null;
-    }
-  );
-
   private getDominantRoleIconRole = memoize(
     (roleIds: string[] | null): GuildInfo_guild_roles | null => {
       if (roleIds === null) return null;
@@ -82,8 +82,8 @@ class MessageAuthor extends PureComponent<MessageAuthorProps> {
 
   render() {
     // Gets the dominant role color
-    const dominantRoleColor = this.getDominantRoleColor(this.props.author.roles);
-    const color = this.convertColor(dominantRoleColor ?? 0);
+    const dominantRoleColor = getDominantRoleColor(this.props.author.roles);
+    const color = convertColor(dominantRoleColor ?? 0);
 
     // Gets the dominant role icon
     const dominantRoleIconRole = this.getDominantRoleIconRole(this.props.author.roles);

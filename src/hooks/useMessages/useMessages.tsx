@@ -1,7 +1,7 @@
 import produce from "immer";
 import { MESSAGES, MORE_MESSAGES, NEW_MESSAGE, MESSAGE_UPDATED, MESSAGE_DELETED, MESSAGES_BULK_DELETED } from ".";
 import { useQuery, useSubscription } from "react-apollo-hooks";
-import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables, Messages, MessagesVariables, Messages_channel_TextChannel_messageBunch } from "@generated";
+import { MessageDeleted, MessagesBulkDeleted, Messages_channel, Message as MessageData, MessageUpdated, NewMessage, UpdatedMessage, NewMessageVariables, MessageUpdatedVariables, MessageDeletedVariables, MessagesBulkDeletedVariables, Messages, MessagesVariables, Messages_channel_TextChannel_messageBunch, GuildInfo_guild_channels } from "@generated";
 import { authStore, generalStore } from "@store";
 import { useContext } from "react";
 import { NotificationContext } from "@ui/Overlays/Notification/NotificationContext";
@@ -67,7 +67,12 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
   const notifications = queryParams.get('notifications') === 'true'
 
-  const channels = notifications && generalStore.guild && generalStore.settings && !generalStore.settings?.singleChannel
+  const channels = notifications
+                && generalStore.guild
+                && generalStore.settings
+                && !generalStore.settings.singleChannel
+                && !generalStore.settings.hideSidebar
+                && !thread
     ? generalStore.guild?.channels.map(c => c.id)
     : [channel]
 
@@ -111,13 +116,12 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
 
           message.author.color = messages.find(m => m.author.id === message.author.id)?.author.color || 0xffffff
           if (!messages.find(m => m.id === message.id)) messages.push(message);
-
         })
       )}
   });
 
   useSubscription<MessageUpdated, MessageUpdatedVariables>(MESSAGE_UPDATED, {
-    variables: { channel, guild, threadId: thread },
+    variables: { channels: [channel], guild, threadId: thread },
     skip: !channel,
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
@@ -150,7 +154,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
   });
 
   useSubscription<MessageDeleted, MessageDeletedVariables>(MESSAGE_DELETED, {
-    variables: { channel, guild, threadId: thread },
+    variables: { channels: [channel], guild, threadId: thread },
     skip: !channel,
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>
@@ -177,7 +181,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
   });
 
   useSubscription<MessagesBulkDeleted, MessagesBulkDeletedVariables>(MESSAGES_BULK_DELETED, {
-    variables: { channel, guild, threadId: thread },
+    variables: { channels: [channel], guild, threadId: thread },
     skip: !channel,
     onSubscriptionData({ subscriptionData }) {
       query.updateQuery(prev =>

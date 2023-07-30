@@ -30,8 +30,9 @@ export const Wrapper = styled('div')<Props>`
     opacity: 0;
   }
 
-  ${({ hideOnMobile }) => 
+  ${({ hideOnMobile, squashed }) => 
     hideOnMobile ? css`
+      max-width: ${ squashed ? '50%' : '60%'};
       @media only screen and (max-width: 520px) {
         display: none
       }
@@ -40,7 +41,9 @@ export const Wrapper = styled('div')<Props>`
   
   ${({ threadFullscreen }) =>
     !threadFullscreen ? css`
-      border-left: 8px solid #202225;
+      @media only screen and (min-width: 519px) {
+        border-left: 8px solid #202225;
+      }
     ` : null
   }
   

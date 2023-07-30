@@ -18,6 +18,8 @@ query GuildInfo($guild: String!) {
             id
             position
             rateLimitPerUser
+            nsfw
+            canSend
 
             category {
                 name
@@ -26,17 +28,20 @@ query GuildInfo($guild: String!) {
 
             ... on TextChannel {
                 topic
-                canSend
-                nsfw
+                
+                threads {
+                    id
+                }
             }
             ... on AnnouncementChannel {
                 topic
-                canSend
-                nsfw
+
+                threads {
+                    id
+                }
             }
-            ... on VoiceChannel {
-                canSend
-                nsfw
+            ...on ForumChannel {
+                topic
             }
         }
 

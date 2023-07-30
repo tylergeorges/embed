@@ -1,9 +1,12 @@
 import Tooltip from 'rc-tooltip'
 import {
   Emoji,
+  ForumName,
+  Fullscreen,
   Join,
   Name,
   NewsName,
+  NSFWForumName,
   NSFWName,
   NSFWNewsName,
   NSFWVoiceName,
@@ -31,10 +34,12 @@ import { FetchUser } from './FetchUser'
 import AddMembers from "@views/Messages/Header/AddMembers";
 import LeaveGroup from "@views/Messages/Header/LeaveGroup";
 import Hamburger from "@ui/Header/Hamburger";
+import ThreadBrowser from './ThreadBrowser'
 
 export interface HeaderProps {
   channel?: string,
   chatUser?: string,
+  guild: string,
   thread?: boolean,
   AuthStore?: AuthStore
 }
@@ -62,7 +67,10 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
     return (
         <Root thread={thread}>
             <Stretch>
-                { chatUser && chatName ?
+                { thread ?
+                    <ThreadName><Emoji>{threadData.name}</Emoji></ThreadName>
+                : cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
+                chatUser && chatName ?
                     <UserName>{chatName}</UserName>
                 : chatUser && generalStore.guild ?
                     <FetchUser guild={generalStore.guild.id} user={chatUser} />
@@ -74,12 +82,14 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
                     <NSFWVoiceName><Emoji>{cData?.name}</Emoji></NSFWVoiceName>
                 : cData.__typename === 'VoiceChannel' ?
                     <VoiceName><Emoji>{cData?.name}</Emoji></VoiceName>
+                : cData.nsfw && cData.__typename === 'ForumChannel' ?
+                    <NSFWForumName><Emoji>{cData?.name}</Emoji></NSFWForumName>
+                : cData.__typename === 'ForumChannel' ?
+                    <ForumName><Emoji>{cData?.name}</Emoji></ForumName>
                 : cData.id === generalStore.guild?.rulesChannelId ?
                     <RulesName><Emoji>{cData?.name}</Emoji></RulesName>
                 : cData.nsfw ?
                     <NSFWName><Emoji>{cData?.name}</Emoji></NSFWName>
-                : thread ?
-                    <ThreadName><Emoji>{threadData.name}</Emoji></ThreadName>
                 : <Name><Emoji>{cData?.name}</Emoji></Name>}
                 {window.innerWidth < 520 || (!cData.topic && cData.__typename !== 'VoiceChannel') || thread ? null : (
                     <TopicWrapper>
@@ -94,8 +104,9 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
                     </TopicWrapper>
                 )}
             </Stretch>
+            {thread || ['VoiceChannel', 'ForumChannel'].includes(cData.__typename) || <ThreadBrowser count={cData.threads?.length} />}
             {/* {(!thread || generalStore.threadFullscreen) && <Pins />} Thread pins are disabled */}
-            {!thread && !chatUser && cData.__typename !== 'VoiceChannel' && <Pins />}
+            {!thread && !chatUser && !['VoiceChannel', 'ForumChannel'].includes(cData.__typename) && <Pins />}
 
             {!thread && chatUser && 'ownerId' in cData && (
               <>

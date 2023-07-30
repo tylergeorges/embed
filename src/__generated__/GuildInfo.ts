@@ -14,11 +14,13 @@ export interface GuildInfo_guild_channels_ThreadChannel_category {
 }
 
 export interface GuildInfo_guild_channels_ThreadChannel {
-  __typename: "ThreadChannel";
+  __typename: "ThreadChannel" | "VoiceChannel";
   name: string;
   id: string;
   position: number;
   rateLimitPerUser: number | null;
+  nsfw: boolean;
+  canSend: boolean;
   category: GuildInfo_guild_channels_ThreadChannel_category | null;
 }
 
@@ -28,16 +30,22 @@ export interface GuildInfo_guild_channels_TextChannel_category {
   position: number;
 }
 
+export interface GuildInfo_guild_channels_TextChannel_threads {
+  __typename: "AnnouncementChannel" | "ForumChannel" | "TextChannel" | "ThreadChannel" | "VoiceChannel";
+  id: string;
+}
+
 export interface GuildInfo_guild_channels_TextChannel {
   __typename: "TextChannel";
   name: string;
   id: string;
   position: number;
   rateLimitPerUser: number | null;
+  nsfw: boolean;
+  canSend: boolean;
   category: GuildInfo_guild_channels_TextChannel_category | null;
   topic: string | null;
-  canSend: boolean;
-  nsfw: boolean;
+  threads: GuildInfo_guild_channels_TextChannel_threads[] | null;
 }
 
 export interface GuildInfo_guild_channels_AnnouncementChannel_category {
@@ -46,36 +54,43 @@ export interface GuildInfo_guild_channels_AnnouncementChannel_category {
   position: number;
 }
 
+export interface GuildInfo_guild_channels_AnnouncementChannel_threads {
+  __typename: "AnnouncementChannel" | "ForumChannel" | "TextChannel" | "ThreadChannel" | "VoiceChannel";
+  id: string;
+}
+
 export interface GuildInfo_guild_channels_AnnouncementChannel {
   __typename: "AnnouncementChannel";
   name: string;
   id: string;
   position: number;
   rateLimitPerUser: number | null;
+  nsfw: boolean;
+  canSend: boolean;
   category: GuildInfo_guild_channels_AnnouncementChannel_category | null;
   topic: string | null;
-  canSend: boolean;
-  nsfw: boolean;
+  threads: GuildInfo_guild_channels_AnnouncementChannel_threads[] | null;
 }
 
-export interface GuildInfo_guild_channels_VoiceChannel_category {
+export interface GuildInfo_guild_channels_ForumChannel_category {
   __typename: "Category";
   name: string;
   position: number;
 }
 
-export interface GuildInfo_guild_channels_VoiceChannel {
-  __typename: "VoiceChannel";
+export interface GuildInfo_guild_channels_ForumChannel {
+  __typename: "ForumChannel";
   name: string;
   id: string;
   position: number;
   rateLimitPerUser: number | null;
-  category: GuildInfo_guild_channels_VoiceChannel_category | null;
-  canSend: boolean;
   nsfw: boolean;
+  canSend: boolean;
+  category: GuildInfo_guild_channels_ForumChannel_category | null;
+  topic: string | null;
 }
 
-export type GuildInfo_guild_channels = GuildInfo_guild_channels_TextChannel | GuildInfo_guild_channels_AnnouncementChannel | GuildInfo_guild_channels_VoiceChannel;
+export type GuildInfo_guild_channels = GuildInfo_guild_channels_ThreadChannel | GuildInfo_guild_channels_TextChannel | GuildInfo_guild_channels_AnnouncementChannel | GuildInfo_guild_channels_ForumChannel;
 
 export interface GuildInfo_guild_roles {
   __typename: "Role";

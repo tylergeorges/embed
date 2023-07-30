@@ -18,47 +18,47 @@ export const useSendMessage = (thread?: string) => {
 
   return async (content: string, fileName?: string, fileData?: string, fileAlt?: string) => {
     const optimisticData = {
-      __typename: 'Message',
-      id: Util.generateSnowflake(),
-      channelId: channel,
-      content: content,
-      type: MessageType.Default,
-      flags: 1 << 4, // reusing flag for optimistic messages
-      createdAt: +new Date(),
-      editedAt: null,
-      isGuest: true,
-      author: {
-        __typename: 'User',
-        avatarUrl: 'avatarUrl' in authStore.user && authStore.user.avatarUrl || 'avatar' in authStore.user && Util.craftAvatarUrl(authStore.user._id, authStore.user.avatar),
-        bot: true,
-        color: 0,
-        discrim: '0000',
-        id: '_id' in authStore.user ? authStore.user._id : Util.generateSnowflake(),
-        flags: 0,
-        name: authStore.user.username,
-        roles: [],
-        system: false,
-        isWebhook: true
-      },
-      reactions: [],
-      attachments: [],
-      stickers: [],
-      messageReference: null,
-      referencedMessage: null,
-      embeds: [],
-      mentions: [],
-      interaction: null,
-      thread: null,
+      __typename: 'Mutation',
+      sendMessage: {
+        __typename: 'Message',
+        id: Util.generateSnowflake(),
+        channelId: channel,
+        content: content,
+        type: MessageType.Default,
+        flags: 1 << 4, // reusing flag for optimistic messages
+        createdAt: +new Date(),
+        editedAt: null,
+        isGuest: true,
+        author: {
+          __typename: 'User',
+          avatarUrl: 'avatarUrl' in authStore.user && authStore.user.avatarUrl || 'avatar' in authStore.user && Util.craftAvatarUrl(authStore.user._id, authStore.user.avatar),
+          bot: true,
+          color: 0,
+          discrim: '0000',
+          id: '_id' in authStore.user ? authStore.user._id : Util.generateSnowflake(),
+          flags: 0,
+          name: authStore.user.username,
+          roles: [],
+          system: false,
+          isWebhook: true
+        },
+        reactions: [],
+        attachments: [],
+        stickers: [],
+        messageReference: null,
+        referencedMessage: null,
+        embeds: [],
+        mentions: [],
+        interaction: null,
+        thread: null,
+      }
     }
 
     if (!channel.startsWith('@')) {
       try {
         await sendMessage({
           variables: { channel, content, fileName, fileData, fileAlt, thread },
-          optimisticResponse: {
-            __typename: 'Mutation',
-            sendMessage: optimisticData
-          } as SendMessage,
+          optimisticResponse: optimisticData as SendMessage,
           update: (store, { data: { sendMessage: newMessage } }) => {
             const data = store.readQuery<Messages, MessagesVariables>({ query: MESSAGES, variables: { guild, channel, thread } })
 
@@ -99,10 +99,7 @@ export const useSendMessage = (thread?: string) => {
       const user = channel.substring(1)
       await sendDirectMessage({
         variables: { guild, user, content },
-        optimisticResponse: {
-          __typename: 'Mutation',
-          sendChat: optimisticData
-        } as SendDirectMessage,
+        optimisticResponse: optimisticData as SendDirectMessage,
         update: (store, { data: { sendChat: newMessage } }) => {
           const data = store.readQuery<ChatMessages, ChatMessagesVariables>({ query: CHAT_MESSAGES, variables: { guild, user } })
 

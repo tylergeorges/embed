@@ -34,3 +34,22 @@ jobs:
         run: docker build -t ghcr.io/widgetbot-io/embed:${GITHUB_REF#refs/tags/} .
       - name: Docker push tag latest
         run: docker push ghcr.io/widgetbot-io/embed:${GITHUB_REF#refs/tags/}
+  sentry-release:
+    name: Release on Sentry
+    runs-on: ubuntu-latest
+    env:
+      SENTRY_PROJECT: embed
+      SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+      SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
+      SENTRY_URL: ${{ secrets.SENTRY_URL }}
+    steps:
+      - name: Use actions/checkout@v2
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Submodules
+        run: git submodule update --init --recursive --remote
+      - name: Create Sentry release
+        uses: getsentry/action-release@v1
+        with:
+          version: ${{ github.ref }}

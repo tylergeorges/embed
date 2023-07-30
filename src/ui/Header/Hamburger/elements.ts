@@ -6,6 +6,28 @@ interface Props {
   pointRight: boolean;
 }
 
+const arrow = css`
+  transform: rotate(-180deg);
+  &::before {
+    top: -7px;
+    left: -9px;
+  }
+  div {
+    &::before {
+      top: -4.8px;
+      width: 15px;
+      transform: rotate(45deg);
+      right: -3px;
+    }
+    &::after {
+      top: 4.8px;
+      width: 15px;
+      transform: rotate(-45deg);
+      right: -3px;
+    }
+  }
+`
+
 export const Ham = styled('button')<Props>`
   border: none;
   background: none;
@@ -43,45 +65,29 @@ export const Ham = styled('button')<Props>`
   }
 
   @media (min-width: 521px) {
-    ${({ theme, open, thread, pointRight }) =>
-      open
-        ? css`
-            transform: rotate(${ pointRight ? '0deg' : '-180deg' });
-            
-                
-            &::before {
-              top: -7px;
-              left: -9px;
-            }
-            div {
-              &::before {
-                top: -4.8px;
-                width: 15px;
-                transform: rotate(45deg);
-                right: -3px;
-              }
-              &::after {
-                top: 4.8px;
-                width: 15px;
-                transform: rotate(-45deg);
-                right: -3px;
-              }
-            }
-            ${thread
-                ? css`
-                  color: transparent;
-                  div {
-                    &::before, &::after {
-                      color: ${theme.colors.accent};
-                      width: inherit;
-                      right: -1px;
-                      top: 0;
-                    }
-                  }
-                `
-                : null}
-          `
-        : null};
+    ${({ open }) => open ? arrow : null}
+  }
+  
+  ${({ open, pointRight }) => open ? css`
+    transform: rotate(${ pointRight ? '0deg' : '-180deg' });
+  ` : null}
+
+  ${({ theme, thread }) =>
+    thread ? css`
+      ${arrow}
+      @media (min-width: 521px) {
+        color: transparent;
+        div {
+          &::before, &::after {
+            color: ${theme.colors.accent};
+            width: inherit;
+            right: -1px;
+            top: 0;
+          }
+        }
+      }
+    `
+    : null};
   }
 `
 
