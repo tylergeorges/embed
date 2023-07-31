@@ -67,11 +67,10 @@ const MessagesView = observer(() => {
           </React.Suspense>
 
           <React.Suspense fallback={<Loading />}>
-            <Messages2ElectricBoogaloo guild={guild} channel={channel} chatUser={user} />
             {channelType === 'ForumChannel' ? (
               <Forum guild={guild} channel={channel}/>
             ) : (
-              <Messages2ElectricBoogaloo guild={guild} channel={channel} chatUser={user]}/>
+              <Messages2ElectricBoogaloo guild={guild} channel={channel} chatUser={user}/>
             )}
           </React.Suspense>
 

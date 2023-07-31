@@ -30,9 +30,9 @@ export const Wrapper = styled('div')<Props>`
     opacity: 0;
   }
 
-  ${({ hideOnMobile, squashed }) => 
+  ${({ hideOnMobile, sidebarOpen }) => 
     hideOnMobile ? css`
-      max-width: ${ squashed ? '50%' : '60%'};
+      max-width: ${ sidebarOpen ? '50%' : '60%'};
       @media only screen and (max-width: 520px) {
         display: none
       }

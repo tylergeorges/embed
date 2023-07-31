@@ -11,7 +11,6 @@ import {
   NSFWNewsName,
   NSFWVoiceName,
   RulesName,
-  Fullscreen,
   UserName,
   SingleChannelAuthWrapper,
   Stretch,
@@ -69,8 +68,7 @@ export const Header = observer(({ channel, chatUser, thread }: HeaderProps) => {
             <Stretch>
                 { thread ?
                     <ThreadName><Emoji>{threadData.name}</Emoji></ThreadName>
-                : cData.nsfw && cData.__typename === 'AnnouncementChannel' ?
-                chatUser && chatName ?
+                : chatUser && chatName ?
                     <UserName>{chatName}</UserName>
                 : chatUser && generalStore.guild ?
                     <FetchUser guild={generalStore.guild.id} user={chatUser} />

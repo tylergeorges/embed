@@ -16,7 +16,7 @@ interface DiscordUser {
   _id: string;
   username: string;
   avatar: string;
-  discriminator: number | null;
+  discriminator: string | null;
   blockedUsers: string[];
 }
 
