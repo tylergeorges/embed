@@ -95,6 +95,7 @@ export const ChannelsFooterUserWrapper = styled.withConfig({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
+
   paddingX: theme.space.md,
   paddingY: theme.space.sm,
   gap: theme.space.sm,
@@ -107,7 +108,7 @@ export const ChannelsFooterUserAvatar = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'channels-footer_user_avatar'
 })(Image, {
-  size: theme.sizes.iconSizeLarge,
+  size: theme.sizes.iconSizeLg,
   borderRadius: theme.radii.round
 });
 

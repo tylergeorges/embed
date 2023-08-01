@@ -33,8 +33,8 @@ export const CategoryNameArrow = styled.withConfig({
   backgroundPosition: '50% 50%',
   backgroundRepeat: 'no-repeat',
 
-  width: theme.sizes.iconSizeSmall,
-  height: theme.sizes.iconSizeSmall,
+  width: theme.sizes.iconSizeSm,
+  height: theme.sizes.iconSizeSm,
 
   cursor: 'pointer',
   transition: 'transform  ase',
@@ -175,7 +175,7 @@ export const ChannelNameInner = styled.withConfig({
 export const ChannelNameIconWrapper = styled.withConfig({
   displayName: 'channel-name_icon_wrapper'
 })('div', {
-  size: theme.sizes.iconSizeSmall,
+  size: theme.sizes.iconSizeSm,
   marginRight: theme.space.xs.value
 });
 

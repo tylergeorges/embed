@@ -42,7 +42,7 @@ export const ChannelsFooterLoginButton = () => {
 
           if (!hasToken) {
             localStorage.setItem('token', token);
-            await fetchDiscordUser().then(user => {
+            await fetchDiscordUser({ userToken: token }).then(user => {
               setUserData(user);
             });
           }

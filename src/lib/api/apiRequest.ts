@@ -18,12 +18,17 @@ interface ApiReqArgs {
   endPoint: string;
   method: 'GET' | 'POST';
   options?: APIRequestOptions;
+  userToken?: string;
 }
 
-export async function apiRequest<T>({ endPoint, method, options = {} }: ApiReqArgs): Promise<T> {
-  const token = window.localStorage.getItem('token') ?? '';
+export async function apiRequest<T>({
+  endPoint,
+  method,
+  userToken,
+  options = {}
+}: ApiReqArgs): Promise<T> {
+  const token = userToken ?? localStorage.get('token') ?? '';
 
-  console.log(token);
   const headers = { ...options.headers, Authorization: token } ?? {};
 
   return axiosClient
@@ -36,8 +41,9 @@ export async function apiRequest<T>({ endPoint, method, options = {} }: ApiReqAr
     .catch(err => err);
 }
 
-export const fetchDiscordUser = async () =>
+export const fetchDiscordUser = ({ userToken }: { userToken?: string }) =>
   apiRequest<IUser>({
     endPoint: Endpoints.auth.fetchLatestProfile,
-    method: 'GET'
+    method: 'GET',
+    userToken
   });

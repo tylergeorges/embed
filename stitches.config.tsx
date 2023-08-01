@@ -152,16 +152,19 @@ const stitches = createStitches({
       iconSizeXl: '40px',
 
       /** 32px */
-      iconSizeLarge: '32px',
+      iconSizeLg: '32px',
 
       /** 24px */
-      iconSizeMed: '24px',
+      iconSizeMd: '24px',
 
       /** 20px */
-      iconSizeSmall: '20px',
+      iconSizeSm: '20px',
 
       /** 16px */
-      messageTypeIcon: '16px',
+      iconSizeXs: '16px',
+
+      /** 16px */
+      messageTypeIcon: '$iconSizeXs',
 
       /** 34px */
       threadButton: '34px',

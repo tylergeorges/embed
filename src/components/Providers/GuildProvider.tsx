@@ -82,20 +82,22 @@ export default function GuildProvider({ children }: GuildProviderProps) {
 
     if (!fetchedUserDataRef.current) {
       fetchedUserDataRef.current = true;
+      const token = localStorage.getItem('token');
 
-      console.log('fectch user data in provider');
-      fetchDiscordUser()
-        .then(data => {
-          if (!data) {
+      if (token) {
+        fetchDiscordUser({ userToken: token })
+          .then(data => {
+            if (!data) {
+              setUserData(undefined);
+            }
+
+            setUserData(data);
+          })
+          .catch(err => {
+            console.error(err);
             setUserData(undefined);
-          }
-
-          setUserData(data);
-        })
-        .catch(err => {
-          console.error(err);
-          setUserData(undefined);
-        });
+          });
+      }
     }
 
     if (data && !fetching) {

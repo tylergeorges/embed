@@ -1,4 +1,5 @@
 import * as Styles from '@components/Sidebar/ChannelsSidebar/ChannelsFooter/styles';
+import { LogoutButton } from '@icons/Buttons/LogoutButton';
 import { useStoreState } from '@state';
 
 export const ChannelsFooterUserInfo = () => {
@@ -8,17 +9,21 @@ export const ChannelsFooterUserInfo = () => {
 
   return (
     <Styles.ChannelsFooterUserWrapper>
-      <Styles.ChannelsFooterUserAvatar
-        src={user?.avatarUrl}
-        width={32}
-        height={32}
-        alt={`@${user.username}'s Avatar.`}
-      />
+      <div>
+        <Styles.ChannelsFooterUserAvatar
+          src={user?.avatarUrl}
+          width={32}
+          height={32}
+          alt={`@${user.username}'s Avatar.`}
+        />
+      </div>
 
       <Styles.ChannelsFooterUserContentWrapper>
         <Styles.ChannelsFooterUserName>{user.username}</Styles.ChannelsFooterUserName>
         <Styles.ChannelsFooterUserDiscrim>#{user.discriminator}</Styles.ChannelsFooterUserDiscrim>
       </Styles.ChannelsFooterUserContentWrapper>
+
+      <LogoutButton />
     </Styles.ChannelsFooterUserWrapper>
   );
 };

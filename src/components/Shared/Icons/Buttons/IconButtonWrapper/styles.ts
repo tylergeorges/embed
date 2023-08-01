@@ -7,15 +7,23 @@ export const IconRoot = styled.withConfig({
 })('svg', {
   variants: {
     size: {
-      small: {
-        size: theme.sizes.iconSizeSmall
+      xs: {
+        size: theme.sizes.iconSizeSm
       },
 
-      regular: {
-        width: theme.sizes.iconSizeMed.value
+      sm: {
+        size: theme.sizes.iconSizeSm
       },
 
-      large: {
+      md: {
+        width: theme.sizes.iconSizeMd
+      },
+
+      lg: {
+        size: theme.sizes.iconSizeLg
+      },
+
+      xl: {
         size: theme.sizes.iconSizeXl
       }
     },
@@ -49,7 +57,7 @@ export const IconButtonRoot = styled.withConfig({
   justifyContent: 'center',
 
   cursor: 'pointer',
-  size: theme.sizes.iconSizeMed,
+  size: theme.sizes.iconSizeMd,
 
   marginX: theme.space.sm,
 
@@ -122,40 +130,73 @@ export const IconButtonChildrenWrapper = styled.withConfig({
 
   variants: {
     backgroundGlowSize: {
-      sm: {
-        size: theme.sizes.iconSizeSmall,
-        borderRadius: theme.radii.round,
+      xs: {
+        size: theme.sizes.iconSizeXs,
 
         '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity20
+          backgroundColor: theme.colors.primaryOpacity10
+        }
+      },
+
+      sm: {
+        size: theme.sizes.iconSizeSm,
+
+        '&:hover': {
+          backgroundColor: theme.colors.primaryOpacity10
         }
       },
 
       md: {
-        size: theme.sizes.iconSizeMed,
-        borderRadius: theme.radii.round,
+        size: theme.sizes.iconSizeMd,
 
         '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity20
+          backgroundColor: theme.colors.primaryOpacity10
         }
       },
 
       lg: {
-        size: theme.sizes.iconSizeLarge,
-        borderRadius: theme.radii.round,
+        size: theme.sizes.iconSizeLg,
 
         '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity20
+          backgroundColor: theme.colors.primaryOpacity10
         }
       },
 
       xl: {
         size: theme.sizes.iconSizeXl,
-        borderRadius: theme.radii.round,
 
         '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity20
+          backgroundColor: theme.colors.primaryOpacity10
         }
+      }
+    },
+    backgroundGlowRadii: {
+      xxs: {
+        borderRadius: theme.radii.xxs
+      },
+
+      xs: {
+        borderRadius: theme.radii.xs
+      },
+
+      sm: {
+        borderRadius: theme.radii.sm
+      },
+
+      md: {
+        borderRadius: theme.radii.md
+      },
+
+      lg: {
+        borderRadius: theme.radii.lg
+      },
+
+      xl: {
+        borderRadius: theme.radii.xl
+      },
+
+      round: {
+        borderRadius: theme.radii.round
       }
     },
 
