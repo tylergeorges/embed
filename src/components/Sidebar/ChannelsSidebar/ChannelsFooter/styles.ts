@@ -1,4 +1,5 @@
 import { theme, styled, commonComponentId } from '@stitches';
+import Image from 'next/image';
 
 export const ChannelsFooterWrapper = styled.withConfig({
   componentId: commonComponentId,
@@ -83,4 +84,57 @@ export const ChannelsFooterVersionWrapper = styled.withConfig({
   color: theme.colors.primaryOpacity30,
   fontSize: theme.fontSizes.sm,
   padding: theme.space.xs
+});
+
+export const ChannelsFooterUserWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channels-footer_user_wrapper'
+})('div', {
+  width: '100%',
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  paddingX: theme.space.md,
+  paddingY: theme.space.sm,
+  gap: theme.space.sm,
+
+  backgroundColor: 'rgb(38, 40, 44)',
+  fontWeight: '500'
+});
+
+export const ChannelsFooterUserAvatar = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channels-footer_user_avatar'
+})(Image, {
+  size: theme.sizes.iconSizeLarge,
+  borderRadius: theme.radii.round
+});
+
+export const ChannelsFooterUserContentWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channels-footer_user_content_wrapper'
+})('div', {
+  height: '100%',
+  width: '100%',
+  display: 'flex',
+  alignItems: 'flex-start',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  textAlign: 'start'
+});
+
+export const ChannelsFooterUserName = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channels-footer_username'
+})('div', {
+  fontSize: theme.fontSizes.md
+});
+
+export const ChannelsFooterUserDiscrim = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'channels-footer_user_discrim'
+})('div', {
+  fontSize: theme.fontSizes.sm,
+  color: theme.colors.primaryOpacity30
 });
