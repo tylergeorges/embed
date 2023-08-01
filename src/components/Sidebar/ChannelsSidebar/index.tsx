@@ -3,6 +3,7 @@ import { Header } from '@components/Header';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { Backdrop } from '@components/Overlays/Modal/styles';
+import { ChannelsFooter } from '@components/Sidebar/ChannelsSidebar/ChannelsFooter';
 import * as Styles from '../styles';
 import { Category } from './Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
@@ -51,6 +52,8 @@ export const ChannelsSidebar = () => {
               <Category category={category} key={category.id} />
             ))}
         </Styles.ChannelsChildrenWrapper>
+
+        <ChannelsFooter />
       </Styles.ChannelsSidebarWrapper>
     </>
   );

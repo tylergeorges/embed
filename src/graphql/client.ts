@@ -1,14 +1,6 @@
 import { createClient, cacheExchange, fetchExchange, subscriptionExchange } from 'urql';
-import { getEnvVar } from '@util/env';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
-
-const serverEndpoint = getEnvVar('CUSTOM_SERVER_ENDPOINT');
-const isDev = serverEndpoint?.includes('127.0.0.1');
-
-const socketScheme = isDev ? 'ws://' : 'wss://';
-const httpScheme = isDev ? 'http://' : 'https://';
-
-const WS_URL = `${socketScheme}${serverEndpoint}/api/graphql`;
+import { GRAPHQL_URL, WS_URL } from '@lib/api/url';
 
 const subClient = new SubscriptionClient(WS_URL, {
   reconnect: true,
@@ -17,7 +9,7 @@ const subClient = new SubscriptionClient(WS_URL, {
 });
 
 export const client = createClient({
-  url: `${httpScheme}${serverEndpoint}/api/graphql`,
+  url: GRAPHQL_URL,
   exchanges: [
     fetchExchange,
     cacheExchange,

@@ -10,7 +10,6 @@ import * as Styles from '@components/Core/styles';
 import { svgUrls } from '@svg-assets';
 import { useContextMenu } from '@hooks/useContextMenu';
 import dynamic from 'next/dynamic';
-import GuildProvider from '@components/Providers/GuildProvider';
 
 const MessageRendererRoot = styled('div', {
   '--fonts-main': 'GgSans',
@@ -44,46 +43,44 @@ function GuildChannel() {
   const guildChannels = useStoreState(state => state.guild.guildChannels);
 
   return (
-    <GuildProvider>
-      <MessageRendererProvider
-        messageButtons={() => []}
-        currentUser={() => null}
-        // @ts-ignore
-        resolveChannel={id => (guildChannels[id] as APIChannel) ?? null}
-        resolveGuild={() => null}
-        resolveMember={() => null}
-        resolveRole={() => null}
-        resolveUser={() => null}
-        svgUrls={svgUrls}
-        seeThreadOnClick={(messageId, thread) =>
-          alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
-        }
-        userMentionOnClick={user =>
-          alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
-        }
-        roleMentionOnClick={role => alert(`Role "${role.name}" mention clicked!`)}
-        channelMentionOnClick={channel => alert(`Channel "${channel.name}" mention clicked!`)}
-        messageComponentButtonOnClick={(message, customId) => {
-          alert(`Button by custom id "${customId}" pressed on message ${message.id}!`);
-        }}
-      >
-        {({ themeClass }) => (
-          <MessageRendererRoot className={themeClass}>
-            <Styles.Main onContextMenu={disableBrowserMenu}>
-              {showContextMenu && <ContextMenu />}
+    <MessageRendererProvider
+      messageButtons={() => []}
+      currentUser={() => null}
+      // @ts-ignore
+      resolveChannel={id => (guildChannels[id] as APIChannel) ?? null}
+      resolveGuild={() => null}
+      resolveMember={() => null}
+      resolveRole={() => null}
+      resolveUser={() => null}
+      svgUrls={svgUrls}
+      seeThreadOnClick={(messageId, thread) =>
+        alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
+      }
+      userMentionOnClick={user =>
+        alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
+      }
+      roleMentionOnClick={role => alert(`Role "${role.name}" mention clicked!`)}
+      channelMentionOnClick={channel => alert(`Channel "${channel.name}" mention clicked!`)}
+      messageComponentButtonOnClick={(message, customId) => {
+        alert(`Button by custom id "${customId}" pressed on message ${message.id}!`);
+      }}
+    >
+      {({ themeClass }) => (
+        <MessageRendererRoot className={themeClass}>
+          <Styles.Main onContextMenu={disableBrowserMenu}>
+            {showContextMenu && <ContextMenu />}
 
-              <Styles.InnerMain>
-                {showTopicModal && <ChannelTopicModal />}
-                <ChannelsSidebar />
+            <Styles.InnerMain>
+              {showTopicModal && <ChannelTopicModal />}
+              <ChannelsSidebar />
 
-                <TextChannelContainer />
-              </Styles.InnerMain>
-              {isDomThreadsPanelOpen && <ThreadPanel />}
-            </Styles.Main>
-          </MessageRendererRoot>
-        )}
-      </MessageRendererProvider>
-    </GuildProvider>
+              <TextChannelContainer />
+            </Styles.InnerMain>
+            {isDomThreadsPanelOpen && <ThreadPanel />}
+          </Styles.Main>
+        </MessageRendererRoot>
+      )}
+    </MessageRendererProvider>
   );
 }
 
