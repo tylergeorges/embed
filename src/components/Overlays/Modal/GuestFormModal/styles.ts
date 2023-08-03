@@ -120,3 +120,30 @@ export const GuestFormFooter = styled.withConfig({
 
   backgroundColor: theme.colors.modalFooterBackground
 });
+
+export const GuestFormDiscordAuth = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-guest_form_discord_auth'
+})('div', {
+  width: '100%',
+  marginTop: theme.space.lg
+});
+export const GuestFormDiscordContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-guest_form_discord_auth_content'
+})('span', {
+  color: theme.colors.primaryOpacity40,
+  fontSize: theme.fontSizes.md
+});
+
+export const GuestFormDiscordAuthButton = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-guest_form_discord_link'
+})('span', {
+  color: theme.colors.link,
+  cursor: 'pointer',
+
+  '&:hover': {
+    textDecoration: 'underline'
+  }
+});

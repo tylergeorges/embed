@@ -1,6 +1,7 @@
 import { fetchDiscordUser, guestLogin, guildLogin } from '@lib/api/apiRequest';
+import { API_URL, Endpoints } from '@lib/api/url';
 import { useStoreActions } from '@state';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 interface WindowMessageEvent extends MessageEvent {
   data:
@@ -68,12 +69,8 @@ export const useAuthAPI = () => {
     [setUserData]
   );
 
-  const discordSignIn = useCallback(
+  const receiveDiscordAuthMessage = useCallback(
     async ({ data, source }: WindowMessageEvent) => {
-      const hasToken = !!localStorage.getItem('token');
-
-      if (inProgressRef.current || hasToken) return;
-
       source = source as Window;
 
       switch (data.type) {
@@ -81,8 +78,7 @@ export const useAuthAPI = () => {
           source.close();
 
           if (!data.token) {
-            inProgressRef.current = false;
-            return;
+            break;
           }
 
           const { token } = data;
@@ -97,12 +93,13 @@ export const useAuthAPI = () => {
             .catch(err => {
               console.error(err);
             });
-          return;
+
+          inProgressRef.current = false;
           break;
         }
         case 'AUTH_FAIL': {
           source.close();
-          window.removeEventListener('message', discordSignIn);
+          window.removeEventListener('message', receiveDiscordAuthMessage);
           console.error('Auhtenticating failed: ', data.error);
 
           inProgressRef.current = false;
@@ -112,9 +109,30 @@ export const useAuthAPI = () => {
         default:
           break;
       }
+
+      inProgressRef.current = false;
     },
     [setUserData]
   );
+
+  const discordSignIn = useCallback(() => {
+    const hasToken = !!localStorage.getItem('token');
+
+    if (inProgressRef.current || hasToken) return;
+
+    inProgressRef.current = true;
+
+    const x: number = window.screen.width / 2 - 840 / 2;
+    const y: number = window.screen.height / 2 - 700 / 2;
+
+    window.open(
+      `${API_URL}${Endpoints.auth.discord}`,
+      'Login to WidgetBot with Discord!',
+      `menubar=no,width=905,height=752,location=no,resizable=no,scrollbars=yes,status=no,left=${x},top=${y}`
+    );
+
+    window.addEventListener('message', receiveDiscordAuthMessage);
+  }, [receiveDiscordAuthMessage]);
 
   const guildSignIn = useCallback(
     async (guild: string, token: string) => {
@@ -156,6 +174,11 @@ export const useAuthAPI = () => {
         });
     },
     [setUserData]
+  );
+
+  useEffect(
+    () => () => window.removeEventListener('message', receiveDiscordAuthMessage),
+    [receiveDiscordAuthMessage]
   );
 
   return { guestSignIn, discordSignIn, guildSignIn };

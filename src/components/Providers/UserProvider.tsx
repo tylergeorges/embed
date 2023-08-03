@@ -5,10 +5,10 @@ import { fetchDiscordUser } from '@lib/api/apiRequest';
 import { useAuthAPI } from '@hooks/useAuthAPI';
 
 interface UserProviderProps {
-  isUserFetched: React.MutableRefObject<boolean>;
+  setIsUserFetched: () => void;
 }
 
-export default function UserProvider({ isUserFetched }: UserProviderProps) {
+export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
   const { guildId, tokenParam, usernameParam } = useAppRouter();
   const localFetchedRef = useRef(false);
 
@@ -18,8 +18,8 @@ export default function UserProvider({ isUserFetched }: UserProviderProps) {
 
   useEffect(() => {
     // console.log('token is set', usernameParam);
-    if (!localFetchedRef.current && !isUserFetched.current) {
-      console.log('FETCHING USER DATA', isUserFetched.current, localFetchedRef.current);
+    if (!localFetchedRef.current) {
+      console.log('FETCHING USER DATA', localFetchedRef.current);
 
       const token = localStorage.getItem('token') ?? '';
 
@@ -38,7 +38,7 @@ export default function UserProvider({ isUserFetched }: UserProviderProps) {
           });
 
         localFetchedRef.current = true;
-        isUserFetched.current = true;
+        setIsUserFetched();
       } else if (!token && usernameParam) {
         console.log('usernameParam ', usernameParam);
 
@@ -49,7 +49,7 @@ export default function UserProvider({ isUserFetched }: UserProviderProps) {
           });
 
         localFetchedRef.current = true;
-        isUserFetched.current = true;
+        setIsUserFetched();
       } else if (!token && tokenParam) {
         console.log(tokenParam);
 
@@ -60,10 +60,13 @@ export default function UserProvider({ isUserFetched }: UserProviderProps) {
           });
 
         localFetchedRef.current = true;
-        isUserFetched.current = true;
+        setIsUserFetched();
+      } else if (!token && !tokenParam && !usernameParam) {
+        localFetchedRef.current = true;
+        setIsUserFetched();
       }
     }
-  }, [guildId, isUserFetched, guildSignIn, guestSignIn, setUserData, tokenParam, usernameParam]);
+  }, [guildId, setIsUserFetched, guildSignIn, guestSignIn, setUserData, tokenParam, usernameParam]);
 
   return <></>;
 }

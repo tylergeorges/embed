@@ -6,20 +6,57 @@ import { useStoreActions, useStoreState } from '@state';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface GuestFormProps {
-  receiveGuestMessage: (e: React.SyntheticEvent) => void;
-  usernameRef: React.MutableRefObject<string>;
+  hideForm: () => void;
 }
 
-const GuestForm = ({ receiveGuestMessage, usernameRef }: GuestFormProps) => {
+const GuestForm = ({ hideForm }: GuestFormProps) => {
+  const { guestSignIn, discordSignIn } = useAuthAPI();
+
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [localUsername, setLocalUsername] = useState('');
+  const [username, setUsername] = useState('');
+  const isFetching = useRef(false);
+
   const showGuestFormModal = useStoreState(state => state.ui.showGuestFormModal);
+
+  const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
+
+  useEffect(() => {
+    if (!showGuestFormModal) {
+      setUsername('');
+    }
+
+    if (!username.trim()) {
+      setIsButtonDisabled(true);
+    }
+  }, [username, showGuestFormModal]);
+
+  const submitForm = (e: React.SyntheticEvent) => {
+    e.preventDefault();
+
+    if (isButtonDisabled || isFetching.current) return;
+
+    isFetching.current = true;
+
+    guestSignIn(username)
+      .then(() => {
+        hideForm();
+      })
+      .catch(err => {
+        console.error(err);
+      });
+
+    setUsername('');
+    isFetching.current = false;
+    setShowGuestFormModal(false);
+  };
 
   const onInput = (e: React.FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
-    setLocalUsername(target.value);
+
+    setUsername(target.value);
 
     const userCanSubmit = !!target.value.trim();
+
     if (userCanSubmit && isButtonDisabled) {
       setIsButtonDisabled(false);
     } else if (!userCanSubmit && !isButtonDisabled) {
@@ -27,41 +64,35 @@ const GuestForm = ({ receiveGuestMessage, usernameRef }: GuestFormProps) => {
     }
   };
 
-  const submitCB = (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    if (isButtonDisabled) return;
-
-    usernameRef.current = localUsername;
-    receiveGuestMessage(e);
-  };
-
-  useEffect(() => {
-    if (!showGuestFormModal) {
-      setLocalUsername('');
-    }
-
-    if (!usernameRef.current.trim()) {
-      setIsButtonDisabled(true);
-    }
-  }, [showGuestFormModal, usernameRef]);
-
   return (
     <>
-      <Styles.GuestFormWrapper onSubmit={submitCB} id="guest-user-form">
+      <Styles.GuestFormWrapper onSubmit={submitForm} id="guest-user-form">
         <GuestFormInput
-          defaultValue={localUsername}
+          defaultValue={username}
           label="Display Name"
           placeholder="Guest"
           onInput={onInput}
-          value={localUsername}
+          value={username}
+          maxLength={80}
+          minLength={1}
         />
+
+        <Styles.GuestFormDiscordAuth>
+          <Styles.GuestFormDiscordContent>
+            Discord account?
+            <Styles.GuestFormDiscordAuthButton onClick={discordSignIn}>
+              {' '}
+              Log in
+            </Styles.GuestFormDiscordAuthButton>
+          </Styles.GuestFormDiscordContent>
+        </Styles.GuestFormDiscordAuth>
       </Styles.GuestFormWrapper>
 
       <Styles.GuestFormFooter>
         <Styles.GuestFormLoginButton
           type="submit"
           form="guest-user-form"
-          onClick={submitCB}
+          onClick={submitForm}
           disabled={isButtonDisabled}
         >
           <Styles.GuestFormLoginButtonLabel>Login</Styles.GuestFormLoginButtonLabel>
@@ -72,45 +103,27 @@ const GuestForm = ({ receiveGuestMessage, usernameRef }: GuestFormProps) => {
 };
 
 export const GuestFormModal = () => {
-  const inProgressRef = useRef(false);
-  const usernameRef = useRef('');
-  const { guestSignIn } = useAuthAPI();
+  const isFetching = useRef(false);
 
   const showGuestFormModal = useStoreState(state => state.ui.showGuestFormModal);
 
   const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
 
-  const hideForm = () => {
-    usernameRef.current = '';
+  const user = useStoreState(state => state.user.data);
+
+  const hasUser = !!user;
+
+  const hideForm = useCallback(() => {
     setShowGuestFormModal(false);
-    // setUsername('');
-    inProgressRef.current = false;
-  };
 
-  const receiveGuestMessage = useCallback(
-    (e: React.SyntheticEvent) => {
-      e.preventDefault();
+    isFetching.current = false;
+  }, [setShowGuestFormModal]);
 
-      if (!inProgressRef.current) {
-        inProgressRef.current = true;
-
-        guestSignIn(usernameRef.current)
-          .then(() => {
-            usernameRef.current = '';
-            inProgressRef.current = false;
-            setShowGuestFormModal(false);
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      }
-    },
-    [guestSignIn, setShowGuestFormModal]
-  );
+  if (hasUser) return null;
 
   return (
-    <InformationModal isOpen={showGuestFormModal} title="Guest Form" hideModal={hideForm}>
-      <GuestForm receiveGuestMessage={receiveGuestMessage} usernameRef={usernameRef} />
+    <InformationModal isOpen={showGuestFormModal} title="Create Guest Account" hideModal={hideForm}>
+      <GuestForm hideForm={hideForm} />
     </InformationModal>
   );
 };

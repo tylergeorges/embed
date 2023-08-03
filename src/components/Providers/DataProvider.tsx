@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import UserProvider from '@components/Providers/UserProvider';
 import GuildProvider from '@components/Providers/GuildProvider';
 import { Loading } from '@components/Overlays/Loading';
@@ -8,10 +8,10 @@ interface DataProviderProps {
 }
 
 export default function DataProvider({ children }: DataProviderProps) {
-  const isUserFetched = useRef(false);
   const [isGuildFetched, setIsGuildFetched] = useState(false);
+  const [isUserFetched, setIsUserFetched] = useState(false);
 
-  const isFetching = !isUserFetched.current || !isGuildFetched;
+  const isFetching = !isUserFetched || !isGuildFetched;
 
   const setGuildFetchedCB = useCallback(() => {
     if (!isGuildFetched) {
@@ -19,9 +19,15 @@ export default function DataProvider({ children }: DataProviderProps) {
     }
   }, [isGuildFetched]);
 
+  const setUserFetchedCB = useCallback(() => {
+    if (!isUserFetched) {
+      setIsUserFetched(true);
+    }
+  }, [isUserFetched]);
+
   return (
     <>
-      <UserProvider isUserFetched={isUserFetched} />
+      <UserProvider setIsUserFetched={setUserFetchedCB} />
       <GuildProvider setIsGuildFetched={setGuildFetchedCB} />
       {isFetching ? <Loading /> : children}
     </>
