@@ -1,8 +1,23 @@
-export interface IUser {
-  _id: string;
+type Provider = 'Discord' | 'Guild' | 'Guest';
+
+interface BaseUser {
+  provider: Provider;
   username: string;
-  discriminator: string;
+  id: string;
   avatarUrl: string;
-  provider: 'Guild' | 'Discord' | 'Guest';
+}
+
+export interface IUser extends Omit<BaseUser, 'id'> {
+  _id: string;
+  discriminator: string;
+  provider: 'Discord';
   blockedUsers: IUser[];
+}
+
+export interface GuestUser extends BaseUser {
+  provider: 'Guest';
+}
+
+export interface GuildUser extends BaseUser {
+  provider: 'Guild';
 }

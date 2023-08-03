@@ -8,4 +8,8 @@ export interface RouterQuery extends ParsedUrlQuery {
   guild: string;
   /** The current thread's id */
   thread?: string;
+
+  username?: string;
+
+  token?: string;
 }
