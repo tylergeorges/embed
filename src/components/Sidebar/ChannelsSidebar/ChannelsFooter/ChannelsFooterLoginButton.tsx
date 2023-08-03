@@ -1,69 +1,17 @@
 import * as Styles from '@components/Sidebar/ChannelsSidebar/ChannelsFooter/styles';
 import { API_URL, Endpoints } from '@lib/api/url';
-import { fetchDiscordUser } from '@lib/api/apiRequest';
-import React, { useCallback, useEffect, useRef } from 'react';
-import { useStoreActions } from '@state';
-
-interface WindowMessageEvent extends MessageEvent {
-  data:
-    | {
-        type: 'AUTH_FAIL';
-        error: string;
-      }
-    | {
-        type: 'AUTH_SUCCESS';
-        token?: string;
-      };
-}
+import React, { useEffect, useRef } from 'react';
+import { useStoreActions, useStoreState } from '@state';
+import { useAuthAPI } from '@hooks/useAuthAPI';
 
 export const ChannelsFooterLoginButton = () => {
   const inProgressRef = useRef(false);
+  const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
 
-  const setUserData = useStoreActions(state => state.user.setUserData);
+  const isGuestMode = useStoreState(state => state.guild.settings)?.guestMode;
+  // const isGuestMode = true;
 
-  const receiveMessage = useCallback(
-    async ({ data, source }: WindowMessageEvent) => {
-      if (!inProgressRef.current) return;
-
-      const hasToken = !!localStorage.getItem('token');
-
-      source = source as Window;
-
-      switch (data.type) {
-        case 'AUTH_SUCCESS': {
-          source.close();
-
-          if (!data.token) {
-            inProgressRef.current = false;
-            break;
-          }
-
-          const { token } = data;
-
-          if (!hasToken) {
-            localStorage.setItem('token', token);
-            await fetchDiscordUser({ userToken: token }).then(user => {
-              setUserData(user);
-            });
-          }
-
-          inProgressRef.current = false;
-          break;
-        }
-        case 'AUTH_FAIL': {
-          source.close();
-          window.removeEventListener('message', receiveMessage);
-          console.error('Auhtenticating failed: ', data.error);
-
-          inProgressRef.current = false;
-          break;
-        }
-        default:
-          break;
-      }
-    },
-    [setUserData]
-  );
+  const { discordSignIn } = useAuthAPI();
 
   const login = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -74,21 +22,26 @@ export const ChannelsFooterLoginButton = () => {
       const x: number = window.screen.width / 2 - 840 / 2;
       const y: number = window.screen.height / 2 - 700 / 2;
 
-      window.open(
-        `${API_URL}${Endpoints.auth.discord}`,
-        'Login to WidgetBot with Discord!',
-        `menubar=no,width=905,height=752,location=no,resizable=no,scrollbars=yes,status=no,left=${x},top=${y}`
-      );
+      console.log('is guest mode login');
+      if (isGuestMode) {
+        setShowGuestFormModal(true);
+        inProgressRef.current = false;
+      } else {
+        window.open(
+          `${API_URL}${Endpoints.auth.discord}`,
+          'Login to WidgetBot with Discord!',
+          `menubar=no,width=905,height=752,location=no,resizable=no,scrollbars=yes,status=no,left=${x},top=${y}`
+        );
+        window.addEventListener('message', discordSignIn);
+      }
     }
-
-    window.addEventListener('message', receiveMessage);
   };
 
   useEffect(
     () => () => {
-      window.removeEventListener('message', receiveMessage);
+      window.removeEventListener('message', discordSignIn);
     },
-    [receiveMessage]
+    [discordSignIn]
   );
 
   return (

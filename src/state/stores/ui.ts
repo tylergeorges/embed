@@ -19,6 +19,7 @@ export interface UIStore {
 
   showTopicModal: boolean;
   showThreadsModal: boolean;
+  showGuestFormModal: boolean;
 
   showContextMenu: boolean;
   contextMenuData: ContextMenuData;
@@ -35,6 +36,7 @@ export interface UIStore {
 
   setShowTopicModal: Action<UIStore, boolean>;
   setShowContextMenu: Action<UIStore, boolean>;
+  setShowGuestFormModal: Action<UIStore, boolean>;
   setShowThreadsModal: Action<UIStore, boolean>;
 
   setContextMenuData: Action<UIStore, ContextMenuData>;
@@ -47,6 +49,7 @@ const ui: UIStore = {
   isTransitionedThreadsPanelOpen: false,
   isMembersListOpen: true,
 
+  showGuestFormModal: false,
   showTopicModal: false,
   showThreadsModal: false,
   contextMenuData: { xPos: 0, yPos: 0 },
@@ -87,6 +90,10 @@ const ui: UIStore = {
 
   setShowTopicModal: action((state, payload) => {
     state.showTopicModal = payload;
+  }),
+
+  setShowGuestFormModal: action((state, payload) => {
+    state.showGuestFormModal = payload;
   }),
 
   setShowThreadsModal: action((state, payload) => {

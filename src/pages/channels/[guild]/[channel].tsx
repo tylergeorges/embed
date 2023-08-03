@@ -10,11 +10,14 @@ import * as Styles from '@components/Core/styles';
 import { svgUrls } from '@svg-assets';
 import { useContextMenu } from '@hooks/useContextMenu';
 import dynamic from 'next/dynamic';
+import { GuestFormModal } from '@components/Overlays/Modal/GuestFormModal';
 
 const MessageRendererRoot = styled('div', {
-  '--fonts-main': 'GgSans',
   height: '100%',
-  width: '100%'
+  width: '100%',
+  '*': {
+    fontFamily: 'GgSans'
+  }
 });
 
 // dynamic imports since they are conditionally rendered, helps with bundle size
@@ -72,6 +75,7 @@ function GuildChannel() {
 
             <Styles.InnerMain>
               {showTopicModal && <ChannelTopicModal />}
+              <GuestFormModal />
               <ChannelsSidebar />
 
               <TextChannelContainer />
