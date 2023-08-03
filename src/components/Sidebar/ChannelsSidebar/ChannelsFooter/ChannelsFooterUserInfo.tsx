@@ -20,7 +20,9 @@ export const ChannelsFooterUserInfo = () => {
 
       <Styles.ChannelsFooterUserContentWrapper>
         <Styles.ChannelsFooterUserName>{user.username}</Styles.ChannelsFooterUserName>
-        <Styles.ChannelsFooterUserDiscrim>#{user.discriminator}</Styles.ChannelsFooterUserDiscrim>
+        {user.provider === 'Discord' && (
+          <Styles.ChannelsFooterUserDiscrim>#{user.discriminator}</Styles.ChannelsFooterUserDiscrim>
+        )}
       </Styles.ChannelsFooterUserContentWrapper>
 
       <LogoutButton />

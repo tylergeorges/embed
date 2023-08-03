@@ -5,10 +5,20 @@ export const commonComponentId = process.env.NODE_ENV === 'development' ? undefi
 const stitches = createStitches({
   theme: {
     transitions: {
+      /** 100ms */
       fastestDuration: '100ms',
+
+      /** 200ms */
       fasterDuration: '200ms',
+
+      /** 300ms */
       defaultDuration: '300ms',
+
+      /** 500ms */
       longerDuration: '500ms',
+
+      /** 1000ms */
+      longestDuration: '1000ms',
 
       defaultTransform: 'transform $defaultDuration ease',
       defaultOpacity: 'opacity $defaultDuration ease',
@@ -47,14 +57,17 @@ const stitches = createStitches({
       background: '#313338',
       backgroundOpacity10: '#36393f1a',
       backgroundSecondary: '#2b2d31',
-      backgroundSecondaryAlt: '#232428',
+      backgroundSecondaryAlt: 'rgb(35, 36, 40)',
       backgroundTertiary: '#232428',
+
+      modalBackground: 'rgb(49, 51, 56)',
+      modalFooterBackground: 'rgb(43, 45, 49)',
 
       mentioned: 'rgba(250, 166, 26, 0.1)',
       mentionedHover: 'rgba(250, 168, 26, 0.08)',
       mentionedBorder: '#faa81a',
 
-      inputBackground: 'rgba(255, 255, 255, 0.03)',
+      inputBackground: 'rgb(30, 31, 34)',
 
       contextMenuBackground: '#111214',
       messageHover: 'rgba(0, 0, 0, .05)',
@@ -162,6 +175,12 @@ const stitches = createStitches({
 
       /** 16px */
       iconSizeXs: '16px',
+
+      /** 32px */
+      buttonHeightSm: '32px',
+
+      /** 38px */
+      buttonHeightMd: '38px',
 
       /** 16px */
       messageTypeIcon: '$iconSizeXs',
