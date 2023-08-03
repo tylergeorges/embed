@@ -165,7 +165,7 @@ export const TextBoxWrapper = styled.withConfig({
   maxHeight: '50vh',
 
   borderRadius: theme.radii.xs,
-  backgroundColor: theme.colors.inputBackground,
+  backgroundColor: theme.colors.chatInputBackground,
 
   paddingY: theme.space.sm,
   marginBottom: theme.space.lg,

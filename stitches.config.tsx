@@ -68,6 +68,7 @@ const stitches = createStitches({
       mentionedBorder: '#faa81a',
 
       inputBackground: 'rgb(30, 31, 34)',
+      chatInputBackground: 'rgba(255,255,255,0.03)',
 
       contextMenuBackground: '#111214',
       messageHover: 'rgba(0, 0, 0, .05)',

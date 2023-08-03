@@ -74,8 +74,11 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
 
   useEffect(() => {
     if (!guildId) {
-      router.push(`/channels/585454996800405509/1117820894795010138`);
       //
+
+      router.push(`/channels/585454996800405509/1117820894795010138`);
+      // router.push(`/channels/585454996800405509/1117820894795010138?token=${userToken}`);
+      // router.push(`/channels/585454996800405509/1117820894795010138?username=guest`);
     }
     if (data && !fetching && !localFetchedRef.current) {
       console.log('GUILD DATA FETCHED ');

@@ -17,11 +17,11 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
   const { guestSignIn, guildSignIn } = useAuthAPI();
 
   useEffect(() => {
-    // console.log('token is set', usernameParam);
-    if (!localFetchedRef.current) {
+    // Check if guildId is in URL to make sure pages loaded
+    if (!localFetchedRef.current && guildId) {
       console.log('FETCHING USER DATA', localFetchedRef.current);
 
-      const token = localStorage.getItem('token') ?? '';
+      const token = localStorage.getItem('token');
 
       if (token) {
         fetchDiscordUser({ userToken: token })
@@ -41,7 +41,6 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
         setIsUserFetched();
       } else if (!token && usernameParam) {
         console.log('usernameParam ', usernameParam);
-
         guestSignIn(usernameParam)
           .then(() => {})
           .catch(err => {

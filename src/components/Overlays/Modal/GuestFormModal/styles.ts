@@ -128,6 +128,7 @@ export const GuestFormDiscordAuth = styled.withConfig({
   width: '100%',
   marginTop: theme.space.lg
 });
+
 export const GuestFormDiscordContent = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-guest_form_discord_auth_content'

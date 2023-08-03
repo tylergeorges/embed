@@ -123,7 +123,9 @@ export const GuestFormModal = () => {
 
   return (
     <InformationModal isOpen={showGuestFormModal} title="Create Guest Account" hideModal={hideForm}>
-      <GuestForm hideForm={hideForm} />
+      <>
+        <GuestForm hideForm={hideForm} />
+      </>
     </InformationModal>
   );
 };
