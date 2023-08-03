@@ -49,15 +49,16 @@ export const useMessages = ({
   const isReady = data?.channelV2.id === channel;
 
   useEffect(() => {
+    if (variables.channel !== channel || variables.threadId !== threadId) {
+      setMessages([]);
+      setVariables({ channel, threadId, guild });
+    }
+
     // @ts-expect-error
     const apiMsgs = data?.channelV2?.messageBunch?.messages ?? [];
     // @ts-ignore
     const isReadyWithMessages =
       isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
-
-    if (variables.channel !== channel || variables.threadId !== threadId) {
-      setMessages([]);
-    }
 
     // @ts-expect-error
     const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
@@ -66,6 +67,7 @@ export const useMessages = ({
       if (isReadyWithMessages) {
         setNewMessageGroupLength(groupMessages(msgs).length);
 
+        console.log('set messages ');
         setMessages(prev => [...msgs, ...prev]);
       }
     }

@@ -18,12 +18,12 @@ export const GuestFormLoginButton = styled.withConfig({
   border: 'none',
   outline: 'none',
   minWidth: 75,
-  cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: 'transparent',
 
+  // Buttons background color
   '&::before': {
     content: '',
     transition: 'opacity ease',
@@ -38,10 +38,25 @@ export const GuestFormLoginButton = styled.withConfig({
     opacity: 1
   },
 
-  '&:hover': {
-    '&::before': {
-      content: '',
-      opacity: '75%'
+  variants: {
+    disabled: {
+      true: {
+        opacity: '50%',
+        cursor: 'not-allowed',
+        userSelect: 'none'
+      },
+
+      false: {
+        cursor: 'pointer',
+
+        // Darken button on hover
+        '&:hover': {
+          '&::before': {
+            content: '',
+            opacity: '75%'
+          }
+        }
+      }
     }
   }
 });

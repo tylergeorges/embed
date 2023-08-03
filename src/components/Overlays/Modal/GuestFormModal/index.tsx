@@ -29,6 +29,7 @@ const GuestForm = ({ receiveGuestMessage, usernameRef }: GuestFormProps) => {
 
   const submitCB = (e: React.SyntheticEvent) => {
     e.preventDefault();
+    if (isButtonDisabled) return;
 
     usernameRef.current = localUsername;
     receiveGuestMessage(e);
@@ -57,7 +58,12 @@ const GuestForm = ({ receiveGuestMessage, usernameRef }: GuestFormProps) => {
       </Styles.GuestFormWrapper>
 
       <Styles.GuestFormFooter>
-        <Styles.GuestFormLoginButton onClick={submitCB}>
+        <Styles.GuestFormLoginButton
+          type="submit"
+          form="guest-user-form"
+          onClick={submitCB}
+          disabled={isButtonDisabled}
+        >
           <Styles.GuestFormLoginButtonLabel>Login</Styles.GuestFormLoginButtonLabel>
         </Styles.GuestFormLoginButton>
       </Styles.GuestFormFooter>
@@ -76,7 +82,6 @@ export const GuestFormModal = () => {
 
   const hideForm = () => {
     usernameRef.current = '';
-    console.log(usernameRef.current);
     setShowGuestFormModal(false);
     // setUsername('');
     inProgressRef.current = false;

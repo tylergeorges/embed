@@ -5,9 +5,9 @@ import { Provider as GraphQLProvider } from 'urql';
 import { store } from '@state/store';
 import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
-import GuildProvider from '@components/Providers/GuildProvider';
 import '../i18n';
 import React from 'react';
+import DataProvider from '@components/Providers/DataProvider';
 
 const globalStyles = globalCss({
   '@font-face': {
@@ -133,9 +133,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <StoreProvider store={store}>
         <GraphQLProvider value={client}>
-          <GuildProvider>
+          <DataProvider>
             <Component {...pageProps} />
-          </GuildProvider>
+          </DataProvider>
         </GraphQLProvider>
       </StoreProvider>
     </>
