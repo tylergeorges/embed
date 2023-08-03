@@ -7,11 +7,11 @@ interface BaseUser {
   avatarUrl: string;
 }
 
-export interface IUser extends Omit<BaseUser, 'id'> {
+export interface DiscordUser extends Omit<BaseUser, 'id'> {
   _id: string;
   discriminator: string;
   provider: 'Discord';
-  blockedUsers: IUser[];
+  blockedUsers: DiscordUser[];
 }
 
 export interface GuestUser extends BaseUser {
@@ -21,3 +21,5 @@ export interface GuestUser extends BaseUser {
 export interface GuildUser extends BaseUser {
   provider: 'Guild';
 }
+
+export type AuthUser = DiscordUser | GuildUser | GuestUser;

@@ -1,23 +1,55 @@
+import { APIDiscordResponse, AuthResponse, HandleAuthMessageResponse } from '@lib/api/api.types';
 import { fetchDiscordUser, guestLogin, guildLogin } from '@lib/api/apiRequest';
 import { API_URL, Endpoints } from '@lib/api/url';
 import { useStoreActions } from '@state';
 import { useCallback, useEffect, useRef } from 'react';
+import { GuestUser, GuildUser, DiscordUser, AuthUser } from 'types/user.types';
 
 interface WindowMessageEvent extends MessageEvent {
-  data:
-    | {
-        type: 'AUTH_FAIL';
-        error: string;
-      }
-    | {
-        type: 'AUTH_SUCCESS';
-        token?: string;
-      };
+  data: APIDiscordResponse;
 }
 
 export const useAuthAPI = () => {
   const inProgressRef = useRef(false);
   const setUserData = useStoreActions(state => state.user.setUserData);
+
+  const handleAuthMessage = <T extends AuthUser>(
+    authRes: AuthResponse<T>
+  ): HandleAuthMessageResponse<T> => {
+    switch (authRes.type) {
+      case 'AUTH_SUCCESS': {
+        if (!authRes.token) {
+          inProgressRef.current = false;
+
+          console.error(authRes);
+          return { type: 'ERROR', message: authRes.type };
+        }
+
+        const { token } = authRes;
+        localStorage.setItem('token', token);
+
+        inProgressRef.current = false;
+
+        return { type: 'SUCCESS', data: authRes } as HandleAuthMessageResponse<T>;
+      }
+
+      case 'AUTH_FAIL':
+      case 'AUTH_ERROR': {
+        console.error('Auhtenticating failed: ', authRes);
+
+        inProgressRef.current = false;
+
+        if (authRes.type === 'AUTH_ERROR') {
+          return { type: 'ERROR', message: authRes.message };
+        }
+
+        return { type: 'ERROR', message: authRes.error };
+      }
+
+      default:
+        return { type: 'ERROR', message: authRes };
+    }
+  };
 
   const guestSignIn = useCallback(
     async (username: string) => {
@@ -35,36 +67,15 @@ export const useAuthAPI = () => {
 
       guestLogin({ username: trimmedUsername })
         .then(res => {
-          switch (res.type) {
-            case 'AUTH_SUCCESS': {
-              if (!res.token) {
-                inProgressRef.current = false;
-                break;
-              }
+          const guestData = handleAuthMessage<GuestUser>(res);
 
-              const { token } = res;
+          if (guestData.type === 'ERROR') return;
 
-              localStorage.setItem('token', token);
-              setUserData(res.user);
-
-              inProgressRef.current = false;
-              break;
-            }
-            case 'AUTH_ERROR': {
-              console.error('Auhtenticating failed: ', res);
-
-              inProgressRef.current = false;
-              break;
-            }
-            default:
-              break;
-          }
+          setUserData(guestData.data.user);
         })
         .catch(err => {
           console.error(err);
         });
-
-      inProgressRef.current = false;
     },
     [setUserData]
   );
@@ -73,44 +84,25 @@ export const useAuthAPI = () => {
     async ({ data, source }: WindowMessageEvent) => {
       source = source as Window;
 
-      switch (data.type) {
-        case 'AUTH_SUCCESS': {
-          source.close();
+      const discordUserData = handleAuthMessage<DiscordUser>(data);
 
-          if (!data.token) {
-            break;
-          }
+      if (discordUserData.type === 'ERROR') {
+        source.close();
 
-          const { token } = data;
+        console.error('Auhtenticating failed: ', discordUserData.message);
+      } else {
+        source.close();
 
-          localStorage.setItem('token', token);
-
-          fetchDiscordUser({ userToken: token })
-            .then(user => {
-              console.log('discord ', user);
-              setUserData(user);
-            })
-            .catch(err => {
-              console.error(err);
-            });
-
-          inProgressRef.current = false;
-          break;
-        }
-        case 'AUTH_FAIL': {
-          source.close();
-          window.removeEventListener('message', receiveDiscordAuthMessage);
-          console.error('Auhtenticating failed: ', data.error);
-
-          inProgressRef.current = false;
-
-          break;
-        }
-        default:
-          break;
+        fetchDiscordUser({ userToken: discordUserData.data.token })
+          .then(user => {
+            setUserData(user);
+          })
+          .catch(err => {
+            console.error(err);
+          });
       }
 
-      inProgressRef.current = false;
+      window.removeEventListener('message', receiveDiscordAuthMessage);
     },
     [setUserData]
   );
@@ -142,32 +134,14 @@ export const useAuthAPI = () => {
 
       guildLogin({ guild, token })
         .then(res => {
-          console.log('guild data: ', res);
+          const guildData = handleAuthMessage<GuildUser>(res);
 
-          switch (res.type) {
-            case 'AUTH_SUCCESS': {
-              if (!res.token) {
-                inProgressRef.current = false;
-                break;
-              }
-
-              const { token } = res;
-
-              localStorage.setItem('token', token);
-              setUserData(res.user);
-
-              inProgressRef.current = false;
-              break;
-            }
-            case 'AUTH_ERROR': {
-              console.error('Auhtenticating failed: ', res.message);
-
-              inProgressRef.current = false;
-              break;
-            }
-            default:
-              break;
+          if (guildData.type === 'ERROR') {
+            console.error('Auhtenticating failed: ', guildData.message);
+            return;
           }
+
+          setUserData(guildData.data.user);
         })
         .catch(err => {
           console.error(err);

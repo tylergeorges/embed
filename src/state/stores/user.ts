@@ -1,11 +1,11 @@
 import { Action, action } from 'easy-peasy';
-import { IUser, GuestUser, GuildUser } from 'types/user.types';
+import { DiscordUser, GuestUser, GuildUser } from 'types/user.types';
 
 // TODO: prolly a better place for this? as User is likely a commonly used interface
 
 export interface UserStore {
-  data?: IUser | GuestUser | GuildUser;
-  setUserData: Action<UserStore, IUser | GuestUser | GuildUser | undefined>;
+  data?: DiscordUser | GuestUser | GuildUser;
+  setUserData: Action<UserStore, DiscordUser | GuestUser | GuildUser | undefined>;
 }
 
 const user: UserStore = {
