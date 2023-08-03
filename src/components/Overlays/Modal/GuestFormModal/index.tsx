@@ -1,6 +1,6 @@
-import { Modal } from '@components/Overlays/Modal';
 import { GuestFormInput } from '@components/Overlays/Modal/GuestFormModal/GuestFormInput';
 import * as Styles from '@components/Overlays/Modal/GuestFormModal/styles';
+import { InformationModal } from '@components/Overlays/Modal/InformationModal';
 import { useAuthAPI } from '@hooks/useAuthAPI';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -104,8 +104,8 @@ export const GuestFormModal = () => {
   );
 
   return (
-    <Modal isOpen={showGuestFormModal} title="Guest Form" hideModal={hideForm}>
+    <InformationModal isOpen={showGuestFormModal} title="Guest Form" hideModal={hideForm}>
       <GuestForm receiveGuestMessage={receiveGuestMessage} usernameRef={usernameRef} />
-    </Modal>
+    </InformationModal>
   );
 };

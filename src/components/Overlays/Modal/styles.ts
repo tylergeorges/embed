@@ -198,7 +198,7 @@ export const ModalHeaderContent = styled.withConfig({
 
   fontSize: '100%',
 
-  padding: theme.space.xl,
+  padding: theme.space.lg,
 
   cursor: 'default'
 });

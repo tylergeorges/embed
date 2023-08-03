@@ -4,7 +4,13 @@ import { RouterQuery } from 'types/routerQuery';
 export const useAppRouter = () => {
   const router = useRouter();
 
-  const { channel: channelId, guild: guildId, thread: threadId } = router.query as RouterQuery;
+  const {
+    channel: channelId,
+    guild: guildId,
+    thread: threadId,
+    username: usernameParam,
+    token: tokenParam
+  } = router.query as RouterQuery;
 
-  return { channelId, guildId, threadId, router };
+  return { channelId, guildId, threadId, router, tokenParam, usernameParam };
 };

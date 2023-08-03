@@ -5,6 +5,7 @@ import { useStoreActions, useStoreState } from '@state';
 import { Loading } from '@components/Overlays/Loading';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { fetchDiscordUser } from '@lib/api/apiRequest';
+import { useAuthAPI } from '@hooks/useAuthAPI';
 
 interface GuildProviderProps {
   children: React.ReactNode;
@@ -17,7 +18,9 @@ const guildDocument = graphql(/* GraphQL */ `
       name
       settings {
         readonly
+        guestMode
       }
+
       channels {
         id
         name
@@ -59,7 +62,7 @@ const guildDocument = graphql(/* GraphQL */ `
 `);
 
 export default function GuildProvider({ children }: GuildProviderProps) {
-  const { guildId, router } = useAppRouter();
+  const { guildId, router, tokenParam, usernameParam } = useAppRouter();
 
   const [{ data, fetching }] = useQuery({
     query: guildDocument,
@@ -74,30 +77,13 @@ export default function GuildProvider({ children }: GuildProviderProps) {
 
   const fetchedUserDataRef = useRef(false);
 
+  const { guestSignIn, guildSignIn } = useAuthAPI();
+
   useEffect(() => {
     if (!guildId) {
-      router.push('/channels/585454996800405509/585840022511550494');
-      // router.push('/channels/299881420891881473/368427726358446110');
-    }
+      // router.push('/channels/585454996800405509/585840022511550494');
 
-    if (!fetchedUserDataRef.current) {
-      fetchedUserDataRef.current = true;
-      const token = localStorage.getItem('token');
-
-      if (token) {
-        fetchDiscordUser({ userToken: token })
-          .then(data => {
-            if (!data) {
-              setUserData(undefined);
-            }
-
-            setUserData(data);
-          })
-          .catch(err => {
-            console.error(err);
-            setUserData(undefined);
-          });
-      }
+      router.push(`/channels/585454996800405509/1117820894795010138`);
     }
 
     if (data && !fetching) {
@@ -107,7 +93,54 @@ export default function GuildProvider({ children }: GuildProviderProps) {
       // @ts-expect-error
       setChannels(data.guild.channels);
     }
-  }, [data, fetching, setChannels, setGuildData, setSettings, guildId, router, setUserData]);
+  }, [data, fetching, setChannels, setGuildData, setSettings, guildId, router]);
+
+  // User Data useEffect
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      fetchDiscordUser({ userToken: token })
+        .then(data => {
+          if (!data) {
+            setUserData(undefined);
+          }
+
+          setUserData(data);
+          fetchedUserDataRef.current = true;
+        })
+        .catch(err => {
+          console.error(err);
+          setUserData(undefined);
+          fetchedUserDataRef.current = true;
+        });
+    } else if (!token && usernameParam) {
+      console.log('usernameParam ', usernameParam);
+
+      guestSignIn(usernameParam)
+        .then(() => {
+          fetchedUserDataRef.current = true;
+        })
+        .catch(err => {
+          fetchedUserDataRef.current = true;
+
+          console.error(err);
+        });
+    } else if (!token && tokenParam) {
+      console.log(tokenParam);
+
+      guildSignIn(guildId, tokenParam)
+        .then(() => {
+          fetchedUserDataRef.current = true;
+        })
+        .catch(err => {
+          console.error(err);
+          fetchedUserDataRef.current = true;
+        });
+    } else if (!token && !tokenParam && !usernameParam && !fetchedUserDataRef.current) {
+      fetchedUserDataRef.current = true;
+    }
+  }, [setUserData, usernameParam, tokenParam, guestSignIn, guildId, guildSignIn]);
 
   if (fetching || !data || channels === undefined || !fetchedUserDataRef.current)
     return <Loading />;

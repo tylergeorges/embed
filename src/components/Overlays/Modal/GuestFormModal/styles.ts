@@ -4,7 +4,8 @@ export const GuestFormWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-guest_form_wrapper'
 })('form', {
-  padding: theme.space.lg
+  paddingX: theme.space.lg,
+  paddingY: theme.space.sm
 });
 
 export const GuestFormLoginButton = styled.withConfig({
@@ -75,7 +76,6 @@ export const GuestFormInputLabel = styled.withConfig({
 })('h3', {
   fontSize: theme.fontSizes.sm,
   color: theme.colors.textMuted,
-  // color: theme.colors.primaryOpacity60,
   fontWeight: '600',
   margin: 0,
   userSelect: 'none',
@@ -99,7 +99,7 @@ export const GuestFormFooter = styled.withConfig({
   displayName: 'modal-guest_form_footer'
 })('div', {
   width: '100%',
-  padding: theme.space.xl,
+  padding: theme.space.lg,
   borderBottomLeftRadius: theme.radii.sm,
   borderBottomRightRadius: theme.radii.sm,
 
