@@ -159,14 +159,16 @@ export const ModalContainer = styled.withConfig({
   flexDirection: 'column',
   justifyContent: 'flex-start',
   textAlign: 'left',
-
-  width: 490,
+  // @ts-ignore
+  paddingX: theme.space.xxl.value,
+  paddingY: theme.space.lg,
 
   borderRadius: 4,
 
   pointerEvents: 'all',
   backgroundColor: theme.colors.background,
   zIndex: theme.zIndices.modal,
+  position: 'relative',
 
   variants: {
     isOpen: {
@@ -174,8 +176,19 @@ export const ModalContainer = styled.withConfig({
         // Scaling to 0 is not performant, so we trigger it to render on GPU with translate3d
         transform: 'scale(0) rotate(0deg) translate3d(0,0,0)'
       },
+
       true: {
         animation: `${zoomInBounce} ${theme.transitions.longerDuration}  ease`
+      }
+    },
+
+    containerSize: {
+      sm: {
+        minWidth: 310
+      },
+
+      md: {
+        width: 490
       }
     }
   }
@@ -185,7 +198,12 @@ export const ModalHeader = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-header'
 })('div', {
-  width: '100%'
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  position: 'relative',
+  justifyContent: 'center',
+  flexDirection: 'column'
 });
 
 export const ModalHeaderContent = styled.withConfig({
@@ -193,14 +211,83 @@ export const ModalHeaderContent = styled.withConfig({
   displayName: 'modal-header_content'
 })(HeaderMainContentRoot, {
   display: 'flex',
-  justifyContent: 'space-between',
+  flexDirection: 'column',
+
   userSelect: 'none',
 
-  fontSize: '100%',
+  cursor: 'default',
+  marginBottom: theme.space.xs,
+  marginTop: theme.space.md,
 
-  padding: theme.space.lg,
+  variants: {
+    titleSize: {
+      sm: {
+        fontSize: theme.fontSizes.sm
+      },
 
-  cursor: 'default'
+      md: {
+        fontSize: theme.fontSizes.md
+      },
+
+      lg: {
+        fontSize: theme.fontSizes.lg
+      },
+
+      xl: {
+        fontSize: theme.fontSizes.xl
+      },
+
+      xxl: {
+        fontSize: theme.fontSizes.xxl.value
+      },
+
+      xxxl: {
+        fontSize: theme.fontSizes.xxxl.value
+      }
+    },
+
+    titleAlignment: {
+      left: {
+        justifyContent: 'flex-start'
+      },
+
+      center: {
+        justifyContent: 'center',
+        textAlign: 'center'
+      }
+    }
+  }
+});
+
+export const ModalSubheaderContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-subheader_content'
+})('h3', {
+  userSelect: 'none',
+
+  fontSize: theme.fontSizes.lg,
+  color: theme.colors.textMuted,
+  margin: 0,
+  fontWeight: '$medium',
+
+  cursor: 'default',
+  marginBottom: theme.space.xl.value
+});
+
+export const ModalCloseWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-close_wrapper'
+})('div', {
+  position: 'absolute',
+  right: 0,
+  top: 0,
+  display: 'flex',
+  width: theme.sizes.iconSizeLg,
+  height: 30,
+  alignItems: 'center',
+  justifyContent: 'center',
+  margin: theme.space.xxs,
+  cursor: 'pointer'
 });
 
 export const PopoutHeader = styled.withConfig({

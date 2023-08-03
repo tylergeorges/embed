@@ -4,8 +4,11 @@ export const GuestFormWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-guest_form_wrapper'
 })('form', {
-  paddingX: theme.space.lg,
-  paddingY: theme.space.sm
+  height: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column'
 });
 
 export const GuestFormLoginButton = styled.withConfig({
@@ -14,14 +17,16 @@ export const GuestFormLoginButton = styled.withConfig({
 })('button', {
   position: 'relative',
   borderRadius: theme.radii.round,
-  padding: theme.space.sm,
+  padding: theme.space.md,
   border: 'none',
+  paddingX: theme.space.xxl,
   outline: 'none',
   minWidth: 75,
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   backgroundColor: 'transparent',
+  marginTop: theme.space.xl.value,
 
   // Buttons background color
   '&::before': {
@@ -57,6 +62,12 @@ export const GuestFormLoginButton = styled.withConfig({
           }
         }
       }
+    },
+
+    size: {
+      full: {
+        width: '100%'
+      }
     }
   }
 });
@@ -66,7 +77,7 @@ export const GuestFormLoginButtonLabel = styled.withConfig({
   displayName: 'modal-guest_form_login_button_label'
 })('span', {
   color: theme.colors.primary,
-  fontSize: theme.fontSizes.md,
+  fontSize: theme.fontSizes.lg,
 
   zIndex: theme.zIndices.tooltip
 });
@@ -77,12 +88,25 @@ export const GuestFormInputRoot = styled.withConfig({
 })('input', {
   borderRadius: theme.radii.xs,
   width: '100%',
-  backgroundColor: theme.colors.inputBackground,
   outline: 'none',
   border: 'none',
   padding: theme.space.md,
   color: theme.colors.primaryOpacity80,
-  fontSize: theme.fontSizes.lg
+  fontSize: theme.fontSizes.lg,
+  backgroundColor: theme.colors.chatInputBackground,
+
+  variants: {
+    color: {
+      dark: {
+        backgroundColor: theme.colors.inputBackground
+      },
+
+      light: {
+        backgroundColor: 'rgba(0,0,0, 0.2)',
+        border: '1px solid rgba(0,0,0, 0.3)'
+      }
+    }
+  }
 });
 
 export const GuestFormInputLabel = styled.withConfig({
@@ -126,14 +150,16 @@ export const GuestFormDiscordAuth = styled.withConfig({
   displayName: 'modal-guest_form_discord_auth'
 })('div', {
   width: '100%',
-  marginTop: theme.space.lg
+  marginTop: theme.space.sm,
+
+  textAlign: 'center'
 });
 
 export const GuestFormDiscordContent = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-guest_form_discord_auth_content'
 })('span', {
-  color: theme.colors.primaryOpacity40,
+  color: theme.colors.textMuted,
   fontSize: theme.fontSizes.md
 });
 
@@ -141,7 +167,7 @@ export const GuestFormDiscordAuthButton = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-guest_form_discord_link'
 })('span', {
-  color: theme.colors.link,
+  color: theme.colors.accent,
   cursor: 'pointer',
 
   '&:hover': {

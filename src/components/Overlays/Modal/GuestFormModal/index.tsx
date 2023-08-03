@@ -1,6 +1,6 @@
+import { Modal } from '@components/Overlays/Modal';
 import { GuestFormInput } from '@components/Overlays/Modal/GuestFormModal/GuestFormInput';
 import * as Styles from '@components/Overlays/Modal/GuestFormModal/styles';
-import { InformationModal } from '@components/Overlays/Modal/InformationModal';
 import { useAuthAPI } from '@hooks/useAuthAPI';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -69,35 +69,34 @@ const GuestForm = ({ hideForm }: GuestFormProps) => {
       <Styles.GuestFormWrapper onSubmit={submitForm} id="guest-user-form">
         <GuestFormInput
           defaultValue={username}
-          label="Display Name"
-          placeholder="Guest"
+          label="Name"
           onInput={onInput}
           value={username}
           maxLength={80}
           minLength={1}
+          color="light"
         />
 
-        <Styles.GuestFormDiscordAuth>
-          <Styles.GuestFormDiscordContent>
-            Discord account?
-            <Styles.GuestFormDiscordAuthButton onClick={discordSignIn}>
-              {' '}
-              Log in
-            </Styles.GuestFormDiscordAuthButton>
-          </Styles.GuestFormDiscordContent>
-        </Styles.GuestFormDiscordAuth>
-      </Styles.GuestFormWrapper>
-
-      <Styles.GuestFormFooter>
         <Styles.GuestFormLoginButton
+          size="full"
           type="submit"
           form="guest-user-form"
           onClick={submitForm}
           disabled={isButtonDisabled}
         >
-          <Styles.GuestFormLoginButtonLabel>Login</Styles.GuestFormLoginButtonLabel>
+          <Styles.GuestFormLoginButtonLabel>Continue</Styles.GuestFormLoginButtonLabel>
         </Styles.GuestFormLoginButton>
-      </Styles.GuestFormFooter>
+      </Styles.GuestFormWrapper>
+
+      <Styles.GuestFormDiscordAuth>
+        <Styles.GuestFormDiscordContent>
+          Discord account?
+          <Styles.GuestFormDiscordAuthButton onClick={discordSignIn}>
+            {' '}
+            Log in
+          </Styles.GuestFormDiscordAuthButton>
+        </Styles.GuestFormDiscordContent>
+      </Styles.GuestFormDiscordAuth>
     </>
   );
 };
@@ -122,10 +121,16 @@ export const GuestFormModal = () => {
   if (hasUser) return null;
 
   return (
-    <InformationModal isOpen={showGuestFormModal} title="Create Guest Account" hideModal={hideForm}>
-      <>
-        <GuestForm hideForm={hideForm} />
-      </>
-    </InformationModal>
+    <Modal
+      isOpen={showGuestFormModal}
+      title="Welcome!"
+      subheader="Pick a name to start chatting"
+      hideModal={hideForm}
+      titleSize="xxl"
+      titleAlignment="center"
+      containerSize="sm"
+    >
+      <GuestForm hideForm={hideForm} />
+    </Modal>
   );
 };

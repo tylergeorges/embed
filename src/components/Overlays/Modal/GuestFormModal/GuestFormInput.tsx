@@ -1,6 +1,6 @@
 import * as Styles from './styles';
 
-interface GuestFormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface GuestFormInputProps extends React.ComponentProps<typeof Styles.GuestFormInputRoot> {
   label?: string;
   onInput: (e: React.FormEvent<HTMLInputElement>) => void;
 }

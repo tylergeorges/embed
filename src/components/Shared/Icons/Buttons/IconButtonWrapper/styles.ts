@@ -7,8 +7,12 @@ export const IconRoot = styled.withConfig({
 })('svg', {
   variants: {
     size: {
+      xxs: {
+        size: theme.sizes.iconSizeXxs
+      },
+
       xs: {
-        size: theme.sizes.iconSizeSm
+        size: theme.sizes.iconSizeXs
       },
 
       sm: {
@@ -35,6 +39,10 @@ export const IconRoot = styled.withConfig({
     },
 
     color: {
+      lighter: {
+        color: theme.colors.iconLighter.value
+      },
+
       light: {
         color: theme.colors.iconLight.value
       },
@@ -170,6 +178,7 @@ export const IconButtonChildrenWrapper = styled.withConfig({
         }
       }
     },
+
     backgroundGlowRadii: {
       xxs: {
         borderRadius: theme.radii.xxs

@@ -45,6 +45,7 @@ const stitches = createStitches({
       textPrimary: '#FFFFFF',
       textMuted: '$primaryOpacity30',
 
+      iconLighter: 'rgba(255, 255, 255, 0.3)',
       iconLight: 'rgb(181,186,193)',
       iconActive: '$primaryOpacity90',
       active: 'rgba(255, 255, 255, 0.9)',
@@ -104,8 +105,11 @@ const stitches = createStitches({
       /** font-size: 20px */
       xl: '20px',
 
+      /** font-size: 26px */
+      xxl: '26px',
+
       /** font-size: 32px */
-      xxl: '32px'
+      xxxl: '32px'
     },
 
     space: {
@@ -176,6 +180,9 @@ const stitches = createStitches({
 
       /** 16px */
       iconSizeXs: '16px',
+
+      /** 12px */
+      iconSizeXxs: '12px',
 
       /** 32px */
       buttonHeightSm: '32px',
