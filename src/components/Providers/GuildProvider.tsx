@@ -3,19 +3,6 @@ import { graphql } from '@graphql/gql';
 import { useQuery } from 'urql';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
-import jwt from 'jsonwebtoken';
-
-const user = {
-  id: '4823',
-  username: 'kneadle',
-  avatar: 'https://i.imgur.com/YuuVt5o.jpeg',
-
-  // JWT registered claims
-  iss: 'test',
-  iat: Date.now()
-};
-
-const userToken = jwt.sign(user, 'monkeys');
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -89,8 +76,8 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     if (!guildId) {
       //
 
-      // router.push(`/channels/585454996800405509/1117820894795010138`);
-      router.push(`/channels/585454996800405509/1117820894795010138?token=${userToken}`);
+      router.push(`/channels/585454996800405509/1117820894795010138`);
+      // router.push(`/channels/585454996800405509/1117820894795010138?token=${userToken}`);
       // router.push(`/channels/585454996800405509/1117820894795010138?username=guest`);
     }
     if (data && !fetching && !localFetchedRef.current) {

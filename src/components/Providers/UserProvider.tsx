@@ -19,8 +19,6 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
   useEffect(() => {
     // Check if guildId is in URL to make sure pages loaded
     if (!localFetchedRef.current && guildId) {
-      console.log('FETCHING USER DATA', localFetchedRef.current);
-
       const token = localStorage.getItem('token');
 
       if (token) {
@@ -40,7 +38,6 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
         localFetchedRef.current = true;
         setIsUserFetched();
       } else if (!token && usernameParam) {
-        console.log('usernameParam ', usernameParam);
         guestSignIn(usernameParam)
           .then(() => {})
           .catch(err => {
