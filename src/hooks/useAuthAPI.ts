@@ -96,13 +96,13 @@ export const useAuthAPI = () => {
         fetchDiscordUser({ userToken: discordUserData.data.token })
           .then(user => {
             setUserData(user);
+            window.removeEventListener('message', receiveDiscordAuthMessage);
           })
           .catch(err => {
             console.error(err);
+            window.removeEventListener('message', receiveDiscordAuthMessage);
           });
       }
-
-      window.removeEventListener('message', receiveDiscordAuthMessage);
     },
     [setUserData]
   );

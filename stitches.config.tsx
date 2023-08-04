@@ -73,7 +73,7 @@ const stitches = createStitches({
 
       contextMenuBackground: '#111214',
       messageHover: 'rgba(0, 0, 0, .05)',
-      link: '#00b0f4',
+      link: 'rgb(0, 168, 252)',
 
       tooltipBackground: '#18191c',
       tooltipForeground: '#dcddde',
@@ -273,11 +273,8 @@ const stitches = createStitches({
     },
 
     radii: {
-      /** 2px */
-      xxxs: '2px',
-
-      /** border-radius: 4px */
-      xxs: '4px',
+      /** border-radius: 3px */
+      xxs: '3px',
 
       /** border-radius: 6px */
       xs: '6px',

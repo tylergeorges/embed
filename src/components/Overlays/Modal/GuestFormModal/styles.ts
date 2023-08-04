@@ -27,12 +27,14 @@ export const GuestFormLoginButton = styled.withConfig({
   justifyContent: 'center',
   backgroundColor: 'transparent',
   marginTop: theme.space.xl.value,
+  transition: 'opacity ease',
+  transitionDuration: theme.transitions.defaultDuration,
 
   // Buttons background color
   '&::before': {
     content: '',
     transition: 'opacity ease',
-    transitionDuration: theme.transitions.fasterDuration,
+    transitionDuration: theme.transitions.defaultDuration,
 
     position: 'absolute',
     backgroundColor: theme.colors.accent,
@@ -53,12 +55,12 @@ export const GuestFormLoginButton = styled.withConfig({
 
       false: {
         cursor: 'pointer',
-
+        opacity: 1,
         // Darken button on hover
         '&:hover': {
           '&::before': {
             content: '',
-            opacity: '75%'
+            opacity: '80%'
           }
         }
       }
@@ -79,7 +81,8 @@ export const GuestFormLoginButtonLabel = styled.withConfig({
   color: theme.colors.primary,
   fontSize: theme.fontSizes.lg,
 
-  zIndex: theme.zIndices.tooltip
+  zIndex: theme.zIndices.tooltip,
+  fontWeight: '$medium'
 });
 
 export const GuestFormInputRoot = styled.withConfig({
@@ -167,7 +170,7 @@ export const GuestFormDiscordAuthButton = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-guest_form_discord_link'
 })('span', {
-  color: theme.colors.accent,
+  color: theme.colors.link,
   cursor: 'pointer',
 
   '&:hover': {
