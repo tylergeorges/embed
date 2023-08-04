@@ -129,7 +129,8 @@ export const ChannelsFooterUserName = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'channels-footer_username'
 })('div', {
-  fontSize: theme.fontSizes.md
+  fontSize: theme.fontSizes.md,
+  fontWeight: '500'
 });
 
 export const ChannelsFooterUserDiscrim = styled.withConfig({

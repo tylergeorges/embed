@@ -4,9 +4,6 @@ dependencies:
   '@babel/core':
     specifier: ^7.22.5
     version: 7.22.5
-  '@next/font':
-    specifier: ^13.4.12
-    version: 13.4.12
   '@sentry/nextjs':
     specifier: ^7.57.0
     version: 7.57.0(next@13.4.9)(react@18.2.0)
@@ -1852,13 +1849,6 @@ packages:
     dependencies:
       glob: 7.1.7
     dev: true
-
-  /@next/font@13.4.12:
-    resolution:
-      {
-        integrity: sha512-w/ygNFuscvvFKFTMoIqhU8Kaq1wM6x4XEu9bwzJaj8G7aloH866TUPeCgiKf+M/ACpMKfRahQa06REcg6T3CyA==
-      }
-    dev: false
 
   /@next/swc-darwin-arm64@13.4.9:
     resolution:

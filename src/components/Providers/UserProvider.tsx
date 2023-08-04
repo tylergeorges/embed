@@ -23,19 +23,6 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
 
       const token = localStorage.getItem('token');
 
-      if (tokenParam) {
-        console.log(tokenParam);
-
-        guildSignIn(guildId, tokenParam)
-          .then(() => {})
-          .catch(err => {
-            console.error(err);
-          });
-
-        localFetchedRef.current = true;
-        setIsUserFetched();
-      }
-
       if (token) {
         fetchDiscordUser({ userToken: token })
           .then(data => {
