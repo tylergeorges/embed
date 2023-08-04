@@ -8,6 +8,20 @@ const subClient = new SubscriptionClient(WS_URL, {
   reconnectionAttempts: 3
 });
 
+const getHeaders = () => {
+  let token: string = '';
+
+  try {
+    token = window.localStorage.getItem('token') ?? '';
+  } catch (err) {
+    console.error(err);
+  }
+
+  console.log(token);
+
+  return { Authorization: token };
+};
+
 export const client = createClient({
   url: GRAPHQL_URL,
   exchanges: [
@@ -17,6 +31,10 @@ export const client = createClient({
     subscriptionExchange({
       forwardSubscription: request => subClient.request(request)
     })
-  ]
+  ],
+
+  fetchOptions: {
+    headers: getHeaders()
+  }
   // TODO: Pass auth header when auth is implemented on frontend.
 });

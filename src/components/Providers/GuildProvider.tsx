@@ -23,6 +23,7 @@ const guildDocument = graphql(/* GraphQL */ `
         name
         type
         position
+        canSend
 
         threads {
           id

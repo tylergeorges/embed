@@ -83,6 +83,8 @@ const guild: GuildStore = {
 
   setChannels: action((state, payload) => {
     const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
+
+    console.log(sortedChannels);
     state.channels = sortedChannels;
   }),
 

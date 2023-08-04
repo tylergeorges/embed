@@ -917,6 +917,7 @@ export type GuildQuery = {
           name: string;
           type: ChannelType;
           position: number;
+          canSend: boolean;
           rateLimitPerUser?: number | null;
           threads?: Array<
             | { __typename?: 'AnnouncementChannel'; id: string; name: string }
@@ -934,6 +935,7 @@ export type GuildQuery = {
           name: string;
           type: ChannelType;
           position: number;
+          canSend: boolean;
           rateLimitPerUser?: number | null;
           threads?: Array<
             | { __typename?: 'AnnouncementChannel'; id: string; name: string }
@@ -951,6 +953,7 @@ export type GuildQuery = {
           name: string;
           type: ChannelType;
           position: number;
+          canSend: boolean;
           rateLimitPerUser?: number | null;
           threads?: Array<
             | { __typename?: 'AnnouncementChannel'; id: string; name: string }
@@ -967,6 +970,7 @@ export type GuildQuery = {
           name: string;
           type: ChannelType;
           position: number;
+          canSend: boolean;
           rateLimitPerUser?: number | null;
           threads?: Array<
             | { __typename?: 'AnnouncementChannel'; id: string; name: string }
@@ -983,6 +987,7 @@ export type GuildQuery = {
           name: string;
           type: ChannelType;
           position: number;
+          canSend: boolean;
           rateLimitPerUser?: number | null;
           threads?: Array<
             | { __typename?: 'AnnouncementChannel'; id: string; name: string }
@@ -1726,6 +1731,7 @@ export const GuildDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'position' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'canSend' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'threads' },

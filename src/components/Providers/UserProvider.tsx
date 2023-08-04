@@ -23,11 +23,11 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
 
       if (token) {
         fetchDiscordUser({ userToken: token })
-          .then(data => {
-            if (!data) {
+          .then(user => {
+            if (!user) {
               setUserData(undefined);
             } else {
-              setUserData(data);
+              setUserData(user);
             }
           })
           .catch(err => {

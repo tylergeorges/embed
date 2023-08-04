@@ -15,7 +15,7 @@ export const useAuthAPI = () => {
 
   const handleAuthMessage = <T extends AuthUser>(
     authRes: AuthResponse<T>
-  ): HandleAuthMessageResponse<T> => {
+  ): HandleAuthMessageResponse<T> | undefined => {
     switch (authRes.type) {
       case 'AUTH_SUCCESS': {
         if (!authRes.token) {
@@ -47,7 +47,7 @@ export const useAuthAPI = () => {
       }
 
       default:
-        return { type: 'ERROR', message: authRes };
+        break;
     }
   };
 
@@ -69,6 +69,8 @@ export const useAuthAPI = () => {
         .then(res => {
           const guestData = handleAuthMessage<GuestUser>(res);
 
+          if (!guestData) return;
+
           if (guestData.type === 'ERROR') return;
 
           setUserData(guestData.data.user);
@@ -86,13 +88,13 @@ export const useAuthAPI = () => {
 
       const discordUserData = handleAuthMessage<DiscordUser>(data);
 
-      if (discordUserData.type === 'ERROR') {
-        source.close();
+      if (!discordUserData) return;
 
+      source.close();
+
+      if (discordUserData.type === 'ERROR') {
         console.error('Auhtenticating failed: ', discordUserData.message);
       } else {
-        source.close();
-
         fetchDiscordUser({ userToken: discordUserData.data.token })
           .then(user => {
             setUserData(user);
@@ -135,6 +137,8 @@ export const useAuthAPI = () => {
       guildLogin({ guild, token })
         .then(res => {
           const guildData = handleAuthMessage<GuildUser>(res);
+
+          if (!guildData) return;
 
           if (guildData.type === 'ERROR') {
             console.error('Auhtenticating failed: ', guildData.message);
