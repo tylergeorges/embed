@@ -17,8 +17,6 @@ const getHeaders = () => {
     console.error(err);
   }
 
-  console.log(token);
-
   return { Authorization: token };
 };
 

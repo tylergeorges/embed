@@ -47,8 +47,6 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
         localFetchedRef.current = true;
         setIsUserFetched();
       } else if (!token && tokenParam) {
-        console.log(tokenParam);
-
         guildSignIn(guildId, tokenParam)
           .then(() => {})
           .catch(err => {

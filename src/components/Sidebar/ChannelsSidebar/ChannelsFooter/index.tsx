@@ -13,7 +13,6 @@ export const ChannelsFooter = () => {
 
   useEffect(() => {
     if (hasUser) {
-      console.log('hide guest form modal i nchannels footer');
       setShowGuestFormModal(false);
     }
   }, [hasUser, setShowGuestFormModal]);

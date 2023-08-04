@@ -82,14 +82,12 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
       // router.push(`/channels/585454996800405509/1117820894795010138?username=guest`);
     }
     if (data && !fetching && !localFetchedRef.current) {
-      console.log('GUILD DATA FETCHED ');
       setGuildData(data.guild);
       // @ts-expect-error
       setSettings(data.guild.settings);
       // @ts-expect-error
       setChannels(data.guild.channels);
 
-      console.log('guild provider set data', data, fetching);
       setIsGuildFetched();
       localFetchedRef.current = true;
     }

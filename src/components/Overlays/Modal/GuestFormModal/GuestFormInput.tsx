@@ -8,6 +8,6 @@ interface GuestFormInputProps extends React.ComponentProps<typeof Styles.GuestFo
 export const GuestFormInput = ({ label, onInput, ...props }: GuestFormInputProps) => (
   <Styles.GuestFormInputWrapper>
     {label && <Styles.GuestFormInputLabel>{label}</Styles.GuestFormInputLabel>}
-    <Styles.GuestFormInputRoot {...props} onChange={onInput} />
+    <Styles.GuestFormInputRoot {...props} onInput={onInput} />
   </Styles.GuestFormInputWrapper>
 );

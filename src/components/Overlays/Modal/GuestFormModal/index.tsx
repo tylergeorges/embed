@@ -68,7 +68,6 @@ const GuestForm = ({ hideForm }: GuestFormProps) => {
     <>
       <Styles.GuestFormWrapper onSubmit={submitForm} id="guest-user-form">
         <GuestFormInput
-          defaultValue={username}
           label="Name"
           onInput={onInput}
           value={username}

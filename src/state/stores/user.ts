@@ -12,7 +12,6 @@ const user: UserStore = {
   data: undefined,
 
   setUserData: action((state, payload) => {
-    console.log('set user data', payload);
     if (state.data !== payload) {
       state.data = payload;
     }

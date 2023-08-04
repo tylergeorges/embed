@@ -67,7 +67,6 @@ export const useMessages = ({
       if (isReadyWithMessages) {
         setNewMessageGroupLength(groupMessages(msgs).length);
 
-        console.log('set messages ');
         setMessages(prev => [...msgs, ...prev]);
       }
     }
