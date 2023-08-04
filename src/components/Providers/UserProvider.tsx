@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useStoreActions } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { fetchDiscordUser } from '@lib/api/apiRequest';
@@ -22,6 +22,19 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
       console.log('FETCHING USER DATA', localFetchedRef.current);
 
       const token = localStorage.getItem('token');
+
+      if (tokenParam) {
+        console.log(tokenParam);
+
+        guildSignIn(guildId, tokenParam)
+          .then(() => {})
+          .catch(err => {
+            console.error(err);
+          });
+
+        localFetchedRef.current = true;
+        setIsUserFetched();
+      }
 
       if (token) {
         fetchDiscordUser({ userToken: token })
