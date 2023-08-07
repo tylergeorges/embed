@@ -1,5 +1,5 @@
-import { forwardRef } from 'react';
-import { useStoreActions } from '@state';
+import { forwardRef, useEffect } from 'react';
+import { useStoreActions, useStoreState } from '@state';
 import { Channel as IChannel } from '@graphql/graphql';
 import { Thread } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Thread';
 import { IThread } from '@state/stores/guild';
@@ -27,6 +27,25 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
     const setContextMenuData = useStoreActions(state => state.ui.setContextMenuData);
     const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
+
+    const refetchGuild = useStoreState(state => state.guild.refetchGuild);
+    const currentChannelYPos = useStoreState(state => state.ui.currentChannelYPos);
+
+    // Used to get new channel position when auth state changes and more channels are added
+    useEffect(() => {
+      if (ref != null && typeof ref !== 'function') {
+        const refElement = ref.current;
+
+        if (refElement) {
+          const currentY = refElement.offsetTop;
+
+          if (currentChannelYPos !== currentY) {
+            setCurrentChannelYPos(currentY);
+            setInitChannelYPos(currentY);
+          }
+        }
+      }
+    }, [refetchGuild, currentChannelYPos, ref, setInitChannelYPos, setCurrentChannelYPos]);
 
     const { channelId, guildId } = useAppRouter();
 

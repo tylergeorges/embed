@@ -21,6 +21,7 @@ export const Category = ({ category }: CategoryProps) => {
   const categoryRef = useRef<HTMLDivElement>(null);
   // Ref used to get the height of the container that holds the channel names
   const channelsConRef = useRef<HTMLDivElement>(null);
+  const shouldRefetch = useStoreState(state => state.guild.refetchGuild);
 
   // Actions
   const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
@@ -44,7 +45,15 @@ export const Category = ({ category }: CategoryProps) => {
       setIsDomThreadsPanelOpen(false);
     }
 
-    if (currentChannelRef.current) {
+    if (currentChannelRef.current && !shouldRefetch) {
+      console.log('shouldnt refecth ', currentChannelRef.current.offsetTop);
+      setCurrentChannelYPos(currentChannelRef.current.offsetTop);
+      setInitChannelYPos(currentChannelRef.current.offsetTop);
+    }
+
+    if (currentChannelRef.current && shouldRefetch) {
+      console.log('should refecth ', currentChannelRef.current.offsetTop);
+
       setCurrentChannelYPos(currentChannelRef.current.offsetTop);
       setInitChannelYPos(currentChannelRef.current.offsetTop);
     }
@@ -58,7 +67,8 @@ export const Category = ({ category }: CategoryProps) => {
     setCurrentChannelYPos,
     setInitChannelYPos,
     setIsDomThreadsPanelOpen,
-    setIsTransitionedThreadsPanelOpen
+    setIsTransitionedThreadsPanelOpen,
+    shouldRefetch
   ]);
 
   const toggleIsOpen = useCallback(() => {

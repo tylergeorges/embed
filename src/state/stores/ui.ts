@@ -103,7 +103,11 @@ const ui: UIStore = {
   // Set the current channel's Y position, this is used for the
   // ActiveBackground component
   setCurrentChannelYPos: action((state, payload) => {
-    state.currentChannelYPos = payload;
+    if (state.currentChannelYPos !== payload) {
+      console.log(state.currentChannelYPos, payload);
+      state.currentChannelYPos = payload;
+    }
+
     // state.initChannelYPos = payload;
   }),
 
