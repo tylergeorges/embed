@@ -1,4 +1,10 @@
-import { createClient, cacheExchange, fetchExchange, subscriptionExchange } from 'urql';
+import {
+  createClient,
+  cacheExchange,
+  fetchExchange,
+  subscriptionExchange,
+  dedupExchange
+} from 'urql';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { GRAPHQL_URL, WS_URL } from '@lib/api/url';
 
@@ -8,31 +14,34 @@ const subClient = new SubscriptionClient(WS_URL, {
   reconnectionAttempts: 3
 });
 
-const getHeaders = () => {
+export const getToken = () => {
   let token: string = '';
 
   try {
-    token = window.localStorage.getItem('token') ?? '';
+    token = localStorage.getItem('token') ?? '';
   } catch (err) {
     console.error(err);
   }
 
-  return { Authorization: token };
+  return token;
 };
 
 export const client = createClient({
   url: GRAPHQL_URL,
   exchanges: [
-    fetchExchange,
     cacheExchange,
+    dedupExchange,
+
+    fetchExchange,
 
     subscriptionExchange({
       forwardSubscription: request => subClient.request(request)
     })
   ],
 
-  fetchOptions: {
-    headers: getHeaders()
+  fetchOptions: () => {
+    const token = getToken();
+
+    return { headers: { Authorization: token } };
   }
-  // TODO: Pass auth header when auth is implemented on frontend.
 });

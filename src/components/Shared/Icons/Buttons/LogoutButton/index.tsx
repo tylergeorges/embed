@@ -1,17 +1,25 @@
 import { IconButton } from '@icons/Buttons/IconButton';
 import { useStoreActions } from '@state';
+import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const LogoutButton = () => {
   const translate = useTranslation();
+
   const setUserData = useStoreActions(state => state.user.setUserData);
+  const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
 
-  const logout = (e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const logout = useCallback(
+    (e: React.SyntheticEvent) => {
+      e.preventDefault();
 
-    setUserData(undefined);
-    localStorage.removeItem('token');
-  };
+      localStorage.removeItem('token');
+      setUserData(undefined);
+
+      setRefetchGuild(true);
+    },
+    [setUserData, setRefetchGuild]
+  );
 
   return (
     <IconButton

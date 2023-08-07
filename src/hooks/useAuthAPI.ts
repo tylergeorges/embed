@@ -12,44 +12,47 @@ interface WindowMessageEvent extends MessageEvent {
 export const useAuthAPI = () => {
   const inProgressRef = useRef(false);
   const setUserData = useStoreActions(state => state.user.setUserData);
+  const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
 
-  const handleAuthMessage = <T extends AuthUser>(
-    authRes: AuthResponse<T>
-  ): HandleAuthMessageResponse<T> | undefined => {
-    switch (authRes.type) {
-      case 'AUTH_SUCCESS': {
-        if (!authRes.token) {
+  const handleAuthMessage = useCallback(
+    <T extends AuthUser>(authRes: AuthResponse<T>): HandleAuthMessageResponse<T> | undefined => {
+      switch (authRes.type) {
+        case 'AUTH_SUCCESS': {
+          if (!authRes.token) {
+            inProgressRef.current = false;
+
+            console.error(authRes);
+            return { type: 'ERROR', message: authRes.type };
+          }
+
+          const { token } = authRes;
+          localStorage.setItem('token', token);
+
+          setRefetchGuild(true);
           inProgressRef.current = false;
 
-          console.error(authRes);
-          return { type: 'ERROR', message: authRes.type };
+          return { type: 'SUCCESS', data: authRes } as HandleAuthMessageResponse<T>;
         }
 
-        const { token } = authRes;
-        localStorage.setItem('token', token);
+        case 'AUTH_FAIL':
+        case 'AUTH_ERROR': {
+          console.error('Auhtenticating failed: ', authRes);
 
-        inProgressRef.current = false;
+          inProgressRef.current = false;
 
-        return { type: 'SUCCESS', data: authRes } as HandleAuthMessageResponse<T>;
-      }
+          if (authRes.type === 'AUTH_ERROR') {
+            return { type: 'ERROR', message: authRes.message };
+          }
 
-      case 'AUTH_FAIL':
-      case 'AUTH_ERROR': {
-        console.error('Auhtenticating failed: ', authRes);
-
-        inProgressRef.current = false;
-
-        if (authRes.type === 'AUTH_ERROR') {
-          return { type: 'ERROR', message: authRes.message };
+          return { type: 'ERROR', message: authRes.error };
         }
 
-        return { type: 'ERROR', message: authRes.error };
+        default:
+          break;
       }
-
-      default:
-        break;
-    }
-  };
+    },
+    [setRefetchGuild]
+  );
 
   const guestSignIn = useCallback(
     async (username: string) => {
@@ -79,7 +82,7 @@ export const useAuthAPI = () => {
           console.error(err);
         });
     },
-    [setUserData]
+    [setUserData, handleAuthMessage]
   );
 
   const receiveDiscordAuthMessage = useCallback(
@@ -106,7 +109,7 @@ export const useAuthAPI = () => {
           });
       }
     },
-    [setUserData]
+    [setUserData, handleAuthMessage]
   );
 
   const discordSignIn = useCallback(() => {
@@ -151,7 +154,7 @@ export const useAuthAPI = () => {
           console.error(err);
         });
     },
-    [setUserData]
+    [setUserData, handleAuthMessage]
   );
 
   useEffect(

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { graphql } from '@graphql/gql';
 import { useQuery } from 'urql';
 import { useStoreActions, useStoreState } from '@state';
@@ -8,7 +8,7 @@ interface GuildProviderProps {
   setIsGuildFetched: () => void;
 }
 
-const guildDocument = graphql(/* GraphQL */ `
+export const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {
     guild(id: $id) {
       id
@@ -62,34 +62,49 @@ const guildDocument = graphql(/* GraphQL */ `
 export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps) {
   const { guildId, router } = useAppRouter();
 
-  const [{ data, fetching }] = useQuery({
+  const [{ data, fetching }, fetchHook] = useQuery({
     query: guildDocument,
     variables: { id: guildId }
   });
 
+  const shouldRefetchGuild = useStoreState(state => state.guild.refetchGuild);
+  const guildData = useStoreState(state => state.guild.data);
+  const guildSettings = useStoreState(state => state.guild.settings);
+
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
+  const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
   const setChannels = useStoreActions(state => state.guild.setChannels);
-  const channels = useStoreState(state => state.guild.channels);
-  const localFetchedRef = useRef(false);
 
   useEffect(() => {
+    const newToken = localStorage.getItem('token') ?? '';
+
     if (!guildId) {
       //
 
       router.push(`/channels/585454996800405509/1117820894795010138`);
-      // router.push(`/channels/585454996800405509/1117820894795010138?token=${userToken}`);
-      // router.push(`/channels/585454996800405509/1117820894795010138?username=guest`);
     }
-    if (data && !fetching && !localFetchedRef.current) {
-      setGuildData(data.guild);
-      // @ts-expect-error
-      setSettings(data.guild.settings);
+    // If auth state changed, refetch channels
+    else if (shouldRefetchGuild) {
+      fetchHook({
+        requestPolicy: 'network-only',
+        fetchOptions: { headers: { Authorization: newToken } }
+      });
+      setRefetchGuild(false);
+    }
+    // Set guild data
+    else if (data && !fetching) {
+      // So guild data/settings only get set once
+      if (!guildData && !guildSettings) {
+        setGuildData(data.guild);
+
+        // @ts-expect-error
+        setSettings(data.guild.settings);
+      }
       // @ts-expect-error
       setChannels(data.guild.channels);
 
       setIsGuildFetched();
-      localFetchedRef.current = true;
     }
   }, [
     data,
@@ -99,8 +114,12 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     setSettings,
     guildId,
     router,
-    channels,
-    setIsGuildFetched
+    setIsGuildFetched,
+    fetchHook,
+    shouldRefetchGuild,
+    setRefetchGuild,
+    guildData,
+    guildSettings
   ]);
 
   return <></>;

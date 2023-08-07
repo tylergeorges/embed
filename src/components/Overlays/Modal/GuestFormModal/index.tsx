@@ -20,6 +20,12 @@ const GuestForm = ({ hideForm }: GuestFormProps) => {
 
   const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
 
+  // const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
+
+  const discordLoginCB = () => {
+    discordSignIn();
+  };
+
   useEffect(() => {
     if (!showGuestFormModal) {
       setUsername('');
@@ -90,7 +96,7 @@ const GuestForm = ({ hideForm }: GuestFormProps) => {
       <Styles.GuestFormDiscordAuth>
         <Styles.GuestFormDiscordContent>
           Discord account?
-          <Styles.GuestFormDiscordAuthButton onClick={discordSignIn}>
+          <Styles.GuestFormDiscordAuthButton onClick={discordLoginCB}>
             {' '}
             Log in
           </Styles.GuestFormDiscordAuthButton>

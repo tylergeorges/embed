@@ -18,7 +18,9 @@ const documents = {
   '\n  subscription NewMessage($guild: String!, $channel: String!, $threadId: String) {\n    messageV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      ...BaseMessage\n    }\n  }\n':
     types.NewMessageDocument,
   '\n  subscription MessageDeleted($guild: String!, $channel: String!, $threadId: String) {\n    messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n':
-    types.MessageDeletedDocument
+    types.MessageDeletedDocument,
+  '\n  query ChannelsQuery($id: String!) {\n    guild(id: $id) {\n      id\n      name\n      settings {\n        readonly\n        guestMode\n      }\n\n      channels {\n        id\n        name\n        type\n        position\n        canSend\n\n        threads {\n          id\n          name\n        }\n        category {\n          id\n          name\n          position\n        }\n\n        ... on TextChannel {\n          topic\n\n          threads {\n            id\n          }\n        }\n        ... on AnnouncementChannel {\n          topic\n\n          threads {\n            id\n          }\n        }\n        ... on ForumChannel {\n          topic\n        }\n\n        rateLimitPerUser\n      }\n    }\n  }\n':
+    types.ChannelsQueryDocument
 };
 
 export function graphql(
@@ -45,6 +47,9 @@ export function graphql(
 export function graphql(
   source: '\n  subscription MessageDeleted($guild: String!, $channel: String!, $threadId: String) {\n    messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n'
 ): typeof documents['\n  subscription MessageDeleted($guild: String!, $channel: String!, $threadId: String) {\n    messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {\n      id\n    }\n  }\n'];
+export function graphql(
+  source: '\n  query ChannelsQuery($id: String!) {\n    guild(id: $id) {\n      id\n      name\n      settings {\n        readonly\n        guestMode\n      }\n\n      channels {\n        id\n        name\n        type\n        position\n        canSend\n\n        threads {\n          id\n          name\n        }\n        category {\n          id\n          name\n          position\n        }\n\n        ... on TextChannel {\n          topic\n\n          threads {\n            id\n          }\n        }\n        ... on AnnouncementChannel {\n          topic\n\n          threads {\n            id\n          }\n        }\n        ... on ForumChannel {\n          topic\n        }\n\n        rateLimitPerUser\n      }\n    }\n  }\n'
+): typeof documents['\n  query ChannelsQuery($id: String!) {\n    guild(id: $id) {\n      id\n      name\n      settings {\n        readonly\n        guestMode\n      }\n\n      channels {\n        id\n        name\n        type\n        position\n        canSend\n\n        threads {\n          id\n          name\n        }\n        category {\n          id\n          name\n          position\n        }\n\n        ... on TextChannel {\n          topic\n\n          threads {\n            id\n          }\n        }\n        ... on AnnouncementChannel {\n          topic\n\n          threads {\n            id\n          }\n        }\n        ... on ForumChannel {\n          topic\n        }\n\n        rateLimitPerUser\n      }\n    }\n  }\n'];
 
 export function graphql(source: string): unknown;
 export function graphql(source: string) {

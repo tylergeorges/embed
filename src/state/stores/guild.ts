@@ -25,12 +25,14 @@ export interface GuildStore {
   categories: Computed<GuildStore, Category[]>;
   currentThread: Channel | undefined;
   currentChannel: { name: string; topic: string } | undefined;
+  refetchGuild: boolean;
 
   setData: Action<GuildStore, IGuild>;
   setSettings: Action<GuildStore, GuildSettings>;
   setChannels: Action<GuildStore, Channel[]>;
   setCurrentThread: Action<GuildStore, Channel>;
   setCurrentChannel: Action<GuildStore, string>;
+  setRefetchGuild: Action<GuildStore, boolean>;
 }
 
 const guild: GuildStore = {
@@ -40,6 +42,7 @@ const guild: GuildStore = {
   channels: undefined,
   currentThread: undefined,
   currentChannel: undefined,
+  refetchGuild: false,
 
   guildChannels: computed(state => {
     if (!state.channels) return {};
@@ -81,10 +84,16 @@ const guild: GuildStore = {
     state.settings = payload;
   }),
 
-  setChannels: action((state, payload) => {
-    const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
+  setRefetchGuild: action((state, payload) => {
+    state.refetchGuild = payload;
+  }),
 
-    state.channels = sortedChannels;
+  setChannels: action((state, payload) => {
+    if (payload.length !== state.channels?.length) {
+      const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
+
+      state.channels = sortedChannels;
+    }
   }),
 
   setCurrentThread: action((state, payload) => {
