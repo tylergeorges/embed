@@ -257,3 +257,25 @@ export const deletedMessageSubscription = graphql(`
     }
   }
 `);
+
+// export const sendMessageMutation = graphql(`
+//   mutation SendMessage(
+//     $channel: String!
+//     $content: String!
+//     $thread: String
+//     $fileData: String
+//     $fileName: String
+//     $fileAlt: String
+//   ) {
+//     sendMessage(
+//       channel: $channel
+//       content: $content
+//       threadId: $thread
+//       fileData: $fileData
+//       fileName: $fileName
+//       fileAlt: $fileAlt
+//     ) {
+//       ...Message
+//     }
+//   }
+// `);
