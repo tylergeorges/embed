@@ -13,10 +13,13 @@ type ModifierKeys = {
 };
 
 interface TextBoxInputProps {
+  handleInputSubmit: (content: string) => void;
   channelIsThread?: boolean;
 }
 
-export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
+const inputHeight = 21;
+
+export const TextBoxInput = ({ channelIsThread, handleInputSubmit }: TextBoxInputProps) => {
   const translate = useTranslation();
   const currentThread = useStoreState(state => state.guild.currentThread);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
@@ -26,7 +29,7 @@ export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
     Control: { isHolding: false }
   });
 
-  const [, setMessageContent] = useState('');
+  const [content, setMessageContent] = useState('');
 
   const [showPlaceHolder, setShowPlaceholder] = useState(true);
   const [isCursorOnNewLine, setIsCursorOnNewLine] = useState(false);
@@ -37,10 +40,16 @@ export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!['Shift', 'Enter', 'Backspace', 'a', 'Control'].includes(e.key)) return;
 
+    const input = inputRef.current;
+
+    if (!input) return;
+
     const { key } = e;
 
-    if (key === 'Shift' || key === 'Control') {
-      if (modifierKeys[key] && modifierKeys[key].isHolding) return;
+    const keyIsModifier = key === 'Shift' || key === 'Control';
+
+    if (keyIsModifier) {
+      if (modifierKeys[key].isHolding) return;
 
       setModifierKeys(prev => ({ ...prev, [key]: { isHolding: true } }));
     }
@@ -51,24 +60,31 @@ export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
       }
     }
 
-    if (key === 'Enter' && modifierKeys.Shift.isHolding) {
-      if (inputRef.current) {
-        const currentInputHeight = inputRef.current?.clientHeight;
-        const inputHeight = 21;
-        inputRef.current.style.height = `${currentInputHeight + inputHeight}px`;
+    if (key === 'Enter') {
+      const enterNewLine = key === 'Enter' && modifierKeys.Shift.isHolding;
+
+      if (enterNewLine) {
+        const currentInputHeight = input.clientHeight;
+
+        input.style.height = `${currentInputHeight + inputHeight}px`;
         if (showPlaceHolder) {
           setShowPlaceholder(false);
           setIsCursorOnNewLine(true);
         }
+      } else {
+        e.preventDefault();
+        handleInputSubmit(content);
+        console.log('submit content');
       }
     }
 
     if (key === 'Backspace') {
-      let caretPos: number = 0;
+      const caretPos: number = 0;
 
       if (window.getSelection) {
         const sel = window.getSelection();
-        if (isAllContentSelected && inputRef.current) {
+
+        if (isAllContentSelected) {
           setIsAllContentSelected(false);
 
           inputRef.current.style.height = `21px`;
@@ -76,31 +92,34 @@ export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
 
         if (sel?.rangeCount) {
           const range = sel.getRangeAt(0);
-          if (range.commonAncestorContainer.parentNode === inputRef.current) {
-            caretPos = range.endOffset;
+          if (range.commonAncestorContainer.parentNode === input) {
+            // caretPos = range.endOffset;
           }
         }
       }
 
-      if (inputRef.current) {
-        const currentInputHeight = inputRef.current.getBoundingClientRect().height;
-        const inputHeight = 21;
-        if (currentInputHeight > 47) {
-          if (caretPos === 0) {
-            inputRef.current.style.height = `${currentInputHeight - inputHeight}px`;
-          }
-        } else {
-          setIsCursorOnNewLine(false);
-          if (caretPos === 0) {
-            setShowPlaceholder(true);
-          }
-          if (currentInputHeight > inputHeight && caretPos === 0) {
-            inputRef.current.style.height = `${currentInputHeight - inputHeight}px`;
-          }
+      const currentInputHeight = input.getBoundingClientRect().height;
+
+      if (currentInputHeight > 47) {
+        if (caretPos === 0) {
+          input.style.height = `${currentInputHeight - inputHeight}px`;
+        }
+      } else {
+        setIsCursorOnNewLine(false);
+
+        if (caretPos === 0) {
+          setShowPlaceholder(true);
+        }
+
+        const canDeleteLine = currentInputHeight > inputHeight && caretPos === 0;
+
+        if (canDeleteLine) {
+          input.style.height = `${currentInputHeight - inputHeight}px`;
         }
       }
     }
   };
+
   const handleKeyUp = (e: React.KeyboardEvent) => {
     if (e.key !== 'Shift' && e.key !== 'Control') return;
 
@@ -114,7 +133,7 @@ export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
       setMessageContent(e.currentTarget?.textContent);
       setShowPlaceholder(false);
     } else if (!isCursorOnNewLine && !e.currentTarget.textContent) {
-      setShowPlaceholder(true);
+      // setShowPlaceholder(true);
     }
   };
 
@@ -128,6 +147,8 @@ export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
         ref={inputRef}
         inputMode="text"
       />
+
+      <input hidden type="text" form="text-box_form" value={content} />
 
       {showPlaceHolder && (
         <Styles.TextBoxPlaceholder>

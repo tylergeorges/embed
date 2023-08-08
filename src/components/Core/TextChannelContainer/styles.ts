@@ -173,10 +173,10 @@ export const TextBoxWrapper = styled.withConfig({
   userSelect: 'none'
 });
 
-export const TextBoxInner = styled.withConfig({
+export const TextBoxForm = styled.withConfig({
   componentId: commonComponentId,
-  displayName: 'textbox-inner'
-})('div', {
+  displayName: 'textbox-form'
+})('form', {
   display: 'flex',
 
   width: '100%',
@@ -216,7 +216,6 @@ export const TextInput = styled.withConfig({
   displayName: 'textbox-input'
 })('div', {
   cursor: 'text',
-
   border: 'none',
   backgroundColor: 'transparent',
 

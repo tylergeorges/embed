@@ -82,7 +82,7 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     if (!guildId) {
       //
 
-      router.push(`/channels/585454996800405509/1117820894795010138`);
+      router.push(`/channels/299881420891881473/355719584830980096`);
     }
     // If auth state changed, refetch channels
     else if (shouldRefetchGuild) {
