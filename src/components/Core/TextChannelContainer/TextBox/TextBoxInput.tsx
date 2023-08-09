@@ -37,6 +37,14 @@ export const TextBoxInput = ({ channelIsThread, handleInputSubmit }: TextBoxInpu
 
   const inputRef = useRef<HTMLDivElement>(null);
 
+  const clearInput = () => {
+    if (inputRef.current) {
+      inputRef.current.innerHTML = '';
+      setShowPlaceholder(true);
+      setMessageContent('');
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!['Shift', 'Enter', 'Backspace', 'a', 'Control'].includes(e.key)) return;
 
@@ -72,29 +80,32 @@ export const TextBoxInput = ({ channelIsThread, handleInputSubmit }: TextBoxInpu
           setIsCursorOnNewLine(true);
         }
       } else {
+        //! Send message
         e.preventDefault();
-        handleInputSubmit(content);
-        console.log('submit content');
+
+        if (content.trim().length) {
+          handleInputSubmit(content);
+          clearInput();
+        }
       }
     }
 
     if (key === 'Backspace') {
-      const caretPos: number = 0;
+      let caretPos: number = 0;
 
-      if (window.getSelection) {
-        const sel = window.getSelection();
+      const sel = window.getSelection();
 
-        if (isAllContentSelected) {
-          setIsAllContentSelected(false);
+      if (isAllContentSelected) {
+        setIsAllContentSelected(false);
 
-          inputRef.current.style.height = `21px`;
-        }
+        input.style.height = `21px`;
+      }
 
-        if (sel?.rangeCount) {
-          const range = sel.getRangeAt(0);
-          if (range.commonAncestorContainer.parentNode === input) {
-            // caretPos = range.endOffset;
-          }
+      if (sel && sel.rangeCount) {
+        const range = sel.getRangeAt(0);
+
+        if (range.commonAncestorContainer.parentNode === input) {
+          caretPos = range.endOffset;
         }
       }
 
@@ -133,7 +144,7 @@ export const TextBoxInput = ({ channelIsThread, handleInputSubmit }: TextBoxInpu
       setMessageContent(e.currentTarget?.textContent);
       setShowPlaceholder(false);
     } else if (!isCursorOnNewLine && !e.currentTarget.textContent) {
-      // setShowPlaceholder(true);
+      setShowPlaceholder(true);
     }
   };
 

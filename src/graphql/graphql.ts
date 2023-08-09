@@ -898,6 +898,42 @@ export type VoiceChannelMessagesArgs = {
   threadId?: InputMaybe<Scalars['String']>;
 };
 
+export type TextChannelFragment = {
+  __typename?: 'TextChannel';
+  id: string;
+  name: string;
+  type: ChannelType;
+  position: number;
+  canSend: boolean;
+  topic?: string | null;
+  category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+  threads?: Array<
+    | { __typename?: 'AnnouncementChannel'; id: string; name: string }
+    | { __typename?: 'ForumChannel'; id: string; name: string }
+    | { __typename?: 'TextChannel'; id: string; name: string }
+    | { __typename?: 'ThreadChannel'; id: string; name: string }
+    | { __typename?: 'VoiceChannel'; id: string; name: string }
+  > | null;
+} & { ' $fragmentName'?: 'TextChannelFragment' };
+
+export type AnnouncementChannelFragment = {
+  __typename?: 'AnnouncementChannel';
+  id: string;
+  name: string;
+  type: ChannelType;
+  position: number;
+  canSend: boolean;
+  topic?: string | null;
+  category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+  threads?: Array<
+    | { __typename?: 'AnnouncementChannel'; id: string; name: string }
+    | { __typename?: 'ForumChannel'; id: string; name: string }
+    | { __typename?: 'TextChannel'; id: string; name: string }
+    | { __typename?: 'ThreadChannel'; id: string; name: string }
+    | { __typename?: 'VoiceChannel'; id: string; name: string }
+  > | null;
+} & { ' $fragmentName'?: 'AnnouncementChannelFragment' };
+
 export type GuildQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -911,7 +947,7 @@ export type GuildQuery = {
     settings: { __typename?: 'GuildSettings'; readonly: boolean; guestMode: boolean };
     channels: Array<
       | {
-          __typename?: 'AnnouncementChannel';
+          __typename: 'AnnouncementChannel';
           topic?: string | null;
           id: string;
           name: string;
@@ -929,7 +965,7 @@ export type GuildQuery = {
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
       | {
-          __typename?: 'ForumChannel';
+          __typename: 'ForumChannel';
           topic?: string | null;
           id: string;
           name: string;
@@ -947,7 +983,7 @@ export type GuildQuery = {
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
       | {
-          __typename?: 'TextChannel';
+          __typename: 'TextChannel';
           topic?: string | null;
           id: string;
           name: string;
@@ -965,7 +1001,7 @@ export type GuildQuery = {
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
       | {
-          __typename?: 'ThreadChannel';
+          __typename: 'ThreadChannel';
           id: string;
           name: string;
           type: ChannelType;
@@ -982,7 +1018,7 @@ export type GuildQuery = {
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
       | {
-          __typename?: 'VoiceChannel';
+          __typename: 'VoiceChannel';
           id: string;
           name: string;
           type: ChannelType;
@@ -1120,6 +1156,17 @@ export type BaseMessageFragment = {
   } | null;
 } & { ' $fragmentName'?: 'BaseMessageFragment' };
 
+export type MessageFragment = ({
+  __typename?: 'Message';
+  referencedMessage?:
+    | ({ __typename?: 'Message' } & {
+        ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+      })
+    | null;
+} & { ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment } }) & {
+  ' $fragmentName'?: 'MessageFragment';
+};
+
 export type UpdatedMessageFragment = {
   __typename?: 'UpdatedMessage';
   id: string;
@@ -1209,9 +1256,7 @@ export type MessagesQueryQuery = {
         messageBunch: {
           __typename?: 'MessageBunch';
           messages: Array<
-            { __typename?: 'Message' } & {
-              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
-            }
+            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
           >;
         };
       }
@@ -1221,9 +1266,7 @@ export type MessagesQueryQuery = {
         messageBunch: {
           __typename?: 'MessageBunch';
           messages: Array<
-            { __typename?: 'Message' } & {
-              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
-            }
+            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
           >;
         };
       }
@@ -1254,9 +1297,7 @@ export type NewMessageSubscriptionVariables = Exact<{
 export type NewMessageSubscription = {
   __typename?: 'Subscription';
   messageV2?:
-    | ({ __typename?: 'Message' } & {
-        ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
-      })
+    | ({ __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } })
     | null;
 };
 
@@ -1274,7 +1315,7 @@ export type MessageDeletedSubscription = {
 export type SendMessageMutationVariables = Exact<{
   channel: Scalars['String'];
   content: Scalars['String'];
-  thread?: InputMaybe<Scalars['String']>;
+  threadId?: InputMaybe<Scalars['String']>;
   fileData?: InputMaybe<Scalars['String']>;
   fileName?: InputMaybe<Scalars['String']>;
   fileAlt?: InputMaybe<Scalars['String']>;
@@ -1283,10 +1324,98 @@ export type SendMessageMutationVariables = Exact<{
 export type SendMessageMutation = {
   __typename?: 'Mutation';
   sendMessage: { __typename?: 'Message' } & {
-    ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+    ' $fragmentRefs'?: { MessageFragment: MessageFragment };
   };
 };
 
+export const TextChannelFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'TextChannel' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TextChannel' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'position' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'canSend' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'category' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'position' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'threads' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<TextChannelFragment, unknown>;
+export const AnnouncementChannelFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'AnnouncementChannel' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'AnnouncementChannel' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'position' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'canSend' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'category' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'position' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'threads' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<AnnouncementChannelFragment, unknown>;
 export const EmbedFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -1544,6 +1673,31 @@ export const BaseMessageFragmentDoc = {
     ...EmbedFragmentDoc.definitions
   ]
 } as unknown as DocumentNode<BaseMessageFragment, unknown>;
+export const MessageFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'Message' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'referencedMessage' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } }]
+            }
+          }
+        ]
+      }
+    },
+    ...BaseMessageFragmentDoc.definitions
+  ]
+} as unknown as DocumentNode<MessageFragment, unknown>;
 export const UpdatedMessageFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -1748,6 +1902,7 @@ export const GuildDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'position' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'canSend' } },
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'threads' },
@@ -1928,7 +2083,7 @@ export const MessagesQueryDocument = {
                                 selections: [
                                   {
                                     kind: 'FragmentSpread',
-                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                    name: { kind: 'Name', value: 'Message' }
                                   }
                                 ]
                               }
@@ -1974,7 +2129,7 @@ export const MessagesQueryDocument = {
                                 selections: [
                                   {
                                     kind: 'FragmentSpread',
-                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                    name: { kind: 'Name', value: 'Message' }
                                   }
                                 ]
                               }
@@ -1991,7 +2146,7 @@ export const MessagesQueryDocument = {
         ]
       }
     },
-    ...BaseMessageFragmentDoc.definitions
+    ...MessageFragmentDoc.definitions
   ]
 } as unknown as DocumentNode<MessagesQueryQuery, MessagesQueryQueryVariables>;
 export const MessageUpdatedDocument = {
@@ -2121,13 +2276,13 @@ export const NewMessageDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } }]
+              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'Message' } }]
             }
           }
         ]
       }
     },
-    ...BaseMessageFragmentDoc.definitions
+    ...MessageFragmentDoc.definitions
   ]
 } as unknown as DocumentNode<NewMessageSubscription, NewMessageSubscriptionVariables>;
 export const MessageDeletedDocument = {
@@ -2222,7 +2377,7 @@ export const SendMessageDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'thread' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
         },
         {
@@ -2261,7 +2416,7 @@ export const SendMessageDocument = {
               {
                 kind: 'Argument',
                 name: { kind: 'Name', value: 'threadId' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'thread' } }
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
               },
               {
                 kind: 'Argument',
@@ -2281,12 +2436,12 @@ export const SendMessageDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } }]
+              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'Message' } }]
             }
           }
         ]
       }
     },
-    ...BaseMessageFragmentDoc.definitions
+    ...MessageFragmentDoc.definitions
   ]
 } as unknown as DocumentNode<SendMessageMutation, SendMessageMutationVariables>;

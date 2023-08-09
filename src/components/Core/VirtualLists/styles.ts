@@ -43,5 +43,6 @@ export const VirtualListMessageWrapper = styled.withConfig({
   displayName: 'list-message_container'
 })('div', {
   textAlign: 'left',
-  marginTop: '1.0625rem'
+  // ! Margin causes rendering issues
+  paddingTop: '1.0625rem'
 });

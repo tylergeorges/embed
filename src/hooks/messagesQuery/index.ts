@@ -50,7 +50,7 @@ export const EmbedFragment = gql`
 `;
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MessageFragment = gql`
+export const BaseMessageFragment = gql`
   fragment BaseMessage on Message {
     id
     channelId
@@ -127,6 +127,16 @@ const MessageFragment = gql`
       archivedAt
       locked
       messageCount
+    }
+  }
+`;
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const MessageFragment = gql`
+  fragment Message on Message {
+    ...BaseMessage
+
+    referencedMessage {
+      ...BaseMessage
     }
   }
 `;
@@ -216,7 +226,7 @@ export const messagesQuery = graphql(`
       ... on TextChannel {
         messageBunch(threadId: $threadId, before: $before) {
           messages {
-            ...BaseMessage
+            ...Message
           }
         }
       }
@@ -224,7 +234,7 @@ export const messagesQuery = graphql(`
         # This is not currently used but it resolves type issues
         messageBunch(threadId: $threadId, before: $before) {
           messages {
-            ...BaseMessage
+            ...Message
           }
         }
       }
@@ -245,7 +255,7 @@ export const updateMessageSubscription = graphql(`
 export const newMessageSubscription = graphql(`
   subscription NewMessage($guild: String!, $channel: String!, $threadId: String) {
     messageV2(channels: [$channel], guild: $guild, threadId: $threadId) {
-      ...BaseMessage
+      ...Message
     }
   }
 `);
@@ -262,7 +272,7 @@ export const sendMessageMutation = graphql(`
   mutation SendMessage(
     $channel: String!
     $content: String!
-    $thread: String
+    $threadId: String
     $fileData: String
     $fileName: String
     $fileAlt: String
@@ -270,12 +280,12 @@ export const sendMessageMutation = graphql(`
     sendMessage(
       channel: $channel
       content: $content
-      threadId: $thread
+      threadId: $threadId
       fileData: $fileData
       fileName: $fileName
       fileAlt: $fileAlt
     ) {
-      ...BaseMessage
+      ...Message
     }
   }
 `);

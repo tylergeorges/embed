@@ -46,14 +46,11 @@ export const Category = ({ category }: CategoryProps) => {
     }
 
     if (currentChannelRef.current && !shouldRefetch) {
-      console.log('shouldnt refecth ', currentChannelRef.current.offsetTop);
       setCurrentChannelYPos(currentChannelRef.current.offsetTop);
       setInitChannelYPos(currentChannelRef.current.offsetTop);
     }
 
     if (currentChannelRef.current && shouldRefetch) {
-      console.log('should refecth ', currentChannelRef.current.offsetTop);
-
       setCurrentChannelYPos(currentChannelRef.current.offsetTop);
       setInitChannelYPos(currentChannelRef.current.offsetTop);
     }

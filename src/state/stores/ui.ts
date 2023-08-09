@@ -104,7 +104,6 @@ const ui: UIStore = {
   // ActiveBackground component
   setCurrentChannelYPos: action((state, payload) => {
     if (state.currentChannelYPos !== payload) {
-      console.log(state.currentChannelYPos, payload);
       state.currentChannelYPos = payload;
     }
 

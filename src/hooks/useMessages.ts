@@ -1,10 +1,11 @@
 import { useQuery } from 'urql';
-import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useMemo, useRef, useState } from 'react';
 import {
   MessagesQueryQueryVariables,
   // @ts-ignore
   MessageFragmentFragment,
-  BaseMessageFragment
+  BaseMessageFragment,
+  Message
 } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
@@ -26,52 +27,67 @@ interface UseMessagesProps {
   threadId?: string;
 }
 
-export const useMessages = ({
-  guild,
-  channel,
-  threadId,
-  setMessages,
-  messages
-}: UseMessagesProps) => {
+export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
   const [variables, setVariables] = useState<MessagesQueryQueryVariables>({
     guild,
     channel,
     threadId
   });
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
 
   const [{ data }, fetchHook] = useQuery({
     query: messagesQuery,
     variables
   });
-
   const isReady = data?.channelV2.id === channel;
 
-  useEffect(() => {
-    if (variables.channel !== channel || variables.threadId !== threadId) {
-      setMessages([]);
-      setVariables({ channel, threadId, guild });
+  // useEffect(() => {
+  // if (variables.channel !== channel || variables.threadId !== threadId) {
+  //   setMessages([]);
+  //   setVariables({ channel, threadId, guild });
+  // }
+
+  const fetchedMoreData = useRef(false);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  let messages: Message[] = [];
+
+  // @ts-expect-error
+  const apiMsgs: Message[] = data?.channelV2?.messageBunch?.messages ?? [];
+  // @ts-ignore
+  const isReadyWithMessages =
+    isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
+
+  const msgs: Message[] = isReadyWithMessages ? apiMsgs : [];
+
+  if (isReadyWithMessages) {
+    if (!messages.length) {
+      messages = msgs;
+    } else if (msgs[0].id !== messages[0].id && fetchedMoreData.current) {
+      messages.unshift(...msgs);
+      fetchedMoreData.current = false;
     }
+  }
+  // console.log(data);
 
-    // @ts-expect-error
-    const apiMsgs = data?.channelV2?.messageBunch?.messages ?? [];
-    // @ts-ignore
-    const isReadyWithMessages =
-      isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
+  // if (msgs.length) {
+  //   if (isReadyWithMessages) {
+  //     // setNewMessageGroupLength(groupMessages(msgs).length);
 
-    // @ts-expect-error
-    const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
+  //     if (messages.length === 0) {
+  //       setMessages(prev => [...msgs, ...prev]);
+  //     } else if (apiMsgs.length === messages.length + 1) {
+  //       console.log(apiMsgs.length === messages.length + 1);
+  //       const latestMsg = apiMsgs[messages.length];
 
-    if (msgs.length) {
-      if (isReadyWithMessages) {
-        setNewMessageGroupLength(groupMessages(msgs).length);
-
-        setMessages(prev => [...msgs, ...prev]);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isReady]);
+  //       console.log('api set msgs');
+  //       setMessages(prev => [...prev, latestMsg]);
+  //       console.log('after mss', messages);
+  //     }
+  //   }
+  // }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [data, isReady]);
 
   const fetchMore = useCallback(
     (before: string) => {
@@ -80,6 +96,7 @@ export const useMessages = ({
       setVariables({ channel, guild, before, threadId });
 
       fetchHook({ requestPolicy: 'network-only' });
+      fetchedMoreData.current = true;
     },
     [channel, fetchHook, guild, isReady, threadId]
   );

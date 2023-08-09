@@ -1,6 +1,7 @@
+/* eslint-disable no-bitwise */
 import { useSubscription } from 'urql';
 import { Dispatch, SetStateAction } from 'react';
-import { BaseMessageFragment, UpdatedMessage } from '@graphql/graphql';
+import { Message, UpdatedMessage } from '@graphql/graphql';
 import {
   deletedMessageSubscription,
   newMessageSubscription,
@@ -14,6 +15,7 @@ interface UseSubArgs {
   messages: StateMessages[];
   setMessages: Dispatch<SetStateAction<StateMessages[]>>;
   threadId?: string;
+  // scrollToBottom: (index: number) => void;
 }
 
 export const useMessageSubscription = ({
@@ -30,10 +32,44 @@ export const useMessageSubscription = ({
     },
 
     (prev, data) => {
-      const message = data.messageV2 as BaseMessageFragment;
+      const newMessage = data.messageV2 as Message;
 
-      if (message) {
-        setMessages(prev => [...prev, message]);
+      console.log(newMessage);
+      if (newMessage && !messages.find(m => m.id === newMessage.id)) {
+        // @ts-expect-error
+        if (!(newMessage.flags & (1 << 4))) {
+          // trims spaces so Discord's normalization doesn't break it
+          const optimisticIndex = messages.findIndex(
+            m =>
+              // @ts-expect-error
+              m.content.replace(/ /g, '') === newMessage.content.replace(/ /g, '') &&
+              // @ts-expect-error
+              m.flags & (1 << 4)
+          );
+
+          if (optimisticIndex > -1) {
+            console.log('messages before adding ', messages, newMessage);
+            const updatedMessages = [...messages];
+            updatedMessages.splice(optimisticIndex, 1);
+            updatedMessages.concat(newMessage);
+
+            setMessages([...updatedMessages]);
+            // setMessages(msgs => {
+            //   msgs.splice(optimisticIndex, 1);
+            //   msgs.concat(newMessage);
+
+            //   return msgs;
+            // });
+            console.log('messages after adding ', messages, newMessage);
+
+            // scrollToBottom(messages.length - 1);
+
+            return data;
+          }
+
+          setMessages(msgs => [...msgs, newMessage]);
+          // scrollToBottom(messages.length - 1);
+        }
       }
 
       return data;

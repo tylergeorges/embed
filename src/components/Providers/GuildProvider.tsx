@@ -8,6 +8,52 @@ interface GuildProviderProps {
   setIsGuildFetched: () => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const textChannelFragment = graphql(`
+  fragment TextChannel on TextChannel {
+    id
+    name
+    type
+    position
+    canSend
+    topic
+
+    category {
+      id
+      name
+      position
+    }
+
+    threads {
+      id
+      name
+    }
+  }
+`);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const annoucmentChannelFragment = graphql(`
+  fragment AnnouncementChannel on AnnouncementChannel {
+    id
+    name
+    type
+    position
+    canSend
+    topic
+
+    category {
+      id
+      name
+      position
+    }
+
+    threads {
+      id
+      name
+    }
+  }
+`);
+
 export const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {
     guild(id: $id) {
@@ -24,6 +70,7 @@ export const guildDocument = graphql(/* GraphQL */ `
         type
         position
         canSend
+        __typename
 
         threads {
           id
@@ -64,7 +111,8 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
 
   const [{ data, fetching }, fetchHook] = useQuery({
     query: guildDocument,
-    variables: { id: guildId }
+    variables: { id: guildId },
+    requestPolicy: 'cache-and-network'
   });
 
   const shouldRefetchGuild = useStoreState(state => state.guild.refetchGuild);
