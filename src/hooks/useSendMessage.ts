@@ -21,6 +21,7 @@ export const useSendMessage = ({ thread }: UseSendMessageProps) => {
   ) => {
     if (!user) return;
 
+    console.log(thread);
     await sendMutation(
       {
         channel: channelId,
@@ -33,8 +34,6 @@ export const useSendMessage = ({ thread }: UseSendMessageProps) => {
       { optimistic: true }
     );
   };
-
-  //   console.log(sendMessageRes.extensions);
 
   return { sendMessage };
 };

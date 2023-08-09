@@ -5,6 +5,7 @@ import { TextBoxInput } from '@components/Core/TextChannelContainer/TextBox/Text
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { useSendMessage } from '@hooks/useSendMessage';
 import * as Styles from '../styles';
+import { useAppRouter } from '../../../../hooks/useAppRouter';
 
 interface TextBoxProps {
   channelIsThread?: boolean;
@@ -12,7 +13,9 @@ interface TextBoxProps {
 
 export const TextBox = ({ channelIsThread }: TextBoxProps) => {
   const fileAttachmentRef = useRef<HTMLInputElement>(null);
-  const { sendMessage } = useSendMessage({ thread: null });
+  const { threadId } = useAppRouter();
+
+  const { sendMessage } = useSendMessage({ thread: channelIsThread ? threadId : undefined });
 
   const attachmentButtonClick = (e: React.SyntheticEvent) => {
     e.preventDefault();

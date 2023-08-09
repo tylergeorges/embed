@@ -38,15 +38,11 @@ export const getToken = () => {
   return token;
 };
 
-const getState = () => store.getState();
-
 const cache = cacheExchange({
   updates: {
     Mutation: {
       sendMessage(_result, args, _cache) {
-        // if (!info.optimistic) return;
-
-        const guild = getState().guild.data?.id as string;
+        const guild = store.getState().guild.data?.id as string;
         const newMessage = _result.sendMessage as Message;
 
         if (newMessage) {
@@ -55,119 +51,38 @@ const cache = cacheExchange({
           _cache
             .inspectFields('Query')
             .filter(field => field.fieldName === 'channelV2')
-            .forEach(field => {
+            .forEach(() => {
               _cache.updateQuery(
                 {
                   query: messagesQuery,
                   variables: {
-                    channel: field.arguments?.id as string,
-                    guild
+                    channel: args.channel as string,
+                    guild,
+                    threadId: args.threadId as string
                   }
                 },
+
                 (data: MessagesQuery | undefined | null) => {
-                  console.log(field);
-                  // if (!data || !data.channelV2) return;
+                  if (!data || !data.channelV2) return;
 
-                  // const messages = data.channelV2?.messageBunch.messages as StateMessages[];
-                  // const messages = data.channelV2?.messageBunch.messages as StateMessages[];
-
-                  // console.log(
-                  //   'data log ',
-                  //   data.channelV2?.messageBunch.messages,
-                  //   newMessage.id,
-                  //   field
-                  // );
-
-                  if (!data?.channelV2?.messageBunch.messages.find(m => m.id === newMessage.id))
-                    data?.channelV2?.messageBunch.messages.push(newMessage);
-
-                  // @ts-expect-error
-                  if (!(newMessage.flags & (1 << 4))) {
-                    // trims spaces so Discord's normalization doesn't break it
-                    const optimisticIndex = data?.channelV2?.messageBunch.messages.findIndex(
-                      m =>
-                        m.content.replace(/ /g, '') === newMessage.content.replace(/ /g, '') &&
-                        // @ts-expect-error
-                        m.flags & (1 << 4)
-                    );
-
-                    console.log('optimisticIndex ', optimisticIndex);
-                    // @ts-expect-error
-                    if (optimisticIndex > -1)
-                      // @ts-expect-error
-                      data?.channelV2?.messageBunch.messages.splice(optimisticIndex, 1);
+                  if (!data.channelV2.messageBunch.messages.find(m => m.id === newMessage.id)) {
+                    data?.channelV2.messageBunch.messages.push(newMessage);
                   }
 
-                  // console.log('deconstruct ', newMessage, data.channelV2.messageBunch.messages);
-                  // console.log(
-                  //   'data?.channelV2.messageBunch.messages',
-                  //   data?.channelV2.messageBunch.messages
-                  // );
-
-                  // data.channelV2.messageBunch.messages = messages;
                   return data;
                 }
               );
             });
         }
-        // _cache.updateQuery(
-        //   {
-        //     query: messagesQuery,
-        //     variables: { channel: args.channel, guild, threadId: args.thread }
-        //   },
-        //   data => {
-        //     console.log(data);
-        //     if (!data || !data.channelV2?.messageBunch?.messages) return data;
-
-        //     console.log(data);
-        //     const messages = data.channelV2?.messageBunch.messages as StateMessages[];
-
-        //     if (!messages.find(m => m.id === newMessage.id)) {
-        //       messages.push(newMessage);
-        //       data.channelV2.messageBunch.messages = messages;
-        //     }
-
-        //     // if (!(newMessage.flags & (1 << 4))) {
-        //     //   // trims spaces so Discord's normalization doesn't break it
-        //     //   const optimisticIndex = messages.findIndex(
-        //     //     m =>
-        //     //       m.content.replace(/ /g, '') === newMessage.content.replace(/ /g, '') &&
-        //     //       m.flags & (1 << 4)
-        //     //   );
-
-        //     //   if (optimisticIndex > -1) messages.splice(optimisticIndex, 1);
-        //     // }
-        //     console.log('updates ', data);
-
-        //     return data;
-        //   }
-        // );
-        // }
-
-        // console.log('qweqw ', messages);
-        // _cache.updateQuery(
-        //   { query: messagesQuery, variables: { channel: args.channel, guild } },
-        //   data => {
-        //     data?.channelV2.messageBunch.messages.push(newMessage);
-
-        //     return data;
-        //   }
-        // );
       }
     }
   },
 
   optimistic: {
     sendMessage(args): Message | {} {
-      // const { authorId, authorAvatar, authorUsername } = info.variables;
-      const user = getState().user.data;
-
-      // console.log('args ', args, '\n cache ', _cache, '\n info ', info, user);
+      const user = store.getState().user.data;
 
       if (!user) return {};
-
-      // const messageId = DiscordSnowflake.generate();
-      // const createdAt = DiscordSnowflake.timestampFrom(messageId);
 
       return {
         __typename: 'Message',

@@ -242,6 +242,50 @@ export const messagesQuery = graphql(`
   }
 `);
 
+export const moreMessagesQuery = graphql(`
+  query MoreMessages($guild: String!, $channel: String!, $thread: String, $before: String) {
+    channelV2(id: $channel, guild: $guild) {
+      id
+      ... on TextChannel {
+        messageBunch(threadId: $thread, before: $before) {
+          messages {
+            ...Message
+          }
+        }
+      }
+      ... on AnnouncementChannel {
+        messageBunch(threadId: $thread, before: $before) {
+          messages {
+            ...Message
+          }
+        }
+      }
+      ... on VoiceChannel {
+        messageBunch(
+          threadId: $thread
+
+          before: $before
+        ) {
+          messages {
+            ...Message
+          }
+        }
+      }
+      ... on ForumChannel {
+        messageBunch(
+          threadId: $thread
+
+          before: $before
+        ) {
+          messages {
+            ...Message
+          }
+        }
+      }
+    }
+  }
+`);
+
 // TODO: Copy fragments from old codebase for this.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const updateMessageSubscription = graphql(`

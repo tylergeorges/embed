@@ -71,6 +71,7 @@ export const useMessageSubscription = ({
           // scrollToBottom(messages.length - 1);
         }
       }
+      setMessages(msgs => [...msgs, newMessage]);
 
       return data;
     }
@@ -102,10 +103,11 @@ export const useMessageSubscription = ({
     (prev, data) => {
       const updatedMessage = data.messageUpdateV2 as UpdatedMessage;
 
+      console.log(updatedMessage);
       if (updatedMessage && typeof updatedMessage.content === 'string') {
-        const oldMessages = [...messages];
+        const oldMessages = messages;
 
-        const messageIdx = oldMessages.findIndex(msg => msg.id === updatedMessage.id);
+        const messageIdx = messages.findIndex(msg => msg.id === updatedMessage.id);
 
         if (messageIdx >= 0) {
           oldMessages[messageIdx] = updatedMessage;
