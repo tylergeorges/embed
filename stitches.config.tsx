@@ -50,6 +50,9 @@ const stitches = createStitches({
       backgroundModifierHoverHsl: '223 calc($saturationFactor * 5.8%) 52.9%',
       backgroundModifierHover: 'hsl($backgroundModifierHoverHsl / 0.16)',
 
+      modalBackgroundHsl: '223 calc($saturationFactor * 6.7%) 20.6%',
+      modalBackground: 'hsl($modalBackgroundHsl / 1)',
+
       interactiveActiveHsl: '0 calc($saturationFactor * 0%) 100%',
       interactiveActive: 'hsl($interactiveActiveHsl / 1)',
 

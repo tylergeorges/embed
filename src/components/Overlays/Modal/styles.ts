@@ -165,7 +165,7 @@ export const ModalContainer = styled.withConfig({
   borderRadius: 4,
 
   pointerEvents: 'all',
-  backgroundColor: theme.colors.background,
+  backgroundColor: theme.colors.modalBackground,
   zIndex: theme.zIndices.modal,
 
   variants: {
