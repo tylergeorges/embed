@@ -27,13 +27,17 @@ export const IconRoot = styled.withConfig({
     },
 
     color: {
+      channel: {
+        color: theme.colors.channelsIcon
+      },
+
       light: {
-        color: theme.colors.iconLight.value
+        color: theme.colors.interactiveDefault
       },
 
       dark: {
         // TODO: Find out why we need to access .value for it to work properly
-        color: theme.colors.textMuted.value
+        color: theme.colors.interactiveDefault
       }
     }
   }
@@ -116,7 +120,7 @@ export const IconButtonChildrenWrapper = styled.withConfig({
 
   '&:hover': {
     use: {
-      color: theme.colors.primaryOpacity80
+      color: theme.colors.interactiveHover
     }
   },
 
@@ -124,45 +128,29 @@ export const IconButtonChildrenWrapper = styled.withConfig({
     backgroundGlowSize: {
       sm: {
         size: theme.sizes.iconSizeSmall,
-        borderRadius: theme.radii.round,
-
-        '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity20
-        }
+        borderRadius: theme.radii.round
       },
 
       md: {
         size: theme.sizes.iconSizeMed,
-        borderRadius: theme.radii.round,
-
-        '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity20
-        }
+        borderRadius: theme.radii.round
       },
 
       lg: {
         size: theme.sizes.iconSizeLarge,
-        borderRadius: theme.radii.round,
-
-        '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity20
-        }
+        borderRadius: theme.radii.round
       },
 
       xl: {
         size: theme.sizes.iconSizeXl,
-        borderRadius: theme.radii.round,
-
-        '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity20
-        }
+        borderRadius: theme.radii.round
       }
     },
 
     isActive: {
       true: {
         use: {
-          color: theme.colors.iconActive
+          color: theme.colors.interactiveActive
         }
       }
     }

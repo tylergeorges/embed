@@ -67,6 +67,7 @@ export const CategoryContainer = styled.withConfig({
   width: '100%',
   boxSizing: 'border-box',
   paddingTop: theme.space.xl,
+  zIndex: theme.zIndices.channelsSidebar,
 
   fontWeight: theme.fontWeights.medium,
   transition: `translateY ${theme.transitions.longerDuration} ease`
@@ -109,7 +110,7 @@ export const ChannelNameWrapper = styled.withConfig({
       },
 
       true: {
-        color: theme.colors.active
+        color: theme.colors.interactiveActive
       }
     },
 
@@ -156,7 +157,6 @@ export const ChannelNameInner = styled.withConfig({
   paddingX: theme.space.xxs.value,
   width: '100%',
   fontSize: theme.fontSizes.lg,
-  fontWeight: theme.fontWeights.regular,
   boxSizing: 'border-box',
 
   marginBottom: theme.space.xxs.value,
@@ -164,11 +164,11 @@ export const ChannelNameInner = styled.withConfig({
   variants: {
     isActive: {
       false: {
-        color: theme.colors.textMuted.value,
+        color: theme.colors.channelsPrimary,
 
         '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity10,
-          color: theme.colors.primaryOpacity50
+          backgroundColor: theme.colors.backgroundModifierHover,
+          color: theme.colors.interactiveHover
         }
       }
     }

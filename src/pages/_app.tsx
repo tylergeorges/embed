@@ -39,8 +39,9 @@ const globalStyles = globalCss({
     width: '100%',
     height: '100%',
     overflow: 'hidden',
-    backgroundColor: theme.colors.background,
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+
+    backgroundColor: theme.colors.background
   },
   body: {
     padding: 0,
@@ -48,8 +49,7 @@ const globalStyles = globalCss({
     fontFamily: 'GgSans',
     width: '100%',
     height: '100%',
-    color: 'white',
-    backgroundColor: theme.colors.background,
+    color: theme.colors.textPrimary,
     overflow: 'hidden',
     boxSizing: 'border-box'
   },

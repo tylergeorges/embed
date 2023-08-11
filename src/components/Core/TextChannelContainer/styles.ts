@@ -98,7 +98,22 @@ export const TextChannelInnerWrapper = styled.withConfig({
   flexDirection: 'row',
 
   height: '100%',
-  width: '100%'
+  width: '100%',
+
+  backgroundOverlay: theme.colors.background,
+
+  '&:after': {
+    content: '',
+    boxShadow: theme.shadows.headerBorder,
+
+    position: 'absolute',
+    width: '100%',
+
+    top: -1,
+    height: 1,
+
+    zIndex: theme.zIndices.membersSidebar
+  }
 });
 
 export const MessageWrapper = styled.withConfig({

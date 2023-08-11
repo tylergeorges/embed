@@ -77,7 +77,7 @@ export const Backdrop = styled.withConfig({
       isMembersListOpen: true,
 
       css: {
-        zIndex: theme.zIndices.membersSidebarBackdrop,
+        zIndex: theme.zIndices.none,
         opacity: 1
       }
     },

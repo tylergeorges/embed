@@ -26,12 +26,13 @@ export const HeaderRoot = styled.withConfig({
 
   height: theme.sizes.headerHeight,
   width: '100%',
+  boxShadow: theme.shadows.headerBorder,
 
   variants: {
     shadowEnabled: {
       true: {
         boxShadow: theme.shadows.headerDropShadow,
-        backgroundColor: theme.colors.background
+        backgroundColor: theme.colors.headerBarBackground
       },
 
       false: {
@@ -47,7 +48,9 @@ export const HeaderMainContentRoot = styled.withConfig({
 })('h1', {
   fontSize: theme.fontSizes.lg,
   margin: 0,
-  fontWeight: theme.fontWeights.semibold
+  fontWeight: theme.fontWeights.semibold,
+  color: theme.colors.headerPrimary,
+  height: 24
 });
 
 export const GuildHeaderName = styled.withConfig({
