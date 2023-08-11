@@ -9,7 +9,7 @@ import { generateSnowflake } from '@util/generateSnowflake';
 import { store } from '@state/store';
 import { messagesQuery } from '@hooks/messagesQuery';
 
-interface MessagesQuery {
+export interface MessagesQuery {
   channelV2?: {
     id: string;
     __typename: 'TextChannel';
@@ -65,8 +65,10 @@ const cache = cacheExchange({
                 (data: MessagesQuery | undefined | null) => {
                   if (!data || !data.channelV2) return;
 
-                  if (!data.channelV2.messageBunch.messages.find(m => m.id === newMessage.id)) {
-                    data?.channelV2.messageBunch.messages.push(newMessage);
+                  const { messages } = data.channelV2.messageBunch;
+
+                  if (!messages.find(m => m.id === newMessage.id)) {
+                    messages.push(newMessage);
                   }
 
                   return data;

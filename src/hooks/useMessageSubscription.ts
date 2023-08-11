@@ -8,6 +8,7 @@ import {
   updateMessageSubscription
 } from '@hooks/messagesQuery';
 import { StateMessages } from 'types/messages.types';
+import { getOptimisticIndex } from '@util/getOptimisticIndex';
 
 interface UseSubArgs {
   guild: string;
@@ -34,41 +35,19 @@ export const useMessageSubscription = ({
     (prev, data) => {
       const newMessage = data.messageV2 as Message;
 
-      console.log(newMessage);
       if (newMessage && !messages.find(m => m.id === newMessage.id)) {
-        // @ts-expect-error
-        if (!(newMessage.flags & (1 << 4))) {
-          // trims spaces so Discord's normalization doesn't break it
-          const optimisticIndex = messages.findIndex(
-            m =>
-              // @ts-expect-error
-              m.content.replace(/ /g, '') === newMessage.content.replace(/ /g, '') &&
-              // @ts-expect-error
-              m.flags & (1 << 4)
-          );
+        if (!(newMessage.flags ?? 0 & (1 << 4))) {
+          const optimisticIndex = getOptimisticIndex(messages, newMessage);
 
           if (optimisticIndex > -1) {
-            console.log('messages before adding ', messages, newMessage);
-            const updatedMessages = [...messages];
+            const updatedMessages = messages;
             updatedMessages.splice(optimisticIndex, 1);
             updatedMessages.concat(newMessage);
-
-            setMessages([...updatedMessages]);
-            // setMessages(msgs => {
-            //   msgs.splice(optimisticIndex, 1);
-            //   msgs.concat(newMessage);
-
-            //   return msgs;
-            // });
-            console.log('messages after adding ', messages, newMessage);
-
-            // scrollToBottom(messages.length - 1);
 
             return data;
           }
 
           setMessages(msgs => [...msgs, newMessage]);
-          // scrollToBottom(messages.length - 1);
         }
       }
       setMessages(msgs => [...msgs, newMessage]);
@@ -103,7 +82,6 @@ export const useMessageSubscription = ({
     (prev, data) => {
       const updatedMessage = data.messageUpdateV2 as UpdatedMessage;
 
-      console.log(updatedMessage);
       if (updatedMessage && typeof updatedMessage.content === 'string') {
         const oldMessages = messages;
 

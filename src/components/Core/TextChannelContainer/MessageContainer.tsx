@@ -7,6 +7,8 @@ import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
 import { StateMessages } from 'types/messages.types';
+import { MessagesQuery, client } from '@graphql/client';
+import { moreMessagesQuery } from '@hooks/messagesQuery';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
@@ -14,16 +16,20 @@ interface MessageContainerProps {
 }
 
 export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
-  const [isListRendered, setIsListRendered] = useState(false);
-  const { channelId: channel, guildId: guild, threadId } = useAppRouter();
   const [messages, setMessages] = useState<StateMessages[]>([]);
 
-  const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
+  const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
+
+  const { channelId: channel, guildId: guild, threadId: thread } = useAppRouter();
+
+  const threadId = channelIsThread ? thread : undefined;
+
+  const { groupedMessages, isReady, firstItemIndex } = useMessages({
     guild,
     channel,
     messages,
     setMessages,
-    threadId: channelIsThread ? threadId : undefined
+    threadId
   });
 
   useMessageSubscription({
@@ -31,16 +37,33 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
     guild,
     channel,
     setMessages,
-    threadId: channelIsThread ? threadId : undefined
+    threadId
   });
 
-  const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
+  const fetchMore = useCallback(
+    (before: string) => {
+      if (!isReady) return;
 
-  const handleBottomStateChanged = useCallback(() => {
-    if (!isListRendered) {
-      setIsListRendered(true);
-    }
-  }, [isListRendered]);
+      client
+        .executeQuery<MessagesQuery>({
+          query: moreMessagesQuery,
+          variables: { channel, guild, before, thread: threadId },
+          key: Number(before)
+        })
+        .then(res => {
+          if (!res.data || !res.data.channelV2) return;
+
+          const oldMessages = res.data.channelV2.messageBunch.messages;
+
+          setMessages(recent => [...oldMessages, ...recent]);
+        });
+    },
+    [channel, guild, isReady, threadId, setMessages]
+  );
+
+  const loadMoreMessages = useCallback(() => {
+    fetchMore(messages[0].id);
+  }, [fetchMore, messages]);
 
   return (
     <Styles.MessageWrapper
@@ -56,7 +79,6 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
         messages={groupedMessages}
         isReady={isReady}
         firstItemIndex={firstItemIndex}
-        handleBottomStateChanged={handleBottomStateChanged}
       />
 
       <TextBox channelIsThread={channelIsThread} />

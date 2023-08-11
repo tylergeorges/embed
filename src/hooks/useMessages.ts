@@ -1,6 +1,6 @@
 /* eslint-disable no-bitwise */
 import { useQuery } from 'urql';
-import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 import {
   MessagesQueryQueryVariables,
   // @ts-ignore
@@ -11,9 +11,10 @@ import {
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
-import { messagesQuery, moreMessagesQuery } from '@hooks/messagesQuery';
+import { messagesQuery } from '@hooks/messagesQuery';
 import { StateMessages } from 'types/messages.types';
-import { client } from '@graphql/client';
+import { MessagesQuery } from '@graphql/client';
+import { getOptimisticIndex } from '@util/getOptimisticIndex';
 
 type MessageState = {
   messages: MessageFragmentFragment[];
@@ -27,17 +28,6 @@ interface UseMessagesProps {
   messages: StateMessages[];
   setMessages: Dispatch<SetStateAction<StateMessages[]>>;
   threadId?: string;
-}
-
-interface MessagesQuery {
-  channelV2?: {
-    id: string;
-    __typename: 'TextChannel';
-    messageBunch: {
-      __typename: 'MessageBunch';
-      messages: Message[];
-    };
-  };
 }
 
 export const useMessages = ({
@@ -81,59 +71,30 @@ export const useMessages = ({
         setNewMessageGroupLength(groupMessages(msgs).length);
 
         if (messages.length === 0) {
-          setMessages(prev => [...msgs, ...prev]);
+          setMessages(msgs);
         } else if (messages.length) {
           const recentMessage = apiMsgs[apiMsgs.length - 1];
 
-          if (recentMessage.flags && !(recentMessage.flags & (1 << 4))) {
+          if (!(recentMessage.flags ?? 0 & (1 << 4))) {
             // trims spaces so Discord's normalization doesn't break it
-            const optimisticIndex = messages.findIndex(
-              m =>
-                m.content?.replace(/ /g, '') === recentMessage.content.replace(/ /g, '') &&
-                // @ts-expect-error
-                m.flags & (1 << 4)
-            );
+
+            const optimisticIndex = getOptimisticIndex(messages, recentMessage);
 
             if (optimisticIndex > -1) {
               const updatedMessages = messages;
+              updatedMessages.splice(optimisticIndex, 1, recentMessage);
 
-              updatedMessages.splice(optimisticIndex, 1);
-              updatedMessages.concat(recentMessage);
-
-              setMessages(updatedMessages);
+              setMessages([...updatedMessages]);
             }
+          } else {
+            setMessages(prev => [...prev, recentMessage]);
           }
-          setMessages(prev => [...prev, recentMessage]);
         }
       }
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isReady]);
-
-  const fetchMore = useCallback(
-    (before: string) => {
-      if (!isReady) return;
-
-      client
-        .executeQuery<MessagesQuery>({
-          query: moreMessagesQuery,
-          variables: { channel, guild, before, thread: threadId },
-          key: Number(before)
-        })
-        .then(res => {
-          if (!res.data || !res.data.channelV2) return;
-
-          const oldMessages = res.data.channelV2.messageBunch.messages;
-
-          setMessages(recent => [...oldMessages, ...recent]);
-        });
-    },
-    [channel, guild, isReady, threadId, setMessages]
-  );
-
-  const loadMoreMessages = useCallback(() => {
-    fetchMore(messages[0].id);
-  }, [fetchMore, messages]);
 
   let messageState: MessageState;
 
@@ -163,9 +124,8 @@ export const useMessages = ({
 
   return {
     ...messageState,
-    fetchMore,
+
     newMessageGroupLength,
-    isReady,
-    loadMoreMessages
+    isReady
   };
 };

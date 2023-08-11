@@ -13,10 +13,7 @@ export const convertMessageToDiscord = (message: BaseMessageFragment): APIMessag
     id: message.author.id,
     bot: message.author.bot,
     username: message.author.name,
-    avatar: null,
-    // avatar: message.author.avatarUrl?.split('/').pop().split('.')[0] ?? null,
-    // avatar: `${message.author.avatarUrl?.split('/').pop()?.split('.')[0]}` ?? null,
-
+    avatar: message.author.avatarUrl?.split('/')?.pop()?.split('.')[0] ?? null,
     global_name: message.author.name,
     discriminator: message.author.discrim
   },

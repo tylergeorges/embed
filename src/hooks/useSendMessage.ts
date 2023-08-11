@@ -9,8 +9,9 @@ interface UseSendMessageProps {
 }
 
 export const useSendMessage = ({ thread }: UseSendMessageProps) => {
-  const [, sendMutation] = useMutation(sendMessageMutation);
   const { channelId } = useAppRouter();
+  const [, sendMutation] = useMutation(sendMessageMutation);
+
   const user = useStoreState(state => state.user.data);
 
   const sendMessage = async (
@@ -21,7 +22,6 @@ export const useSendMessage = ({ thread }: UseSendMessageProps) => {
   ) => {
     if (!user) return;
 
-    console.log(thread);
     await sendMutation(
       {
         channel: channelId,
