@@ -227,7 +227,7 @@ export const TextInput = styled.withConfig({
   alignItems: 'center',
 
   color: theme.colors.textPrimary,
-  fontWeight: theme.fontWeights.thin,
+  fontWeight: theme.fontWeights.regular,
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
   textAlign: 'left',

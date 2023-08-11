@@ -45,9 +45,9 @@ export const HeaderMainContentRoot = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'header-main_content_root'
 })('h1', {
-  fontWeight: theme.fontWeights.bold,
   fontSize: theme.fontSizes.lg,
-  margin: 0
+  margin: 0,
+  fontWeight: theme.fontWeights.semibold
 });
 
 export const GuildHeaderName = styled.withConfig({
@@ -117,6 +117,7 @@ export const ChannelHeaderTopic = styled.withConfig({
   borderLeftStyle: 'solid',
   borderLeftWidth: 1,
   borderLeftColor: theme.colors.primaryOpacity10,
+  fontWeight: theme.fontWeights.medium,
 
   wordBreak: 'break-word',
   overflow: 'hidden',

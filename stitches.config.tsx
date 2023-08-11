@@ -228,13 +228,16 @@ const stitches = createStitches({
 
     fontWeights: {
       /** font-weight: 400 */
-      thin: 400,
+      regular: 400,
 
       /** font-weight: 500 */
       medium: 500,
 
       /** font-weight: 600 */
-      bold: 600
+      semibold: 600,
+
+      /** font-weight: 700 */
+      bold: 700
     },
 
     borderWidths: {

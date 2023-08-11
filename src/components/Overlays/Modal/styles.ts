@@ -396,6 +396,8 @@ export const ThreadsPopoutListHeader = styled.withConfig({
 
   fontSize: theme.fontSizes.sm,
   fontWeight: theme.fontWeights.bold,
+  textRendering: 'optimizeLegibility',
+  textTransform: 'uppercase',
 
   width: '100%',
   marginY: theme.space.lg

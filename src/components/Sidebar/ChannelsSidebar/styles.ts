@@ -53,9 +53,12 @@ export const CategoryNameContent = styled.withConfig({
   displayName: 'category-name'
 })('div', {
   textTransform: 'uppercase',
+  textRendering: 'optimizeLegibility',
   fontSize: theme.fontSizes.sm,
   alignSelf: 'center',
-  boxSizing: 'border-box'
+  boxSizing: 'border-box',
+  fontWeight: theme.fontWeights.semibold,
+  letterSpacing: '.02em'
 });
 
 export const CategoryContainer = styled.withConfig({
@@ -153,7 +156,7 @@ export const ChannelNameInner = styled.withConfig({
   paddingX: theme.space.xxs.value,
   width: '100%',
   fontSize: theme.fontSizes.lg,
-  fontWeight: theme.fontWeights.thin,
+  fontWeight: theme.fontWeights.regular,
   boxSizing: 'border-box',
 
   marginBottom: theme.space.xxs.value,
