@@ -5,10 +5,8 @@ export const MembersSidebar = () => {
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
   return (
-    <>
-      <Styles.MembersSidebarWrapper membersListOpen={isMembersListOpen} type="membersList">
-        <div />
-      </Styles.MembersSidebarWrapper>
-    </>
+    <Styles.MembersSidebarWrapper membersListOpen={isMembersListOpen} type="membersList">
+      <div />
+    </Styles.MembersSidebarWrapper>
   );
 };

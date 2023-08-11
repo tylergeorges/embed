@@ -352,6 +352,7 @@ const stitches = createStitches({
     }),
 
     backgroundOverlay: (color: ScaleValue<'colors'>) => ({
+      // Theres no way type a Color Token, if we dont access value here then it won't work.
       // @ts-expect-error
       background: `linear-gradient(rgb($backgroundOverlayColor / $backgroundOpacityChat), rgb($backgroundOverlayColor / $backgroundOpacityChat)) fixed 0 0/cover, ${color.value} fixed 0 0/cover`,
 
