@@ -168,7 +168,6 @@ export const ModalContainer = styled.withConfig({
 
   pointerEvents: 'all',
   backgroundColor: theme.colors.background,
-  // zIndex: theme.zIndices.modal,
   position: 'relative',
   zIndex: theme.zIndices.negative,
 
