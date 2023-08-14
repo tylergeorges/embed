@@ -3,6 +3,7 @@ import { graphql } from '@graphql/gql';
 import { useQuery } from 'urql';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
+import { Guild } from '@graphql/graphql';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -13,9 +14,34 @@ export const guildDocument = graphql(/* GraphQL */ `
     guild(id: $id) {
       id
       name
+      icon
+      memberCount
+      rulesChannelId
+      banner
+      splash
+      partnered
+      verified
+      tier
+
       settings {
         readonly
         guestMode
+      }
+
+      roles {
+        id
+        name
+        position
+        color
+        icon
+        unicodeEmoji
+      }
+
+      emojis {
+        id
+        name
+        animated
+        available
       }
 
       channels {
@@ -25,10 +51,13 @@ export const guildDocument = graphql(/* GraphQL */ `
         position
         canSend
 
-        threads {
+        ... on ThreadChannel {
           id
+          type
           name
+          parentId
         }
+
         category {
           id
           name
@@ -39,14 +68,24 @@ export const guildDocument = graphql(/* GraphQL */ `
           topic
 
           threads {
-            id
+            ... on ThreadChannel {
+              id
+              type
+              name
+              parentId
+            }
           }
         }
         ... on AnnouncementChannel {
           topic
 
           threads {
-            id
+            ... on ThreadChannel {
+              id
+              type
+              name
+              parentId
+            }
           }
         }
         ... on ForumChannel {
@@ -96,13 +135,14 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     else if (data && !fetching) {
       // So guild data/settings only get set once
       if (!guildData && !guildSettings) {
-        setGuildData(data.guild);
+        const guild = data.guild as Guild;
 
-        // @ts-expect-error
-        setSettings(data.guild.settings);
+        setGuildData(guild);
+
+        setSettings(guild.settings);
+
+        setChannels(guild.channels);
       }
-      // @ts-expect-error
-      setChannels(data.guild.channels);
 
       setIsGuildFetched();
     }
