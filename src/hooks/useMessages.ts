@@ -1,11 +1,6 @@
 import { useQuery } from 'urql';
 import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  MessagesQueryQueryVariables,
-  // @ts-ignore
-  MessageFragmentFragment,
-  BaseMessageFragment
-} from '@graphql/graphql';
+import { MessagesQueryQueryVariables, BaseMessageFragment } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
@@ -13,7 +8,6 @@ import { messagesQuery } from '@hooks/messagesQuery';
 import { StateMessages } from 'types/messages.types';
 
 type MessageState = {
-  messages: MessageFragmentFragment[];
   groupedMessages: APIMessage[][];
   firstItemIndex: number;
 };
@@ -56,7 +50,6 @@ export const useMessages = ({
 
     // @ts-expect-error
     const apiMsgs = data?.channelV2?.messageBunch?.messages ?? [];
-    // @ts-ignore
     const isReadyWithMessages =
       isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
 
@@ -90,7 +83,6 @@ export const useMessages = ({
 
   let messageState: MessageState;
 
-  // @ts-ignore
   // eslint-disable-next-line prefer-const
   messageState = useMemo(() => {
     let firstItemIndex = 100_000;

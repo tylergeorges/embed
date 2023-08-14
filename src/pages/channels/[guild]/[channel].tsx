@@ -49,7 +49,6 @@ function GuildChannel() {
     <MessageRendererProvider
       messageButtons={() => []}
       currentUser={() => null}
-      // @ts-ignore
       resolveChannel={id => (guildChannels[id] as APIChannel) ?? null}
       resolveGuild={() => null}
       resolveMember={() => null}

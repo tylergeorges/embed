@@ -2,6 +2,7 @@ import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreActions, useStoreState } from '@state';
 import { useTranslation } from 'react-i18next';
+import { Channel as IChannel } from '@graphql/graphql';
 
 export const ThreadsButton = () => {
   const { channelId } = useAppRouter();
@@ -11,7 +12,11 @@ export const ThreadsButton = () => {
   const showThreadsModal = useStoreState(state => state.ui.showThreadsModal);
   const guildChannels = useStoreState(state => state.guild.guildChannels);
 
-  const numOfThreads = guildChannels[channelId].threads?.length;
+  const channel = guildChannels[channelId] as IChannel;
+
+  const threadsLen = channel.threads?.length;
+
+  const numOfThreads = threadsLen === 0 ? null : String(threadsLen);
 
   const openThreadsModal = (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -26,8 +31,7 @@ export const ThreadsButton = () => {
       tooltipPlacement="bottom"
       tooltipDisabledIfActive
       isActive={showThreadsModal}
-      // @ts-ignore
-      iconContent={numOfThreads || null}
+      iconContent={numOfThreads}
       onClick={openThreadsModal}
     />
   );

@@ -1,6 +1,7 @@
 import { Action, Computed, action, computed } from 'easy-peasy';
 import { Category, Channel, GuildSettings } from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
+import { APIChannel } from 'discord-api-types/v10';
 
 export interface IGuild {
   id: string;
@@ -14,7 +15,7 @@ export interface IThread extends Channel {
 }
 
 export type GuildChannels = {
-  [channelId: string]: Channel;
+  [channelId: string]: Channel | APIChannel;
 };
 
 export interface GuildStore {
@@ -24,7 +25,7 @@ export interface GuildStore {
   channels?: Channel[];
   categories: Computed<GuildStore, Category[]>;
   currentThread: Channel | undefined;
-  currentChannel: { name: string; topic: string } | undefined;
+  currentChannel: { name: string; topic?: string | null } | undefined;
   refetchGuild: boolean;
 
   setData: Action<GuildStore, IGuild>;
@@ -51,16 +52,15 @@ const guild: GuildStore = {
 
     // Filter for channels that have threads
     const channelsLen = state.channels.length;
+
     // Iterate over channels that have threads and add them to map
     for (let i = 0; i < channelsLen; i += 1) {
-      // @ts-ignore
-      const channel = state.channels[i];
+      const channel = state.channels[i] as Channel;
 
       const mapHasChannel = guildChannels[String(channel.id)];
       if (mapHasChannel) break;
 
       guildChannels[String(channel.id)] = channel;
-      guildChannels[String(channel.id)].threads = channel.threads;
     }
 
     return guildChannels;
@@ -102,8 +102,13 @@ const guild: GuildStore = {
 
   setCurrentChannel: action((state, payload) => {
     const currentChannel = state.guildChannels[payload];
-    // @ts-ignore
-    state.currentChannel = { name: currentChannel.name, topic: currentChannel.topic };
+
+    if ('topic' in currentChannel) {
+      state.currentChannel = {
+        name: currentChannel.name as string,
+        topic: currentChannel.topic as string
+      };
+    }
   })
 };
 
