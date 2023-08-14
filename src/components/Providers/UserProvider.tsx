@@ -37,7 +37,9 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
 
         localFetchedRef.current = true;
         setIsUserFetched();
-      } else if (!token && usernameParam) {
+      }
+      // If user isn't authed and username query string is present
+      else if (!token && usernameParam) {
         guestSignIn(usernameParam)
           .then(() => {})
           .catch(err => {
@@ -46,7 +48,9 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
 
         localFetchedRef.current = true;
         setIsUserFetched();
-      } else if (!token && tokenParam) {
+      }
+      // If user isn't authed and Guild login query string is present
+      else if (!token && tokenParam) {
         guildSignIn(guildId, tokenParam)
           .then(() => {})
           .catch(err => {

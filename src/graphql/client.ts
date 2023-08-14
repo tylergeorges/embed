@@ -14,7 +14,14 @@ const subClient = new SubscriptionClient(WS_URL, {
   reconnectionAttempts: 3
 });
 
-export const getToken = () => localStorage.getItem('token') ?? '';
+export const getToken = () => {
+  try {
+    return localStorage.getItem('token') ?? '';
+  } catch (err) {
+    console.error(err);
+    return '';
+  }
+};
 
 export const client = createClient({
   url: GRAPHQL_URL,
