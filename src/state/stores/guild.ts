@@ -1,5 +1,5 @@
 import { Action, Computed, action, computed } from 'easy-peasy';
-import { Category, Channel, GuildSettings } from '@graphql/graphql';
+import { Category, Channel, GuildSettings, Mention } from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
 import { APIChannel } from 'discord-api-types/v10';
 
@@ -18,6 +18,10 @@ export type GuildChannels = {
   [channelId: string]: Channel | APIChannel;
 };
 
+type GuildMembers = {
+  [memberId: string]: Mention & { username: string };
+};
+
 export interface GuildStore {
   guildChannels: Computed<GuildStore, GuildChannels>;
   data?: IGuild;
@@ -27,6 +31,7 @@ export interface GuildStore {
   currentThread: Channel | undefined;
   currentChannel: { name: string; topic?: string | null } | undefined;
   refetchGuild: boolean;
+  members?: GuildMembers;
 
   setData: Action<GuildStore, IGuild>;
   setSettings: Action<GuildStore, GuildSettings>;
@@ -34,6 +39,8 @@ export interface GuildStore {
   setCurrentThread: Action<GuildStore, Channel>;
   setCurrentChannel: Action<GuildStore, string>;
   setRefetchGuild: Action<GuildStore, boolean>;
+
+  addMember: Action<GuildStore, Mention>;
 }
 
 const guild: GuildStore = {
@@ -44,6 +51,7 @@ const guild: GuildStore = {
   currentThread: undefined,
   currentChannel: undefined,
   refetchGuild: false,
+  members: undefined,
 
   guildChannels: computed(state => {
     if (!state.channels) return {};
@@ -93,6 +101,19 @@ const guild: GuildStore = {
       const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
 
       state.channels = sortedChannels;
+    }
+  }),
+
+  addMember: action((state, payload) => {
+    if (!state.members) {
+      state.members = {};
+    }
+
+    if (!state.members[payload.id]) {
+      state.members[payload.id] = {
+        ...payload,
+        username: payload.name
+      };
     }
   }),
 

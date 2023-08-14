@@ -1,11 +1,13 @@
+/* eslint-disable no-continue */
 import { useQuery } from 'urql';
 import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
-import { MessagesQueryQueryVariables, BaseMessageFragment } from '@graphql/graphql';
+import { MessagesQueryQueryVariables, BaseMessageFragment, Message } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
-import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
+import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 import { messagesQuery } from '@hooks/messagesQuery';
 import { StateMessages } from 'types/messages.types';
+import { useStoreActions } from '@state';
 
 type MessageState = {
   groupedMessages: APIMessage[][];
@@ -34,6 +36,7 @@ export const useMessages = ({
   });
 
   const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
+  const addMember = useStoreActions(state => state.guild.addMember);
 
   const [{ data }, fetchHook] = useQuery({
     query: messagesQuery,
@@ -42,6 +45,18 @@ export const useMessages = ({
 
   const isReady = data?.channelV2.id === channel;
 
+  const getMentionedMembers = (msgs: Message[]) => {
+    for (const msg of msgs) {
+      const { mentions } = msg;
+
+      if (!mentions.length) continue;
+
+      for (const member of mentions) {
+        addMember(member);
+      }
+    }
+  };
+
   useEffect(() => {
     if (variables.channel !== channel || variables.threadId !== threadId) {
       setMessages([]);
@@ -49,7 +64,7 @@ export const useMessages = ({
     }
 
     // @ts-expect-error
-    const apiMsgs = data?.channelV2?.messageBunch?.messages ?? [];
+    const apiMsgs: Message[] = data?.channelV2?.messageBunch?.messages ?? [];
     const isReadyWithMessages =
       isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
 
@@ -60,6 +75,7 @@ export const useMessages = ({
       if (isReadyWithMessages) {
         setNewMessageGroupLength(groupMessages(msgs).length);
 
+        getMentionedMembers(msgs);
         setMessages(prev => [...msgs, ...prev]);
       }
     }

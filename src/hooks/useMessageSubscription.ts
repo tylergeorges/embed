@@ -32,6 +32,7 @@ export const useMessageSubscription = ({
     (prev, data) => {
       const message = data.messageV2 as BaseMessageFragment;
 
+      console.log(message);
       if (message) {
         setMessages(prev => [...prev, message]);
       }
