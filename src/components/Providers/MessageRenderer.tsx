@@ -9,6 +9,7 @@ import { convertToDiscordMember } from '@util/convertToDiscord/convertToDiscordM
 import { convertChannelToDiscord } from '@util/convertToDiscord/convertChannelToDiscord';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { Channel } from '@graphql/graphql';
+import { convertGuild } from '@util/convertToDiscord/convertGuild';
 
 const MessageRendererRoot = styled('div', {
   height: '100%',
@@ -77,9 +78,7 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
       messageButtons={() => []}
       currentUser={() => (user !== undefined ? convertUserToDiscord(user) : null)}
       resolveChannel={id => convertChannelToDiscord(guildChannels[id] as Channel)}
-      // @ts-expect-error
-      // Guild type mismatch
-      resolveGuild={guild}
+      resolveGuild={() => (guild ? convertGuild(guild) : null)}
       resolveMember={resolveMember}
       resolveRole={resolveRole}
       resolveUser={resolveUser}
