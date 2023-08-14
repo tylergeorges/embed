@@ -1,7 +1,13 @@
 import { API_URL, Endpoints } from '@lib/api/url';
 import axios from 'axios';
 import { DiscordUser } from 'types/user.types';
-import { APIGuestResponse, APIGuildResponse } from './api.types';
+import {
+  APIGuestResponse,
+  APIGuildResponse,
+  GuestLoginArgs,
+  GuildLoginArgs,
+  LatestProfileArgs
+} from './api.types';
 
 interface APIRequestOptions {
   headers?: { [key: string]: any };
@@ -16,7 +22,7 @@ const axiosClient = axios.create({
 });
 
 interface ApiReqArgs {
-  endPoint: string;
+  endpoint: string;
   method: 'GET' | 'POST';
   options?: APIRequestOptions;
   userToken?: string;
@@ -24,7 +30,7 @@ interface ApiReqArgs {
 }
 
 export async function apiRequest<T>({
-  endPoint,
+  endpoint,
   method,
   userToken,
   options = {}
@@ -36,7 +42,7 @@ export async function apiRequest<T>({
   return axiosClient
     .request({
       method,
-      url: endPoint,
+      url: endpoint,
       headers,
       data: options.payload ?? {}
     })
@@ -44,23 +50,23 @@ export async function apiRequest<T>({
     .catch(err => err);
 }
 
-export const fetchDiscordUser = ({ userToken }: { userToken?: string }) =>
+export const fetchLatestProfile = ({ userToken }: LatestProfileArgs) =>
   apiRequest<DiscordUser>({
-    endPoint: Endpoints.auth.fetchLatestProfile,
+    endpoint: Endpoints.auth.fetchLatestProfile,
     method: 'GET',
     userToken
   });
 
-export const guestLogin = ({ username }: { username: string }) =>
+export const guestLogin = ({ username }: GuestLoginArgs) =>
   apiRequest<APIGuestResponse>({
-    endPoint: Endpoints.auth.guest,
+    endpoint: Endpoints.auth.guest,
     method: 'POST',
     options: { payload: { username } }
   });
 
-export const guildLogin = ({ guild, token }: { guild: string; token: string }) =>
+export const guildLogin = ({ guild, token }: GuildLoginArgs) =>
   apiRequest<APIGuildResponse>({
-    endPoint: Endpoints.auth.guild,
+    endpoint: Endpoints.auth.guild,
     method: 'POST',
     options: {
       payload: {

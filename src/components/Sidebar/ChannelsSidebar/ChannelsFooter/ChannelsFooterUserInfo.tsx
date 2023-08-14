@@ -1,9 +1,11 @@
 import * as Styles from '@components/Sidebar/ChannelsSidebar/ChannelsFooter/styles';
 import { LogoutButton } from '@icons/Buttons/LogoutButton';
 import { useStoreState } from '@state';
+import { useTranslation } from 'react-i18next';
 
 export const ChannelsFooterUserInfo = () => {
   const user = useStoreState(state => state.user.data);
+  const translate = useTranslation();
 
   if (!user) return <></>;
 
@@ -16,7 +18,9 @@ export const ChannelsFooterUserInfo = () => {
         src={user.avatarUrl}
         width={32}
         height={32}
-        alt={`@${user.username}'s Avatar.`}
+        alt={translate.t('avatar.alt.label', {
+          USERNAME: user.username
+        })}
       />
 
       <Styles.ChannelsFooterUserContentWrapper>

@@ -14,7 +14,7 @@ export const ThreadsButton = () => {
 
   const channel = guildChannels[channelId] as IChannel;
 
-  const threadsLen = channel.threads?.length;
+  const threadsLen = channel?.threads?.length ?? 0;
 
   const numOfThreads = threadsLen === 0 ? null : String(threadsLen);
 

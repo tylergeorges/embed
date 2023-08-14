@@ -57,3 +57,16 @@ export type HandleAuthMessageResponse<T extends AuthUser> =
       type: 'SUCCESS';
       data: AuthSuccessResponse<T>;
     };
+
+export interface GuestLoginArgs {
+  username: string;
+}
+
+export interface GuildLoginArgs {
+  guild: string;
+  token: string;
+}
+
+export interface LatestProfileArgs {
+  userToken?: string;
+}

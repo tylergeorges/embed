@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useStoreActions } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { fetchDiscordUser } from '@lib/api/apiRequest';
-import { useAuthAPI } from '@hooks/useAuthAPI';
+import { fetchLatestProfile } from '@lib/api/apiRequest';
+import { useAuthApi } from '@hooks/useAuthApi';
 
 interface UserProviderProps {
   setIsUserFetched: () => void;
@@ -14,7 +14,7 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
 
   const setUserData = useStoreActions(state => state.user.setUserData);
 
-  const { guestSignIn, guildSignIn } = useAuthAPI();
+  const { guestSignIn, guildSignIn } = useAuthApi();
 
   useEffect(() => {
     // Check if guildId is in URL to make sure pages loaded
@@ -22,7 +22,7 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
       const token = localStorage.getItem('token');
 
       if (token) {
-        fetchDiscordUser({ userToken: token })
+        fetchLatestProfile({ userToken: token })
           .then(user => {
             if (!user) {
               setUserData(undefined);

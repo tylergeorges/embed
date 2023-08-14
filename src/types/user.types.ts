@@ -11,7 +11,7 @@ export interface DiscordUser extends Omit<BaseUser, 'id'> {
   _id: string;
   discriminator: string;
   provider: 'Discord';
-  blockedUsers: DiscordUser[];
+  blockedUsers: string[];
 }
 
 export interface GuestUser extends BaseUser {

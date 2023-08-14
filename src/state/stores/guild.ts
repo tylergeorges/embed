@@ -137,7 +137,7 @@ const guild: GuildStore = {
   setCurrentChannel: action((state, payload) => {
     const currentChannel = state.guildChannels[payload];
 
-    if ('topic' in currentChannel) {
+    if (currentChannel && 'topic' in currentChannel) {
       state.currentChannel = {
         name: currentChannel.name as string,
         topic: currentChannel.topic as string

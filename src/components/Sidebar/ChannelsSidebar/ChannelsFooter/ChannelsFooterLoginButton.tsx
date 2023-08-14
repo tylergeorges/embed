@@ -1,7 +1,7 @@
 import * as Styles from '@components/Sidebar/ChannelsSidebar/ChannelsFooter/styles';
 import React, { useRef } from 'react';
 import { useStoreActions, useStoreState } from '@state';
-import { useAuthAPI } from '@hooks/useAuthAPI';
+import { useAuthApi } from '@hooks/useAuthApi';
 
 export const ChannelsFooterLoginButton = () => {
   const inProgressRef = useRef(false);
@@ -10,7 +10,7 @@ export const ChannelsFooterLoginButton = () => {
 
   const isGuestMode = useStoreState(state => state.guild.settings)?.guestMode;
 
-  const { discordSignIn } = useAuthAPI();
+  const { discordSignIn } = useAuthApi();
 
   const login = (e: React.SyntheticEvent) => {
     e.preventDefault();

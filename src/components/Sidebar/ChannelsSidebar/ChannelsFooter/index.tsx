@@ -9,17 +9,15 @@ export const ChannelsFooter = () => {
 
   const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
 
-  const hasUser = !!user;
-
   useEffect(() => {
-    if (hasUser) {
+    if (user) {
       setShowGuestFormModal(false);
     }
-  }, [hasUser, setShowGuestFormModal]);
+  }, [setShowGuestFormModal, user]);
 
   return (
     <Styles.ChannelsFooterWrapper>
-      {!hasUser ? <ChannelsFooterLoginButton /> : <ChannelsFooterUserInfo />}
+      {!user ? <ChannelsFooterLoginButton /> : <ChannelsFooterUserInfo />}
 
       <Styles.ChannelsFooterVersionWrapper>WidgetBot v3.8.6</Styles.ChannelsFooterVersionWrapper>
     </Styles.ChannelsFooterWrapper>
