@@ -56,6 +56,7 @@ export class AuthStore {
       this.locale = window.localStorage.getItem("locale") || "en";
       try {
         this.user = JSON.parse(window.localStorage.getItem('user'));
+        if (this.user) api.emit('alreadySignedIn', this.user)
       } catch (e) {
         this.logout();
         generalStore.needsUpdate = true;
@@ -95,6 +96,8 @@ export class AuthStore {
 
     this.user = undefined;
     this.token = undefined;
+
+    api.emit('signOut')
   }
 
   @action discordLogin() {
