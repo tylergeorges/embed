@@ -62,7 +62,7 @@ function Embed({embed, images}: EmbedProps) {
             <EmbedStyle.Provider>
               {embed.provider.url
                 ? (
-                  <a href={embed.provider.url} target="_blank" onClick={e => openLink(e, embed.provider.url)}>{embed.provider.name}</a>
+                  <a href={embed.provider.url} target="_blank" rel="noreferrer" onClick={e => openLink(e, embed.provider.url)}>{embed.provider.name}</a>
                 )
                 : (
                   embed.provider.name
@@ -77,7 +77,7 @@ function Embed({embed, images}: EmbedProps) {
               <EmbedStyle.AuthorName>
                 {embed.author.url
                 ? (
-                  <a href={embed.author.url} target="_blank" onClick={e => openLink(e, embed.author.url)}>{embed.author.name}</a>
+                  <a href={embed.author.url} target="_blank" rel="noreferrer" onClick={e => openLink(e, embed.author.url)}>{embed.author.name}</a>
                 )
                 : (
                   embed.author.name
@@ -88,7 +88,7 @@ function Embed({embed, images}: EmbedProps) {
           {embed.title && (
             embed.url !== null
               ? (
-                <EmbedStyle.TitleWithUrl href={embed.url} target="_blank" onClick={e => openLink(e, embed.url)}>
+                <EmbedStyle.TitleWithUrl href={embed.url} target="_blank" rel="noreferrer" onClick={e => openLink(e, embed.url)}>
                   {parseEmbedTitle(embed.title)}
                 </EmbedStyle.TitleWithUrl>
               )
