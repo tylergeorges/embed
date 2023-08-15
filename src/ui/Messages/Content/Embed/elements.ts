@@ -144,6 +144,10 @@ export namespace EmbedStyle {
   export const Provider = styled.div`
     font-size: 12px;
     color: ${props => props.theme.colors._primary.darken(0.1).string()};
+
+    a {
+      color: inherit;
+    }
   `;
 
   export const Title = styled.div`

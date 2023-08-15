@@ -45,6 +45,11 @@ export const Modal = types
       self.type = 'delete'
       self.thread = thread
     },
+    openLink(url) {
+      self.isOpen = true
+      self.type = 'link'
+      self.data = url
+    },
     close() {
       self.isOpen = false
     }
