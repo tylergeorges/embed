@@ -1,4 +1,3 @@
-/* eslint-disable no-alert */
 import { MessageRendererProvider } from '@widgetbot/message-renderer';
 import { styled } from '@stitches';
 import { APIChannel, APIRole, ChannelType } from 'discord-api-types/v10';
@@ -25,6 +24,7 @@ interface MessageRendererWrapperProps {
 
 export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
   const { router, guildId } = useAppRouter();
+
   const user = useStoreState(state => state.user.data);
 
   const guild = useStoreState(state => state.guild.data);
@@ -33,9 +33,7 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
   const members = useStoreState(state => state.guild.members);
 
   const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
-
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
-
   const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
 
   const resolveUser = (id: string) => {
@@ -43,6 +41,7 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
 
     return convertUserToDiscord(members[id]);
   };
+
   const resolveMember = (id: string) => {
     if (!members) return null;
 
@@ -76,7 +75,7 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
   return (
     <MessageRendererProvider
       messageButtons={() => []}
-      currentUser={() => (user !== undefined ? convertUserToDiscord(user) : null)}
+      currentUser={() => (user ? convertUserToDiscord(user) : null)}
       resolveChannel={id => convertChannelToDiscord(guildChannels[id] as Channel)}
       resolveGuild={() => (guild ? convertGuild(guild) : null)}
       resolveMember={resolveMember}
