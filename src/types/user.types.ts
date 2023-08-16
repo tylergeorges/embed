@@ -7,8 +7,7 @@ interface BaseUser {
   avatarUrl: string;
 }
 
-export interface DiscordUser extends Omit<BaseUser, 'id'> {
-  _id: string;
+export interface DiscordUser extends BaseUser {
   discriminator: string;
   provider: 'Discord';
   blockedUsers: string[];
