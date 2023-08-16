@@ -36,6 +36,13 @@ export const useMessageSubscription = ({
       const newMessage = data.messageV2 as Message;
 
       if (newMessage && !messages.find(m => m.id === newMessage.id)) {
+        console.log(
+          'newMessageSubscription: ',
+          newMessage,
+          prev,
+          messages.find(m => m.id === newMessage.id)
+        );
+
         if (!(newMessage.flags ?? 0 & (1 << 4))) {
           const optimisticIndex = getOptimisticIndex(messages, newMessage);
 
@@ -44,13 +51,16 @@ export const useMessageSubscription = ({
             updatedMessages.splice(optimisticIndex, 1);
             updatedMessages.concat(newMessage);
 
+            setMessages(updatedMessages);
             return data;
           }
 
           setMessages(msgs => [...msgs, newMessage]);
+          return data;
         }
+
+        setMessages(msgs => [...msgs, newMessage]);
       }
-      setMessages(msgs => [...msgs, newMessage]);
 
       return data;
     }

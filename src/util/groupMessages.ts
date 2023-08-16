@@ -20,7 +20,11 @@ function isGroupRecent(prevMessage: APIMessage, recentMessage: APIMessage, maxGr
 }
 
 function messageIsGroupable(prevMessage: APIMessage, recentMessage: APIMessage) {
-  if (prevMessage.author.id !== recentMessage.author.id) return false;
+  if (
+    prevMessage.author.id !== recentMessage.author.id ||
+    prevMessage.author.bot !== recentMessage.author.bot
+  )
+    return false;
 
   const isRecent = isGroupRecent(prevMessage, recentMessage, 7);
 
@@ -30,6 +34,7 @@ function messageIsGroupable(prevMessage: APIMessage, recentMessage: APIMessage) 
 
   return isRecent && recentMessage.type === MessageType.Default && sameAuthor;
 }
+
 /**
  * Takes an array of messages and groups them if the previous message was sent by
  * the same author.

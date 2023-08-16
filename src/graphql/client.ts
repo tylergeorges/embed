@@ -47,6 +47,11 @@ const cache = cacheExchange({
 
         if (newMessage) {
           newMessage.isGuest = true;
+          // @ts-expect-error
+          // Adds bot property to message
+          newMessage.bot = true;
+
+          console.log('cache exchanged newMessage ', newMessage);
 
           _cache
             .inspectFields('Query')
