@@ -109,15 +109,13 @@ export const GuestFormModal = () => {
 
   const user = useStoreState(state => state.user.data);
 
-  const hasUser = !!user;
-
   const hideForm = useCallback(() => {
     setShowGuestFormModal(false);
 
     isFetching.current = false;
   }, [setShowGuestFormModal]);
 
-  if (hasUser) return null;
+  if (user) return null;
 
   return (
     <Modal
