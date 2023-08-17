@@ -20,15 +20,10 @@ function isGroupRecent(prevMessage: APIMessage, recentMessage: APIMessage, maxGr
 }
 
 function messageIsGroupable(prevMessage: APIMessage, recentMessage: APIMessage) {
-  if (
-    prevMessage.author.id !== recentMessage.author.id ||
-    prevMessage.author.bot !== recentMessage.author.bot
-  )
-    return false;
-
   const isRecent = isGroupRecent(prevMessage, recentMessage, 7);
 
   const sameAuthor =
+    prevMessage.author.bot === recentMessage.author.bot &&
     prevMessage.author.id === recentMessage.author.id &&
     prevMessage.author.username === recentMessage.author.username;
 

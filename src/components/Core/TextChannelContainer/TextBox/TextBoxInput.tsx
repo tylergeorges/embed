@@ -25,7 +25,7 @@ export const TextBoxInput = ({
   handleInputSubmit,
   canSend
 }: TextBoxInputProps) => {
-  const translate = useTranslation();
+  const { t } = useTranslation();
   const currentThread = useStoreState(state => state.guild.currentThread);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
 
@@ -154,10 +154,10 @@ export const TextBoxInput = ({
   };
 
   const placeholder = canSend
-    ? translate.t('input.message', {
+    ? t('input.message', {
         CHANNEL: channelIsThread ? currentThread?.name : currentChannel?.name
       })
-    : 'You do not have permission to send messages in this channel.';
+    : t('input.noperms');
 
   return (
     <Styles.TextBoxInputWrapper canSend={canSend}>

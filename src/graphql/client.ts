@@ -27,15 +27,12 @@ const subClient = new SubscriptionClient(WS_URL, {
 });
 
 export const getToken = () => {
-  let token: string = '';
-
   try {
-    token = localStorage.getItem('token') ?? '';
+    return localStorage.getItem('token') ?? '';
   } catch (err) {
     console.error(err);
+    return '';
   }
-
-  return token;
 };
 
 const cache = cacheExchange({

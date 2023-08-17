@@ -1,7 +1,7 @@
 import { Modal } from '@components/Overlays/Modal';
 import { GuestFormInput } from '@components/Overlays/Modal/GuestFormModal/GuestFormInput';
 import * as Styles from '@components/Overlays/Modal/GuestFormModal/styles';
-import { useAuthAPI } from '@hooks/useAuthAPI';
+import { useAuthApi } from '@hooks/useAuthApi';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -10,7 +10,7 @@ interface GuestFormProps {
 }
 
 const GuestForm = ({ hideForm }: GuestFormProps) => {
-  const { guestSignIn, discordSignIn } = useAuthAPI();
+  const { guestSignIn, discordSignIn } = useAuthApi();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [username, setUsername] = useState('');
@@ -19,12 +19,6 @@ const GuestForm = ({ hideForm }: GuestFormProps) => {
   const showGuestFormModal = useStoreState(state => state.ui.showGuestFormModal);
 
   const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
-
-  // const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
-
-  const discordLoginCB = () => {
-    discordSignIn();
-  };
 
   useEffect(() => {
     if (!showGuestFormModal) {
@@ -96,7 +90,7 @@ const GuestForm = ({ hideForm }: GuestFormProps) => {
       <Styles.GuestFormDiscordAuth>
         <Styles.GuestFormDiscordContent>
           Discord account?
-          <Styles.GuestFormDiscordAuthButton onClick={discordLoginCB}>
+          <Styles.GuestFormDiscordAuthButton onClick={discordSignIn}>
             {' '}
             Log in
           </Styles.GuestFormDiscordAuthButton>
@@ -115,15 +109,13 @@ export const GuestFormModal = () => {
 
   const user = useStoreState(state => state.user.data);
 
-  const hasUser = !!user;
-
   const hideForm = useCallback(() => {
     setShowGuestFormModal(false);
 
     isFetching.current = false;
   }, [setShowGuestFormModal]);
 
-  if (hasUser) return null;
+  if (user) return null;
 
   return (
     <Modal

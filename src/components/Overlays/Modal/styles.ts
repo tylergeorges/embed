@@ -159,7 +159,8 @@ export const ModalContainer = styled.withConfig({
   flexDirection: 'column',
   justifyContent: 'flex-start',
   textAlign: 'left',
-  // @ts-ignore
+  // ignoring this error because if we dont access the value property it outputs incorrect values.
+  // @ts-expect-error
   paddingX: theme.space.xxl.value,
   paddingY: theme.space.lg,
 
@@ -167,7 +168,6 @@ export const ModalContainer = styled.withConfig({
 
   pointerEvents: 'all',
   backgroundColor: theme.colors.background,
-  // zIndex: theme.zIndices.modal,
   position: 'relative',
   zIndex: theme.zIndices.negative,
 

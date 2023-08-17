@@ -108,7 +108,7 @@ export const ChannelHeaderTopic = styled.withConfig({
 })('div', {
   margin: 0,
   // ignoring this error because if we dont access the value property it outputs incorrect values.
-  // @ts-ignore
+  // @ts-expect-error
   paddingX: theme.space.sm.value,
 
   color: theme.colors.textMuted,

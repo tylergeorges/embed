@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useStoreActions } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { fetchDiscordUser } from '@lib/api/apiRequest';
-import { useAuthAPI } from '@hooks/useAuthAPI';
+import { fetchLatestProfile } from '@lib/api/apiRequest';
+import { useAuthApi } from '@hooks/useAuthApi';
 
 interface UserProviderProps {
   setIsUserFetched: () => void;
@@ -14,7 +14,7 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
 
   const setUserData = useStoreActions(state => state.user.setUserData);
 
-  const { guestSignIn, guildSignIn } = useAuthAPI();
+  const { guestSignIn, guildSignIn } = useAuthApi();
 
   useEffect(() => {
     // Check if guildId is in URL to make sure pages loaded
@@ -22,7 +22,7 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
       const token = localStorage.getItem('token');
 
       if (token) {
-        fetchDiscordUser({ userToken: token })
+        fetchLatestProfile({ userToken: token })
           .then(user => {
             if (!user) {
               setUserData(undefined);
@@ -37,25 +37,27 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
 
         localFetchedRef.current = true;
         setIsUserFetched();
-      } else if (!token && usernameParam) {
-        guestSignIn(usernameParam)
-          .then(() => {})
-          .catch(err => {
-            console.error(err);
-          });
+      }
+      // If user isn't authed and username query string is present
+      else if (!token && usernameParam) {
+        guestSignIn(usernameParam).catch(err => {
+          console.error(err);
+        });
 
         localFetchedRef.current = true;
         setIsUserFetched();
-      } else if (!token && tokenParam) {
-        guildSignIn(guildId, tokenParam)
-          .then(() => {})
-          .catch(err => {
-            console.error(err);
-          });
+      }
+      // If user isn't authed and Guild login query string is present
+      else if (!token && tokenParam) {
+        guildSignIn(guildId, tokenParam).catch(err => {
+          console.error(err);
+        });
 
         localFetchedRef.current = true;
         setIsUserFetched();
-      } else if (!token && !tokenParam && !usernameParam) {
+      }
+      // If not authed and no auth query string is provided
+      else if (!token && !tokenParam && !usernameParam) {
         localFetchedRef.current = true;
         setIsUserFetched();
       }

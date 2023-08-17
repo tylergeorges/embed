@@ -11,7 +11,7 @@ export default function DataProvider({ children }: DataProviderProps) {
   const [isGuildFetched, setIsGuildFetched] = useState(false);
   const [isUserFetched, setIsUserFetched] = useState(false);
 
-  const isFetching = !isUserFetched || !isGuildFetched;
+  const isFetched = isUserFetched && isGuildFetched;
 
   const setGuildFetchedCB = useCallback(() => {
     if (!isGuildFetched) {
@@ -29,7 +29,7 @@ export default function DataProvider({ children }: DataProviderProps) {
     <>
       <UserProvider setIsUserFetched={setUserFetchedCB} />
       <GuildProvider setIsGuildFetched={setGuildFetchedCB} />
-      {isFetching ? <Loading /> : children}
+      {isFetched ? children : <Loading />}
     </>
   );
 }

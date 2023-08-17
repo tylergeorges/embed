@@ -3,22 +3,13 @@ import React, { memo } from 'react';
 import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
 import { useStoreState } from '@state';
 import { TextChannelContainer } from '@components/Core/TextChannelContainer';
-import { MessageRendererProvider } from '@widgetbot/message-renderer';
-import { styled } from '@stitches';
-import { APIChannel } from 'discord-api-types/v10';
 import * as Styles from '@components/Core/styles';
-import { svgUrls } from '@svg-assets';
 import { useContextMenu } from '@hooks/useContextMenu';
 import dynamic from 'next/dynamic';
 import { GuestFormModal } from '@components/Overlays/Modal/GuestFormModal';
-
-const MessageRendererRoot = styled('div', {
-  height: '100%',
-  width: '100%',
-  '*': {
-    fontFamily: 'GgSans'
-  }
-});
+import { styled } from '@stitches';
+import { MessageRendererProvider } from '@widgetbot/message-renderer';
+import { svgUrls } from '@svg-assets';
 
 // dynamic imports since they are conditionally rendered, helps with bundle size
 const ChannelTopicModal = dynamic(() =>
@@ -35,6 +26,14 @@ const ContextMenu = dynamic(() =>
   import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
 );
 
+const MessageRendererRoot = styled('div', {
+  height: '100%',
+  width: '100%',
+  '*': {
+    fontFamily: 'GgSans'
+  }
+});
+
 function GuildChannel() {
   const { disableBrowserMenu } = useContextMenu();
 
@@ -42,7 +41,6 @@ function GuildChannel() {
 
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);
   const showTopicModal = useStoreState(state => state.ui.showTopicModal);
-
   const guildChannels = useStoreState(state => state.guild.guildChannels);
 
   return (

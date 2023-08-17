@@ -10,7 +10,7 @@ export const ContextMenuWrapper = styled.withConfig({
   minWidth: 188,
   maxWidth: 320,
 
-  // @ts-ignore
+  // @ts-expect-error
   // We access the value property directly so the proper size gets applied
   paddingY: theme.space.xs.value,
   paddingX: theme.space.sm,
@@ -36,8 +36,7 @@ export const ContextMenuItem = styled.withConfig({
   width: '100%',
   marginY: theme.space.xs,
   paddingX: theme.space.sm,
-
-  // @ts-ignore
+  // @ts-expect-error
   // We access the value property directly so the proper size gets applied
   paddingY: theme.space.xs.value,
 

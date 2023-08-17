@@ -1,8 +1,7 @@
 import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
-
 import { useStoreState } from '@state';
 import { useCallback, useState } from 'react';
-import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
+import { MessagesListRenderer } from '@components/Core/VirtualLists/MessagesListRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
@@ -77,7 +76,7 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
         '@small': true
       }}
     >
-      <MessageRenderer
+      <MessagesListRenderer
         startReached={loadMoreMessages}
         messages={groupedMessages}
         isReady={isReady}

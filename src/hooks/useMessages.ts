@@ -1,23 +1,17 @@
 /* eslint-disable no-bitwise */
+/* eslint-disable no-continue */
 import { useQuery } from 'urql';
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
-import {
-  MessagesQueryQueryVariables,
-  // @ts-ignore
-  MessageFragmentFragment,
-  BaseMessageFragment,
-  Message
-} from '@graphql/graphql';
+import { MessagesQueryQueryVariables, BaseMessageFragment, Message } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
-import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
+import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 import { messagesQuery } from '@hooks/messagesQuery';
 import { StateMessages } from 'types/messages.types';
 import { MessagesQuery } from '@graphql/client';
 import { getOptimisticIndex } from '@util/getOptimisticIndex';
 
 type MessageState = {
-  messages: MessageFragmentFragment[];
   groupedMessages: APIMessage[][];
   firstItemIndex: number;
 };
@@ -98,7 +92,6 @@ export const useMessages = ({
 
   let messageState: MessageState;
 
-  // @ts-ignore
   // eslint-disable-next-line prefer-const
   messageState = useMemo(() => {
     let firstItemIndex = 100_000;

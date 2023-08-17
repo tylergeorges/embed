@@ -3,6 +3,7 @@ import { graphql } from '@graphql/gql';
 import { useQuery } from 'urql';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
+import { Guild } from '@graphql/graphql';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -59,9 +60,34 @@ export const guildDocument = graphql(/* GraphQL */ `
     guild(id: $id) {
       id
       name
+      icon
+      memberCount
+      rulesChannelId
+      banner
+      splash
+      partnered
+      verified
+      tier
+
       settings {
         readonly
         guestMode
+      }
+
+      roles {
+        id
+        name
+        position
+        color
+        icon
+        unicodeEmoji
+      }
+
+      emojis {
+        id
+        name
+        animated
+        available
       }
 
       channels {
@@ -72,10 +98,13 @@ export const guildDocument = graphql(/* GraphQL */ `
         canSend
         __typename
 
-        threads {
+        ... on ThreadChannel {
           id
+          type
           name
+          parentId
         }
+
         category {
           id
           name
@@ -86,14 +115,24 @@ export const guildDocument = graphql(/* GraphQL */ `
           topic
 
           threads {
-            id
+            ... on ThreadChannel {
+              id
+              type
+              name
+              parentId
+            }
           }
         }
         ... on AnnouncementChannel {
           topic
 
           threads {
-            id
+            ... on ThreadChannel {
+              id
+              type
+              name
+              parentId
+            }
           }
         }
         ... on ForumChannel {
@@ -128,29 +167,32 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     const newToken = localStorage.getItem('token') ?? '';
 
     if (!guildId) {
-      //
-
-      router.push(`/channels/299881420891881473/355719584830980096`);
+      router.push(`/channels/299881420891881473/368427726358446110`);
     }
     // If auth state changed, refetch channels
     else if (shouldRefetchGuild) {
+      console.log('refetch guild', newToken);
       fetchHook({
         requestPolicy: 'network-only',
         fetchOptions: { headers: { Authorization: newToken } }
       });
+
       setRefetchGuild(false);
     }
     // Set guild data
     else if (data && !fetching) {
+      // Weird type error when casting
+      // @ts-expect-error
+      const guild = data.guild as Guild;
+
       // So guild data/settings only get set once
       if (!guildData && !guildSettings) {
-        setGuildData(data.guild);
+        setGuildData(guild);
 
-        // @ts-expect-error
-        setSettings(data.guild.settings);
+        setSettings(guild.settings);
       }
-      // @ts-expect-error
-      setChannels(data.guild.channels);
+
+      setChannels(guild.channels);
 
       setIsGuildFetched();
     }

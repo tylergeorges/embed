@@ -13,7 +13,7 @@ const MenuItem = ({ itemLabel, onClick }: MenuItemProps) => (
 );
 
 export const ContextMenu = () => {
-  const translate = useTranslation();
+  const { t } = useTranslation();
 
   const contextMenuData = useStoreState(state => state.ui.contextMenuData);
   const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
@@ -33,7 +33,7 @@ export const ContextMenu = () => {
         top: contextMenuData.yPos
       }}
     >
-      <MenuItem itemLabel={translate.t('contextmenu.copylink')} onClick={copyToClipboard} />
+      <MenuItem itemLabel={t('contextmenu.copylink')} onClick={copyToClipboard} />
     </Styles.ContextMenuWrapper>
   );
 };

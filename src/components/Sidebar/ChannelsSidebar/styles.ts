@@ -79,7 +79,7 @@ export const ChannelNameWrapper = styled.withConfig({
   transition: 'max-height ease',
   transitionDuration: theme.transitions.defaultDuration,
 
-  // @ts-ignore
+  // @ts-expect-error
   paddingX: theme.space.sm.value,
   width: '100%',
 
@@ -94,8 +94,8 @@ export const ChannelNameWrapper = styled.withConfig({
         justifyItems: 'center',
         width: '100%',
         marginLeft: theme.space.xxl.value,
-
-        // @ts-ignore
+        // ignoring this error because if we dont access the value property it outputs incorrect values.
+        // @ts-expect-error
         paddingY: theme.space.xs.value
       }
     },
@@ -149,7 +149,8 @@ export const ChannelNameInner = styled.withConfig({
 
   userSelect: 'none',
 
-  // @ts-ignore
+  // ignoring this error because if we dont access the value property it outputs incorrect values.
+  // @ts-expect-error
   paddingX: theme.space.xxs.value,
   width: '100%',
   fontSize: theme.fontSizes.lg,

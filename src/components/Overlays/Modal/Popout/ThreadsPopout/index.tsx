@@ -11,7 +11,7 @@ interface ThreadsPopoutProps {
 }
 
 export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
-  const translate = useTranslation();
+  const { t } = useTranslation();
   const { channelId } = useAppRouter();
 
   const showThreadsModal = useStoreState(state => state.ui.showThreadsModal);
@@ -29,7 +29,7 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
   return (
     <>
       <Popout
-        title={translate.t('threads.label')}
+        title={t('threads.label')}
         TitleIcon="ThreadHash"
         isOpen={showThreadsModal}
         hideModal={hideThreadsModal}

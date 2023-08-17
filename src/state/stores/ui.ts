@@ -106,8 +106,6 @@ const ui: UIStore = {
     if (state.currentChannelYPos !== payload) {
       state.currentChannelYPos = payload;
     }
-
-    // state.initChannelYPos = payload;
   }),
 
   // Set initial channel Y position used for when we open

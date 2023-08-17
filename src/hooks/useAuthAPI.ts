@@ -1,5 +1,5 @@
 import { APIDiscordResponse, AuthResponse, HandleAuthMessageResponse } from '@lib/api/api.types';
-import { fetchDiscordUser, guestLogin, guildLogin } from '@lib/api/apiRequest';
+import { fetchLatestProfile, guestLogin, guildLogin } from '@lib/api/apiRequest';
 import { API_URL, Endpoints } from '@lib/api/url';
 import { useStoreActions } from '@state';
 import { useCallback, useEffect, useRef } from 'react';
@@ -9,7 +9,7 @@ interface WindowMessageEvent extends MessageEvent {
   data: APIDiscordResponse;
 }
 
-export const useAuthAPI = () => {
+export const useAuthApi = () => {
   const inProgressRef = useRef(false);
   const setUserData = useStoreActions(state => state.user.setUserData);
   const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
@@ -86,19 +86,18 @@ export const useAuthAPI = () => {
   );
 
   const receiveDiscordAuthMessage = useCallback(
-    async ({ data, source }: WindowMessageEvent) => {
+    ({ data, source }: WindowMessageEvent) => {
       source = source as Window;
 
+      source.close();
       const discordUserData = handleAuthMessage<DiscordUser>(data);
 
       if (!discordUserData) return;
 
-      source.close();
-
       if (discordUserData.type === 'ERROR') {
         console.error('Auhtenticating failed: ', discordUserData.message);
       } else {
-        fetchDiscordUser({ userToken: discordUserData.data.token })
+        fetchLatestProfile({ userToken: discordUserData.data.token })
           .then(user => {
             setUserData(user);
             window.removeEventListener('message', receiveDiscordAuthMessage);
