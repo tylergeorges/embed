@@ -36,7 +36,6 @@ export const IconRoot = styled.withConfig({
       },
 
       dark: {
-        // TODO: Find out why we need to access .value for it to work properly
         color: theme.colors.interactiveDefault
       }
     }
