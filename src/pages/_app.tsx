@@ -10,30 +10,46 @@ import '../i18n';
 import React from 'react';
 
 const globalStyles = globalCss({
-  '@font-face': {
-    fontFamily: 'GgSans',
-    src: 'url(/font/gg-sans-Regular.ttf)'
-  },
+  '@font-face': [
+    {
+      fontFamily: 'GgSans',
+      src: 'url(/font/gg-sans-Regular.ttf)',
+      fontWeight: '400'
+    },
+    {
+      fontFamily: 'GgSans',
+      src: 'url(/font/gg-sans-Medium.ttf)',
+      fontWeight: '500'
+    },
+    {
+      fontFamily: 'GgSans',
+      src: 'url(/font/gg-sans-Semibold.ttf)',
+      fontWeight: '600'
+    },
+    {
+      fontFamily: 'GgSans',
+      src: 'url(/font/gg-sans-Bold.ttf)',
+      fontWeight: '700'
+    }
+  ],
   html: {
     padding: 0,
     margin: 0,
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
+    fontFamily: 'GgSans',
     width: '100%',
     height: '100%',
     overflow: 'hidden',
-    backgroundColor: theme.colors.background,
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+
+    backgroundColor: theme.colors.background
   },
   body: {
     padding: 0,
     margin: 0,
-    fontFamily:
-      '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif',
+    fontFamily: 'GgSans',
     width: '100%',
     height: '100%',
-    color: 'white',
-    backgroundColor: theme.colors.background,
+    color: theme.colors.textPrimary,
     overflow: 'hidden',
     boxSizing: 'border-box'
   },
@@ -43,6 +59,7 @@ const globalStyles = globalCss({
   },
 
   '*, ::after, ::before': {
+    fontFamily: 'GgSans',
     boxSizing: 'inherit',
     scrollbarWidth: 'thin',
     scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.2)'

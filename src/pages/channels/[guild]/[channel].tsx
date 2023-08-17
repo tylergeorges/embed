@@ -13,7 +13,6 @@ import dynamic from 'next/dynamic';
 import GuildProvider from '@components/Providers/GuildProvider';
 
 const MessageRendererRoot = styled('div', {
-  '--fonts-main': 'GgSans',
   height: '100%',
   width: '100%'
 });

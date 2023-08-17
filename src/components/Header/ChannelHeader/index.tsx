@@ -24,7 +24,7 @@ export const ChannelHeader = () => {
         <Styles.ChannelNameTopicWrapper>
           {currentChannel ? (
             <>
-              <Icons icon="TextChannelHash" size="small" color="dark" />
+              <Icons icon="TextChannelHash" size="regular" color="channel" />
               <Styles.ChannelHeaderName>{currentChannel.name}</Styles.ChannelHeaderName>
               <Styles.ChannelHeaderTopic onClick={openTopicModal}>
                 {currentChannel.topic}

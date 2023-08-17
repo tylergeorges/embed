@@ -77,7 +77,7 @@ export const Backdrop = styled.withConfig({
       isMembersListOpen: true,
 
       css: {
-        zIndex: theme.zIndices.membersSidebarBackdrop,
+        zIndex: theme.zIndices.none,
         opacity: 1
       }
     },
@@ -396,6 +396,8 @@ export const ThreadsPopoutListHeader = styled.withConfig({
 
   fontSize: theme.fontSizes.sm,
   fontWeight: theme.fontWeights.bold,
+  textRendering: 'optimizeLegibility',
+  textTransform: 'uppercase',
 
   width: '100%',
   marginY: theme.space.lg

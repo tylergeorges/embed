@@ -44,12 +44,12 @@ export const ChannelsSidebar = () => {
         </Styles.GuildHeaderWrapper>
 
         <Styles.ChannelsChildrenWrapper>
-          <ChannelHighlighter />
           {categories
             .filter(category => category !== null)
             .map(category => (
               <Category category={category} key={category.id} />
             ))}
+          <ChannelHighlighter />
         </Styles.ChannelsChildrenWrapper>
       </Styles.ChannelsSidebarWrapper>
     </>
