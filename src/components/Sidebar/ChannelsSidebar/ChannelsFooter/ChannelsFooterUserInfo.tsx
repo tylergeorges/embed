@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 
 export const ChannelsFooterUserInfo = () => {
   const user = useStoreState(state => state.user.data);
-  const translate = useTranslation();
+  const { t } = useTranslation();
 
   if (!user) return <></>;
 
@@ -18,7 +18,7 @@ export const ChannelsFooterUserInfo = () => {
         src={user.avatarUrl}
         width={32}
         height={32}
-        alt={translate.t('avatar.alt.label', {
+        alt={t('avatar.alt.label', {
           USERNAME: user.username
         })}
       />
