@@ -119,30 +119,30 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     const newToken = localStorage.getItem('token') ?? '';
 
     if (!guildId) {
-      //
-
       router.push(`/channels/299881420891881473/368427726358446110`);
     }
     // If auth state changed, refetch channels
     else if (shouldRefetchGuild) {
+      console.log('refetch guild', newToken);
       fetchHook({
         requestPolicy: 'network-only',
         fetchOptions: { headers: { Authorization: newToken } }
       });
+
       setRefetchGuild(false);
     }
     // Set guild data
     else if (data && !fetching) {
+      const guild = data.guild as Guild;
+
       // So guild data/settings only get set once
       if (!guildData && !guildSettings) {
-        const guild = data.guild as Guild;
-
         setGuildData(guild);
 
         setSettings(guild.settings);
-
-        setChannels(guild.channels);
       }
+
+      setChannels(guild.channels);
 
       setIsGuildFetched();
     }

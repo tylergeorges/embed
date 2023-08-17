@@ -86,14 +86,13 @@ export const useAuthApi = () => {
   );
 
   const receiveDiscordAuthMessage = useCallback(
-    async ({ data, source }: WindowMessageEvent) => {
+    ({ data, source }: WindowMessageEvent) => {
       source = source as Window;
 
+      source.close();
       const discordUserData = handleAuthMessage<DiscordUser>(data);
 
       if (!discordUserData) return;
-
-      source.close();
 
       if (discordUserData.type === 'ERROR') {
         console.error('Auhtenticating failed: ', discordUserData.message);
