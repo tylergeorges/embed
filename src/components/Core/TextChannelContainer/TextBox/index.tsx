@@ -9,9 +9,10 @@ import { useAppRouter } from '../../../../hooks/useAppRouter';
 
 interface TextBoxProps {
   channelIsThread?: boolean;
+  canSend: boolean;
 }
 
-export const TextBox = ({ channelIsThread }: TextBoxProps) => {
+export const TextBox = ({ channelIsThread, canSend }: TextBoxProps) => {
   const fileAttachmentRef = useRef<HTMLInputElement>(null);
   const { threadId } = useAppRouter();
 
@@ -41,29 +42,37 @@ export const TextBox = ({ channelIsThread }: TextBoxProps) => {
   );
 
   return (
-    <Styles.TextBoxWrapper>
-      <Styles.TextBoxForm id="text-box_form">
-        <Styles.TextBoxButtonWrapper>
-          <input
-            hidden
-            type="file"
-            onChange={addAttachment}
-            ref={fileAttachmentRef}
-            form="text-box_form"
-          />
-          <IconButton
-            tooltipDisabled
-            onClick={attachmentButtonClick}
-            isActive={false}
-            icon="AddAttachment"
-          />
-        </Styles.TextBoxButtonWrapper>
+    <Styles.TextBoxWrapper canSend={canSend}>
+      <Styles.TextBoxForm id="text-box_form" canSend={canSend}>
+        {canSend && (
+          <Styles.TextBoxButtonWrapper>
+            <input
+              hidden
+              type="file"
+              onChange={addAttachment}
+              ref={fileAttachmentRef}
+              form="text-box_form"
+            />
+            <IconButton
+              tooltipDisabled
+              onClick={attachmentButtonClick}
+              isActive={false}
+              icon="AddAttachment"
+            />
+          </Styles.TextBoxButtonWrapper>
+        )}
 
-        <TextBoxInput channelIsThread={channelIsThread} handleInputSubmit={handleInputSubmit} />
+        <TextBoxInput
+          channelIsThread={channelIsThread}
+          handleInputSubmit={handleInputSubmit}
+          canSend={canSend}
+        />
 
-        <Styles.TextBoxButtonWrapper>
-          <EmojisButton />
-        </Styles.TextBoxButtonWrapper>
+        {canSend && (
+          <Styles.TextBoxButtonWrapper>
+            <EmojisButton />
+          </Styles.TextBoxButtonWrapper>
+        )}
       </Styles.TextBoxForm>
     </Styles.TextBoxWrapper>
   );

@@ -20,6 +20,9 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
+  const canSend = useStoreState(state => state.guild.currentChannel)?.canSend;
+  const user = useStoreState(state => state.user.data);
+
   const { channelId: channel, guildId: guild, threadId: thread } = useAppRouter();
 
   const threadId = channelIsThread ? thread : undefined;
@@ -81,7 +84,7 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
         firstItemIndex={firstItemIndex}
       />
 
-      <TextBox channelIsThread={channelIsThread} />
+      <TextBox channelIsThread={channelIsThread} canSend={!!canSend && !!user} />
     </Styles.MessageWrapper>
   );
 };

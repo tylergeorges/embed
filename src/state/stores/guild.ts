@@ -24,7 +24,7 @@ export interface GuildStore {
   channels?: Channel[];
   categories: Computed<GuildStore, Category[]>;
   currentThread: Channel | undefined;
-  currentChannel: { name: string; topic: string } | undefined;
+  currentChannel: { name: string; topic: string; canSend: boolean } | undefined;
   refetchGuild: boolean;
 
   setData: Action<GuildStore, IGuild>;
@@ -103,7 +103,13 @@ const guild: GuildStore = {
   setCurrentChannel: action((state, payload) => {
     const currentChannel = state.guildChannels[payload];
     // @ts-ignore
-    state.currentChannel = { name: currentChannel.name, topic: currentChannel.topic };
+    state.currentChannel = {
+      name: currentChannel.name,
+      // Topic exsists, type error
+      // @ts-expect-error
+      topic: currentChannel?.topic,
+      canSend: currentChannel.canSend
+    };
   })
 };
 

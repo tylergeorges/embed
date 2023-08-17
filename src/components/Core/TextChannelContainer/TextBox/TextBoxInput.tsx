@@ -13,13 +13,18 @@ type ModifierKeys = {
 };
 
 interface TextBoxInputProps {
+  canSend: boolean;
   handleInputSubmit: (content: string) => void;
   channelIsThread?: boolean;
 }
 
 const inputHeight = 21;
 
-export const TextBoxInput = ({ channelIsThread, handleInputSubmit }: TextBoxInputProps) => {
+export const TextBoxInput = ({
+  channelIsThread,
+  handleInputSubmit,
+  canSend
+}: TextBoxInputProps) => {
   const translate = useTranslation();
   const currentThread = useStoreState(state => state.guild.currentThread);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
@@ -148,26 +153,27 @@ export const TextBoxInput = ({ channelIsThread, handleInputSubmit }: TextBoxInpu
     }
   };
 
+  const placeholder = canSend
+    ? translate.t('input.message', {
+        CHANNEL: channelIsThread ? currentThread?.name : currentChannel?.name
+      })
+    : 'You do not have permission to send messages in this channel.';
+
   return (
-    <Styles.TextBoxInputWrapper>
+    <Styles.TextBoxInputWrapper canSend={canSend}>
       <Styles.TextInput
         onKeyUp={handleKeyUp}
         contentEditable
         onKeyDown={handleKeyDown}
         onInput={handleInputChange}
         ref={inputRef}
+        canSend={canSend}
         inputMode="text"
       />
 
       <input hidden type="text" form="text-box_form" value={content} />
 
-      {showPlaceHolder && (
-        <Styles.TextBoxPlaceholder>
-          {translate.t('input.message', {
-            CHANNEL: channelIsThread ? currentThread?.name : currentChannel?.name
-          })}
-        </Styles.TextBoxPlaceholder>
-      )}
+      {showPlaceHolder && <Styles.TextBoxPlaceholder>{placeholder}</Styles.TextBoxPlaceholder>}
     </Styles.TextBoxInputWrapper>
   );
 };

@@ -170,7 +170,15 @@ export const TextBoxWrapper = styled.withConfig({
   paddingY: theme.space.sm,
   marginBottom: theme.space.lg,
 
-  userSelect: 'none'
+  userSelect: 'none',
+
+  variants: {
+    canSend: {
+      false: {
+        cursor: 'not-allowed'
+      }
+    }
+  }
 });
 
 export const TextBoxForm = styled.withConfig({
@@ -182,7 +190,15 @@ export const TextBoxForm = styled.withConfig({
   width: '100%',
   maxHeight: '50vh',
 
-  overflowY: 'auto'
+  overflowY: 'auto',
+
+  variants: {
+    canSend: {
+      false: {
+        cursor: 'not-allowed'
+      }
+    }
+  }
 });
 
 export const TextBoxButtonWrapper = styled.withConfig({
@@ -208,14 +224,26 @@ export const TextBoxInputWrapper = styled.withConfig({
   width: '100%',
   height: '100%',
 
-  marginBottom: theme.space.md
+  marginBottom: theme.space.md,
+
+  variants: {
+    canSend: {
+      false: {
+        pointerEvents: 'none',
+        cursor: 'no-drop'
+      },
+
+      true: {
+        cursor: 'text'
+      }
+    }
+  }
 });
 
 export const TextInput = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'textbox-input'
 })('div', {
-  cursor: 'text',
   border: 'none',
   backgroundColor: 'transparent',
 
@@ -232,7 +260,20 @@ export const TextInput = styled.withConfig({
   textAlign: 'left',
 
   outline: 'none',
-  fontSize: theme.fontSizes.lg
+  fontSize: theme.fontSizes.lg,
+
+  variants: {
+    canSend: {
+      false: {
+        pointerEvents: 'none',
+        cursor: 'not-allowed'
+      },
+
+      true: {
+        cursor: 'text'
+      }
+    }
+  }
 });
 
 export const TextBoxPlaceholder = styled.withConfig({
