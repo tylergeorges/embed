@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useStoreActions } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { fetchLatestProfile } from '@lib/api/apiRequest';
-import { useAuthApi } from '@hooks/useAuthApi';
+import { useAuthApi } from '@hooks/useAuthAPI';
 
 interface UserProviderProps {
   setIsUserFetched: () => void;

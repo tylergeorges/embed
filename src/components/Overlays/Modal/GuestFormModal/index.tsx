@@ -1,7 +1,7 @@
 import { Modal } from '@components/Overlays/Modal';
 import { GuestFormInput } from '@components/Overlays/Modal/GuestFormModal/GuestFormInput';
 import * as Styles from '@components/Overlays/Modal/GuestFormModal/styles';
-import { useAuthApi } from '@hooks/useAuthApi';
+import { useAuthApi } from '@hooks/useAuthAPI';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
