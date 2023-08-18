@@ -8,19 +8,19 @@ interface ChannelIconProps {
 export const ChannelIcon = ({ channelType }: ChannelIconProps) => {
   switch (channelType) {
     case ChannelType.GuildText: {
-      return <Icons icon="TextChannelHash" color="dark" size="small" />;
+      return <Icons icon="TextChannelHash" color="dark" size="sm" />;
     }
 
     case ChannelType.GuildAnnouncement: {
-      return <Icons icon="NewsChannelIcon" color="dark" size="small" />;
+      return <Icons icon="NewsChannelIcon" color="dark" size="sm" />;
     }
 
     case ChannelType.GuildForum: {
-      return <Icons icon="FourmChannelIcon" color="dark" size="small" />;
+      return <Icons icon="FourmChannelIcon" color="dark" size="sm" />;
     }
 
     default: {
-      return <Icons icon="TextChannelHash" color="dark" size="small" />;
+      return <Icons icon="TextChannelHash" color="dark" size="sm" />;
     }
   }
 };
