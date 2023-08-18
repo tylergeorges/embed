@@ -4,7 +4,7 @@
  * KEY **MUST** be the same as the actual object key.
  */
 const VARIABLES: Record<string, [string, string]> = {
-  CUSTOM_SERVER_ENDPOINT: ['{{CUSTOM_SERVER_ENDPOINT}}', 's-e.widgetbot.io']
+  CUSTOM_SERVER_ENDPOINT: ['{{CUSTOM_SERVER_ENDPOINT}}', 's-staging.widgetbot.io']
 };
 
 export function getEnvVar(key: string): string | undefined {

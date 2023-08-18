@@ -7,5 +7,5 @@ interface CloseButtonProps {
 }
 
 export const CloseButton = ({ onClick }: CloseButtonProps) => (
-  <IconButton icon="Close" tooltipDisabled onClick={onClick} size="sm" color="lighter" />
+  <IconButton icon="Close" tooltipDisabled onClick={onClick} size="sm" color="light" />
 );
