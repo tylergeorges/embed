@@ -4,7 +4,7 @@
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {
-        "url": "https://s-staging.widgetbot.io/api/graphql",
+        "url": "https://s-e.widgetbot.io/api/graphql",
         "headers": {
           "user-agent": "TS GraphQL"
         },
