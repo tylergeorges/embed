@@ -19,7 +19,6 @@
     "@types/lodash.throttle": "^4.1.7",
     "@urql/exchange-auth": "^2.1.6",
     "@widgetbot/message-renderer": "^1.2.5",
-    "axios": "^1.4.0",
     "discord-api-types": "^0.37.47",
     "easy-peasy": "^5.2.0",
     "graphql": "^16.7.1",

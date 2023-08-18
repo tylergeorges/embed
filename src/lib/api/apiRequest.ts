@@ -1,5 +1,4 @@
 import { API_URL, Endpoints } from '@lib/api/url';
-import axios from 'axios';
 import { DiscordUser } from 'types/user.types';
 import {
   APIGuestResponse,
@@ -17,10 +16,6 @@ interface APIRequestOptions {
   authDisabled?: boolean;
 }
 
-const axiosClient = axios.create({
-  baseURL: API_URL
-});
-
 interface ApiReqArgs {
   endpoint: string;
   method: 'GET' | 'POST';
@@ -37,16 +32,28 @@ export async function apiRequest<T>({
 }: ApiReqArgs): Promise<T> {
   const token = userToken ?? '';
 
-  const headers = { ...options.headers, Authorization: token } ?? {};
+  const headers =
+    {
+      ...options.headers,
+      Authorization: token,
+      'Content-Type': 'application/json'
+    } ?? {};
 
-  return axiosClient
-    .request({
-      method,
-      url: endpoint,
-      headers,
-      data: options.payload ?? {}
+  return fetch(`${API_URL}${endpoint}`, {
+    headers,
+    method,
+    mode: 'cors',
+    body: JSON.stringify(options.payload)
+  })
+    .then(res => {
+      console.log(res);
+      return res.json();
     })
-    .then(res => res.data)
+    .then((data: T) => {
+      console.log(data);
+
+      return data;
+    })
     .catch(err => err);
 }
 
