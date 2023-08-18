@@ -74,6 +74,8 @@ const stitches = createStitches({
       backgroundOverlayChat:
         'linear-gradient(rgb($backgroundOverlayColor / $backgroundOpacityChat), rgb($backgroundOverlayColor / $backgroundOpacityChat)) fixed 0 0/cover, hsl($backgroundHsl / 1) fixed 0 0/cover',
 
+      chatInputBackground: 'rgba(255, 255, 255, 0.03)',
+
       primaryOpacity10: 'rgba(255, 255, 255, 0.1)',
       primaryOpacity20: 'rgba(255, 255, 255, 0.2)',
       primaryOpacity30: 'rgba(255, 255, 255, 0.3)',

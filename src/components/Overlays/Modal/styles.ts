@@ -240,10 +240,6 @@ export const ModalHeaderContent = styled.withConfig({
 
       xxl: {
         fontSize: theme.fontSizes.xxl.value
-      },
-
-      xxxl: {
-        fontSize: theme.fontSizes.xxxl.value
       }
     },
 
