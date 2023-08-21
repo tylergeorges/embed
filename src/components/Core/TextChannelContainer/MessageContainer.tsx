@@ -1,13 +1,11 @@
 import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
 import { useStoreState } from '@state';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import { MessageListRenderer } from '@components/Core/VirtualLists/MessageListRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
 import { StateMessages } from 'types/messages.types';
-import { MessagesQuery, client } from '@graphql/client';
-import { moreMessagesQuery } from '@hooks/messagesQuery';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
@@ -26,7 +24,7 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
 
   const threadId = channelIsThread ? thread : undefined;
 
-  const { groupedMessages, isReady, firstItemIndex } = useMessages({
+  const { groupedMessages, isReady, firstItemIndex, loadMoreMessages } = useMessages({
     guild,
     channel,
     messages,
@@ -41,31 +39,6 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
     setMessages,
     threadId
   });
-
-  const fetchMore = useCallback(
-    (before: string) => {
-      if (!isReady) return;
-
-      client
-        .executeQuery<MessagesQuery>({
-          query: moreMessagesQuery,
-          variables: { channel, guild, before, thread: threadId },
-          key: Number(before)
-        })
-        .then(res => {
-          if (!res.data || !res.data.channelV2) return;
-
-          const oldMessages = res.data.channelV2.messageBunch.messages;
-
-          setMessages(recent => [...oldMessages, ...recent]);
-        });
-    },
-    [channel, guild, isReady, threadId, setMessages]
-  );
-
-  const loadMoreMessages = useCallback(() => {
-    fetchMore(messages[0].id);
-  }, [fetchMore, messages]);
 
   return (
     <Styles.MessageWrapper

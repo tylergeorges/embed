@@ -1,14 +1,14 @@
 /* eslint-disable no-bitwise */
 /* eslint-disable no-continue */
 import { useQuery } from 'urql';
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { MessagesQueryQueryVariables, BaseMessageFragment, Message } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
-import { messagesQuery } from '@hooks/messagesQuery';
+import { messagesQuery, moreMessagesQuery } from '@hooks/messagesQuery';
 import { StateMessages } from 'types/messages.types';
-import { MessagesQuery } from '@graphql/client';
+import { MessagesQuery, client } from '@graphql/client';
 import { getOptimisticIndex } from '@util/getOptimisticIndex';
 
 type MessageState = {
@@ -88,6 +88,31 @@ export const useMessages = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isReady]);
 
+  const fetchMore = useCallback(
+    (before: string) => {
+      if (!isReady) return;
+
+      client
+        .executeQuery<MessagesQuery>({
+          query: moreMessagesQuery,
+          variables: { channel, guild, before, thread: threadId },
+          key: Number(before)
+        })
+        .then(res => {
+          if (!res.data || !res.data.channelV2) return;
+
+          const oldMessages = res.data.channelV2.messageBunch.messages;
+
+          setMessages(recent => [...oldMessages, ...recent]);
+        });
+    },
+    [channel, guild, isReady, threadId, setMessages]
+  );
+
+  const loadMoreMessages = useCallback(() => {
+    fetchMore(messages[0].id);
+  }, [fetchMore, messages]);
+
   let messageState: MessageState;
 
   // eslint-disable-next-line prefer-const
@@ -115,7 +140,7 @@ export const useMessages = ({
 
   return {
     ...messageState,
-
+    loadMoreMessages,
     newMessageGroupLength,
     isReady
   };
