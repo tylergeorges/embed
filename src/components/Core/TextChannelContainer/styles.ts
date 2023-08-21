@@ -201,8 +201,8 @@ export const TextBoxForm = styled.withConfig({
   displayName: 'textbox-form'
 })('form', {
   display: 'flex',
-  alignItems: 'center',
   justifyContent: 'center',
+  position: 'relative',
 
   width: '100%',
   maxHeight: '50vh',
@@ -226,7 +226,10 @@ export const TextBoxButtonWrapper = styled.withConfig({
 })('div', {
   position: 'sticky',
   display: 'flex',
-  alignItems: 'flex-start',
+  alignItems: 'center',
+  justifyContent: 'center',
+
+  paddingY: theme.space.xl,
 
   height: '100%',
 
@@ -237,11 +240,13 @@ export const TextBoxInputWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'textbox-input_wrapper'
 })('div', {
-  display: 'flex',
+  position: 'relative',
 
   width: '100%',
-  height: '100%',
+  // height: '100%',
+  display: 'flex',
   alignItems: 'center',
+  // justifyContent: 'center',
 
   variants: {
     canSend: {
@@ -266,9 +271,10 @@ export const TextInput = styled.withConfig({
   backgroundColor: 'transparent',
   width: '100%',
 
-  position: 'relative',
   alignItems: 'center',
-  display: 'flex',
+  display: 'block',
+  height: '100%',
+  whiteSpace: 'pre-line',
 
   color: theme.colors.textPrimary,
   fontWeight: theme.fontWeights.regular,
@@ -278,7 +284,8 @@ export const TextInput = styled.withConfig({
 
   outline: 'none',
   fontSize: theme.fontSizes.lg,
-  padding: theme.space.md,
+  paddingX: theme.space.sm,
+  paddingY: theme.space.md,
 
   variants: {
     canSend: {
@@ -300,12 +307,13 @@ export const TextBoxPlaceholder = styled.withConfig({
 })('div', {
   position: 'absolute',
   fontSize: theme.fontSizes.lg,
+  display: 'block',
 
   color: theme.colors.textMuted,
   width: '100%',
   alignItems: 'center',
   justifyContent: 'center',
-  paddingLeft: theme.space.lg,
+  paddingLeft: theme.space.sm,
 
   pointerEvents: 'none',
 

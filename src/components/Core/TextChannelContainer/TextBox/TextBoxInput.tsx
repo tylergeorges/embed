@@ -18,14 +18,13 @@ interface TextBoxInputProps {
   channelIsThread?: boolean;
 }
 
-const inputHeight = 21;
-
 export const TextBoxInput = ({
   channelIsThread,
   handleInputSubmit,
   canSend
 }: TextBoxInputProps) => {
   const { t } = useTranslation();
+
   const currentThread = useStoreState(state => state.guild.currentThread);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
 
@@ -34,10 +33,7 @@ export const TextBoxInput = ({
     Control: { isHolding: false }
   });
 
-  const [content, setMessageContent] = useState('');
-
   const [showPlaceHolder, setShowPlaceholder] = useState(true);
-  const [isCursorOnNewLine, setIsCursorOnNewLine] = useState(false);
   const [isAllContentSelected, setIsAllContentSelected] = useState(false);
 
   const inputRef = useRef<HTMLDivElement>(null);
@@ -45,8 +41,9 @@ export const TextBoxInput = ({
   const clearInput = () => {
     if (inputRef.current) {
       inputRef.current.innerHTML = '';
+      inputRef.current.innerText = '';
+
       setShowPlaceholder(true);
-      setMessageContent('');
     }
   };
 
@@ -67,28 +64,29 @@ export const TextBoxInput = ({
       setModifierKeys(prev => ({ ...prev, [key]: { isHolding: true } }));
     }
 
-    if (key === 'a') {
+    if (key === 'a' && modifierKeys.Control.isHolding) {
       if (!isAllContentSelected) {
         setIsAllContentSelected(true);
       }
     }
 
     if (key === 'Enter') {
-      const enterNewLine = key === 'Enter' && modifierKeys.Shift.isHolding;
+      const enterNewLine = modifierKeys.Shift.isHolding;
 
       if (enterNewLine) {
-        const currentInputHeight = input.clientHeight;
-
-        input.style.height = `${currentInputHeight + inputHeight}px`;
         if (showPlaceHolder) {
           setShowPlaceholder(false);
-          setIsCursorOnNewLine(true);
         }
       } else {
         //! Send message
         e.preventDefault();
 
-        if (content.trim().length) {
+        const content = inputRef.current.innerText.trim();
+
+        console.log(content.length);
+        if (content && content.length <= 2000) {
+          console.log(content, content.length);
+
           handleInputSubmit(content);
           clearInput();
         }
@@ -96,42 +94,14 @@ export const TextBoxInput = ({
     }
 
     if (key === 'Backspace') {
-      let caretPos: number = 0;
-
-      const sel = window.getSelection();
-
       if (isAllContentSelected) {
+        clearInput();
+
         setIsAllContentSelected(false);
-
-        input.style.height = `21px`;
       }
 
-      if (sel && sel.rangeCount) {
-        const range = sel.getRangeAt(0);
-
-        if (range.commonAncestorContainer.parentNode === input) {
-          caretPos = range.endOffset;
-        }
-      }
-
-      const currentInputHeight = input.getBoundingClientRect().height;
-
-      if (currentInputHeight > 47) {
-        if (caretPos === 0) {
-          input.style.height = `${currentInputHeight - inputHeight}px`;
-        }
-      } else {
-        setIsCursorOnNewLine(false);
-
-        if (caretPos === 0) {
-          setShowPlaceholder(true);
-        }
-
-        const canDeleteLine = currentInputHeight > inputHeight && caretPos === 0;
-
-        if (canDeleteLine) {
-          input.style.height = `${currentInputHeight - inputHeight}px`;
-        }
+      if (!showPlaceHolder) {
+        setShowPlaceholder(true);
       }
     }
   };
@@ -145,10 +115,9 @@ export const TextBoxInput = ({
   };
 
   const handleInputChange = (e: React.FormEvent) => {
-    if (e.currentTarget.textContent) {
-      setMessageContent(e.currentTarget?.textContent);
+    if (showPlaceHolder) {
       setShowPlaceholder(false);
-    } else if (!isCursorOnNewLine && !e.currentTarget.textContent) {
+    } else if (!e.currentTarget.textContent && !showPlaceHolder) {
       setShowPlaceholder(true);
     }
   };
@@ -170,8 +139,6 @@ export const TextBoxInput = ({
         canSend={canSend}
         inputMode="text"
       />
-
-      <input hidden type="text" form="text-box_form" value={content} />
 
       {showPlaceHolder && <Styles.TextBoxPlaceholder>{placeholder}</Styles.TextBoxPlaceholder>}
     </Styles.TextBoxInputWrapper>

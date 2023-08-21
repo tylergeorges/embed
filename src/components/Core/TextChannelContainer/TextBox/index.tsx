@@ -53,6 +53,7 @@ export const TextBox = ({ channelIsThread, canSend }: TextBoxProps) => {
               ref={fileAttachmentRef}
               form="text-box_form"
             />
+
             <IconButton
               tooltipDisabled
               onClick={attachmentButtonClick}
