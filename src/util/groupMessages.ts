@@ -1,5 +1,5 @@
 /* eslint-disable no-plusplus */
-import { APIMessage, MessageType } from 'discord-api-types/v10';
+import { APIMessage } from 'discord-api-types/v10';
 
 function dateToMilli(date: Date) {
   return date.getTime() / 1000;
@@ -24,10 +24,9 @@ function messageIsGroupable(prevMessage: APIMessage, recentMessage: APIMessage) 
 
   const sameAuthor =
     prevMessage.author.bot === recentMessage.author.bot &&
-    prevMessage.author.id === recentMessage.author.id &&
-    prevMessage.author.username === recentMessage.author.username;
+    prevMessage.author.id === recentMessage.author.id;
 
-  return isRecent && recentMessage.type === MessageType.Default && sameAuthor;
+  return isRecent && sameAuthor;
 }
 
 /**
@@ -50,7 +49,10 @@ export function groupMessages(messages: APIMessage[]): APIMessage[][] {
     } else if (i > 0) {
       const prevMessageGroup = groupedMessages[groupedMessages.length - 1];
 
-      const isGroupable = messageIsGroupable(prevMessageGroup[0], message);
+      const isGroupable = messageIsGroupable(
+        prevMessageGroup[prevMessageGroup.length - 1],
+        message
+      );
 
       if (isGroupable) {
         prevMessageGroup.push(message);

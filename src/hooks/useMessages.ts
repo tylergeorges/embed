@@ -79,7 +79,7 @@ export const useMessages = ({
               setMessages(prevMsgs => prevMsgs.filter((m, idx) => idx === optimisticIndex));
             }
           } else {
-            setMessages(prev => [...prev, recentMessage]);
+            // setMessages(prev => [...prev, recentMessage]);
           }
         }
       }

@@ -71,6 +71,7 @@ export const TextBoxInput = ({
 
         return;
       }
+
       if (!isAllContentSelected) {
         setIsAllContentSelected(true);
       }
