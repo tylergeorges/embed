@@ -104,7 +104,7 @@ const cache = cacheExchange({
           bot: true,
           color: 0,
           discrim: '0000',
-          id: '_id' in user ? user._id : generateSnowflake(),
+          id: user.id,
           flags: 0,
           name: user.username,
           roles: [],
