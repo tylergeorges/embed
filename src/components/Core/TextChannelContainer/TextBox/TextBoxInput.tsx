@@ -51,6 +51,7 @@ export const TextBoxInput = ({
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (!['Shift', 'Enter', 'Backspace', 'a', 'Control'].includes(e.key)) return;
+
     const { key } = e;
 
     switch (key) {

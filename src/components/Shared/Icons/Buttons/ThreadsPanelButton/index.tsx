@@ -1,10 +1,10 @@
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { useStoreActions } from '@state';
 import { useTranslation } from 'react-i18next';
-import { TChannel } from 'types/guild.types';
+import { GqlThread } from 'types/guild.types';
 
 interface ThreadsPanelButtonProps {
-  thread: TChannel;
+  thread: GqlThread;
 }
 export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
   const { t } = useTranslation();

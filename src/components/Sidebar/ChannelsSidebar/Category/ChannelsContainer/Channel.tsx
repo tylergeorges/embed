@@ -3,7 +3,7 @@ import { useStoreActions, useStoreState } from '@state';
 import { Thread } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Thread';
 import { useAppRouter } from '@hooks/useAppRouter';
 import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
-import { IThread, TChannel } from 'types/guild.types';
+import { GqlThread, GqlChannel } from 'types/guild.types';
 import { ChannelIcon } from './ChannelIcon';
 
 interface ChannelNameProps {
@@ -14,7 +14,7 @@ interface ChannelNameProps {
 
   channelHasActiveThread: boolean;
 
-  channel: TChannel | IThread;
+  channel: GqlChannel | GqlThread;
 
   isThread?: boolean;
 }
@@ -78,7 +78,7 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
             isActive={isActive}
             ref={isActive ? ref : null}
             handleContextMenuClick={handleContextMenuClick}
-            thread={channel as IThread}
+            thread={channel as GqlThread}
             currentChannelUrl={`/channels/${guildId}/${channelId}`}
           />
         ) : (

@@ -2,13 +2,13 @@
 import { Action, Computed, action, computed } from 'easy-peasy';
 import { Category, Channel, Guild, GuildSettings, Role } from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
-import { TAPIChannel, TChannel, GuildChannels } from 'types/guild.types';
+import { APIDiscordChannel, GqlChannel, GuildChannels } from 'types/guild.types';
 
 export interface GuildStore {
   guildChannels: Computed<GuildStore, GuildChannels>;
   data?: Guild;
   settings?: GuildSettings;
-  channels?: TChannel[];
+  channels?: GqlChannel[];
   categories: Computed<GuildStore, Category[]>;
   currentThread: Channel | undefined;
   currentChannel: { name: string; topic: string; canSend: boolean } | undefined;
@@ -17,13 +17,13 @@ export interface GuildStore {
 
   setData: Action<GuildStore, Guild>;
   setSettings: Action<GuildStore, GuildSettings>;
-  setChannels: Action<GuildStore, TChannel[]>;
-  setCurrentThread: Action<GuildStore, TChannel>;
+  setChannels: Action<GuildStore, GqlChannel[]>;
+  setCurrentThread: Action<GuildStore, GqlChannel>;
   setCurrentChannel: Action<GuildStore, string>;
   setRefetchGuild: Action<GuildStore, boolean>;
 }
 
-const addChannelToMap = (channels: TChannel[], guildChannels: GuildChannels) => {
+const addChannelToMap = (channels: GqlChannel[], guildChannels: GuildChannels) => {
   for (const channel of channels) {
     const mapHasChannel = guildChannels[String(channel.id)];
 
@@ -31,7 +31,7 @@ const addChannelToMap = (channels: TChannel[], guildChannels: GuildChannels) => 
 
     guildChannels[String(channel.id)] = channel;
 
-    const channelThreads = channel.threads as TChannel[];
+    const channelThreads = channel.threads as GqlChannel[];
 
     if (!channelThreads?.length) continue;
 
@@ -101,7 +101,7 @@ const guild: GuildStore = {
   }),
 
   setCurrentChannel: action((state, payload) => {
-    const currentChannel = state.guildChannels[payload] as TAPIChannel;
+    const currentChannel = state.guildChannels[payload] as APIDiscordChannel;
 
     if (currentChannel && 'topic' in currentChannel && 'canSend' in currentChannel) {
       state.currentChannel = {

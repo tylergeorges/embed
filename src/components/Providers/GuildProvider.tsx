@@ -4,7 +4,7 @@ import { useQuery } from 'urql';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { Guild } from '@graphql/graphql';
-import { TChannel } from 'types/guild.types';
+import { GqlChannel } from 'types/guild.types';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -192,7 +192,7 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
         setSettings(guild.settings);
       }
 
-      setChannels(guild.channels as TChannel[]);
+      setChannels(guild.channels as GqlChannel[]);
 
       setRefetchGuild(false);
       setIsGuildFetched();

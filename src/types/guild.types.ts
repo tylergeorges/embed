@@ -1,25 +1,27 @@
 import { Channel } from '@graphql/graphql';
 import { APIChannel } from 'discord-api-types/v10';
 
-export type TAPIChannel = APIChannel & {
+// These are used to resolve type errors
+
+export type APIDiscordChannel = APIChannel & {
   name: string;
-  threads?: TChannel[];
+  threads?: GqlChannel[];
   topic?: string;
   canSend: boolean;
 };
 
-export type TChannel = Channel & {
+export type GqlChannel = Channel & {
   name: string;
   canSend: boolean;
-  threads?: IThread[];
+  threads?: GqlThread[];
   topic?: string;
 };
 
 export type GuildChannels = {
-  [channelId: string]: TChannel | TAPIChannel;
+  [channelId: string]: GqlChannel | APIDiscordChannel;
 };
 
-export interface IThread extends TChannel {
+export interface GqlThread extends GqlChannel {
   id: string;
   name: string;
   __typename: 'ThreadChannel';

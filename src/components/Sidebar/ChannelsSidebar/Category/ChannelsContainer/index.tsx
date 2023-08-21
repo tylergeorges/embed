@@ -4,7 +4,7 @@ import { useStoreState } from '@state';
 import { Category as ICategory } from '@graphql/graphql';
 import { ThreadSpine } from '@components/Shared/Icons/ThreadSpine';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { IThread } from 'types/guild.types';
+import { GqlThread } from 'types/guild.types';
 import { Channel } from './Channel';
 
 interface ChannelsProps {
@@ -43,7 +43,7 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
                       {thread.id === threadId && <ThreadSpine />}
                       <Channel
                         isThread
-                        channel={thread as IThread}
+                        channel={thread as GqlThread}
                         isActive={thread.id === threadId}
                         isCategoryOpen={isCategoryOpen}
                         ref={currentChannelRef}
