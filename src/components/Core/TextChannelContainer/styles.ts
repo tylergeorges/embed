@@ -270,6 +270,8 @@ export const TextInput = styled.withConfig({
   border: 'none',
   backgroundColor: 'transparent',
   width: '100%',
+  fontFamily: 'GgSans',
+  '-webkit-user-modify': 'read-write-plaintext-only',
 
   alignItems: 'center',
   display: 'block',

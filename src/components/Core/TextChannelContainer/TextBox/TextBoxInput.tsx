@@ -42,13 +42,14 @@ export const TextBoxInput = ({
     if (inputRef.current) {
       inputRef.current.innerHTML = '';
       inputRef.current.innerText = '';
+      inputRef.current.textContent = '';
 
       setShowPlaceholder(true);
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!['Shift', 'Enter', 'Backspace', 'a', 'Control'].includes(e.key)) return;
+    if (!['Shift', 'Enter', 'Backspace', 'a', 'Control', 'u', 'b', 'i'].includes(e.key)) return;
 
     const input = inputRef.current;
 
@@ -64,7 +65,12 @@ export const TextBoxInput = ({
       setModifierKeys(prev => ({ ...prev, [key]: { isHolding: true } }));
     }
 
-    if (key === 'a' && modifierKeys.Control.isHolding) {
+    if (modifierKeys.Control.isHolding) {
+      if (key !== 'a') {
+        e.preventDefault();
+
+        return;
+      }
       if (!isAllContentSelected) {
         setIsAllContentSelected(true);
       }
@@ -96,7 +102,6 @@ export const TextBoxInput = ({
     if (key === 'Backspace') {
       if (isAllContentSelected) {
         clearInput();
-
         setIsAllContentSelected(false);
       }
 
@@ -122,6 +127,18 @@ export const TextBoxInput = ({
     }
   };
 
+  const sanitizePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
+    e.preventDefault();
+
+    const text = e.clipboardData.getData('text/plain');
+
+    document.execCommand('insertText', false, text);
+
+    if (showPlaceHolder) {
+      setShowPlaceholder(false);
+    }
+  };
+
   const placeholder = canSend
     ? t('input.message', {
         CHANNEL: channelIsThread ? currentThread?.name : currentChannel?.name
@@ -132,12 +149,13 @@ export const TextBoxInput = ({
     <Styles.TextBoxInputWrapper canSend={canSend}>
       <Styles.TextInput
         onKeyUp={handleKeyUp}
-        contentEditable
+        onPaste={sanitizePaste}
         onKeyDown={handleKeyDown}
         onInput={handleInputChange}
         ref={inputRef}
         canSend={canSend}
         inputMode="text"
+        contentEditable
       />
 
       {showPlaceHolder && <Styles.TextBoxPlaceholder>{placeholder}</Styles.TextBoxPlaceholder>}
