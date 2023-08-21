@@ -173,8 +173,9 @@ export const TextBoxWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'textbox-wrapper'
 })('form', {
-  display: 'flex',
+  position: 'relative',
   alignItems: 'center',
+  display: 'flex',
 
   width: 'calc(100% - 32px)',
   maxHeight: '50vh',
@@ -182,8 +183,7 @@ export const TextBoxWrapper = styled.withConfig({
   borderRadius: theme.radii.xs,
   backgroundColor: theme.colors.chatInputBackground,
 
-  paddingY: theme.space.sm,
-  marginBottom: theme.space.lg,
+  marginBottom: theme.space.xl.value,
 
   userSelect: 'none',
 
@@ -201,6 +201,8 @@ export const TextBoxForm = styled.withConfig({
   displayName: 'textbox-form'
 })('form', {
   display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 
   width: '100%',
   maxHeight: '50vh',
@@ -236,12 +238,10 @@ export const TextBoxInputWrapper = styled.withConfig({
   displayName: 'textbox-input_wrapper'
 })('div', {
   display: 'flex',
-  position: 'relative',
 
   width: '100%',
   height: '100%',
-
-  marginBottom: theme.space.md,
+  alignItems: 'center',
 
   variants: {
     canSend: {
@@ -264,12 +264,11 @@ export const TextInput = styled.withConfig({
 })('div', {
   border: 'none',
   backgroundColor: 'transparent',
-
   width: '100%',
 
   position: 'relative',
-  justifyContent: 'flex-start',
   alignItems: 'center',
+  display: 'flex',
 
   color: theme.colors.textPrimary,
   fontWeight: theme.fontWeights.regular,
@@ -279,6 +278,7 @@ export const TextInput = styled.withConfig({
 
   outline: 'none',
   fontSize: theme.fontSizes.lg,
+  padding: theme.space.md,
 
   variants: {
     canSend: {
@@ -299,14 +299,20 @@ export const TextBoxPlaceholder = styled.withConfig({
   displayName: 'textbox-placeholder'
 })('div', {
   position: 'absolute',
+  fontSize: theme.fontSizes.lg,
+
   color: theme.colors.textMuted,
+  width: '100%',
+  alignItems: 'center',
+  justifyContent: 'center',
+  paddingLeft: theme.space.lg,
+
   pointerEvents: 'none',
-  display: 'block',
 
   textOverflow: 'ellipsis',
   overflow: 'hidden',
   whiteSpace: 'nowrap',
-  width: '100%',
+
   textAlign: 'left'
 });
 
