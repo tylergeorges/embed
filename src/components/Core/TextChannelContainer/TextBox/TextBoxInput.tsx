@@ -89,10 +89,7 @@ export const TextBoxInput = ({
 
         const content = inputRef.current.innerText.trim();
 
-        console.log(content.length);
         if (content && content.length <= 2000) {
-          console.log(content, content.length);
-
           handleInputSubmit(content);
           clearInput();
         }

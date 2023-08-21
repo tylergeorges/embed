@@ -172,7 +172,7 @@ export const MessageWrapper = styled.withConfig({
 export const TextBoxWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'textbox-wrapper'
-})('form', {
+})('div', {
   position: 'relative',
   alignItems: 'center',
   display: 'flex',

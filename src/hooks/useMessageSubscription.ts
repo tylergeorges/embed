@@ -1,7 +1,7 @@
 /* eslint-disable no-bitwise */
 import { useSubscription } from 'urql';
 import { Dispatch, SetStateAction } from 'react';
-import { Message, UpdatedMessage } from '@graphql/graphql';
+import { Message, NewMessageSubscription, UpdatedMessage } from '@graphql/graphql';
 import {
   deletedMessageSubscription,
   newMessageSubscription,
@@ -33,18 +33,21 @@ export const useMessageSubscription = ({
     },
 
     (prev, data) => {
-      const newMessage = data.messageV2 as Message;
+      const newMessage = data.messageV2 as NewMessageSubscription & Message;
 
       if (newMessage && !messages.find(m => m.id === newMessage.id)) {
-        if (!(newMessage.flags ?? 0 & (1 << 4))) {
+        const msgFlags = newMessage.flags as number;
+
+        if (!(msgFlags & (1 << 4))) {
           const optimisticIndex = getOptimisticIndex(messages, newMessage);
 
           if (optimisticIndex > -1) {
-            const updatedMessages = messages;
-            updatedMessages.splice(optimisticIndex, 1);
-            updatedMessages.concat(newMessage);
+            setMessages(prevMsgs => {
+              prevMsgs.splice(optimisticIndex, 1, newMessage);
 
-            setMessages(updatedMessages);
+              return prevMsgs;
+            });
+
             return data;
           }
 

@@ -10,7 +10,7 @@ import { store } from '@state/store';
 import { messagesQuery } from '@hooks/messagesQuery';
 
 export interface MessagesQuery {
-  channelV2?: {
+  channelV2: {
     id: string;
     __typename: 'TextChannel';
     messageBunch: {
@@ -39,15 +39,12 @@ const cache = cacheExchange({
   updates: {
     Mutation: {
       sendMessage(_result, args, _cache) {
+        const user = store.getState().user.data;
         const guild = store.getState().guild.data?.id as string;
+
         const newMessage = _result.sendMessage as Message;
 
-        if (newMessage) {
-          newMessage.isGuest = true;
-          // @ts-expect-error
-          // Adds bot property to message
-          newMessage.bot = true;
-
+        if (newMessage && user) {
           _cache
             .inspectFields('Query')
             .filter(field => field.fieldName === 'channelV2')
@@ -63,7 +60,7 @@ const cache = cacheExchange({
                 },
 
                 (data: MessagesQuery | undefined | null) => {
-                  if (!data || !data.channelV2) return;
+                  if (!data) return;
 
                   const { messages } = data.channelV2.messageBunch;
 
@@ -95,7 +92,7 @@ const cache = cacheExchange({
         flags: 1 << 4, // reusing flag for optimistic messages
         createdAt: +new Date(),
         editedAt: null,
-        isGuest: true,
+        isGuest: user.provider === 'Guest',
         unread: true,
         author: {
           __typename: 'User',
@@ -104,8 +101,8 @@ const cache = cacheExchange({
           bot: true,
           color: 0,
           discrim: '0000',
-          id: user.id,
-          flags: 0,
+          id: '_id' in user ? user._id : user.id,
+          flags: null,
           name: user.username,
           roles: [],
           system: false,

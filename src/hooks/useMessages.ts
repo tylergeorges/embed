@@ -67,18 +67,16 @@ export const useMessages = ({
         if (messages.length === 0) {
           setMessages(msgs);
         } else if (messages.length) {
-          const recentMessage = apiMsgs[apiMsgs.length - 1];
+          const recentMessage = msgs[msgs.length - 1];
 
-          if (!(recentMessage.flags ?? 0 & (1 << 4))) {
+          const msgFlags = recentMessage.flags as number;
+
+          if (!(msgFlags & (1 << 4))) {
             // trims spaces so Discord's normalization doesn't break it
-
             const optimisticIndex = getOptimisticIndex(messages, recentMessage);
 
             if (optimisticIndex > -1) {
-              const updatedMessages = messages;
-              updatedMessages.splice(optimisticIndex, 1, recentMessage);
-
-              setMessages([...updatedMessages]);
+              setMessages(prevMsgs => prevMsgs.filter((m, idx) => idx === optimisticIndex));
             }
           } else {
             setMessages(prev => [...prev, recentMessage]);

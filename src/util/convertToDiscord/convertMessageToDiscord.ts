@@ -10,12 +10,14 @@ export const convertMessageToDiscord = (message: BaseMessageFragment): APIMessag
   // convert epoch to '2022-11-17T19:23:27.904000+00:00'
   timestamp: new Date(message.createdAt).toISOString(),
   edited_timestamp: message.editedAt,
+
   author: {
     id: message.author.id,
     bot: message.author.bot,
     username: message.author.name,
     avatar: getAvatarId(message.author.avatarUrl),
     global_name: message.author.name,
+    system: message.author.system,
     discriminator: message.author.discrim
   },
   attachments: message.attachments.map(a => ({
