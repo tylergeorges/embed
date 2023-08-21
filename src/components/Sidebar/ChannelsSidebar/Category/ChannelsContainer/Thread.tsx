@@ -1,7 +1,6 @@
 import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
-
-import { IThread } from '@state/stores/guild';
 import { forwardRef } from 'react';
+import { IThread } from 'types/guild.types';
 
 interface ThreadProps {
   thread: IThread;

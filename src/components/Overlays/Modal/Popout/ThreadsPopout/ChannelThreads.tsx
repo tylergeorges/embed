@@ -1,15 +1,15 @@
 import * as Styles from '@components/Overlays/Modal/styles';
-import { Channel } from '@graphql/graphql';
 import { useTranslation } from 'react-i18next';
 import { ThreadsPanelButton } from '@icons/Buttons/ThreadsPanelButton';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreActions } from '@state';
+import { TChannel } from 'types/guild.types';
 
 interface ChannelThreadsProps {
-  threads: Channel[];
+  threads: TChannel[];
 }
 
-const ThreadPopoutItem = ({ thread }: { thread: Channel }) => {
+const ThreadPopoutItem = ({ thread }: { thread: TChannel }) => {
   const { router, channelId, guildId } = useAppRouter();
 
   const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
