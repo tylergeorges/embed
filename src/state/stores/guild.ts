@@ -16,7 +16,7 @@ export interface IThread extends Channel {
 }
 
 export type GuildChannels = {
-  [channelId: string]: Channel | APIChannel;
+  [channelId: string]: Channel | (APIChannel & { threads?: Channel[] });
 };
 
 export interface GuildStore {

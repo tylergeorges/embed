@@ -18,7 +18,7 @@ interface MessagesListProps {
   startReached: (index: number) => void;
 }
 
-export const MessagesListRenderer = ({
+export const MessageListRenderer = ({
   startReached,
   messages,
   isReady,

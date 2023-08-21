@@ -1,7 +1,7 @@
 import * as Styles from '@components/Sidebar/ChannelsSidebar/ChannelsFooter/styles';
 import React, { useRef } from 'react';
 import { useStoreActions, useStoreState } from '@state';
-import { useAuthApi } from '@hooks/useAuthApi';
+import { useAuthApi } from '@hooks/useAuthAPI';
 
 export const ChannelsFooterLoginButton = () => {
   const inProgressRef = useRef(false);

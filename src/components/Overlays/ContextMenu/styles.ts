@@ -49,7 +49,7 @@ export const ContextMenuItem = styled.withConfig({
 
   '&:hover': {
     backgroundColor: theme.colors.accent,
-    color: theme.colors.primary
+    color: theme.colors.textPrimary
   }
 });
 

@@ -78,7 +78,7 @@ export const GuestFormLoginButtonLabel = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-guest_form_login_button_label'
 })('span', {
-  color: theme.colors.primary,
+  color: theme.colors.textPrimary,
   fontSize: theme.fontSizes.lg,
 
   zIndex: theme.zIndices.tooltip,
@@ -143,9 +143,7 @@ export const GuestFormFooter = styled.withConfig({
   width: '100%',
   padding: theme.space.lg,
   borderBottomLeftRadius: theme.radii.sm,
-  borderBottomRightRadius: theme.radii.sm,
-
-  backgroundColor: theme.colors.modalFooterBackground
+  borderBottomRightRadius: theme.radii.sm
 });
 
 export const GuestFormDiscordAuth = styled.withConfig({

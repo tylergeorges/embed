@@ -39,17 +39,16 @@ export const IconRoot = styled.withConfig({
     },
 
     color: {
-      lighter: {
-        color: theme.colors.iconLighter.value
+      channel: {
+        color: theme.colors.channelsIcon
       },
 
       light: {
-        color: theme.colors.iconLight.value
+        color: theme.colors.interactiveDefault
       },
 
       dark: {
-        // TODO: Find out why we need to access .value for it to work properly
-        color: theme.colors.textMuted.value
+        color: theme.colors.interactiveDefault
       }
     }
   }
@@ -132,50 +131,30 @@ export const IconButtonChildrenWrapper = styled.withConfig({
 
   '&:hover': {
     use: {
-      color: theme.colors.primaryOpacity80
+      color: theme.colors.interactiveHover
     }
   },
 
   variants: {
     backgroundGlowSize: {
-      xs: {
-        size: theme.sizes.iconSizeXs,
-
-        '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity10
-        }
-      },
-
       sm: {
         size: theme.sizes.iconSizeSm,
-
-        '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity10
-        }
+        borderRadius: theme.radii.round
       },
 
       md: {
         size: theme.sizes.iconSizeMd,
-
-        '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity10
-        }
+        borderRadius: theme.radii.round
       },
 
       lg: {
         size: theme.sizes.iconSizeLg,
-
-        '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity10
-        }
+        borderRadius: theme.radii.round
       },
 
       xl: {
         size: theme.sizes.iconSizeXl,
-
-        '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity10
-        }
+        borderRadius: theme.radii.round
       }
     },
 
@@ -212,7 +191,7 @@ export const IconButtonChildrenWrapper = styled.withConfig({
     isActive: {
       true: {
         use: {
-          color: theme.colors.iconActive
+          color: theme.colors.interactiveActive
         }
       }
     }
