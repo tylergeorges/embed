@@ -36,13 +36,6 @@ export const useMessageSubscription = ({
       const newMessage = data.messageV2 as Message;
 
       if (newMessage && !messages.find(m => m.id === newMessage.id)) {
-        console.log(
-          'newMessageSubscription: ',
-          newMessage,
-          prev,
-          messages.find(m => m.id === newMessage.id)
-        );
-
         if (!(newMessage.flags ?? 0 & (1 << 4))) {
           const optimisticIndex = getOptimisticIndex(messages, newMessage);
 

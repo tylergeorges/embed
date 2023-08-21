@@ -6,7 +6,6 @@ import { useAuthApi } from '@hooks/useAuthAPI';
 export const ChannelsFooterLoginButton = () => {
   const inProgressRef = useRef(false);
   const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
-  const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
 
   const isGuestMode = useStoreState(state => state.guild.settings)?.guestMode;
 
@@ -25,7 +24,6 @@ export const ChannelsFooterLoginButton = () => {
       }
 
       inProgressRef.current = false;
-      setRefetchGuild(true);
     }
   };
 

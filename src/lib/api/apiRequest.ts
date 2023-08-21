@@ -45,15 +45,8 @@ export async function apiRequest<T>({
     mode: 'cors',
     body: JSON.stringify(options.payload)
   })
-    .then(res => {
-      console.log(res);
-      return res.json();
-    })
-    .then((data: T) => {
-      console.log(data);
-
-      return data;
-    })
+    .then(res => res.json())
+    .then((data: T) => data)
     .catch(err => err);
 }
 

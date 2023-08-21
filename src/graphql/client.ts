@@ -48,8 +48,6 @@ const cache = cacheExchange({
           // Adds bot property to message
           newMessage.bot = true;
 
-          console.log('cache exchanged newMessage ', newMessage);
-
           _cache
             .inspectFields('Query')
             .filter(field => field.fieldName === 'channelV2')

@@ -170,14 +170,13 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
       router.push(`/channels/299881420891881473/368427726358446110`);
     }
     // If auth state changed, refetch channels
-    else if (shouldRefetchGuild) {
-      console.log('refetch guild', newToken);
+    if (shouldRefetchGuild) {
+      setRefetchGuild(false);
+
       fetchHook({
         requestPolicy: 'network-only',
         fetchOptions: { headers: { Authorization: newToken } }
       });
-
-      setRefetchGuild(false);
     }
     // Set guild data
     else if (data && !fetching) {
@@ -194,6 +193,7 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
 
       setChannels(guild.channels);
 
+      setRefetchGuild(false);
       setIsGuildFetched();
     }
   }, [

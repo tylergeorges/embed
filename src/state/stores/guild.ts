@@ -98,7 +98,9 @@ const guild: GuildStore = {
   }),
 
   setRefetchGuild: action((state, payload) => {
-    state.refetchGuild = payload;
+    if (payload !== state.refetchGuild) {
+      state.refetchGuild = payload;
+    }
   }),
 
   setChannels: action((state, payload) => {
