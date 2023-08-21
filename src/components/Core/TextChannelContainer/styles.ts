@@ -205,12 +205,14 @@ export const TextBoxForm = styled.withConfig({
   width: '100%',
   maxHeight: '50vh',
 
-  overflowY: 'auto',
-
   variants: {
     canSend: {
       false: {
         cursor: 'not-allowed'
+      },
+
+      true: {
+        overflowY: 'auto'
       }
     }
   }
@@ -245,7 +247,8 @@ export const TextBoxInputWrapper = styled.withConfig({
     canSend: {
       false: {
         pointerEvents: 'none',
-        cursor: 'no-drop'
+        cursor: 'no-drop',
+        opacity: '50%'
       },
 
       true: {
@@ -294,10 +297,17 @@ export const TextInput = styled.withConfig({
 export const TextBoxPlaceholder = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'textbox-placeholder'
-})('span', {
+})('div', {
   position: 'absolute',
   color: theme.colors.textMuted,
-  pointerEvents: 'none'
+  pointerEvents: 'none',
+  display: 'block',
+
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  width: '100%',
+  textAlign: 'left'
 });
 
 export const MessageContentOuterWrapper = styled.withConfig({
