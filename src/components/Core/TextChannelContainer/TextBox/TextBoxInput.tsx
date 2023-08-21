@@ -7,6 +7,7 @@ type ModifierKeys = {
   Shift: {
     isHolding: boolean;
   };
+
   Control: {
     isHolding: boolean;
   };
@@ -49,69 +50,67 @@ export const TextBoxInput = ({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (!['Shift', 'Enter', 'Backspace', 'a', 'Control', 'u', 'b', 'i'].includes(e.key)) return;
-
-    const input = inputRef.current;
-
-    if (!input) return;
-
+    if (!['Shift', 'Enter', 'Backspace', 'a', 'Control'].includes(e.key)) return;
     const { key } = e;
 
-    const keyIsModifier = key === 'Shift' || key === 'Control';
+    switch (key) {
+      case 'Shift':
+      case 'Control': {
+        if (modifierKeys[key].isHolding) break;
 
-    if (keyIsModifier) {
-      if (modifierKeys[key].isHolding) return;
+        setModifierKeys(prev => ({ ...prev, [key]: { isHolding: true } }));
 
-      setModifierKeys(prev => ({ ...prev, [key]: { isHolding: true } }));
-    }
-
-    if (modifierKeys.Control.isHolding) {
-      if (key !== 'a') {
-        e.preventDefault();
-
-        return;
+        break;
       }
 
-      if (!isAllContentSelected) {
-        setIsAllContentSelected(true);
-      }
-    }
+      case 'Enter': {
+        const enterNewLine = modifierKeys.Shift.isHolding;
 
-    if (key === 'Enter') {
-      const enterNewLine = modifierKeys.Shift.isHolding;
+        if (enterNewLine) {
+          if (showPlaceHolder) {
+            setShowPlaceholder(false);
+          }
+        } else {
+          //! Send message
+          e.preventDefault();
 
-      if (enterNewLine) {
-        if (showPlaceHolder) {
-          setShowPlaceholder(false);
+          const content = inputRef.current?.innerText.trim();
+
+          if (content && content.length <= 2000) {
+            handleInputSubmit(content);
+            clearInput();
+          }
         }
-      } else {
-        //! Send message
-        e.preventDefault();
 
-        const content = inputRef.current.innerText.trim();
+        break;
+      }
 
-        if (content && content.length <= 2000) {
-          handleInputSubmit(content);
+      case 'Backspace': {
+        if (isAllContentSelected) {
           clearInput();
+          setShowPlaceholder(true);
+          setIsAllContentSelected(false);
         }
-      }
-    }
 
-    if (key === 'Backspace') {
-      if (isAllContentSelected) {
-        clearInput();
-        setIsAllContentSelected(false);
+        break;
       }
 
-      if (!showPlaceHolder) {
-        setShowPlaceholder(true);
+      case 'a': {
+        if (!isAllContentSelected && modifierKeys.Control.isHolding) {
+          setIsAllContentSelected(true);
+        }
+
+        break;
+      }
+
+      default: {
+        break;
       }
     }
   };
 
   const handleKeyUp = (e: React.KeyboardEvent) => {
-    if (e.key !== 'Shift' && e.key !== 'Control') return;
-
+    if (e.key !== 'Control' && e.key !== 'Shift') return;
     if (!modifierKeys[e.key].isHolding) return;
 
     setModifierKeys(prev => ({ ...prev, [e.key]: { isHolding: false } }));
@@ -125,6 +124,7 @@ export const TextBoxInput = ({
     }
   };
 
+  // Prevent user from pasting formatted/stylized text
   const sanitizePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
     e.preventDefault();
 
