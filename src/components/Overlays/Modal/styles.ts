@@ -217,8 +217,7 @@ export const ModalHeaderContent = styled.withConfig({
   userSelect: 'none',
 
   cursor: 'default',
-  marginBottom: theme.space.xs,
-  marginTop: theme.space.md,
+  marginY: theme.space.md,
 
   variants: {
     titleSize: {
