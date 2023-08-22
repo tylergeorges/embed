@@ -1,11 +1,16 @@
 /* eslint-disable no-plusplus */
-import { APIMessage } from 'discord-api-types/v10';
+
+import { ExpandedAPIMessage } from 'types/messages.types';
 
 function dateToMilli(date: Date) {
   return date.getTime() / 1000;
 }
 
-function isGroupRecent(prevMessage: APIMessage, recentMessage: APIMessage, maxGroupTime: number) {
+function isGroupRecent(
+  prevMessage: ExpandedAPIMessage,
+  recentMessage: ExpandedAPIMessage,
+  maxGroupTime: number
+) {
   const prevMessageDate = new Date(prevMessage.timestamp);
   const recentMessageDate = new Date(recentMessage.timestamp);
 
@@ -19,12 +24,14 @@ function isGroupRecent(prevMessage: APIMessage, recentMessage: APIMessage, maxGr
   return timeFromLastMessage < maxGroupTime;
 }
 
-function messageIsGroupable(prevMessage: APIMessage, recentMessage: APIMessage) {
+function messageIsGroupable(prevMessage: ExpandedAPIMessage, recentMessage: ExpandedAPIMessage) {
   const isRecent = isGroupRecent(prevMessage, recentMessage, 7);
 
   const sameAuthor =
+    recentMessage.author.id === prevMessage.author.id &&
     recentMessage.author.bot === prevMessage.author.bot &&
-    recentMessage.author.id === prevMessage.author.id;
+    recentMessage.author.flags === prevMessage.author.flags &&
+    recentMessage.isGuest === prevMessage.isGuest;
 
   return sameAuthor && isRecent;
 }
@@ -36,8 +43,8 @@ function messageIsGroupable(prevMessage: APIMessage, recentMessage: APIMessage) 
  * @param messages
  * @returns groupedMessages
  */
-export function groupMessages(messages: APIMessage[]): APIMessage[][] {
-  const groupedMessages: APIMessage[][] = [];
+export function groupMessages(messages: ExpandedAPIMessage[]): ExpandedAPIMessage[][] {
+  const groupedMessages: ExpandedAPIMessage[][] = [];
   const messageLength = messages.length;
 
   for (let i = 0; i < messageLength; i++) {
@@ -65,9 +72,9 @@ export function groupMessages(messages: APIMessage[]): APIMessage[][] {
 }
 
 export function addMessageToGroup(
-  initGrouped: APIMessage[][],
-  message: APIMessage
-): APIMessage[][] {
+  initGrouped: ExpandedAPIMessage[][],
+  message: ExpandedAPIMessage
+): ExpandedAPIMessage[][] {
   const groupedMessages = initGrouped;
   const prevMessageGroup = groupedMessages[groupedMessages.length - 1];
 

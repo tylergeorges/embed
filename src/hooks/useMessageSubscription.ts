@@ -8,14 +8,14 @@ import {
   updateMessageSubscription
 } from '@hooks/messagesQuery';
 import { getOptimisticIndex } from '@util/getOptimisticIndex';
-import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
+import { ExpandedAPIMessage } from 'types/messages.types';
 
 interface UseSubArgs {
   guild: string;
   channel: string;
-  groupedMessages: APIMessage[][];
-  setGroupedMessages: Dispatch<SetStateAction<APIMessage[][]>>;
+  groupedMessages: ExpandedAPIMessage[][];
+  setGroupedMessages: Dispatch<SetStateAction<ExpandedAPIMessage[][]>>;
   addMessageToGroupCB: (msg: BaseMessageFragment) => void;
   threadId?: string;
   // scrollToBottom: (index: number) => void;

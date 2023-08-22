@@ -7,6 +7,7 @@ import { Message, MessageType } from '@graphql/graphql';
 import { generateSnowflake } from '@util/generateSnowflake';
 import { store } from '@state/store';
 import { messagesQuery } from '@hooks/messagesQuery';
+import { getOptimisticIndex } from '@util/getOptimisticIndex';
 
 export interface MessagesQuery {
   channelV2: {
@@ -45,6 +46,7 @@ const cache = cacheExchange({
 
         if (newMessage && user) {
           newMessage.author.id = user.id;
+          newMessage.isGuest = true;
 
           _cache
             .inspectFields('Query')
@@ -64,8 +66,9 @@ const cache = cacheExchange({
                   if (!data) return;
 
                   const { messages } = data.channelV2.messageBunch;
+                  const optimisticIndex = getOptimisticIndex(messages, newMessage);
 
-                  if (!messages.find(m => m.id === newMessage.id)) {
+                  if (optimisticIndex === -1) {
                     messages.push(newMessage);
                   }
 
@@ -100,9 +103,10 @@ const cache = cacheExchange({
           avatarUrl: user.avatarUrl,
           avatar: user.avatarUrl,
           bot: true,
+
           color: 0,
           discrim: '0000',
-          // id: user.id,
+          id: user.id,
           name: user.username,
           roles: [],
           system: false,

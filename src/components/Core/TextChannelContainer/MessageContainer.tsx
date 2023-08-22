@@ -5,10 +5,10 @@ import { MessageListRenderer } from '@components/Core/VirtualLists/MessageListRe
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
-import { APIMessage } from 'discord-api-types/v10';
 import { addMessageToGroup } from '@util/groupMessages';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 import { BaseMessageFragment } from '@graphql/graphql';
+import { ExpandedAPIMessage } from 'types/messages.types';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
@@ -16,7 +16,7 @@ interface MessageContainerProps {
 }
 
 export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
-  const [groupedMessages, setGroupedMessages] = useState<APIMessage[][]>([]);
+  const [groupedMessages, setGroupedMessages] = useState<ExpandedAPIMessage[][]>([]);
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 

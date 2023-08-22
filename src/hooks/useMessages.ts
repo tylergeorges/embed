@@ -2,11 +2,11 @@ import { useQuery } from 'urql';
 import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { MessagesQueryQueryVariables, BaseMessageFragment, Message } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
-import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 import { messagesQuery, moreMessagesQuery } from '@hooks/messagesQuery';
 import { MessagesQuery, client } from '@graphql/client';
 import { getOptimisticIndex } from '@util/getOptimisticIndex';
+import { ExpandedAPIMessage } from 'types/messages.types';
 
 type MessageState = {
   firstItemIndex: number;
@@ -15,8 +15,8 @@ type MessageState = {
 interface UseMessagesProps {
   guild: string;
   channel: string;
-  groupedMessages: APIMessage[][];
-  setGroupedMessages: Dispatch<SetStateAction<APIMessage[][]>>;
+  groupedMessages: ExpandedAPIMessage[][];
+  setGroupedMessages: Dispatch<SetStateAction<ExpandedAPIMessage[][]>>;
   addMessageToGroupCB: (msg: BaseMessageFragment) => void;
   threadId?: string;
 }
