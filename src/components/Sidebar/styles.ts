@@ -68,7 +68,8 @@ export const ChannelsChildrenWrapper = styled.withConfig({
   flexDirection: 'column',
   alignItems: 'center',
   height: '100%',
-  position: 'relative'
+  position: 'relative',
+  marginTop: theme.space.lg
 });
 
 export const GuildHeaderWrapper = styled.withConfig({
