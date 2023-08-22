@@ -147,12 +147,13 @@ export const ChannelNameInner = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'channel-name_inner'
 })(Link, {
+  position: 'relative',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
 
   userSelect: 'none',
-
+  zIndex: theme.zIndices.channelsSidebar,
   // @ts-ignore
   paddingX: theme.space.xxs.value,
   width: '100%',
