@@ -29,10 +29,11 @@ export const Modal = ({
     {!disableBackdrop && <Styles.Backdrop type="modal" isOpen={isOpen} onClick={hideModal} />}
 
     <Styles.ModalContainerWrapper isOpen={isOpen} role="dialog" aria-label={title}>
-      <Styles.ModalContainer isOpen={isOpen} containerSize={containerSize}>
+      <Styles.ModalContainer isOpen={isOpen} containerSize={containerSize ?? 'sm'}>
         <Styles.ModalCloseWrapper>
           <CloseButton onClick={hideModal} />
         </Styles.ModalCloseWrapper>
+
         <Styles.ModalHeader>
           <Styles.ModalHeaderContent
             titleSize={titleSize ?? 'lg'}
@@ -40,6 +41,7 @@ export const Modal = ({
           >
             {title}
           </Styles.ModalHeaderContent>
+
           {subheader && <Styles.ModalSubheaderContent>{subheader}</Styles.ModalSubheaderContent>}
         </Styles.ModalHeader>
 
