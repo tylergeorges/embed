@@ -4,6 +4,7 @@ import * as Styles from '@components/Overlays/Modal/GuestFormModal/styles';
 import { useAuthApi } from '@hooks/useAuthAPI';
 import { useStoreActions, useStoreState } from '@state';
 import { forwardRef, useCallback, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface GuestFormProps {
   hideForm: () => void;
@@ -11,6 +12,7 @@ interface GuestFormProps {
 
 const GuestForm = forwardRef<HTMLInputElement, GuestFormProps>(({ hideForm }, ref) => {
   const { guestSignIn, discordSignIn } = useAuthApi();
+  const { t } = useTranslation();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const isFetching = useRef(false);
@@ -55,7 +57,7 @@ const GuestForm = forwardRef<HTMLInputElement, GuestFormProps>(({ hideForm }, re
     <>
       <Styles.GuestFormWrapper onSubmit={submitForm} id="guest-user-form">
         <GuestFormInput
-          label="Name"
+          label={t('auth.name') as string}
           onInput={onInput}
           maxLength={80}
           minLength={1}
@@ -71,16 +73,16 @@ const GuestForm = forwardRef<HTMLInputElement, GuestFormProps>(({ hideForm }, re
           onClick={submitForm}
           disabled={isButtonDisabled}
         >
-          <Styles.GuestFormLoginButtonLabel>Continue</Styles.GuestFormLoginButtonLabel>
+          <Styles.GuestFormLoginButtonLabel>{t('auth.continue')}</Styles.GuestFormLoginButtonLabel>
         </Styles.GuestFormLoginButton>
       </Styles.GuestFormWrapper>
 
       <Styles.GuestFormDiscordAuth>
         <Styles.GuestFormDiscordContent>
-          Discord account?
+          {t('auth.discordacc')}
           <Styles.GuestFormDiscordAuthButton onClick={discordSignIn}>
             {' '}
-            Log in
+            {t('auth.login2')}
           </Styles.GuestFormDiscordAuthButton>
         </Styles.GuestFormDiscordContent>
       </Styles.GuestFormDiscordAuth>
@@ -91,6 +93,8 @@ const GuestForm = forwardRef<HTMLInputElement, GuestFormProps>(({ hideForm }, re
 GuestForm.displayName = 'GuestForm';
 
 export const GuestFormModal = () => {
+  const { t } = useTranslation();
+
   const isFetching = useRef(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const showGuestFormModal = useStoreState(state => state.ui.showGuestFormModal);
@@ -112,8 +116,8 @@ export const GuestFormModal = () => {
   return (
     <Modal
       isOpen={showGuestFormModal}
-      title="Welcome!"
-      subheader="Pick a name to start chatting"
+      title={t('auth.welcome')}
+      subheader={t('auth.pickname') as string}
       hideModal={hideForm}
       titleSize="xxl"
       titleAlignment="center"

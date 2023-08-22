@@ -2,8 +2,11 @@ import * as Styles from '@components/Sidebar/ChannelsSidebar/ChannelsFooter/styl
 import React, { useRef } from 'react';
 import { useStoreActions, useStoreState } from '@state';
 import { useAuthApi } from '@hooks/useAuthAPI';
+import { useTranslation } from 'react-i18next';
 
 export const ChannelsFooterLoginButton = () => {
+  const { t } = useTranslation();
+
   const inProgressRef = useRef(false);
   const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
 
@@ -30,7 +33,9 @@ export const ChannelsFooterLoginButton = () => {
   return (
     <Styles.ChannelsFooterButtonWrapper>
       <Styles.ChannelsFooterLoginButton onClick={login}>
-        <Styles.ChannelsFooterLoginButtonLabel>Login</Styles.ChannelsFooterLoginButtonLabel>
+        <Styles.ChannelsFooterLoginButtonLabel>
+          {t('auth.login')}
+        </Styles.ChannelsFooterLoginButtonLabel>
       </Styles.ChannelsFooterLoginButton>
     </Styles.ChannelsFooterButtonWrapper>
   );

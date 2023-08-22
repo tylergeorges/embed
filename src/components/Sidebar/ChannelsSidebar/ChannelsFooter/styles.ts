@@ -57,7 +57,8 @@ export const ChannelsFooterLoginButtonLabel = styled.withConfig({
   color: theme.colors.interactiveActive,
   fontSize: theme.fontSizes.md,
 
-  zIndex: theme.zIndices.tooltip
+  zIndex: theme.zIndices.tooltip,
+  fontWeight: theme.fontWeights.medium
 });
 
 export const ChannelsFooterButtonWrapper = styled.withConfig({
