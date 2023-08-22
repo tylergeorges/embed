@@ -23,10 +23,10 @@ function messageIsGroupable(prevMessage: APIMessage, recentMessage: APIMessage) 
   const isRecent = isGroupRecent(prevMessage, recentMessage, 7);
 
   const sameAuthor =
-    prevMessage.author.bot === recentMessage.author.bot &&
-    prevMessage.author.id === recentMessage.author.id;
+    recentMessage.author.bot === prevMessage.author.bot &&
+    recentMessage.author.id === prevMessage.author.id;
 
-  return isRecent && sameAuthor;
+  return sameAuthor && isRecent;
 }
 
 /**
@@ -44,8 +44,7 @@ export function groupMessages(messages: APIMessage[]): APIMessage[][] {
     const message = messages[i];
 
     if (i === 0) {
-      groupedMessages.push([]);
-      groupedMessages[0].push(message);
+      groupedMessages.push([message]);
     } else if (i > 0) {
       const prevMessageGroup = groupedMessages[groupedMessages.length - 1];
 
@@ -60,6 +59,24 @@ export function groupMessages(messages: APIMessage[]): APIMessage[][] {
         groupedMessages.push([message]);
       }
     }
+  }
+
+  return groupedMessages;
+}
+
+export function addMessageToGroup(
+  initGrouped: APIMessage[][],
+  message: APIMessage
+): APIMessage[][] {
+  const groupedMessages = initGrouped;
+  const prevMessageGroup = groupedMessages[groupedMessages.length - 1];
+
+  const isGroupable = messageIsGroupable(prevMessageGroup[prevMessageGroup.length - 1], message);
+
+  if (isGroupable) {
+    prevMessageGroup.push(message);
+  } else {
+    groupedMessages.push([message]);
   }
 
   return groupedMessages;

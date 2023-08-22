@@ -1,11 +1,14 @@
 import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
 import { useStoreState } from '@state';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MessageListRenderer } from '@components/Core/VirtualLists/MessageListRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
-import { StateMessages } from 'types/messages.types';
+import { APIMessage } from 'discord-api-types/v10';
+import { addMessageToGroup } from '@util/groupMessages';
+import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
+import { BaseMessageFragment } from '@graphql/graphql';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
@@ -13,7 +16,7 @@ interface MessageContainerProps {
 }
 
 export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
-  const [messages, setMessages] = useState<StateMessages[]>([]);
+  const [groupedMessages, setGroupedMessages] = useState<APIMessage[][]>([]);
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
@@ -24,20 +27,29 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
 
   const threadId = channelIsThread ? thread : undefined;
 
-  const { groupedMessages, isReady, firstItemIndex, loadMoreMessages } = useMessages({
+  const addMessageToGroupCB = useCallback(
+    (msg: BaseMessageFragment) => {
+      setGroupedMessages(addMessageToGroup(groupedMessages, convertMessageToDiscord(msg)));
+    },
+    [groupedMessages]
+  );
+
+  const { isReady, firstItemIndex, loadMoreMessages } = useMessages({
     guild,
     channel,
-    messages,
-    setMessages,
-    threadId
+    threadId,
+    groupedMessages,
+    setGroupedMessages,
+    addMessageToGroupCB
   });
 
   useMessageSubscription({
-    messages,
     guild,
     channel,
-    setMessages,
-    threadId
+    threadId,
+    groupedMessages,
+    setGroupedMessages,
+    addMessageToGroupCB
   });
 
   return (

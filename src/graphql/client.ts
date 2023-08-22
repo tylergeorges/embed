@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-bitwise */
 import { Client, fetchExchange, subscriptionExchange } from 'urql';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
@@ -45,6 +44,8 @@ const cache = cacheExchange({
         const newMessage = _result.sendMessage as Message;
 
         if (newMessage && user) {
+          newMessage.author.id = user.id;
+
           _cache
             .inspectFields('Query')
             .filter(field => field.fieldName === 'channelV2')
@@ -78,7 +79,7 @@ const cache = cacheExchange({
   },
 
   optimistic: {
-    sendMessage(args): Message | {} {
+    sendMessage(args): (Message & { isOptimistic: true }) | {} {
       const user = store.getState().user.data;
 
       if (!user) return {};
@@ -89,11 +90,11 @@ const cache = cacheExchange({
         channelId: args.channel as string,
         content: args.content as string,
         type: MessageType.Default,
-        flags: 1 << 4, // reusing flag for optimistic messages
         createdAt: +new Date(),
         editedAt: null,
-        isGuest: user.provider === 'Guest',
+        isGuest: true,
         unread: true,
+        flags: 1 << 4,
         author: {
           __typename: 'User',
           avatarUrl: user.avatarUrl,
@@ -101,8 +102,7 @@ const cache = cacheExchange({
           bot: true,
           color: 0,
           discrim: '0000',
-          id: '_id' in user ? user._id : user.id,
-          flags: null,
+          // id: user.id,
           name: user.username,
           roles: [],
           system: false,

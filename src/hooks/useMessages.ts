@@ -1,5 +1,3 @@
-/* eslint-disable no-bitwise */
-/* eslint-disable no-continue */
 import { useQuery } from 'urql';
 import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
 import { MessagesQueryQueryVariables, BaseMessageFragment, Message } from '@graphql/graphql';
@@ -7,20 +5,19 @@ import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 import { messagesQuery, moreMessagesQuery } from '@hooks/messagesQuery';
-import { StateMessages } from 'types/messages.types';
 import { MessagesQuery, client } from '@graphql/client';
 import { getOptimisticIndex } from '@util/getOptimisticIndex';
 
 type MessageState = {
-  groupedMessages: APIMessage[][];
   firstItemIndex: number;
 };
 
 interface UseMessagesProps {
   guild: string;
   channel: string;
-  messages: StateMessages[];
-  setMessages: Dispatch<SetStateAction<StateMessages[]>>;
+  groupedMessages: APIMessage[][];
+  setGroupedMessages: Dispatch<SetStateAction<APIMessage[][]>>;
+  addMessageToGroupCB: (msg: BaseMessageFragment) => void;
   threadId?: string;
 }
 
@@ -28,8 +25,9 @@ export const useMessages = ({
   guild,
   channel,
   threadId,
-  setMessages,
-  messages
+  setGroupedMessages,
+  groupedMessages,
+  addMessageToGroupCB
 }: UseMessagesProps) => {
   const [variables, setVariables] = useState<MessagesQueryQueryVariables>({
     guild,
@@ -48,43 +46,40 @@ export const useMessages = ({
 
   useEffect(() => {
     if (variables.channel !== channel || variables.threadId !== threadId) {
-      setMessages([]);
+      setGroupedMessages([]);
       setVariables({ channel, threadId, guild });
     }
 
     const apiMsgs: Message[] = data?.channelV2?.messageBunch?.messages ?? [];
 
+    const lastGroup = groupedMessages[groupedMessages.length - 1] ?? [];
+
+    const lastGroupedMessage = lastGroup[lastGroup.length - 1];
+
     const isReadyWithMessages =
-      isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
+      isReady && apiMsgs[apiMsgs.length - 1]?.id !== lastGroupedMessage?.id;
 
-    const msgs = isReadyWithMessages ? apiMsgs : [];
+    if (isReadyWithMessages) {
+      if (groupedMessages.length === 0) {
+        setGroupedMessages(
+          groupMessages(apiMsgs.map(msg => convertMessageToDiscord(msg as BaseMessageFragment)))
+        );
 
-    if (msgs.length) {
-      if (isReadyWithMessages) {
-        // @ts-expect-error
-        setNewMessageGroupLength(groupMessages(msgs).length);
+        setNewMessageGroupLength(groupedMessages.length);
+      } else if (groupedMessages.length) {
+        const recentMessage = apiMsgs[apiMsgs.length - 1];
 
-        if (messages.length === 0) {
-          setMessages(msgs);
-        } else if (messages.length) {
-          const recentMessage = msgs[msgs.length - 1];
+        // Make sure we dont add message twice
+        if (recentMessage && !lastGroup.find(m => m.id === recentMessage.id)) {
+          const optimisticIndex = getOptimisticIndex(lastGroup, recentMessage);
 
-          const msgFlags = recentMessage.flags as number;
-
-          if (!(msgFlags & (1 << 4))) {
-            // trims spaces so Discord's normalization doesn't break it
-            const optimisticIndex = getOptimisticIndex(messages, recentMessage);
-
-            if (optimisticIndex > -1) {
-              setMessages(prevMsgs => prevMsgs.filter((m, idx) => idx === optimisticIndex));
-            }
-          } else {
-            // setMessages(prev => [...prev, recentMessage]);
+          // Make sure optimistic message isnt in array
+          if (optimisticIndex === -1) {
+            addMessageToGroupCB(recentMessage);
           }
         }
       }
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isReady]);
 
@@ -101,17 +96,19 @@ export const useMessages = ({
         .then(res => {
           if (!res.data || !res.data.channelV2) return;
 
-          const oldMessages = res.data.channelV2.messageBunch.messages;
+          const oldMessages = groupMessages(
+            res.data.channelV2.messageBunch.messages.map(m => convertMessageToDiscord(m))
+          );
 
-          setMessages(recent => [...oldMessages, ...recent]);
+          setGroupedMessages(recent => [...oldMessages, ...recent]);
         });
     },
-    [channel, guild, isReady, threadId, setMessages]
+    [channel, guild, isReady, threadId, setGroupedMessages]
   );
 
   const loadMoreMessages = useCallback(() => {
-    fetchMore(messages[0].id);
-  }, [fetchMore, messages]);
+    fetchMore(groupedMessages[0][0].id);
+  }, [fetchMore, groupedMessages]);
 
   let messageState: MessageState;
 
@@ -119,27 +116,23 @@ export const useMessages = ({
   messageState = useMemo(() => {
     let firstItemIndex = 100_000;
 
-    if (messages === undefined)
+    if (groupedMessages.length === 0)
       return {
-        groupedMessages: [],
         firstItemIndex
       };
 
-    const grouped = groupMessages(
-      messages.map(msg => convertMessageToDiscord(msg as BaseMessageFragment))
-    );
-    firstItemIndex -= grouped.length - 1;
+    firstItemIndex -= groupedMessages.length - 1;
 
     return {
-      groupedMessages: grouped,
       firstItemIndex
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [variables, messages]);
+  }, [variables, groupedMessages]);
 
   return {
     ...messageState,
+    groupedMessages,
     loadMoreMessages,
     newMessageGroupLength,
     isReady

@@ -1,30 +1,33 @@
 /* eslint-disable no-bitwise */
 import { useSubscription } from 'urql';
 import { Dispatch, SetStateAction } from 'react';
-import { Message, NewMessageSubscription, UpdatedMessage } from '@graphql/graphql';
+import { BaseMessageFragment, Message, NewMessageSubscription } from '@graphql/graphql';
 import {
   deletedMessageSubscription,
   newMessageSubscription,
   updateMessageSubscription
 } from '@hooks/messagesQuery';
-import { StateMessages } from 'types/messages.types';
 import { getOptimisticIndex } from '@util/getOptimisticIndex';
+import { APIMessage } from 'discord-api-types/v10';
+import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 
 interface UseSubArgs {
   guild: string;
   channel: string;
-  messages: StateMessages[];
-  setMessages: Dispatch<SetStateAction<StateMessages[]>>;
+  groupedMessages: APIMessage[][];
+  setGroupedMessages: Dispatch<SetStateAction<APIMessage[][]>>;
+  addMessageToGroupCB: (msg: BaseMessageFragment) => void;
   threadId?: string;
   // scrollToBottom: (index: number) => void;
 }
 
 export const useMessageSubscription = ({
-  messages,
-  setMessages,
   channel,
   guild,
-  threadId
+  threadId,
+  addMessageToGroupCB,
+  groupedMessages,
+  setGroupedMessages
 }: UseSubArgs) => {
   useSubscription(
     {
@@ -35,27 +38,19 @@ export const useMessageSubscription = ({
     (prev, data) => {
       const newMessage = data.messageV2 as NewMessageSubscription & Message;
 
-      if (newMessage && !messages.find(m => m.id === newMessage.id)) {
-        const msgFlags = newMessage.flags as number;
+      const lastGroup = groupedMessages[groupedMessages.length - 1];
 
-        if (!(msgFlags & (1 << 4))) {
-          const optimisticIndex = getOptimisticIndex(messages, newMessage);
+      const isMessageAdded = lastGroup.find(m => m.id === newMessage.id);
 
-          if (optimisticIndex > -1) {
-            setMessages(prevMsgs => {
-              prevMsgs.splice(optimisticIndex, 1, newMessage);
+      if (!isMessageAdded) {
+        const optimisticIndex = getOptimisticIndex(lastGroup, newMessage);
 
-              return prevMsgs;
-            });
-
-            return data;
-          }
-
-          setMessages(msgs => [...msgs, newMessage]);
+        if (optimisticIndex > -1) {
           return data;
         }
 
-        setMessages(msgs => [...msgs, newMessage]);
+        addMessageToGroupCB(newMessage);
+        return data;
       }
 
       return data;
@@ -73,7 +68,9 @@ export const useMessageSubscription = ({
       if (messageDeleteV2) {
         const messageId = messageDeleteV2.id;
 
-        setMessages(oldMsgs => oldMsgs.filter(msg => msg.id !== messageId));
+        setGroupedMessages(msgGroups =>
+          msgGroups.map(group => group.filter(msg => msg.id !== messageId))
+        );
       }
 
       return data;
@@ -86,18 +83,20 @@ export const useMessageSubscription = ({
       query: updateMessageSubscription
     },
     (prev, data) => {
-      const updatedMessage = data.messageUpdateV2 as UpdatedMessage;
+      const updatedMessage = data.messageUpdateV2 as Message;
 
-      if (updatedMessage && typeof updatedMessage.content === 'string') {
-        const oldMessages = messages;
+      if (updatedMessage) {
+        setGroupedMessages(msgGroups =>
+          msgGroups.map(group => {
+            const oldMessageIdx = group.findIndex(msg => msg.id === updatedMessage.id);
 
-        const messageIdx = messages.findIndex(msg => msg.id === updatedMessage.id);
+            if (oldMessageIdx >= 0) {
+              group[oldMessageIdx] = convertMessageToDiscord(updatedMessage);
+            }
 
-        if (messageIdx >= 0) {
-          oldMessages[messageIdx] = updatedMessage;
-
-          setMessages(oldMessages);
-        }
+            return group;
+          })
+        );
       }
       return data;
     }

@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import { APIMessage, MessageType } from 'discord-api-types/v10';
 import { BaseMessageFragment } from '@graphql/graphql';
 import { getAvatarId } from '@util/convertToDiscord/getAvatarId';
@@ -10,10 +11,11 @@ export const convertMessageToDiscord = (message: BaseMessageFragment): APIMessag
   // convert epoch to '2022-11-17T19:23:27.904000+00:00'
   timestamp: new Date(message.createdAt).toISOString(),
   edited_timestamp: message.editedAt,
+  flags: message.flags === 16 ? 1 << 4 : 0,
 
   author: {
     id: message.author.id,
-    bot: message.author.bot,
+    bot: message.isGuest,
     username: message.author.name,
     avatar: getAvatarId(message.author.avatarUrl),
     global_name: message.author.name,
