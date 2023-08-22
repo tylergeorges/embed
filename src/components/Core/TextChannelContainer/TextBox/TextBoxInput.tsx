@@ -1,5 +1,6 @@
 import * as Styles from '@components/Core/TextChannelContainer/styles';
-import { useStoreState } from '@state';
+import { useAuthApi } from '@hooks/useAuthAPI';
+import { useStoreActions, useStoreState } from '@state';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -16,18 +17,34 @@ type ModifierKeys = {
 interface TextBoxInputProps {
   canSend: boolean;
   handleInputSubmit: (content: string) => void;
+  isAuthed: boolean;
   channelIsThread?: boolean;
 }
+
+const getPlaceholder = (isAuthed: boolean, canSend: boolean) => {
+  if (!isAuthed) {
+    return 'input.login';
+  }
+
+  if (canSend) {
+    return 'input.message';
+  }
+
+  return 'input.noperms';
+};
 
 export const TextBoxInput = ({
   channelIsThread,
   handleInputSubmit,
-  canSend
+  canSend,
+  isAuthed
 }: TextBoxInputProps) => {
   const { t } = useTranslation();
-
+  const { discordSignIn } = useAuthApi();
   const currentThread = useStoreState(state => state.guild.currentThread);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
+  const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
+  const guildSettings = useStoreState(state => state.guild.settings);
 
   const [modifierKeys, setModifierKeys] = useState<ModifierKeys>({
     Shift: { isHolding: false },
@@ -138,14 +155,31 @@ export const TextBoxInput = ({
     }
   };
 
-  const placeholder = canSend
-    ? t('input.message', {
-        CHANNEL: channelIsThread ? currentThread?.name : currentChannel?.name
-      })
-    : t('input.noperms');
+  const showGuestForm = () => {
+    if (!isAuthed && !guildSettings?.readonly) {
+      if (guildSettings?.guestMode) {
+        setShowGuestFormModal(true);
+      } else {
+        discordSignIn();
+      }
+    }
+  };
+
+  const placeholderOptions =
+    canSend && isAuthed
+      ? {
+          CHANNEL: channelIsThread ? currentThread?.name : currentChannel?.name
+        }
+      : {};
+
+  const placeholder = t(getPlaceholder(isAuthed, canSend), placeholderOptions);
 
   return (
-    <Styles.TextBoxInputWrapper canSend={canSend}>
+    <Styles.TextBoxInputWrapper
+      canSend={canSend}
+      isAuthed={isAuthed}
+      onClick={isAuthed ? undefined : showGuestForm}
+    >
       <Styles.TextInput
         onKeyUp={handleKeyUp}
         onPaste={sanitizePaste}

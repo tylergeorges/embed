@@ -3,6 +3,12 @@ import { APIMessage, MessageType } from 'discord-api-types/v10';
 import { BaseMessageFragment } from '@graphql/graphql';
 import { getAvatarId } from '@util/convertToDiscord/getAvatarId';
 
+const getIdFromUrl = (avatarUrl: string) => {
+  const id = avatarUrl.split('/')[4] ?? null;
+
+  return id;
+};
+
 export const convertMessageToDiscord = (message: BaseMessageFragment): APIMessage => ({
   id: message.id,
   type: MessageType.Default,
@@ -14,7 +20,7 @@ export const convertMessageToDiscord = (message: BaseMessageFragment): APIMessag
   flags: message.flags === 16 ? 1 << 4 : 0,
 
   author: {
-    id: message.author.id,
+    id: '_id' in message.author ? message.author.id : getIdFromUrl(message.author.avatarUrl),
     bot: message.isGuest,
     username: message.author.name,
     avatar: getAvatarId(message.author.avatarUrl),

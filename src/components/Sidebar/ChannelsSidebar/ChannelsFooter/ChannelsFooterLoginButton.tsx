@@ -9,17 +9,17 @@ export const ChannelsFooterLoginButton = () => {
   const inProgressRef = useRef(false);
   const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
 
-  const isGuestMode = useStoreState(state => state.guild.settings)?.guestMode;
+  const guildSettings = useStoreState(state => state.guild.settings);
 
   const { discordSignIn } = useAuthApi();
 
   const login = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    if (!inProgressRef.current) {
+    if (!inProgressRef.current && !guildSettings?.readonly) {
       inProgressRef.current = true;
 
-      if (isGuestMode) {
+      if (guildSettings?.guestMode) {
         setShowGuestFormModal(true);
       } else {
         discordSignIn();

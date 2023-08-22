@@ -68,7 +68,7 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
         firstItemIndex={firstItemIndex}
       />
 
-      <TextBox channelIsThread={channelIsThread} canSend={!!canSend && !!user} />
+      <TextBox channelIsThread={channelIsThread} canSend={!!canSend && !!user} isAuthed={!!user} />
     </Styles.MessageWrapper>
   );
 };

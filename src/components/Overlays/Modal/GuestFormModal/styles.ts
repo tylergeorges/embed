@@ -82,7 +82,7 @@ export const GuestFormLoginButtonLabel = styled.withConfig({
   fontSize: theme.fontSizes.lg,
 
   zIndex: theme.zIndices.tooltip,
-  fontWeight: '$medium'
+  fontWeight: theme.fontWeights.medium
 });
 
 export const GuestFormInputRoot = styled.withConfig({

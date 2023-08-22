@@ -185,15 +185,7 @@ export const TextBoxWrapper = styled.withConfig({
 
   marginBottom: theme.space.xl.value,
 
-  userSelect: 'none',
-
-  variants: {
-    canSend: {
-      false: {
-        cursor: 'not-allowed'
-      }
-    }
-  }
+  userSelect: 'none'
 });
 
 export const TextBoxForm = styled.withConfig({
@@ -211,6 +203,16 @@ export const TextBoxForm = styled.withConfig({
     canSend: {
       false: {
         cursor: 'not-allowed'
+      },
+
+      true: {
+        overflowY: 'auto'
+      }
+    },
+
+    isAuthed: {
+      false: {
+        cursor: 'pointer'
       },
 
       true: {
@@ -243,10 +245,8 @@ export const TextBoxInputWrapper = styled.withConfig({
   position: 'relative',
 
   width: '100%',
-  // height: '100%',
   display: 'flex',
   alignItems: 'center',
-  // justifyContent: 'center',
 
   variants: {
     canSend: {
@@ -259,8 +259,38 @@ export const TextBoxInputWrapper = styled.withConfig({
       true: {
         cursor: 'text'
       }
+    },
+
+    isAuthed: {
+      false: {
+        cursor: 'pointer',
+        opacity: '50%'
+      },
+
+      true: {
+        cursor: 'text'
+      }
     }
-  }
+  },
+
+  compoundVariants: [
+    {
+      canSend: false,
+      isAuthed: false,
+      css: {
+        pointerEvents: 'initial',
+        cursor: 'pointer'
+      }
+    },
+    {
+      canSend: true,
+      isAuthed: false,
+      css: {
+        pointerEvents: 'initial',
+        cursor: 'pointer'
+      }
+    }
+  ]
 });
 
 export const TextInput = styled.withConfig({

@@ -152,7 +152,7 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
   const [{ data, fetching }, fetchHook] = useQuery({
     query: guildDocument,
     variables: { id: guildId },
-    requestPolicy: 'cache-and-network'
+    requestPolicy: 'network-only'
   });
 
   const shouldRefetchGuild = useStoreState(state => state.guild.refetchGuild);

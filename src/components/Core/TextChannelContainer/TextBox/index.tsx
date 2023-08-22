@@ -8,11 +8,12 @@ import * as Styles from '../styles';
 import { useAppRouter } from '../../../../hooks/useAppRouter';
 
 interface TextBoxProps {
-  channelIsThread?: boolean;
+  isAuthed: boolean;
   canSend: boolean;
+  channelIsThread?: boolean;
 }
 
-export const TextBox = ({ channelIsThread, canSend }: TextBoxProps) => {
+export const TextBox = ({ channelIsThread, canSend, isAuthed }: TextBoxProps) => {
   const fileAttachmentRef = useRef<HTMLInputElement>(null);
   const { threadId } = useAppRouter();
 
@@ -42,9 +43,9 @@ export const TextBox = ({ channelIsThread, canSend }: TextBoxProps) => {
   );
 
   return (
-    <Styles.TextBoxWrapper canSend={canSend}>
-      <Styles.TextBoxForm id="text-box_form" canSend={canSend}>
-        {canSend && (
+    <Styles.TextBoxWrapper>
+      <Styles.TextBoxForm id="text-box_form" canSend={canSend} isAuthed={isAuthed}>
+        {canSend && isAuthed && (
           <Styles.TextBoxButtonWrapper>
             <input
               hidden
@@ -66,10 +67,11 @@ export const TextBox = ({ channelIsThread, canSend }: TextBoxProps) => {
         <TextBoxInput
           channelIsThread={channelIsThread}
           handleInputSubmit={handleInputSubmit}
+          isAuthed={isAuthed}
           canSend={canSend}
         />
 
-        {canSend && (
+        {canSend && isAuthed && (
           <Styles.TextBoxButtonWrapper>
             <EmojisButton />
           </Styles.TextBoxButtonWrapper>

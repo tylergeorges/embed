@@ -37,17 +37,18 @@ export const useMessages = ({
 
   const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
 
-  const [{ data }] = useQuery<MessagesQuery>({
+  const [{ data }, fetchHook] = useQuery<MessagesQuery>({
     query: messagesQuery,
-    variables: { guild, threadId, channel }
+    variables
   });
 
   const isReady = (data && data.channelV2?.id === channel) || false;
 
   useEffect(() => {
     if (variables.channel !== channel || variables.threadId !== threadId) {
-      setGroupedMessages([]);
       setVariables({ channel, threadId, guild });
+      fetchHook({ requestPolicy: 'network-only' });
+      setGroupedMessages([]);
     }
 
     const apiMsgs: Message[] = data?.channelV2?.messageBunch?.messages ?? [];
@@ -81,7 +82,7 @@ export const useMessages = ({
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isReady]);
+  }, [data, isReady, channel, threadId]);
 
   const fetchMore = useCallback(
     (before: string) => {
