@@ -3,41 +3,30 @@ import { GuestFormInput } from '@components/Overlays/Modal/GuestFormModal/GuestF
 import * as Styles from '@components/Overlays/Modal/GuestFormModal/styles';
 import { useAuthApi } from '@hooks/useAuthAPI';
 import { useStoreActions, useStoreState } from '@state';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { forwardRef, useCallback, useRef, useState } from 'react';
 
 interface GuestFormProps {
   hideForm: () => void;
 }
 
-const GuestForm = ({ hideForm }: GuestFormProps) => {
+const GuestForm = forwardRef<HTMLInputElement, GuestFormProps>(({ hideForm }, ref) => {
   const { guestSignIn, discordSignIn } = useAuthApi();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [username, setUsername] = useState('');
   const isFetching = useRef(false);
 
-  const showGuestFormModal = useStoreState(state => state.ui.showGuestFormModal);
+  const inputRef = ref as React.MutableRefObject<HTMLInputElement>;
 
   const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
-
-  useEffect(() => {
-    if (!showGuestFormModal) {
-      setUsername('');
-    }
-
-    if (!username.trim()) {
-      setIsButtonDisabled(true);
-    }
-  }, [username, showGuestFormModal]);
 
   const submitForm = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    if (isButtonDisabled || isFetching.current) return;
+    if (isButtonDisabled || isFetching.current || !inputRef) return;
 
     isFetching.current = true;
 
-    guestSignIn(username)
+    guestSignIn(inputRef.current.value.trim())
       .then(() => {
         hideForm();
       })
@@ -45,7 +34,7 @@ const GuestForm = ({ hideForm }: GuestFormProps) => {
         console.error(err);
       });
 
-    setUsername('');
+    inputRef.current.value = '';
     isFetching.current = false;
     setShowGuestFormModal(false);
   };
@@ -53,13 +42,11 @@ const GuestForm = ({ hideForm }: GuestFormProps) => {
   const onInput = (e: React.FormEvent<HTMLInputElement>) => {
     const target = e.target as HTMLInputElement;
 
-    setUsername(target.value);
+    const textValue = target.value;
 
-    const userCanSubmit = !!target.value.trim();
-
-    if (userCanSubmit && isButtonDisabled) {
+    if (textValue.trim() && isButtonDisabled) {
       setIsButtonDisabled(false);
-    } else if (!userCanSubmit && !isButtonDisabled) {
+    } else if (!textValue.trim() && !isButtonDisabled) {
       setIsButtonDisabled(true);
     }
   };
@@ -70,10 +57,11 @@ const GuestForm = ({ hideForm }: GuestFormProps) => {
         <GuestFormInput
           label="Name"
           onInput={onInput}
-          value={username}
           maxLength={80}
           minLength={1}
           color="light"
+          ref={ref}
+          type="text"
         />
 
         <Styles.GuestFormLoginButton
@@ -98,11 +86,13 @@ const GuestForm = ({ hideForm }: GuestFormProps) => {
       </Styles.GuestFormDiscordAuth>
     </>
   );
-};
+});
+
+GuestForm.displayName = 'GuestForm';
 
 export const GuestFormModal = () => {
   const isFetching = useRef(false);
-
+  const inputRef = useRef<HTMLInputElement>(null);
   const showGuestFormModal = useStoreState(state => state.ui.showGuestFormModal);
 
   const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
@@ -112,8 +102,10 @@ export const GuestFormModal = () => {
   const hideForm = useCallback(() => {
     setShowGuestFormModal(false);
 
+    if (inputRef.current) inputRef.current.value = '';
+
     isFetching.current = false;
-  }, [setShowGuestFormModal]);
+  }, [setShowGuestFormModal, inputRef]);
 
   if (user) return null;
 
@@ -127,7 +119,7 @@ export const GuestFormModal = () => {
       titleAlignment="center"
       containerSize="sm"
     >
-      <GuestForm hideForm={hideForm} />
+      <GuestForm hideForm={hideForm} ref={inputRef} />
     </Modal>
   );
 };
