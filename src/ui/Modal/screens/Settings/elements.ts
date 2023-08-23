@@ -5,7 +5,6 @@ export const Root = styled(Modal.Content)`
   padding: 20px;
   text-align: center;
   user-select: none;
-  width: 250px;
   max-width: 95%;
   top: 50%;
   left: 50%;

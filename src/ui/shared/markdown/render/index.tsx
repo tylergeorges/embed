@@ -11,6 +11,8 @@ import SimpleMarkdown, { defaultRules } from "simple-markdown";
 import TextSpoiler from "@ui/shared/markdown/render/elements/TextSpoiler";
 import { Message_author, Message_mentions } from '@generated'
 import { Timestamp } from './elements/Timestamp'
+import { store } from '@models'
+import { settingsStore } from '@store'
 
 function parserFor(rules: SimpleMarkdown.ReactRules, returnAst?) {
   const parser = SimpleMarkdown.parserFor(rules)
@@ -98,17 +100,26 @@ function createRules(rule: { [key: string]: any }) {
     },
     link: {
       ...link,
-      react: (node, recurseOutput, state) => (
-        <Link
-          title={node.title || astToString(node.content)}
+      react(node, recurseOutput, state) {
+        const url = SimpleMarkdown.sanitizeUrl(node.target)
+        const content = astToString(node.content)
+        const masked = url !== content
+
+        return <Link
+          title={masked ? `${node.title || content}\n\n(${url})` : url}
           href={SimpleMarkdown.sanitizeUrl(node.target)}
           target="_blank"
           rel="noreferrer"
           key={state.key}
+          onClick={e => {
+            if (!masked || !settingsStore.linkWarning) return
+            e.preventDefault()
+            store.modal.openLink(url)
+          }}
         >
           {recurseOutput(node.content, state)}
         </Link>
-      )
+      }
     },
     inlineCode: {
       ...inlineCode,

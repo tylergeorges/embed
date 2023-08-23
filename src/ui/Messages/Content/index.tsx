@@ -1,5 +1,5 @@
 import {Children, memo, ReactChild, ReactNode, useMemo,} from "react";
-import Markdown, { LinkMarkdown } from "@ui/shared/markdown/render";
+import { LinkMarkdown } from "@ui/shared/markdown/render";
 import {
   Message as MessageData,
   Message_attachments,
@@ -177,17 +177,9 @@ function Content(props: ContentProps) {
           <ContentContainerBase data-is-reply-content={props.isReplyContent}>
             {props.message.content.length > 0
               ? <>
-                  {props.message.author.isWebhook
-                    ? (
-                      <LinkMarkdown mentions={props.message.mentions}>
-                        {props.message.content}
-                      </LinkMarkdown>
-                    ) : (
-                      <Markdown mentions={props.message.mentions}>
-                        {props.message.content}
-                      </Markdown>
-                    )
-                  }
+                  <LinkMarkdown mentions={props.message.mentions}>
+                    {props.message.content}
+                  </LinkMarkdown>
                   {props.message.editedAt && <Edited editedAt={props.message.editedAt} />}
                 </>
               : <ReplyAccessoryText>{dominantAccessoryText}</ReplyAccessoryText>

@@ -10,10 +10,18 @@ import moment from "moment";
 import {LinkMarkdown, parseEmbedTitle} from "@ui/shared/markdown/render";
 import useSize from "@ui/Messages/Content/Embed/useSize";
 import EmbedVideo from "@ui/Messages/Content/Embed/EmbedVideo";
+import { settingsStore } from "@store";
+import { store } from "@models";
 
 export interface EmbedProps {
   embed: Message_embeds;
   images: Embed_image[] | undefined;
+}
+
+const openLink = (e: React.MouseEvent<HTMLAnchorElement>, url: string) => {
+  if (!settingsStore.linkWarning) return
+  e.preventDefault()
+  store.modal.openLink(url)
 }
 
 function Embed({embed, images}: EmbedProps) {
@@ -52,7 +60,13 @@ function Embed({embed, images}: EmbedProps) {
         <EmbedStyle.Content>
           {embed.provider && (
             <EmbedStyle.Provider>
-              {embed.provider.name}
+              {embed.provider.url
+                ? (
+                  <a href={embed.provider.url} target="_blank" rel="noreferrer" onClick={e => openLink(e, embed.provider.url)}>{embed.provider.name}</a>
+                )
+                : (
+                  embed.provider.name
+                )}
             </EmbedStyle.Provider>
           )}
           {embed.author && (
@@ -63,7 +77,7 @@ function Embed({embed, images}: EmbedProps) {
               <EmbedStyle.AuthorName>
                 {embed.author.url
                 ? (
-                  <a href={embed.author.url} target="_blank">{embed.author.name}</a>
+                  <a href={embed.author.url} target="_blank" rel="noreferrer" onClick={e => openLink(e, embed.author.url)}>{embed.author.name}</a>
                 )
                 : (
                   embed.author.name
@@ -74,7 +88,7 @@ function Embed({embed, images}: EmbedProps) {
           {embed.title && (
             embed.url !== null
               ? (
-                <EmbedStyle.TitleWithUrl href={embed.url} target="_blank">
+                <EmbedStyle.TitleWithUrl href={embed.url} target="_blank" rel="noreferrer" onClick={e => openLink(e, embed.url)}>
                   {parseEmbedTitle(embed.title)}
                 </EmbedStyle.TitleWithUrl>
               )
