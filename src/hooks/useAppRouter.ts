@@ -6,5 +6,5 @@ export const useAppRouter = () => {
 
   const { channel: channelId, guild: guildId, thread: threadId } = router.query as RouterQuery;
 
-  return { channelId, guildId, threadId, router };
+  return { channelId, guildId, threadId, router, isRouteLoaded: router.isReady };
 };
