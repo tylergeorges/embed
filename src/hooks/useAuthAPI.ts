@@ -53,7 +53,7 @@ export const useAuthApi = () => {
           break;
       }
     },
-    [setRefetchGuild]
+    [setRefetchGuild, setShowGuestFormModal]
   );
 
   const guestSignIn = useCallback(

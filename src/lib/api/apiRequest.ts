@@ -1,5 +1,5 @@
 import { API_URL, Endpoints } from '@lib/api/url';
-import { DiscordUser } from 'types/user.types';
+import { AuthUser } from 'types/user.types';
 import {
   APIGuestResponse,
   APIGuildResponse,
@@ -45,20 +45,13 @@ export async function apiRequest<T>({
     mode: 'cors',
     body: JSON.stringify(options.payload)
   })
-    .then(res => {
-      console.log(res);
-      return res.json();
-    })
-    .then((data: T) => {
-      console.log(data);
-
-      return data;
-    })
+    .then(res => res.json())
+    .then((data: T) => data)
     .catch(err => err);
 }
 
 export const fetchLatestProfile = ({ userToken }: LatestProfileArgs) =>
-  apiRequest<DiscordUser>({
+  apiRequest<AuthUser>({
     endpoint: Endpoints.auth.fetchLatestProfile,
     method: 'GET',
     userToken

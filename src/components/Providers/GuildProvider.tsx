@@ -123,7 +123,6 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     }
     // If auth state changed, refetch channels
     else if (shouldRefetchGuild) {
-      console.log('refetch guild', newToken);
       fetchHook({
         requestPolicy: 'network-only',
         fetchOptions: { headers: { Authorization: newToken } }
