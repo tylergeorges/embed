@@ -82,6 +82,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
         produce(prev, (data?: { channel: Messages_channel }) => {
           const messages = data?.channel.messageBunch.messages;
           if (!messages) {
+            query.refetch()
             console.warn('NEW_MESSAGE received empty initial state within subscription', subscriptionData, data);
             return;
           }
@@ -124,6 +125,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
         produce(prev, (data?: { channel: Messages_channel }) => {
           const messages = data?.channel.messageBunch.messages;
           if (!messages) {
+            query.refetch()
             console.warn('MESSAGE_UPDATED received empty initial state within subscription', subscriptionData, data);
             return;
           }
@@ -156,6 +158,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
         produce(prev, (data?: { channel: Messages_channel }) => {
           const messages = data?.channel.messageBunch.messages;
           if (!messages) {
+            query.refetch()
             console.warn('MESSAGE_DELETED received empty initial state within subscription', subscriptionData, data);
             return;
           }
@@ -182,6 +185,7 @@ export const useMessages = (channel: string, guild: string, thread?: string) => 
         produce(prev, (data?: { channel: Messages_channel }) => {
           const channel = data?.channel;
           if (!channel) {
+            query.refetch()
             console.warn('MESSAGES_BULK_DELETED received empty initial state within subscription', subscriptionData, data);
             return;
           }
