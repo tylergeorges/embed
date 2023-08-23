@@ -11,7 +11,7 @@ export const ThreadsButton = () => {
   const showThreadsModal = useStoreState(state => state.ui.showThreadsModal);
   const guildChannels = useStoreState(state => state.guild.guildChannels);
 
-  const numOfThreads = guildChannels[channelId].threads?.length;
+  const numOfThreads = guildChannels[channelId]?.threads?.length ?? null;
 
   const openThreadsModal = (e: React.SyntheticEvent) => {
     e.preventDefault();
