@@ -29,6 +29,7 @@ export const GuestFormLoginButton = styled.withConfig({
   marginTop: theme.space.xl.value,
   transition: 'opacity ease',
   transitionDuration: theme.transitions.defaultDuration,
+  maxHeight: 45,
 
   // Buttons background color
   '&::before': {
@@ -174,4 +175,12 @@ export const GuestFormDiscordAuthButton = styled.withConfig({
   '&:hover': {
     textDecoration: 'underline'
   }
+});
+
+export const DiscordIconWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'icon-discord_wrapper'
+})('svg', {
+  position: 'relative',
+  size: theme.sizes.iconSizeLg
 });

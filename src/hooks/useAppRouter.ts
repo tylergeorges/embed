@@ -12,5 +12,13 @@ export const useAppRouter = () => {
     token: tokenParam
   } = router.query as RouterQuery;
 
-  return { channelId, guildId, threadId, router, tokenParam, usernameParam };
+  return {
+    channelId,
+    guildId,
+    threadId,
+    router,
+    tokenParam,
+    usernameParam,
+    isRouteLoaded: router.isReady
+  };
 };

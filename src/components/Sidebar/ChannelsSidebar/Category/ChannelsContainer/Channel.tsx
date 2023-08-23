@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { useStoreActions } from '@state';
 import { Thread } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Thread';
 import { useAppRouter } from '@hooks/useAppRouter';
@@ -10,7 +10,7 @@ interface ChannelNameProps {
   /** Check if the channel is the current channel selected. */
   isActive: boolean;
 
-  isCategoryOpen: boolean;
+  isCategoryOpen?: boolean;
 
   channelHasActiveThread: boolean;
 
@@ -28,6 +28,16 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
 
     const { channelId, guildId } = useAppRouter();
+
+    useEffect(() => {
+      if (isActive && ref) {
+        const channelRef = ref as React.MutableRefObject<HTMLAnchorElement>;
+        const channelEle = channelRef.current;
+
+        setCurrentChannelYPos(channelEle.offsetTop);
+        setInitChannelYPos(channelEle.offsetTop);
+      }
+    }, [setCurrentChannelYPos, setInitChannelYPos, isActive, ref]);
 
     const handleChannelClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       setCurrentChannelYPos(e.currentTarget.offsetTop);

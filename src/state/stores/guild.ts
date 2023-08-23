@@ -9,7 +9,7 @@ export interface GuildStore {
   data?: Guild;
   settings?: GuildSettings;
   channels?: GqlChannel[];
-  categories: Computed<GuildStore, Category[]>;
+  categories?: Category[];
   currentThread: Channel | undefined;
   currentChannel: { name: string; topic: string; canSend: boolean } | undefined;
   refetchGuild: boolean;
@@ -44,6 +44,7 @@ const addChannelToMap = (channels: GqlChannel[], guildChannels: GuildChannels) =
 
 const guild: GuildStore = {
   // State
+  categories: undefined,
   data: undefined,
   settings: undefined,
   channels: undefined,
@@ -52,21 +53,13 @@ const guild: GuildStore = {
   refetchGuild: false,
   roles: undefined,
 
+  // Computed
   guildChannels: computed(state => {
     if (!state.channels) return {};
 
     const guildChannels: GuildChannels = {};
 
     return addChannelToMap(state.channels, guildChannels);
-  }),
-
-  // Computed
-  categories: computed(state => {
-    if (!state.channels) return [];
-
-    return [...new Map(state.channels.map(c => [c.category?.id, c.category])).values()].sort(
-      (a, b) => (a?.position || 0) - (b?.position || 0) // we use || 0 in case position is undefined
-    ) as Category[];
   }),
 
   // Actions
@@ -89,11 +82,13 @@ const guild: GuildStore = {
   }),
 
   setChannels: action((state, payload) => {
-    if (payload.length !== state.channels?.length) {
-      const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
+    const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
 
-      state.channels = sortedChannels;
-    }
+    state.categories = [
+      ...new Map(sortedChannels.map(c => [c.category?.id, c.category])).values()
+    ] as Category[];
+
+    state.channels = sortedChannels;
   }),
 
   setCurrentThread: action((state, payload) => {

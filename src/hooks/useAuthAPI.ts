@@ -13,6 +13,7 @@ export const useAuthApi = () => {
   const inProgressRef = useRef(false);
   const setUserData = useStoreActions(state => state.user.setUserData);
   const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
+  const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
 
   const handleAuthMessage = useCallback(
     <T extends AuthUser>(authRes: AuthResponse<T>): HandleAuthMessageResponse<T> | undefined => {
@@ -27,6 +28,7 @@ export const useAuthApi = () => {
 
           const { token } = authRes;
           localStorage.setItem('token', token);
+          setShowGuestFormModal(false);
 
           setRefetchGuild(true);
           inProgressRef.current = false;
@@ -51,7 +53,7 @@ export const useAuthApi = () => {
           break;
       }
     },
-    [setRefetchGuild]
+    [setRefetchGuild, setShowGuestFormModal]
   );
 
   const guestSignIn = useCallback(

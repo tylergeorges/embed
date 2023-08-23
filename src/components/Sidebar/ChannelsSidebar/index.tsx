@@ -4,6 +4,9 @@ import { useContextMenu } from '@hooks/useContextMenu';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { Backdrop } from '@components/Overlays/Modal/styles';
 import { ChannelsFooter } from '@components/Sidebar/ChannelsSidebar/ChannelsFooter';
+import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
+import { useAppRouter } from '@hooks/useAppRouter';
+import { useRef } from 'react';
 import * as Styles from '../styles';
 import { Category } from './Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
@@ -12,10 +15,15 @@ export const ChannelsSidebar = () => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
   const { hideContextMenu } = useContextMenu();
 
+  const { channelId, threadId } = useAppRouter();
+
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
 
   const guildName = useStoreState(state => state.guild.data?.name) as string;
   const categories = useStoreState(state => state.guild.categories);
+  const channels = useStoreState(state => state.guild.channels);
+
+  const channelRef = useRef<HTMLAnchorElement>(null);
 
   const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
 
@@ -45,12 +53,25 @@ export const ChannelsSidebar = () => {
         </Styles.GuildHeaderWrapper>
 
         <Styles.ChannelsChildrenWrapper>
+          <ChannelHighlighter />
+
+          {channels
+            ?.filter(channel => channel.category === null)
+            .map(channel => (
+              <Channel
+                ref={channelRef}
+                channel={channel}
+                key={channel.id}
+                isActive={channel.id === channelId}
+                channelHasActiveThread={!!threadId && channel.id === channelId}
+              />
+            ))}
+
           {categories
-            .filter(category => category !== null)
+            ?.filter(category => category !== null)
             .map(category => (
               <Category category={category} key={category.id} />
             ))}
-          <ChannelHighlighter />
         </Styles.ChannelsChildrenWrapper>
 
         <ChannelsFooter />

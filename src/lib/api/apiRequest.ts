@@ -1,5 +1,5 @@
 import { API_URL, Endpoints } from '@lib/api/url';
-import { DiscordUser } from 'types/user.types';
+import { AuthUser } from 'types/user.types';
 import {
   APIGuestResponse,
   APIGuildResponse,
@@ -51,7 +51,7 @@ export async function apiRequest<T>({
 }
 
 export const fetchLatestProfile = ({ userToken }: LatestProfileArgs) =>
-  apiRequest<DiscordUser>({
+  apiRequest<AuthUser>({
     endpoint: Endpoints.auth.fetchLatestProfile,
     method: 'GET',
     userToken
