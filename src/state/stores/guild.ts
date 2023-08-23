@@ -24,7 +24,7 @@ export interface GuildStore {
   data?: Guild;
   settings?: GuildSettings;
   channels?: Channel[];
-  categories: Computed<GuildStore, Category[]>;
+  categories?: Category[];
   currentThread: Channel | undefined;
   currentChannel: { name: string; topic?: string | null } | undefined;
   refetchGuild: boolean;
@@ -76,13 +76,7 @@ const guild: GuildStore = {
   }),
 
   // Computed
-  categories: computed(state => {
-    if (!state.channels) return [];
-
-    return [...new Map(state.channels.map(c => [c.category?.id, c.category])).values()].sort(
-      (a, b) => (a?.position || 0) - (b?.position || 0) // we use || 0 in case position is undefined
-    ) as Category[];
-  }),
+  categories: undefined,
 
   // Actions
   setData: action((state, payload) => {
@@ -102,11 +96,13 @@ const guild: GuildStore = {
   }),
 
   setChannels: action((state, payload) => {
-    if (payload.length !== state.channels?.length) {
-      const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
+    const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
 
-      state.channels = sortedChannels;
-    }
+    state.categories = [
+      ...new Map(sortedChannels.map(c => [c.category?.id, c.category])).values()
+    ] as Category[];
+
+    state.channels = sortedChannels;
   }),
 
   setCurrentThread: action((state, payload) => {
@@ -114,14 +110,10 @@ const guild: GuildStore = {
   }),
 
   setCurrentChannel: action((state, payload) => {
-    const currentChannel = state.guildChannels[payload];
+    const currentChannel = state.guildChannels[payload] as Channel & { topic?: string };
 
-    if (currentChannel && 'topic' in currentChannel) {
-      state.currentChannel = {
-        name: currentChannel.name as string,
-        topic: currentChannel.topic as string
-      };
-    }
+    if (currentChannel)
+      state.currentChannel = { name: currentChannel.name, topic: currentChannel.topic ?? '' };
   })
 };
 

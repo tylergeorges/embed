@@ -11,7 +11,7 @@ interface ChannelNameProps {
   /** Check if the channel is the current channel selected. */
   isActive: boolean;
 
-  isCategoryOpen: boolean;
+  isCategoryOpen?: boolean;
 
   channelHasActiveThread: boolean;
 
@@ -48,6 +48,16 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     }, [refetchGuild, currentChannelYPos, ref, setInitChannelYPos, setCurrentChannelYPos]);
 
     const { channelId, guildId } = useAppRouter();
+
+    useEffect(() => {
+      if (isActive && ref) {
+        const channelRef = ref as React.MutableRefObject<HTMLAnchorElement>;
+        const channelEle = channelRef.current;
+
+        setCurrentChannelYPos(channelEle.offsetTop);
+        setInitChannelYPos(channelEle.offsetTop);
+      }
+    }, [setCurrentChannelYPos, setInitChannelYPos, isActive, ref]);
 
     const handleChannelClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       setCurrentChannelYPos(e.currentTarget.offsetTop);

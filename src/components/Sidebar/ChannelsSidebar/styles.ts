@@ -147,14 +147,14 @@ export const ChannelNameInner = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'channel-name_inner'
 })(Link, {
+  position: 'relative',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
 
   userSelect: 'none',
-
-  // ignoring this error because if we dont access the value property it outputs incorrect values.
-  // @ts-expect-error
+  zIndex: theme.zIndices.channelsSidebar,
+  // @ts-ignore
   paddingX: theme.space.xxs.value,
   width: '100%',
   fontSize: theme.fontSizes.lg,

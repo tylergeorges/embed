@@ -119,7 +119,8 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     const newToken = localStorage.getItem('token') ?? '';
 
     if (!guildId) {
-      router.push(`/channels/299881420891881473/368427726358446110`);
+      // router.push('/channels/585454996800405509/585840022511550494');
+      router.push('/channels/299881420891881473/1143579521371615243');
     }
     // If auth state changed, refetch channels
     else if (shouldRefetchGuild) {
