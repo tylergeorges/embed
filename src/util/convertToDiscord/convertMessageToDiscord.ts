@@ -4,13 +4,6 @@ import { BaseMessageFragment } from '@graphql/graphql';
 import { getAvatarId } from '@util/convertToDiscord/getAvatarId';
 import { ExpandedAPIMessage } from 'types/messages.types';
 
-// Used to resolve avatars for bot accounts
-const getIdFromUrl = (avatarUrl: string) => {
-  const id = avatarUrl.split('/')[4] ?? null;
-
-  return id;
-};
-
 export const convertMessageToDiscord = (message: BaseMessageFragment): ExpandedAPIMessage => ({
   id: message.id,
   type: MessageType.Default,
@@ -23,8 +16,8 @@ export const convertMessageToDiscord = (message: BaseMessageFragment): ExpandedA
   isGuest: message.isGuest,
 
   author: {
-    id: '_id' in message.author ? message.author.id : getIdFromUrl(message.author.avatarUrl),
-    bot: message.isGuest || message.author.bot,
+    id: message.author.id,
+    bot: message.author.bot,
     username: message.author.name,
     avatar: getAvatarId(message.author.avatarUrl),
     global_name: message.author.name,

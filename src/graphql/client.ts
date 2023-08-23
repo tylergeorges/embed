@@ -45,9 +45,6 @@ const cache = cacheExchange({
         const newMessage = _result.sendMessage as Message;
 
         if (newMessage && user) {
-          newMessage.author.id = user.id;
-          newMessage.isGuest = true;
-
           _cache
             .inspectFields('Query')
             .filter(field => field.fieldName === 'channelV2')
@@ -95,14 +92,14 @@ const cache = cacheExchange({
         type: MessageType.Default,
         createdAt: +new Date(),
         editedAt: null,
-        isGuest: true,
+        isGuest: user.provider !== 'Guest',
         unread: true,
         flags: 1 << 4,
         author: {
           __typename: 'User',
           avatarUrl: user.avatarUrl,
           avatar: user.avatarUrl,
-          bot: true,
+          bot: user.provider === 'Guest',
 
           color: 0,
           discrim: '0000',

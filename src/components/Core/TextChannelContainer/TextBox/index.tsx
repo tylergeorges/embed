@@ -4,8 +4,8 @@ import { EmojisButton } from '@components/Shared/Icons/Buttons/EmojisButton';
 import { TextBoxInput } from '@components/Core/TextChannelContainer/TextBox/TextBoxInput';
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
 import { useSendMessage } from '@hooks/useSendMessage';
+import { useAppRouter } from '@hooks/useAppRouter';
 import * as Styles from '../styles';
-import { useAppRouter } from '../../../../hooks/useAppRouter';
 
 interface TextBoxProps {
   isAuthed: boolean;
