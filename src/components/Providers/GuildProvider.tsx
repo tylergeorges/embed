@@ -99,7 +99,7 @@ export const guildDocument = graphql(/* GraphQL */ `
 `);
 
 export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps) {
-  const { guildId, router } = useAppRouter();
+  const { guildId, router, isRouteLoaded } = useAppRouter();
 
   const [{ data, fetching }, fetchHook] = useQuery({
     query: guildDocument,
@@ -116,14 +116,13 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
   const setChannels = useStoreActions(state => state.guild.setChannels);
 
   useEffect(() => {
-    const newToken = localStorage.getItem('token') ?? '';
-
-    if (!guildId) {
+    if (!guildId && isRouteLoaded) {
       // router.push('/channels/585454996800405509/585840022511550494');
       router.push('/channels/299881420891881473/1143579521371615243');
     }
     // If auth state changed, refetch channels
     else if (shouldRefetchGuild) {
+      const newToken = localStorage.getItem('token') ?? '';
       fetchHook({
         requestPolicy: 'network-only',
         fetchOptions: { headers: { Authorization: newToken } }
@@ -159,7 +158,8 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     shouldRefetchGuild,
     setRefetchGuild,
     guildData,
-    guildSettings
+    guildSettings,
+    isRouteLoaded
   ]);
 
   return <></>;

@@ -5,7 +5,7 @@ export default function Home() {
   const { router } = useAppRouter();
 
   useEffect(() => {
-    router.push('channels/299881420891881473/309009333436547082');
+    router.push('channels/299881420891881473/368427726358446110');
   }, [router]);
 
   return <></>;
