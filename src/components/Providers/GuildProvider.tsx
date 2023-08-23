@@ -58,7 +58,7 @@ const guildDocument = graphql(/* GraphQL */ `
 `);
 
 export default function GuildProvider({ children }: GuildProviderProps) {
-  const { guildId, router } = useAppRouter();
+  const { guildId, router, isRouteLoaded } = useAppRouter();
 
   const [{ data, fetching }] = useQuery({
     query: guildDocument,
@@ -71,9 +71,9 @@ export default function GuildProvider({ children }: GuildProviderProps) {
   const channels = useStoreState(state => state.guild.channels);
 
   useEffect(() => {
-    if (!guildId) {
-      // router.push('/channels/585454996800405509/585840022511550494');
-      router.push('/channels/299881420891881473/1143579521371615243');
+    if (!guildId && isRouteLoaded) {
+      // Redirects to WidgetBot #general
+      router.push('/channels/299881420891881473/368427726358446110');
     }
 
     if (data && !fetching) {
@@ -83,7 +83,7 @@ export default function GuildProvider({ children }: GuildProviderProps) {
       // @ts-expect-error
       setChannels(data.guild.channels);
     }
-  }, [data, fetching, setChannels, setGuildData, setSettings, guildId, router]);
+  }, [data, fetching, setChannels, setGuildData, setSettings, guildId, router, isRouteLoaded]);
 
   if (fetching || !data || channels === undefined) return <Loading />;
 
