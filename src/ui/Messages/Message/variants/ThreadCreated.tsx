@@ -25,13 +25,8 @@ interface ThreadCreatedProps {
 }
 
 function ThreadCreated(props: ThreadCreatedProps) {
-  const openThread = useCallback(() => generalStore.setActiveThread({
-    id: props.messageReference.channelId,
-    name: props.messageContent,
-    messageCount: 0,
-    archivedAt: null,
-    locked: false
-  }), [props.messageId, props.messageContent]);
+  const openThread = useCallback(() => generalStore.setActiveThread(props.thread),
+    [props.thread.id, props.thread.name, props.thread.locked]);
 
   if (props.thread === null)
     return (

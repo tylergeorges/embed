@@ -66,13 +66,7 @@ export default observer(({ guild, channel }: Props) => {
                                 const color = convertColor(getDominantRoleColor(message.author.roles))
 
                                 return <Post key={thread.id} onClick={() => {
-                                    generalStore.setActiveThread({
-                                        id: thread.id,
-                                        name: thread.name,
-                                        messageCount: 0,
-                                        archivedAt: null,
-                                        locked: false
-                                    })
+                                    generalStore.setActiveThread(thread)
                                 }}>
                                     <PostName>{thread.name}</PostName>
                                     <Preview>

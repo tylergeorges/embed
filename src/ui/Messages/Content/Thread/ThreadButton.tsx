@@ -18,13 +18,8 @@ interface ThreadButtonProps {
 }
 
 function ThreadButton(props: ThreadButtonProps) {
-  const openThread = useCallback(() => generalStore.setActiveThread({
-    id: props.messageId,
-    name: props.messageContent,
-    messageCount: 0,
-    archivedAt: null,
-    locked: false
-  }), [props.messageId, props.messageContent]);
+  const openThread = useCallback(() => generalStore.setActiveThread(props.thread),
+    [props.thread.id, props.thread.name, props.thread.locked]);
 
   return (
     <ThreadButtonContainerBase>

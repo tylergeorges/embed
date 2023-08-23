@@ -197,6 +197,7 @@ export interface ForumPosts_channel_AnnouncementChannel_threads_ThreadChannel {
   __typename: "ThreadChannel";
   id: string;
   name: string;
+  locked: boolean;
   messageCount: number;
   appliedTags: string[];
   firstMessage: ForumPosts_channel_AnnouncementChannel_threads_ThreadChannel_firstMessage;
@@ -399,6 +400,7 @@ export interface ForumPosts_channel_ForumChannel_threads_ThreadChannel {
   __typename: "ThreadChannel";
   id: string;
   name: string;
+  locked: boolean;
   messageCount: number;
   appliedTags: string[];
   firstMessage: ForumPosts_channel_ForumChannel_threads_ThreadChannel_firstMessage;

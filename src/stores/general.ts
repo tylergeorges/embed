@@ -5,6 +5,8 @@ import { EmojiStore } from "@services/Emoji";
 import { defaultEmojis } from "@services/Emoji/defaultEmojis";
 import { MessageDataModified } from "@ui/Messages/Message";
 
+type Thread = Pick<Message_thread, 'id' | 'name' | 'locked'> & Partial<Pick<Message_thread, 'archivedAt'>>;
+
 export class GeneralStore {
   @observable appName = 'WidgetBot';
 
@@ -15,7 +17,7 @@ export class GeneralStore {
   @observable settings?: Settings_settings;
   @observable channels: ICategory[] = [];
   @observable menuOpen: boolean = false;
-  @observable activeThread?: Omit<Message_thread, '__typename'>;
+  @observable activeThread?: Thread;
   @observable threadFullscreen: boolean = false;
   @observable file?: File;
   @observable emojis = new EmojiStore(...defaultEmojis);
@@ -50,7 +52,7 @@ export class GeneralStore {
     this.channels = channels
   }
 
-  @action setActiveThread(data: Omit<Message_thread, '__typename'>) {
+  @action setActiveThread(data: Thread) {
     this.activeThread = data;
   }
 

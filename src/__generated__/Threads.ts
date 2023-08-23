@@ -186,6 +186,7 @@ export interface Threads_channel_threads_ThreadChannel {
   __typename: "ThreadChannel";
   id: string;
   name: string;
+  locked: boolean;
   messageBunch: Threads_channel_threads_ThreadChannel_messageBunch;
 }
 
