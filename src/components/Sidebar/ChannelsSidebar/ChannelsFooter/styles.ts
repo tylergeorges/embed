@@ -8,10 +8,9 @@ export const ChannelsFooterWrapper = styled.withConfig({
   width: '100%',
   display: 'flex',
   justifyContent: 'center',
-  // backgroundColor: 'rgb(27, 29, 32)',
-  backgroundOverlay: theme.colors.backgroundTertiary,
 
-  flexDirection: 'column'
+  flexDirection: 'column',
+  backgroundOverlay: theme.colors.background
 });
 
 export const ChannelsFooterLoginButton = styled.withConfig({
@@ -70,7 +69,6 @@ export const ChannelsFooterButtonWrapper = styled.withConfig({
   width: '100%',
   display: 'flex',
   justifyContent: 'center',
-  backgroundOverlay: theme.colors.backgroundSecondaryAlt,
   padding: theme.space.sm,
   alignItems: 'center',
   flexDirection: 'column',
@@ -86,7 +84,8 @@ export const ChannelsFooterVersionWrapper = styled.withConfig({
   justifyContent: 'center',
   color: theme.colors.primaryOpacity30,
   fontSize: theme.fontSizes.sm,
-  padding: theme.space.xs
+  padding: theme.space.xs,
+  backgroundOverlay: theme.colors.backgroundSecondaryAlt
 });
 
 export const ChannelsFooterUserWrapper = styled.withConfig({
@@ -103,7 +102,6 @@ export const ChannelsFooterUserWrapper = styled.withConfig({
   paddingY: theme.space.sm,
   gap: theme.space.sm,
 
-  // backgroundColor: 'rgb(38, 40, 44)',
   fontWeight: '500'
 });
 
