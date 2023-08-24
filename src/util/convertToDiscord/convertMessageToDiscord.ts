@@ -1,10 +1,12 @@
 /* eslint-disable no-bitwise */
 import { MessageType } from 'discord-api-types/v10';
-import { BaseMessageFragment } from '@graphql/graphql';
+import { BaseMessageFragment, Message } from '@graphql/graphql';
 import { getAvatarId } from '@util/convertToDiscord/getAvatarId';
 import { ExpandedAPIMessage } from 'types/messages.types';
 
-export const convertMessageToDiscord = (message: BaseMessageFragment): ExpandedAPIMessage => ({
+export const convertMessageToDiscord = (
+  message: BaseMessageFragment | Message
+): ExpandedAPIMessage => ({
   id: message.id,
   type: MessageType.Default,
   channel_id: message.channelId,

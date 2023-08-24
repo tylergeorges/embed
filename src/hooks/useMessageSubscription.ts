@@ -1,32 +1,26 @@
-/* eslint-disable no-bitwise */
 import { useSubscription } from 'urql';
 import { Dispatch, SetStateAction } from 'react';
-import { BaseMessageFragment, Message, NewMessageSubscription } from '@graphql/graphql';
 import {
   deletedMessageSubscription,
   newMessageSubscription,
   updateMessageSubscription
 } from '@hooks/messagesQuery';
-import { getOptimisticIndex } from '@util/getOptimisticIndex';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 import { ExpandedAPIMessage } from 'types/messages.types';
+import { addMessageToGroup } from '@util/groupMessages';
+import { Message } from '@graphql/graphql';
 
 interface UseSubArgs {
   guild: string;
   channel: string;
-  groupedMessages: ExpandedAPIMessage[][];
   setGroupedMessages: Dispatch<SetStateAction<ExpandedAPIMessage[][]>>;
-  addMessageToGroupCB: (msg: BaseMessageFragment) => void;
   threadId?: string;
-  // scrollToBottom: (index: number) => void;
 }
 
 export const useMessageSubscription = ({
   channel,
   guild,
   threadId,
-  addMessageToGroupCB,
-  groupedMessages,
   setGroupedMessages
 }: UseSubArgs) => {
   useSubscription(
@@ -36,22 +30,11 @@ export const useMessageSubscription = ({
     },
 
     (prev, data) => {
-      const newMessage = data.messageV2 as NewMessageSubscription & Message;
+      const newMessage = data.messageV2;
 
-      const lastGroup = groupedMessages[groupedMessages.length - 1];
+      const converted = convertMessageToDiscord(newMessage as Message);
 
-      const isMessageAdded = lastGroup.find(m => m.id === newMessage.id);
-
-      if (!isMessageAdded) {
-        const optimisticIndex = getOptimisticIndex(lastGroup, newMessage);
-
-        if (optimisticIndex > -1) {
-          return data;
-        }
-
-        addMessageToGroupCB(newMessage);
-        return data;
-      }
+      setGroupedMessages(prev => addMessageToGroup(prev, converted));
 
       return data;
     }
@@ -83,6 +66,8 @@ export const useMessageSubscription = ({
       query: updateMessageSubscription
     },
     (prev, data) => {
+      //
+      // @ts-expect-error
       const updatedMessage = data.messageUpdateV2 as Message;
 
       if (updatedMessage) {

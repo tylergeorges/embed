@@ -14,15 +14,10 @@ export const useSendMessage = ({ thread }: UseSendMessageProps) => {
 
   const user = useStoreState(state => state.user.data);
 
-  const sendMessage = async (
-    content: string,
-    fileName?: string,
-    fileData?: string,
-    fileAlt?: string
-  ) => {
+  const sendMessage = (content: string, fileName?: string, fileData?: string, fileAlt?: string) => {
     if (!user) return;
 
-    await sendMutation(
+    sendMutation(
       {
         channel: channelId,
         content,

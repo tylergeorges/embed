@@ -58,6 +58,8 @@ const annoucmentChannelFragment = graphql(`
 
 export const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {
+    __typename
+
     guild(id: $id) {
       id
       name
@@ -69,13 +71,17 @@ export const guildDocument = graphql(/* GraphQL */ `
       partnered
       verified
       tier
+      __typename
 
       settings {
+        __typename
         readonly
         guestMode
       }
 
       roles {
+        __typename
+
         id
         name
         position
@@ -100,6 +106,8 @@ export const guildDocument = graphql(/* GraphQL */ `
         __typename
 
         ... on ThreadChannel {
+          __typename
+
           id
           type
           name
@@ -113,10 +121,14 @@ export const guildDocument = graphql(/* GraphQL */ `
         }
 
         ... on TextChannel {
+          __typename
+
           topic
 
           threads {
             ... on ThreadChannel {
+              __typename
+
               id
               type
               name
@@ -125,10 +137,16 @@ export const guildDocument = graphql(/* GraphQL */ `
           }
         }
         ... on AnnouncementChannel {
+          __typename
+          id
           topic
 
           threads {
+            __typename
+            id
             ... on ThreadChannel {
+              __typename
+
               id
               type
               name
@@ -137,6 +155,8 @@ export const guildDocument = graphql(/* GraphQL */ `
           }
         }
         ... on ForumChannel {
+          __typename
+          id
           topic
         }
 

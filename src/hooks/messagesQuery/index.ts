@@ -60,8 +60,10 @@ export const BaseMessageFragment = gql`
     createdAt
     editedAt
     isGuest
+    __typename
 
     author {
+      __typename
       avatarUrl
       bot
       discrim
@@ -133,9 +135,13 @@ export const BaseMessageFragment = gql`
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const MessageFragment = gql`
   fragment Message on Message {
+    __typename
+    id
     ...BaseMessage
 
     referencedMessage {
+      __typename
+      id
       ...BaseMessage
     }
   }
@@ -152,6 +158,7 @@ const UpdatedMessageFragment = gql`
     editedAt
 
     author {
+      __typename
       avatarUrl
       bot
       discrim
@@ -220,20 +227,51 @@ const UpdatedMessageFragment = gql`
 `;
 
 export const messagesQuery = graphql(`
-  query messagesQuery($guild: String!, $channel: String!, $threadId: String, $before: String) {
-    channelV2(guild: $guild, id: $channel) {
+  query messagesQuery(
+    $guild: String!
+    $channel: String!
+    $threadId: String
+    $around: String
+    $before: String
+    $after: String
+    $limit: Int
+  ) {
+    __typename
+
+    channel: channelV2(guild: $guild, id: $channel) {
       id
+      __typename
       ... on TextChannel {
-        messageBunch(threadId: $threadId, before: $before) {
+        messageBunch(
+          threadId: $threadId
+          limit: $limit
+          after: $after
+          before: $before
+          around: $around
+        ) {
+          __typename
+
           messages {
+            id
+            __typename
             ...Message
           }
         }
       }
       ... on ThreadChannel {
         # This is not currently used but it resolves type issues
-        messageBunch(threadId: $threadId, before: $before) {
+        messageBunch(
+          threadId: $threadId
+          limit: $limit
+          after: $after
+          before: $before
+          around: $around
+        ) {
+          __typename
+
           messages {
+            __typename
+            id
             ...Message
           }
         }
@@ -243,41 +281,51 @@ export const messagesQuery = graphql(`
 `);
 
 export const moreMessagesQuery = graphql(`
-  query MoreMessages($guild: String!, $channel: String!, $thread: String, $before: String) {
-    channelV2(id: $channel, guild: $guild) {
+  query MoreMessages(
+    $guild: String!
+    $channel: String!
+    $threadId: String
+    $around: String
+    $before: String
+    $after: String
+    $limit: Int
+  ) {
+    __typename
+
+    channel: channelV2(guild: $guild, id: $channel) {
       id
+      __typename
       ... on TextChannel {
-        messageBunch(threadId: $thread, before: $before) {
-          messages {
-            ...Message
-          }
-        }
-      }
-      ... on AnnouncementChannel {
-        messageBunch(threadId: $thread, before: $before) {
-          messages {
-            ...Message
-          }
-        }
-      }
-      ... on VoiceChannel {
         messageBunch(
-          threadId: $thread
-
+          threadId: $threadId
+          limit: $limit
+          after: $after
           before: $before
+          around: $around
         ) {
+          __typename
+
           messages {
+            id
+            __typename
             ...Message
           }
         }
       }
-      ... on ForumChannel {
+      ... on ThreadChannel {
+        # This is not currently used but it resolves type issues
         messageBunch(
-          threadId: $thread
-
+          threadId: $threadId
+          limit: $limit
+          after: $after
           before: $before
+          around: $around
         ) {
+          __typename
+
           messages {
+            __typename
+            id
             ...Message
           }
         }
@@ -291,6 +339,8 @@ export const moreMessagesQuery = graphql(`
 export const updateMessageSubscription = graphql(`
   subscription MessageUpdated($guild: String!, $channel: String!, $threadId: String) {
     messageUpdateV2(guild: $guild, channels: [$channel], threadId: $threadId) {
+      __typename
+      id
       ...UpdatedMessage
     }
   }
@@ -299,6 +349,8 @@ export const updateMessageSubscription = graphql(`
 export const newMessageSubscription = graphql(`
   subscription NewMessage($guild: String!, $channel: String!, $threadId: String) {
     messageV2(channels: [$channel], guild: $guild, threadId: $threadId) {
+      __typename
+      id
       ...Message
     }
   }
@@ -307,6 +359,7 @@ export const newMessageSubscription = graphql(`
 export const deletedMessageSubscription = graphql(`
   subscription MessageDeleted($guild: String!, $channel: String!, $threadId: String) {
     messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {
+      __typename
       id
     }
   }
@@ -321,6 +374,8 @@ export const sendMessageMutation = graphql(`
     $fileName: String
     $fileAlt: String
   ) {
+    __typename
+
     sendMessage(
       channel: $channel
       content: $content
@@ -329,6 +384,8 @@ export const sendMessageMutation = graphql(`
       fileName: $fileName
       fileAlt: $fileAlt
     ) {
+      __typename
+      id
       ...Message
     }
   }

@@ -1,12 +1,10 @@
 import { useQuery } from 'urql';
-import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { MessagesQueryQueryVariables, BaseMessageFragment, Message } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 import { messagesQuery, moreMessagesQuery } from '@hooks/messagesQuery';
-import { MessagesQuery, client } from '@graphql/client';
-import { getOptimisticIndex } from '@util/getOptimisticIndex';
-import { ExpandedAPIMessage } from 'types/messages.types';
+import { ExpandedAPIMessage, MessagesQuery } from 'types/messages.types';
 
 type MessageState = {
   firstItemIndex: number;
@@ -17,107 +15,111 @@ interface UseMessagesProps {
   channel: string;
   groupedMessages: ExpandedAPIMessage[][];
   setGroupedMessages: Dispatch<SetStateAction<ExpandedAPIMessage[][]>>;
-  addMessageToGroupCB: (msg: BaseMessageFragment) => void;
   threadId?: string;
 }
+
+const compareArr = (a: ExpandedAPIMessage[][], b: ExpandedAPIMessage[][]) =>
+  JSON.stringify(a) === JSON.stringify(b);
+
+const convertAndGroup = (msgs: Message[]) =>
+  groupMessages(msgs.map(msg => convertMessageToDiscord(msg as BaseMessageFragment)));
 
 export const useMessages = ({
   guild,
   channel,
   threadId,
   setGroupedMessages,
-  groupedMessages,
-  addMessageToGroupCB
+  groupedMessages
 }: UseMessagesProps) => {
   const [variables, setVariables] = useState<MessagesQueryQueryVariables>({
     guild,
     channel,
     threadId
   });
-
   const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
+  const [pauseMain, setPauseMain] = useState(false);
 
-  const [{ data }, fetchHook] = useQuery<MessagesQuery>({
+  const lastMessages = useRef<ExpandedAPIMessage[][]>([]);
+  const fetching = useRef(false);
+
+  // Intial message query
+  const [{ data: rootQueryData }] = useQuery<MessagesQuery>({
     query: messagesQuery,
-    variables
+    variables: {
+      guild,
+      channel,
+      threadId
+    },
+
+    // Dont re-fetch data after initial query
+    pause: pauseMain
   });
 
-  const isReady = (data && data.channelV2?.id === channel) || false;
+  const [{ data: moreMessagesData }, fetchMoreMessages] = useQuery<MessagesQuery>({
+    query: moreMessagesQuery,
+    variables,
+    pause: !pauseMain,
+    requestPolicy: 'cache-and-network'
+  });
+
+  const messageData = pauseMain ? moreMessagesData : rootQueryData;
+
+  const isReady = !!messageData;
+  const messages = messageData?.channel?.messageBunch?.messages ?? [];
 
   useEffect(() => {
     if (variables.channel !== channel || variables.threadId !== threadId) {
-      setVariables({ channel, threadId, guild });
-      fetchHook({ requestPolicy: 'network-only' });
       setGroupedMessages([]);
+      setVariables({ channel, threadId, guild });
     }
 
-    const apiMsgs: Message[] = data?.channelV2?.messageBunch?.messages ?? [];
+    if (isReady) {
+      const convertedApiMessages = convertAndGroup(messages);
 
-    const lastGroup = groupedMessages[groupedMessages.length - 1] ?? [];
+      // Prevent setting cached data
+      const isSameArr = compareArr(convertedApiMessages, lastMessages.current);
 
-    const lastGroupedMessage = lastGroup[lastGroup.length - 1];
-
-    const isReadyWithMessages =
-      isReady && apiMsgs[apiMsgs.length - 1]?.id !== lastGroupedMessage?.id;
-
-    if (isReadyWithMessages) {
-      if (groupedMessages.length === 0) {
-        setGroupedMessages(
-          groupMessages(apiMsgs.map(msg => convertMessageToDiscord(msg as BaseMessageFragment)))
-        );
-
-        setNewMessageGroupLength(groupedMessages.length);
-      } else if (groupedMessages.length) {
-        const recentMessage = apiMsgs[apiMsgs.length - 1];
-
-        // Make sure we dont add message twice
-        if (recentMessage && !lastGroup.find(m => m.id === recentMessage.id)) {
-          const optimisticIndex = getOptimisticIndex(lastGroup, recentMessage);
-
-          // Make sure optimistic message isnt in array
-          if (optimisticIndex === -1) {
-            addMessageToGroupCB(recentMessage);
-          }
+      if (!isSameArr) {
+        // Set initial message data
+        if (groupedMessages.length === 0) {
+          setGroupedMessages(convertedApiMessages);
+          setNewMessageGroupLength(convertedApiMessages.length - 1);
+          setPauseMain(true);
         }
+        // This runs when more messages are fetched
+        else {
+          setGroupedMessages(prev => [...convertedApiMessages, ...prev]);
+          setNewMessageGroupLength(convertedApiMessages.length - 1);
+          fetching.current = false;
+        }
+
+        lastMessages.current = convertedApiMessages;
       }
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isReady, channel, threadId]);
+  }, [messageData, isReady, moreMessagesData, pauseMain]);
 
   const fetchMore = useCallback(
     (before: string) => {
-      if (!isReady) return;
+      if (fetching.current && moreMessagesData) return;
 
-      client
-        .executeQuery<MessagesQuery>({
-          query: moreMessagesQuery,
-          variables: { channel, guild, before, thread: threadId },
-          key: Number(before)
-        })
-        .then(res => {
-          if (!res.data || !res.data.channelV2) return;
+      setVariables({ channel, guild, before, threadId });
+      fetchMoreMessages({ requestPolicy: 'cache-and-network' });
 
-          const oldMessages = groupMessages(
-            res.data.channelV2.messageBunch.messages.map(m => convertMessageToDiscord(m))
-          );
-
-          setGroupedMessages(recent => [...oldMessages, ...recent]);
-        });
+      fetching.current = true;
     },
-    [channel, guild, isReady, threadId, setGroupedMessages]
+    [channel, guild, threadId, fetchMoreMessages, fetching, moreMessagesData]
   );
 
   const loadMoreMessages = useCallback(() => {
     fetchMore(groupedMessages[0][0].id);
   }, [fetchMore, groupedMessages]);
 
-  let messageState: MessageState;
-
-  // eslint-disable-next-line prefer-const
-  messageState = useMemo(() => {
+  const messageState = useMemo(() => {
     let firstItemIndex = 100_000;
 
-    if (groupedMessages.length === 0)
+    if (groupedMessages === undefined)
       return {
         firstItemIndex
       };
@@ -127,12 +129,10 @@ export const useMessages = ({
     return {
       firstItemIndex
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [variables, groupedMessages]);
+  }, [groupedMessages]) as MessageState;
 
   return {
-    ...messageState,
+    firstItemIndex: messageState.firstItemIndex,
     groupedMessages,
     loadMoreMessages,
     newMessageGroupLength,

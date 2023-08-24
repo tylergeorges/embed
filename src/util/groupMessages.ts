@@ -1,5 +1,4 @@
 /* eslint-disable no-plusplus */
-
 import { ExpandedAPIMessage } from 'types/messages.types';
 
 function dateToMilli(date: Date) {
@@ -11,8 +10,8 @@ function isGroupRecent(
   recentMessage: ExpandedAPIMessage,
   maxGroupTime: number
 ) {
-  const prevMessageDate = new Date(prevMessage.timestamp);
-  const recentMessageDate = new Date(recentMessage.timestamp);
+  const prevMessageDate = new Date(prevMessage?.timestamp);
+  const recentMessageDate = new Date(recentMessage?.timestamp);
 
   if (prevMessageDate.getDate() !== recentMessageDate.getDate()) return false;
 
@@ -75,10 +74,12 @@ export function addMessageToGroup(
   initGrouped: ExpandedAPIMessage[][],
   message: ExpandedAPIMessage
 ): ExpandedAPIMessage[][] {
-  const groupedMessages = initGrouped;
-  const prevMessageGroup = groupedMessages[groupedMessages.length - 1];
+  const groupedMessages = [...initGrouped];
 
-  const isGroupable = messageIsGroupable(prevMessageGroup[prevMessageGroup.length - 1], message);
+  const prevMessageGroup = groupedMessages[groupedMessages.length - 1];
+  const latestMessage = prevMessageGroup[prevMessageGroup.length - 1];
+
+  const isGroupable = messageIsGroupable(latestMessage, message);
 
   if (isGroupable) {
     prevMessageGroup.push(message);

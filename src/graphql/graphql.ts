@@ -939,9 +939,9 @@ export type GuildQueryVariables = Exact<{
 }>;
 
 export type GuildQuery = {
-  __typename?: 'Query';
+  __typename: 'Query';
   guild: {
-    __typename?: 'Guild';
+    __typename: 'Guild';
     id: string;
     name: string;
     icon?: string | null;
@@ -952,9 +952,9 @@ export type GuildQuery = {
     partnered: string;
     verified: string;
     tier: string;
-    settings: { __typename?: 'GuildSettings'; readonly: boolean; guestMode: boolean };
+    settings: { __typename: 'GuildSettings'; readonly: boolean; guestMode: boolean };
     roles: Array<{
-      __typename?: 'Role';
+      __typename: 'Role';
       id: string;
       name: string;
       position: number;
@@ -972,32 +972,32 @@ export type GuildQuery = {
     channels: Array<
       | {
           __typename: 'AnnouncementChannel';
-          topic?: string | null;
           id: string;
+          topic?: string | null;
           name: string;
           type: ChannelType;
           position: number;
           canSend: boolean;
           rateLimitPerUser?: number | null;
           threads?: Array<
-            | { __typename?: 'AnnouncementChannel' }
-            | { __typename?: 'ForumChannel' }
-            | { __typename?: 'TextChannel' }
+            | { __typename: 'AnnouncementChannel'; id: string }
+            | { __typename: 'ForumChannel'; id: string }
+            | { __typename: 'TextChannel'; id: string }
             | {
-                __typename?: 'ThreadChannel';
+                __typename: 'ThreadChannel';
                 id: string;
                 type: ChannelType;
                 name: string;
                 parentId: string;
               }
-            | { __typename?: 'VoiceChannel' }
+            | { __typename: 'VoiceChannel'; id: string }
           > | null;
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
       | {
           __typename: 'ForumChannel';
-          topic?: string | null;
           id: string;
+          topic?: string | null;
           name: string;
           type: ChannelType;
           position: number;
@@ -1019,7 +1019,7 @@ export type GuildQuery = {
             | { __typename?: 'ForumChannel' }
             | { __typename?: 'TextChannel' }
             | {
-                __typename?: 'ThreadChannel';
+                __typename: 'ThreadChannel';
                 id: string;
                 type: ChannelType;
                 name: string;
@@ -1100,7 +1100,7 @@ export type EmbedFragment = {
 } & { ' $fragmentName'?: 'EmbedFragment' };
 
 export type BaseMessageFragment = {
-  __typename?: 'Message';
+  __typename: 'Message';
   id: string;
   channelId: string;
   content: string;
@@ -1110,7 +1110,7 @@ export type BaseMessageFragment = {
   editedAt?: any | null;
   isGuest: boolean;
   author: {
-    __typename?: 'User';
+    __typename: 'User';
     avatarUrl: string;
     bot: boolean;
     discrim: string;
@@ -1173,9 +1173,10 @@ export type BaseMessageFragment = {
 } & { ' $fragmentName'?: 'BaseMessageFragment' };
 
 export type MessageFragment = ({
-  __typename?: 'Message';
+  __typename: 'Message';
+  id: string;
   referencedMessage?:
-    | ({ __typename?: 'Message' } & {
+    | ({ __typename: 'Message'; id: string } & {
         ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
       })
     | null;
@@ -1192,7 +1193,7 @@ export type UpdatedMessageFragment = {
   createdAt?: any | null;
   editedAt?: any | null;
   author?: {
-    __typename?: 'User';
+    __typename: 'User';
     avatarUrl: string;
     bot: boolean;
     discrim: string;
@@ -1258,88 +1259,84 @@ export type MessagesQueryQueryVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
   threadId?: InputMaybe<Scalars['String']>;
+  around?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
 }>;
 
 export type MessagesQueryQuery = {
-  __typename?: 'Query';
-  channelV2:
-    | { __typename?: 'AnnouncementChannel'; id: string }
-    | { __typename?: 'ForumChannel'; id: string }
+  __typename: 'Query';
+  channel:
+    | { __typename: 'AnnouncementChannel'; id: string }
+    | { __typename: 'ForumChannel'; id: string }
     | {
-        __typename?: 'TextChannel';
+        __typename: 'TextChannel';
         id: string;
         messageBunch: {
-          __typename?: 'MessageBunch';
+          __typename: 'MessageBunch';
           messages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+            { __typename: 'Message'; id: string } & {
+              ' $fragmentRefs'?: { MessageFragment: MessageFragment };
+            }
           >;
         };
       }
     | {
-        __typename?: 'ThreadChannel';
+        __typename: 'ThreadChannel';
         id: string;
         messageBunch: {
-          __typename?: 'MessageBunch';
+          __typename: 'MessageBunch';
           messages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+            { __typename: 'Message'; id: string } & {
+              ' $fragmentRefs'?: { MessageFragment: MessageFragment };
+            }
           >;
         };
       }
-    | { __typename?: 'VoiceChannel'; id: string };
+    | { __typename: 'VoiceChannel'; id: string };
 };
 
 export type MoreMessagesQueryVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
-  thread?: InputMaybe<Scalars['String']>;
+  threadId?: InputMaybe<Scalars['String']>;
+  around?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  limit?: InputMaybe<Scalars['Int']>;
 }>;
 
 export type MoreMessagesQuery = {
-  __typename?: 'Query';
-  channelV2:
+  __typename: 'Query';
+  channel:
+    | { __typename: 'AnnouncementChannel'; id: string }
+    | { __typename: 'ForumChannel'; id: string }
     | {
-        __typename?: 'AnnouncementChannel';
+        __typename: 'TextChannel';
         id: string;
         messageBunch: {
-          __typename?: 'MessageBunch';
+          __typename: 'MessageBunch';
           messages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+            { __typename: 'Message'; id: string } & {
+              ' $fragmentRefs'?: { MessageFragment: MessageFragment };
+            }
           >;
         };
       }
     | {
-        __typename?: 'ForumChannel';
+        __typename: 'ThreadChannel';
         id: string;
         messageBunch: {
-          __typename?: 'MessageBunch';
+          __typename: 'MessageBunch';
           messages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+            { __typename: 'Message'; id: string } & {
+              ' $fragmentRefs'?: { MessageFragment: MessageFragment };
+            }
           >;
         };
       }
-    | {
-        __typename?: 'TextChannel';
-        id: string;
-        messageBunch: {
-          __typename?: 'MessageBunch';
-          messages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
-          >;
-        };
-      }
-    | { __typename?: 'ThreadChannel'; id: string }
-    | {
-        __typename?: 'VoiceChannel';
-        id: string;
-        messageBunch: {
-          __typename?: 'MessageBunch';
-          messages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
-          >;
-        };
-      };
+    | { __typename: 'VoiceChannel'; id: string };
 };
 
 export type MessageUpdatedSubscriptionVariables = Exact<{
@@ -1351,7 +1348,7 @@ export type MessageUpdatedSubscriptionVariables = Exact<{
 export type MessageUpdatedSubscription = {
   __typename?: 'Subscription';
   messageUpdateV2?:
-    | ({ __typename?: 'UpdatedMessage' } & {
+    | ({ __typename: 'UpdatedMessage'; id: string } & {
         ' $fragmentRefs'?: { UpdatedMessageFragment: UpdatedMessageFragment };
       })
     | null;
@@ -1366,7 +1363,9 @@ export type NewMessageSubscriptionVariables = Exact<{
 export type NewMessageSubscription = {
   __typename?: 'Subscription';
   messageV2?:
-    | ({ __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } })
+    | ({ __typename: 'Message'; id: string } & {
+        ' $fragmentRefs'?: { MessageFragment: MessageFragment };
+      })
     | null;
 };
 
@@ -1378,7 +1377,7 @@ export type MessageDeletedSubscriptionVariables = Exact<{
 
 export type MessageDeletedSubscription = {
   __typename?: 'Subscription';
-  messageDeleteV2?: { __typename?: 'DeletedMessage'; id: string } | null;
+  messageDeleteV2?: { __typename: 'DeletedMessage'; id: string } | null;
 };
 
 export type SendMessageMutationVariables = Exact<{
@@ -1391,8 +1390,8 @@ export type SendMessageMutationVariables = Exact<{
 }>;
 
 export type SendMessageMutation = {
-  __typename?: 'Mutation';
-  sendMessage: { __typename?: 'Message' } & {
+  __typename: 'Mutation';
+  sendMessage: { __typename: 'Message'; id: string } & {
     ' $fragmentRefs'?: { MessageFragment: MessageFragment };
   };
 };
@@ -1609,12 +1608,14 @@ export const BaseMessageFragmentDoc = {
           { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'editedAt' } },
           { kind: 'Field', name: { kind: 'Name', value: 'isGuest' } },
+          { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'author' },
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
@@ -1752,13 +1753,19 @@ export const MessageFragmentDoc = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
           { kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'referencedMessage' },
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } }]
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } }
+              ]
             }
           }
         ]
@@ -1789,6 +1796,7 @@ export const UpdatedMessageFragmentDoc = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
@@ -1934,6 +1942,7 @@ export const GuildDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'guild' },
@@ -1957,12 +1966,14 @@ export const GuildDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'partnered' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'verified' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'tier' } },
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'settings' },
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'readonly' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'guestMode' } }
                     ]
@@ -1974,6 +1985,7 @@ export const GuildDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'position' } },
@@ -2017,6 +2029,7 @@ export const GuildDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'name' } },
@@ -2045,6 +2058,7 @@ export const GuildDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
                             {
                               kind: 'Field',
@@ -2061,6 +2075,10 @@ export const GuildDocument = {
                                     selectionSet: {
                                       kind: 'SelectionSet',
                                       selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: '__typename' }
+                                        },
                                         { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                         { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                                         { kind: 'Field', name: { kind: 'Name', value: 'name' } },
@@ -2083,6 +2101,8 @@ export const GuildDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
                             {
                               kind: 'Field',
@@ -2090,6 +2110,8 @@ export const GuildDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                   {
                                     kind: 'InlineFragment',
                                     typeCondition: {
@@ -2099,6 +2121,10 @@ export const GuildDocument = {
                                     selectionSet: {
                                       kind: 'SelectionSet',
                                       selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: '__typename' }
+                                        },
                                         { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                         { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                                         { kind: 'Field', name: { kind: 'Name', value: 'name' } },
@@ -2120,7 +2146,11 @@ export const GuildDocument = {
                         },
                         selectionSet: {
                           kind: 'SelectionSet',
-                          selections: [{ kind: 'Field', name: { kind: 'Name', value: 'topic' } }]
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'topic' } }
+                          ]
                         }
                       },
                       { kind: 'Field', name: { kind: 'Name', value: 'rateLimitPerUser' } }
@@ -2166,15 +2196,32 @@ export const MessagesQueryDocument = {
         },
         {
           kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'around' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        },
+        {
+          kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'before' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'after' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
         }
       ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
           {
             kind: 'Field',
+            alias: { kind: 'Name', value: 'channel' },
             name: { kind: 'Name', value: 'channelV2' },
             arguments: [
               {
@@ -2192,6 +2239,7 @@ export const MessagesQueryDocument = {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                 {
                   kind: 'InlineFragment',
                   typeCondition: {
@@ -2212,19 +2260,37 @@ export const MessagesQueryDocument = {
                           },
                           {
                             kind: 'Argument',
+                            name: { kind: 'Name', value: 'limit' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'after' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'after' } }
+                          },
+                          {
+                            kind: 'Argument',
                             name: { kind: 'Name', value: 'before' },
                             value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'around' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'around' } }
                           }
                         ],
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'messages' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                                   {
                                     kind: 'FragmentSpread',
                                     name: { kind: 'Name', value: 'Message' }
@@ -2258,19 +2324,37 @@ export const MessagesQueryDocument = {
                           },
                           {
                             kind: 'Argument',
+                            name: { kind: 'Name', value: 'limit' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'after' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'after' } }
+                          },
+                          {
+                            kind: 'Argument',
                             name: { kind: 'Name', value: 'before' },
                             value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'around' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'around' } }
                           }
                         ],
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'messages' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                   {
                                     kind: 'FragmentSpread',
                                     name: { kind: 'Name', value: 'Message' }
@@ -2319,37 +2403,55 @@ export const MoreMessagesDocument = {
         },
         {
           kind: 'VariableDefinition',
-          variable: { kind: 'Variable', name: { kind: 'Name', value: 'thread' } },
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'around' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
         },
         {
           kind: 'VariableDefinition',
           variable: { kind: 'Variable', name: { kind: 'Name', value: 'before' } },
           type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'after' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'Int' } }
         }
       ],
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
           {
             kind: 'Field',
+            alias: { kind: 'Name', value: 'channel' },
             name: { kind: 'Name', value: 'channelV2' },
             arguments: [
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'id' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } }
+                name: { kind: 'Name', value: 'guild' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
               },
               {
                 kind: 'Argument',
-                name: { kind: 'Name', value: 'guild' },
-                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } }
               }
             ],
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                 {
                   kind: 'InlineFragment',
                   typeCondition: {
@@ -2366,23 +2468,41 @@ export const MoreMessagesDocument = {
                           {
                             kind: 'Argument',
                             name: { kind: 'Name', value: 'threadId' },
-                            value: { kind: 'Variable', name: { kind: 'Name', value: 'thread' } }
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'limit' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'after' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'after' } }
                           },
                           {
                             kind: 'Argument',
                             name: { kind: 'Name', value: 'before' },
                             value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'around' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'around' } }
                           }
                         ],
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'messages' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                                   {
                                     kind: 'FragmentSpread',
                                     name: { kind: 'Name', value: 'Message' }
@@ -2400,7 +2520,7 @@ export const MoreMessagesDocument = {
                   kind: 'InlineFragment',
                   typeCondition: {
                     kind: 'NamedType',
-                    name: { kind: 'Name', value: 'AnnouncementChannel' }
+                    name: { kind: 'Name', value: 'ThreadChannel' }
                   },
                   selectionSet: {
                     kind: 'SelectionSet',
@@ -2412,115 +2532,41 @@ export const MoreMessagesDocument = {
                           {
                             kind: 'Argument',
                             name: { kind: 'Name', value: 'threadId' },
-                            value: { kind: 'Variable', name: { kind: 'Name', value: 'thread' } }
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'limit' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'limit' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'after' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'after' } }
                           },
                           {
                             kind: 'Argument',
                             name: { kind: 'Name', value: 'before' },
                             value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'around' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'around' } }
                           }
                         ],
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'messages' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
-                                  {
-                                    kind: 'FragmentSpread',
-                                    name: { kind: 'Name', value: 'Message' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'VoiceChannel' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'messageBunch' },
-                        arguments: [
-                          {
-                            kind: 'Argument',
-                            name: { kind: 'Name', value: 'threadId' },
-                            value: { kind: 'Variable', name: { kind: 'Name', value: 'thread' } }
-                          },
-                          {
-                            kind: 'Argument',
-                            name: { kind: 'Name', value: 'before' },
-                            value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
-                          }
-                        ],
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'messages' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
-                                  {
-                                    kind: 'FragmentSpread',
-                                    name: { kind: 'Name', value: 'Message' }
-                                  }
-                                ]
-                              }
-                            }
-                          ]
-                        }
-                      }
-                    ]
-                  }
-                },
-                {
-                  kind: 'InlineFragment',
-                  typeCondition: {
-                    kind: 'NamedType',
-                    name: { kind: 'Name', value: 'ForumChannel' }
-                  },
-                  selectionSet: {
-                    kind: 'SelectionSet',
-                    selections: [
-                      {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'messageBunch' },
-                        arguments: [
-                          {
-                            kind: 'Argument',
-                            name: { kind: 'Name', value: 'threadId' },
-                            value: { kind: 'Variable', name: { kind: 'Name', value: 'thread' } }
-                          },
-                          {
-                            kind: 'Argument',
-                            name: { kind: 'Name', value: 'before' },
-                            value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
-                          }
-                        ],
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            {
-                              kind: 'Field',
-                              name: { kind: 'Name', value: 'messages' },
-                              selectionSet: {
-                                kind: 'SelectionSet',
-                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                   {
                                     kind: 'FragmentSpread',
                                     name: { kind: 'Name', value: 'Message' }
@@ -2602,6 +2648,8 @@ export const MessageUpdatedDocument = {
             selectionSet: {
               kind: 'SelectionSet',
               selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'FragmentSpread', name: { kind: 'Name', value: 'UpdatedMessage' } }
               ]
             }
@@ -2670,7 +2718,11 @@ export const NewMessageDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'Message' } }]
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'Message' } }
+              ]
             }
           }
         ]
@@ -2737,7 +2789,10 @@ export const MessageDeletedDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } }
+              ]
             }
           }
         ]
@@ -2793,6 +2848,7 @@ export const SendMessageDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'sendMessage' },
@@ -2830,7 +2886,11 @@ export const SendMessageDocument = {
             ],
             selectionSet: {
               kind: 'SelectionSet',
-              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'Message' } }]
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'Message' } }
+              ]
             }
           }
         ]
