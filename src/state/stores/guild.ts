@@ -1,3 +1,4 @@
+/* eslint-disable prefer-object-spread */
 import { Action, Computed, action, computed } from 'easy-peasy';
 import { Category, Channel, GuildSettings } from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
@@ -57,7 +58,7 @@ const guild: GuildStore = {
       if (mapHasChannel) break;
 
       guildChannels[String(channel.id)] = channel;
-      guildChannels[String(channel.id)].threads = channel.threads;
+      Object.assign({}, guildChannels[String(channel.id)]?.threads, channel?.threads);
     }
 
     return guildChannels;
@@ -76,7 +77,8 @@ const guild: GuildStore = {
   }),
 
   setChannels: action((state, payload) => {
-    const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
+    const sortedChannels = [...payload].sort((a, b) => positionChannel(a) - positionChannel(b));
+    // const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
 
     state.categories = [
       ...new Map(sortedChannels.map(c => [c.category?.id, c.category])).values()

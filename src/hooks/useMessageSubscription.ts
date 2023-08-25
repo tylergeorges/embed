@@ -1,83 +1,99 @@
-import { useSubscription } from 'urql';
-import { Dispatch, SetStateAction } from 'react';
-import { BaseMessageFragment, UpdatedMessage } from '@graphql/graphql';
+/* eslint-disable no-underscore-dangle */
+import { Message } from '@graphql/graphql';
 import {
   deletedMessageSubscription,
   newMessageSubscription,
   updateMessageSubscription
 } from '@hooks/messagesQuery';
-import { StateMessages } from 'types/messages.types';
+import { MessagesQuery } from 'types/messages.types';
+import { OperationVariables, useSubscription } from '@apollo/client';
+import { WatchQueryOptions } from '@apollo/client/core/watchQueryOptions';
+import { produce } from 'structurajs';
+
+type UpdateQuery = <TVars extends OperationVariables = OperationVariables>(
+  mapFn: (
+    previousQueryResult: MessagesQuery,
+    options: Pick<WatchQueryOptions<TVars, MessagesQuery>, 'variables'>
+  ) => MessagesQuery
+) => void;
 
 interface UseSubArgs {
   guild: string;
   channel: string;
-  messages: StateMessages[];
-  setMessages: Dispatch<SetStateAction<StateMessages[]>>;
+  updateQuery: UpdateQuery;
   threadId?: string;
 }
 
-export const useMessageSubscription = ({
-  messages,
-  setMessages,
-  channel,
-  guild,
-  threadId
-}: UseSubArgs) => {
-  useSubscription(
-    {
-      variables: { guild, channel, threadId },
-      query: newMessageSubscription
-    },
+export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }: UseSubArgs) => {
+  useSubscription(newMessageSubscription, {
+    variables: { guild, channel, threadId },
 
-    (prev, data) => {
-      const message = data.messageV2 as BaseMessageFragment;
+    onSubscriptionData: ({ subscriptionData }) => {
+      updateQuery(
+        prev =>
+          produce(prev, data => {
+            const messages = data?.channelV2?.messageBunch.messages;
 
-      if (message) {
-        setMessages(prev => [...prev, message]);
-      }
+            if (!messages || !subscriptionData.data) {
+              return;
+            }
 
-      return data;
+            const message = subscriptionData.data.messageV2 as Message;
+
+            if (!messages.find(m => m.id === message.id)) messages.push(message);
+          }) as MessagesQuery
+      );
     }
-  );
+  });
 
-  useSubscription(
-    {
-      variables: { guild, channel, threadId },
-      query: deletedMessageSubscription
-    },
-    (prev, data) => {
-      const { messageDeleteV2 } = data;
+  useSubscription(deletedMessageSubscription, {
+    variables: { guild, channel, threadId },
 
-      if (messageDeleteV2) {
-        const messageId = messageDeleteV2.id;
+    onSubscriptionData: ({ subscriptionData }) => {
+      updateQuery(
+        prev =>
+          produce(prev, data => {
+            const messages = data?.channelV2?.messageBunch.messages;
 
-        setMessages(oldMsgs => oldMsgs.filter(msg => msg.id !== messageId));
-      }
+            if (!messages || !subscriptionData.data) {
+              return;
+            }
 
-      return data;
+            const deletedMessage = subscriptionData.data.messageDeleteV2 as Message;
+
+            if (deletedMessage) {
+              const messageId = deletedMessage.id;
+
+              data.channelV2.messageBunch.messages = messages.filter(msg => msg.id !== messageId);
+            }
+          }) as MessagesQuery
+      );
     }
-  );
+  });
 
-  useSubscription(
-    {
-      variables: { guild, channel, threadId },
-      query: updateMessageSubscription
-    },
-    (prev, data) => {
-      const updatedMessage = data.messageUpdateV2 as UpdatedMessage;
+  useSubscription(updateMessageSubscription, {
+    variables: { guild, channel, threadId },
 
-      if (updatedMessage && typeof updatedMessage.content === 'string') {
-        const oldMessages = [...messages];
+    onSubscriptionData: ({ subscriptionData }) => {
+      updateQuery(
+        prev =>
+          produce(prev, data => {
+            const updatedMessage = subscriptionData?.data?.messageUpdateV2 as Message;
 
-        const messageIdx = oldMessages.findIndex(msg => msg.id === updatedMessage.id);
+            if (updatedMessage) {
+              const { messages } = data.channelV2.messageBunch;
 
-        if (messageIdx >= 0) {
-          oldMessages[messageIdx] = updatedMessage;
+              const messageIdx = data.channelV2.messageBunch.messages.findIndex(
+                msg => msg.id === updatedMessage.id
+              );
 
-          setMessages(oldMessages);
-        }
-      }
-      return data;
+              if (messageIdx > -1) {
+                delete updatedMessage.__typename;
+                Object.assign(messages[messageIdx], updatedMessage);
+              }
+            }
+          }) as MessagesQuery
+      );
     }
-  );
+  });
 };

@@ -32,6 +32,7 @@ export const MessageRenderer = ({
 
     return false;
   };
+
   return (
     <Styles.VirtualListContainer>
       {isReady && (

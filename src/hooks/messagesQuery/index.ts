@@ -1,4 +1,4 @@
-import { gql } from 'urql';
+import { gql } from '@apollo/client';
 import { graphql } from '@graphql/gql';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
