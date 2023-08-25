@@ -1,4 +1,4 @@
-import { gql } from 'urql';
+import { gql } from '@apollo/client';
 import { graphql } from '@graphql/gql';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -256,8 +256,41 @@ export const messagesQuery = graphql(`
             __typename
             ...Message
           }
+
+          pinnedMessages {
+            ...Message
+          }
         }
       }
+
+      ... on AnnouncementChannel {
+        messageBunch(threadId: $threadId, before: $before) {
+          messages {
+            ...Message
+          }
+
+          pinnedMessages {
+            ...Message
+          }
+        }
+      }
+
+      ... on VoiceChannel {
+        messageBunch(threadId: $threadId, before: $before) {
+          messages {
+            ...Message
+          }
+        }
+      }
+
+      ... on ForumChannel {
+        messageBunch(threadId: $threadId, before: $before) {
+          messages {
+            ...Message
+          }
+        }
+      }
+
       ... on ThreadChannel {
         # This is not currently used but it resolves type issues
         messageBunch(

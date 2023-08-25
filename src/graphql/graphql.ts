@@ -997,7 +997,6 @@ export type GuildQuery = {
       | {
           __typename: 'ForumChannel';
           id: string;
-          topic?: string | null;
           name: string;
           type: ChannelType;
           position: number;
@@ -1268,8 +1267,29 @@ export type MessagesQueryQueryVariables = Exact<{
 export type MessagesQueryQuery = {
   __typename: 'Query';
   channel:
-    | { __typename: 'AnnouncementChannel'; id: string }
-    | { __typename: 'ForumChannel'; id: string }
+    | {
+        __typename: 'AnnouncementChannel';
+        id: string;
+        messageBunch: {
+          __typename?: 'MessageBunch';
+          messages: Array<
+            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+          >;
+          pinnedMessages: Array<
+            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+          >;
+        };
+      }
+    | {
+        __typename: 'ForumChannel';
+        id: string;
+        messageBunch: {
+          __typename?: 'MessageBunch';
+          messages: Array<
+            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+          >;
+        };
+      }
     | {
         __typename: 'TextChannel';
         id: string;
@@ -1279,6 +1299,9 @@ export type MessagesQueryQuery = {
             { __typename: 'Message'; id: string } & {
               ' $fragmentRefs'?: { MessageFragment: MessageFragment };
             }
+          >;
+          pinnedMessages: Array<
+            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
           >;
         };
       }
@@ -1294,7 +1317,16 @@ export type MessagesQueryQuery = {
           >;
         };
       }
-    | { __typename: 'VoiceChannel'; id: string };
+    | {
+        __typename: 'VoiceChannel';
+        id: string;
+        messageBunch: {
+          __typename?: 'MessageBunch';
+          messages: Array<
+            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+          >;
+        };
+      };
 };
 
 export type MoreMessagesQueryVariables = Exact<{
@@ -2138,21 +2170,6 @@ export const GuildDocument = {
                           ]
                         }
                       },
-                      {
-                        kind: 'InlineFragment',
-                        typeCondition: {
-                          kind: 'NamedType',
-                          name: { kind: 'Name', value: 'ForumChannel' }
-                        },
-                        selectionSet: {
-                          kind: 'SelectionSet',
-                          selections: [
-                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'topic' } }
-                          ]
-                        }
-                      },
                       { kind: 'Field', name: { kind: 'Name', value: 'rateLimitPerUser' } }
                     ]
                   }
@@ -2291,6 +2308,170 @@ export const MessagesQueryDocument = {
                                 selections: [
                                   { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                   { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'Message' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pinnedMessages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'Message' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'AnnouncementChannel' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'messageBunch' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'threadId' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'before' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          }
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'messages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'Message' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pinnedMessages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'Message' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'VoiceChannel' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'messageBunch' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'threadId' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'before' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          }
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'messages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'Message' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'ForumChannel' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'messageBunch' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'threadId' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'before' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          }
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'messages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
                                   {
                                     kind: 'FragmentSpread',
                                     name: { kind: 'Name', value: 'Message' }

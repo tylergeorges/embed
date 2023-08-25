@@ -1,10 +1,8 @@
 import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
 import { useStoreState } from '@state';
-import { useState } from 'react';
 import { MessageListRenderer } from '@components/Core/VirtualLists/MessageListRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
-import { ExpandedAPIMessage } from 'types/messages.types';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
 import * as Styles from './styles';
 
@@ -13,7 +11,6 @@ interface MessageContainerProps {
 }
 
 export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
-  const [groupedMessages, setGroupedMessages] = useState<ExpandedAPIMessage[][]>([]);
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
   const canSend = useStoreState(state => state.guild.currentChannel)?.canSend;
@@ -23,19 +20,17 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
 
   const threadId = channelIsThread ? thread : undefined;
 
-  const { isReady, firstItemIndex, loadMoreMessages } = useMessages({
+  const { groupedMessages, loadMoreMessages, isReady, firstItemIndex, updateQuery } = useMessages({
     guild,
     channel,
-    threadId,
-    setGroupedMessages,
-    groupedMessages
+    threadId: channelIsThread ? threadId : undefined
   });
 
   useMessageSubscription({
     guild,
     channel,
-    threadId,
-    setGroupedMessages
+    threadId: channelIsThread ? threadId : undefined,
+    updateQuery
   });
 
   return (

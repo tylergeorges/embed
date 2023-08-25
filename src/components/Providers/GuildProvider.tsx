@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { graphql } from '@graphql/gql';
-import { useQuery } from 'urql';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { Guild } from '@graphql/graphql';
-import { GqlChannel } from 'types/guild.types';
+import { useQuery } from '@apollo/client';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -154,11 +152,6 @@ export const guildDocument = graphql(/* GraphQL */ `
             }
           }
         }
-        ... on ForumChannel {
-          __typename
-          id
-          topic
-        }
 
         rateLimitPerUser
       }
@@ -169,10 +162,8 @@ export const guildDocument = graphql(/* GraphQL */ `
 export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps) {
   const { guildId, router, isRouteLoaded } = useAppRouter();
 
-  const [{ data, fetching }, fetchHook] = useQuery({
-    query: guildDocument,
-    variables: { id: guildId },
-    requestPolicy: 'network-only'
+  const { data, loading, fetchMore } = useQuery(guildDocument, {
+    variables: { id: guildId }
   });
 
   const shouldRefetchGuild = useStoreState(state => state.guild.refetchGuild);
@@ -191,14 +182,12 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     }
     // If auth state changed, refetch channels
     else if (shouldRefetchGuild) {
-      const newToken = localStorage.getItem('token') ?? '';
-      fetchHook({
-        requestPolicy: 'network-only',
-        fetchOptions: { headers: { Authorization: newToken } }
-      });
+      // const newToken = localStorage.getItem('token') ?? '';
+      // fetchMore({
+      // });
     }
     // Set guild data
-    else if (data && !fetching) {
+    else if (data && !loading) {
       // Weird type error when casting
       // @ts-expect-error
       const guild = data.guild as Guild;
@@ -210,21 +199,21 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
         setSettings(guild.settings);
       }
 
-      setChannels(guild.channels as GqlChannel[]);
+      setChannels(guild.channels);
 
       setRefetchGuild(false);
       setIsGuildFetched();
     }
   }, [
     data,
-    fetching,
+    loading,
     setChannels,
     setGuildData,
     setSettings,
     guildId,
     router,
     setIsGuildFetched,
-    fetchHook,
+    fetchMore,
     shouldRefetchGuild,
     setRefetchGuild,
     guildData,

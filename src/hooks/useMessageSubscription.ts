@@ -1,89 +1,109 @@
-import { useSubscription } from 'urql';
-import { Dispatch, SetStateAction } from 'react';
+/* eslint-disable no-underscore-dangle */
+import { Exact, InputMaybe, Message, MessagesQueryQuery, UpdatedMessage } from '@graphql/graphql';
 import {
   deletedMessageSubscription,
   newMessageSubscription,
   updateMessageSubscription
 } from '@hooks/messagesQuery';
-import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
-import { ExpandedAPIMessage } from 'types/messages.types';
-import { addMessageToGroup } from '@util/groupMessages';
-import { Message } from '@graphql/graphql';
+import { useSubscription } from '@apollo/client';
+import { WatchQueryOptions } from '@apollo/client/core/watchQueryOptions';
+import { produce } from 'structurajs';
+
+type UpdateQuery = (
+  mapFn: (
+    previousQueryResult: MessagesQueryQuery,
+    options: Pick<
+      WatchQueryOptions<
+        Exact<{
+          guild: string;
+          channel: string;
+          threadId?: InputMaybe<string> | undefined;
+          before?: InputMaybe<string> | undefined;
+        }>,
+        MessagesQueryQuery
+      >,
+      'variables'
+    >
+  ) => MessagesQueryQuery
+) => void;
 
 interface UseSubArgs {
   guild: string;
   channel: string;
-  setGroupedMessages: Dispatch<SetStateAction<ExpandedAPIMessage[][]>>;
+  updateQuery: UpdateQuery;
   threadId?: string;
 }
 
-export const useMessageSubscription = ({
-  channel,
-  guild,
-  threadId,
-  setGroupedMessages
-}: UseSubArgs) => {
-  useSubscription(
-    {
-      variables: { guild, channel, threadId },
-      query: newMessageSubscription
-    },
+export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }: UseSubArgs) => {
+  useSubscription(newMessageSubscription, {
+    variables: { guild, channel, threadId },
 
-    (prev, data) => {
-      const newMessage = data.messageV2;
+    onSubscriptionData: ({ subscriptionData }) => {
+      updateQuery(
+        prev =>
+          produce(prev, data => {
+            const messages = data.channel.messageBunch.messages as Message[];
 
-      const converted = convertMessageToDiscord(newMessage as Message);
-
-      setGroupedMessages(prev => addMessageToGroup(prev, converted));
-
-      return data;
-    }
-  );
-
-  useSubscription(
-    {
-      variables: { guild, channel, threadId },
-      query: deletedMessageSubscription
-    },
-    (prev, data) => {
-      const { messageDeleteV2 } = data;
-
-      if (messageDeleteV2) {
-        const messageId = messageDeleteV2.id;
-
-        setGroupedMessages(msgGroups =>
-          msgGroups.map(group => group.filter(msg => msg.id !== messageId))
-        );
-      }
-
-      return data;
-    }
-  );
-
-  useSubscription(
-    {
-      variables: { guild, channel, threadId },
-      query: updateMessageSubscription
-    },
-    (prev, data) => {
-      //
-      // @ts-expect-error
-      const updatedMessage = data.messageUpdateV2 as Message;
-
-      if (updatedMessage) {
-        setGroupedMessages(msgGroups =>
-          msgGroups.map(group => {
-            const oldMessageIdx = group.findIndex(msg => msg.id === updatedMessage.id);
-
-            if (oldMessageIdx >= 0) {
-              group[oldMessageIdx] = convertMessageToDiscord(updatedMessage);
+            if (!messages || !subscriptionData.data) {
+              return;
             }
 
-            return group;
-          })
-        );
-      }
-      return data;
+            const message = subscriptionData.data.messageV2 as Message;
+
+            if (!messages.find(m => m.id === message.id)) messages.push(message);
+          }) as MessagesQueryQuery
+      );
     }
-  );
+  });
+
+  useSubscription(deletedMessageSubscription, {
+    variables: { guild, channel, threadId },
+
+    onSubscriptionData: ({ subscriptionData }) => {
+      updateQuery(
+        prev =>
+          produce(prev, data => {
+            const messages = data.channel?.messageBunch.messages as Message[];
+
+            if (!messages || !subscriptionData.data) {
+              return;
+            }
+
+            const deletedMessage = subscriptionData.data.messageDeleteV2;
+
+            if (deletedMessage) {
+              const messageId = deletedMessage.id;
+
+              data.channel.messageBunch.messages = messages.filter(msg => msg.id !== messageId);
+            }
+          }) as MessagesQueryQuery
+      );
+    }
+  });
+
+  useSubscription(updateMessageSubscription, {
+    variables: { guild, channel, threadId },
+
+    onSubscriptionData: ({ subscriptionData }) => {
+      updateQuery(
+        prev =>
+          produce(prev, data => {
+            const updatedMessage = subscriptionData?.data
+              ?.messageUpdateV2 as Partial<UpdatedMessage>;
+
+            if (updatedMessage) {
+              const messages = data.channel.messageBunch.messages as Message[];
+
+              const messageIdx = messages.findIndex(msg => msg.id === updatedMessage.id);
+
+              if (messageIdx > -1) {
+                delete updatedMessage.__typename;
+
+                Object.assign(messages[messageIdx], updatedMessage);
+              }
+            }
+          }) as MessagesQueryQuery
+      );
+    }
+  });
 };

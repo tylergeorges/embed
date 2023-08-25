@@ -26,6 +26,7 @@ export const useAuthApi = () => {
             return { type: 'ERROR', message: authRes.type };
           }
 
+          console.log(authRes);
           const { token } = authRes;
           localStorage.setItem('token', token);
           setShowGuestFormModal(false);
@@ -39,6 +40,7 @@ export const useAuthApi = () => {
         case 'AUTH_FAIL':
         case 'AUTH_ERROR': {
           console.error('Auhtenticating failed: ', authRes);
+          console.log(authRes);
 
           inProgressRef.current = false;
 
