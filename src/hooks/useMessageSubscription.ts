@@ -1,20 +1,30 @@
 /* eslint-disable no-underscore-dangle */
-import { Message } from '@graphql/graphql';
+import { Exact, InputMaybe, Message, MessagesQueryQuery } from '@graphql/graphql';
 import {
   deletedMessageSubscription,
   newMessageSubscription,
   updateMessageSubscription
 } from '@hooks/messagesQuery';
-import { MessagesQuery } from 'types/messages.types';
-import { OperationVariables, useSubscription } from '@apollo/client';
+import { useSubscription } from '@apollo/client';
 import { WatchQueryOptions } from '@apollo/client/core/watchQueryOptions';
 import { produce } from 'structurajs';
 
-type UpdateQuery = <TVars extends OperationVariables = OperationVariables>(
+type UpdateQuery = (
   mapFn: (
-    previousQueryResult: MessagesQuery,
-    options: Pick<WatchQueryOptions<TVars, MessagesQuery>, 'variables'>
-  ) => MessagesQuery
+    previousQueryResult: MessagesQueryQuery,
+    options: Pick<
+      WatchQueryOptions<
+        Exact<{
+          guild: string;
+          channel: string;
+          threadId?: InputMaybe<string> | undefined;
+          before?: InputMaybe<string> | undefined;
+        }>,
+        MessagesQueryQuery
+      >,
+      'variables'
+    >
+  ) => MessagesQueryQuery
 ) => void;
 
 interface UseSubArgs {
@@ -32,7 +42,7 @@ export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }
       updateQuery(
         prev =>
           produce(prev, data => {
-            const messages = data?.channelV2?.messageBunch.messages;
+            const messages = data.channelV2.messageBunch.messages as Message[];
 
             if (!messages || !subscriptionData.data) {
               return;
@@ -41,7 +51,7 @@ export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }
             const message = subscriptionData.data.messageV2 as Message;
 
             if (!messages.find(m => m.id === message.id)) messages.push(message);
-          }) as MessagesQuery
+          }) as MessagesQueryQuery
       );
     }
   });
@@ -53,7 +63,7 @@ export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }
       updateQuery(
         prev =>
           produce(prev, data => {
-            const messages = data?.channelV2?.messageBunch.messages;
+            const messages = data.channelV2?.messageBunch.messages as Message[];
 
             if (!messages || !subscriptionData.data) {
               return;
@@ -66,7 +76,7 @@ export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }
 
               data.channelV2.messageBunch.messages = messages.filter(msg => msg.id !== messageId);
             }
-          }) as MessagesQuery
+          }) as MessagesQueryQuery
       );
     }
   });
@@ -81,18 +91,17 @@ export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }
             const updatedMessage = subscriptionData?.data?.messageUpdateV2 as Message;
 
             if (updatedMessage) {
-              const { messages } = data.channelV2.messageBunch;
+              const messages = data.channelV2.messageBunch.messages as Message[];
 
-              const messageIdx = data.channelV2.messageBunch.messages.findIndex(
-                msg => msg.id === updatedMessage.id
-              );
+              const messageIdx = messages.findIndex(msg => msg.id === updatedMessage.id);
 
               if (messageIdx > -1) {
                 delete updatedMessage.__typename;
+
                 Object.assign(messages[messageIdx], updatedMessage);
               }
             }
-          }) as MessagesQuery
+          }) as MessagesQueryQuery
       );
     }
   });

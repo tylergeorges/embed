@@ -218,8 +218,41 @@ export const messagesQuery = graphql(`
           messages {
             ...BaseMessage
           }
+
+          pinnedMessages {
+            ...BaseMessage
+          }
         }
       }
+
+      ... on AnnouncementChannel {
+        messageBunch(threadId: $threadId, before: $before) {
+          messages {
+            ...BaseMessage
+          }
+
+          pinnedMessages {
+            ...BaseMessage
+          }
+        }
+      }
+
+      ... on VoiceChannel {
+        messageBunch(threadId: $threadId, before: $before) {
+          messages {
+            ...BaseMessage
+          }
+        }
+      }
+
+      ... on ForumChannel {
+        messageBunch(threadId: $threadId, before: $before) {
+          messages {
+            ...BaseMessage
+          }
+        }
+      }
+
       ... on ThreadChannel {
         # This is not currently used but it resolves type issues
         messageBunch(threadId: $threadId, before: $before) {

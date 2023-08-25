@@ -47,9 +47,6 @@ const guildDocument = graphql(/* GraphQL */ `
             id
           }
         }
-        ... on ForumChannel {
-          topic
-        }
 
         rateLimitPerUser
       }

@@ -1,14 +1,15 @@
+/* eslint-disable no-underscore-dangle */
 import { useCallback, useMemo, useState } from 'react';
 import {
   // @ts-ignore
   BaseMessageFragment,
-  Message
+  Message,
+  MessagesQueryQuery
 } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
 import { messagesQuery } from '@hooks/messagesQuery';
-import { MessagesQuery } from 'types/messages.types';
 import { useQuery } from '@apollo/client';
 import { produce } from 'structurajs';
 
@@ -31,39 +32,41 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
     fetchMore: fetchHook,
     updateQuery,
     loading
-  } = useQuery<MessagesQuery>(messagesQuery, {
+  } = useQuery(messagesQuery, {
     variables: {
       guild,
       channel,
       threadId
     }
   });
-
   const isReady = data?.channelV2.id === channel && !loading;
 
-  const messages = data?.channelV2?.messageBunch?.messages;
+  const messages = data?.channelV2?.messageBunch?.messages as Message[];
 
   const fetchMore = useCallback(
     (before: string) => {
       if (!isReady) return;
 
-      fetchHook<MessagesQuery>({
+      fetchHook({
         query: messagesQuery,
         variables: { channel, guild, before, threadId },
         updateQuery: (prev, { fetchMoreResult }) => {
+          if (!('messageBunch' in fetchMoreResult.channelV2)) return prev;
+
           const olderMessages = fetchMoreResult?.channelV2?.messageBunch.messages as Message[];
 
           if (olderMessages.length === 0) {
-            return fetchMoreResult;
+            return prev;
           }
 
           return produce(prev, draft => {
+            if (!('messageBunch' in draft.channelV2)) return draft;
+
             draft.channelV2.messageBunch.messages = [
               ...olderMessages,
               ...draft.channelV2.messageBunch.messages
             ];
-          }) as MessagesQuery;
-          // prev.
+          }) as MessagesQueryQuery;
         }
       });
     },
