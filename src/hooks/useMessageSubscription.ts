@@ -2,6 +2,7 @@
 import { Exact, InputMaybe, Message, MessagesQueryQuery, UpdatedMessage } from '@graphql/graphql';
 import {
   deletedMessageSubscription,
+  messagesQuery,
   newMessageSubscription,
   updateMessageSubscription
 } from '@hooks/messagesQuery';
@@ -38,7 +39,17 @@ export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }
   useSubscription(newMessageSubscription, {
     variables: { guild, channel, threadId },
 
-    onSubscriptionData: ({ subscriptionData }) => {
+    onSubscriptionData: ({ subscriptionData, client }) => {
+      if (!subscriptionData.data) return;
+
+      const messagesCache = client.cache.readQuery({
+        query: messagesQuery,
+        variables: { guild, channel, threadId }
+      })?.channel.messageBunch.messages;
+
+      const message = subscriptionData.data.messageV2 as Message;
+
+      if (messagesCache?.find(m => m.id === message?.id)) return;
       updateQuery(
         prev =>
           produce(prev, data => {
@@ -48,9 +59,7 @@ export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }
               return;
             }
 
-            const message = subscriptionData.data.messageV2 as Message;
-
-            if (!messages.find(m => m.id === message.id)) messages.push(message);
+            messages.push(message);
           }) as MessagesQueryQuery
       );
     }
@@ -63,7 +72,7 @@ export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }
       updateQuery(
         prev =>
           produce(prev, data => {
-            const messages = data.channel?.messageBunch.messages as Message[];
+            const messages = data.channel?.messageBunch.messages;
 
             if (!messages || !subscriptionData.data) {
               return;

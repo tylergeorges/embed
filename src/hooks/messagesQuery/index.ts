@@ -258,6 +258,8 @@ export const messagesQuery = graphql(`
           }
 
           pinnedMessages {
+            id
+            __typename
             ...Message
           }
         }
@@ -266,10 +268,14 @@ export const messagesQuery = graphql(`
       ... on AnnouncementChannel {
         messageBunch(threadId: $threadId, before: $before) {
           messages {
+            id
+            __typename
             ...Message
           }
 
           pinnedMessages {
+            id
+            __typename
             ...Message
           }
         }
@@ -278,6 +284,8 @@ export const messagesQuery = graphql(`
       ... on VoiceChannel {
         messageBunch(threadId: $threadId, before: $before) {
           messages {
+            id
+            __typename
             ...Message
           }
         }
@@ -286,6 +294,8 @@ export const messagesQuery = graphql(`
       ... on ForumChannel {
         messageBunch(threadId: $threadId, before: $before) {
           messages {
+            id
+            __typename
             ...Message
           }
         }

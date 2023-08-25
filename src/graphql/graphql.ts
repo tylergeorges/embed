@@ -1273,10 +1273,14 @@ export type MessagesQueryQuery = {
         messageBunch: {
           __typename?: 'MessageBunch';
           messages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+            { __typename: 'Message'; id: string } & {
+              ' $fragmentRefs'?: { MessageFragment: MessageFragment };
+            }
           >;
           pinnedMessages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+            { __typename: 'Message'; id: string } & {
+              ' $fragmentRefs'?: { MessageFragment: MessageFragment };
+            }
           >;
         };
       }
@@ -1286,7 +1290,9 @@ export type MessagesQueryQuery = {
         messageBunch: {
           __typename?: 'MessageBunch';
           messages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+            { __typename: 'Message'; id: string } & {
+              ' $fragmentRefs'?: { MessageFragment: MessageFragment };
+            }
           >;
         };
       }
@@ -1301,7 +1307,9 @@ export type MessagesQueryQuery = {
             }
           >;
           pinnedMessages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+            { __typename: 'Message'; id: string } & {
+              ' $fragmentRefs'?: { MessageFragment: MessageFragment };
+            }
           >;
         };
       }
@@ -1323,7 +1331,9 @@ export type MessagesQueryQuery = {
         messageBunch: {
           __typename?: 'MessageBunch';
           messages: Array<
-            { __typename?: 'Message' } & { ' $fragmentRefs'?: { MessageFragment: MessageFragment } }
+            { __typename: 'Message'; id: string } & {
+              ' $fragmentRefs'?: { MessageFragment: MessageFragment };
+            }
           >;
         };
       };
@@ -2321,6 +2331,8 @@ export const MessagesQueryDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                                   {
                                     kind: 'FragmentSpread',
                                     name: { kind: 'Name', value: 'Message' }
@@ -2367,6 +2379,8 @@ export const MessagesQueryDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                                   {
                                     kind: 'FragmentSpread',
                                     name: { kind: 'Name', value: 'Message' }
@@ -2380,6 +2394,8 @@ export const MessagesQueryDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                                   {
                                     kind: 'FragmentSpread',
                                     name: { kind: 'Name', value: 'Message' }
@@ -2426,6 +2442,8 @@ export const MessagesQueryDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                                   {
                                     kind: 'FragmentSpread',
                                     name: { kind: 'Name', value: 'Message' }
@@ -2472,6 +2490,8 @@ export const MessagesQueryDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                                   {
                                     kind: 'FragmentSpread',
                                     name: { kind: 'Name', value: 'Message' }

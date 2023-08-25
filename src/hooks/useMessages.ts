@@ -1,11 +1,5 @@
-/* eslint-disable no-underscore-dangle */
 import { useCallback, useMemo, useState } from 'react';
-import {
-  // @ts-ignore
-  BaseMessageFragment,
-  Message,
-  MessagesQueryQuery
-} from '@graphql/graphql';
+import { BaseMessageFragment, MessagesQueryQuery } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { messagesQuery } from '@hooks/messagesQuery';
@@ -39,9 +33,9 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
       threadId
     }
   });
-  const isReady = data?.channel.id === channel && !loading;
 
-  const messages = data?.channel?.messageBunch?.messages as Message[];
+  const isReady = data?.channel.id === channel && !loading;
+  const messages = data?.channel?.messageBunch?.messages;
 
   const fetchMore = useCallback(
     (before: string) => {
@@ -51,17 +45,9 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
         query: messagesQuery,
         variables: { channel, guild, before, threadId },
         updateQuery: (prev, { fetchMoreResult }) => {
-          if (!('messageBunch' in fetchMoreResult.channel)) return prev;
-
-          const olderMessages = fetchMoreResult?.channel?.messageBunch.messages as Message[];
-
-          if (olderMessages.length === 0) {
-            return prev;
-          }
+          const olderMessages = fetchMoreResult?.channel?.messageBunch.messages;
 
           return produce(prev, draft => {
-            if (!('messageBunch' in draft.channel)) return draft;
-
             draft.channel.messageBunch.messages = [
               ...olderMessages,
               ...draft.channel.messageBunch.messages
@@ -91,6 +77,7 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
     const grouped = groupMessages(
       messages.map(msg => convertMessageToDiscord(msg as BaseMessageFragment))
     );
+
     firstItemIndex -= grouped.length - 1;
 
     return {
