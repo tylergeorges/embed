@@ -1,5 +1,7 @@
-import { createClient, cacheExchange, fetchExchange, subscriptionExchange } from 'urql';
+import { ApolloClient, InMemoryCache, split, HttpLink } from '@apollo/client';
 import { getEnvVar } from '@util/env';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 
 const serverEndpoint = getEnvVar('CUSTOM_SERVER_ENDPOINT');
@@ -10,21 +12,29 @@ const httpScheme = isDev ? 'http://' : 'https://';
 
 const WS_URL = `${socketScheme}${serverEndpoint}/api/graphql`;
 
-const subClient = new SubscriptionClient(WS_URL, {
-  reconnect: true,
-  timeout: 10000,
-  reconnectionAttempts: 3
+const httpLink = new HttpLink({
+  uri: `${httpScheme}${serverEndpoint}/api/graphql`
 });
 
-export const client = createClient({
-  url: `${httpScheme}${serverEndpoint}/api/graphql`,
-  exchanges: [
-    fetchExchange,
-    cacheExchange,
+const wsLink = new WebSocketLink(
+  new SubscriptionClient(WS_URL, {
+    reconnect: true,
+    timeout: 10000,
+    reconnectionAttempts: 3
+  })
+);
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+  },
+  wsLink,
+  httpLink
+);
 
-    subscriptionExchange({
-      forwardSubscription: request => subClient.request(request)
-    })
-  ]
-  // TODO: Pass auth header when auth is implemented on frontend.
+const cache = new InMemoryCache();
+
+export const client = new ApolloClient({
+  link: splitLink,
+  cache
 });

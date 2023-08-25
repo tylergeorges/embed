@@ -7,7 +7,7 @@ export const convertMessageToDiscord = (message: BaseMessageFragment): APIMessag
   channel_id: message.channelId,
   content: message.content,
   // convert epoch to '2022-11-17T19:23:27.904000+00:00'
-  timestamp: new Date(message.createdAt).toISOString(),
+  timestamp: new Date(message?.createdAt)?.toISOString(),
   edited_timestamp: message.editedAt,
   author: {
     id: message.author.id,

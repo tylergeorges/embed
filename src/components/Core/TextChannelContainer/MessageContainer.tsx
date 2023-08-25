@@ -6,7 +6,6 @@ import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
-import { StateMessages } from 'types/messages.types';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
@@ -16,22 +15,18 @@ interface MessageContainerProps {
 export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
   const [isListRendered, setIsListRendered] = useState(false);
   const { channelId: channel, guildId: guild, threadId } = useAppRouter();
-  const [messages, setMessages] = useState<StateMessages[]>([]);
 
-  const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
+  const { groupedMessages, loadMoreMessages, isReady, firstItemIndex, updateQuery } = useMessages({
     guild,
     channel,
-    messages,
-    setMessages,
     threadId: channelIsThread ? threadId : undefined
   });
 
   useMessageSubscription({
-    messages,
     guild,
     channel,
-    setMessages,
-    threadId: channelIsThread ? threadId : undefined
+    threadId: channelIsThread ? threadId : undefined,
+    updateQuery
   });
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
