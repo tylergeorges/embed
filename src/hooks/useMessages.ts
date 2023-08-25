@@ -67,6 +67,7 @@ export const useMessages = ({
   const isReady = !!messageData;
   const messages = messageData?.channel?.messageBunch?.messages ?? [];
 
+  console.log(messageData);
   useEffect(() => {
     if (variables.channel !== channel || variables.threadId !== threadId) {
       setGroupedMessages([]);

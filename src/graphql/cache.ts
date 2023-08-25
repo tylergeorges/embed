@@ -13,7 +13,6 @@ export const cache = cacheExchange({
     ThreadChannel: data => data.id as string,
     AnnouncementChannel: data => data.id as string,
     ForumChannel: data => data.id as string,
-
     MessageBunch: data => data.id as string
   },
 
