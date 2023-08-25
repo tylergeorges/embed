@@ -21,7 +21,6 @@
     "@widgetbot/message-renderer": "^1.2.5",
     "discord-api-types": "^0.37.47",
     "easy-peasy": "^5.2.0",
-    "graphql": "^16.7.1",
     "i18next": "^22.5.1",
     "i18next-browser-languagedetector": "^7.1.0",
     "keyv": "^4.5.2",
