@@ -1,5 +1,6 @@
-import { authStore } from '@store'
+import { authStore, generalStore } from '@store'
 import { Server } from '@widgetbot/embed-api'
+import { store } from '@models';
 
 const queryParams = new URLSearchParams(location.search)
 
@@ -17,6 +18,12 @@ api.on('sendMessage', data => {
     const { channel, message } = data
     // controller.signals.sendMessage({ channel, message })
   }
+})
+
+api.on('login', () => {
+  if (authStore.user) return
+
+  generalStore.settings?.guestMode ? generalStore.toggleMenu(true) : store.modal.openDiscordLogin()
 })
 
 api.on('logout', () => {
