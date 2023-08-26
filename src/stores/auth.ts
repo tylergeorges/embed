@@ -110,6 +110,12 @@ export class AuthStore {
 
       const newWindow = window.open(`${API_URL}${Endpoints.auth.discord.split(' ')[1]}`, 'Login to WidgetBot with Discord!', `menubar=no,width=905,height=752,location=no,resizable=no,scrollbars=yes,status=no,left=${x},top=${y}`);
 
+      if (!newWindow) {
+        this.inProgress = false;
+        reject('Failed to open login popup');
+        return
+      }
+
       const timer = setInterval(() => {
         if ((newWindow as Window).closed) {
           cleanup();

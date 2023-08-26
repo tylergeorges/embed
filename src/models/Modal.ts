@@ -50,6 +50,11 @@ export const Modal = types
       self.type = 'link'
       self.data = url
     },
+    openDiscordLogin() {
+      self.isOpen = true
+      self.type = 'discordlogin'
+      self.data = null
+    },
     close() {
       self.isOpen = false
     }
