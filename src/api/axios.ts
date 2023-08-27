@@ -24,8 +24,8 @@ export async function APIRequest(endpoint: string, options: APIRequestOptions = 
         method,
         ...(options.baseURL ? { baseURL: options.baseURL } : {}),
         url: endpoint,
+        withCredentials: !options.authDisabled,
         headers: {
-            ...(!options.authDisabled ? { Authorization: authStore.token }: {}),
             ...(options.headers || {})
         },
         data: options.payload || {}
