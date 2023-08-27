@@ -10,6 +10,7 @@ import {act} from "react-dom/test-utils";
 import {Locale} from "@lib/Locale";
 import {generalStore} from "@store/general";
 import api from "@lib/embed-api";
+import { getCookie } from "@lib/cookie";
 
 interface DiscordUser {
   avatar: string
@@ -52,7 +53,7 @@ export class AuthStore {
 
   constructor() {
     try {
-      this.token = window.localStorage.getItem('token');
+      this.token = getCookie('widgetbot_token');
       this.locale = window.localStorage.getItem("locale") || "en";
       try {
         this.user = JSON.parse(window.localStorage.getItem('user'));
@@ -91,6 +92,8 @@ export class AuthStore {
   }
 
   @action logout() {
+    // TODO: Call a logout endpoint.
+
     window.localStorage.removeItem('token');
     window.localStorage.removeItem('user');
 
@@ -101,6 +104,10 @@ export class AuthStore {
   }
 
   @action discordLogin() {
+    // TODO: window.location.href = login url
+    // Login sets cookie and returns back to embed url
+    // If fails, pass query param (auth_error=message) and display message somehow
+
     return new Promise<void>((resolve, reject) => {
       this.inProgress = true;
       this.errors = undefined;
