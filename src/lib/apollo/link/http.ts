@@ -18,7 +18,8 @@ const httpLink = ApolloLink.from([
 	new BatchHttpLink({
 		uri: GRAPHQL_URL,
 		batchInterval: 20,
-		batchMax: 1
+		batchMax: 1,
+		credentials: 'same-origin',
 	})
 ].filter(Boolean) as any);
 
