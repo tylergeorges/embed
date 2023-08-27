@@ -1,5 +1,6 @@
 import { WebSocketLink } from 'apollo-link-ws'
 import {WS_URL} from "@lib/env";
+import { authStore } from "@store";
 
 let ls: Storage
 try {
@@ -13,7 +14,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: {
-      authToken: ls?.getItem('token') || '',
+      authToken: authStore.token || '',
       settingsGroup: queryParams.get('settings-group') || ''
     }
   }
