@@ -30,4 +30,8 @@ api.on('logout', () => {
   authStore.logout()
 })
 
+api.on('setToken', token => {
+  authStore.setToken(token);
+});
+
 export default api
