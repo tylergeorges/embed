@@ -34,4 +34,6 @@ api.on('setToken', token => {
   authStore.setToken(token);
 });
 
+api.emit('ready');
+
 export default api
