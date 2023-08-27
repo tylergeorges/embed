@@ -79,6 +79,13 @@ export class AuthStore {
     this.locale = locale;
   }
 
+  @action async setToken(token: string) {
+    this.token = token;
+    window.localStorage.setItem("token", token);
+
+    await this.fetchDiscordUser();
+  }
+
   @action async fetchDiscordUser() {
     const { data } = await APIRequest(Endpoints.auth.fetchLatestProfile);
 

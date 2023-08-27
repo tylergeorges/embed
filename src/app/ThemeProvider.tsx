@@ -10,6 +10,7 @@ import { useQuery } from 'react-apollo-hooks'
 import {useRouter} from '@hooks'
 import {generalStore, authStore} from '@store';
 import { useEffect } from 'react'
+import { decode } from 'jsonwebtoken';
 
 const queryParams = new URLSearchParams(location.search)
 
@@ -43,9 +44,22 @@ export const ThemeProvider = ({ children }) => {
         generalStore.toggleMenu(true)
       }
 
-      if (ls) authStore.guildLogin(guild, token).then(async () => {
-        generalStore.needsUpdate = true;
-      })
+      if (ls) {
+        let decodedToken;
+
+        try {
+          decodedToken = decode(token);
+        } catch (e) {
+        }
+
+        if (decodedToken?.issuer === 'WidgetBot Backend') {
+          authStore.setToken(token);
+        } else {
+          authStore.guildLogin(guild, token).then(async () => {
+            generalStore.needsUpdate = true;
+          })
+        }
+      }
     } else if (queryParams.has('username')) {
       const name = decodeURIComponent(queryParams.get('username'))
       if (name !== authStore.user?.username) {
