@@ -1,6 +1,7 @@
 // Code created by viction#0001 https://viction.dev/ - owner of really cool bot https://kratos.gg/
 import Axios, { AxiosResponse, Method } from 'axios';
 import {API_URL, url} from "@lib/env";
+import { authStore } from "@store";
 
 interface APIRequestOptions {
     headers?: {[key: string]: any};
@@ -24,7 +25,7 @@ export async function APIRequest(endpoint: string, options: APIRequestOptions = 
         ...(options.baseURL ? { baseURL: options.baseURL } : {}),
         url: endpoint,
         headers: {
-            ...(!options.authDisabled ? { Authorization: window.localStorage.getItem('token') }: {}),
+            ...(!options.authDisabled ? { Authorization: authStore.token }: {}),
             ...(options.headers || {})
         },
         data: options.payload || {}
