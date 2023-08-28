@@ -6,18 +6,26 @@ import { GRAPHQL_URL, WS_URL } from '@lib/api/url';
 
 export const getToken = () => {
   try {
-    return localStorage.getItem('token') ?? '';
+    return localStorage.getItem('token');
   } catch (err) {
     console.error(err);
     return '';
   }
 };
 
+const getHeaders = (): {} | { Authorization: string } => {
+  const token = getToken();
+
+  if (!token) return {};
+
+  return {
+    Authorization: token
+  };
+};
+
 const httpLink = new HttpLink({
   uri: GRAPHQL_URL,
-  headers: {
-    Authorization: getToken()
-  }
+  headers: getHeaders()
 });
 
 const wsLink = new WebSocketLink(
@@ -45,7 +53,5 @@ const cache = new InMemoryCache();
 export const client = new ApolloClient({
   link: splitLink,
   cache,
-  headers: {
-    Authorization: getToken()
-  }
+  headers: getHeaders()
 });

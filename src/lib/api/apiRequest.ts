@@ -30,14 +30,13 @@ export async function apiRequest<T>({
   userToken,
   options = {}
 }: ApiReqArgs): Promise<T> {
-  const token = userToken ?? '';
-
-  const headers =
-    {
-      ...options.headers,
-      Authorization: token,
-      'Content-Type': 'application/json'
-    } ?? {};
+  const headers = userToken
+    ? {
+        ...options.headers,
+        Authorization: userToken,
+        'Content-Type': 'application/json'
+      }
+    : {};
 
   return fetch(`${API_URL}${endpoint}`, {
     headers,
