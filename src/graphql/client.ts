@@ -3,6 +3,7 @@ import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { GRAPHQL_URL, WS_URL } from '@lib/api/url';
+import { setContext } from '@apollo/client/link/context';
 
 export const getToken = () => {
   try {
@@ -22,6 +23,17 @@ const getHeaders = (): {} | { Authorization: string } => {
     Authorization: token
   };
 };
+
+const headerLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  console.log('headers', headers, token);
+  return {
+    headers: {
+      ...headers,
+      Authorization: token ?? ''
+    }
+  };
+});
 
 const httpLink = new HttpLink({
   uri: GRAPHQL_URL,
@@ -51,7 +63,7 @@ const splitLink = split(
 const cache = new InMemoryCache();
 
 export const client = new ApolloClient({
-  link: splitLink,
-  cache,
-  headers: getHeaders()
+  link: headerLink.concat(splitLink),
+  cache
+  // headers: getHeaders()
 });

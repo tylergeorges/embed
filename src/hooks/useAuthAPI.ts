@@ -19,6 +19,7 @@ export const useAuthApi = () => {
     <T extends AuthUser>(authRes: AuthResponse<T>): HandleAuthMessageResponse<T> | undefined => {
       switch (authRes.type) {
         case 'AUTH_SUCCESS': {
+          console.log('discord success ', authRes);
           if (!authRes.token) {
             inProgressRef.current = false;
 
@@ -28,9 +29,11 @@ export const useAuthApi = () => {
 
           const { token } = authRes;
           localStorage.setItem('token', token);
+
           setShowGuestFormModal(false);
 
           setRefetchGuild(true);
+
           inProgressRef.current = false;
 
           return { type: 'SUCCESS', data: authRes } as HandleAuthMessageResponse<T>;
@@ -102,6 +105,7 @@ export const useAuthApi = () => {
         fetchLatestProfile({ userToken: discordUserData.data.token })
           .then(user => {
             setUserData(user);
+
             window.removeEventListener('message', receiveDiscordAuthMessage);
           })
           .catch(err => {

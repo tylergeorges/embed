@@ -18,7 +18,7 @@ export type GqlChannel = Channel & {
 };
 
 export type GuildChannels = {
-  [channelId: string]: GqlChannel | APIDiscordChannel;
+  [channelId: string]: Channel | APIDiscordChannel;
 };
 
 export interface GqlThread extends GqlChannel {

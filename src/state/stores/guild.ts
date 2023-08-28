@@ -9,7 +9,7 @@ export interface GuildStore {
   guildChannels: Computed<GuildStore, GuildChannels>;
   data?: Guild;
   settings?: GuildSettings;
-  channels?: GqlChannel[];
+  channels?: Channel[];
   categories?: Category[];
   currentThread: Channel | undefined;
   currentChannel: { name: string; topic: string; canSend: boolean } | undefined;
@@ -18,13 +18,13 @@ export interface GuildStore {
 
   setData: Action<GuildStore, Guild>;
   setSettings: Action<GuildStore, GuildSettings>;
-  setChannels: Action<GuildStore, GqlChannel[]>;
+  setChannels: Action<GuildStore, Channel[]>;
   setCurrentThread: Action<GuildStore, GqlChannel>;
   setCurrentChannel: Action<GuildStore, string>;
   setRefetchGuild: Action<GuildStore, boolean>;
 }
 
-const addChannelToMap = (channels: GqlChannel[], guildChannels: GuildChannels) => {
+const addChannelToMap = (channels: Channel[], guildChannels: GuildChannels) => {
   for (const channel of channels) {
     const mapHasChannel = guildChannels[String(channel.id)];
 
