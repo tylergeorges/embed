@@ -33,7 +33,7 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
   const scrollToBottom = useCallback(
     ({ forceScroll }: { forceScroll?: boolean }) => {
       if (atBottom || forceScroll) {
-        listRef.current?.scrollTo({ top: 9999, behavior: 'instant' });
+        listRef.current?.scrollTo({ top: 9999, behavior: 'auto' });
       }
     },
     [atBottom]
