@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 import { binaryToId } from '@util/binaryToId';
 
 const EPOCH = 1420070400000;
@@ -17,7 +16,7 @@ export function generateSnowflake() {
 
   if (INCREMENT >= 4095) INCREMENT = 0;
 
-  const BINARY = `${(timestamp - EPOCH).toString(2).padStart(42, '0')}0000100000${(INCREMENT++)
+  const BINARY = `${(timestamp - EPOCH).toString(2).padStart(42, '0')}0000100000${(INCREMENT += 1)
     .toString(2)
     .padStart(12, '0')}`;
 

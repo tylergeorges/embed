@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 import { ExpandedAPIMessage } from 'types/messages.types';
 
 function dateToMilli(date: Date) {
@@ -46,7 +45,7 @@ export function groupMessages(messages: ExpandedAPIMessage[]): ExpandedAPIMessag
   const groupedMessages: ExpandedAPIMessage[][] = [];
   const messageLength = messages.length;
 
-  for (let i = 0; i < messageLength; i++) {
+  for (let i = 0; i < messageLength; i += 1) {
     const message = messages[i];
 
     if (i === 0) {

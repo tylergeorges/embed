@@ -1,4 +1,3 @@
-/* eslint-disable no-plusplus */
 import * as Styles from '@components/Shared/SkeletonLoaders';
 
 // TODO: finish implementing skeleton loader

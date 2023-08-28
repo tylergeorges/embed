@@ -32,7 +32,7 @@ const textChannelFragment = graphql(`
 `);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const annoucmentChannelFragment = graphql(`
+const announcementChannelFragment = graphql(`
   fragment AnnouncementChannel on AnnouncementChannel {
     id
     name
