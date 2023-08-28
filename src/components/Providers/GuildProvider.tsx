@@ -1,16 +1,63 @@
 import { useEffect } from 'react';
 import { graphql } from '@graphql/gql';
-import { useQuery } from 'urql';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { Guild } from '@graphql/graphql';
+import { useQuery } from '@apollo/client';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const textChannelFragment = graphql(`
+  fragment TextChannel on TextChannel {
+    id
+    name
+    type
+    position
+    canSend
+    topic
+
+    category {
+      id
+      name
+      position
+    }
+
+    threads {
+      id
+      name
+    }
+  }
+`);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const annoucmentChannelFragment = graphql(`
+  fragment AnnouncementChannel on AnnouncementChannel {
+    id
+    name
+    type
+    position
+    canSend
+    topic
+
+    category {
+      id
+      name
+      position
+    }
+
+    threads {
+      id
+      name
+    }
+  }
+`);
+
 export const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {
+    __typename
+
     guild(id: $id) {
       id
       name
@@ -22,13 +69,17 @@ export const guildDocument = graphql(/* GraphQL */ `
       partnered
       verified
       tier
+      __typename
 
       settings {
+        __typename
         readonly
         guestMode
       }
 
       roles {
+        __typename
+
         id
         name
         position
@@ -50,8 +101,11 @@ export const guildDocument = graphql(/* GraphQL */ `
         type
         position
         canSend
+        __typename
 
         ... on ThreadChannel {
+          __typename
+
           id
           type
           name
@@ -65,10 +119,14 @@ export const guildDocument = graphql(/* GraphQL */ `
         }
 
         ... on TextChannel {
+          __typename
+
           topic
 
           threads {
             ... on ThreadChannel {
+              __typename
+
               id
               type
               name
@@ -77,19 +135,22 @@ export const guildDocument = graphql(/* GraphQL */ `
           }
         }
         ... on AnnouncementChannel {
+          __typename
+          id
           topic
 
           threads {
+            __typename
+            id
             ... on ThreadChannel {
+              __typename
+
               id
               type
               name
               parentId
             }
           }
-        }
-        ... on ForumChannel {
-          topic
         }
 
         rateLimitPerUser
@@ -101,8 +162,7 @@ export const guildDocument = graphql(/* GraphQL */ `
 export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps) {
   const { guildId, router, isRouteLoaded } = useAppRouter();
 
-  const [{ data, fetching }, fetchHook] = useQuery({
-    query: guildDocument,
+  const { data, loading, fetchMore } = useQuery(guildDocument, {
     variables: { id: guildId }
   });
 
@@ -122,16 +182,14 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     }
     // If auth state changed, refetch channels
     else if (shouldRefetchGuild) {
-      const newToken = localStorage.getItem('token') ?? '';
-      fetchHook({
-        requestPolicy: 'network-only',
-        fetchOptions: { headers: { Authorization: newToken } }
-      });
-
-      setRefetchGuild(false);
+      // const newToken = localStorage.getItem('token') ?? '';
+      // fetchMore({
+      // });
     }
     // Set guild data
-    else if (data && !fetching) {
+    else if (data && !loading) {
+      // Weird type error when casting
+      // @ts-expect-error
       const guild = data.guild as Guild;
 
       // So guild data/settings only get set once
@@ -143,18 +201,19 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
 
       setChannels(guild.channels);
 
+      setRefetchGuild(false);
       setIsGuildFetched();
     }
   }, [
     data,
-    fetching,
+    loading,
     setChannels,
     setGuildData,
     setSettings,
     guildId,
     router,
     setIsGuildFetched,
-    fetchHook,
+    fetchMore,
     shouldRefetchGuild,
     setRefetchGuild,
     guildData,

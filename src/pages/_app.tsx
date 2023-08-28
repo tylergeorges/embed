@@ -1,13 +1,13 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { StoreProvider } from 'easy-peasy';
-import { Provider as GraphQLProvider } from 'urql';
 import { store } from '@state/store';
 import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
 import '../i18n';
 import React from 'react';
 import DataProvider from '@components/Providers/DataProvider';
+import { ApolloProvider } from '@apollo/client';
 
 const globalStyles = globalCss({
   '@font-face': [
@@ -149,11 +149,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
       </Head>
       <StoreProvider store={store}>
-        <GraphQLProvider value={client}>
+        <ApolloProvider client={client}>
           <DataProvider>
             <Component {...pageProps} />
           </DataProvider>
-        </GraphQLProvider>
+        </ApolloProvider>
       </StoreProvider>
     </>
   );

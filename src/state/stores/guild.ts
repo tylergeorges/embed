@@ -96,7 +96,8 @@ const guild: GuildStore = {
   }),
 
   setChannels: action((state, payload) => {
-    const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
+    const sortedChannels = [...payload].sort((a, b) => positionChannel(a) - positionChannel(b));
+    // const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
 
     state.categories = [
       ...new Map(sortedChannels.map(c => [c.category?.id, c.category])).values()

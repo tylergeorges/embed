@@ -1,12 +1,17 @@
-/* eslint-disable no-continue */
-import { useQuery } from 'urql';
-import { Dispatch, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react';
-import { MessagesQueryQueryVariables, BaseMessageFragment, Message } from '@graphql/graphql';
+/* eslint-disable no-underscore-dangle */
+import { useCallback, useMemo, useState } from 'react';
+import {
+  // @ts-ignore
+  BaseMessageFragment,
+  Message,
+  MessagesQueryQuery
+} from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 import { messagesQuery } from '@hooks/messagesQuery';
-import { StateMessages } from 'types/messages.types';
+import { useQuery } from '@apollo/client';
+import { produce } from 'structurajs';
 
 type MessageState = {
   groupedMessages: APIMessage[][];
@@ -16,76 +21,65 @@ type MessageState = {
 interface UseMessagesProps {
   guild: string;
   channel: string;
-  messages: StateMessages[];
-  setMessages: Dispatch<SetStateAction<StateMessages[]>>;
   threadId?: string;
 }
 
-export const useMessages = ({
-  guild,
-  channel,
-  threadId,
-  setMessages,
-  messages
-}: UseMessagesProps) => {
-  const [variables, setVariables] = useState<MessagesQueryQueryVariables>({
-    guild,
-    channel,
-    threadId
-  });
+export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
+  const [newMessageGroupLength] = useState(0);
 
-  const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
-
-  const [{ data }, fetchHook] = useQuery({
-    query: messagesQuery,
-    variables
-  });
-
-  const isReady = data?.channelV2.id === channel;
-
-  useEffect(() => {
-    if (variables.channel !== channel || variables.threadId !== threadId) {
-      setMessages([]);
-      setVariables({ channel, threadId, guild });
+  const {
+    data,
+    fetchMore: fetchHook,
+    updateQuery,
+    loading
+  } = useQuery(messagesQuery, {
+    variables: {
+      guild,
+      channel,
+      threadId
     }
+  });
+  const isReady = data?.channelV2.id === channel && !loading;
 
-    // @ts-expect-error
-    const apiMsgs: Message[] = data?.channelV2?.messageBunch?.messages ?? [];
-    const isReadyWithMessages =
-      isReady && apiMsgs[apiMsgs.length - 1]?.id !== messages[messages.length - 1]?.id;
-
-    // @ts-expect-error
-    const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
-
-    if (msgs.length) {
-      if (isReadyWithMessages) {
-        setNewMessageGroupLength(groupMessages(msgs).length);
-
-        setMessages(prev => [...msgs, ...prev]);
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, isReady]);
+  const messages = data?.channelV2?.messageBunch?.messages as Message[];
 
   const fetchMore = useCallback(
     (before: string) => {
       if (!isReady) return;
 
-      setVariables({ channel, guild, before, threadId });
+      fetchHook({
+        query: messagesQuery,
+        variables: { channel, guild, before, threadId },
+        updateQuery: (prev, { fetchMoreResult }) => {
+          if (!('messageBunch' in fetchMoreResult.channelV2)) return prev;
 
-      fetchHook({ requestPolicy: 'network-only' });
+          const olderMessages = fetchMoreResult?.channelV2?.messageBunch.messages as Message[];
+
+          if (olderMessages.length === 0) {
+            return prev;
+          }
+
+          return produce(prev, draft => {
+            if (!('messageBunch' in draft.channelV2)) return draft;
+
+            draft.channelV2.messageBunch.messages = [
+              ...olderMessages,
+              ...draft.channelV2.messageBunch.messages
+            ];
+          }) as MessagesQueryQuery;
+        }
+      });
     },
     [channel, fetchHook, guild, isReady, threadId]
   );
 
   const loadMoreMessages = useCallback(() => {
-    fetchMore(messages[0].id);
+    if (messages) {
+      fetchMore(messages[0].id);
+    }
   }, [fetchMore, messages]);
 
-  let messageState: MessageState;
-
-  // eslint-disable-next-line prefer-const
-  messageState = useMemo(() => {
+  const messageState: MessageState = useMemo(() => {
     let firstItemIndex = 100_000;
 
     if (messages === undefined)
@@ -103,15 +97,14 @@ export const useMessages = ({
       groupedMessages: grouped,
       firstItemIndex
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [variables, messages]);
+  }, [messages]);
 
   return {
     ...messageState,
     fetchMore,
     newMessageGroupLength,
     isReady,
-    loadMoreMessages
+    loadMoreMessages,
+    updateQuery
   };
 };
