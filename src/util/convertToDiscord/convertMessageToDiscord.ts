@@ -1,8 +1,15 @@
-/* eslint-disable no-bitwise */
 import { MessageType } from 'discord-api-types/v10';
 import { BaseMessageFragment, Message } from '@graphql/graphql';
 import { getAvatarId } from '@util/convertToDiscord/getAvatarId';
 import { ExpandedAPIMessage } from 'types/messages.types';
+
+const getIdFromUrl = (message: BaseMessageFragment | Message) => {
+  const id = message.author.avatarUrl.includes('gravatar')
+    ? message.author.id
+    : message.author.avatarUrl.split('/')[4] ?? null;
+
+  return id;
+};
 
 export const convertMessageToDiscord = (
   message: BaseMessageFragment | Message
@@ -18,7 +25,7 @@ export const convertMessageToDiscord = (
   isGuest: message.isGuest,
 
   author: {
-    id: message.author.id,
+    id: message.isGuest && message.author.bot ? getIdFromUrl(message) : message.author.id,
     bot: message.author.bot,
     username: message.author.name,
     avatar: getAvatarId(message.author.avatarUrl),
