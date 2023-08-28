@@ -10,7 +10,6 @@ export const getToken = () => {
     return localStorage.getItem('token');
   } catch (err) {
     console.error(err);
-    return '';
   }
 };
 
@@ -24,30 +23,22 @@ const getHeaders = (): {} | { Authorization: string } => {
   };
 };
 
-const headerLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('token');
-  console.log('headers', headers, token);
-  return {
-    headers: {
-      ...headers,
-      Authorization: token ?? ''
-    }
-  };
-});
+const authContext = setContext((_, { headers }) => ({
+  headers: {
+    ...headers,
+    ...getHeaders()
+  }
+}));
 
 const httpLink = new HttpLink({
-  uri: GRAPHQL_URL,
-  headers: getHeaders()
+  uri: GRAPHQL_URL
 });
 
 const wsLink = new WebSocketLink(
   new SubscriptionClient(WS_URL, {
     reconnect: true,
     timeout: 10000,
-    reconnectionAttempts: 3,
-    connectionParams: {
-      authToken: getToken()
-    }
+    reconnectionAttempts: 3
   })
 );
 
@@ -63,7 +54,6 @@ const splitLink = split(
 const cache = new InMemoryCache();
 
 export const client = new ApolloClient({
-  link: headerLink.concat(splitLink),
+  link: authContext.concat(splitLink),
   cache
-  // headers: getHeaders()
 });

@@ -183,28 +183,24 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     }
     // If auth state changed, refetch channels
     else if (shouldRefetchGuild) {
-      client
-        .resetStore()
-        .then(() => {
-          fetchMore({
-            query: guildDocument,
-            variables: { id: guildId },
-            updateQuery: (prev, { fetchMoreResult }) => {
-              // Weird type error when casting
-              // @ts-expect-error
-              const guild = fetchMoreResult.guild as Guild;
+      client.resetStore();
 
-              setChannels(guild.channels);
-              setRefetchGuild(false);
+      client.onResetStore(() =>
+        fetchMore({
+          query: guildDocument,
+          variables: { id: guildId },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            // Weird type error when casting
+            // @ts-expect-error
+            const guild = fetchMoreResult.guild as Guild;
 
-              return fetchMoreResult;
-            }
-          });
+            setChannels(guild.channels);
+            setRefetchGuild(false);
+
+            return fetchMoreResult;
+          }
         })
-        .catch(err => {
-          console.error(err);
-          setRefetchGuild(false);
-        });
+      );
     }
     // Set guild data/settings  once
     else if (data && !loading && !guildData && !guildSettings) {

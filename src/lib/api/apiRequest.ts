@@ -36,7 +36,7 @@ export async function apiRequest<T>({
         Authorization: userToken,
         'Content-Type': 'application/json'
       }
-    : {};
+    : { 'Content-Type': 'application/json' };
 
   return fetch(`${API_URL}${endpoint}`, {
     headers,

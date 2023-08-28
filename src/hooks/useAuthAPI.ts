@@ -1,3 +1,4 @@
+import { getToken } from '@graphql/client';
 import { APIDiscordResponse, AuthResponse, HandleAuthMessageResponse } from '@lib/api/api.types';
 import { fetchLatestProfile, guestLogin, guildLogin } from '@lib/api/apiRequest';
 import { API_URL, Endpoints } from '@lib/api/url';
@@ -19,7 +20,6 @@ export const useAuthApi = () => {
     <T extends AuthUser>(authRes: AuthResponse<T>): HandleAuthMessageResponse<T> | undefined => {
       switch (authRes.type) {
         case 'AUTH_SUCCESS': {
-          console.log('discord success ', authRes);
           if (!authRes.token) {
             inProgressRef.current = false;
 
@@ -61,7 +61,7 @@ export const useAuthApi = () => {
 
   const guestSignIn = useCallback(
     async (username: string) => {
-      const hasToken = !!localStorage.getItem('token');
+      const hasToken = !!getToken();
 
       if (!username || hasToken || inProgressRef.current) return;
 
@@ -76,7 +76,6 @@ export const useAuthApi = () => {
       guestLogin({ username: trimmedUsername })
         .then(res => {
           const guestData = handleAuthMessage<GuestUser>(res);
-
           if (!guestData) return;
 
           if (guestData.type === 'ERROR') return;
