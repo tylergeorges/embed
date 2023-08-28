@@ -9,10 +9,11 @@ import { MessageType } from 'discord-api-types/v10';
 import { SendMessageMutation } from '../graphql/graphql';
 
 interface UseSendMessageProps {
+  scrollToBottom: ({ forceScroll }: { forceScroll?: boolean | undefined }) => void;
   thread?: string | null;
 }
 
-export const useSendMessage = ({ thread }: UseSendMessageProps) => {
+export const useSendMessage = ({ thread, scrollToBottom }: UseSendMessageProps) => {
   const { channelId, guildId, threadId } = useAppRouter();
   const [sendMutation] = useMutation(sendMessageMutation);
 
@@ -84,6 +85,7 @@ export const useSendMessage = ({ thread }: UseSendMessageProps) => {
         if (!messagesCache || !sendMessage || messagesCache.find(m => m.id === sendMessage?.id))
           return;
 
+        scrollToBottom({ forceScroll: true });
         cache.writeQuery({
           query: messagesQuery,
           variables: { channel: channelId, guild: guildId, threadId },

@@ -10,14 +10,18 @@ import * as Styles from '../styles';
 interface TextBoxProps {
   isAuthed: boolean;
   canSend: boolean;
+  scrollToBottom: ({ forceScroll }: { forceScroll?: boolean | undefined }) => void;
   channelIsThread?: boolean;
 }
 
-export const TextBox = ({ channelIsThread, canSend, isAuthed }: TextBoxProps) => {
+export const TextBox = ({ channelIsThread, canSend, isAuthed, scrollToBottom }: TextBoxProps) => {
   const fileAttachmentRef = useRef<HTMLInputElement>(null);
   const { threadId } = useAppRouter();
 
-  const { sendMessage } = useSendMessage({ thread: channelIsThread ? threadId : undefined });
+  const { sendMessage } = useSendMessage({
+    thread: channelIsThread ? threadId : undefined,
+    scrollToBottom
+  });
 
   const attachmentButtonClick = (e: React.SyntheticEvent) => {
     e.preventDefault();

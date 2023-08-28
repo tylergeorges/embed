@@ -4,6 +4,8 @@ import { MessageListRenderer } from '@components/Core/VirtualLists/MessageListRe
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
+import { useCallback, useRef, useState } from 'react';
+import { VirtuosoHandle } from 'react-virtuoso';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
@@ -11,7 +13,9 @@ interface MessageContainerProps {
 }
 
 export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
+  const [atBottom, setAtBottom] = useState(false);
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
+  const listRef = useRef<VirtuosoHandle>(null);
 
   const canSend = useStoreState(state => state.guild.currentChannel)?.canSend;
   const user = useStoreState(state => state.user.data);
@@ -20,18 +24,41 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
 
   const threadId = channelIsThread ? thread : undefined;
 
-  const { groupedMessages, loadMoreMessages, isReady, firstItemIndex, updateQuery } = useMessages({
+  const { groupedMessages, loadMoreMessages, firstItemIndex, updateQuery } = useMessages({
     guild,
     channel,
     threadId: channelIsThread ? threadId : undefined
   });
 
+  const scrollToBottom = useCallback(
+    ({ forceScroll }: { forceScroll?: boolean }) => {
+      if (atBottom || forceScroll) {
+        listRef.current?.scrollTo({ top: 9999, behavior: 'instant' });
+      }
+    },
+    [atBottom]
+  );
+
   useMessageSubscription({
     guild,
     channel,
     threadId: channelIsThread ? threadId : undefined,
-    updateQuery
+    updateQuery,
+    scrollToBottom
   });
+
+  const handleBottomStateChanged = useCallback((bottom: boolean) => {
+    setAtBottom(bottom);
+  }, []);
+
+  const handleTopStateChanged = useCallback(
+    (top: boolean) => {
+      if (top) {
+        loadMoreMessages();
+      }
+    },
+    [loadMoreMessages]
+  );
 
   return (
     <Styles.MessageWrapper
@@ -43,13 +70,20 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
       }}
     >
       <MessageListRenderer
-        startReached={loadMoreMessages}
+        // startReached={loadMoreMessages}
         messages={groupedMessages}
-        isReady={isReady}
+        handleBottomStateChanged={handleBottomStateChanged}
+        ref={listRef}
+        handleTopStateChanged={handleTopStateChanged}
         firstItemIndex={firstItemIndex}
       />
 
-      <TextBox channelIsThread={channelIsThread} canSend={!!canSend && !!user} isAuthed={!!user} />
+      <TextBox
+        scrollToBottom={scrollToBottom}
+        channelIsThread={channelIsThread}
+        canSend={!!canSend && !!user}
+        isAuthed={!!user}
+      />
     </Styles.MessageWrapper>
   );
 };

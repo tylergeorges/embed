@@ -2,8 +2,8 @@ import { listComponents } from '@components/Core/VirtualLists/listComponents';
 import * as Styles from '@components/Core/VirtualLists/styles';
 import MessageGroup from '@widgetbot/message-renderer';
 import { APIMessage } from 'discord-api-types/v10';
-import { useState } from 'react';
-import { Virtuoso } from 'react-virtuoso';
+import { forwardRef } from 'react';
+import { Virtuoso, VirtuosoHandle } from 'react-virtuoso';
 
 const Message = (index: number, data: APIMessage[]) => (
   <Styles.VirtualListMessageWrapper>
@@ -13,49 +13,40 @@ const Message = (index: number, data: APIMessage[]) => (
 
 interface MessagesListProps {
   messages: APIMessage[][];
-  isReady: boolean;
   firstItemIndex: number;
-  startReached: (index: number) => void;
+  handleBottomStateChanged: (bottom: boolean) => void;
+  handleTopStateChanged: (top: boolean) => void;
 }
 
-export const MessageListRenderer = ({
-  startReached,
-  messages,
-  isReady,
-  firstItemIndex
-}: MessagesListProps) => {
-  const [isListRendered, setIsListRendered] = useState(false);
+export const MessageListRenderer = forwardRef<VirtuosoHandle, MessagesListProps>(
+  ({ messages, firstItemIndex, handleBottomStateChanged, handleTopStateChanged }, ref) => {
+    const followOutput = (isAtBottom: boolean) => {
+      if (isAtBottom) {
+        return true; // can be 'auto' or false to avoid scrolling
+      }
 
-  const handleBottomStateChanged = () => {
-    if (!isListRendered) {
-      setIsListRendered(true);
-    }
-  };
+      return false;
+    };
 
-  const followOutput = (isAtBottom: boolean) => {
-    if (isAtBottom) {
-      return 'auto'; // can be 'auto' or false to avoid scrolling
-    }
-
-    return false;
-  };
-
-  return (
-    <Styles.VirtualListContainer>
-      {isReady && (
+    return (
+      <Styles.VirtualListContainer>
         <Virtuoso
+          atTopStateChange={handleTopStateChanged}
           data={messages}
           firstItemIndex={firstItemIndex}
-          startReached={startReached}
           atBottomStateChange={handleBottomStateChanged}
-          atBottomThreshold={2}
+          atBottomThreshold={20}
           itemContent={Message}
-          defaultItemHeight={100}
+          defaultItemHeight={50}
           overscan={100}
+          alignToBottom
           components={listComponents}
           followOutput={followOutput}
+          ref={ref}
         />
-      )}
-    </Styles.VirtualListContainer>
-  );
-};
+      </Styles.VirtualListContainer>
+    );
+  }
+);
+
+MessageListRenderer.displayName = 'MessageListRenderer';

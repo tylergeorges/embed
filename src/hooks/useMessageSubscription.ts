@@ -32,10 +32,17 @@ interface UseSubArgs {
   guild: string;
   channel: string;
   updateQuery: UpdateQuery;
+  scrollToBottom: ({ forceScroll }: { forceScroll?: boolean | undefined }) => void;
   threadId?: string;
 }
 
-export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }: UseSubArgs) => {
+export const useMessageSubscription = ({
+  channel,
+  guild,
+  threadId,
+  updateQuery,
+  scrollToBottom
+}: UseSubArgs) => {
   useSubscription(newMessageSubscription, {
     variables: { guild, channel, threadId },
 
@@ -62,6 +69,7 @@ export const useMessageSubscription = ({ channel, guild, threadId, updateQuery }
             }
 
             messages.push(message);
+            scrollToBottom({});
           }) as MessagesQueryQuery
       );
     }

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from 'react';
-import { BaseMessageFragment, MessagesQueryQuery } from '@graphql/graphql';
+import { Message, MessagesQueryQuery } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { messagesQuery } from '@hooks/messagesQuery';
@@ -74,9 +74,7 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
         firstItemIndex
       };
 
-    const grouped = groupMessages(
-      messages.map(msg => convertMessageToDiscord(msg as BaseMessageFragment))
-    );
+    const grouped = groupMessages(messages.map(msg => convertMessageToDiscord(msg as Message)));
 
     firstItemIndex -= grouped.length - 1;
 
@@ -90,7 +88,6 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
     ...messageState,
     fetchMore,
     newMessageGroupLength,
-    isReady,
     loadMoreMessages,
     updateQuery
   };
