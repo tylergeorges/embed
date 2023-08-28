@@ -19,12 +19,6 @@ dependencies:
   '@types/lodash.throttle':
     specifier: ^4.1.7
     version: 4.1.7
-  '@urql/exchange-auth':
-    specifier: ^2.1.6
-    version: 2.1.6(graphql@16.7.1)
-  '@urql/exchange-graphcache':
-    specifier: ^6.3.1
-    version: 6.3.1(graphql@16.7.1)
   '@widgetbot/message-renderer':
     specifier: ^1.2.5
     version: 1.2.5(@types/react@18.0.21)(react@18.2.0)
@@ -46,9 +40,6 @@ dependencies:
   lodash.throttle:
     specifier: ^4.1.1
     version: 4.1.1
-  memoizee:
-    specifier: ^0.4.15
-    version: 0.4.15
   next:
     specifier: ^13.4.9
     version: 13.4.9(@babel/core@7.22.5)(react-dom@18.2.0)(react@18.2.0)
@@ -149,20 +140,6 @@ devDependencies:
     version: 4.8.4
 
 packages:
-  /@0no-co/graphql.web@1.0.4(graphql@16.7.1):
-    resolution:
-      {
-        integrity: sha512-W3ezhHGfO0MS1PtGloaTpg0PbaT8aZSmmaerL7idtU5F7oCI+uu25k+MsMS31BVFlp4aMkHSrNRxiD72IlK8TA==
-      }
-    peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-    peerDependenciesMeta:
-      graphql:
-        optional: true
-    dependencies:
-      graphql: 16.7.1
-    dev: false
-
   /@aashutoshrathi/word-wrap@1.2.6:
     resolution:
       {
@@ -2652,43 +2629,6 @@ packages:
       '@typescript-eslint/types': 5.60.1
       eslint-visitor-keys: 3.4.1
     dev: true
-
-  /@urql/core@4.1.1(graphql@16.7.1):
-    resolution:
-      {
-        integrity: sha512-iIoAy6BY+BUZZ7KIpnMT7C9q+ULf5ZCVxGe3/i7WZSJBrQa2h1QkIMhL+8fAKmOn9gt83jSIv5drWWnhZ9izEA==
-      }
-    dependencies:
-      '@0no-co/graphql.web': 1.0.4(graphql@16.7.1)
-      wonka: 6.3.4
-    transitivePeerDependencies:
-      - graphql
-    dev: false
-
-  /@urql/exchange-auth@2.1.6(graphql@16.7.1):
-    resolution:
-      {
-        integrity: sha512-snOlt7p5kYq0KnPDuXkKe2qW3/BucQZOElvTeo3svLQuk9JiNJVnm6ffQ6QGiGO+G3AtMrctnno1+X44fLtDuQ==
-      }
-    dependencies:
-      '@urql/core': 4.1.1(graphql@16.7.1)
-      wonka: 6.3.4
-    transitivePeerDependencies:
-      - graphql
-    dev: false
-
-  /@urql/exchange-graphcache@6.3.1(graphql@16.7.1):
-    resolution:
-      {
-        integrity: sha512-oQ/qWgyhduazEWSiTEFljjefUsuHYVEzoczIj8QrrKih9AUNo4FEWiA7OTzTF9Z1NmCQ9dO8BDto715PvZ3J+g==
-      }
-    dependencies:
-      '@0no-co/graphql.web': 1.0.4(graphql@16.7.1)
-      '@urql/core': 4.1.1(graphql@16.7.1)
-      wonka: 6.3.4
-    transitivePeerDependencies:
-      - graphql
-    dev: false
 
   /@whatwg-node/events@0.0.3:
     resolution:
@@ -8870,13 +8810,6 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
-
-  /wonka@6.3.4:
-    resolution:
-      {
-        integrity: sha512-CjpbqNtBGNAeyNS/9W6q3kSkKE52+FjIj7AkFlLr11s/VWGUu6a2CdYSdGxocIhIVjaW/zchesBQUKPVU69Cqg==
-      }
-    dev: false
 
   /wrap-ansi@6.2.0:
     resolution:
