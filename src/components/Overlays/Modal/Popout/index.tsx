@@ -32,15 +32,13 @@ export const Popout = memo(
         }}
       >
         <Styles.PopoutHeader>
-          <Styles.PopoutHeaderContent>
-            <Styles.PopoutTitleWrapper>
-              {TitleIcon && <Icons icon={TitleIcon} />}
+          <Styles.PopoutTitleWrapper>
+            {TitleIcon && <Icons icon={TitleIcon} />}
 
-              <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
-            </Styles.PopoutTitleWrapper>
+            <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
+          </Styles.PopoutTitleWrapper>
 
-            <CloseButton onClick={hideModal} />
-          </Styles.PopoutHeaderContent>
+          <CloseButton onClick={hideModal} />
         </Styles.PopoutHeader>
 
         {children}
