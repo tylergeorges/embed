@@ -1,10 +1,10 @@
 import { IconButton } from '@components/Shared/Icons/Buttons/IconButton';
+import { ThreadChannel } from '@graphql/graphql';
 import { useStoreActions } from '@state';
 import { useTranslation } from 'react-i18next';
-import { GqlThread } from 'types/guild.types';
 
 interface ThreadsPanelButtonProps {
-  thread: GqlThread;
+  thread: ThreadChannel;
 }
 export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
   const { t } = useTranslation();

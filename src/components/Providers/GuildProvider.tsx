@@ -1,16 +1,16 @@
 import { useEffect } from 'react';
-import { graphql } from '@graphql/gql';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { Guild } from '@graphql/graphql';
+import { graphql } from '@graphql/gql';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const textChannelFragment = graphql(`
+const textChannelFragment = graphql(/* GraphQL */ `
   fragment TextChannel on TextChannel {
     id
     name
@@ -33,7 +33,7 @@ const textChannelFragment = graphql(`
 `);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const announcementChannelFragment = graphql(`
+const announcementChannelFragment = graphql(/* GraphQL */ `
   fragment AnnouncementChannel on AnnouncementChannel {
     id
     name
@@ -111,6 +111,7 @@ export const guildDocument = graphql(/* GraphQL */ `
           type
           name
           parentId
+          topic
         }
 
         category {
@@ -132,6 +133,7 @@ export const guildDocument = graphql(/* GraphQL */ `
               type
               name
               parentId
+              topic
             }
           }
         }
@@ -143,6 +145,7 @@ export const guildDocument = graphql(/* GraphQL */ `
           threads {
             __typename
             id
+
             ... on ThreadChannel {
               __typename
 
@@ -150,6 +153,7 @@ export const guildDocument = graphql(/* GraphQL */ `
               type
               name
               parentId
+              topic
             }
           }
         }

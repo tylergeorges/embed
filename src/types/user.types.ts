@@ -8,7 +8,6 @@ interface BaseUser {
 }
 
 export interface DiscordUser extends BaseUser {
-  _id: string;
   discriminator: string;
   provider: 'Discord';
   blockedUsers: string[];

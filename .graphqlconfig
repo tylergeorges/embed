@@ -1,6 +1,9 @@
 {
   "name": "Staging GraphQL Schema",
   "schemaPath": "schema.graphql",
+  "includes": [
+    "src/**/*.tsx", "src/**/*.ts"
+  ],
   "extensions": {
     "endpoints": {
       "Default GraphQL Endpoint": {

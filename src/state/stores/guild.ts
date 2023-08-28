@@ -1,9 +1,17 @@
 /* eslint-disable no-continue */
 /* eslint-disable prefer-object-spread */
 import { Action, Computed, action, computed } from 'easy-peasy';
-import { Category, Channel, Guild, GuildSettings, Role } from '@graphql/graphql';
+import {
+  Category,
+  Channel,
+  Guild,
+  GuildSettings,
+  Role,
+  TextChannel,
+  ThreadChannel
+} from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
-import { APIDiscordChannel, GqlChannel, GuildChannels } from 'types/guild.types';
+import { GuildChannels } from 'types/guild.types';
 
 export interface GuildStore {
   guildChannels: Computed<GuildStore, GuildChannels>;
@@ -11,7 +19,7 @@ export interface GuildStore {
   settings?: GuildSettings;
   channels?: Channel[];
   categories?: Category[];
-  currentThread: Channel | undefined;
+  currentThread: ThreadChannel | undefined;
   currentChannel: { name: string; topic: string; canSend: boolean } | undefined;
   refetchGuild: boolean;
   roles?: Map<string, Role>;
@@ -19,7 +27,7 @@ export interface GuildStore {
   setData: Action<GuildStore, Guild>;
   setSettings: Action<GuildStore, GuildSettings>;
   setChannels: Action<GuildStore, Channel[]>;
-  setCurrentThread: Action<GuildStore, GqlChannel>;
+  setCurrentThread: Action<GuildStore, ThreadChannel>;
   setCurrentChannel: Action<GuildStore, string>;
   setRefetchGuild: Action<GuildStore, boolean>;
 }
@@ -32,7 +40,7 @@ const addChannelToMap = (channels: Channel[], guildChannels: GuildChannels) => {
 
     guildChannels[String(channel.id)] = channel;
 
-    const channelThreads = channel.threads as GqlChannel[];
+    const channelThreads = channel.threads as ThreadChannel[];
 
     if (!channelThreads?.length) continue;
 
@@ -84,7 +92,6 @@ const guild: GuildStore = {
 
   setChannels: action((state, payload) => {
     const sortedChannels = [...payload].sort((a, b) => positionChannel(a) - positionChannel(b));
-    // const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
 
     state.categories = [
       ...new Map(sortedChannels.map(c => [c.category?.id, c.category])).values()
@@ -98,9 +105,9 @@ const guild: GuildStore = {
   }),
 
   setCurrentChannel: action((state, payload) => {
-    const currentChannel = state.guildChannels[payload] as APIDiscordChannel;
+    const currentChannel = state.guildChannels[payload] as TextChannel;
 
-    if (currentChannel && 'topic' in currentChannel && 'canSend' in currentChannel) {
+    if (currentChannel)
       state.currentChannel = {
         name: currentChannel.name,
 
@@ -108,7 +115,6 @@ const guild: GuildStore = {
 
         canSend: currentChannel.canSend
       };
-    }
   })
 };
 

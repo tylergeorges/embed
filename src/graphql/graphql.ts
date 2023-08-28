@@ -989,6 +989,7 @@ export type GuildQuery = {
                 type: ChannelType;
                 name: string;
                 parentId: string;
+                topic?: string | null;
               }
             | { __typename: 'VoiceChannel'; id: string }
           > | null;
@@ -1023,6 +1024,7 @@ export type GuildQuery = {
                 type: ChannelType;
                 name: string;
                 parentId: string;
+                topic?: string | null;
               }
             | { __typename?: 'VoiceChannel' }
           > | null;
@@ -1034,6 +1036,7 @@ export type GuildQuery = {
           type: ChannelType;
           name: string;
           parentId: string;
+          topic?: string | null;
           position: number;
           canSend: boolean;
           rateLimitPerUser?: number | null;
@@ -2075,7 +2078,8 @@ export const GuildDocument = {
                             { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'parentId' } }
+                            { kind: 'Field', name: { kind: 'Name', value: 'parentId' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'topic' } }
                           ]
                         }
                       },
@@ -2124,7 +2128,11 @@ export const GuildDocument = {
                                         { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                         { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                                         { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                                        { kind: 'Field', name: { kind: 'Name', value: 'parentId' } }
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'parentId' }
+                                        },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'topic' } }
                                       ]
                                     }
                                   }
@@ -2170,7 +2178,11 @@ export const GuildDocument = {
                                         { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                                         { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                                         { kind: 'Field', name: { kind: 'Name', value: 'name' } },
-                                        { kind: 'Field', name: { kind: 'Name', value: 'parentId' } }
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: 'parentId' }
+                                        },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'topic' } }
                                       ]
                                     }
                                   }

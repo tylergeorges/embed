@@ -11,7 +11,11 @@ const config: CodegenConfig = {
     }
   },
   documents: ['src/**/*.tsx', 'src/**/*.ts'],
-  ignoreNoDocuments: true, // for better experience with the watcher
+  ignoreNoDocuments: true, // for better experience with the watcher,
+  pluckConfig: {
+    globalIdentifier: 'gql'
+  },
+
   generates: {
     'src/graphql': {
       preset: 'client',

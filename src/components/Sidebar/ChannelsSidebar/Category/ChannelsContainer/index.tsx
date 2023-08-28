@@ -1,10 +1,9 @@
 import { Fragment, RefObject, forwardRef } from 'react';
 import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
 import { useStoreState } from '@state';
-import { Category as ICategory } from '@graphql/graphql';
+import { Category as ICategory, ThreadChannel } from '@graphql/graphql';
 import { ThreadSpine } from '@components/Shared/Icons/ThreadSpine';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { GqlThread } from 'types/guild.types';
 import { Channel } from './Channel';
 
 interface ChannelsProps {
@@ -43,7 +42,7 @@ export const ChannelsContainer = forwardRef<HTMLDivElement, ChannelsProps>(
                       {thread.id === threadId && <ThreadSpine />}
                       <Channel
                         isThread
-                        channel={thread as GqlThread}
+                        channel={thread as ThreadChannel}
                         isActive={thread.id === threadId}
                         isCategoryOpen={isCategoryOpen}
                         ref={currentChannelRef}

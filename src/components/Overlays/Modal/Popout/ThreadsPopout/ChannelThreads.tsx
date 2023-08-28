@@ -3,13 +3,13 @@ import { useTranslation } from 'react-i18next';
 import { ThreadsPanelButton } from '@icons/Buttons/ThreadsPanelButton';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreActions } from '@state';
-import { GqlThread } from 'types/guild.types';
+import { ThreadChannel } from '@graphql/graphql';
 
 interface ChannelThreadsProps {
-  threads: GqlThread[];
+  threads: ThreadChannel[];
 }
 
-const ThreadPopoutItem = ({ thread }: { thread: GqlThread }) => {
+const ThreadPopoutItem = ({ thread }: { thread: ThreadChannel }) => {
   const { router, channelId, guildId } = useAppRouter();
 
   const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);

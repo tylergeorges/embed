@@ -43,7 +43,7 @@ export const useSendMessage = ({ thread }: UseSendMessageProps) => {
           createdAt: +new Date(),
           editedAt: null,
           unread: true,
-          flags: 1 << 4,
+          flags: 0,
           isGuest: true,
 
           author: {

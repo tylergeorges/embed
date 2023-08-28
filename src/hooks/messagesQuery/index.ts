@@ -1,8 +1,9 @@
-import { gql } from '@apollo/client';
+// import { gql } from '@apollo/client';
+
 import { graphql } from '@graphql/gql';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const EmbedFragment = gql`
+export const EmbedFragment = graphql(/* GraphQL */ `
   fragment Embed on Embed {
     title
     description
@@ -10,6 +11,7 @@ export const EmbedFragment = gql`
     timestamp
     color
     type
+
     author {
       url
       name
@@ -47,10 +49,10 @@ export const EmbedFragment = gql`
       proxyUrl
     }
   }
-`;
+`);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const BaseMessageFragment = gql`
+export const BaseMessageFragment = graphql(/* GraphQL */ `
   fragment BaseMessage on Message {
     id
     channelId
@@ -131,9 +133,9 @@ export const BaseMessageFragment = gql`
       messageCount
     }
   }
-`;
+`);
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MessageFragment = gql`
+const MessageFragment = graphql(/* GraphQL */ `
   fragment Message on Message {
     __typename
     id
@@ -145,10 +147,10 @@ const MessageFragment = gql`
       ...BaseMessage
     }
   }
-`;
+`);
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const UpdatedMessageFragment = gql`
+const UpdatedMessageFragment = graphql(/* GraphQL */ `
   fragment UpdatedMessage on UpdatedMessage {
     id
     content
@@ -224,9 +226,9 @@ const UpdatedMessageFragment = gql`
       messageCount
     }
   }
-`;
+`);
 
-export const messagesQuery = graphql(`
+export const messagesQuery = graphql(/* GraphQL */ `
   query messagesQuery(
     $guild: String!
     $channel: String!
@@ -323,7 +325,7 @@ export const messagesQuery = graphql(`
   }
 `);
 
-export const moreMessagesQuery = graphql(`
+export const moreMessagesQuery = graphql(/* GraphQL */ `
   query MoreMessages(
     $guild: String!
     $channel: String!
@@ -377,9 +379,7 @@ export const moreMessagesQuery = graphql(`
   }
 `);
 
-// TODO: Copy fragments from old codebase for this.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const updateMessageSubscription = graphql(`
+export const updateMessageSubscription = graphql(/* GraphQL */ `
   subscription MessageUpdated($guild: String!, $channel: String!, $threadId: String) {
     messageUpdateV2(guild: $guild, channels: [$channel], threadId: $threadId) {
       __typename
@@ -389,7 +389,7 @@ export const updateMessageSubscription = graphql(`
   }
 `);
 
-export const newMessageSubscription = graphql(`
+export const newMessageSubscription = graphql(/* GraphQL */ `
   subscription NewMessage($guild: String!, $channel: String!, $threadId: String) {
     messageV2(channels: [$channel], guild: $guild, threadId: $threadId) {
       __typename
@@ -399,7 +399,7 @@ export const newMessageSubscription = graphql(`
   }
 `);
 
-export const deletedMessageSubscription = graphql(`
+export const deletedMessageSubscription = graphql(/* GraphQL */ `
   subscription MessageDeleted($guild: String!, $channel: String!, $threadId: String) {
     messageDeleteV2(channels: [$channel], guild: $guild, threadId: $threadId) {
       __typename
@@ -408,7 +408,7 @@ export const deletedMessageSubscription = graphql(`
   }
 `);
 
-export const sendMessageMutation = graphql(`
+export const sendMessageMutation = graphql(/* GraphQL */ `
   mutation SendMessage(
     $channel: String!
     $content: String!

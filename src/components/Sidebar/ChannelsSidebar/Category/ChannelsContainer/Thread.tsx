@@ -1,9 +1,9 @@
 import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
+import { ThreadChannel } from '@graphql/graphql';
 import { forwardRef } from 'react';
-import { GqlThread } from 'types/guild.types';
 
 interface ThreadProps {
-  thread: GqlThread;
+  thread: ThreadChannel;
   isActive: boolean;
   handleContextMenuClick: (e: React.MouseEvent) => void;
   currentChannelUrl: string;
