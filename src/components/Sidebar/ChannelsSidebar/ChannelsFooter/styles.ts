@@ -35,7 +35,7 @@ export const ChannelsFooterLoginButton = styled.withConfig({
     transitionDuration: theme.transitions.fasterDuration,
 
     position: 'absolute',
-    backgroundColor: theme.colors.accent,
+    backgroundColor: theme.colors.loginButtonBackground,
     width: '100%',
     height: '100%',
     borderRadius: theme.radii.xxs,
@@ -47,6 +47,13 @@ export const ChannelsFooterLoginButton = styled.withConfig({
     '&::before': {
       content: '',
       opacity: '75%'
+    }
+  },
+
+  '&:active': {
+    '&::before': {
+      content: '',
+      boxShadow: theme.shadows.loginButtonActiveShadow
     }
   }
 });
@@ -72,7 +79,9 @@ export const ChannelsFooterButtonWrapper = styled.withConfig({
   padding: theme.space.sm,
   alignItems: 'center',
   flexDirection: 'column',
-  gap: theme.space.sm
+  gap: theme.space.sm,
+
+  backgroundColor: theme.colors.channelsSidebarFooterLighterBackground
 });
 
 export const ChannelsFooterVersionWrapper = styled.withConfig({
@@ -85,7 +94,8 @@ export const ChannelsFooterVersionWrapper = styled.withConfig({
   color: theme.colors.primaryOpacity30,
   fontSize: theme.fontSizes.sm,
   padding: theme.space.xs,
-  backgroundOverlay: theme.colors.backgroundSecondaryAlt
+
+  backgroundColor: theme.colors.channelsSidebarFooterDarkerBackground
 });
 
 export const ChannelsFooterUserWrapper = styled.withConfig({

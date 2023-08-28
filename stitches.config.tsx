@@ -71,6 +71,11 @@ const stitches = createStitches({
       backgroundOpacityChat: '0.8',
       backgroundOverlayColor: '0 0 0',
 
+      loginButtonBackground: 'rgba(88, 101, 242, 0.4)',
+
+      channelsSidebarFooterLighterBackground: 'rgb(38, 40, 44)',
+      channelsSidebarFooterDarkerBackground: 'rgb(27, 29, 32)',
+
       backgroundOverlayChat:
         'linear-gradient(rgb($backgroundOverlayColor / $backgroundOpacityChat), rgb($backgroundOverlayColor / $backgroundOpacityChat)) fixed 0 0/cover, hsl($backgroundHsl / 1) fixed 0 0/cover',
 
@@ -273,11 +278,15 @@ const stitches = createStitches({
 
     shadows: {
       dropShadow: 'rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
+
       headerDropShadow:
         '0 2px 4px -1px rgba(0, 0, 0, 0.1), 0px 4px 5px 0px rgba(0, 0, 0, 0.12), 0px 1px 10px 0px rgba(0, 0, 0, 0.09), 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06)',
 
       headerBorder:
-        '0 1px 0 hsl(0 calc( 1 *0%) 0.8% /0.2),0 1.5px 0 hsl( 240 calc(1 *7.7%) 2.5% /0.05),0 2px 0 hsl( 0 calc(1 *0%) 0.8% /0.05)'
+        '0 1px 0 hsl(0 calc( 1 *0%) 0.8% /0.2),0 1.5px 0 hsl( 240 calc(1 *7.7%) 2.5% /0.05),0 2px 0 hsl( 0 calc(1 *0%) 0.8% /0.05)',
+
+      loginButtonActiveShadow:
+        'rgba(255, 255, 255, 0.1) 0px 0px 0px 99999px inset, rgba(0, 0, 0, 0.2) 0px 5px 5px -3px, rgba(0, 0, 0, 0.14) 0px 8px 10px 1px, rgba(0, 0, 0, 0.12) 0px 3px 14px 2px'
     },
 
     fontWeights: {
