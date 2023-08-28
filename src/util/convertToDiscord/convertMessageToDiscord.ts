@@ -1,9 +1,9 @@
-import { MessageType } from 'discord-api-types/v10';
-import { BaseMessageFragment, Message } from '@graphql/graphql';
+import { APIEmbed, MessageType } from 'discord-api-types/v10';
+import { Message } from '@graphql/graphql';
 import { getAvatarId } from '@util/convertToDiscord/getAvatarId';
 import { ExpandedAPIMessage } from 'types/messages.types';
 
-const getIdFromUrl = (message: BaseMessageFragment | Message) => {
+const getIdFromUrl = (message: Message) => {
   const id = message.author.avatarUrl.includes('gravatar')
     ? message.author.id
     : message.author.avatarUrl.split('/')[4] ?? null;
@@ -11,9 +11,7 @@ const getIdFromUrl = (message: BaseMessageFragment | Message) => {
   return id;
 };
 
-export const convertMessageToDiscord = (
-  message: BaseMessageFragment | Message
-): ExpandedAPIMessage => ({
+export const convertMessageToDiscord = (message: Message): ExpandedAPIMessage => ({
   id: message.id,
   type: MessageType.Default,
   channel_id: message.channelId,
@@ -39,13 +37,27 @@ export const convertMessageToDiscord = (
     id: '0',
     url: a.url,
     height: a.height,
-    width: a.width,
     filename: a.filename,
     size: a.size,
-    proxy_url: a.url
+    proxy_url: a.url,
+    width: a.width
   })),
 
-  embeds: [],
+  embeds: message.embeds.map(e => ({
+    author: e.author,
+    color: e.color,
+    description: e.description,
+    footer: e.footer,
+    image: e.image ?? {},
+    provider: e.provider,
+    thumbnail: e.thumbnail ?? {},
+    timestamp: e.timestamp,
+    title: e.title,
+    url: e.url,
+    fields: e.fields,
+    video: e.video ?? {}
+  })) as APIEmbed[],
+
   reactions: [],
   mentions: [],
   mention_roles: [],
