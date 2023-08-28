@@ -35,7 +35,8 @@ export const VirtualListContainer = styled.withConfig({
   position: 'relative',
   width: '100%',
   height: '100%',
-  boxSizing: 'content-box'
+
+  paddingBottom: theme.space.lg
 });
 
 export const VirtualListMessageWrapper = styled.withConfig({
