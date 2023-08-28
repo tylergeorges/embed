@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { graphql } from '@graphql/gql';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { useQuery } from '@apollo/client';
+import { useApolloClient, useQuery } from '@apollo/client';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -169,6 +169,7 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
   const shouldRefetchGuild = useStoreState(state => state.guild.refetchGuild);
   const guildData = useStoreState(state => state.guild.data);
   const guildSettings = useStoreState(state => state.guild.settings);
+  const client = useApolloClient();
 
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
@@ -177,36 +178,46 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
 
   useEffect(() => {
     if (!guildId && isRouteLoaded) {
-      // router.push('/channels/585454996800405509/585840022511550494');
       router.push('/channels/299881420891881473/1143579521371615243');
     }
     // If auth state changed, refetch channels
     else if (shouldRefetchGuild) {
-      // const newToken = localStorage.getItem('token') ?? '';
-      // fetchMore({
-      // });
+      client.resetStore();
+
+      client.onResetStore(() =>
+        fetchMore({
+          query: guildDocument,
+          variables: { id: guildId },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            // Weird type error when casting
+            // @ts-expect-error
+            const guild = fetchMoreResult.guild as Guild;
+
+            setChannels(guild.channels);
+            setRefetchGuild(false);
+
+            return fetchMoreResult;
+          }
+        })
+      );
     }
-    // Set guild data
-    else if (data && !loading) {
+    // Set guild data/settings once
+    else if (data && !loading && !guildSettings) {
       // Weird type error when casting
       // @ts-expect-error
       const guild = data.guild as Guild;
 
       // So guild data/settings only get set once
-      if (!guildData && !guildSettings) {
-        setGuildData(guild);
-
-        setSettings(guild.settings);
-      }
-
+      setGuildData(guild);
+      setSettings(guild.settings);
       setChannels(guild.channels);
 
-      setRefetchGuild(false);
       setIsGuildFetched();
     }
   }, [
     data,
     loading,
+    client,
     setChannels,
     setGuildData,
     setSettings,
