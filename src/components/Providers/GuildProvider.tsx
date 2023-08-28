@@ -4,6 +4,7 @@ import { useAppRouter } from '@hooks/useAppRouter';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { Guild } from '@graphql/graphql';
 import { graphql } from '@graphql/gql';
+import { getToken } from '@graphql/client';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -165,7 +166,8 @@ export const guildDocument = graphql(/* GraphQL */ `
 `);
 
 export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps) {
-  const { guildId, router, isRouteLoaded } = useAppRouter();
+  const client = useApolloClient();
+  const { guildId, router, isRouteLoaded, channelId } = useAppRouter();
 
   const { data, loading, fetchMore } = useQuery(guildDocument, {
     variables: { id: guildId }
@@ -174,7 +176,6 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
   const shouldRefetchGuild = useStoreState(state => state.guild.refetchGuild);
   const guildData = useStoreState(state => state.guild.data);
   const guildSettings = useStoreState(state => state.guild.settings);
-  const client = useApolloClient();
 
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
@@ -198,7 +199,21 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
             // @ts-expect-error
             const guild = fetchMoreResult.guild as Guild;
 
-            setChannels(guild.channels);
+            const { channels } = guild;
+
+            setChannels(channels);
+
+            const token = getToken();
+
+            if (!token) {
+              const isAuthChannel = channels.findIndex(ch => ch.id === channelId) === -1;
+
+              // Redirect to non-auth channel if user signs out and was in an authed channel.
+              if (isAuthChannel) {
+                router.push(`/channels/${guildId}/${channels[0].id}`);
+              }
+            }
+
             setRefetchGuild(false);
 
             return fetchMoreResult;
@@ -222,6 +237,7 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     data,
     loading,
     client,
+    channelId,
     setChannels,
     setGuildData,
     setSettings,
