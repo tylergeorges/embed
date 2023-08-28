@@ -19,9 +19,6 @@ dependencies:
   '@types/lodash.throttle':
     specifier: ^4.1.7
     version: 4.1.7
-  '@urql/exchange-auth':
-    specifier: ^2.1.6
-    version: 2.1.6(graphql@16.7.1)
   '@widgetbot/message-renderer':
     specifier: ^1.2.5
     version: 1.2.5(@types/react@18.0.21)(react@18.2.0)
@@ -146,20 +143,6 @@ devDependencies:
     version: 4.8.4
 
 packages:
-  /@0no-co/graphql.web@1.0.4(graphql@16.7.1):
-    resolution:
-      {
-        integrity: sha512-W3ezhHGfO0MS1PtGloaTpg0PbaT8aZSmmaerL7idtU5F7oCI+uu25k+MsMS31BVFlp4aMkHSrNRxiD72IlK8TA==
-      }
-    peerDependencies:
-      graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
-    peerDependenciesMeta:
-      graphql:
-        optional: true
-    dependencies:
-      graphql: 16.7.1
-    dev: false
-
   /@aashutoshrathi/word-wrap@1.2.6:
     resolution:
       {
