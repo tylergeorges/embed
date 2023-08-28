@@ -70,7 +70,6 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
       }}
     >
       <MessageListRenderer
-        // startReached={loadMoreMessages}
         messages={groupedMessages}
         handleBottomStateChanged={handleBottomStateChanged}
         ref={listRef}

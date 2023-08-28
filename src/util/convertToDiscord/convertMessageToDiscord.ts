@@ -54,29 +54,66 @@ export const convertMessageToDiscord = (message: Message): APIMessage & { isGues
 
   embeds: message.embeds
     ? (message.embeds.map(e => ({
-        author: e.author,
+        author: {
+          name: e.author?.name,
+          icon_url: e.author?.icon,
+          proxy_icon_url: e.author?.proxyIconUrl,
+          url: e.author?.url
+        },
+
         color: e.color,
         description: e.description,
-        footer: e.footer,
-        image: e.image ?? {},
+
+        footer: {
+          text: e.footer?.text,
+          icon_url: e.footer?.proxyIconUrl,
+          proxy_icon_url: e.footer?.proxyIconUrl
+        },
+
+        image:
+          {
+            url: e.image?.url,
+            height: e.image?.height,
+            proxy_url: e.image?.proxyUrl,
+            width: e.image?.width
+          } ?? undefined,
+
         provider: e.provider,
-        thumbnail: e.thumbnail ?? {},
+
+        thumbnail:
+          {
+            url: e.thumbnail?.url,
+            height: e.thumbnail?.height,
+            proxy_url: e.thumbnail?.proxyUrl,
+            width: e.thumbnail?.width
+          } ?? undefined,
+
         timestamp: e.timestamp,
         title: e.title,
         url: e.url,
+
         fields: e.fields,
-        video: e.video ?? {}
+
+        video:
+          {
+            height: e.video?.height,
+            proxy_url: e.video?.proxyUrl,
+            url: e.video?.url,
+            width: e.video?.width
+          } ?? undefined
       })) as APIEmbed[])
     : [],
 
   reactions: message.reactions
     ? message.reactions.map(r => ({
         count: r.count as number,
+
         emoji: {
           id: r.emojiId as string,
           name: r.emojiName as string,
           animated: r.animated as boolean
         },
+
         me: r.me
       }))
     : [],
