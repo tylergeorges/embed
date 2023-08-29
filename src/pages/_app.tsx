@@ -57,7 +57,6 @@ const globalStyles = globalCss({
     fontFamily: 'GgSans',
     width: '100%',
     height: '100%',
-    color: theme.colors.textPrimary,
     overflow: 'hidden',
     boxSizing: 'border-box'
   },

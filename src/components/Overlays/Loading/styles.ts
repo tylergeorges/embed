@@ -65,7 +65,6 @@ export const SpinnerWrapper = styled.withConfig({
 })('div', {
   width: '100%',
   height: '100%',
-  backgroundColor: theme.colors.background,
   position: 'absolute',
   display: 'flex',
   alignItems: 'center',
