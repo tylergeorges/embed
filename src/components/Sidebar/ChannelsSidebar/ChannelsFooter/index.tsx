@@ -1,25 +1,19 @@
 import * as Styles from '@components/Sidebar/ChannelsSidebar/ChannelsFooter/styles';
-import React, { useEffect } from 'react';
-import { useStoreActions, useStoreState } from '@state';
+import { useStoreState } from '@state';
 import { ChannelsFooterUserInfo } from '@components/Sidebar/ChannelsSidebar/ChannelsFooter/ChannelsFooterUserInfo';
 import { ChannelsFooterLoginButton } from '@components/Sidebar/ChannelsSidebar/ChannelsFooter/ChannelsFooterLoginButton';
+import { version } from '../../../../../package.json';
 
 export const ChannelsFooter = () => {
   const user = useStoreState(state => state.user.data);
 
-  const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
-
-  useEffect(() => {
-    if (user) {
-      setShowGuestFormModal(false);
-    }
-  }, [setShowGuestFormModal, user]);
-
   return (
     <Styles.ChannelsFooterWrapper>
-      {!user ? <ChannelsFooterLoginButton /> : <ChannelsFooterUserInfo />}
+      {user ? <ChannelsFooterUserInfo /> : <ChannelsFooterLoginButton />}
 
-      <Styles.ChannelsFooterVersionWrapper>WidgetBot v3.8.6</Styles.ChannelsFooterVersionWrapper>
+      <Styles.ChannelsFooterVersionWrapper>
+        WidgetBot v{version}
+      </Styles.ChannelsFooterVersionWrapper>
     </Styles.ChannelsFooterWrapper>
   );
 };

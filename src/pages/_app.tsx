@@ -1,19 +1,37 @@
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { StoreProvider } from 'easy-peasy';
-import { Provider as GraphQLProvider } from 'urql';
 import { store } from '@state/store';
 import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
 import '../i18n';
 import React from 'react';
 import DataProvider from '@components/Providers/DataProvider';
+import { ApolloProvider } from '@apollo/client';
 
 const globalStyles = globalCss({
-  '@font-face': {
-    fontFamily: 'GgSans',
-    src: 'url(/font/gg-sans-Regular.ttf)'
-  },
+  '@font-face': [
+    {
+      fontFamily: 'GgSans',
+      src: 'url(/font/gg-sans-Regular.ttf)',
+      fontWeight: '400'
+    },
+    {
+      fontFamily: 'GgSans',
+      src: 'url(/font/gg-sans-Medium.ttf)',
+      fontWeight: '500'
+    },
+    {
+      fontFamily: 'GgSans',
+      src: 'url(/font/gg-sans-Semibold.ttf)',
+      fontWeight: '600'
+    },
+    {
+      fontFamily: 'GgSans',
+      src: 'url(/font/gg-sans-Bold.ttf)',
+      fontWeight: '700'
+    }
+  ],
   html: {
     padding: 0,
     margin: 0,
@@ -21,8 +39,9 @@ const globalStyles = globalCss({
     width: '100%',
     height: '100%',
     overflow: 'hidden',
-    backgroundColor: theme.colors.background,
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
+
+    backgroundColor: theme.colors.background
   },
   body: {
     padding: 0,
@@ -30,8 +49,7 @@ const globalStyles = globalCss({
     fontFamily: 'GgSans',
     width: '100%',
     height: '100%',
-    color: 'white',
-    backgroundColor: theme.colors.background,
+    color: theme.colors.textPrimary,
     overflow: 'hidden',
     boxSizing: 'border-box'
   },
@@ -41,6 +59,7 @@ const globalStyles = globalCss({
   },
 
   '*, ::after, ::before': {
+    fontFamily: 'GgSans',
     boxSizing: 'inherit',
     scrollbarWidth: 'thin',
     scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.2)'
@@ -130,11 +149,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
       </Head>
       <StoreProvider store={store}>
-        <GraphQLProvider value={client}>
+        <ApolloProvider client={client}>
           <DataProvider>
             <Component {...pageProps} />
           </DataProvider>
-        </GraphQLProvider>
+        </ApolloProvider>
       </StoreProvider>
     </>
   );

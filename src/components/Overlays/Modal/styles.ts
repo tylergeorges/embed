@@ -77,7 +77,7 @@ export const Backdrop = styled.withConfig({
       isMembersListOpen: true,
 
       css: {
-        zIndex: theme.zIndices.membersSidebarBackdrop,
+        zIndex: theme.zIndices.none,
         opacity: 1
       }
     },
@@ -217,8 +217,7 @@ export const ModalHeaderContent = styled.withConfig({
   userSelect: 'none',
 
   cursor: 'default',
-  marginBottom: theme.space.xs,
-  marginTop: theme.space.md,
+  marginY: theme.space.md,
 
   variants: {
     titleSize: {
@@ -240,10 +239,6 @@ export const ModalHeaderContent = styled.withConfig({
 
       xxl: {
         fontSize: theme.fontSizes.xxl.value
-      },
-
-      xxxl: {
-        fontSize: theme.fontSizes.xxxl.value
       }
     },
 
@@ -484,6 +479,8 @@ export const ThreadsPopoutListHeader = styled.withConfig({
 
   fontSize: theme.fontSizes.sm,
   fontWeight: theme.fontWeights.bold,
+  textRendering: 'optimizeLegibility',
+  textTransform: 'uppercase',
 
   width: '100%',
   marginY: theme.space.lg

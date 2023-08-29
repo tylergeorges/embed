@@ -18,7 +18,7 @@ interface MessagesListProps {
   startReached?: (index: number) => void;
 }
 
-export const MessagesListRenderer = ({
+export const MessageListRenderer = ({
   startReached,
   handleBottomStateChanged,
   messages,
@@ -32,6 +32,7 @@ export const MessagesListRenderer = ({
 
     return false;
   };
+
   return (
     <Styles.VirtualListContainer>
       {isReady && (

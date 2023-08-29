@@ -14,7 +14,8 @@ export const SidebarWrapper = styled.withConfig({
 
   userSelect: 'none',
 
-  backgroundColor: theme.colors.backgroundSecondary,
+  backgroundOverlay: theme.colors.backgroundSecondary,
+
   willChange: 'transform',
   transition: theme.transitions.defaultTransform,
 
@@ -68,6 +69,7 @@ export const ChannelsChildrenWrapper = styled.withConfig({
   alignItems: 'center',
   height: '100%',
   position: 'relative',
+  marginTop: theme.space.lg,
   overflowY: 'auto'
 });
 
@@ -84,8 +86,7 @@ export const MembersSidebarWrapper = styled.withConfig({
   displayName: 'members-sidebar_wrapper'
 })(SidebarWrapper, {
   right: 0,
-  boxSizing: 'border-box',
-  zIndex: theme.zIndices.membersSidebar
+  boxSizing: 'border-box'
 });
 
 export const ThreadsPanelContainer = styled.withConfig({

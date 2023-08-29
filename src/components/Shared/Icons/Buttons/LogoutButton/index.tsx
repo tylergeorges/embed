@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const LogoutButton = () => {
-  const translate = useTranslation();
+  const { t } = useTranslation();
 
   const setUserData = useStoreActions(state => state.user.setUserData);
   const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
@@ -24,7 +24,7 @@ export const LogoutButton = () => {
   return (
     <IconButton
       tooltipPlacement="top"
-      tooltipLabel={translate.t('logout.tooltip') as string}
+      tooltipLabel={t('logout.tooltip') as string}
       onClick={logout}
       icon="Logout"
       size="md"

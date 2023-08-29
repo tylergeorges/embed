@@ -6,7 +6,7 @@ import { Channel as IChannel } from '@graphql/graphql';
 
 export const ThreadsButton = () => {
   const { channelId } = useAppRouter();
-  const translate = useTranslation();
+  const { t } = useTranslation();
 
   const setShowThreadsModal = useStoreActions(state => state.ui.setShowThreadsModal);
   const showThreadsModal = useStoreState(state => state.ui.showThreadsModal);
@@ -27,7 +27,7 @@ export const ThreadsButton = () => {
     <IconButton
       icon="ThreadHash"
       color="light"
-      tooltipLabel={translate.t('threads.label') as string}
+      tooltipLabel={t('threads.label') as string}
       tooltipPlacement="bottom"
       tooltipDisabledIfActive
       isActive={showThreadsModal}

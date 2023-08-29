@@ -54,7 +54,13 @@ import SvgIconNewsChannel from './message-renderer-icons/channel-icons/icon-news
 import SvgIconFourmChannel from './message-renderer-icons/channel-icons/icon-forum-channel.svg';
 import SvgIconRulesChannel from './message-renderer-icons/channel-icons/icon-rules-channel.svg';
 
+// ! DISCORD ICON
+import SvgDiscordIcon from './icon-discord.svg';
+
 export const svgUrls = {
+  // ! DISCORD ICON
+  DiscordIcon: SvgDiscordIcon.src,
+
   // ! FILE ICONS
   FileAudio: SvgFileAudio.src,
   FileSketch: SvgSketch.src,

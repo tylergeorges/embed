@@ -1,12 +1,14 @@
 import * as Styles from '@components/Sidebar/ChannelsSidebar/ChannelsFooter/styles';
 import React, { useRef } from 'react';
 import { useStoreActions, useStoreState } from '@state';
-import { useAuthApi } from '@hooks/useAuthApi';
+import { useAuthApi } from '@hooks/useAuthAPI';
+import { useTranslation } from 'react-i18next';
 
 export const ChannelsFooterLoginButton = () => {
+  const { t } = useTranslation();
+
   const inProgressRef = useRef(false);
   const setShowGuestFormModal = useStoreActions(state => state.ui.setShowGuestFormModal);
-  const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
 
   const isGuestMode = useStoreState(state => state.guild.settings)?.guestMode;
 
@@ -25,14 +27,15 @@ export const ChannelsFooterLoginButton = () => {
       }
 
       inProgressRef.current = false;
-      setRefetchGuild(true);
     }
   };
 
   return (
     <Styles.ChannelsFooterButtonWrapper>
       <Styles.ChannelsFooterLoginButton onClick={login}>
-        <Styles.ChannelsFooterLoginButtonLabel>Login</Styles.ChannelsFooterLoginButtonLabel>
+        <Styles.ChannelsFooterLoginButtonLabel>
+          {t('auth.login')}
+        </Styles.ChannelsFooterLoginButtonLabel>
       </Styles.ChannelsFooterLoginButton>
     </Styles.ChannelsFooterButtonWrapper>
   );

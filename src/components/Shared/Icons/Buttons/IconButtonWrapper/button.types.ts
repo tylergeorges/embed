@@ -12,7 +12,7 @@ export interface IconButtonWrapperProps
 
   tooltipDisabled?: boolean;
 
-  iconContent: string | null;
+  iconContent?: string | null;
 
   isActive?: boolean;
 

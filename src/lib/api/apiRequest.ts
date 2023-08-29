@@ -1,6 +1,5 @@
 import { API_URL, Endpoints } from '@lib/api/url';
-import axios from 'axios';
-import { DiscordUser } from 'types/user.types';
+import { AuthUser } from 'types/user.types';
 import {
   APIGuestResponse,
   APIGuildResponse,
@@ -16,10 +15,6 @@ interface APIRequestOptions {
 
   authDisabled?: boolean;
 }
-
-const axiosClient = axios.create({
-  baseURL: API_URL
-});
 
 interface ApiReqArgs {
   endpoint: string;
@@ -37,21 +32,26 @@ export async function apiRequest<T>({
 }: ApiReqArgs): Promise<T> {
   const token = userToken ?? '';
 
-  const headers = { ...options.headers, Authorization: token } ?? {};
+  const headers =
+    {
+      ...options.headers,
+      Authorization: token,
+      'Content-Type': 'application/json'
+    } ?? {};
 
-  return axiosClient
-    .request({
-      method,
-      url: endpoint,
-      headers,
-      data: options.payload ?? {}
-    })
-    .then(res => res.data)
+  return fetch(`${API_URL}${endpoint}`, {
+    headers,
+    method,
+    mode: 'cors',
+    body: JSON.stringify(options.payload)
+  })
+    .then(res => res.json())
+    .then((data: T) => data)
     .catch(err => err);
 }
 
 export const fetchLatestProfile = ({ userToken }: LatestProfileArgs) =>
-  apiRequest<DiscordUser>({
+  apiRequest<AuthUser>({
     endpoint: Endpoints.auth.fetchLatestProfile,
     method: 'GET',
     userToken

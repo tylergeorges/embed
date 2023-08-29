@@ -53,9 +53,12 @@ export const CategoryNameContent = styled.withConfig({
   displayName: 'category-name'
 })('div', {
   textTransform: 'uppercase',
+  textRendering: 'optimizeLegibility',
   fontSize: theme.fontSizes.sm,
   alignSelf: 'center',
-  boxSizing: 'border-box'
+  boxSizing: 'border-box',
+  fontWeight: theme.fontWeights.semibold,
+  letterSpacing: '.02em'
 });
 
 export const CategoryContainer = styled.withConfig({
@@ -64,6 +67,7 @@ export const CategoryContainer = styled.withConfig({
   width: '100%',
   boxSizing: 'border-box',
   paddingTop: theme.space.xl,
+  zIndex: theme.zIndices.channelsSidebar,
 
   fontWeight: theme.fontWeights.medium,
   transition: `translateY ${theme.transitions.longerDuration} ease`
@@ -106,7 +110,7 @@ export const ChannelNameWrapper = styled.withConfig({
       },
 
       true: {
-        color: theme.colors.active
+        color: theme.colors.interactiveActive
       }
     },
 
@@ -143,18 +147,17 @@ export const ChannelNameInner = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'channel-name_inner'
 })(Link, {
+  position: 'relative',
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
 
   userSelect: 'none',
-
-  // ignoring this error because if we dont access the value property it outputs incorrect values.
-  // @ts-expect-error
+  zIndex: theme.zIndices.channelsSidebar,
+  // @ts-ignore
   paddingX: theme.space.xxs.value,
   width: '100%',
   fontSize: theme.fontSizes.lg,
-  fontWeight: theme.fontWeights.thin,
   boxSizing: 'border-box',
 
   marginBottom: theme.space.xxs.value,
@@ -162,11 +165,11 @@ export const ChannelNameInner = styled.withConfig({
   variants: {
     isActive: {
       false: {
-        color: theme.colors.textMuted.value,
+        color: theme.colors.channelsPrimary,
 
         '&:hover': {
-          backgroundColor: theme.colors.primaryOpacity10,
-          color: theme.colors.primaryOpacity50
+          backgroundColor: theme.colors.backgroundModifierHover,
+          color: theme.colors.interactiveHover
         }
       }
     }

@@ -30,13 +30,11 @@ const ThreadPopoutItem = ({ thread }: { thread: Channel }) => {
 };
 
 export const ChannelThreads = ({ threads }: ChannelThreadsProps) => {
-  const translate = useTranslation();
+  const { t } = useTranslation();
 
   return (
     <Styles.ThreadsPopoutContent>
-      <Styles.ThreadsPopoutListHeader>
-        {translate.t('olderthreads.label')}
-      </Styles.ThreadsPopoutListHeader>
+      <Styles.ThreadsPopoutListHeader>{t('olderthreads.label')}</Styles.ThreadsPopoutListHeader>
 
       <Styles.ThreadsPopoutList>
         {' '}

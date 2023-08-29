@@ -1,18 +1,9 @@
-import {
-  createClient,
-  cacheExchange,
-  fetchExchange,
-  subscriptionExchange,
-  dedupExchange
-} from 'urql';
+import { ApolloClient, InMemoryCache, split, HttpLink } from '@apollo/client';
+import { getMainDefinition } from '@apollo/client/utilities';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { GRAPHQL_URL, WS_URL } from '@lib/api/url';
-
-const subClient = new SubscriptionClient(WS_URL, {
-  reconnect: true,
-  timeout: 10000,
-  reconnectionAttempts: 3
-});
+import { setContext } from '@apollo/client/link/context';
 
 export const getToken = () => {
   try {
@@ -23,22 +14,49 @@ export const getToken = () => {
   }
 };
 
-export const client = createClient({
-  url: GRAPHQL_URL,
-  exchanges: [
-    cacheExchange,
-    dedupExchange,
+const getHeaders = (): {} | { Authorization: string } => {
+  const token = getToken();
 
-    fetchExchange,
+  if (!token) return {};
 
-    subscriptionExchange({
-      forwardSubscription: request => subClient.request(request)
-    })
-  ],
+  return {
+    Authorization: token
+  };
+};
 
-  fetchOptions: () => {
-    const token = getToken();
-
-    return { headers: { Authorization: token } };
+const authContext = setContext((_, { headers }) => ({
+  headers: {
+    ...headers,
+    ...getHeaders()
   }
+}));
+
+const httpLink = new HttpLink({
+  uri: GRAPHQL_URL
+});
+
+const wsLink = new WebSocketLink(
+  new SubscriptionClient(WS_URL, {
+    reconnect: true,
+    timeout: 10000,
+    reconnectionAttempts: 3
+  })
+);
+
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+  },
+  wsLink,
+  httpLink
+);
+
+const cache = new InMemoryCache({
+  typePolicies: {}
+});
+
+export const client = new ApolloClient({
+  link: authContext.concat(splitLink),
+  cache
 });

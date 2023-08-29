@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { useStoreActions } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { fetchLatestProfile } from '@lib/api/apiRequest';
-import { useAuthApi } from '@hooks/useAuthApi';
+import { useAuthApi } from '@hooks/useAuthAPI';
+import { getToken } from '@graphql/client';
 
 interface UserProviderProps {
   setIsUserFetched: () => void;
@@ -19,7 +20,7 @@ export default function UserProvider({ setIsUserFetched }: UserProviderProps) {
   useEffect(() => {
     // Check if guildId is in URL to make sure pages loaded
     if (!localFetchedRef.current && guildId) {
-      const token = localStorage.getItem('token');
+      const token = getToken();
 
       if (token) {
         fetchLatestProfile({ userToken: token })

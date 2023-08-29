@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import UserProvider from '@components/Providers/UserProvider';
-import GuildProvider from '@components/Providers/GuildProvider';
 import { Loading } from '@components/Overlays/Loading';
+import GuildProvider from '@components/Providers/GuildProvider';
 
 interface DataProviderProps {
   children: React.ReactNode;

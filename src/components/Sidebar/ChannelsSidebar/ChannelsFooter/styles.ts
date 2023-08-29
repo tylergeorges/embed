@@ -54,10 +54,11 @@ export const ChannelsFooterLoginButtonLabel = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'channels-footer_login_button_label'
 })('span', {
-  color: theme.colors.primary,
+  color: theme.colors.interactiveActive,
   fontSize: theme.fontSizes.md,
 
-  zIndex: theme.zIndices.tooltip
+  zIndex: theme.zIndices.tooltip,
+  fontWeight: theme.fontWeights.medium
 });
 
 export const ChannelsFooterButtonWrapper = styled.withConfig({
