@@ -1053,7 +1053,7 @@ export type GuildQuery = {
   };
 };
 
-export type UserFragment = { __typename?: 'User'; id: string; name: string } & {
+export type UserFragment = { __typename?: 'User'; id: string; name: string; avatarUrl: string } & {
   ' $fragmentName'?: 'UserFragment';
 };
 
@@ -1485,7 +1485,8 @@ export const UserFragmentDoc = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } }
         ]
       }
     }
@@ -1496,7 +1497,7 @@ export const MentionFragmentDoc = {
   definitions: [
     {
       kind: 'FragmentDefinition',
-      name: { kind: 'Name', value: 'mention' },
+      name: { kind: 'Name', value: 'Mention' },
       typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Mention' } },
       selectionSet: {
         kind: 'SelectionSet',

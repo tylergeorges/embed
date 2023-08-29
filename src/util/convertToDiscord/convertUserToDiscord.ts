@@ -10,6 +10,6 @@ export function convertUserToDiscord(user: UserFragment | AuthUser): APIUser | n
     id: user.id,
     username: 'username' in user ? user.username : user.name,
     discriminator: '',
-    avatar: ''
+    avatar: user.avatarUrl
   };
 }

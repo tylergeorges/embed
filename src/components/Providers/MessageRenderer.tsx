@@ -7,7 +7,7 @@ import { convertUserToMember } from '@util/convertToDiscord/convertUserToMember'
 import { useStoreActions, useStoreState } from '@state';
 import { convertChannelToDiscord } from '@util/convertToDiscord/convertChannelToDiscord';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { Channel } from '@graphql/graphql';
+import { Channel, Role } from '@graphql/graphql';
 import { convertGuild } from '@util/convertToDiscord/convertGuild';
 import { gql, useApolloClient } from '@apollo/client';
 
@@ -38,11 +38,9 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
   const client = useApolloClient();
 
   const resolveRole = (id: string): APIRole | null => {
-    if (!roles) return null;
+    if (!roles || !roles.has(id)) return null;
 
-    const role = roles.get(id);
-
-    if (!role) return null;
+    const role = roles.get(id) as Role;
 
     return {
       color: role.color,
@@ -66,6 +64,7 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
         fragment User on User {
           id
           name
+          avatarUrl
         }
       `
     });
@@ -74,7 +73,7 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
       id: `Mention:${id}`,
 
       fragment: gql`
-        fragment mention on Mention {
+        fragment Mention on Mention {
           id
           name
         }

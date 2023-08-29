@@ -8,16 +8,10 @@ import {
   MessagesQueryQuery
 } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
-import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 import { messagesQuery } from '@hooks/messagesQuery';
 import { produce } from 'structurajs';
 import { useQuery } from '@apollo/client';
-
-type MessageState = {
-  groupedMessages: APIMessage[][];
-  firstItemIndex: number;
-};
 
 interface UseMessagesProps {
   guild: string;
@@ -80,10 +74,8 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
     }
   }, [fetchMore, messages]);
 
-  let messageState: MessageState;
-
   // eslint-disable-next-line prefer-const
-  messageState = useMemo(() => {
+  const messageState = useMemo(() => {
     let firstItemIndex = 100_000;
 
     if (messages === undefined)
