@@ -57,11 +57,11 @@ export const convertField = {
         ? getIdFromUrl(message.author.avatarUrl)
         : message.author.id,
 
+    avatar: getAvatarId(message.author.avatarUrl),
+
     bot: message.author.bot,
 
     username: message.author.name,
-
-    avatar: getAvatarId(message.author.avatarUrl),
 
     global_name: message.author.name,
 

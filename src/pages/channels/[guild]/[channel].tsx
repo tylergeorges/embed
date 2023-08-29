@@ -29,9 +29,7 @@ const ContextMenu = dynamic(() =>
 const MessageRendererRoot = styled('div', {
   height: '100%',
   width: '100%',
-  '*': {
-    fontFamily: 'GgSans'
-  }
+  fontFamily: 'inherit'
 });
 
 function GuildChannel() {
