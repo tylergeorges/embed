@@ -534,6 +534,7 @@ export const NoThreadsContent = styled.withConfig({
 })('div', {
   position: 'relative',
   display: 'flex',
+  color: theme.colors.textPrimary,
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',
