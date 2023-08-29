@@ -15,6 +15,7 @@ export const Main = styled.withConfig({
   width: '100%',
   backgroundColor: theme.colors.background,
   animation: `${zoomIn} ${theme.transitions.longerDuration} ease`,
+  fontFamily: 'GgSans',
   justifyItems: 'center'
 });
 

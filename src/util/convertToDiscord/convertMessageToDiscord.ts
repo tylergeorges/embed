@@ -1,10 +1,10 @@
-import { APIMessage } from 'discord-api-types/v10';
+import { APIMessage, MessageType } from 'discord-api-types/v10';
 import { Message } from '@graphql/graphql';
 import { convertField } from '@util/convertToDiscord/convertField';
 
 export const convertMessageToDiscord = (message: Message): APIMessage & { isGuest: boolean } => ({
   id: message.id,
-  type: convertField.messageType(message.type),
+  type: message.type ? convertField.messageType(message.type) : MessageType.Default,
 
   channel_id: message.channelId,
   content: message.content,
@@ -39,7 +39,6 @@ export const convertMessageToDiscord = (message: Message): APIMessage & { isGues
   thread: convertField.thread(message.thread),
 
   mention_roles: [],
-
   pinned: false,
 
   tts: false,

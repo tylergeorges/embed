@@ -69,8 +69,6 @@ export const convertField = {
 
     flags: message.author.flags ?? 0,
 
-    accent_color: message.author.color,
-
     discriminator: message.author.discrim
   }),
 
