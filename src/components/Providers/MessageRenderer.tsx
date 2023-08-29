@@ -37,7 +37,28 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
   const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
   const client = useApolloClient();
 
-  const resolveFromCache = (id: string) => {
+  const resolveRole = (id: string): APIRole | null => {
+    if (!roles) return null;
+
+    const role = roles.get(id);
+
+    if (!role) return null;
+
+    return {
+      color: role.color,
+      hoist: false,
+      id: role.id,
+      name: role.name,
+      managed: false,
+      mentionable: false,
+      permissions: '',
+      position: role.position,
+      icon: role?.icon,
+      unicode_emoji: role?.unicodeEmoji ? ` ${role.unicodeEmoji}` : null
+    };
+  };
+
+  const resolveUserFromCache = (id: string) => {
     const user = client.readFragment({
       id: `User:${id}`,
 
@@ -64,7 +85,7 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
   };
 
   const resolveUser = (id: string) => {
-    const user = resolveFromCache(id);
+    const user = resolveUserFromCache(id);
 
     return convertUserToDiscord(user);
   };
@@ -89,14 +110,6 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
     });
 
     return convertUserToMember(member);
-  };
-
-  const resolveRole = (id: string) => {
-    if (!roles) return null;
-
-    const role = roles.get(id) ?? null;
-
-    return role as APIRole;
   };
 
   const channelMentionOnClick = (channel: APIChannel) => {
