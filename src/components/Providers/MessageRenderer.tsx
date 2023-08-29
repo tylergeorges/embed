@@ -3,12 +3,13 @@ import { styled } from '@stitches';
 import { APIChannel, APIRole, ChannelType } from 'discord-api-types/v10';
 import { svgUrls } from '@svg-assets';
 import { convertUserToDiscord } from '@util/convertToDiscord/convertUserToDiscord';
+import { convertUserToMember } from '@util/convertToDiscord/convertUserToMember';
 import { useStoreActions, useStoreState } from '@state';
-import { convertToDiscordMember } from '@util/convertToDiscord/convertToDiscordMember';
 import { convertChannelToDiscord } from '@util/convertToDiscord/convertChannelToDiscord';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { Channel } from '@graphql/graphql';
 import { convertGuild } from '@util/convertToDiscord/convertGuild';
+import { gql, useApolloClient } from '@apollo/client';
 
 const MessageRendererRoot = styled('div', {
   height: '100%',
@@ -30,22 +31,48 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
   const guild = useStoreState(state => state.guild.data);
   const roles = useStoreState(state => state.guild.roles);
   const guildChannels = useStoreState(state => state.guild.guildChannels);
-  const members = useStoreState(state => state.guild.members);
 
   const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
   const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
+  const client = useApolloClient();
+
+  const resolveFromCache = (id: string) => {
+    const user = client.readFragment({
+      id: `User:${id}`,
+
+      fragment: gql`
+        fragment User on User {
+          id
+          name
+        }
+      `
+    });
+
+    const mention = client.readFragment({
+      id: `Mention:${id}`,
+
+      fragment: gql`
+        fragment mention on Mention {
+          id
+          name
+        }
+      `
+    });
+
+    return mention && 'name' in mention ? mention : user;
+  };
 
   const resolveUser = (id: string) => {
-    if (!members) return null;
+    const user = resolveFromCache(id);
 
-    return convertUserToDiscord(members[id]);
+    return convertUserToDiscord(user);
   };
 
   const resolveMember = (id: string) => {
-    if (!members) return null;
+    const user = resolveFromCache(id);
 
-    return convertToDiscordMember(members[id]);
+    return convertUserToMember(user);
   };
 
   const resolveRole = (id: string) => {

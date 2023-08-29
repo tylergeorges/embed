@@ -1,6 +1,6 @@
 /* eslint-disable no-continue */
 import { Action, Computed, action, computed } from 'easy-peasy';
-import { Category, Channel, Guild, GuildSettings, Mention, Role } from '@graphql/graphql';
+import { Category, Channel, Guild, GuildSettings, Role } from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
 import { APIChannel } from 'discord-api-types/v10';
 
@@ -19,10 +19,6 @@ export type GuildChannels = {
   [channelId: string]: Channel | (APIChannel & { threads?: Channel[] });
 };
 
-type GuildMembers = {
-  [memberId: string]: Mention & { username: string };
-};
-
 export interface GuildStore {
   guildChannels: Computed<GuildStore, GuildChannels>;
   data?: Guild;
@@ -33,7 +29,6 @@ export interface GuildStore {
   currentChannel: { name: string; topic?: string | null } | undefined;
   refetchGuild: boolean;
   roles?: Map<string, Role>;
-  members?: GuildMembers;
 
   setData: Action<GuildStore, Guild>;
   setSettings: Action<GuildStore, GuildSettings>;
@@ -41,7 +36,6 @@ export interface GuildStore {
   setCurrentThread: Action<GuildStore, Channel>;
   setCurrentChannel: Action<GuildStore, string>;
   setRefetchGuild: Action<GuildStore, boolean>;
-  addMember: Action<GuildStore, Mention>;
 }
 
 const addChannelToMap = (channels: Channel[], guildChannels: GuildChannels) => {
@@ -72,7 +66,6 @@ const guild: GuildStore = {
   currentChannel: undefined,
   refetchGuild: false,
   roles: undefined,
-  members: undefined,
 
   guildChannels: computed(state => {
     if (!state.channels) return {};
@@ -122,19 +115,6 @@ const guild: GuildStore = {
 
     if (currentChannel)
       state.currentChannel = { name: currentChannel.name, topic: currentChannel.topic ?? '' };
-  }),
-
-  addMember: action((state, payload) => {
-    if (!state.members) {
-      state.members = {};
-    }
-
-    if (!state.members[payload.id]) {
-      state.members[payload.id] = {
-        ...payload,
-        username: payload.name
-      };
-    }
   })
 };
 

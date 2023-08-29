@@ -11,7 +11,6 @@ import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
 import { messagesQuery } from '@hooks/messagesQuery';
-import { useStoreActions } from '@state';
 import { produce } from 'structurajs';
 import { useQuery } from '@apollo/client';
 
@@ -42,21 +41,6 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
     }
   });
   const isReady = data?.channelV2.id === channel && !loading;
-
-  const addMember = useStoreActions(state => state.guild.addMember);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const getMentionedMembers = (msgs: Message[]) => {
-    for (const msg of msgs) {
-      const { mentions } = msg;
-
-      if (!mentions.length) continue;
-
-      for (const member of mentions) {
-        addMember(member);
-      }
-    }
-  };
 
   const messages = data?.channelV2?.messageBunch?.messages as Message[];
 

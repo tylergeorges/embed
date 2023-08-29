@@ -1053,6 +1053,27 @@ export type GuildQuery = {
   };
 };
 
+export type UserFragment = { __typename?: 'User'; id: string; name: string } & {
+  ' $fragmentName'?: 'UserFragment';
+};
+
+export type MentionFragment = { __typename?: 'Mention'; id: string; name: string } & {
+  ' $fragmentName'?: 'MentionFragment';
+};
+
+export type MemberFragment = {
+  __typename?: 'User';
+  id: string;
+  discrim: string;
+  avatarUrl: string;
+  bot: boolean;
+  flags?: number | null;
+  isWebhook: boolean;
+  system: boolean;
+  name: string;
+  roles?: Array<string> | null;
+} & { ' $fragmentName'?: 'MemberFragment' };
+
 export type EmbedFragment = {
   __typename?: 'Embed';
   title?: string | null;
@@ -1453,6 +1474,64 @@ export const AnnouncementChannelFragmentDoc = {
     }
   ]
 } as unknown as DocumentNode<AnnouncementChannelFragment, unknown>;
+export const UserFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'User' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<UserFragment, unknown>;
+export const MentionFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'mention' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Mention' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MentionFragment, unknown>;
+export const MemberFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'Member' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'isWebhook' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'system' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'roles' } }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MemberFragment, unknown>;
 export const EmbedFragmentDoc = {
   kind: 'Document',
   definitions: [

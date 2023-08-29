@@ -1,4 +1,11 @@
-import { ApolloClient, InMemoryCache, split, HttpLink } from '@apollo/client';
+/* eslint-disable no-underscore-dangle */
+import {
+  ApolloClient,
+  InMemoryCache,
+  split,
+  HttpLink,
+  defaultDataIdFromObject
+} from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
@@ -53,7 +60,19 @@ const splitLink = split(
 );
 
 const cache = new InMemoryCache({
-  typePolicies: {}
+  dataIdFromObject(res) {
+    switch (res.__typename) {
+      case 'User': {
+        return `User:${res.id}` as string;
+      }
+      case 'Mention': {
+        return `Mention:${res.id}`;
+      }
+
+      default:
+        return defaultDataIdFromObject(res);
+    }
+  }
 });
 
 export const client = new ApolloClient({
