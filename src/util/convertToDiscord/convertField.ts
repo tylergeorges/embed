@@ -1,4 +1,15 @@
-import { APIEmbed, APIUser, InteractionType, APIMessageInteraction } from 'discord-api-types/v10';
+import {
+  APIEmbed,
+  APIUser,
+  InteractionType,
+  APIMessageInteraction,
+  MessageType as DiscordMessageType,
+  APIAttachment,
+  APIReaction,
+  APIMessageReference,
+  APIChannel,
+  ChannelType
+} from 'discord-api-types/v10';
 import {
   Attachment,
   Embed,
@@ -6,12 +17,41 @@ import {
   Mention,
   Message,
   MessageInteraction,
-  Reaction
+  MessageType as GqlMessageType,
+  Reaction,
+  MessageReference,
+  Thread
 } from '@graphql/graphql';
 import { getAvatarId, getIdFromUrl } from '@util/convertToDiscord/getAvatarId';
+import { messageTypeTable } from '@util/convertToDiscord/messageTypeTable';
 
 export const convertField = {
-  author: (message: Message) => ({
+  messageType: (type: GqlMessageType): DiscordMessageType => messageTypeTable[type],
+
+  messageReference: (
+    reference: Maybe<MessageReference> | undefined
+  ): APIMessageReference | undefined =>
+    reference
+      ? {
+          channel_id: reference.channelId,
+          guild_id: reference.guildId as string,
+          message_id: reference.messageId as string
+        }
+      : undefined,
+
+  thread: (messageThread: Maybe<Thread> | undefined): APIChannel | undefined =>
+    messageThread
+      ? {
+          id: messageThread.id,
+          name: messageThread.name,
+          message_count: messageThread.messageCount,
+          position: 0,
+          type: ChannelType.PublicThread,
+          applied_tags: []
+        }
+      : undefined,
+
+  author: (message: Message): APIUser => ({
     id:
       message.isGuest && message.author.bot
         ? getIdFromUrl(message.author.avatarUrl)
@@ -34,7 +74,9 @@ export const convertField = {
     discriminator: message.author.discrim
   }),
 
-  interaction: (messageInteraction: Maybe<MessageInteraction> | undefined) =>
+  interaction: (
+    messageInteraction: Maybe<MessageInteraction> | undefined
+  ): APIMessageInteraction | undefined =>
     messageInteraction
       ? ({
           id: messageInteraction.id,
@@ -60,7 +102,7 @@ export const convertField = {
         } as APIMessageInteraction)
       : undefined,
 
-  attachments: (messageAttachments: Attachment[]) =>
+  attachments: (messageAttachments: Attachment[]): APIAttachment[] =>
     messageAttachments.map(a => ({
       id: '0',
       url: a.url,
@@ -71,7 +113,7 @@ export const convertField = {
       width: a.width
     })),
 
-  embeds: (messageEmbeds: Embed[]) =>
+  embeds: (messageEmbeds: Embed[]): APIEmbed[] =>
     messageEmbeds
       ? (messageEmbeds.map(e => ({
           author: {
@@ -138,7 +180,7 @@ export const convertField = {
         })) as APIEmbed[])
       : [],
 
-  mentions: (messageMentions: Mention[]) =>
+  mentions: (messageMentions: Mention[]): APIUser[] =>
     messageMentions
       ? (messageMentions.map(m => ({
           id: m.id,
@@ -152,7 +194,7 @@ export const convertField = {
         })) as APIUser[])
       : [],
 
-  reactions: (messageReactions: Maybe<Reaction[]> | undefined) =>
+  reactions: (messageReactions: Maybe<Reaction[]> | undefined): APIReaction[] =>
     messageReactions
       ? messageReactions.map(r => ({
           count: r.count as number,

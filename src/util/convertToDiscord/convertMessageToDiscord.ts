@@ -1,10 +1,11 @@
-import { MessageType, APIMessage, ChannelType } from 'discord-api-types/v10';
+import { APIMessage } from 'discord-api-types/v10';
 import { Message } from '@graphql/graphql';
 import { convertField } from '@util/convertToDiscord/convertField';
 
 export const convertMessageToDiscord = (message: Message): APIMessage & { isGuest: boolean } => ({
   id: message.id,
-  type: MessageType.Default,
+  type: convertField.messageType(message.type),
+
   channel_id: message.channelId,
   content: message.content,
 
@@ -12,7 +13,9 @@ export const convertMessageToDiscord = (message: Message): APIMessage & { isGues
   timestamp: new Date(message?.createdAt)?.toISOString(),
 
   edited_timestamp: message.editedAt,
+
   flags: message.flags ?? 0,
+
   isGuest: message.isGuest,
 
   author: convertField.author(message),
@@ -31,27 +34,15 @@ export const convertMessageToDiscord = (message: Message): APIMessage & { isGues
     ? convertMessageToDiscord(message.referencedMessage)
     : undefined,
 
-  message_reference: message.messageReference
-    ? {
-        channel_id: message.messageReference.channelId,
-        guild_id: message.messageReference.guildId as string,
-        message_id: message.messageReference.messageId as string
-      }
-    : undefined,
+  message_reference: convertField.messageReference(message.messageReference),
 
-  thread: message.thread
-    ? {
-        id: message.thread.id,
-        name: message.thread.name,
-        message_count: message.thread.messageCount,
-        position: 0,
-        type: ChannelType.PublicThread,
-        applied_tags: []
-      }
-    : undefined,
+  thread: convertField.thread(message.thread),
 
   mention_roles: [],
+
   pinned: false,
+
   tts: false,
+
   mention_everyone: false
 });

@@ -5,8 +5,7 @@ import { messagesQuery, sendMessageMutation } from '@hooks/messagesQuery';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreState } from '@state';
 import { generateSnowflake } from '@util/generateSnowflake';
-import { MessageType } from 'discord-api-types/v10';
-import { SendMessageMutation } from '../graphql/graphql';
+import { MessageType, SendMessageMutation } from '@graphql/graphql';
 
 interface UseSendMessageProps {
   scrollToBottom: ({ forceScroll }: { forceScroll?: boolean | undefined }) => void;
@@ -44,7 +43,7 @@ export const useSendMessage = ({ thread, scrollToBottom }: UseSendMessageProps) 
           createdAt: +new Date(),
           editedAt: null,
           unread: true,
-          flags: 0,
+          flags: null,
           isGuest: true,
 
           author: {
