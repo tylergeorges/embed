@@ -133,7 +133,9 @@ export const ChannelsFooterUserContentWrapper = styled.withConfig({
   alignItems: 'flex-start',
   flexDirection: 'column',
   justifyContent: 'center',
-  textAlign: 'start'
+  textAlign: 'start',
+
+  color: theme.colors.textPrimary
 });
 
 export const ChannelsFooterUserName = styled.withConfig({
