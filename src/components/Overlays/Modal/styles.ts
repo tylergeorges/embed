@@ -211,10 +211,9 @@ export const PopoutHeader = styled.withConfig({
   flexDirection: 'row',
   alignItems: 'center',
 
-  width: '100%',
   height: 48,
 
-  padding: 0,
+  paddingLeft: theme.space.lg,
 
   borderTopRightRadius: theme.radii.sm,
   borderTopLeftRadius: theme.radii.sm,
@@ -297,7 +296,9 @@ export const PopoutTitle = styled.withConfig({
 })('span', {
   background: 'none',
   padding: 0,
-  marginLeft: theme.space.sm
+  marginLeft: theme.space.sm,
+
+  fontWeight: theme.fontWeights.semibold
 });
 
 export const PopoutContentWrapper = styled.withConfig({
