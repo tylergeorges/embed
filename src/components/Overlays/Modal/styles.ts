@@ -185,7 +185,9 @@ export const ModalHeader = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-header'
 })('div', {
-  width: '100%'
+  width: '100%',
+  padding: theme.space.lg,
+  paddingRight: theme.space.sm
 });
 
 export const ModalHeaderContent = styled.withConfig({
@@ -196,9 +198,7 @@ export const ModalHeaderContent = styled.withConfig({
   justifyContent: 'space-between',
   userSelect: 'none',
 
-  fontSize: '100%',
-
-  padding: theme.space.xl,
+  fontSize: theme.fontSizes.xl,
 
   cursor: 'default'
 });
@@ -328,13 +328,13 @@ export const ChannelTopicModalContent = styled.withConfig({
   flexGrow: 1,
   flexShrink: 1,
 
-  paddingLeft: theme.space.xl,
-  paddingRight: theme.space.lg,
+  paddingX: theme.space.lg,
   paddingBottom: theme.space.xxl,
 
   textRendering: 'optimizeLegibility',
   whiteSpace: 'pre-wrap',
-  overflowWrap: 'break-word'
+  overflowWrap: 'break-word',
+  fontWeight: theme.fontWeights.regular
 });
 
 export const NoThreadsIconOuter = styled.withConfig({
