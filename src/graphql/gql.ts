@@ -13,7 +13,7 @@ const documents = {
     types.UserFragmentDoc,
   '\n        fragment mention on Mention {\n          id\n          name\n        }\n      ':
     types.MentionFragmentDoc,
-  '\n        fragment Member on User {\n          id\n          discrim\n          avatarUrl\n          bot\n          flags\n          isWebhook\n          system\n          name\n          roles\n        }\n      ':
+  '\n        fragment Member on User {\n          id\n          name\n          avatarUrl\n          discrim\n          bot\n          isWebhook\n          system\n          flags\n          roles\n        }\n      ':
     types.MemberFragmentDoc,
   '\n  fragment Embed on Embed {\n    title\n    description\n    url\n    timestamp\n    color\n    type\n    author {\n      url\n      name\n      proxyIconUrl\n    }\n    fields {\n      value\n      name\n      inline\n    }\n    image {\n      url\n      proxyUrl\n      width\n      height\n    }\n    provider {\n      name\n      url\n    }\n    footer {\n      proxyIconUrl\n      text\n    }\n    thumbnail {\n      height\n      width\n      url\n      proxyUrl\n    }\n    video {\n      height\n      width\n      url\n      proxyUrl\n    }\n  }\n':
     types.EmbedFragmentDoc,
@@ -47,8 +47,8 @@ export function graphql(
   source: '\n        fragment mention on Mention {\n          id\n          name\n        }\n      '
 ): typeof documents['\n        fragment mention on Mention {\n          id\n          name\n        }\n      '];
 export function graphql(
-  source: '\n        fragment Member on User {\n          id\n          discrim\n          avatarUrl\n          bot\n          flags\n          isWebhook\n          system\n          name\n          roles\n        }\n      '
-): typeof documents['\n        fragment Member on User {\n          id\n          discrim\n          avatarUrl\n          bot\n          flags\n          isWebhook\n          system\n          name\n          roles\n        }\n      '];
+  source: '\n        fragment Member on User {\n          id\n          name\n          avatarUrl\n          discrim\n          bot\n          isWebhook\n          system\n          flags\n          roles\n        }\n      '
+): typeof documents['\n        fragment Member on User {\n          id\n          name\n          avatarUrl\n          discrim\n          bot\n          isWebhook\n          system\n          flags\n          roles\n        }\n      '];
 export function graphql(
   source: '\n  fragment Embed on Embed {\n    title\n    description\n    url\n    timestamp\n    color\n    type\n    author {\n      url\n      name\n      proxyIconUrl\n    }\n    fields {\n      value\n      name\n      inline\n    }\n    image {\n      url\n      proxyUrl\n      width\n      height\n    }\n    provider {\n      name\n      url\n    }\n    footer {\n      proxyIconUrl\n      text\n    }\n    thumbnail {\n      height\n      width\n      url\n      proxyUrl\n    }\n    video {\n      height\n      width\n      url\n      proxyUrl\n    }\n  }\n'
 ): typeof documents['\n  fragment Embed on Embed {\n    title\n    description\n    url\n    timestamp\n    color\n    type\n    author {\n      url\n      name\n      proxyIconUrl\n    }\n    fields {\n      value\n      name\n      inline\n    }\n    image {\n      url\n      proxyUrl\n      width\n      height\n    }\n    provider {\n      name\n      url\n    }\n    footer {\n      proxyIconUrl\n      text\n    }\n    thumbnail {\n      height\n      width\n      url\n      proxyUrl\n    }\n    video {\n      height\n      width\n      url\n      proxyUrl\n    }\n  }\n'];

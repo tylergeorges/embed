@@ -1064,13 +1064,13 @@ export type MentionFragment = { __typename?: 'Mention'; id: string; name: string
 export type MemberFragment = {
   __typename?: 'User';
   id: string;
-  discrim: string;
+  name: string;
   avatarUrl: string;
+  discrim: string;
   bot: boolean;
-  flags?: number | null;
   isWebhook: boolean;
   system: boolean;
-  name: string;
+  flags?: number | null;
   roles?: Array<string> | null;
 } & { ' $fragmentName'?: 'MemberFragment' };
 
@@ -1519,13 +1519,13 @@ export const MemberFragmentDoc = {
         kind: 'SelectionSet',
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
           { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
           { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
           { kind: 'Field', name: { kind: 'Name', value: 'isWebhook' } },
           { kind: 'Field', name: { kind: 'Name', value: 'system' } },
-          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
           { kind: 'Field', name: { kind: 'Name', value: 'roles' } }
         ]
       }

@@ -70,9 +70,25 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
   };
 
   const resolveMember = (id: string) => {
-    const user = resolveFromCache(id);
+    const member = client.readFragment({
+      id: `User:${id}`,
 
-    return convertUserToMember(user);
+      fragment: gql`
+        fragment Member on User {
+          id
+          name
+          avatarUrl
+          discrim
+          bot
+          isWebhook
+          system
+          flags
+          roles
+        }
+      `
+    });
+
+    return convertUserToMember(member);
   };
 
   const resolveRole = (id: string) => {
