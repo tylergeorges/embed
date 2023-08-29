@@ -8,14 +8,6 @@ import '../i18n';
 import React from 'react';
 import DataProvider from '@components/Providers/DataProvider';
 import { ApolloProvider } from '@apollo/client';
-import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev';
-import { __DEV__ } from '@apollo/client/utilities/globals';
-
-if (__DEV__) {
-  // Adds messages only in a dev environment
-  loadDevMessages();
-  loadErrorMessages();
-}
 
 const globalStyles = globalCss({
   '@font-face': [

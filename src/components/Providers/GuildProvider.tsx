@@ -146,7 +146,6 @@ export const guildDocument = graphql(/* GraphQL */ `
           threads {
             __typename
             id
-
             ... on ThreadChannel {
               __typename
 
