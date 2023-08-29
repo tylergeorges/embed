@@ -51,7 +51,8 @@ export const ToolTipContent = styled.withConfig({
 })('span', {
   fontSize: theme.fontSizes.lg,
   textAlign: 'center',
-  position: 'relative'
+  position: 'relative',
+  color: theme.colors.textPrimary
 });
 
 export const ToolTipWrapper = styled.withConfig({

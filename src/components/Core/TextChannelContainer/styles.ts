@@ -35,7 +35,6 @@ export const TextChannelWrapper = styled.withConfig({
         transform: `translateX(${theme.sizes.sideBarWidth})`,
         width: `calc(100% - ${theme.sizes.sideBarWidth})`
       },
-
       false: {
         transform: 'translateX(0px)'
       }
@@ -43,7 +42,7 @@ export const TextChannelWrapper = styled.withConfig({
 
     threadsPanelOpen: {
       true: {
-        width: `calc(100% - ${theme.sizes.threadPanelMinWidth} + 8px)`
+        width: `calc(100% - ${theme.sizes.threadPanelMinWidth} + ${theme.sizes.panelSeperatorWidth})`
       }
     }
   },
@@ -74,8 +73,7 @@ export const TextChannelWrapper = styled.withConfig({
       mobile: false,
 
       css: {
-        // 8px is the length of the panel separator
-        width: `calc(100% - (${theme.sizes.sideBarWidth} + ${theme.sizes.threadPanelMinWidth} + 8px))`,
+        width: `calc(100% - (${theme.sizes.sideBarWidth} + ${theme.sizes.threadPanelMinWidth} + ${theme.sizes.panelSeperatorWidth}))`,
         transform: `translateX(${theme.sizes.sideBarWidth})`
       }
     },
@@ -101,7 +99,22 @@ export const TextChannelInnerWrapper = styled.withConfig({
   flexDirection: 'row',
 
   height: '100%',
-  width: '100%'
+  width: '100%',
+
+  backgroundOverlay: theme.colors.background,
+
+  '&:after': {
+    content: '',
+    boxShadow: theme.shadows.headerBorder,
+
+    position: 'absolute',
+    width: '100%',
+
+    top: -1,
+    height: 1,
+
+    zIndex: theme.zIndices.membersSidebar
+  }
 });
 
 export const MessageWrapper = styled.withConfig({
@@ -127,7 +140,6 @@ export const MessageWrapper = styled.withConfig({
         width: '100%',
         marginRight: 0
       },
-
       true: {
         width: `calc(100% - ${theme.sizes.sideBarWidth})`
       }
@@ -148,7 +160,6 @@ export const MessageWrapper = styled.withConfig({
     {
       membersListOpen: true,
       mobile: true,
-
       css: {
         marginRight: 'none',
         width: '100%',
@@ -233,7 +244,7 @@ export const TextInput = styled.withConfig({
   alignItems: 'center',
 
   color: theme.colors.textPrimary,
-  fontWeight: theme.fontWeights.thin,
+  fontWeight: theme.fontWeights.regular,
   wordBreak: 'break-word',
   overflowWrap: 'break-word',
   textAlign: 'left',

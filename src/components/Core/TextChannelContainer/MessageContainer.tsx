@@ -1,10 +1,11 @@
 import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
 
 import { useStoreState } from '@state';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
-import { useMessages } from '@hooks/useMessages';
 import { useAppRouter } from '@hooks/useAppRouter';
+import { useMessages } from '@hooks/useMessages';
+import { useMessageSubscription } from '@hooks/useMessageSubscription';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
@@ -13,21 +14,28 @@ interface MessageContainerProps {
 
 export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
   const [isListRendered, setIsListRendered] = useState(false);
+  const { channelId: channel, guildId: guild, threadId } = useAppRouter();
 
-  const { channelId, guildId } = useAppRouter();
-  const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
-
-  const { groupedMessages, loadMoreMessages, isReady, firstItemIndex } = useMessages({
-    guild: guildId,
-    channel: channelId,
-    thread: ''
+  const { groupedMessages, loadMoreMessages, isReady, firstItemIndex, updateQuery } = useMessages({
+    guild,
+    channel,
+    threadId: channelIsThread ? threadId : undefined
   });
 
-  const handleBottomStateChanged = () => {
+  useMessageSubscription({
+    guild,
+    channel,
+    threadId: channelIsThread ? threadId : undefined,
+    updateQuery
+  });
+
+  const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
+
+  const handleBottomStateChanged = useCallback(() => {
     if (!isListRendered) {
       setIsListRendered(true);
     }
-  };
+  }, [isListRendered]);
 
   return (
     <Styles.MessageWrapper
@@ -39,14 +47,14 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
       }}
     >
       <MessageRenderer
-        groupedMessages={groupedMessages}
         startReached={loadMoreMessages}
+        messages={groupedMessages}
         isReady={isReady}
         firstItemIndex={firstItemIndex}
         handleBottomStateChanged={handleBottomStateChanged}
       />
 
-      <TextBox channelIsThread={channelIsThread} />
+      <TextBox />
     </Styles.MessageWrapper>
   );
 };

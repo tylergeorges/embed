@@ -24,8 +24,14 @@ export const ChannelTopicModal = ({
   };
 
   return (
-    <InformationModal isOpen={isOpen} hideModal={hideTopicModal} title={currentChannel?.name ?? ''}>
-      <Styles.ChannelTopicModalContent>{currentChannel.topic}</Styles.ChannelTopicModalContent>
+    <InformationModal
+      isOpen={isOpen}
+      hideModal={hideTopicModal}
+      title={`#${currentChannel?.name}` ?? ''}
+    >
+      <Styles.ChannelTopicModalContent>
+        {currentChannel?.topic ?? ''}
+      </Styles.ChannelTopicModalContent>
     </InformationModal>
   );
 };

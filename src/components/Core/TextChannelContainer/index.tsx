@@ -8,9 +8,8 @@ import { Backdrop } from '@components/Overlays/Modal/styles';
 import ModalProvider from '@components/Providers/ModalProvider';
 import { useIsModalOpen } from '@hooks/useIsModalOpen';
 import * as Styles from './styles';
-
-import { TextChannelHeader } from './TextChannelHeader';
 import { MessageContainer } from './MessageContainer';
+import { TextChannelHeader } from './TextChannelHeader';
 
 export const TextChannelContainer = () => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');

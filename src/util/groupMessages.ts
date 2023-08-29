@@ -1,6 +1,35 @@
 /* eslint-disable no-plusplus */
-import { APIMessage } from 'discord-api-types/v10';
+import { APIMessage, MessageType } from 'discord-api-types/v10';
 
+function dateToMilli(date: Date) {
+  return date.getTime() / 1000;
+}
+
+function isGroupRecent(prevMessage: APIMessage, recentMessage: APIMessage, maxGroupTime: number) {
+  const prevMessageDate = new Date(prevMessage.timestamp);
+  const recentMessageDate = new Date(recentMessage.timestamp);
+
+  if (prevMessageDate.getDate() !== recentMessageDate.getDate()) return false;
+
+  const prevMsgMin = dateToMilli(prevMessageDate) / 60;
+  const recentMsgMin = dateToMilli(recentMessageDate) / 60;
+
+  const timeFromLastMessage = Math.abs(prevMsgMin - recentMsgMin);
+
+  return timeFromLastMessage < maxGroupTime;
+}
+
+function messageIsGroupable(prevMessage: APIMessage, recentMessage: APIMessage) {
+  if (prevMessage.author.id !== recentMessage.author.id) return false;
+
+  const isRecent = isGroupRecent(prevMessage, recentMessage, 7);
+
+  const sameAuthor =
+    prevMessage.author.id === recentMessage.author.id &&
+    prevMessage.author.username === recentMessage.author.username;
+
+  return isRecent && recentMessage.type === MessageType.Default && sameAuthor;
+}
 /**
  * Takes an array of messages and groups them if the previous message was sent by
  * the same author.
@@ -21,13 +50,9 @@ export function groupMessages(messages: APIMessage[]): APIMessage[][] {
     } else if (i > 0) {
       const prevMessageGroup = groupedMessages[groupedMessages.length - 1];
 
-      const prevMsgGroupAuthor = prevMessageGroup[0].author;
+      const isGroupable = messageIsGroupable(prevMessageGroup[0], message);
 
-      const sameAuthor =
-        prevMsgGroupAuthor.id === message.author.id &&
-        prevMsgGroupAuthor.username === message.author.username;
-
-      if (sameAuthor) {
+      if (isGroupable) {
         prevMessageGroup.push(message);
       } else {
         groupedMessages.push([message]);

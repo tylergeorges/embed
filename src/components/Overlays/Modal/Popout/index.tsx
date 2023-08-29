@@ -1,6 +1,8 @@
 import * as Styles from '@components/Overlays/Modal/styles';
 import { IconProps, Icons } from '@components/Shared/Icons';
-import { ReactElement, useEffect, useRef } from 'react';
+import { ReactElement, memo } from 'react';
+import { useMediaQuery } from '@hooks/useMediaQuery';
+
 import { CloseButton } from '@icons/Buttons/CloseButton';
 
 type TitleIcon = IconProps['icon'];
@@ -14,38 +16,23 @@ interface PopoutProps {
   popoutFor: HTMLDivElement | null;
 }
 
-export const Popout = ({
-  children,
-  isOpen,
-  hideModal,
-  title,
-  TitleIcon,
-  popoutFor
-}: PopoutProps) => {
-  const popoutRef = useRef<HTMLDivElement>(null);
+export const Popout = memo(
+  ({ children, isOpen, hideModal, title, TitleIcon, popoutFor }: PopoutProps) => {
+    const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
 
-  useEffect(() => {
-    const popout = popoutRef.current;
+    if (!popoutFor || !isOpen) return <></>;
 
-    if (popout && popoutFor) {
-      const right = popoutFor.clientLeft + 80;
-      popout.style.right = `${right}px`;
-    }
-  }, [popoutFor]);
-
-  return (
-    <Styles.PopoutContainer
-      isMobile={{
-        '@initial': false,
-        '@small': true
-      }}
-      isOpen={isOpen}
-      aria-label={title}
-      role="dialog"
-      ref={popoutRef}
-    >
-      <Styles.PopoutHeader>
-        <Styles.PopoutHeaderContent>
+    return (
+      <Styles.PopoutContainer
+        isMobile={windowIsMobile}
+        isOpen={isOpen}
+        aria-label={title}
+        role="dialog"
+        css={{
+          right: `calc(${popoutFor.clientLeft}px + 80px)`
+        }}
+      >
+        <Styles.PopoutHeader>
           <Styles.PopoutTitleWrapper>
             {TitleIcon && <Icons icon={TitleIcon} />}
 
@@ -53,10 +40,12 @@ export const Popout = ({
           </Styles.PopoutTitleWrapper>
 
           <CloseButton onClick={hideModal} />
-        </Styles.PopoutHeaderContent>
-      </Styles.PopoutHeader>
+        </Styles.PopoutHeader>
 
-      {children}
-    </Styles.PopoutContainer>
-  );
-};
+        {children}
+      </Styles.PopoutContainer>
+    );
+  }
+);
+
+Popout.displayName = 'Popout';

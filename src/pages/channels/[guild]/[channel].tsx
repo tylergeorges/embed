@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import React from 'react';
+import React, { memo } from 'react';
 import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
 import { useStoreState } from '@state';
 import { TextChannelContainer } from '@components/Core/TextChannelContainer';
@@ -12,9 +12,9 @@ import dynamic from 'next/dynamic';
 import ModalProvider from '@components/Providers/ModalProvider';
 import { ThreadPanel } from '@components/Sidebar/ThreadPanel';
 import { ChannelTopicModal } from '@components/Overlays/Modal/InformationModal/ChannelTopicModal';
+import GuildProvider from '@components/Providers/GuildProvider';
 
 const MessageRendererRoot = styled('div', {
-  '--fonts-main': 'GgSans',
   height: '100%',
   width: '100%'
 });
@@ -27,13 +27,13 @@ ModalProvider.register('channel-topic-modal', ChannelTopicModal);
 ModalProvider.register('sidebar-threads-panel', ThreadPanel);
 ModalProvider.register('sidebar-channels-list', ChannelsSidebar, true);
 
-export default function GuildChannel() {
+function GuildChannel() {
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);
 
   const guildChannels = useStoreState(state => state.guild.guildChannels);
 
   return (
-    <>
+    <GuildProvider>
       <MessageRendererProvider
         messageButtons={() => []}
         currentUser={() => null}
@@ -66,6 +66,8 @@ export default function GuildChannel() {
           </MessageRendererRoot>
         )}
       </MessageRendererProvider>
-    </>
+    </GuildProvider>
   );
 }
+
+export default memo(GuildChannel);

@@ -11,19 +11,19 @@ const Message = (index: number, data: APIMessage[]) => (
 );
 
 interface MessagesListProps {
-  groupedMessages: APIMessage[][];
-  firstItemIndex: number;
-  isReady: boolean;
   handleBottomStateChanged?: (atBottom: boolean) => void;
+  messages: APIMessage[][];
+  isReady: boolean;
+  firstItemIndex: number;
   startReached?: (index: number) => void;
 }
 
 export const MessageRenderer = ({
-  isReady,
-  groupedMessages,
   startReached,
-  firstItemIndex,
-  handleBottomStateChanged
+  handleBottomStateChanged,
+  messages,
+  isReady,
+  firstItemIndex
 }: MessagesListProps) => {
   const followOutput = (isAtBottom: boolean) => {
     if (isAtBottom) {
@@ -37,7 +37,7 @@ export const MessageRenderer = ({
     <Styles.VirtualListContainer>
       {isReady && (
         <Virtuoso
-          data={groupedMessages}
+          data={messages}
           firstItemIndex={firstItemIndex}
           startReached={startReached}
           atBottomStateChange={handleBottomStateChanged}

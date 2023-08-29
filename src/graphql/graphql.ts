@@ -37,7 +37,6 @@ export type AnnouncementChannel = Channel & {
   type: ChannelType;
 };
 
-
 export type AnnouncementChannelMessageBunchArgs = {
   after?: InputMaybe<Scalars['String']>;
   around?: InputMaybe<Scalars['String']>;
@@ -48,7 +47,6 @@ export type AnnouncementChannelMessageBunchArgs = {
   orderBy?: InputMaybe<Scalars['String']>;
   threadId?: InputMaybe<Scalars['String']>;
 };
-
 
 export type AnnouncementChannelMessagesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -277,7 +275,6 @@ export type ForumChannel = Channel & {
   type: ChannelType;
 };
 
-
 export type ForumChannelMessageBunchArgs = {
   after?: InputMaybe<Scalars['String']>;
   around?: InputMaybe<Scalars['String']>;
@@ -288,7 +285,6 @@ export type ForumChannelMessageBunchArgs = {
   orderBy?: InputMaybe<Scalars['String']>;
   threadId?: InputMaybe<Scalars['String']>;
 };
-
 
 export type ForumChannelMessagesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -348,6 +344,14 @@ export type GuildSettings = {
   showVoiceChannels: Scalars['Boolean'];
   singleChannel?: Maybe<Scalars['String']>;
   theme?: Maybe<ThemeSettings>;
+};
+
+export type GuildTokenSettings = {
+  __typename?: 'GuildTokenSettings';
+  channelId?: Maybe<Scalars['String']>;
+  guildId: Scalars['String'];
+  settings: GuildSettings;
+  threadId?: Maybe<Scalars['String']>;
 };
 
 export type JoinMember = Action & {
@@ -463,26 +467,22 @@ export type Mutation = {
   sendMessage: Message;
 };
 
-
 export type MutationAddMemberArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
   memberIds: Array<Scalars['String']>;
 };
 
-
 export type MutationBlockUserArgs = {
   active?: Scalars['Boolean'];
   id: Scalars['String'];
 };
-
 
 export type MutationCreateGroupArgs = {
   content: Scalars['String'];
   guild: Scalars['String'];
   memberIds: Array<Scalars['String']>;
 };
-
 
 export type MutationDeleteChatMessageArgs = {
   channel: Scalars['String'];
@@ -491,32 +491,27 @@ export type MutationDeleteChatMessageArgs = {
   isGroup?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type MutationDeleteMessageArgs = {
   channel: Scalars['String'];
   id: Scalars['String'];
   threadId?: InputMaybe<Scalars['String']>;
 };
 
-
 export type MutationLeaveGroupArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
 };
-
 
 export type MutationMarkChatAsReadArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
 };
 
-
 export type MutationRemoveMemberArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
   member: Scalars['String'];
 };
-
 
 export type MutationSendChatArgs = {
   content: Scalars['String'];
@@ -526,7 +521,6 @@ export type MutationSendChatArgs = {
   guild: Scalars['String'];
   id: Scalars['String'];
 };
-
 
 export type MutationSendMessageArgs = {
   captchaRes?: InputMaybe<Scalars['String']>;
@@ -546,6 +540,7 @@ export type Query = {
   directUsers: Array<User>;
   getChats: Array<Chat>;
   getMessagesForChat: Array<Message>;
+  getTokenSettings: GuildTokenSettings;
   guild: Guild;
   hello: Scalars['String'];
   settings: GuildSettings;
@@ -553,27 +548,22 @@ export type Query = {
   userData?: Maybe<User>;
 };
 
-
 export type QueryChannelArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryChannelV2Args = {
   guild: Scalars['String'];
   id: Scalars['String'];
 };
 
-
 export type QueryDirectUsersArgs = {
   name?: InputMaybe<Scalars['String']>;
 };
 
-
 export type QueryGetChatsArgs = {
   guild: Scalars['String'];
 };
-
 
 export type QueryGetMessagesForChatArgs = {
   guild: Scalars['String'];
@@ -581,16 +571,17 @@ export type QueryGetMessagesForChatArgs = {
   isGroup?: InputMaybe<Scalars['Boolean']>;
 };
 
+export type QueryGetTokenSettingsArgs = {
+  token: Scalars['String'];
+};
 
 export type QueryGuildArgs = {
   id: Scalars['String'];
 };
 
-
 export type QuerySettingsArgs = {
   id: Scalars['String'];
 };
-
 
 export type QueryUserDataArgs = {
   guild: Scalars['String'];
@@ -636,23 +627,27 @@ export type Subscription = {
   __typename?: 'Subscription';
   action?: Maybe<Action>;
   directMessage?: Maybe<Message>;
+  /** @deprecated Use messageV2 instead */
   message?: Maybe<Message>;
+  /** @deprecated Use messageDeleteV2 instead */
   messageDelete?: Maybe<DeletedMessage>;
+  /** @deprecated Use messageDeleteBulkV2 instead */
   messageDeleteBulk?: Maybe<BulkDeletedMessages>;
+  messageDeleteBulkV2?: Maybe<BulkDeletedMessages>;
+  messageDeleteV2?: Maybe<DeletedMessage>;
+  /** @deprecated Use messageUpdateV2 instead */
   messageUpdate?: Maybe<UpdatedMessage>;
+  messageUpdateV2?: Maybe<UpdatedMessage>;
   messageV2?: Maybe<Message>;
 };
-
 
 export type SubscriptionActionArgs = {
   guild: Scalars['String'];
 };
 
-
 export type SubscriptionDirectMessageArgs = {
   guild: Scalars['String'];
 };
-
 
 export type SubscriptionMessageArgs = {
   channel: Scalars['String'];
@@ -660,13 +655,11 @@ export type SubscriptionMessageArgs = {
   threadId?: InputMaybe<Scalars['String']>;
 };
 
-
 export type SubscriptionMessageDeleteArgs = {
   channel: Scalars['String'];
   guild: Scalars['String'];
   threadId?: InputMaybe<Scalars['String']>;
 };
-
 
 export type SubscriptionMessageDeleteBulkArgs = {
   channel: Scalars['String'];
@@ -674,6 +667,17 @@ export type SubscriptionMessageDeleteBulkArgs = {
   threadId?: InputMaybe<Scalars['String']>;
 };
 
+export type SubscriptionMessageDeleteBulkV2Args = {
+  channels?: InputMaybe<Array<Scalars['String']>>;
+  guild: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
+};
+
+export type SubscriptionMessageDeleteV2Args = {
+  channels?: InputMaybe<Array<Scalars['String']>>;
+  guild: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
+};
 
 export type SubscriptionMessageUpdateArgs = {
   channel: Scalars['String'];
@@ -681,6 +685,11 @@ export type SubscriptionMessageUpdateArgs = {
   threadId?: InputMaybe<Scalars['String']>;
 };
 
+export type SubscriptionMessageUpdateV2Args = {
+  channels?: InputMaybe<Array<Scalars['String']>>;
+  guild: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
+};
 
 export type SubscriptionMessageV2Args = {
   channels?: InputMaybe<Array<Scalars['String']>>;
@@ -705,7 +714,6 @@ export type TextChannel = Channel & {
   type: ChannelType;
 };
 
-
 export type TextChannelMessageBunchArgs = {
   after?: InputMaybe<Scalars['String']>;
   around?: InputMaybe<Scalars['String']>;
@@ -716,7 +724,6 @@ export type TextChannelMessageBunchArgs = {
   orderBy?: InputMaybe<Scalars['String']>;
   threadId?: InputMaybe<Scalars['String']>;
 };
-
 
 export type TextChannelMessagesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -757,6 +764,7 @@ export type ThreadChannel = Channel & {
   canSend: Scalars['Boolean'];
   category?: Maybe<Category>;
   id: Scalars['String'];
+  locked: Scalars['Boolean'];
   messageBunch: MessageBunch;
   messageCount: Scalars['Int'];
   /** @deprecated This field is deprecated, use `messageBunch` instead */
@@ -771,7 +779,6 @@ export type ThreadChannel = Channel & {
   type: ChannelType;
 };
 
-
 export type ThreadChannelMessageBunchArgs = {
   after?: InputMaybe<Scalars['String']>;
   around?: InputMaybe<Scalars['String']>;
@@ -783,7 +790,6 @@ export type ThreadChannelMessageBunchArgs = {
   orderBy?: InputMaybe<Scalars['String']>;
   threadId?: InputMaybe<Scalars['String']>;
 };
-
 
 export type ThreadChannelMessagesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -835,7 +841,6 @@ export type User = {
   system: Scalars['Boolean'];
 };
 
-
 export type UserProfileArgs = {
   guild: Scalars['String'];
 };
@@ -871,7 +876,6 @@ export type VoiceChannel = Channel & {
   type: ChannelType;
 };
 
-
 export type VoiceChannelMessageBunchArgs = {
   after?: InputMaybe<Scalars['String']>;
   around?: InputMaybe<Scalars['String']>;
@@ -882,7 +886,6 @@ export type VoiceChannelMessageBunchArgs = {
   orderBy?: InputMaybe<Scalars['String']>;
   threadId?: InputMaybe<Scalars['String']>;
 };
-
 
 export type VoiceChannelMessagesArgs = {
   after?: InputMaybe<Scalars['String']>;
@@ -899,50 +902,1467 @@ export type GuildQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
+export type GuildQuery = {
+  __typename?: 'Query';
+  guild: {
+    __typename?: 'Guild';
+    id: string;
+    name: string;
+    settings: { __typename?: 'GuildSettings'; readonly: boolean };
+    channels: Array<
+      | {
+          __typename?: 'AnnouncementChannel';
+          topic?: string | null;
+          id: string;
+          name: string;
+          type: ChannelType;
+          position: number;
+          rateLimitPerUser?: number | null;
+          threads?: Array<
+            | { __typename?: 'AnnouncementChannel'; id: string; name: string }
+            | { __typename?: 'ForumChannel'; id: string; name: string }
+            | { __typename?: 'TextChannel'; id: string; name: string }
+            | { __typename?: 'ThreadChannel'; id: string; name: string }
+            | { __typename?: 'VoiceChannel'; id: string; name: string }
+          > | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+      | {
+          __typename?: 'ForumChannel';
+          id: string;
+          name: string;
+          type: ChannelType;
+          position: number;
+          rateLimitPerUser?: number | null;
+          threads?: Array<
+            | { __typename?: 'AnnouncementChannel'; id: string; name: string }
+            | { __typename?: 'ForumChannel'; id: string; name: string }
+            | { __typename?: 'TextChannel'; id: string; name: string }
+            | { __typename?: 'ThreadChannel'; id: string; name: string }
+            | { __typename?: 'VoiceChannel'; id: string; name: string }
+          > | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+      | {
+          __typename?: 'TextChannel';
+          topic?: string | null;
+          id: string;
+          name: string;
+          type: ChannelType;
+          position: number;
+          rateLimitPerUser?: number | null;
+          threads?: Array<
+            | { __typename?: 'AnnouncementChannel'; id: string; name: string }
+            | { __typename?: 'ForumChannel'; id: string; name: string }
+            | { __typename?: 'TextChannel'; id: string; name: string }
+            | { __typename?: 'ThreadChannel'; id: string; name: string }
+            | { __typename?: 'VoiceChannel'; id: string; name: string }
+          > | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+      | {
+          __typename?: 'ThreadChannel';
+          id: string;
+          name: string;
+          type: ChannelType;
+          position: number;
+          rateLimitPerUser?: number | null;
+          threads?: Array<
+            | { __typename?: 'AnnouncementChannel'; id: string; name: string }
+            | { __typename?: 'ForumChannel'; id: string; name: string }
+            | { __typename?: 'TextChannel'; id: string; name: string }
+            | { __typename?: 'ThreadChannel'; id: string; name: string }
+            | { __typename?: 'VoiceChannel'; id: string; name: string }
+          > | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+      | {
+          __typename?: 'VoiceChannel';
+          id: string;
+          name: string;
+          type: ChannelType;
+          position: number;
+          rateLimitPerUser?: number | null;
+          threads?: Array<
+            | { __typename?: 'AnnouncementChannel'; id: string; name: string }
+            | { __typename?: 'ForumChannel'; id: string; name: string }
+            | { __typename?: 'TextChannel'; id: string; name: string }
+            | { __typename?: 'ThreadChannel'; id: string; name: string }
+            | { __typename?: 'VoiceChannel'; id: string; name: string }
+          > | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+    >;
+  };
+};
 
-export type GuildQuery = { __typename?: 'Query', guild: { __typename?: 'Guild', id: string, name: string, settings: { __typename?: 'GuildSettings', readonly: boolean }, channels: Array<{ __typename?: 'AnnouncementChannel', topic?: string | null, id: string, name: string, type: ChannelType, position: number, rateLimitPerUser?: number | null, threads?: Array<{ __typename?: 'AnnouncementChannel', id: string, name: string } | { __typename?: 'ForumChannel', id: string, name: string } | { __typename?: 'TextChannel', id: string, name: string } | { __typename?: 'ThreadChannel', id: string, name: string } | { __typename?: 'VoiceChannel', id: string, name: string }> | null, category?: { __typename?: 'Category', id: string, name: string, position: number } | null } | { __typename?: 'ForumChannel', topic?: string | null, id: string, name: string, type: ChannelType, position: number, rateLimitPerUser?: number | null, threads?: Array<{ __typename?: 'AnnouncementChannel', id: string, name: string } | { __typename?: 'ForumChannel', id: string, name: string } | { __typename?: 'TextChannel', id: string, name: string } | { __typename?: 'ThreadChannel', id: string, name: string } | { __typename?: 'VoiceChannel', id: string, name: string }> | null, category?: { __typename?: 'Category', id: string, name: string, position: number } | null } | { __typename?: 'TextChannel', topic?: string | null, id: string, name: string, type: ChannelType, position: number, rateLimitPerUser?: number | null, threads?: Array<{ __typename?: 'AnnouncementChannel', id: string, name: string } | { __typename?: 'ForumChannel', id: string, name: string } | { __typename?: 'TextChannel', id: string, name: string } | { __typename?: 'ThreadChannel', id: string, name: string } | { __typename?: 'VoiceChannel', id: string, name: string }> | null, category?: { __typename?: 'Category', id: string, name: string, position: number } | null } | { __typename?: 'ThreadChannel', id: string, name: string, type: ChannelType, position: number, rateLimitPerUser?: number | null, threads?: Array<{ __typename?: 'AnnouncementChannel', id: string, name: string } | { __typename?: 'ForumChannel', id: string, name: string } | { __typename?: 'TextChannel', id: string, name: string } | { __typename?: 'ThreadChannel', id: string, name: string } | { __typename?: 'VoiceChannel', id: string, name: string }> | null, category?: { __typename?: 'Category', id: string, name: string, position: number } | null } | { __typename?: 'VoiceChannel', id: string, name: string, type: ChannelType, position: number, rateLimitPerUser?: number | null, threads?: Array<{ __typename?: 'AnnouncementChannel', id: string, name: string } | { __typename?: 'ForumChannel', id: string, name: string } | { __typename?: 'TextChannel', id: string, name: string } | { __typename?: 'ThreadChannel', id: string, name: string } | { __typename?: 'VoiceChannel', id: string, name: string }> | null, category?: { __typename?: 'Category', id: string, name: string, position: number } | null }> } };
+export type EmbedFragment = {
+  __typename?: 'Embed';
+  title?: string | null;
+  description?: string | null;
+  url?: string | null;
+  timestamp?: string | null;
+  color?: number | null;
+  type?: string | null;
+  author?: {
+    __typename?: 'EmbedAuthor';
+    url?: string | null;
+    name?: string | null;
+    proxyIconUrl?: string | null;
+  } | null;
+  fields?: Array<{
+    __typename?: 'EmbedField';
+    value: string;
+    name: string;
+    inline?: boolean | null;
+  }> | null;
+  image?: {
+    __typename?: 'EmbedImage';
+    url?: string | null;
+    proxyUrl?: string | null;
+    width?: number | null;
+    height?: number | null;
+  } | null;
+  provider?: { __typename?: 'EmbedProvider'; name?: string | null; url?: string | null } | null;
+  footer?: { __typename?: 'EmbedFooter'; proxyIconUrl?: string | null; text: string } | null;
+  thumbnail?: {
+    __typename?: 'EmbedThumbnail';
+    height?: number | null;
+    width?: number | null;
+    url?: string | null;
+    proxyUrl?: string | null;
+  } | null;
+  video?: {
+    __typename?: 'EmbedVideo';
+    height?: number | null;
+    width?: number | null;
+    url?: string | null;
+    proxyUrl?: string | null;
+  } | null;
+} & { ' $fragmentName'?: 'EmbedFragment' };
 
-export type EmbedFragment = { __typename?: 'Embed', title?: string | null, description?: string | null, url?: string | null, timestamp?: string | null, color?: number | null, type?: string | null, author?: { __typename?: 'EmbedAuthor', url?: string | null, name?: string | null, proxyIconUrl?: string | null } | null, fields?: Array<{ __typename?: 'EmbedField', value: string, name: string, inline?: boolean | null }> | null, image?: { __typename?: 'EmbedImage', url?: string | null, proxyUrl?: string | null, width?: number | null, height?: number | null } | null, provider?: { __typename?: 'EmbedProvider', name?: string | null, url?: string | null } | null, footer?: { __typename?: 'EmbedFooter', proxyIconUrl?: string | null, text: string } | null, thumbnail?: { __typename?: 'EmbedThumbnail', height?: number | null, width?: number | null, url?: string | null, proxyUrl?: string | null } | null, video?: { __typename?: 'EmbedVideo', height?: number | null, width?: number | null, url?: string | null, proxyUrl?: string | null } | null } & { ' $fragmentName'?: 'EmbedFragment' };
+export type BaseMessageFragment = {
+  __typename?: 'Message';
+  id: string;
+  channelId: string;
+  content: string;
+  type: MessageType;
+  flags?: number | null;
+  createdAt: any;
+  editedAt?: any | null;
+  isGuest: boolean;
+  author: {
+    __typename?: 'User';
+    avatarUrl: string;
+    bot: boolean;
+    discrim: string;
+    id: string;
+    flags?: number | null;
+    name: string;
+    roles?: Array<string> | null;
+    system: boolean;
+    isWebhook: boolean;
+  };
+  attachments: Array<{
+    __typename?: 'Attachment';
+    url: string;
+    height?: number | null;
+    width?: number | null;
+    filename: string;
+    size: number;
+  }>;
+  stickers: Array<{
+    __typename?: 'Sticker';
+    id: string;
+    name: string;
+    formatType: FormatType;
+    lottieData?: string | null;
+  }>;
+  reactions?: Array<{
+    __typename?: 'Reaction';
+    count: number;
+    emojiId?: string | null;
+    emojiName?: string | null;
+    animated?: boolean | null;
+  }> | null;
+  messageReference?: {
+    __typename?: 'MessageReference';
+    guildId?: string | null;
+    channelId: string;
+    messageId?: string | null;
+  } | null;
+  embeds: Array<{ __typename?: 'Embed' } & { ' $fragmentRefs'?: { EmbedFragment: EmbedFragment } }>;
+  mentions: Array<{ __typename?: 'Mention'; id: string; type: MentionType; name: string }>;
+  interaction?: {
+    __typename?: 'MessageInteraction';
+    name: string;
+    user: {
+      __typename?: 'Author';
+      id: string;
+      username: string;
+      discriminator: string;
+      avatarUrl: string;
+    };
+  } | null;
+  thread?: {
+    __typename?: 'Thread';
+    id: string;
+    name: string;
+    archivedAt?: any | null;
+    locked: boolean;
+    messageCount: number;
+  } | null;
+} & { ' $fragmentName'?: 'BaseMessageFragment' };
 
-export type BaseMessageFragment = { __typename?: 'Message', id: string, channelId: string, content: string, type: MessageType, flags?: number | null, createdAt: any, editedAt?: any | null, isGuest: boolean, author: { __typename?: 'User', avatarUrl: string, bot: boolean, discrim: string, id: string, flags?: number | null, name: string, roles?: Array<string> | null, system: boolean, isWebhook: boolean }, attachments: Array<{ __typename?: 'Attachment', url: string, height?: number | null, width?: number | null, filename: string, size: number }>, stickers: Array<{ __typename?: 'Sticker', id: string, name: string, formatType: FormatType, lottieData?: string | null }>, reactions?: Array<{ __typename?: 'Reaction', count: number, emojiId?: string | null, emojiName?: string | null, animated?: boolean | null }> | null, messageReference?: { __typename?: 'MessageReference', guildId?: string | null, channelId: string, messageId?: string | null } | null, embeds: Array<(
-    { __typename?: 'Embed' }
-    & { ' $fragmentRefs'?: { 'EmbedFragment': EmbedFragment } }
-  )>, mentions: Array<{ __typename?: 'Mention', id: string, type: MentionType, name: string }>, interaction?: { __typename?: 'MessageInteraction', name: string, user: { __typename?: 'Author', id: string, username: string, discriminator: string, avatarUrl: string } } | null, thread?: { __typename?: 'Thread', id: string, name: string, archivedAt?: any | null, locked: boolean, messageCount: number } | null } & { ' $fragmentName'?: 'BaseMessageFragment' };
+export type UpdatedMessageFragment = {
+  __typename?: 'UpdatedMessage';
+  id: string;
+  content?: string | null;
+  type?: MessageType | null;
+  flags?: number | null;
+  createdAt?: any | null;
+  editedAt?: any | null;
+  author?: {
+    __typename?: 'User';
+    avatarUrl: string;
+    bot: boolean;
+    discrim: string;
+    id: string;
+    flags?: number | null;
+    name: string;
+    roles?: Array<string> | null;
+  } | null;
+  attachments?: Array<{
+    __typename?: 'Attachment';
+    url: string;
+    height?: number | null;
+    width?: number | null;
+    filename: string;
+    size: number;
+  }> | null;
+  stickers?: Array<{
+    __typename?: 'Sticker';
+    id: string;
+    name: string;
+    formatType: FormatType;
+    lottieData?: string | null;
+  }> | null;
+  reactions?: Array<{
+    __typename?: 'Reaction';
+    count: number;
+    emojiId?: string | null;
+    emojiName?: string | null;
+    animated?: boolean | null;
+  }> | null;
+  messageReference?: {
+    __typename?: 'MessageReference';
+    guildId?: string | null;
+    channelId: string;
+    messageId?: string | null;
+  } | null;
+  embeds?: Array<
+    { __typename?: 'Embed' } & { ' $fragmentRefs'?: { EmbedFragment: EmbedFragment } }
+  > | null;
+  mentions?: Array<{ __typename?: 'Mention'; id: string; type: MentionType; name: string }> | null;
+  interaction?: {
+    __typename?: 'MessageInteraction';
+    name: string;
+    user: {
+      __typename?: 'Author';
+      id: string;
+      username: string;
+      discriminator: string;
+      avatarUrl: string;
+    };
+  } | null;
+  thread?: {
+    __typename?: 'Thread';
+    id: string;
+    name: string;
+    archivedAt?: any | null;
+    locked: boolean;
+    messageCount: number;
+  } | null;
+} & { ' $fragmentName'?: 'UpdatedMessageFragment' };
 
 export type MessagesQueryQueryVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
 }>;
 
+export type MessagesQueryQuery = {
+  __typename?: 'Query';
+  channelV2:
+    | {
+        __typename?: 'AnnouncementChannel';
+        id: string;
+        messageBunch: {
+          __typename?: 'MessageBunch';
+          messages: Array<
+            { __typename?: 'Message' } & {
+              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+            }
+          >;
+          pinnedMessages: Array<
+            { __typename?: 'Message' } & {
+              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+            }
+          >;
+        };
+      }
+    | {
+        __typename?: 'ForumChannel';
+        id: string;
+        messageBunch: {
+          __typename?: 'MessageBunch';
+          messages: Array<
+            { __typename?: 'Message' } & {
+              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+            }
+          >;
+        };
+      }
+    | {
+        __typename?: 'TextChannel';
+        id: string;
+        messageBunch: {
+          __typename?: 'MessageBunch';
+          messages: Array<
+            { __typename?: 'Message' } & {
+              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+            }
+          >;
+          pinnedMessages: Array<
+            { __typename?: 'Message' } & {
+              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+            }
+          >;
+        };
+      }
+    | {
+        __typename?: 'ThreadChannel';
+        id: string;
+        messageBunch: {
+          __typename?: 'MessageBunch';
+          messages: Array<
+            { __typename?: 'Message' } & {
+              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+            }
+          >;
+        };
+      }
+    | {
+        __typename?: 'VoiceChannel';
+        id: string;
+        messageBunch: {
+          __typename?: 'MessageBunch';
+          messages: Array<
+            { __typename?: 'Message' } & {
+              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+            }
+          >;
+        };
+      };
+};
 
-export type MessagesQueryQuery = { __typename?: 'Query', channelV2: { __typename?: 'AnnouncementChannel', id: string } | { __typename?: 'ForumChannel', id: string } | { __typename?: 'TextChannel', id: string, messageBunch: { __typename?: 'MessageBunch', messages: Array<(
-        { __typename?: 'Message' }
-        & { ' $fragmentRefs'?: { 'BaseMessageFragment': BaseMessageFragment } }
-      )> } } | { __typename?: 'ThreadChannel', id: string } | { __typename?: 'VoiceChannel', id: string } };
-
-export type NewMessageSubscriptionSubscriptionVariables = Exact<{
+export type MessageUpdatedSubscriptionVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
 }>;
 
+export type MessageUpdatedSubscription = {
+  __typename?: 'Subscription';
+  messageUpdateV2?:
+    | ({ __typename?: 'UpdatedMessage' } & {
+        ' $fragmentRefs'?: { UpdatedMessageFragment: UpdatedMessageFragment };
+      })
+    | null;
+};
 
-export type NewMessageSubscriptionSubscription = { __typename?: 'Subscription', message?: (
-    { __typename?: 'Message' }
-    & { ' $fragmentRefs'?: { 'BaseMessageFragment': BaseMessageFragment } }
-  ) | null };
-
-export type UpdateMessageSubscriptionSubscriptionVariables = Exact<{
+export type NewMessageSubscriptionVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
 }>;
 
+export type NewMessageSubscription = {
+  __typename?: 'Subscription';
+  messageV2?:
+    | ({ __typename?: 'Message' } & {
+        ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+      })
+    | null;
+};
 
-export type UpdateMessageSubscriptionSubscription = { __typename?: 'Subscription', messageUpdate?: { __typename?: 'UpdatedMessage', id: string, content?: string | null } | null };
+export type MessageDeletedSubscriptionVariables = Exact<{
+  guild: Scalars['String'];
+  channel: Scalars['String'];
+  threadId?: InputMaybe<Scalars['String']>;
+}>;
 
-export const EmbedFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"Embed"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Embed"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"timestamp"}},{"kind":"Field","name":{"kind":"Name","value":"color"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"proxyIconUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"fields"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"value"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"inline"}}]}},{"kind":"Field","name":{"kind":"Name","value":"image"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"proxyUrl"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}},{"kind":"Field","name":{"kind":"Name","value":"provider"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"footer"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"proxyIconUrl"}},{"kind":"Field","name":{"kind":"Name","value":"text"}}]}},{"kind":"Field","name":{"kind":"Name","value":"thumbnail"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"proxyUrl"}}]}},{"kind":"Field","name":{"kind":"Name","value":"video"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"proxyUrl"}}]}}]}}]} as unknown as DocumentNode<EmbedFragment, unknown>;
-export const BaseMessageFragmentDoc = {"kind":"Document", "definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"BaseMessage"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Message"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"channelId"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"flags"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"editedAt"}},{"kind":"Field","name":{"kind":"Name","value":"isGuest"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"avatarUrl"}},{"kind":"Field","name":{"kind":"Name","value":"bot"}},{"kind":"Field","name":{"kind":"Name","value":"discrim"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"flags"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"roles"}},{"kind":"Field","name":{"kind":"Name","value":"system"}},{"kind":"Field","name":{"kind":"Name","value":"isWebhook"}}]}},{"kind":"Field","name":{"kind":"Name","value":"attachments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"filename"}},{"kind":"Field","name":{"kind":"Name","value":"size"}}]}},{"kind":"Field","name":{"kind":"Name","value":"stickers"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"formatType"}},{"kind":"Field","name":{"kind":"Name","value":"lottieData"}}]}},{"kind":"Field","name":{"kind":"Name","value":"reactions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"count"}},{"kind":"Field","name":{"kind":"Name","value":"emojiId"}},{"kind":"Field","name":{"kind":"Name","value":"emojiName"}},{"kind":"Field","name":{"kind":"Name","value":"animated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"messageReference"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"guildId"}},{"kind":"Field","name":{"kind":"Name","value":"channelId"}},{"kind":"Field","name":{"kind":"Name","value":"messageId"}}]}},{"kind":"Field","name":{"kind":"Name","value":"embeds"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"Embed"}}]}},{"kind":"Field","name":{"kind":"Name","value":"mentions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"interaction"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"discriminator"}},{"kind":"Field","name":{"kind":"Name","value":"avatarUrl"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"thread"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"archivedAt"}},{"kind":"Field","name":{"kind":"Name","value":"locked"}},{"kind":"Field","name":{"kind":"Name","value":"messageCount"}}]}}]}},...EmbedFragmentDoc.definitions]} as unknown as DocumentNode<BaseMessageFragment, unknown>;
-export const GuildDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Guild"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"guild"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"settings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"readonly"}}]}},{"kind":"Field","name":{"kind":"Name","value":"channels"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"position"}},{"kind":"Field","name":{"kind":"Name","value":"threads"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}},{"kind":"Field","name":{"kind":"Name","value":"category"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"position"}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TextChannel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topic"}},{"kind":"Field","name":{"kind":"Name","value":"threads"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"AnnouncementChannel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topic"}},{"kind":"Field","name":{"kind":"Name","value":"threads"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ForumChannel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"topic"}}]}},{"kind":"Field","name":{"kind":"Name","value":"rateLimitPerUser"}}]}}]}}]}}]} as unknown as DocumentNode<GuildQuery, GuildQueryVariables>;
-export const MessagesQueryDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"messagesQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"guild"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"channel"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"before"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"channelV2"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"guild"},"value":{"kind":"Variable","name":{"kind":"Name","value":"guild"}}},{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"channel"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"TextChannel"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"messageBunch"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"before"},"value":{"kind":"Variable","name":{"kind":"Name","value":"before"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"messages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BaseMessage"}}]}}]}}]}}]}}]}},...BaseMessageFragmentDoc.definitions]} as unknown as DocumentNode<MessagesQueryQuery, MessagesQueryQueryVariables>;
-export const NewMessageSubscriptionDocument = {"kind":"Document", "definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"newMessageSubscription"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"guild"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"channel"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"guild"},"value":{"kind":"Variable","name":{"kind":"Name","value":"guild"}}},{"kind":"Argument","name":{"kind":"Name","value":"channel"},"value":{"kind":"Variable","name":{"kind":"Name","value":"channel"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"BaseMessage"}}]}}]}},...BaseMessageFragmentDoc.definitions]} as unknown as DocumentNode<NewMessageSubscriptionSubscription, NewMessageSubscriptionSubscriptionVariables>;
-export const UpdateMessageSubscriptionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"subscription","name":{"kind":"Name","value":"updateMessageSubscription"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"guild"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"channel"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"messageUpdate"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"guild"},"value":{"kind":"Variable","name":{"kind":"Name","value":"guild"}}},{"kind":"Argument","name":{"kind":"Name","value":"channel"},"value":{"kind":"Variable","name":{"kind":"Name","value":"channel"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}}]}}]}}]} as unknown as DocumentNode<UpdateMessageSubscriptionSubscription, UpdateMessageSubscriptionSubscriptionVariables>;
+export type MessageDeletedSubscription = {
+  __typename?: 'Subscription';
+  messageDeleteV2?: { __typename?: 'DeletedMessage'; id: string } | null;
+};
+
+export const EmbedFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'Embed' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Embed' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'title' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'description' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'timestamp' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'author' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'proxyIconUrl' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'fields' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'value' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'inline' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'image' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'proxyUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'provider' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'footer' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'proxyIconUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'text' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'thumbnail' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'proxyUrl' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'video' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'proxyUrl' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<EmbedFragment, unknown>;
+export const BaseMessageFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'BaseMessage' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Message' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'channelId' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'editedAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'isGuest' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'author' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'system' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'isWebhook' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'attachments' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'filename' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'stickers' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'formatType' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lottieData' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'reactions' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'count' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'emojiId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'emojiName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'animated' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'messageReference' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'guildId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'channelId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'messageId' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'embeds' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'Embed' } }]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'mentions' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'interaction' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'user' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'discriminator' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'thread' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'archivedAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'locked' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'messageCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    ...EmbedFragmentDoc.definitions
+  ]
+} as unknown as DocumentNode<BaseMessageFragment, unknown>;
+export const UpdatedMessageFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'UpdatedMessage' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'UpdatedMessage' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'content' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'createdAt' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'editedAt' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'author' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'roles' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'attachments' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'url' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'height' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'width' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'filename' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'size' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'stickers' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'formatType' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'lottieData' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'reactions' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'count' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'emojiId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'emojiName' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'animated' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'messageReference' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'guildId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'channelId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'messageId' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'embeds' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'Embed' } }]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'mentions' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'interaction' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'user' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'username' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'discriminator' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'thread' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'archivedAt' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'locked' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'messageCount' } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    ...EmbedFragmentDoc.definitions
+  ]
+} as unknown as DocumentNode<UpdatedMessageFragment, unknown>;
+export const GuildDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Guild' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'id' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'guild' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'id' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'settings' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'readonly' } }]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'channels' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'position' } },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'threads' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'category' },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'position' } }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'InlineFragment',
+                        typeCondition: {
+                          kind: 'NamedType',
+                          name: { kind: 'Name', value: 'TextChannel' }
+                        },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'threads' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      {
+                        kind: 'InlineFragment',
+                        typeCondition: {
+                          kind: 'NamedType',
+                          name: { kind: 'Name', value: 'AnnouncementChannel' }
+                        },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'threads' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      { kind: 'Field', name: { kind: 'Name', value: 'rateLimitPerUser' } }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<GuildQuery, GuildQueryVariables>;
+export const MessagesQueryDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'messagesQuery' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'before' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'channelV2' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'guild' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'TextChannel' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'messageBunch' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'threadId' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'before' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          }
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'messages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pinnedMessages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'AnnouncementChannel' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'messageBunch' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'threadId' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'before' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          }
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'messages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pinnedMessages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'VoiceChannel' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'messageBunch' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'threadId' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'before' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          }
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'messages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'ForumChannel' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'messageBunch' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'threadId' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'before' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          }
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'messages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                },
+                {
+                  kind: 'InlineFragment',
+                  typeCondition: {
+                    kind: 'NamedType',
+                    name: { kind: 'Name', value: 'ThreadChannel' }
+                  },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'Field',
+                        name: { kind: 'Name', value: 'messageBunch' },
+                        arguments: [
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'threadId' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+                          },
+                          {
+                            kind: 'Argument',
+                            name: { kind: 'Name', value: 'before' },
+                            value: { kind: 'Variable', name: { kind: 'Name', value: 'before' } }
+                          }
+                        ],
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'messages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    ...BaseMessageFragmentDoc.definitions
+  ]
+} as unknown as DocumentNode<MessagesQueryQuery, MessagesQueryQueryVariables>;
+export const MessageUpdatedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'subscription',
+      name: { kind: 'Name', value: 'MessageUpdated' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'messageUpdateV2' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'guild' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'channels' },
+                value: {
+                  kind: 'ListValue',
+                  values: [{ kind: 'Variable', name: { kind: 'Name', value: 'channel' } }]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'threadId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'FragmentSpread', name: { kind: 'Name', value: 'UpdatedMessage' } }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    ...UpdatedMessageFragmentDoc.definitions
+  ]
+} as unknown as DocumentNode<MessageUpdatedSubscription, MessageUpdatedSubscriptionVariables>;
+export const NewMessageDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'subscription',
+      name: { kind: 'Name', value: 'NewMessage' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'messageV2' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'channels' },
+                value: {
+                  kind: 'ListValue',
+                  values: [{ kind: 'Variable', name: { kind: 'Name', value: 'channel' } }]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'guild' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'threadId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } }]
+            }
+          }
+        ]
+      }
+    },
+    ...BaseMessageFragmentDoc.definitions
+  ]
+} as unknown as DocumentNode<NewMessageSubscription, NewMessageSubscriptionVariables>;
+export const MessageDeletedDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'subscription',
+      name: { kind: 'Name', value: 'MessageDeleted' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } },
+          type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'messageDeleteV2' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'channels' },
+                value: {
+                  kind: 'ListValue',
+                  values: [{ kind: 'Variable', name: { kind: 'Name', value: 'channel' } }]
+                }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'guild' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'threadId' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'threadId' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MessageDeletedSubscription, MessageDeletedSubscriptionVariables>;

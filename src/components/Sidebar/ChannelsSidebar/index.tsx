@@ -4,6 +4,9 @@ import { useContextMenu } from '@hooks/useContextMenu';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { Backdrop } from '@components/Overlays/Modal/styles';
 import ModalProvider from '@components/Providers/ModalProvider';
+import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
+import { useAppRouter } from '@hooks/useAppRouter';
+import { useRef } from 'react';
 import * as Styles from '../styles';
 import { Category } from './Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
@@ -11,10 +14,14 @@ import { ChannelHighlighter } from './ChannelHighlighter';
 interface ChannelsSidebarProps {
   isOpen: boolean;
 }
-
 export const ChannelsSidebar = ({ isOpen }: ChannelsSidebarProps) => {
+  const { channelId, threadId } = useAppRouter();
+
   const guildName = useStoreState(state => state.guild.data?.name) as string;
   const categories = useStoreState(state => state.guild.categories);
+  const channels = useStoreState(state => state.guild.channels);
+
+  const channelRef = useRef<HTMLAnchorElement>(null);
 
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
 
@@ -48,8 +55,21 @@ export const ChannelsSidebar = ({ isOpen }: ChannelsSidebarProps) => {
 
         <Styles.ChannelsChildrenWrapper>
           <ChannelHighlighter />
+
+          {channels
+            ?.filter(channel => channel.category === null)
+            .map(channel => (
+              <Channel
+                ref={channelRef}
+                channel={channel}
+                key={channel.id}
+                isActive={channel.id === channelId}
+                channelHasActiveThread={!!threadId && channel.id === channelId}
+              />
+            ))}
+
           {categories
-            .filter(category => category !== null)
+            ?.filter(category => category !== null)
             .map(category => (
               <Category category={category} key={category.id} />
             ))}

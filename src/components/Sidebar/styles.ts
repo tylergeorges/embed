@@ -14,7 +14,8 @@ export const SidebarWrapper = styled.withConfig({
 
   userSelect: 'none',
 
-  backgroundColor: theme.colors.backgroundSecondary,
+  backgroundOverlay: theme.colors.backgroundSecondary,
+
   willChange: 'transform',
   transition: theme.transitions.defaultTransform,
 
@@ -34,7 +35,6 @@ export const SidebarWrapper = styled.withConfig({
       false: {
         transform: `translateX(150%)`
       },
-
       true: {
         transform: `translateX(0)`
       }
@@ -68,7 +68,8 @@ export const ChannelsChildrenWrapper = styled.withConfig({
   flexDirection: 'column',
   alignItems: 'center',
   height: '100%',
-  position: 'relative'
+  position: 'relative',
+  marginTop: theme.space.lg
 });
 
 export const GuildHeaderWrapper = styled.withConfig({
@@ -84,8 +85,7 @@ export const MembersSidebarWrapper = styled.withConfig({
   displayName: 'members-sidebar_wrapper'
 })(SidebarWrapper, {
   right: 0,
-  boxSizing: 'border-box',
-  zIndex: theme.zIndices.membersSidebar
+  boxSizing: 'border-box'
 });
 
 export const ThreadsPanelContainer = styled.withConfig({
@@ -141,10 +141,10 @@ export const ThreadsPanelSeperator = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'panel-threads_seperator'
 })('div', {
-  transform: `translateX(-8px)`,
+  transform: `translateX(-${theme.sizes.panelSeperatorWidth})`,
 
   height: '100%',
-  width: 8,
+  width: theme.sizes.panelSeperatorWidth,
 
   backgroundColor: theme.colors.borderDark,
   zIndex: theme.zIndices.modal,

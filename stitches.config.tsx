@@ -17,8 +17,63 @@ const stitches = createStitches({
     },
 
     colors: {
-      primary: 'rgba(255, 255, 255, 1.0)',
+      saturationFactor: '1',
+
+      headerPrimaryHsl: '220 calc($saturationFactor * 13%) 95.5%',
+      headerPrimary: 'hsl($headerPrimaryHsl / 1)',
+
+      channelsPrimaryHsl: '214 calc($saturationFactor * 8.1%) 61.2%',
+      channelsPrimary: 'hsl($channelsPrimaryHsl / 1)',
+
+      textPrimaryHsl: '210 calc($saturationFactor * 9.1%) 87.1%',
+      textPrimary: 'hsl($textPrimaryHsl / 1)',
+
+      textMutedHsl: '214 calc($saturationFactor * 8.1%) 61.2%',
+      textMuted: 'hsl($textMutedHsl / 1)',
+
       primaryDark: '#72767d',
+
+      backgroundHsl: '223 calc($saturationFactor * 6.7%) 20.6%',
+      background: 'hsl($backgroundHsl / 1)',
+
+      backgroundSecondaryHsl: '220 calc($saturationFactor * 6.5%) 18%',
+      backgroundSecondary: 'hsl($backgroundSecondaryHsl / 1)',
+
+      backgroundSecondaryAltHsl: '228 calc($saturationFactor * 6.7%) 14.7%',
+      backgroundSecondaryAlt: 'hsl($backgroundSecondaryAltHsl / 1)',
+
+      backgroundTertiaryHsl: '225 calc($saturationFactor * 6.3%) 12.5%',
+      backgroundTertiary: 'hsl($backgroundTertiaryHsl / 1)',
+
+      backgroundModifierSelectedHsl: '228 calc($saturationFactor * 6%) 32.5%',
+      backgroundModiferSelected: 'hsl($backgroundModifierSelectedHsl / 0.6)',
+
+      backgroundModifierHoverHsl: '223 calc($saturationFactor * 5.8%) 52.9%',
+      backgroundModifierHover: 'hsl($backgroundModifierHoverHsl / 0.16)',
+
+      modalBackgroundHsl: '223 calc($saturationFactor * 6.7%) 20.6%',
+      modalBackground: 'hsl($modalBackgroundHsl / 1)',
+
+      interactiveActiveHsl: '0 calc($saturationFactor * 0%) 100%',
+      interactiveActive: 'hsl($interactiveActiveHsl / 1)',
+
+      interactiveDefaultHsl: '215 calc($saturationFactor * 8.8%) 73.3%',
+      interactiveDefault: 'hsl($interactiveDefaultHsl / 1)',
+
+      interactiveHoverHsl: '210 calc($saturationFactor * 9.1%) 87.1%',
+      interactiveHover: 'hsl($interactiveHoverHsl / 1)',
+
+      channelsIconHsl: '223 calc($saturationFactor * 5.3%) 52.9%',
+      channelsIcon: 'hsl($channelsIconHsl / 1)',
+
+      headerBarBackgroundHsl: '223 calc($saturationFactor * 6.7%) 20.6%',
+      headerBarBackground: 'hsl($headerBarBackgroundHsl / 1)',
+
+      backgroundOpacityChat: '0.8',
+      backgroundOverlayColor: '0 0 0',
+
+      backgroundOverlayChat:
+        'linear-gradient(rgb($backgroundOverlayColor / $backgroundOpacityChat), rgb($backgroundOverlayColor / $backgroundOpacityChat)) fixed 0 0/cover, hsl($backgroundHsl / 1) fixed 0 0/cover',
 
       primaryOpacity10: 'rgba(255, 255, 255, 0.1)',
       primaryOpacity20: 'rgba(255, 255, 255, 0.2)',
@@ -33,23 +88,12 @@ const stitches = createStitches({
 
       backDrop: 'rgba(0,0,0,0.7)',
 
-      textPrimary: '#FFFFFF',
-      textMuted: '$primaryOpacity30',
-
-      iconLight: 'rgb(181,186,193)',
-      iconActive: '$primaryOpacity90',
-      active: 'rgba(255, 255, 255, 0.9)',
-
       systemMessageDark: '#999999',
       interactiveNormal: '#dcddde',
       accent: '#5865f2',
       accentOpacity60: '#5865f299',
 
-      background: '#313338',
       backgroundOpacity10: '#36393f1a',
-      backgroundSecondary: '#2b2d31',
-      backgroundSecondaryAlt: '#232428',
-      backgroundTertiary: '#232428',
 
       mentioned: 'rgba(250, 166, 26, 0.1)',
       mentionedHover: 'rgba(250, 168, 26, 0.08)',
@@ -62,7 +106,6 @@ const stitches = createStitches({
       link: '#00b0f4',
 
       tooltipBackground: '#18191c',
-      tooltipForeground: '#dcddde',
 
       transparentBlack: 'rgba(0, 0, 0, 0.6)',
       blackSpoilerHover: 'rgba(0, 0, 0, 0.9)',
@@ -170,6 +213,9 @@ const stitches = createStitches({
       /** width: 240px */
       sideBarWidth: '240px',
 
+      /** width: 8px */
+      panelSeperatorWidth: '8px',
+
       /** min-width: 400px */
       threadPanelMinWidth: '400px',
 
@@ -196,14 +242,14 @@ const stitches = createStitches({
       /** 0 */
       none: 0,
 
+      /** 0 */
+      membersSidebarBackdrop: '$none',
+
+      /** 1 */
+      membersSidebar: 1,
+
       /** 10 */
       tooltip: 10,
-
-      /** 20 */
-      membersSidebarBackdrop: 20,
-
-      /** 30 */
-      membersSidebar: 30,
 
       /** 40 */
       channelsSidebarBackdrop: 40,
@@ -221,18 +267,24 @@ const stitches = createStitches({
     shadows: {
       dropShadow: 'rgba(0, 0, 0, 0.24) 0px 8px 16px 0px',
       headerDropShadow:
-        '0 2px 4px -1px rgba(0, 0, 0, 0.1), 0px 4px 5px 0px rgba(0, 0, 0, 0.12), 0px 1px 10px 0px rgba(0, 0, 0, 0.09), 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06)'
+        '0 2px 4px -1px rgba(0, 0, 0, 0.1), 0px 4px 5px 0px rgba(0, 0, 0, 0.12), 0px 1px 10px 0px rgba(0, 0, 0, 0.09), 0 1px 0 rgba(0, 0, 0, 0.1), 0 2px 0 rgba(0, 0, 0, 0.06)',
+
+      headerBorder:
+        '0 1px 0 hsl(0 calc( 1 *0%) 0.8% /0.2),0 1.5px 0 hsl( 240 calc(1 *7.7%) 2.5% /0.05),0 2px 0 hsl( 0 calc(1 *0%) 0.8% /0.05)'
     },
 
     fontWeights: {
       /** font-weight: 400 */
-      thin: 400,
+      regular: 400,
 
       /** font-weight: 500 */
       medium: 500,
 
       /** font-weight: 600 */
-      bold: 600
+      semibold: 600,
+
+      /** font-weight: 700 */
+      bold: 700
     },
 
     borderWidths: {
@@ -298,6 +350,15 @@ const stitches = createStitches({
     size: (value: ScaleValue<'sizes'>) => ({
       height: value,
       width: value
+    }),
+
+    backgroundOverlay: (color: ScaleValue<'colors'>) => ({
+      // Theres no way type a Color Token, if we dont access value here then it won't work.
+      // @ts-expect-error
+      background: `linear-gradient(rgb($backgroundOverlayColor / $backgroundOpacityChat), rgb($backgroundOverlayColor / $backgroundOpacityChat)) fixed 0 0/cover, ${color.value} fixed 0 0/cover`,
+
+      backgroundSize: 'auto',
+      backgroundImage: 'none'
     })
   }
 });

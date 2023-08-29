@@ -1,8 +1,8 @@
 import * as Styles from '@components/Sidebar/styles';
-import { MessageContainer } from '@components/Core/TextChannelContainer/MessageContainer';
-import { ThreadPanelHeader } from '@components/Header/ThreadPanelHeader';
 
 import { useAppRouter } from '@hooks/useAppRouter';
+import { MessageContainer } from '@components/Core/TextChannelContainer/MessageContainer';
+import { ThreadPanelHeader } from '@components/Header/ThreadPanelHeader';
 
 interface ThreadPanelProps {
   isOpen: boolean;

@@ -89,7 +89,7 @@ export const Backdrop = styled.withConfig({
       isMembersListOpen: true,
 
       css: {
-        zIndex: theme.zIndices.membersSidebarBackdrop,
+        zIndex: theme.zIndices.none,
         opacity: 1
       }
     },
@@ -196,7 +196,9 @@ export const ModalHeader = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-header'
 })('div', {
-  width: '100%'
+  width: '100%',
+  padding: theme.space.lg,
+  paddingRight: theme.space.sm
 });
 
 export const ModalHeaderContent = styled.withConfig({
@@ -207,9 +209,7 @@ export const ModalHeaderContent = styled.withConfig({
   justifyContent: 'space-between',
   userSelect: 'none',
 
-  fontSize: '100%',
-
-  padding: theme.space.xl,
+  fontSize: theme.fontSizes.xl,
 
   cursor: 'default'
 });
@@ -222,10 +222,9 @@ export const PopoutHeader = styled.withConfig({
   flexDirection: 'row',
   alignItems: 'center',
 
-  width: '100%',
   height: 48,
 
-  padding: 0,
+  paddingLeft: theme.space.lg,
 
   borderTopRightRadius: theme.radii.sm,
   borderTopLeftRadius: theme.radii.sm,
@@ -308,7 +307,9 @@ export const PopoutTitle = styled.withConfig({
 })('span', {
   background: 'none',
   padding: 0,
-  marginLeft: theme.space.sm
+  marginLeft: theme.space.sm,
+
+  fontWeight: theme.fontWeights.semibold
 });
 
 export const PopoutContentWrapper = styled.withConfig({
@@ -338,13 +339,13 @@ export const ChannelTopicModalContent = styled.withConfig({
   flexGrow: 1,
   flexShrink: 1,
 
-  paddingLeft: theme.space.xl,
-  paddingRight: theme.space.lg,
+  paddingX: theme.space.lg,
   paddingBottom: theme.space.xxl,
 
   textRendering: 'optimizeLegibility',
   whiteSpace: 'pre-wrap',
-  overflowWrap: 'break-word'
+  overflowWrap: 'break-word',
+  fontWeight: theme.fontWeights.regular
 });
 
 export const NoThreadsIconOuter = styled.withConfig({
@@ -407,6 +408,8 @@ export const ThreadsPopoutListHeader = styled.withConfig({
 
   fontSize: theme.fontSizes.sm,
   fontWeight: theme.fontWeights.bold,
+  textRendering: 'optimizeLegibility',
+  textTransform: 'uppercase',
 
   width: '100%',
   marginY: theme.space.lg

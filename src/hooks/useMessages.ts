@@ -1,277 +1,110 @@
-import { gql, useQuery } from 'urql';
-import { graphql } from '@graphql/gql';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+/* eslint-disable no-underscore-dangle */
+import { useCallback, useMemo, useState } from 'react';
 import {
-  BaseMessageFragment,
-  MessagesQueryQueryVariables,
   // @ts-ignore
-  MessageFragmentFragment
+  BaseMessageFragment,
+  Message,
+  MessagesQueryQuery
 } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
 import { APIMessage } from 'discord-api-types/v10';
 import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const EmbedFragment = gql`
-  fragment Embed on Embed {
-    title
-    description
-    url
-    timestamp
-    color
-    type
-    author {
-      url
-      name
-      proxyIconUrl
-    }
-    fields {
-      value
-      name
-      inline
-    }
-    image {
-      url
-      proxyUrl
-      width
-      height
-    }
-    provider {
-      name
-      url
-    }
-    footer {
-      proxyIconUrl
-      text
-    }
-    thumbnail {
-      height
-      width
-      url
-      proxyUrl
-    }
-    video {
-      height
-      width
-      url
-      proxyUrl
-    }
-  }
-`;
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const MessageFragment = gql`
-  fragment BaseMessage on Message {
-    id
-    channelId
-    content
-    type
-    flags
-    createdAt
-    editedAt
-    isGuest
-
-    author {
-      avatarUrl
-      bot
-      discrim
-      id
-      flags
-      name
-      roles
-      system
-      isWebhook
-    }
-
-    attachments {
-      url
-      height
-      width
-      filename
-      size
-    }
-
-    stickers {
-      id
-      name
-      formatType
-      lottieData
-    }
-
-    reactions {
-      count
-      emojiId
-      emojiName
-      animated
-    }
-
-    messageReference {
-      guildId
-      channelId
-      messageId
-    }
-
-    embeds {
-      ...Embed
-    }
-
-    mentions {
-      id
-      type
-      name
-    }
-
-    interaction {
-      name
-      user {
-        id
-        username
-        discriminator
-        avatarUrl
-      }
-    }
-
-    thread {
-      id
-      name
-      archivedAt
-      locked
-      messageCount
-    }
-  }
-`;
-
-const messagesQuery = graphql(`
-  query messagesQuery($guild: String!, $channel: String!, $before: String) {
-    channelV2(guild: $guild, id: $channel) {
-      id
-      ... on TextChannel {
-        messageBunch(before: $before) {
-          messages {
-            ...BaseMessage
-          }
-        }
-      }
-    }
-  }
-`);
-
-// TODO: Copy fragments from old codebase for this.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const updateMessageSubscription = graphql(`
-  subscription updateMessageSubscription($guild: String!, $channel: String!) {
-    messageUpdate(guild: $guild, channel: $channel) {
-      id
-      content
-    }
-  }
-`);
-
-interface UseMessagesProps {
-  guild: string;
-  channel: string;
-  thread?: string;
-}
+import { messagesQuery } from '@hooks/messagesQuery';
+import { useQuery } from '@apollo/client';
+import { produce } from 'structurajs';
 
 type MessageState = {
-  messages: MessageFragmentFragment[];
   groupedMessages: APIMessage[][];
   firstItemIndex: number;
 };
 
-export const useMessages = ({
-  guild,
-  channel,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  thread
-}: UseMessagesProps) => {
-  const [variables, setVariables] = useState<MessagesQueryQueryVariables>({
-    guild: '',
-    channel: ''
+interface UseMessagesProps {
+  guild: string;
+  channel: string;
+  threadId?: string;
+}
+
+export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
+  const [newMessageGroupLength] = useState(0);
+
+  const {
+    data,
+    fetchMore: fetchHook,
+    updateQuery,
+    loading
+  } = useQuery(messagesQuery, {
+    variables: {
+      guild,
+      channel,
+      threadId
+    }
   });
+  const isReady = data?.channelV2.id === channel && !loading;
 
-  const [messages, setMessages] = useState<BaseMessageFragment[]>([]);
-  const [newMessageGroupLength, setNewMessageGroupLength] = useState(0);
-
-  const [{ data }, fetchHook] = useQuery({
-    query: messagesQuery,
-    variables
-  });
-
-  const ready = data?.channelV2.id === channel;
-
-  useEffect(() => {
-    // @ts-ignore
-    const isReadyWithMessages = ready && data?.channelV2.messageBunch?.messages;
-    if (variables.channel !== channel) {
-      setMessages([]);
-    }
-
-    if (variables.channel !== channel || variables.guild !== guild) {
-      setVariables({ channel, guild });
-    }
-    // @ts-ignore TODO: Fix this
-
-    // @ts-ignore
-    const msgs = isReadyWithMessages ? data.channelV2?.messageBunch?.messages : [];
-    if (msgs.length) {
-      setNewMessageGroupLength(groupMessages(msgs).length);
-
-      if (ready) {
-        setMessages(prev => [...msgs, ...prev]);
-      } else {
-        setMessages([]);
-      }
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, channel, guild, ready]);
+  const messages = data?.channelV2?.messageBunch?.messages as Message[];
 
   const fetchMore = useCallback(
     (before: string) => {
-      if (!ready) return;
+      if (!isReady) return;
 
-      setVariables({ channel, guild, before });
+      fetchHook({
+        query: messagesQuery,
+        variables: { channel, guild, before, threadId },
+        updateQuery: (prev, { fetchMoreResult }) => {
+          if (!('messageBunch' in fetchMoreResult.channelV2)) return prev;
 
-      fetchHook({ requestPolicy: 'network-only' });
+          const olderMessages = fetchMoreResult?.channelV2?.messageBunch.messages as Message[];
+
+          if (olderMessages.length === 0) {
+            return prev;
+          }
+
+          return produce(prev, draft => {
+            if (!('messageBunch' in draft.channelV2)) return draft;
+
+            draft.channelV2.messageBunch.messages = [
+              ...olderMessages,
+              ...draft.channelV2.messageBunch.messages
+            ];
+          }) as MessagesQueryQuery;
+        }
+      });
     },
-    [channel, fetchHook, guild, ready]
+    [channel, fetchHook, guild, isReady, threadId]
   );
 
   const loadMoreMessages = useCallback(() => {
-    fetchMore(messages[0].id);
+    if (messages) {
+      fetchMore(messages[0].id);
+    }
   }, [fetchMore, messages]);
 
-  let messageState: MessageState;
-
-  // @ts-ignore
-  // eslint-disable-next-line prefer-const
-  messageState = useMemo(() => {
+  const messageState: MessageState = useMemo(() => {
     let firstItemIndex = 100_000;
 
     if (messages === undefined)
       return {
-        messages: [],
         groupedMessages: [],
         firstItemIndex
       };
 
-    const grouped = groupMessages(messages.map(convertMessageToDiscord));
+    const grouped = groupMessages(
+      messages.map(msg => convertMessageToDiscord(msg as BaseMessageFragment))
+    );
     firstItemIndex -= grouped.length - 1;
+
     return {
-      messages,
       groupedMessages: grouped,
       firstItemIndex
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages]);
 
   return {
     ...messageState,
     fetchMore,
     newMessageGroupLength,
-    isReady: ready,
-    loadMoreMessages
+    isReady,
+    loadMoreMessages,
+    updateQuery
   };
 };
