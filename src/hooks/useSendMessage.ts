@@ -13,7 +13,7 @@ interface UseSendMessageProps {
 }
 
 export const useSendMessage = ({ thread, scrollToBottom }: UseSendMessageProps) => {
-  const { channelId, guildId, threadId } = useAppRouter();
+  const { channelId, guildId } = useAppRouter();
   const [sendMutation] = useMutation(sendMessageMutation);
 
   const user = useStoreState(state => state.user.data);
@@ -37,7 +37,7 @@ export const useSendMessage = ({ thread, scrollToBottom }: UseSendMessageProps) 
         sendMessage: {
           __typename: 'Message',
           id: generateSnowflake(),
-          channelId,
+          channelId: thread ?? channelId,
           content,
           type: MessageType.Default,
           createdAt: +new Date(),
@@ -78,7 +78,7 @@ export const useSendMessage = ({ thread, scrollToBottom }: UseSendMessageProps) 
 
         const messagesCache = cache.readQuery({
           query: messagesQuery,
-          variables: { channel: channelId, guild: guildId, threadId }
+          variables: { channel: channelId, guild: guildId, threadId: thread }
         })?.channel.messageBunch.messages;
 
         if (!messagesCache || !sendMessage || messagesCache.find(m => m.id === sendMessage?.id))
@@ -87,7 +87,7 @@ export const useSendMessage = ({ thread, scrollToBottom }: UseSendMessageProps) 
         scrollToBottom({ forceScroll: true });
         cache.writeQuery({
           query: messagesQuery,
-          variables: { channel: channelId, guild: guildId, threadId },
+          variables: { channel: channelId, guild: guildId, threadId: thread },
 
           data: {
             __typename: 'Query',

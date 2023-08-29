@@ -49,15 +49,17 @@ export const useMessageSubscription = ({
     onSubscriptionData: ({ subscriptionData, client }) => {
       if (!subscriptionData.data) return;
 
+      const message = subscriptionData.data.messageV2 as Message;
+
       const messagesCache = client.cache.readQuery({
         query: messagesQuery,
         variables: { guild, channel, threadId }
       })?.channel.messageBunch.messages;
+
       if (!subscriptionData.data) {
         return;
       }
 
-      const message = subscriptionData.data.messageV2 as Message;
       if (messagesCache?.find(m => m.id === message?.id)) return;
       updateQuery(
         prev =>

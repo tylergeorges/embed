@@ -244,6 +244,8 @@ export const messagesQuery = graphql(/* GraphQL */ `
       id
       __typename
       ... on TextChannel {
+        __typename
+        id
         messageBunch(
           threadId: $threadId
           limit: $limit
@@ -294,6 +296,8 @@ export const messagesQuery = graphql(/* GraphQL */ `
       }
 
       ... on ForumChannel {
+        __typename
+
         messageBunch(threadId: $threadId, before: $before) {
           messages {
             id
@@ -304,6 +308,8 @@ export const messagesQuery = graphql(/* GraphQL */ `
       }
 
       ... on ThreadChannel {
+        __typename
+
         # This is not currently used but it resolves type issues
         messageBunch(
           threadId: $threadId

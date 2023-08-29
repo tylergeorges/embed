@@ -68,7 +68,9 @@ export const ChannelHeaderName = styled.withConfig({
   alignSelf: 'center',
   whiteSpace: 'nowrap',
   pointerEvents: 'none',
-  userSelect: 'none'
+  userSelect: 'none',
+
+  color: theme.colors.textPrimary
 });
 
 export const Stretch = styled.withConfig({
@@ -158,6 +160,7 @@ export const ThreadPanelHeaderRoot = styled.withConfig({
 })(ChannelHeaderRoot, {
   height: theme.sizes.headerHeight,
   width: '100%',
+  color: theme.colors.textPrimary,
 
   margin: 0,
   padding: 0,

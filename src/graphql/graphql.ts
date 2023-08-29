@@ -2288,6 +2288,8 @@ export const MessagesQueryDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'messageBunch' },
@@ -2478,6 +2480,7 @@ export const MessagesQueryDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'messageBunch' },
@@ -2526,6 +2529,7 @@ export const MessagesQueryDocument = {
                   selectionSet: {
                     kind: 'SelectionSet',
                     selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       {
                         kind: 'Field',
                         name: { kind: 'Name', value: 'messageBunch' },
