@@ -6,27 +6,33 @@ import { CloseButton } from '@icons/Buttons/CloseButton';
 
 interface InformationModalProps {
   children: ReactElement<any, any>;
-  isOpen: boolean;
-  hideModal: () => void;
+
   title: string;
+
   disableBackdrop?: boolean;
+
+  /** Used to hide modal */
+  modalId: string;
 }
 
 export const InformationModal = ({
   children,
-  isOpen,
-  hideModal,
   title,
-  disableBackdrop
+  disableBackdrop,
+  modalId
 }: InformationModalProps) => (
-  <Modal isOpen={isOpen} title={title} hideModal={hideModal} disableBackdrop={disableBackdrop}>
-    <Styles.ModalHeader>
-      <Styles.ModalHeaderContent>
-        #{title}
-        <CloseButton onClick={hideModal} />
-      </Styles.ModalHeaderContent>
-    </Styles.ModalHeader>
+  <Modal title={title} disableBackdrop={disableBackdrop} modalId={modalId}>
+    {({ closeModal }) => (
+      <>
+        <Styles.ModalHeader>
+          <Styles.ModalHeaderContent>
+            #{title}
+            <CloseButton onClick={closeModal} />
+          </Styles.ModalHeaderContent>
+        </Styles.ModalHeader>
 
-    {children}
+        {children}
+      </>
+    )}
   </Modal>
 );

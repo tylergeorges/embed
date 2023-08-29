@@ -16,7 +16,7 @@ export type VisibleModals = {
 
 export type ModalShow = (modalId: string, props?: React.ComponentProps<any>) => void;
 
-export type ModalHide = (modalId: string, hideWithDelay?: boolean) => void | NodeJS.Timeout;
+export type ModalHide = (modalId: string) => void | NodeJS.Timeout;
 
 export type ModalRegister = (
   modalId: string,

@@ -15,6 +15,7 @@ export const ThreadsButton = () => {
 
   const openThreadsModal = (e: React.SyntheticEvent) => {
     e.preventDefault();
+
     setShowThreadsModal(!showThreadsModal);
   };
 

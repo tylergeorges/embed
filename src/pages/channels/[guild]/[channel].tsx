@@ -13,6 +13,7 @@ import ModalProvider from '@components/Providers/ModalProvider';
 import { ThreadPanel } from '@components/Sidebar/ThreadPanel';
 import { ChannelTopicModal } from '@components/Overlays/Modal/InformationModal/ChannelTopicModal';
 import GuildProvider from '@components/Providers/GuildProvider';
+import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
 
 const MessageRendererRoot = styled('div', {
   height: '100%',
@@ -26,6 +27,7 @@ const ContextMenu = dynamic(() =>
 ModalProvider.register('channel-topic-modal', ChannelTopicModal);
 ModalProvider.register('sidebar-threads-panel', ThreadPanel);
 ModalProvider.register('sidebar-channels-list', ChannelsSidebar, true);
+ModalProvider.register('threads-popout-modal', ThreadsPopout, true);
 
 function GuildChannel() {
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);

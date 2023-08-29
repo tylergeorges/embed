@@ -10,11 +10,9 @@ import * as SkeletonStyles from '@components/Shared/SkeletonLoaders';
 import { useStoreState } from '@state';
 
 export const ChannelHeader = () => {
-  // const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
-  const openTopicModal = () => {
-    // setShowTopicModal(true);
 
+  const openTopicModal = () => {
     ModalProvider.show('channel-topic-modal', { currentChannel });
   };
 

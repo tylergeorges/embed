@@ -1,18 +1,41 @@
 import * as Styles from '@components/Overlays/Modal/styles';
+import { useModal } from '@components/Providers/ModalProvider';
 
 interface ModalProps {
-  children: React.ReactNode;
-  isOpen: boolean;
+  children: ({ closeModal }: { closeModal: () => void }) => React.ReactNode;
+
   title: string;
+
   disableBackdrop?: boolean;
-  hideModal: () => void;
+
+  modalId: string;
 }
 
-export const Modal = ({ children, isOpen, title, disableBackdrop, hideModal }: ModalProps) => (
-  <>
-    {!disableBackdrop && <Styles.Backdrop type="modal" isOpen={isOpen} onClick={hideModal} />}
-    <Styles.ModalContainerWrapper isOpen={isOpen} role="dialog" aria-label={title}>
-      <Styles.ModalContainer isOpen={isOpen}>{children}</Styles.ModalContainer>
-    </Styles.ModalContainerWrapper>
-  </>
-);
+export const Modal = ({ children, title, disableBackdrop, modalId }: ModalProps) => {
+  const { waitForElementRef, closeModal, isOpen, removeAfterTransitionEnd } = useModal({
+    modalId
+  });
+
+  return (
+    <>
+      {!disableBackdrop && (
+        <Styles.Backdrop
+          type="modal"
+          isOpen={isOpen}
+          onClick={closeModal}
+          ref={waitForElementRef}
+        />
+      )}
+
+      <Styles.ModalContainerWrapper
+        isOpen={isOpen}
+        role="dialog"
+        aria-label={title}
+        onTransitionEnd={disableBackdrop ? removeAfterTransitionEnd : undefined}
+        ref={disableBackdrop ? waitForElementRef : undefined}
+      >
+        <Styles.ModalContainer isOpen={isOpen}>{children({ closeModal })}</Styles.ModalContainer>
+      </Styles.ModalContainerWrapper>
+    </>
+  );
+};

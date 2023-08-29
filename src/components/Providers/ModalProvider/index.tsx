@@ -1,17 +1,25 @@
-import { theme } from '@stitches';
-import { Fragment, ReactNode, createContext, useReducer } from 'react';
+import {
+  Fragment,
+  ReactNode,
+  createContext,
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState
+} from 'react';
 import { Main } from '@components/Core/styles';
 import { useContextMenu } from '@hooks/useContextMenu';
 import {
-  hideModal,
   showModal,
-  removeModalFromDOM,
+  hideModal,
   modalReducer,
   domModals,
   initialState,
   addToDom,
   visibleModals,
-  modalIds
+  modalIds,
+  removeModalFromDOM
 } from './modalReducer';
 import {
   ModalHide,
@@ -54,35 +62,24 @@ export const show: ModalShow = (modalId, props?: React.ComponentProps<any>) => {
   }, 1);
 };
 
-export const hide: ModalHide = (modalId, hideWithDelay) => {
+/** use useModal for animated exits. */
+export const hide: ModalHide = modalId => {
   if (showTimeout) {
     clearTimeout(showTimeout);
     showTimeout = null;
   }
-
   if (hideTimeout) {
     clearTimeout(hideTimeout);
     hideTimeout = null;
   }
 
-  // Transition element off screen
+  // remove from DOM
   dispatch(hideModal(modalId));
 
-  const modalDuration = Number(theme.transitions.longerDuration.value.split('ms')[0]);
-
-  // remove from DOM
-  if (hideWithDelay) {
-    const backdropDuration = modalDuration * 2;
-
-    // Wait for element's exit transition to finish then remove from DOM
-    hideTimeout = setTimeout(() => {
-      dispatch(removeModalFromDOM(modalId));
-    }, backdropDuration);
-  } else {
-    hideTimeout = setTimeout(() => {
-      dispatch(removeModalFromDOM(modalId));
-    }, modalDuration);
-  }
+  hideTimeout = setTimeout(() => {
+    dispatch(removeModalFromDOM(modalId));
+    console.log('hideTimeout removeModalFromDOM');
+  }, 1000);
 };
 
 // Register modal
@@ -115,7 +112,7 @@ function ModalProvider({ children }: ModalProviderWrapperProps) {
         {children}
 
         {modalIds
-          .filter(id => modalState.domModals[id].isOpen)
+          .filter(id => modalState.domModals[id]?.isOpen)
           .map(id => {
             const DomModal = modalState.domModals[id];
 
@@ -142,6 +139,68 @@ function ModalProvider({ children }: ModalProviderWrapperProps) {
       </Main>
     </ModalContextState.Provider>
   );
+}
+
+interface UseModalProps {
+  modalId: string;
+  openByDefault?: boolean;
+}
+
+export function useModal({ modalId, openByDefault = false }: UseModalProps) {
+  const [transitionedModalIsOpen, setTransitionedModalIsOpen] = useState(openByDefault);
+  // const [transitionedModalIsOpen, setTransitionedModalIsOpen] = useState(openByDefault);
+
+  // We want to wait for this element to be transitioned off the page before removing
+  // modal from DOM
+  const waitForElementRef = useRef<HTMLDivElement>(null);
+
+  const isModalMounted = useRef(false);
+
+  useEffect(() => {
+    if (showTimeout) {
+      clearTimeout(showTimeout);
+      showTimeout = null;
+    }
+
+    setTransitionedModalIsOpen(true);
+
+    return () => {
+      if (showTimeout) {
+        clearTimeout(showTimeout);
+        showTimeout = null;
+      }
+    };
+  }, []);
+
+  const removeAfterTransitionEnd = useCallback(() => {
+    console.log('removeAfterTransitionEnd', isModalMounted.current);
+    // This sets to true once transitioned modal is done
+    if (!isModalMounted.current) {
+      isModalMounted.current = true;
+    } else if (!transitionedModalIsOpen) {
+      // Once the element transitions off screen remove it from DOM
+      console.log('remove from dom');
+      dispatch(removeModalFromDOM(modalId));
+    }
+  }, [modalId, transitionedModalIsOpen]);
+
+  if (waitForElementRef.current) {
+    waitForElementRef.current.ontransitionend = removeAfterTransitionEnd;
+  }
+
+  // Triggers removeAfterTransitionEnd to run
+  const closeTransitionedModal = useCallback(() => {
+    console.log('closeTransitionedModal');
+    setTransitionedModalIsOpen(false);
+    dispatch(hideModal(modalId));
+  }, [modalId]);
+
+  return {
+    waitForElementRef,
+    isOpen: transitionedModalIsOpen,
+    closeModal: closeTransitionedModal,
+    removeAfterTransitionEnd
+  };
 }
 
 const modalProviderConfig = {

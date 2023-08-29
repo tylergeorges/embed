@@ -3,7 +3,7 @@ import { Header } from '@components/Header';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { Backdrop } from '@components/Overlays/Modal/styles';
-import ModalProvider from '@components/Providers/ModalProvider';
+import { useModal } from '@components/Providers/ModalProvider';
 import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useRef } from 'react';
@@ -17,6 +17,11 @@ interface ChannelsSidebarProps {
 export const ChannelsSidebar = ({ isOpen }: ChannelsSidebarProps) => {
   const { channelId, threadId } = useAppRouter();
 
+  const { closeModal, waitForElementRef, removeAfterTransitionEnd } = useModal({
+    modalId: 'sidebar-channels-list',
+    openByDefault: isOpen
+  });
+
   const guildName = useStoreState(state => state.guild.data?.name) as string;
   const categories = useStoreState(state => state.guild.categories);
   const channels = useStoreState(state => state.guild.channels);
@@ -28,7 +33,9 @@ export const ChannelsSidebar = ({ isOpen }: ChannelsSidebarProps) => {
   const { hideContextMenu, disableBrowserMenu } = useContextMenu();
 
   const closeChannelsList = () => {
-    ModalProvider.hide('sidebar-channels-list');
+    // ModalProvider.hide('sidebar-channels-list');
+
+    closeModal();
   };
 
   return (
@@ -42,12 +49,15 @@ export const ChannelsSidebar = ({ isOpen }: ChannelsSidebarProps) => {
         isChannelsListOpen={isOpen}
         isOpen={isOpen && windowIsMobile}
       />
+
       <Styles.ChannelsSidebarWrapper
         type="channelsList"
         channelsListOpen={isOpen}
         onClick={hideContextMenu}
+        onTransitionEnd={removeAfterTransitionEnd}
         className="scrollbar-thin"
         onContextMenu={disableBrowserMenu}
+        ref={waitForElementRef}
       >
         <Styles.GuildHeaderWrapper>
           <Header name={guildName} isChannelHeader={false} />
