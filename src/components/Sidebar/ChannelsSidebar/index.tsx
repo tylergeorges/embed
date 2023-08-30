@@ -52,7 +52,7 @@ export const ChannelsSidebar = () => {
         </Styles.GuildHeaderWrapper>
 
         <Styles.ChannelsChildrenWrapper>
-          <ChannelHighlighter />
+          {channelId && <ChannelHighlighter />}
 
           {channels
             ?.filter(channel => channel.category === null)

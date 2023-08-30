@@ -14,7 +14,6 @@ export const Main = styled.withConfig({
   boxSizing: 'border-box',
   flexDirection: 'row',
   width: '100%',
-  backgroundColor: theme.colors.background,
   animation: `${zoomIn} ${theme.transitions.longerDuration} ease`,
   justifyItems: 'center'
 });

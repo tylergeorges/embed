@@ -30,9 +30,11 @@ export const ChannelHeader = ({ channelName, topic }: ChannelHeaderProps) => {
           {currentChannel || channelName ? (
             <>
               <Icons icon="TextChannelHash" size="regular" color="channel" />
+
               <Styles.ChannelHeaderName>
                 {channelName ?? currentChannel?.name}
               </Styles.ChannelHeaderName>
+
               <Styles.ChannelHeaderTopic onClick={openTopicModal}>
                 {topic ?? currentChannel?.topic}
               </Styles.ChannelHeaderTopic>
@@ -47,12 +49,16 @@ export const ChannelHeader = ({ channelName, topic }: ChannelHeaderProps) => {
         </Styles.ChannelNameTopicWrapper>
       </Styles.ChannelHeaderNameWrapper>
 
-      <ThreadsPopout>
-        <ThreadsButton />
-      </ThreadsPopout>
+      {!topic && (
+        <>
+          <ThreadsPopout>
+            <ThreadsButton />
+          </ThreadsPopout>
 
-      <PinButton />
-      <MembersButton />
+          <PinButton />
+          <MembersButton />
+        </>
+      )}
     </Styles.ChannelHeaderRoot>
   );
 };
