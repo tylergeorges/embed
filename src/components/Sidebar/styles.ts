@@ -56,7 +56,9 @@ export const ChannelsSidebarWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'channels-sidebar_wrapper'
 })(SidebarWrapper, {
-  zIndex: theme.zIndices.channelsSidebar
+  zIndex: theme.zIndices.channelsSidebar,
+  width: '100%',
+  height: '100%'
 });
 
 export const ChannelsChildrenWrapper = styled.withConfig({
@@ -64,13 +66,10 @@ export const ChannelsChildrenWrapper = styled.withConfig({
   displayName: 'channels-children_container'
 })('div', {
   width: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
   height: '100%',
   position: 'relative',
   marginTop: theme.space.lg,
-  overflowY: 'auto'
+  overflowY: 'scroll'
 });
 
 export const GuildHeaderWrapper = styled.withConfig({

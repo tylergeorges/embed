@@ -3,6 +3,8 @@ import { graphql } from '@graphql/gql';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useApolloClient, useQuery } from '@apollo/client';
+import { getToken } from '@graphql/client';
+import { Guild } from '@graphql/graphql';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -69,12 +71,22 @@ export const guildDocument = graphql(/* GraphQL */ `
       partnered
       verified
       tier
+      invite
+      owner
+
       __typename
 
       settings {
         __typename
         readonly
         guestMode
+        defaultModeration
+        directEnabled
+        discordMode
+        filesEnabled
+        isCaptchaEnabled
+        isCustomAuthEnabled
+        showVoiceChannels
       }
 
       roles {
@@ -101,6 +113,8 @@ export const guildDocument = graphql(/* GraphQL */ `
         type
         position
         canSend
+        nsfw
+
         __typename
 
         ... on ThreadChannel {
@@ -160,7 +174,7 @@ export const guildDocument = graphql(/* GraphQL */ `
 `);
 
 export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps) {
-  const { guildId, router, isRouteLoaded } = useAppRouter();
+  const { guildId, router, isRouteLoaded, channelId } = useAppRouter();
 
   const { data, loading, fetchMore } = useQuery(guildDocument, {
     variables: { id: guildId }
@@ -189,11 +203,21 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
           query: guildDocument,
           variables: { id: guildId },
           updateQuery: (prev, { fetchMoreResult }) => {
-            // Weird type error when casting
-            // @ts-expect-error
             const guild = fetchMoreResult.guild as Guild;
 
+            const token = getToken();
+
+            if (!token) {
+              const isAuthChannel = guild.channels.findIndex(ch => ch.id === channelId) === -1;
+
+              // Redirect to non-auth channel if user signs out and was in an authed channel.
+              if (isAuthChannel) {
+                router.push(`/channels/${guildId}/${guild.channels[0].id}`);
+              }
+            }
+
             setChannels(guild.channels);
+
             setRefetchGuild(false);
 
             return fetchMoreResult;
@@ -204,7 +228,6 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     // Set guild data/settings once
     else if (data && !loading && !guildSettings) {
       // Weird type error when casting
-      // @ts-expect-error
       const guild = data.guild as Guild;
 
       // So guild data/settings only get set once
@@ -221,6 +244,7 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     setChannels,
     setGuildData,
     setSettings,
+    channelId,
     guildId,
     router,
     setIsGuildFetched,

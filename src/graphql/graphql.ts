@@ -952,7 +952,20 @@ export type GuildQuery = {
     partnered: string;
     verified: string;
     tier: string;
-    settings: { __typename: 'GuildSettings'; readonly: boolean; guestMode: boolean };
+    invite: string;
+    owner: string;
+    settings: {
+      __typename: 'GuildSettings';
+      readonly: boolean;
+      guestMode: boolean;
+      defaultModeration: boolean;
+      directEnabled: boolean;
+      discordMode: boolean;
+      filesEnabled: boolean;
+      isCaptchaEnabled: boolean;
+      isCustomAuthEnabled: boolean;
+      showVoiceChannels: boolean;
+    };
     roles: Array<{
       __typename: 'Role';
       id: string;
@@ -978,6 +991,7 @@ export type GuildQuery = {
           type: ChannelType;
           position: number;
           canSend: boolean;
+          nsfw: boolean;
           rateLimitPerUser?: number | null;
           threads?: Array<
             | { __typename: 'AnnouncementChannel'; id: string }
@@ -1001,6 +1015,7 @@ export type GuildQuery = {
           type: ChannelType;
           position: number;
           canSend: boolean;
+          nsfw: boolean;
           rateLimitPerUser?: number | null;
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
@@ -1012,6 +1027,7 @@ export type GuildQuery = {
           type: ChannelType;
           position: number;
           canSend: boolean;
+          nsfw: boolean;
           rateLimitPerUser?: number | null;
           threads?: Array<
             | { __typename?: 'AnnouncementChannel' }
@@ -1036,6 +1052,7 @@ export type GuildQuery = {
           parentId: string;
           position: number;
           canSend: boolean;
+          nsfw: boolean;
           rateLimitPerUser?: number | null;
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
@@ -1046,6 +1063,7 @@ export type GuildQuery = {
           type: ChannelType;
           position: number;
           canSend: boolean;
+          nsfw: boolean;
           rateLimitPerUser?: number | null;
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
@@ -1901,6 +1919,8 @@ export const GuildDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'partnered' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'verified' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'tier' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'invite' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'owner' } },
                 { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                 {
                   kind: 'Field',
@@ -1910,7 +1930,14 @@ export const GuildDocument = {
                     selections: [
                       { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'readonly' } },
-                      { kind: 'Field', name: { kind: 'Name', value: 'guestMode' } }
+                      { kind: 'Field', name: { kind: 'Name', value: 'guestMode' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'defaultModeration' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'directEnabled' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'discordMode' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'filesEnabled' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'isCaptchaEnabled' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'isCustomAuthEnabled' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'showVoiceChannels' } }
                     ]
                   }
                 },
@@ -1954,6 +1981,7 @@ export const GuildDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'position' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'canSend' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'nsfw' } },
                       { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       {
                         kind: 'InlineFragment',

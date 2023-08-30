@@ -55,7 +55,7 @@ export const Category = ({ category }: CategoryProps) => {
       setInitChannelYPos(currentChannelRef.current.offsetTop);
     }
 
-    if (channelsConRef.current) {
+    if (channelsConRef.current && channelsConRef.current.offsetHeight !== 0) {
       setChannelsConHeight(channelsConRef.current.offsetHeight);
     }
   }, [
@@ -103,6 +103,7 @@ export const Category = ({ category }: CategoryProps) => {
       // When we re-open the category
     } else {
       if (isActiveCategory && categoryRef.current) {
+        // console.log(' isActiveCategory && categoryRef.current ', initChannelYPos);
         setCurrentChannelYPos(initChannelYPos);
       } else if (!isActiveCategory && activeCategoryIsBelow && categoryRef.current) {
         setInitChannelYPos(initChannelYPos + channelsConHeight);

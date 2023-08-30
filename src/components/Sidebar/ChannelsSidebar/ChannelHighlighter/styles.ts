@@ -12,6 +12,7 @@ export const Background = styled.withConfig({
   transform: 'translateY(var(--yPos))',
   padding: 0,
   margin: 0,
+  left: theme.space.sm,
   width: `calc(100% - ${theme.space.lg.value})`,
 
   variants: {

@@ -33,7 +33,7 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
 
     // Used to get new channel position when auth state changes and more channels are added
     useEffect(() => {
-      if (ref != null && typeof ref !== 'function') {
+      if (isActive && ref != null && typeof ref !== 'function') {
         const refElement = ref.current;
 
         if (refElement) {
@@ -45,13 +45,20 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
           }
         }
       }
-    }, [refetchGuild, currentChannelYPos, ref, setInitChannelYPos, setCurrentChannelYPos]);
+    }, [
+      refetchGuild,
+      currentChannelYPos,
+      ref,
+      setInitChannelYPos,
+      setCurrentChannelYPos,
+      isActive
+    ]);
 
     const { channelId, guildId } = useAppRouter();
 
     useEffect(() => {
-      if (isActive && ref) {
-        const channelRef = ref as React.MutableRefObject<HTMLAnchorElement>;
+      const channelRef = ref as React.MutableRefObject<HTMLAnchorElement>;
+      if (isActive && channelRef.current) {
         const channelEle = channelRef.current;
 
         setCurrentChannelYPos(channelEle.offsetTop);

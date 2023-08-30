@@ -1,6 +1,6 @@
 /* eslint-disable no-continue */
 import { Action, Computed, action, computed } from 'easy-peasy';
-import { Category, Channel, Guild, GuildSettings, Role } from '@graphql/graphql';
+import { Category, Channel, Guild, Role } from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
 import { APIChannel } from 'discord-api-types/v10';
 
@@ -22,8 +22,8 @@ export type GuildChannels = {
 export interface GuildStore {
   guildChannels: Computed<GuildStore, GuildChannels>;
   data?: Guild;
-  settings?: GuildSettings;
-  channels?: Channel[];
+  settings?: Guild['settings'];
+  channels?: Guild['channels'];
   categories?: Category[];
   currentThread: Channel | undefined;
   currentChannel: { name: string; topic?: string | null } | undefined;
@@ -31,8 +31,8 @@ export interface GuildStore {
   roles?: Map<string, Role>;
 
   setData: Action<GuildStore, Guild>;
-  setSettings: Action<GuildStore, GuildSettings>;
-  setChannels: Action<GuildStore, Channel[]>;
+  setSettings: Action<GuildStore, Guild['settings']>;
+  setChannels: Action<GuildStore, Guild['channels']>;
   setCurrentThread: Action<GuildStore, Channel>;
   setCurrentChannel: Action<GuildStore, string>;
   setRefetchGuild: Action<GuildStore, boolean>;
@@ -97,7 +97,6 @@ const guild: GuildStore = {
 
   setChannels: action((state, payload) => {
     const sortedChannels = [...payload].sort((a, b) => positionChannel(a) - positionChannel(b));
-    // const sortedChannels = payload.sort((a, b) => positionChannel(a) - positionChannel(b));
 
     state.categories = [
       ...new Map(sortedChannels.map(c => [c.category?.id, c.category])).values()

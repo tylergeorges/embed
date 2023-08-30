@@ -7,6 +7,7 @@ export const ChannelHighlighter = () => {
   const currentChannelYPos = useStoreState(state => state.ui.currentChannelYPos);
 
   const { threadId } = useAppRouter();
+  // console.log(currentChannelYPos)
 
   if (currentChannelYPos) {
     return (
