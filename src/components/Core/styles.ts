@@ -10,7 +10,8 @@ export const Main = styled.withConfig({
   displayName: 'main'
 })('main', {
   height: '100%',
-  display: 'flex',
+  display: 'block',
+  boxSizing: 'border-box',
   flexDirection: 'row',
   width: '100%',
   backgroundColor: theme.colors.background,
@@ -24,6 +25,5 @@ export const InnerMain = styled.withConfig({
 })('div', {
   width: '100%',
   height: '100%',
-  display: 'flex',
-  position: 'relative'
+  display: 'block'
 });
