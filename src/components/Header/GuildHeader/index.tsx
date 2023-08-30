@@ -13,12 +13,15 @@ export const GuildHeader = () => {
 
   return (
     <Header>
-      <Styles.GuildIcon
-        src={createGuildIconUrl({ guildId: guild.id, icon: guild.icon as string })}
-        alt="Guild Icon"
-        width={26}
-        height={26}
-      />
+      {guild.icon && (
+        <Styles.GuildIcon
+          src={createGuildIconUrl({ guildId: guild.id, icon: guild.icon })}
+          alt="Guild Icon"
+          width={26}
+          height={26}
+        />
+      )}
+
       <Styles.GuildHeaderName>{guild.name}</Styles.GuildHeaderName>
       <Styles.GuildMemberCount>{formatter.format(guild.memberCount)}</Styles.GuildMemberCount>
     </Header>

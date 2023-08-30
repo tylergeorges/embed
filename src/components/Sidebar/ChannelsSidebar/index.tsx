@@ -18,7 +18,6 @@ export const ChannelsSidebar = () => {
 
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
 
-  const guildData = useStoreState(state => state.guild.data);
   const categories = useStoreState(state => state.guild.categories);
   const channels = useStoreState(state => state.guild.channels);
 
@@ -30,9 +29,6 @@ export const ChannelsSidebar = () => {
     setIsChannelsListOpen(false);
   };
 
-  if (!guildData) return <></>;
-
-  console.log(guildData.icon);
   return (
     <>
       <Backdrop

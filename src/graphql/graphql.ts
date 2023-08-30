@@ -910,12 +910,6 @@ export type GuildQuery = {
     name: string;
     icon?: string | null;
     memberCount: number;
-    rulesChannelId?: string | null;
-    banner?: string | null;
-    splash?: string | null;
-    partnered: string;
-    verified: string;
-    tier: string;
     settings: { __typename?: 'GuildSettings'; readonly: boolean };
     channels: Array<
       | {
@@ -1757,12 +1751,6 @@ export const GuildDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'memberCount' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'rulesChannelId' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'banner' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'splash' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'partnered' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'verified' } },
-                { kind: 'Field', name: { kind: 'Name', value: 'tier' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'settings' },

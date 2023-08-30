@@ -4,6 +4,7 @@ import { useStoreActions, useStoreState } from '@state';
 import { Loading } from '@components/Overlays/Loading';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useQuery } from '@apollo/client';
+import { Channel, GuildSettings } from '@graphql/graphql';
 
 interface GuildProviderProps {
   children: React.ReactNode;
@@ -16,16 +17,11 @@ const guildDocument = graphql(/* GraphQL */ `
       name
       icon
       memberCount
-      rulesChannelId
-      banner
-      splash
-      partnered
-      verified
-      tier
 
       settings {
         readonly
       }
+
       channels {
         id
         name
@@ -83,10 +79,8 @@ export default function GuildProvider({ children }: GuildProviderProps) {
 
     if (data && !loading) {
       setGuildData(data.guild);
-      // @ts-expect-error
-      setSettings(data.guild.settings);
-      // @ts-expect-error
-      setChannels(data.guild.channels);
+      setSettings(data.guild.settings as GuildSettings);
+      setChannels(data.guild.channels as Channel[]);
     }
   }, [data, loading, setChannels, setGuildData, setSettings, guildId, router, isRouteLoaded]);
 
