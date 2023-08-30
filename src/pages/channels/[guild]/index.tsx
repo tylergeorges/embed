@@ -3,9 +3,12 @@ import { TextChannelHeader } from '@components/Core/TextChannelContainer/TextCha
 import { useStoreState } from '@state';
 import * as Styles from '@components/Sidebar/styles';
 import { WbIcon } from '@icons/WbIcon';
+import { useTranslation } from 'react-i18next';
 
 export default function GuildIndex() {
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
+
+  const { t } = useTranslation();
 
   return (
     <Styles.GuildRoot
@@ -15,7 +18,10 @@ export default function GuildIndex() {
       }}
       channelsListOpen={isChannelsListOpen}
     >
-      <TextChannelHeader channelName="Select a channel" topic="Pick a channel from the left" />
+      <TextChannelHeader
+        channelName={t('guild.channelselect') as string}
+        topic={t('guild.channelselect.topic') as string}
+      />
 
       <Styles.WbIconContainer>
         <WbIcon />
