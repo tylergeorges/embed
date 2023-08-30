@@ -1,11 +1,11 @@
 import { useStoreActions, useStoreState } from '@state';
-import { Header } from '@components/Header';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { Backdrop } from '@components/Overlays/Modal/styles';
 import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useRef } from 'react';
+import { GuildHeader } from '@components/Header/GuildHeader';
 import * as Styles from '../styles';
 import { Category } from './Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
@@ -18,7 +18,7 @@ export const ChannelsSidebar = () => {
 
   const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
 
-  const guildName = useStoreState(state => state.guild.data?.name) as string;
+  const guildData = useStoreState(state => state.guild.data);
   const categories = useStoreState(state => state.guild.categories);
   const channels = useStoreState(state => state.guild.channels);
 
@@ -30,6 +30,9 @@ export const ChannelsSidebar = () => {
     setIsChannelsListOpen(false);
   };
 
+  if (!guildData) return <></>;
+
+  console.log(guildData.icon);
   return (
     <>
       <Backdrop
@@ -47,9 +50,7 @@ export const ChannelsSidebar = () => {
         onClick={hideContextMenu}
         className="scrollbar-thin"
       >
-        <Styles.GuildHeaderWrapper>
-          <Header name={guildName} isChannelHeader={false} />
-        </Styles.GuildHeaderWrapper>
+        <GuildHeader />
 
         <Styles.ChannelsChildrenWrapper>
           <ChannelHighlighter />

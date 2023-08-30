@@ -14,6 +14,15 @@ const guildDocument = graphql(/* GraphQL */ `
     guild(id: $id) {
       id
       name
+      icon
+      memberCount
+      rulesChannelId
+      banner
+      splash
+      partnered
+      verified
+      tier
+
       settings {
         readonly
       }

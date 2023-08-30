@@ -1,3 +1,4 @@
+import { Header } from '@components/Header';
 import * as Styles from '@components/Header/styles';
 import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
 import { Icons } from '@components/Shared/Icons';
@@ -8,7 +9,7 @@ import { ThreadsButton } from '@components/Shared/Icons/Buttons/ThreadsButton';
 import * as SkeletonStyles from '@components/Shared/SkeletonLoaders';
 import { useStoreActions, useStoreState } from '@state';
 
-export const ChannelHeader = () => {
+export const TextChannelHeader = () => {
   const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
 
@@ -17,14 +18,13 @@ export const ChannelHeader = () => {
   };
 
   return (
-    <Styles.ChannelHeaderRoot>
+    <Header>
+      <Hamburger />
       <Styles.ChannelHeaderNameWrapper role="dialog" aria-modal="true">
-        <Hamburger />
-
+        <Icons icon="TextChannelHash" size="regular" color="channel" />
         <Styles.ChannelNameTopicWrapper>
           {currentChannel ? (
             <>
-              <Icons icon="TextChannelHash" size="regular" color="channel" />
               <Styles.ChannelHeaderName>{currentChannel.name}</Styles.ChannelHeaderName>
               <Styles.ChannelHeaderTopic onClick={openTopicModal}>
                 {currentChannel.topic}
@@ -46,6 +46,6 @@ export const ChannelHeader = () => {
 
       <PinButton />
       <MembersButton />
-    </Styles.ChannelHeaderRoot>
+    </Header>
   );
 };
