@@ -11,8 +11,6 @@ import {MessageType} from "@generated/globalTypes";
 
 interface ThreadButtonProps {
   messageType: MessageType;
-  messageId: string;
-  messageContent: string;
   hasReply: boolean;
   thread: Message_thread;
 }
