@@ -1,16 +1,15 @@
-/* eslint-disable no-underscore-dangle */
-
-import { Mention } from '@graphql/graphql';
-import { getAvatarId } from '@util/convertToDiscord/getAvatarId';
+import { UserFragment } from '@graphql/graphql';
 import { APIUser } from 'discord-api-types/v10';
 import { AuthUser } from 'types/user.types';
 
-export function convertUserToDiscord(user: AuthUser | Mention): APIUser {
+export function convertUserToDiscord(user: UserFragment | AuthUser): APIUser | null {
+  if (!user) return null;
+
   return {
-    global_name: 'name' in user ? user.name : user.username,
+    global_name: 'username' in user ? user.username : user.name,
     id: user.id,
-    username: 'name' in user ? user.name : user.username,
+    username: 'username' in user ? user.username : user.name,
     discriminator: '',
-    avatar: 'avatarUrl' in user ? getAvatarId(user.avatarUrl) : ''
+    avatar: user.avatarUrl
   };
 }
