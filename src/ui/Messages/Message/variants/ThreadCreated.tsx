@@ -25,8 +25,18 @@ interface ThreadCreatedProps {
 }
 
 function ThreadCreated(props: ThreadCreatedProps) {
-  const openThread = useCallback(() => generalStore.setActiveThread(props.thread),
-    [props.thread.id, props.thread.name, props.thread.locked]);
+  const openThread = useCallback(() => generalStore.setActiveThread({
+    id: props.messageReference.channelId,
+    name: props.thread?.name ?? props.messageContent,
+    locked: props.thread?.locked ?? false,
+    archivedAt: props.thread?.archivedAt,
+  }), [
+    props.messageReference.channelId,
+    props.thread?.name,
+    props.messageContent,
+    props.thread?.locked,
+    props.thread?.archivedAt
+  ]);
 
   if (props.thread === null)
     return (
@@ -56,8 +66,6 @@ function ThreadCreated(props: ThreadCreatedProps) {
       <LargeTimestamp timestamp={props.createdAt} />
       <ThreadButton
         thread={props.thread}
-        messageId={props.messageId}
-        messageContent={props.messageContent}
         messageType={MessageType.ThreadCreated}
         hasReply={false}
       />
