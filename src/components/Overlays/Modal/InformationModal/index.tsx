@@ -26,7 +26,7 @@ export const InformationModal = ({
       <>
         <Styles.ModalHeader>
           <Styles.ModalHeaderContent>
-            #{title}
+            {title}
             <CloseButton onClick={closeModal} />
           </Styles.ModalHeaderContent>
         </Styles.ModalHeader>

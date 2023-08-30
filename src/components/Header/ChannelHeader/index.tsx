@@ -1,6 +1,6 @@
 import * as Styles from '@components/Header/styles';
 import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
-import ModalProvider from '@components/Providers/ModalProvider';
+import { ModalContextState } from '@components/Providers/ModalProvider';
 import { Icons } from '@components/Shared/Icons';
 import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
 import { MembersButton } from '@components/Shared/Icons/Buttons/MembersButton';
@@ -8,12 +8,15 @@ import { PinButton } from '@components/Shared/Icons/Buttons/PinButton';
 import { ThreadsButton } from '@components/Shared/Icons/Buttons/ThreadsButton';
 import * as SkeletonStyles from '@components/Shared/SkeletonLoaders';
 import { useStoreState } from '@state';
+import { useContext } from 'react';
 
 export const ChannelHeader = () => {
   const currentChannel = useStoreState(state => state.guild.currentChannel);
+  const { show } = useContext(ModalContextState);
 
   const openTopicModal = () => {
-    ModalProvider.show('channel-topic-modal', { currentChannel });
+    show('channel-topic-modal');
+    // show('channel-topic-modal', { currentChannel });
   };
 
   return (

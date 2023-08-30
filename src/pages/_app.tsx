@@ -33,6 +33,7 @@ const globalStyles = globalCss({
       fontWeight: '700'
     }
   ],
+
   html: {
     padding: 0,
     margin: 0,
