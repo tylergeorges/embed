@@ -231,7 +231,10 @@ const stitches = createStitches({
       messageInputSize: '44px',
 
       /** height: 48px */
-      headerHeight: '48px'
+      headerHeight: '48px',
+
+      /** width: 420px */
+      modalWidth: '420px'
     },
 
     zIndices: {

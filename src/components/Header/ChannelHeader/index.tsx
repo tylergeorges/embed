@@ -1,4 +1,5 @@
 import * as Styles from '@components/Header/styles';
+import { PinnedMessagesPopout } from '@components/Overlays/Modal/Popout/PinnedMessagesPopout';
 import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
 import { Icons } from '@components/Shared/Icons';
 import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
@@ -44,7 +45,10 @@ export const ChannelHeader = () => {
         <ThreadsButton />
       </ThreadsPopout>
 
-      <PinButton />
+      <PinnedMessagesPopout>
+        <PinButton />
+      </PinnedMessagesPopout>
+
       <MembersButton />
     </Styles.ChannelHeaderRoot>
   );

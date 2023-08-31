@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   // @ts-ignore
   BaseMessageFragment,
@@ -12,6 +12,7 @@ import { convertMessageToDiscord } from '@util/convertMessageToDiscord';
 import { messagesQuery } from '@hooks/messagesQuery';
 import { useQuery } from '@apollo/client';
 import { produce } from 'structurajs';
+import { useStoreActions, useStoreState } from '@state';
 
 type MessageState = {
   groupedMessages: APIMessage[][];
@@ -27,6 +28,9 @@ interface UseMessagesProps {
 export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
   const [newMessageGroupLength] = useState(0);
 
+  const setPinnedMessages = useStoreActions(state => state.guild.setPinnedMessages);
+  const statePinnedMessages = useStoreState(state => state.guild.pinnedMessages);
+
   const {
     data,
     fetchMore: fetchHook,
@@ -39,9 +43,24 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
       threadId
     }
   });
+
   const isReady = data?.channelV2.id === channel && !loading;
 
   const messages = data?.channelV2?.messageBunch?.messages as Message[];
+  const pinnedMessages = data?.channelV2?.messageBunch?.pinnedMessages as Message[];
+
+  useEffect(() => {
+    if (
+      pinnedMessages &&
+      (!statePinnedMessages ||
+        JSON.stringify(statePinnedMessages) !== JSON.stringify(pinnedMessages))
+    ) {
+      console.log(pinnedMessages);
+
+      const convertedPinned = pinnedMessages.map(msg => convertMessageToDiscord(msg));
+      setPinnedMessages(convertedPinned);
+    }
+  }, [pinnedMessages, setPinnedMessages]);
 
   const fetchMore = useCallback(
     (before: string) => {
@@ -60,7 +79,7 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
           }
 
           return produce(prev, draft => {
-            if (!('messageBunch' in draft.channelV2)) return draft;
+            if (!draft.channelV2 || !('messageBunch' in draft.channelV2)) return draft;
 
             draft.channelV2.messageBunch.messages = [
               ...olderMessages,

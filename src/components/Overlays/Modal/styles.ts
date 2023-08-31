@@ -234,17 +234,13 @@ export const PopoutContainer = styled.withConfig({
   justifySelf: 'center',
   top: 48,
 
-  height: '20%',
-  minHeight: 400,
-  maxHeight: '80vh',
+  maxHeight: 'calc(100% - 48px)',
   maxWidth: 600,
-  width: '35vw',
+  width: theme.sizes.modalWidth,
 
   backgroundColor: theme.colors.backgroundSecondary,
 
   borderRadius: theme.radii.sm,
-
-  boxSizing: 'border-box',
 
   animation: 'none',
   transition: theme.transitions.defaultTransform,
@@ -262,13 +258,11 @@ export const PopoutContainer = styled.withConfig({
 
     isMobile: {
       true: {
-        width: '65vw',
-        minWidth: 260
+        // width: '65vw',
+        // minWidth: 260
       },
 
-      false: {
-        minWidth: 480
-      }
+      false: {}
     }
   }
 });
@@ -420,27 +414,33 @@ export const ThreadsPopoutContent = styled.withConfig({
   boxSizing: 'border-box'
 });
 
-export const ThreadsPopoutListItem = styled.withConfig({
+export const PopoutListItem = styled.withConfig({
   componentId: commonComponentId,
-  displayName: 'popout-threads_list_item'
+  displayName: 'popout-list_item'
 })('div', {
   backgroundColor: theme.colors.background,
   width: '100%',
 
   padding: theme.space.lg,
-  marginBottom: theme.space.lg,
-
   borderRadius: theme.radii.md,
-  borderWidth: '1px',
-  borderStyle: 'solid',
-  borderColor: 'transparent',
 
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'row',
-  cursor: 'pointer',
 
-  position: 'relative',
+  position: 'relative'
+});
+
+export const ThreadsPopoutListItem = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-threads_list_item'
+})(PopoutListItem, {
+  cursor: 'pointer',
+  borderWidth: '1px',
+  borderStyle: 'solid',
+  borderColor: 'transparent',
+  marginBottom: theme.space.lg,
+
   '&:hover': {
     borderColor: theme.colors.primaryOpacity10
   }
@@ -461,6 +461,63 @@ export const NoThreadsContent = styled.withConfig({
   width: '100%',
   height: '100%',
   userSelect: 'none'
+});
+
+export const PopoutChildrenWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-children_wrapper'
+})('div', {
+  height: '100%',
+  width: '100%',
+  padding: theme.space.lg
+});
+
+export const PinnedPopoutWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-pinned_wrapper'
+})('div', {
+  height: '100%',
+  width: '100%'
+});
+
+export const PinnedMesageListItem = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-pinned_list_item'
+})(PopoutListItem, {
+  cursor: 'auto'
+});
+
+export const NoPinnedContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-no_pinned_content'
+})('div', {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  flexDirection: 'column',
+  height: '100%',
+  width: '100%',
+  userSelect: 'none'
+});
+
+export const NoPinsIconWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-no_pins_icon_wrapper'
+})('div', {
+  width: '100%',
+  height: '100%',
+  userSelect: 'none'
+});
+
+export const NoPinnedMessage = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-no_pinned_message'
+})('div', {
+  fontSize: theme.fontSizes.lg,
+  fontWeight: theme.fontWeights.medium,
+  textAlign: 'center',
+  whiteSpace: 'pre',
+  marginTop: theme.space.lg
 });
 
 export const NoThreadsHeader = styled.withConfig({

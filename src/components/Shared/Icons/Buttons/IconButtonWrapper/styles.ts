@@ -17,6 +17,12 @@ export const IconRoot = styled.withConfig({
 
       large: {
         size: theme.sizes.iconSizeXl
+      },
+
+      auto: {
+        width: 'auto',
+        maxWidth: '30%',
+        height: '35%'
       }
     },
 

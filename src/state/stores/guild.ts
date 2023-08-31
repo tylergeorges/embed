@@ -2,6 +2,7 @@
 import { Action, Computed, action, computed } from 'easy-peasy';
 import { Category, Channel, GuildSettings } from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
+import { APIMessage } from 'discord-api-types/v10';
 
 export interface IGuild {
   id: string;
@@ -26,11 +27,13 @@ export interface GuildStore {
   categories?: Category[];
   currentThread: Channel | undefined;
   currentChannel: { name: string; topic: string } | undefined;
+  pinnedMessages?: APIMessage[];
 
   setData: Action<GuildStore, IGuild>;
   setSettings: Action<GuildStore, GuildSettings>;
   setChannels: Action<GuildStore, Channel[]>;
   setCurrentThread: Action<GuildStore, Channel>;
+  setPinnedMessages: Action<GuildStore, APIMessage[]>;
   setCurrentChannel: Action<GuildStore, string>;
 }
 
@@ -40,6 +43,7 @@ const guild: GuildStore = {
   settings: undefined,
   channels: undefined,
   currentThread: undefined,
+  pinnedMessages: undefined,
   currentChannel: undefined,
 
   guildChannels: computed(state => {
@@ -74,6 +78,10 @@ const guild: GuildStore = {
 
   setSettings: action((state, payload) => {
     state.settings = payload;
+  }),
+
+  setPinnedMessages: action((state, payload) => {
+    state.pinnedMessages = payload;
   }),
 
   setChannels: action((state, payload) => {

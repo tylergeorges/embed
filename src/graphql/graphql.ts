@@ -1222,6 +1222,11 @@ export type MessagesQueryQuery = {
               ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
             }
           >;
+          pinnedMessages: Array<
+            { __typename?: 'Message' } & {
+              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+            }
+          >;
         };
       }
     | {
@@ -1251,6 +1256,11 @@ export type MessagesQueryQuery = {
               ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
             }
           >;
+          pinnedMessages: Array<
+            { __typename?: 'Message' } & {
+              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+            }
+          >;
         };
       }
     | {
@@ -1259,6 +1269,11 @@ export type MessagesQueryQuery = {
         messageBunch: {
           __typename?: 'MessageBunch';
           messages: Array<
+            { __typename?: 'Message' } & {
+              ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+            }
+          >;
+          pinnedMessages: Array<
             { __typename?: 'Message' } & {
               ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
             }
@@ -2056,6 +2071,19 @@ export const MessagesQueryDocument = {
                                   }
                                 ]
                               }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pinnedMessages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                  }
+                                ]
+                              }
                             }
                           ]
                         }
@@ -2102,6 +2130,19 @@ export const MessagesQueryDocument = {
                                   }
                                 ]
                               }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pinnedMessages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                  }
+                                ]
+                              }
                             }
                           ]
                         }
@@ -2139,6 +2180,19 @@ export const MessagesQueryDocument = {
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'messages' },
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'FragmentSpread',
+                                    name: { kind: 'Name', value: 'BaseMessage' }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'pinnedMessages' },
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [

@@ -10,7 +10,7 @@ interface PopoutProps {
   children: ReactElement<any, any>;
   isOpen: boolean;
   hideModal: () => void;
-  TitleIcon: TitleIcon;
+  TitleIcon?: TitleIcon;
   title: string;
   popoutFor: HTMLDivElement | null;
 }
@@ -41,7 +41,7 @@ export const Popout = memo(
           <CloseButton onClick={hideModal} />
         </Styles.PopoutHeader>
 
-        {children}
+        <Styles.PopoutChildrenWrapper>{children}</Styles.PopoutChildrenWrapper>
       </Styles.PopoutContainer>
     );
   }

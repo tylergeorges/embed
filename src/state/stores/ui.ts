@@ -18,6 +18,7 @@ export interface UIStore {
   isChannelsListOpen: boolean;
 
   showTopicModal: boolean;
+  showPinsModal: boolean;
   showThreadsModal: boolean;
 
   showContextMenu: boolean;
@@ -36,6 +37,7 @@ export interface UIStore {
   setShowTopicModal: Action<UIStore, boolean>;
   setShowContextMenu: Action<UIStore, boolean>;
   setShowThreadsModal: Action<UIStore, boolean>;
+  setShowPinsModal: Action<UIStore, boolean>;
 
   setContextMenuData: Action<UIStore, ContextMenuData>;
 }
@@ -48,6 +50,7 @@ const ui: UIStore = {
   isMembersListOpen: true,
 
   showTopicModal: false,
+  showPinsModal: false,
   showThreadsModal: false,
   contextMenuData: { xPos: 0, yPos: 0 },
   showContextMenu: false,
@@ -77,6 +80,7 @@ const ui: UIStore = {
       state.isDomThreadsPanelOpen = false;
     }
   }),
+
   setIsTransitionedThreadsPanelOpen: action((state, payload) => {
     if (payload) {
       state.isTransitionedThreadsPanelOpen = true;
@@ -87,6 +91,10 @@ const ui: UIStore = {
 
   setShowTopicModal: action((state, payload) => {
     state.showTopicModal = payload;
+  }),
+
+  setShowPinsModal: action((state, payload) => {
+    state.showPinsModal = payload;
   }),
 
   setShowThreadsModal: action((state, payload) => {
