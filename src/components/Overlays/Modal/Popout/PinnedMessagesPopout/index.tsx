@@ -32,7 +32,7 @@ export const PinnedMessagesPopout = ({ children }: PinnedMessagesPopoutProps) =>
         popoutFor={childrenRef.current}
       >
         <Styles.PinnedPopoutWrapper>
-          {!pinnedMessages ? (
+          {pinnedMessages.length === 0 ? (
             <NoPins />
           ) : (
             pinnedMessages.map(message => (
