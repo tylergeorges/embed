@@ -6,11 +6,8 @@ interface PinnedMessageProps {
   message: APIMessage;
 }
 
-export const PinnedMessage = ({ message }: PinnedMessageProps) => {
-  console.log(message);
-  return (
-    <Styles.PinnedMesageListItem>
-      <Message message={message} isFirstMessage thread={!!message.thread} />
-    </Styles.PinnedMesageListItem>
-  );
-};
+export const PinnedMessage = ({ message }: PinnedMessageProps) => (
+  <Styles.PinnedMesageListItem>
+    <Message message={message} isFirstMessage thread={!!message.thread} />
+  </Styles.PinnedMesageListItem>
+);

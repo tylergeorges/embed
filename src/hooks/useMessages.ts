@@ -50,17 +50,15 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
   const pinnedMessages = data?.channelV2?.messageBunch?.pinnedMessages as Message[];
 
   useEffect(() => {
+    // Check if pins are already set
     if (
       pinnedMessages &&
-      (!statePinnedMessages ||
-        JSON.stringify(statePinnedMessages) !== JSON.stringify(pinnedMessages))
+      (statePinnedMessages.length === 0 || statePinnedMessages[0].channel_id !== channel)
     ) {
-      console.log(pinnedMessages);
-
       const convertedPinned = pinnedMessages.map(msg => convertMessageToDiscord(msg));
       setPinnedMessages(convertedPinned);
     }
-  }, [pinnedMessages, setPinnedMessages]);
+  }, [pinnedMessages, setPinnedMessages, channel, statePinnedMessages]);
 
   const fetchMore = useCallback(
     (before: string) => {

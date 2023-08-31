@@ -27,7 +27,7 @@ export interface GuildStore {
   categories?: Category[];
   currentThread: Channel | undefined;
   currentChannel: { name: string; topic: string } | undefined;
-  pinnedMessages?: APIMessage[];
+  pinnedMessages: APIMessage[];
 
   setData: Action<GuildStore, IGuild>;
   setSettings: Action<GuildStore, GuildSettings>;
@@ -43,7 +43,7 @@ const guild: GuildStore = {
   settings: undefined,
   channels: undefined,
   currentThread: undefined,
-  pinnedMessages: undefined,
+  pinnedMessages: [],
   currentChannel: undefined,
 
   guildChannels: computed(state => {

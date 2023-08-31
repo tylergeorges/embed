@@ -213,7 +213,7 @@ export const PopoutHeader = styled.withConfig({
 
   height: 48,
 
-  paddingLeft: theme.space.lg,
+  padding: theme.space.lg,
 
   borderTopRightRadius: theme.radii.sm,
   borderTopLeftRadius: theme.radii.sm,
@@ -232,11 +232,11 @@ export const PopoutContainer = styled.withConfig({
   textAlign: 'left',
   alignSelf: 'center',
   justifySelf: 'center',
-  top: 48,
+  top: theme.sizes.headerHeight,
 
-  maxHeight: 'calc(100% - 48px)',
-  maxWidth: 600,
-  width: theme.sizes.modalWidth,
+  maxHeight: `calc(100% - ${theme.sizes.headerHeight})`,
+  maxWidth: 'min-content',
+  minWidth: theme.sizes.modalWidth,
 
   backgroundColor: theme.colors.backgroundSecondary,
 
@@ -258,8 +258,10 @@ export const PopoutContainer = styled.withConfig({
 
     isMobile: {
       true: {
-        // width: '65vw',
-        // minWidth: 260
+        width: theme.sizes.modalWidth,
+        maxWidth: '100%',
+
+        left: 0
       },
 
       false: {}
@@ -422,13 +424,28 @@ export const PopoutListItem = styled.withConfig({
   width: '100%',
 
   padding: theme.space.lg,
-  borderRadius: theme.radii.md,
+  borderRadius: theme.radii.sm,
 
   display: 'flex',
   alignItems: 'center',
   flexDirection: 'row',
 
-  position: 'relative'
+  marginBottom: theme.space.lg,
+
+  borderWidth: '1px',
+  borderStyle: 'solid'
+});
+
+export const PinnedMesageListItem = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-pinned_list_item'
+})(PopoutListItem, {
+  cursor: 'auto',
+  display: 'block',
+  height: 'fit-content',
+  wordBreak: 'break-word',
+  padding: theme.space.sm,
+  borderColor: theme.colors.backgroundTertiary
 });
 
 export const ThreadsPopoutListItem = styled.withConfig({
@@ -436,10 +453,8 @@ export const ThreadsPopoutListItem = styled.withConfig({
   displayName: 'popout-threads_list_item'
 })(PopoutListItem, {
   cursor: 'pointer',
-  borderWidth: '1px',
-  borderStyle: 'solid',
+
   borderColor: 'transparent',
-  marginBottom: theme.space.lg,
 
   '&:hover': {
     borderColor: theme.colors.primaryOpacity10
@@ -469,7 +484,9 @@ export const PopoutChildrenWrapper = styled.withConfig({
 })('div', {
   height: '100%',
   width: '100%',
-  padding: theme.space.lg
+  padding: theme.space.lg,
+  overflowY: 'auto',
+  overflowX: 'hidden'
 });
 
 export const PinnedPopoutWrapper = styled.withConfig({
@@ -478,13 +495,6 @@ export const PinnedPopoutWrapper = styled.withConfig({
 })('div', {
   height: '100%',
   width: '100%'
-});
-
-export const PinnedMesageListItem = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'popout-pinned_list_item'
-})(PopoutListItem, {
-  cursor: 'auto'
 });
 
 export const NoPinnedContent = styled.withConfig({
