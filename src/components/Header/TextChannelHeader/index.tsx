@@ -26,7 +26,6 @@ export const TextChannelHeader = ({ channelName, topic }: ChannelHeaderProps) =>
     <Header>
       <Hamburger />
       <Styles.ChannelHeaderNameWrapper role="dialog" aria-modal="true">
-        <Icons icon="TextChannelHash" size="regular" color="channel" />
         <Styles.ChannelNameTopicWrapper>
           {currentChannel || channelName ? (
             <>
@@ -50,7 +49,7 @@ export const TextChannelHeader = ({ channelName, topic }: ChannelHeaderProps) =>
         </Styles.ChannelNameTopicWrapper>
       </Styles.ChannelHeaderNameWrapper>
 
-      {!topic && (
+      {!topic && !channelName && (
         <>
           <ThreadsPopout>
             <ThreadsButton />
