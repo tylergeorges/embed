@@ -27,8 +27,6 @@ type IconNames = keyof typeof iconData;
 export interface IconProps extends React.ComponentProps<typeof IconRoot> {
   icon: IconNames;
 
-  type?: 'headerIcon';
-
   iconContent?: string | null;
 
   customViewbox?: string;

@@ -14,9 +14,12 @@ const MenuItem = ({ itemLabel, onClick }: MenuItemProps) => (
 
 export const ContextMenu = () => {
   const { t } = useTranslation();
+  const showContextMenu = useStoreState(state => state.ui.showContextMenu);
 
   const contextMenuData = useStoreState(state => state.ui.contextMenuData);
   const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
+
+  if (!showContextMenu) return null;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(contextMenuData.channelLink ?? '').catch(err => {

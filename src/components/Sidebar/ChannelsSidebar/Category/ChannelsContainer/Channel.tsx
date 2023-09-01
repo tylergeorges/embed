@@ -23,6 +23,8 @@ interface ChannelNameProps {
 /** Component that handles rendering of each channel name. */
 export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
   ({ channel, isActive, isCategoryOpen, isThread, channelHasActiveThread }, ref) => {
+    const { channelId, guildId, router } = useAppRouter();
+
     const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
     const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
     const setContextMenuData = useStoreActions(state => state.ui.setContextMenuData);
@@ -47,8 +49,6 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
       }
     }, [refetchGuild, currentChannelYPos, ref, setInitChannelYPos, setCurrentChannelYPos]);
 
-    const { channelId, guildId } = useAppRouter();
-
     useEffect(() => {
       if (isActive && ref) {
         const channelRef = ref as React.MutableRefObject<HTMLAnchorElement>;
@@ -62,6 +62,8 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     const handleChannelClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       setCurrentChannelYPos(e.currentTarget.offsetTop);
       setInitChannelYPos(e.currentTarget.offsetTop);
+
+      router.push(`/channels/${guildId}/${channel.id}`);
     };
 
     const handleContextMenuClick = (e: React.MouseEvent) => {
@@ -78,8 +80,8 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
       <Styles.ChannelNameWrapper
         key={channel.id}
         draggable={false}
-        onClick={handleChannelClick}
         isActive={isActive}
+        onClick={handleChannelClick}
         isCategoryOpen={isCategoryOpen}
         isThread={isThread}
         onContextMenu={handleContextMenuClick}

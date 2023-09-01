@@ -32,12 +32,6 @@ export const IconRoot = styled.withConfig({
       }
     },
 
-    type: {
-      headerIcon: {
-        marginX: theme.space.sm
-      }
-    },
-
     color: {
       channel: {
         color: theme.colors.channelsIcon
@@ -66,12 +60,18 @@ export const IconButtonRoot = styled.withConfig({
   cursor: 'pointer',
   size: theme.sizes.iconSizeMd,
 
-  marginX: theme.space.sm,
-
   background: 'transparent',
   outline: 'none',
   border: 'none',
-  whiteSpace: 'nowrap'
+  whiteSpace: 'nowrap',
+
+  variants: {
+    buttonType: {
+      headerIcon: {
+        marginX: theme.space.sm
+      }
+    }
+  }
 });
 
 export const EmojisIconRoot = styled.withConfig({

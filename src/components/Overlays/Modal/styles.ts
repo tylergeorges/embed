@@ -159,9 +159,6 @@ export const ModalContainer = styled.withConfig({
   flexDirection: 'column',
   justifyContent: 'flex-start',
   textAlign: 'left',
-  // ignoring this error because if we dont access the value property it outputs incorrect values.
-  // @ts-expect-error
-  paddingX: theme.space.xxl.value,
   paddingY: theme.space.lg,
 
   borderRadius: 4,
@@ -202,9 +199,9 @@ export const ModalHeader = styled.withConfig({
   width: '100%',
   display: 'flex',
   alignItems: 'center',
+  paddingX: theme.space.lg,
   position: 'relative',
-  justifyContent: 'center',
-  flexDirection: 'column'
+  paddingRight: theme.space.sm
 });
 
 export const ModalHeaderContent = styled.withConfig({
@@ -212,13 +209,13 @@ export const ModalHeaderContent = styled.withConfig({
   displayName: 'modal-header_content'
 })(HeaderMainContentRoot, {
   display: 'flex',
-  flexDirection: 'column',
-
+  justifyContent: 'space-between',
   userSelect: 'none',
 
-  cursor: 'default',
-  marginY: theme.space.md,
+  fontSize: theme.fontSizes.xl,
+  width: '100%',
 
+  cursor: 'default',
   variants: {
     titleSize: {
       sm: {
@@ -244,11 +241,10 @@ export const ModalHeaderContent = styled.withConfig({
 
     titleAlignment: {
       left: {
-        justifyContent: 'flex-start'
+        textAlign: 'left'
       },
 
       center: {
-        justifyContent: 'center',
         textAlign: 'center'
       }
     }
@@ -277,12 +273,13 @@ export const ModalCloseWrapper = styled.withConfig({
   position: 'absolute',
   right: 0,
   top: 0,
-  display: 'flex',
+  display: 'block',
   width: theme.sizes.iconSizeLg,
-  height: 30,
+  // height: 30,
   alignItems: 'center',
   justifyContent: 'center',
-  margin: theme.space.xxs,
+  alignSelf: 'center',
+  margin: theme.space.sm,
   cursor: 'pointer'
 });
 
@@ -294,10 +291,9 @@ export const PopoutHeader = styled.withConfig({
   flexDirection: 'row',
   alignItems: 'center',
 
-  width: '100%',
   height: 48,
 
-  padding: 0,
+  padding: theme.space.lg,
 
   borderTopRightRadius: theme.radii.sm,
   borderTopLeftRadius: theme.radii.sm,
@@ -380,7 +376,9 @@ export const PopoutTitle = styled.withConfig({
 })('span', {
   background: 'none',
   padding: 0,
-  marginLeft: theme.space.sm
+  marginLeft: theme.space.sm,
+
+  fontWeight: theme.fontWeights.semibold
 });
 
 export const PopoutContentWrapper = styled.withConfig({
@@ -410,13 +408,13 @@ export const ChannelTopicModalContent = styled.withConfig({
   flexGrow: 1,
   flexShrink: 1,
 
-  paddingLeft: theme.space.xl,
-  paddingRight: theme.space.lg,
+  paddingX: theme.space.lg,
   paddingBottom: theme.space.xxl,
 
   textRendering: 'optimizeLegibility',
   whiteSpace: 'pre-wrap',
-  overflowWrap: 'break-word'
+  overflowWrap: 'break-word',
+  fontWeight: theme.fontWeights.regular
 });
 
 export const NoThreadsIconOuter = styled.withConfig({

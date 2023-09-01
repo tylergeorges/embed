@@ -5,14 +5,15 @@ type ModalHeaderContentProps = React.ComponentProps<typeof Styles.ModalHeaderCon
 
 type ModalHeaderContainerProps = React.ComponentProps<typeof Styles.ModalContainer>;
 
-interface ModalProps extends ModalHeaderContentProps, ModalHeaderContainerProps {
-  children: React.ReactNode;
-  isOpen: boolean;
-  title: string;
-  disableBackdrop?: boolean;
-  subheader?: string;
-  hideModal: () => void;
-}
+type ModalProps = ModalHeaderContentProps &
+  ModalHeaderContainerProps & {
+    children: React.ReactNode;
+    isOpen: boolean;
+    title: string;
+    disableBackdrop?: boolean;
+    subheader?: string;
+    hideModal: () => void;
+  };
 
 export const Modal = ({
   children,
@@ -29,16 +30,15 @@ export const Modal = ({
     {!disableBackdrop && <Styles.Backdrop type="modal" isOpen={isOpen} onClick={hideModal} />}
 
     <Styles.ModalContainerWrapper isOpen={isOpen} role="dialog" aria-label={title}>
-      <Styles.ModalContainer isOpen={isOpen} containerSize={containerSize}>
-        <Styles.ModalCloseWrapper>
-          <CloseButton onClick={hideModal} />
-        </Styles.ModalCloseWrapper>
+      <Styles.ModalContainer isOpen={isOpen} containerSize={containerSize ?? 'sm'}>
         <Styles.ModalHeader>
           <Styles.ModalHeaderContent
             titleSize={titleSize ?? 'lg'}
             titleAlignment={titleAlignment ?? 'left'}
           >
             {title}
+
+            <CloseButton onClick={hideModal} />
           </Styles.ModalHeaderContent>
           {subheader && <Styles.ModalSubheaderContent>{subheader}</Styles.ModalSubheaderContent>}
         </Styles.ModalHeader>

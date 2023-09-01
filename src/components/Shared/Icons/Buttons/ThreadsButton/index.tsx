@@ -33,6 +33,7 @@ export const ThreadsButton = () => {
       isActive={showThreadsModal}
       iconContent={numOfThreads}
       onClick={openThreadsModal}
+      buttonType="headerIcon"
     />
   );
 };

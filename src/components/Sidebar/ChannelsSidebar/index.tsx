@@ -7,6 +7,7 @@ import { ChannelsFooter } from '@components/Sidebar/ChannelsSidebar/ChannelsFoot
 import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useRef } from 'react';
+
 import * as Styles from '../styles';
 import { Category } from './Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
@@ -53,7 +54,7 @@ export const ChannelsSidebar = () => {
         </Styles.GuildHeaderWrapper>
 
         <Styles.ChannelsChildrenWrapper>
-          <ChannelHighlighter />
+          {channelId && <ChannelHighlighter />}
 
           {channels
             ?.filter(channel => channel.category === null)
