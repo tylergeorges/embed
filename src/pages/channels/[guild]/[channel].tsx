@@ -1,16 +1,12 @@
 /* eslint-disable no-alert */
 import React, { memo } from 'react';
-import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
 import { useStoreState } from '@state';
-import { TextChannelContainer } from '@components/Core/TextChannelContainer';
 import { MessageRendererProvider } from '@widgetbot/message-renderer';
 import { styled } from '@stitches';
 import { APIChannel } from 'discord-api-types/v10';
-import * as Styles from '@components/Core/styles';
 import { svgUrls } from '@svg-assets';
-import { useContextMenu } from '@hooks/useContextMenu';
 import dynamic from 'next/dynamic';
-import GuildProvider from '@components/Providers/GuildProvider';
+import { TextChannelContainer } from '@components/Core/TextChannelContainer';
 
 const MessageRendererRoot = styled('div', {
   height: '100%',
@@ -28,61 +24,46 @@ const ThreadPanel = dynamic(() =>
   import('@components/Sidebar/ThreadPanel').then(mod => mod.ThreadPanel)
 );
 
-const ContextMenu = dynamic(() =>
-  import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
-);
-
 function GuildChannel() {
-  const { disableBrowserMenu } = useContextMenu();
-
   const isDomThreadsPanelOpen = useStoreState(state => state.ui.isDomThreadsPanelOpen);
 
-  const showContextMenu = useStoreState(state => state.ui.showContextMenu);
   const showTopicModal = useStoreState(state => state.ui.showTopicModal);
 
   const guildChannels = useStoreState(state => state.guild.guildChannels);
 
   return (
-    <GuildProvider>
-      <MessageRendererProvider
-        messageButtons={() => []}
-        currentUser={() => null}
-        // @ts-ignore
-        resolveChannel={id => (guildChannels[id] as APIChannel) ?? null}
-        resolveGuild={() => null}
-        resolveMember={() => null}
-        resolveRole={() => null}
-        resolveUser={() => null}
-        svgUrls={svgUrls}
-        seeThreadOnClick={(messageId, thread) =>
-          alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
-        }
-        userMentionOnClick={user =>
-          alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
-        }
-        roleMentionOnClick={role => alert(`Role "${role.name}" mention clicked!`)}
-        channelMentionOnClick={channel => alert(`Channel "${channel.name}" mention clicked!`)}
-        messageComponentButtonOnClick={(message, customId) => {
-          alert(`Button by custom id "${customId}" pressed on message ${message.id}!`);
-        }}
-      >
-        {({ themeClass }) => (
-          <MessageRendererRoot className={themeClass}>
-            <Styles.Main onContextMenu={disableBrowserMenu}>
-              {showContextMenu && <ContextMenu />}
+    <MessageRendererProvider
+      messageButtons={() => []}
+      currentUser={() => null}
+      // @ts-ignore
+      resolveChannel={id => (guildChannels[id] as APIChannel) ?? null}
+      resolveGuild={() => null}
+      resolveMember={() => null}
+      resolveRole={() => null}
+      resolveUser={() => null}
+      svgUrls={svgUrls}
+      seeThreadOnClick={(messageId, thread) =>
+        alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
+      }
+      userMentionOnClick={user =>
+        alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
+      }
+      roleMentionOnClick={role => alert(`Role "${role.name}" mention clicked!`)}
+      channelMentionOnClick={channel => alert(`Channel "${channel.name}" mention clicked!`)}
+      messageComponentButtonOnClick={(message, customId) => {
+        alert(`Button by custom id "${customId}" pressed on message ${message.id}!`);
+      }}
+    >
+      {({ themeClass }) => (
+        <MessageRendererRoot className={themeClass}>
+          {showTopicModal && <ChannelTopicModal />}
 
-              <Styles.InnerMain>
-                {showTopicModal && <ChannelTopicModal />}
-                <ChannelsSidebar />
+          <TextChannelContainer />
 
-                <TextChannelContainer />
-              </Styles.InnerMain>
-              {isDomThreadsPanelOpen && <ThreadPanel />}
-            </Styles.Main>
-          </MessageRendererRoot>
-        )}
-      </MessageRendererProvider>
-    </GuildProvider>
+          {isDomThreadsPanelOpen && <ThreadPanel />}
+        </MessageRendererRoot>
+      )}
+    </MessageRendererProvider>
   );
 }
 
