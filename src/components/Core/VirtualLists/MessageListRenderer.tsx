@@ -19,34 +19,23 @@ interface MessagesListProps {
 }
 
 export const MessageListRenderer = forwardRef<VirtuosoHandle, MessagesListProps>(
-  ({ messages, firstItemIndex, handleBottomStateChanged, handleTopStateChanged }, ref) => {
-    const followOutput = (isAtBottom: boolean) => {
-      if (isAtBottom) {
-        return true; // can be 'auto' or false to avoid scrolling
-      }
-
-      return false;
-    };
-
-    return (
-      <Styles.VirtualListContainer>
-        <Virtuoso
-          atTopStateChange={handleTopStateChanged}
-          data={messages}
-          firstItemIndex={firstItemIndex}
-          atBottomStateChange={handleBottomStateChanged}
-          atBottomThreshold={20}
-          itemContent={Message}
-          defaultItemHeight={50}
-          overscan={100}
-          alignToBottom
-          components={listComponents}
-          followOutput={followOutput}
-          ref={ref}
-        />
-      </Styles.VirtualListContainer>
-    );
-  }
+  ({ messages, firstItemIndex, handleBottomStateChanged, handleTopStateChanged }, ref) => (
+    <Styles.VirtualListContainer>
+      <Virtuoso
+        atTopStateChange={handleTopStateChanged}
+        data={messages}
+        firstItemIndex={firstItemIndex}
+        atBottomStateChange={handleBottomStateChanged}
+        atBottomThreshold={17}
+        itemContent={Message}
+        defaultItemHeight={50}
+        overscan={200}
+        components={listComponents}
+        followOutput={isAtBottom => (isAtBottom ? 'auto' : false)}
+        ref={ref}
+      />
+    </Styles.VirtualListContainer>
+  )
 );
 
 MessageListRenderer.displayName = 'MessageListRenderer';

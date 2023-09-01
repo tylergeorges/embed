@@ -34,9 +34,7 @@ export const VirtualListContainer = styled.withConfig({
 })('div', {
   position: 'relative',
   width: '100%',
-  height: '100%',
-
-  paddingBottom: theme.space.lg
+  height: '100%'
 });
 
 export const VirtualListMessageWrapper = styled.withConfig({
@@ -45,5 +43,5 @@ export const VirtualListMessageWrapper = styled.withConfig({
 })('div', {
   textAlign: 'left',
   // ! Margin causes rendering issues
-  paddingTop: '1.0625rem'
+  paddingBottom: '1.0625rem'
 });

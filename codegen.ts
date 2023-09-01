@@ -4,7 +4,7 @@ const config: CodegenConfig = {
   overwrite: true,
 
   schema: {
-    'https://s-e.widgetbot.io/api/graphql': {
+    'https://s-staging.widgetbot.io/api/graphql': {
       headers: {
         'User-Agent': 'WidgetBot Embed GraphQL Codegen'
       }
