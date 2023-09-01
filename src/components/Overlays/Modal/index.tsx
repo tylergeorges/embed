@@ -1,19 +1,14 @@
 import * as Styles from '@components/Overlays/Modal/styles';
-import { CloseButton } from '@icons/Buttons/CloseButton';
-
-type ModalHeaderContentProps = React.ComponentProps<typeof Styles.ModalHeaderContent>;
 
 type ModalHeaderContainerProps = React.ComponentProps<typeof Styles.ModalContainer>;
 
-type ModalProps = ModalHeaderContentProps &
-  ModalHeaderContainerProps & {
-    children: React.ReactNode;
-    isOpen: boolean;
-    title: string;
-    disableBackdrop?: boolean;
-    subheader?: string;
-    hideModal: () => void;
-  };
+type ModalProps = ModalHeaderContainerProps & {
+  children: React.ReactNode;
+  isOpen: boolean;
+  title: string;
+  disableBackdrop?: boolean;
+  hideModal: () => void;
+};
 
 export const Modal = ({
   children,
@@ -21,28 +16,13 @@ export const Modal = ({
   title,
   disableBackdrop,
   hideModal,
-  titleAlignment,
-  titleSize,
-  containerSize,
-  subheader
+  containerSize
 }: ModalProps) => (
   <>
     {!disableBackdrop && <Styles.Backdrop type="modal" isOpen={isOpen} onClick={hideModal} />}
 
     <Styles.ModalContainerWrapper isOpen={isOpen} role="dialog" aria-label={title}>
       <Styles.ModalContainer isOpen={isOpen} containerSize={containerSize ?? 'sm'}>
-        <Styles.ModalHeader>
-          <Styles.ModalHeaderContent
-            titleSize={titleSize ?? 'lg'}
-            titleAlignment={titleAlignment ?? 'left'}
-          >
-            {title}
-
-            <CloseButton onClick={hideModal} />
-          </Styles.ModalHeaderContent>
-          {subheader && <Styles.ModalSubheaderContent>{subheader}</Styles.ModalSubheaderContent>}
-        </Styles.ModalHeader>
-
         {children}
       </Styles.ModalContainer>
     </Styles.ModalContainerWrapper>

@@ -6,6 +6,8 @@ import * as Styles from '@components/Core/styles';
 import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
 import dynamic from 'next/dynamic';
 import { useContextMenu } from '@hooks/useContextMenu';
+import { GuestFormModal } from '@components/Overlays/Modal/GuestFormModal';
+// import { GuestFormModal } from '@components/Overlays/Modal/GuestFormModal';
 
 interface DataProviderProps {
   children: React.ReactNode;
@@ -45,7 +47,7 @@ export default function DataProvider({ children }: DataProviderProps) {
             <ChannelsSidebar />
 
             <ContextMenu />
-
+            <GuestFormModal />
             {children}
           </Styles.InnerMain>
         </Styles.Main>

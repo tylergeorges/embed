@@ -20,6 +20,7 @@ export const ChannelsFooterLoginButton = () => {
     if (!inProgressRef.current) {
       inProgressRef.current = true;
 
+      console.log(isGuestMode);
       if (isGuestMode) {
         setShowGuestFormModal(true);
       } else {

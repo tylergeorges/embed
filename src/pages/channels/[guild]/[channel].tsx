@@ -3,7 +3,6 @@ import React, { memo } from 'react';
 import { useStoreState } from '@state';
 import { TextChannelContainer } from '@components/Core/TextChannelContainer';
 import dynamic from 'next/dynamic';
-import { GuestFormModal } from '@components/Overlays/Modal/GuestFormModal';
 
 // dynamic imports since they are conditionally rendered, helps with bundle size
 const ChannelTopicModal = dynamic(() =>
@@ -24,7 +23,6 @@ function GuildChannel() {
   return (
     <>
       {showTopicModal && <ChannelTopicModal />}
-      <GuestFormModal />
 
       <TextChannelContainer />
       {isDomThreadsPanelOpen && <ThreadPanel />}
