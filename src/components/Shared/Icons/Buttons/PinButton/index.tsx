@@ -10,6 +10,7 @@ export const PinButton = () => {
       tooltipLabel={t('pinnedmessages.tooltip') as string}
       tooltipPlacement="bottom"
       onClick={e => e.preventDefault()}
+      buttonType="headerIcon"
     />
   );
 };

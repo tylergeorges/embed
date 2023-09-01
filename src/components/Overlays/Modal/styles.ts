@@ -159,16 +159,12 @@ export const ModalContainer = styled.withConfig({
   flexDirection: 'column',
   justifyContent: 'flex-start',
   textAlign: 'left',
-  // ignoring this error because if we dont access the value property it outputs incorrect values.
-  // @ts-expect-error
-  paddingX: theme.space.xxl.value,
-  paddingY: theme.space.lg,
+  padding: theme.space.lg,
 
   borderRadius: 4,
 
   pointerEvents: 'all',
-  backgroundColor: theme.colors.background,
-  position: 'relative',
+  backgroundOverlay: theme.colors.background,
   zIndex: theme.zIndices.negative,
 
   variants: {
@@ -185,11 +181,11 @@ export const ModalContainer = styled.withConfig({
 
     containerSize: {
       sm: {
-        minWidth: 310
+        width: 310
       },
 
       md: {
-        width: 490
+        width: 420
       }
     }
   }
@@ -203,8 +199,24 @@ export const ModalHeader = styled.withConfig({
   display: 'flex',
   alignItems: 'center',
   position: 'relative',
-  justifyContent: 'center',
-  flexDirection: 'column'
+
+  variants: {
+    direction: {
+      columm: {
+        flexDirection: 'column'
+      },
+
+      row: {
+        flexDirection: 'row'
+      }
+    },
+
+    justify: {
+      center: {
+        justifyContent: 'center'
+      }
+    }
+  }
 });
 
 export const ModalHeaderContent = styled.withConfig({
@@ -212,12 +224,11 @@ export const ModalHeaderContent = styled.withConfig({
   displayName: 'modal-header_content'
 })(HeaderMainContentRoot, {
   display: 'flex',
-  flexDirection: 'column',
 
   userSelect: 'none',
-
+  width: '100%',
   cursor: 'default',
-  marginY: theme.space.md,
+  justifyContent: 'space-between',
 
   variants: {
     titleSize: {
@@ -244,12 +255,21 @@ export const ModalHeaderContent = styled.withConfig({
 
     titleAlignment: {
       left: {
+        textAlign: 'left'
+      },
+
+      center: {
+        textAlign: 'center'
+      }
+    },
+
+    justify: {
+      left: {
         justifyContent: 'flex-start'
       },
 
       center: {
-        justifyContent: 'center',
-        textAlign: 'center'
+        justifyContent: 'center'
       }
     }
   }
@@ -263,7 +283,6 @@ export const ModalSubheaderContent = styled.withConfig({
 
   fontSize: theme.fontSizes.lg,
   color: theme.colors.textMuted,
-  margin: 0,
   fontWeight: '$medium',
 
   cursor: 'default',
@@ -294,10 +313,9 @@ export const PopoutHeader = styled.withConfig({
   flexDirection: 'row',
   alignItems: 'center',
 
-  width: '100%',
   height: 48,
 
-  padding: 0,
+  paddingLeft: theme.space.lg,
 
   borderTopRightRadius: theme.radii.sm,
   borderTopLeftRadius: theme.radii.sm,
@@ -380,7 +398,9 @@ export const PopoutTitle = styled.withConfig({
 })('span', {
   background: 'none',
   padding: 0,
-  marginLeft: theme.space.sm
+  marginLeft: theme.space.sm,
+
+  fontWeight: theme.fontWeights.semibold
 });
 
 export const PopoutContentWrapper = styled.withConfig({
@@ -399,24 +419,22 @@ export const PopoutWrapper = styled.withConfig({
 export const ChannelTopicModalContent = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-channel_topic_content'
-})(HeaderMainContentRoot, {
+})('div', {
   fontSize: theme.fontSizes.lg,
   lineHeight: '20px',
 
-  color: theme.colors.primaryOpacity70,
+  color: theme.colors.textMuted,
 
   height: '100%',
-
   flexGrow: 1,
   flexShrink: 1,
-
-  paddingLeft: theme.space.xl,
-  paddingRight: theme.space.lg,
-  paddingBottom: theme.space.xxl,
+  paddingY: theme.space.lg,
 
   textRendering: 'optimizeLegibility',
   whiteSpace: 'pre-wrap',
-  overflowWrap: 'break-word'
+  overflowWrap: 'break-word',
+
+  fontWeight: theme.fontWeights.medium
 });
 
 export const NoThreadsIconOuter = styled.withConfig({

@@ -12,6 +12,7 @@ export interface HeaderProps {
    */
   shadowEnabled?: boolean;
 
+  topic?: string;
   /** If the header we are going to render is a text channel name, doing this
    *  to hide the hash for non channels.
    */
@@ -20,11 +21,11 @@ export interface HeaderProps {
   children?: ReactNode;
 }
 
-export const Header = ({ name, shadowEnabled, isChannelHeader, children }: HeaderProps) => (
+export const Header = ({ name, shadowEnabled, isChannelHeader, topic, children }: HeaderProps) => (
   <Styles.HeaderRoot shadowEnabled={shadowEnabled} draggable={false}>
     {children}
     {isChannelHeader ? (
-      <ChannelHeader />
+      <ChannelHeader channelName={name} topic={topic} />
     ) : (
       <Styles.GuildHeader>
         <Styles.GuildHeaderName>{name}</Styles.GuildHeaderName>

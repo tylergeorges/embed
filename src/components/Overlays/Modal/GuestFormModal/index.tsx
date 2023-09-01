@@ -5,6 +5,8 @@ import { useAuthApi } from '@hooks/useAuthAPI';
 import { useStoreActions, useStoreState } from '@state';
 import { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { CloseButton } from '@icons/Buttons/CloseButton';
+import * as ModalStyles from '../styles';
 
 const GuestFormDiscordAuth = () => {
   const { discordSignIn } = useAuthApi();
@@ -41,18 +43,27 @@ export const GuestFormModal = () => {
     isFetching.current = false;
   }, [setShowGuestFormModal, inputRef]);
 
-  if (user) return null;
+  if (user || !showGuestFormModal) return null;
 
   return (
     <Modal
       isOpen={showGuestFormModal}
-      title={t('auth.welcome')}
-      subheader={t('auth.pickname') as string}
       hideModal={hideForm}
-      titleSize="xxl"
-      titleAlignment="center"
       containerSize="sm"
+      title={t('auth.welcome')}
     >
+      <ModalStyles.ModalHeader direction="columm">
+        <ModalStyles.ModalHeaderContent titleSize="xxl" titleAlignment="center" justify="center">
+          {t('auth.welcome')}
+
+          <ModalStyles.ModalCloseWrapper>
+            <CloseButton onClick={hideForm} />
+          </ModalStyles.ModalCloseWrapper>
+        </ModalStyles.ModalHeaderContent>
+
+        <ModalStyles.ModalSubheaderContent>{t('auth.pickname')}</ModalStyles.ModalSubheaderContent>
+      </ModalStyles.ModalHeader>
+
       <GuestForm hideForm={hideForm} ref={inputRef} />
 
       <GuestFormDiscordAuth />

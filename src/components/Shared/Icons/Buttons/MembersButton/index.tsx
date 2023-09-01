@@ -18,6 +18,7 @@ export const MembersButton = () => {
       onClick={() => setMembersListOpen(!isMembersListOpen)}
       icon="Members"
       isActive={isMembersListOpen}
+      buttonType="headerIcon"
     />
   );
 };

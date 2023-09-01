@@ -1,4 +1,11 @@
-import { ApolloClient, InMemoryCache, split, HttpLink } from '@apollo/client';
+/* eslint-disable no-underscore-dangle */
+import {
+  ApolloClient,
+  InMemoryCache,
+  split,
+  HttpLink,
+  defaultDataIdFromObject
+} from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { GRAPHQL_URL, WS_URL } from '@lib/api/url';
 import { setContext } from '@apollo/client/link/context';
@@ -49,7 +56,21 @@ const splitLink = split(
   httpLink
 );
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+  dataIdFromObject(res) {
+    switch (res.__typename) {
+      case 'User': {
+        return `User:${res.id}` as string;
+      }
+      case 'Mention': {
+        return `Mention:${res.id}`;
+      }
+
+      default:
+        return defaultDataIdFromObject(res);
+    }
+  }
+});
 
 export const client = new ApolloClient({
   link: authContext.concat(splitLink),

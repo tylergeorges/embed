@@ -19,7 +19,13 @@ export const InformationModal = ({
   title,
   disableBackdrop
 }: InformationModalProps) => (
-  <Modal isOpen={isOpen} title={title} hideModal={hideModal} disableBackdrop={disableBackdrop}>
+  <Modal
+    isOpen={isOpen}
+    title={title}
+    hideModal={hideModal}
+    disableBackdrop={disableBackdrop}
+    containerSize="md"
+  >
     <Styles.ModalHeader>
       <Styles.ModalHeaderContent>
         {title}

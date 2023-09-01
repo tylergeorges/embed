@@ -6,6 +6,7 @@ import { useMessages } from '@hooks/useMessages';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
 import { useCallback, useRef, useState } from 'react';
 import { VirtuosoHandle } from 'react-virtuoso';
+import { MessageRenderer } from '@components/Providers/MessageRenderer';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
@@ -61,28 +62,30 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
   );
 
   return (
-    <Styles.MessageWrapper
-      draggable={false}
-      membersListOpen={isMembersListOpen}
-      mobile={{
-        '@initial': false,
-        '@small': true
-      }}
-    >
-      <MessageListRenderer
-        messages={groupedMessages}
-        handleBottomStateChanged={handleBottomStateChanged}
-        ref={listRef}
-        handleTopStateChanged={handleTopStateChanged}
-        firstItemIndex={firstItemIndex}
-      />
+    <MessageRenderer>
+      <Styles.MessageWrapper
+        draggable={false}
+        membersListOpen={isMembersListOpen}
+        mobile={{
+          '@initial': false,
+          '@small': true
+        }}
+      >
+        <MessageListRenderer
+          messages={groupedMessages}
+          handleBottomStateChanged={handleBottomStateChanged}
+          ref={listRef}
+          handleTopStateChanged={handleTopStateChanged}
+          firstItemIndex={firstItemIndex}
+        />
 
-      <TextBox
-        scrollToBottom={scrollToBottom}
-        channelIsThread={channelIsThread}
-        canSend={!!canSend && !!user}
-        isAuthed={!!user}
-      />
-    </Styles.MessageWrapper>
+        <TextBox
+          scrollToBottom={scrollToBottom}
+          channelIsThread={channelIsThread}
+          canSend={!!canSend && !!user}
+          isAuthed={!!user}
+        />
+      </Styles.MessageWrapper>
+    </MessageRenderer>
   );
 };

@@ -8,7 +8,12 @@ import { ThreadsButton } from '@components/Shared/Icons/Buttons/ThreadsButton';
 import * as SkeletonStyles from '@components/Shared/SkeletonLoaders';
 import { useStoreActions, useStoreState } from '@state';
 
-export const ChannelHeader = () => {
+interface ChannelHeaderProps {
+  channelName?: string;
+  topic?: string;
+}
+
+export const ChannelHeader = ({ channelName, topic }: ChannelHeaderProps) => {
   const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
 
@@ -22,12 +27,19 @@ export const ChannelHeader = () => {
         <Hamburger />
 
         <Styles.ChannelNameTopicWrapper>
-          {currentChannel ? (
+          {currentChannel || channelName ? (
             <>
               <Icons icon="TextChannelHash" size="sm" color="channel" />
-              <Styles.ChannelHeaderName>{currentChannel.name}</Styles.ChannelHeaderName>
-              <Styles.ChannelHeaderTopic onClick={openTopicModal}>
-                {currentChannel.topic}
+
+              <Styles.ChannelHeaderName>
+                {channelName ?? currentChannel?.name}
+              </Styles.ChannelHeaderName>
+
+              <Styles.ChannelHeaderTopic
+                isClickable={!topic}
+                onClick={topic ? undefined : openTopicModal}
+              >
+                {topic ?? currentChannel?.topic}
               </Styles.ChannelHeaderTopic>
             </>
           ) : (
@@ -40,12 +52,16 @@ export const ChannelHeader = () => {
         </Styles.ChannelNameTopicWrapper>
       </Styles.ChannelHeaderNameWrapper>
 
-      <ThreadsPopout>
-        <ThreadsButton />
-      </ThreadsPopout>
+      {!topic && (
+        <>
+          <ThreadsPopout>
+            <ThreadsButton />
+          </ThreadsPopout>
 
-      <PinButton />
-      <MembersButton />
+          <PinButton />
+          <MembersButton />
+        </>
+      )}
     </Styles.ChannelHeaderRoot>
   );
 };

@@ -1,16 +1,10 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Message, MessagesQueryQuery } from '@graphql/graphql';
 import { groupMessages } from '@util/groupMessages';
-import { APIMessage } from 'discord-api-types/v10';
 import { messagesQuery } from '@hooks/messagesQuery';
-import { useQuery } from '@apollo/client';
 import { produce } from 'structurajs';
 import { convertMessageToDiscord } from '@util/convertToDiscord/convertMessageToDiscord';
-
-type MessageState = {
-  groupedMessages: APIMessage[][];
-  firstItemIndex: number;
-};
+import { useQuery } from '@apollo/client';
 
 interface UseMessagesProps {
   guild: string;
@@ -66,7 +60,7 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
     }
   }, [fetchMore, messages]);
 
-  const messageState: MessageState = useMemo(() => {
+  const messageState = useMemo(() => {
     let firstItemIndex = 100_000;
 
     if (messages === undefined)

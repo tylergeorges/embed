@@ -49,7 +49,7 @@ const globalStyles = globalCss({
     overflow: 'hidden',
     boxSizing: 'border-box',
 
-    backgroundColor: theme.colors.background
+    backgroundOverlay: theme.colors.background
   },
   body: {
     padding: 0,

@@ -11,11 +11,13 @@ export const ChannelTopicModal = () => {
     setShowTopicModal(false);
   };
 
+  if (!showTopicModal) return null;
+
   return (
     <InformationModal
       isOpen={showTopicModal}
       hideModal={hideTopicModal}
-      title={currentChannel?.name ?? ''}
+      title={`#${currentChannel?.name}` ?? ''}
     >
       <Styles.ChannelTopicModalContent>
         {currentChannel?.topic ?? ''}

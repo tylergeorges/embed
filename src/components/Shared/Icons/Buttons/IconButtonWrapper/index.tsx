@@ -13,9 +13,10 @@ export const IconButtonWrapper = ({
   isActive,
   tooltipDisabledIfActive,
   iconContent,
-  backgroundGlowRadii
+  backgroundGlowRadii,
+  buttonType
 }: IconButtonWrapperProps) => (
-  <Styles.IconButtonRoot>
+  <Styles.IconButtonRoot buttonType={buttonType}>
     {tooltipDisabled ? (
       <IconButtonInner
         onClick={onClick}

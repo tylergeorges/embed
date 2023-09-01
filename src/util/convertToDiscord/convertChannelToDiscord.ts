@@ -3,8 +3,10 @@ import { APIChannel, APIThreadChannel, ChannelType } from 'discord-api-types/v10
 
 export function convertChannelToDiscord(
   channel: Channel & { parentId?: string }
-): APIChannel | APIThreadChannel {
-  if ('parentId' in channel) {
+): APIChannel | APIThreadChannel | null {
+  if (!channel) return null;
+
+  if (channel?.parentId) {
     return {
       id: channel.id,
       name: channel.name,

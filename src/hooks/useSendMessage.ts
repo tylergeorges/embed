@@ -85,6 +85,7 @@ export const useSendMessage = ({ thread, scrollToBottom }: UseSendMessageProps) 
           return;
 
         scrollToBottom({ forceScroll: true });
+
         cache.writeQuery({
           query: messagesQuery,
           variables: { channel: channelId, guild: guildId, threadId: thread },
