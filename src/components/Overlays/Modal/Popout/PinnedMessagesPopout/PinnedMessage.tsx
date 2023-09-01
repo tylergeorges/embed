@@ -4,10 +4,11 @@ import { APIMessage } from 'discord-api-types/v10';
 
 interface PinnedMessageProps {
   message: APIMessage;
+  isThread: boolean;
 }
 
-export const PinnedMessage = ({ message }: PinnedMessageProps) => (
+export const PinnedMessage = ({ message, isThread }: PinnedMessageProps) => (
   <Styles.PinnedMesageListItem>
-    <Message message={message} isFirstMessage thread={!!message.thread} />
+    <Message message={message} isFirstMessage thread={isThread} />
   </Styles.PinnedMesageListItem>
 );

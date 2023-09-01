@@ -11,7 +11,7 @@ interface PinnedMessagesPopoutProps {
 }
 
 export const PinnedMessagesPopout = ({ children }: PinnedMessagesPopoutProps) => {
-  const translate = useTranslation();
+  const { t } = useTranslation();
 
   const showPinsModal = useStoreState(state => state.ui.showPinsModal);
   const setShowPinsModal = useStoreActions(state => state.ui.setShowPinsModal);
@@ -26,18 +26,18 @@ export const PinnedMessagesPopout = ({ children }: PinnedMessagesPopoutProps) =>
   return (
     <>
       <Popout
-        title={translate.t('pinnedmessages.tooltip')}
+        title={t('pinnedmessages.tooltip')}
         isOpen={showPinsModal}
         hideModal={hidePinsModal}
         popoutFor={childrenRef.current}
       >
         <Styles.PinnedPopoutWrapper>
-          {pinnedMessages.length === 0 ? (
+          {!pinnedMessages.length ? (
             <NoPins />
           ) : (
             pinnedMessages.map(message => (
               <Fragment key={message.id}>
-                <PinnedMessage message={message} />
+                <PinnedMessage message={message} isThread={!!message.thread} />
               </Fragment>
             ))
           )}

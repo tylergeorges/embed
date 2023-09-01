@@ -68,7 +68,7 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
         query: messagesQuery,
         variables: { channel, guild, before, threadId },
         updateQuery: (prev, { fetchMoreResult }) => {
-          if (!('messageBunch' in fetchMoreResult.channelV2)) return prev;
+          if (!fetchMoreResult.channelV2?.messageBunch) return prev;
 
           const olderMessages = fetchMoreResult?.channelV2?.messageBunch.messages as Message[];
 
@@ -77,7 +77,7 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
           }
 
           return produce(prev, draft => {
-            if (!draft.channelV2 || !('messageBunch' in draft.channelV2)) return draft;
+            if (!draft.channelV2?.messageBunch) return draft;
 
             draft.channelV2.messageBunch.messages = [
               ...olderMessages,
