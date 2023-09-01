@@ -1,20 +1,31 @@
 import React from 'react';
-import { useAppRouter } from '@hooks/useAppRouter';
-import { getEnvVar } from '@util/env';
+import { TextChannelHeader } from '@components/Header/TextChannelHeader';
+import { useStoreState } from '@state';
+import * as Styles from '@components/Sidebar/styles';
+import { WbIcon } from '@icons/WbIcon';
+import { useTranslation } from 'react-i18next';
 
 export default function GuildIndex() {
-  const { guildId } = useAppRouter();
+  const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
 
-  const apiUrl = getEnvVar('CUSTOM_SERVER_ENDPOINT');
+  const { t } = useTranslation();
 
-  if (apiUrl) {
-    return (
-      <div>
-        <p>Guild - {guildId}</p>
+  return (
+    <Styles.GuildRoot
+      mobile={{
+        '@initial': false,
+        '@small': true
+      }}
+      channelsListOpen={isChannelsListOpen}
+    >
+      <TextChannelHeader
+        channelName={t('guild.channelselect') as string}
+        topic={t('guild.channelselect.topic') as string}
+      />
 
-        <p>apiUrl - {apiUrl}</p>
-      </div>
-    );
-  }
-  return <div>ERROR - api url returned undefined</div>;
+      <Styles.WbIconContainer>
+        <WbIcon />
+      </Styles.WbIconContainer>
+    </Styles.GuildRoot>
+  );
 }

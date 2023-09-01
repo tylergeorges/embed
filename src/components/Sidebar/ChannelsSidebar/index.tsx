@@ -2,10 +2,10 @@ import { useStoreActions, useStoreState } from '@state';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { Backdrop } from '@components/Overlays/Modal/styles';
-import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useRef } from 'react';
 import { GuildHeader } from '@components/Header/GuildHeader';
+import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
 import * as Styles from '../styles';
 import { Category } from './Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
@@ -49,7 +49,7 @@ export const ChannelsSidebar = () => {
         <GuildHeader />
 
         <Styles.ChannelsChildrenWrapper>
-          <ChannelHighlighter />
+          {channelId && <ChannelHighlighter />}
 
           {channels
             ?.filter(channel => channel.category === null)
