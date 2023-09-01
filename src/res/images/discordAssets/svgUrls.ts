@@ -17,7 +17,7 @@ import SvgIconCheckmark from './message-renderer-icons/status-icons/icon-checkma
 import SvgIconCross from './message-renderer-icons/status-icons/icon-cross.svg';
 import SvgIconDanger from './message-renderer-icons/status-icons/icon-danger.svg';
 import SvgMiscDiscordImageFailure from './message-renderer-icons/status-icons/misc-discord-image-failure.svg';
-import SvgIconNoPins from './message-renderer-icons/status-icons/icon-no-pins.svg';
+import SvgIconNoPins from './status-icons/icon-no-pins.svg';
 import SvgNoThreadsStars from './message-renderer-icons/status-icons/icon-no-threads-stars.svg';
 
 // ! BUTTON ICONS
