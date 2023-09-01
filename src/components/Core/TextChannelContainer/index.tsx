@@ -5,9 +5,9 @@ import { MembersSidebar } from '@components/Sidebar/MembersSidebar';
 import { useCallback, useEffect } from 'react';
 
 import { Backdrop } from '@components/Overlays/Modal/styles';
+import { TextChannelHeader } from '@components/Header/TextChannelHeader';
 import * as Styles from './styles';
 import { MessageContainer } from './MessageContainer';
-import { TextChannelHeader } from './TextChannelHeader';
 
 export const TextChannelContainer = () => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');

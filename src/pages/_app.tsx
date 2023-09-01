@@ -4,10 +4,10 @@ import { StoreProvider } from 'easy-peasy';
 import { store } from '@state/store';
 import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
-import GuildProvider from '@components/Providers/GuildProvider';
 import '../i18n';
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
+import GuildProvider from '@components/Providers/GuildProvider';
 
 const globalStyles = globalCss({
   '@font-face': [

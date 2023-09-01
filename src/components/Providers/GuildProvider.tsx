@@ -7,6 +7,7 @@ import { useQuery } from '@apollo/client';
 import { useContextMenu } from '@hooks/useContextMenu';
 import dynamic from 'next/dynamic';
 import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
+import { Channel, GuildSettings } from '@graphql/graphql';
 import * as Styles from '../Core/styles';
 
 interface GuildProviderProps {
@@ -18,9 +19,13 @@ const guildDocument = graphql(/* GraphQL */ `
     guild(id: $id) {
       id
       name
+      icon
+      memberCount
+
       settings {
         readonly
       }
+
       channels {
         id
         name
@@ -85,10 +90,8 @@ export default function GuildProvider({ children }: GuildProviderProps) {
 
     if (data && !loading) {
       setGuildData(data.guild);
-      // @ts-expect-error
-      setSettings(data.guild.settings);
-      // @ts-expect-error
-      setChannels(data.guild.channels);
+      setSettings(data.guild.settings as GuildSettings);
+      setChannels(data.guild.channels as Channel[]);
     }
   }, [data, loading, setChannels, setGuildData, setSettings, guildId, router, isRouteLoaded]);
 

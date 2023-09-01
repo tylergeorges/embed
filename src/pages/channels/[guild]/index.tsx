@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextChannelHeader } from '@components/Core/TextChannelContainer/TextChannelHeader';
+import { TextChannelHeader } from '@components/Header/TextChannelHeader';
 import { useStoreState } from '@state';
 import * as Styles from '@components/Sidebar/styles';
 import { WbIcon } from '@icons/WbIcon';
