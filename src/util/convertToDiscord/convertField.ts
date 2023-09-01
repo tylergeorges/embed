@@ -25,6 +25,20 @@ import {
 import { getAvatarId, getIdFromUrl } from '@util/convertToDiscord/getAvatarId';
 import { messageTypeTable } from '@util/convertToDiscord/messageTypeTable';
 
+// temp workaround for resolving author's nick color
+// github issue - https://github.com/widgetbot-io/message-renderer/issues/29
+type ConvertedAuthorWorkaround = APIUser & {
+  roles: Maybe<string[]> | undefined;
+
+  joined_at: string;
+
+  user: {
+    id: string;
+    avatar: string | null;
+    global_name: string;
+  };
+};
+
 export const convertField = {
   messageType: (type: GqlMessageType): DiscordMessageType => messageTypeTable[type],
 
@@ -51,7 +65,7 @@ export const convertField = {
         }
       : undefined,
 
-  author: (message: Message): APIUser => ({
+  author: (message: Message): ConvertedAuthorWorkaround => ({
     id:
       message.isGuest && message.author.bot
         ? getIdFromUrl(message.author.avatarUrl)
@@ -64,6 +78,25 @@ export const convertField = {
     username: message.author.name,
 
     global_name: message.author.name,
+
+    // Temporary work around for resolving nick color
+    // github issue - https://github.com/widgetbot-io/message-renderer/issues/29
+    user: {
+      id:
+        message.isGuest && message.author.bot
+          ? getIdFromUrl(message.author.avatarUrl)
+          : message.author.id,
+
+      avatar: getAvatarId(message.author.avatarUrl),
+
+      global_name: message.author.name
+    },
+
+    // Temporary work around for resolving nick color
+    // github issue - https://github.com/widgetbot-io/message-renderer/issues/29
+    joined_at: '',
+
+    roles: message.author.roles,
 
     system: message.author.system,
 
