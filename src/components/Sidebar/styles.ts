@@ -120,7 +120,7 @@ export const ThreadPanelWrapper = styled.withConfig({
 
   zIndex: theme.zIndices.modal,
   transition: theme.transitions.defaultTransform,
-  backgroundColor: theme.colors.background,
+  backgroundOverlay: theme.colors.background,
 
   variants: {
     isOpen: {

@@ -22,19 +22,22 @@ export const ThreadPanel = () => {
   const isTransitionedThreadsPanelOpen = useStoreState(
     state => state.ui.isTransitionedThreadsPanelOpen
   );
+
   const isDomThreadsPanelOpen = useStoreState(state => state.ui.isDomThreadsPanelOpen);
 
   useEffect(() => {
-    // We set this to true after element is in DOM so the transition is shown
-    if (isDomThreadsPanelOpen && !isTransitionedThreadsPanelOpen) {
-      setIsTransitionedThreadsPanelOpen(true);
-    }
+    if (isDomThreadsPanelOpen) {
+      // We set this to true after element is in DOM so the transition is shown
+      if (!isTransitionedThreadsPanelOpen) {
+        setIsTransitionedThreadsPanelOpen(true);
+      }
 
-    if (threadPanelRef.current && transitionDuration.current === 0) {
-      const durationString = getComputedStyle(threadPanelRef.current).transitionDuration;
+      if (threadPanelRef.current && transitionDuration.current === 0) {
+        const durationString = getComputedStyle(threadPanelRef.current).transitionDuration;
 
-      const duration = Number(durationString.split('s')[0][2]) * 100;
-      transitionDuration.current = duration;
+        const duration = Number(durationString.split('s')[0][2]) * 100;
+        transitionDuration.current = duration;
+      }
     }
 
     return () => {
@@ -42,8 +45,12 @@ export const ThreadPanel = () => {
         clearTimeout(removeFromDOMTimeout.current);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [
+    isTransitionedThreadsPanelOpen,
+    isDomThreadsPanelOpen,
+    setIsTransitionedThreadsPanelOpen,
+    setIsDomThreadsPanelOpen
+  ]);
 
   // Remove panel entirely from DOM after it's been transitioned off screen
 
@@ -58,6 +65,8 @@ export const ThreadPanel = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!isDomThreadsPanelOpen) return null;
 
   return (
     <Styles.ThreadPanelWrapper

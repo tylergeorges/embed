@@ -6,7 +6,6 @@ import * as Styles from '@components/Core/styles';
 import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
 import dynamic from 'next/dynamic';
 import { useContextMenu } from '@hooks/useContextMenu';
-import { GuestFormModal } from '@components/Overlays/Modal/GuestFormModal';
 
 interface DataProviderProps {
   children: React.ReactNode;
@@ -14,6 +13,14 @@ interface DataProviderProps {
 
 const ContextMenu = dynamic(() =>
   import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
+);
+
+const ThreadPanel = dynamic(() =>
+  import('@components/Sidebar/ThreadPanel').then(mod => mod.ThreadPanel)
+);
+
+const GuestFormModal = dynamic(() =>
+  import('@components/Overlays/Modal/GuestFormModal').then(mod => mod.GuestFormModal)
 );
 
 export default function DataProvider({ children }: DataProviderProps) {
@@ -40,13 +47,16 @@ export default function DataProvider({ children }: DataProviderProps) {
     <>
       <UserProvider setIsUserFetched={setUserFetchedCB} />
       <GuildProvider setIsGuildFetched={setGuildFetchedCB} />
+
       {isFetched ? (
         <Styles.Main onContextMenu={disableBrowserMenu}>
           <Styles.InnerMain>
             <ChannelsSidebar />
 
+            <ThreadPanel />
             <ContextMenu />
             <GuestFormModal />
+
             {children}
           </Styles.InnerMain>
         </Styles.Main>
