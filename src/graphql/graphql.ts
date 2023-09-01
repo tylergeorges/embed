@@ -1282,6 +1282,136 @@ export type MessagesQueryQuery = {
       };
 };
 
+export type ThreadsQueryVariables = Exact<{
+  guild: Scalars['String'];
+  channel: Scalars['String'];
+}>;
+
+export type ThreadsQuery = {
+  __typename?: 'Query';
+  channel:
+    | {
+        __typename?: 'AnnouncementChannel';
+        id: string;
+        threads?: Array<
+          | { __typename?: 'AnnouncementChannel' }
+          | { __typename?: 'ForumChannel' }
+          | { __typename?: 'TextChannel' }
+          | {
+              __typename?: 'ThreadChannel';
+              id: string;
+              name: string;
+              locked: boolean;
+              messageBunch: {
+                __typename?: 'MessageBunch';
+                messages: Array<
+                  { __typename?: 'Message' } & {
+                    ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+                  }
+                >;
+              };
+            }
+          | { __typename?: 'VoiceChannel' }
+        > | null;
+      }
+    | {
+        __typename?: 'ForumChannel';
+        id: string;
+        threads?: Array<
+          | { __typename?: 'AnnouncementChannel' }
+          | { __typename?: 'ForumChannel' }
+          | { __typename?: 'TextChannel' }
+          | {
+              __typename?: 'ThreadChannel';
+              id: string;
+              name: string;
+              locked: boolean;
+              messageBunch: {
+                __typename?: 'MessageBunch';
+                messages: Array<
+                  { __typename?: 'Message' } & {
+                    ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+                  }
+                >;
+              };
+            }
+          | { __typename?: 'VoiceChannel' }
+        > | null;
+      }
+    | {
+        __typename?: 'TextChannel';
+        id: string;
+        threads?: Array<
+          | { __typename?: 'AnnouncementChannel' }
+          | { __typename?: 'ForumChannel' }
+          | { __typename?: 'TextChannel' }
+          | {
+              __typename?: 'ThreadChannel';
+              id: string;
+              name: string;
+              locked: boolean;
+              messageBunch: {
+                __typename?: 'MessageBunch';
+                messages: Array<
+                  { __typename?: 'Message' } & {
+                    ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+                  }
+                >;
+              };
+            }
+          | { __typename?: 'VoiceChannel' }
+        > | null;
+      }
+    | {
+        __typename?: 'ThreadChannel';
+        id: string;
+        threads?: Array<
+          | { __typename?: 'AnnouncementChannel' }
+          | { __typename?: 'ForumChannel' }
+          | { __typename?: 'TextChannel' }
+          | {
+              __typename?: 'ThreadChannel';
+              id: string;
+              name: string;
+              locked: boolean;
+              messageBunch: {
+                __typename?: 'MessageBunch';
+                messages: Array<
+                  { __typename?: 'Message' } & {
+                    ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+                  }
+                >;
+              };
+            }
+          | { __typename?: 'VoiceChannel' }
+        > | null;
+      }
+    | {
+        __typename?: 'VoiceChannel';
+        id: string;
+        threads?: Array<
+          | { __typename?: 'AnnouncementChannel' }
+          | { __typename?: 'ForumChannel' }
+          | { __typename?: 'TextChannel' }
+          | {
+              __typename?: 'ThreadChannel';
+              id: string;
+              name: string;
+              locked: boolean;
+              messageBunch: {
+                __typename?: 'MessageBunch';
+                messages: Array<
+                  { __typename?: 'Message' } & {
+                    ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
+                  }
+                >;
+              };
+            }
+          | { __typename?: 'VoiceChannel' }
+        > | null;
+      };
+};
+
 export type MessageUpdatedSubscriptionVariables = Exact<{
   guild: Scalars['String'];
   channel: Scalars['String'];
@@ -1818,7 +1948,10 @@ export const GuildDocument = {
                               name: { kind: 'Name', value: 'threads' },
                               selectionSet: {
                                 kind: 'SelectionSet',
-                                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                                ]
                               }
                             }
                           ]
@@ -1839,7 +1972,10 @@ export const GuildDocument = {
                               name: { kind: 'Name', value: 'threads' },
                               selectionSet: {
                                 kind: 'SelectionSet',
-                                selections: [{ kind: 'Field', name: { kind: 'Name', value: 'id' } }]
+                                selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                                ]
                               }
                             }
                           ]
@@ -2218,6 +2354,116 @@ export const MessagesQueryDocument = {
     ...BaseMessageFragmentDoc.definitions
   ]
 } as unknown as DocumentNode<MessagesQueryQuery, MessagesQueryQueryVariables>;
+export const ThreadsDocument = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'OperationDefinition',
+      operation: 'query',
+      name: { kind: 'Name', value: 'Threads' },
+      variableDefinitions: [
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        },
+        {
+          kind: 'VariableDefinition',
+          variable: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } },
+          type: {
+            kind: 'NonNullType',
+            type: { kind: 'NamedType', name: { kind: 'Name', value: 'String' } }
+          }
+        }
+      ],
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          {
+            kind: 'Field',
+            alias: { kind: 'Name', value: 'channel' },
+            name: { kind: 'Name', value: 'channelV2' },
+            arguments: [
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'id' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'channel' } }
+              },
+              {
+                kind: 'Argument',
+                name: { kind: 'Name', value: 'guild' },
+                value: { kind: 'Variable', name: { kind: 'Name', value: 'guild' } }
+              }
+            ],
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'threads' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      {
+                        kind: 'InlineFragment',
+                        typeCondition: {
+                          kind: 'NamedType',
+                          name: { kind: 'Name', value: 'ThreadChannel' }
+                        },
+                        selectionSet: {
+                          kind: 'SelectionSet',
+                          selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'locked' } },
+                            {
+                              kind: 'Field',
+                              name: { kind: 'Name', value: 'messageBunch' },
+                              arguments: [
+                                {
+                                  kind: 'Argument',
+                                  name: { kind: 'Name', value: 'limit' },
+                                  value: { kind: 'IntValue', value: '1' }
+                                }
+                              ],
+                              selectionSet: {
+                                kind: 'SelectionSet',
+                                selections: [
+                                  {
+                                    kind: 'Field',
+                                    name: { kind: 'Name', value: 'messages' },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'FragmentSpread',
+                                          name: { kind: 'Name', value: 'BaseMessage' }
+                                        }
+                                      ]
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    ...BaseMessageFragmentDoc.definitions
+  ]
+} as unknown as DocumentNode<ThreadsQuery, ThreadsQueryVariables>;
 export const MessageUpdatedDocument = {
   kind: 'Document',
   definitions: [

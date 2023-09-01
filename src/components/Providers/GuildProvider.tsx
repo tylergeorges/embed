@@ -31,6 +31,7 @@ const guildDocument = graphql(/* GraphQL */ `
           id
           name
         }
+
         category {
           id
           name
@@ -42,6 +43,7 @@ const guildDocument = graphql(/* GraphQL */ `
 
           threads {
             id
+            name
           }
         }
         ... on AnnouncementChannel {
@@ -49,6 +51,7 @@ const guildDocument = graphql(/* GraphQL */ `
 
           threads {
             id
+            name
           }
         }
 

@@ -1,6 +1,7 @@
 import { HeaderMainContentRoot, Stretch } from '@components/Header/styles';
 import { theme, styled, commonComponentId } from '@stitches';
 import { keyframes } from '@stitches/react';
+import Image from 'next/image';
 
 const zoomInBounce = keyframes({
   '0%': { scale: '0.5' },
@@ -234,7 +235,8 @@ export const PopoutContainer = styled.withConfig({
   justifySelf: 'center',
   top: theme.sizes.headerHeight,
 
-  maxHeight: `calc(100% - ${theme.sizes.headerHeight})`,
+  maxHeight: `80vh`,
+  width: '35vw',
   maxWidth: 'min-content',
   minWidth: theme.sizes.modalWidth,
 
@@ -374,14 +376,57 @@ export const ThreadsPopoutList = styled.withConfig({
   width: '100%',
   position: 'relative'
 });
-
 export const ThreadName = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'popout-threads_list_threadname'
 })('div', {
   width: '100%',
-  color: theme.colors.primaryOpacity50,
+  color: theme.colors.textPrimary,
+  fontSize: theme.fontSizes.lg,
+  fontWeight: theme.fontWeights.semibold
+});
+
+export const ThreadContentWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-threads_content_wrapper'
+})('div', {
+  width: '100%',
+  color: theme.colors.textMuted,
+  fontSize: theme.fontSizes.md,
+  display: 'flex',
+  height: '100%',
+  alignItems: 'center',
+  whiteSpace: 'pre',
+  overflow: 'hidden'
+});
+export const ThreadContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-threads_content_wrapper'
+})('div', {
+  display: 'block',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
   fontSize: theme.fontSizes.lg
+});
+
+export const ThreadAuthor = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-threads_author'
+})('span', {
+  color: theme.colors.textPrimary,
+  fontWeight: theme.fontWeights.medium,
+  margin: 0,
+  fontSize: theme.fontSizes.md,
+
+  // @ts-expect-error
+  marginX: theme.space.xxs.value
+});
+
+export const ThreadAuthorAvatar = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'popout-threads_author_avatar'
+})(Image, {
+  borderRadius: theme.radii.round
 });
 
 export const ThreadsPopoutListHeader = styled.withConfig({
@@ -409,8 +454,6 @@ export const ThreadsPopoutContent = styled.withConfig({
 
   display: 'flex',
   flexDirection: 'column',
-
-  paddingX: theme.space.lg,
 
   overflowY: 'auto',
   boxSizing: 'border-box'
@@ -455,6 +498,7 @@ export const ThreadsPopoutListItem = styled.withConfig({
   cursor: 'pointer',
 
   borderColor: 'transparent',
+  flexDirection: 'column',
 
   '&:hover': {
     borderColor: theme.colors.primaryOpacity10

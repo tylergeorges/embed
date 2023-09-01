@@ -3,6 +3,10 @@ import { useAppRouter } from '@hooks/useAppRouter';
 import { useStoreState, useStoreActions } from '@state';
 import { ReactElement, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/client';
+import { threadsQuery } from '@hooks/messagesQuery';
+import { FetchingDataSpinner } from '@components/Core/VirtualLists/listComponents';
+import { ThreadChannel } from '@graphql/graphql';
 import { ChannelThreads } from './ChannelThreads';
 import { NoThreads } from './NoThreads';
 
@@ -11,8 +15,12 @@ interface ThreadsPopoutProps {
 }
 
 export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
-  const translate = useTranslation();
-  const { channelId } = useAppRouter();
+  const { t } = useTranslation();
+  const { channelId, guildId } = useAppRouter();
+
+  const { data, loading } = useQuery(threadsQuery, {
+    variables: { channel: channelId, guild: guildId }
+  });
 
   const showThreadsModal = useStoreState(state => state.ui.showThreadsModal);
   const guildChannels = useStoreState(state => state.guild.guildChannels);
@@ -26,20 +34,27 @@ export const ThreadsPopout = ({ children }: ThreadsPopoutProps) => {
     setShowThreadsModal(false);
   }, [setShowThreadsModal]);
 
+  const ready = !loading && data;
+  const channelHasThreads = currentChannelThreads.length > 0;
+
+  function getPopoutContent() {
+    if (!ready) return <FetchingDataSpinner />;
+
+    if (!channelHasThreads) return <NoThreads />;
+
+    return <ChannelThreads threads={data.channel.threads as ThreadChannel[]} />;
+  }
+
   return (
     <>
       <Popout
-        title={translate.t('threads.label')}
+        title={t('threads.label')}
         TitleIcon="ThreadHash"
         isOpen={showThreadsModal}
         hideModal={hideThreadsModal}
         popoutFor={childrenRef.current}
       >
-        {currentChannelThreads.length > 0 ? (
-          <ChannelThreads threads={currentChannelThreads} />
-        ) : (
-          <NoThreads />
-        )}
+        {getPopoutContent()}
       </Popout>
 
       <div ref={childrenRef}>{children}</div>

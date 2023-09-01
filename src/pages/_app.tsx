@@ -4,7 +4,6 @@ import { StoreProvider } from 'easy-peasy';
 import { store } from '@state/store';
 import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
-import GuildProvider from '@components/Providers/GuildProvider';
 import '../i18n';
 import React from 'react';
 import { ApolloProvider } from '@apollo/client';
@@ -150,9 +149,7 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <StoreProvider store={store}>
         <ApolloProvider client={client}>
-          <GuildProvider>
-            <Component {...pageProps} />
-          </GuildProvider>
+          <Component {...pageProps} />
         </ApolloProvider>
       </StoreProvider>
     </>

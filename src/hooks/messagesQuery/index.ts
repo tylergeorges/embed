@@ -277,6 +277,26 @@ export const messagesQuery = graphql(`
   }
 `);
 
+export const threadsQuery = graphql(`
+  query Threads($guild: String!, $channel: String!) {
+    channel: channelV2(id: $channel, guild: $guild) {
+      id
+      threads {
+        ... on ThreadChannel {
+          id
+          name
+          locked
+          messageBunch(limit: 1) {
+            messages {
+              ...BaseMessage
+            }
+          }
+        }
+      }
+    }
+  }
+`);
+
 // TODO: Copy fragments from old codebase for this.
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const updateMessageSubscription = graphql(`
