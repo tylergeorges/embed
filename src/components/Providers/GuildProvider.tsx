@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useApolloClient, useQuery } from '@apollo/client';
-import { Guild } from '@graphql/graphql';
-import { graphql } from '@graphql/gql';
 import { getToken } from '@graphql/client';
+import { Channel } from '@graphql/graphql';
+import { graphql } from '@graphql/gql';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -195,24 +195,20 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
           variables: { id: guildId },
           updateQuery: (prev, { fetchMoreResult }) => {
             // Weird type error when casting
-            // @ts-expect-error
-            const guild = fetchMoreResult.guild as Guild;
-
-            const { channels } = guild;
-
-            setChannels(channels);
+            const { guild } = fetchMoreResult;
 
             const token = getToken();
 
+            // When user logs out
             if (!token) {
-              const isAuthChannel = channels.findIndex(ch => ch.id === channelId) === -1;
+              const nonAuthChannel = guild.channels[0];
 
-              // Redirect to non-auth channel if user signs out and was in an authed channel.
-              if (isAuthChannel) {
-                router.push(`/channels/${guildId}/${channels[0].id}`);
-              }
+              router.push(`/channels/${guildId}/${nonAuthChannel.id}`);
             }
 
+            // Error when casting type to Channel Array
+            // @ts-expect-error
+            setChannels(guild.channels as Channel[]);
             setRefetchGuild(false);
 
             return fetchMoreResult;

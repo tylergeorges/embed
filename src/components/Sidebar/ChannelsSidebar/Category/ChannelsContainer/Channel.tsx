@@ -1,9 +1,10 @@
 import { forwardRef, useEffect } from 'react';
 import { useStoreActions } from '@state';
+import { Channel as IChannel, ThreadChannel as IThread, ThreadChannel } from '@graphql/graphql';
 import { Thread } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Thread';
 import { useAppRouter } from '@hooks/useAppRouter';
 import * as Styles from '@components/Sidebar/ChannelsSidebar/styles';
-import { Channel as IChannel, ThreadChannel as IThread, ThreadChannel } from '@graphql/graphql';
+
 import { ChannelIcon } from './ChannelIcon';
 
 interface ChannelNameProps {

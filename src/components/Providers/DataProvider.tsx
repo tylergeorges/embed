@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import UserProvider from '@components/Providers/UserProvider';
 import { Loading } from '@components/Overlays/Loading';
-import GuildProvider from '@components/Providers/GuildProvider';
 import * as Styles from '@components/Core/styles';
 import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
 import dynamic from 'next/dynamic';
 import { useContextMenu } from '@hooks/useContextMenu';
+import GuildProvider from '@components/Providers/GuildProvider';
 
 interface DataProviderProps {
   children: React.ReactNode;
