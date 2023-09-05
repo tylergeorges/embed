@@ -71,7 +71,7 @@ export const GuildIcon = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'guild-icon'
 })(Image, {
-  size: theme.sizes.iconSizeMed,
+  size: theme.sizes.iconSizeMd,
   borderRadius: theme.radii.round
 });
 
