@@ -67,6 +67,10 @@ const ContextMenu = dynamic(() =>
   import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
 );
 
+const ThreadPanel = dynamic(() =>
+  import('@components/Sidebar/ThreadPanel').then(mod => mod.ThreadPanel)
+);
+
 export default function GuildProvider({ children }: GuildProviderProps) {
   const { guildId, router, isRouteLoaded } = useAppRouter();
 
@@ -104,6 +108,7 @@ export default function GuildProvider({ children }: GuildProviderProps) {
 
         {showContextMenu && <ContextMenu />}
 
+        <ThreadPanel />
         {children}
       </Styles.InnerMain>
     </Styles.Main>

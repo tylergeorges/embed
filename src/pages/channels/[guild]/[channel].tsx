@@ -20,13 +20,7 @@ const ChannelTopicModal = dynamic(() =>
   )
 );
 
-const ThreadPanel = dynamic(() =>
-  import('@components/Sidebar/ThreadPanel').then(mod => mod.ThreadPanel)
-);
-
 function GuildChannel() {
-  const isDomThreadsPanelOpen = useStoreState(state => state.ui.isDomThreadsPanelOpen);
-
   const showTopicModal = useStoreState(state => state.ui.showTopicModal);
 
   const guildChannels = useStoreState(state => state.guild.guildChannels);
@@ -59,8 +53,6 @@ function GuildChannel() {
           {showTopicModal && <ChannelTopicModal />}
 
           <TextChannelContainer />
-
-          {isDomThreadsPanelOpen && <ThreadPanel />}
         </MessageRendererRoot>
       )}
     </MessageRendererProvider>
