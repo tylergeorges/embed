@@ -155,76 +155,88 @@ export const convertField = {
 
   embeds: (messageEmbeds: Embed[]): APIEmbed[] =>
     messageEmbeds
-      ? (messageEmbeds.map(e => ({
-          author: {
-            name: e.author?.name,
+      ? messageEmbeds.map(
+          e =>
+            ({
+              author: e.author
+                ? {
+                    name: e.author.name,
 
-            icon_url: e.author?.icon,
+                    icon_url: e.author.icon,
 
-            proxy_icon_url: e.author?.proxyIconUrl,
+                    proxy_icon_url: e.author.proxyIconUrl,
 
-            url: e.author?.url
-          },
+                    url: e.author.url
+                  }
+                : undefined,
 
-          color: e.color,
-          description: e.description,
+              color: e.color,
 
-          footer: {
-            text: e.footer?.text,
+              description: e.description,
 
-            icon_url: e.footer?.proxyIconUrl,
+              footer: e.footer
+                ? {
+                    text: e.footer.text,
 
-            proxy_icon_url: e.footer?.proxyIconUrl
-          },
+                    icon_url: e.footer.proxyIconUrl,
 
-          image:
-            {
-              url: e.image?.url,
+                    proxy_icon_url: e.footer.proxyIconUrl
+                  }
+                : undefined,
 
-              height: e.image?.height,
+              image: e.image
+                ? {
+                    url: e.image.url,
 
-              proxy_url: e.image?.proxyUrl,
+                    height: e.image.height,
 
-              width: e.image?.width
-            } ?? undefined,
+                    proxy_url: e.image.proxyUrl,
 
-          provider: e.provider,
+                    width: e.image.width
+                  }
+                : undefined,
 
-          thumbnail:
-            {
-              url: e.thumbnail?.url,
+              provider: e.provider,
 
-              height: e.thumbnail?.height,
+              thumbnail: e.thumbnail
+                ? {
+                    url: e.thumbnail.url,
 
-              proxy_url: e.thumbnail?.proxyUrl,
+                    height: e.thumbnail.height,
 
-              width: e.thumbnail?.width
-            } ?? undefined,
+                    proxy_url: e.thumbnail.proxyUrl,
 
-          timestamp: e.timestamp,
-          title: e.title,
-          url: e.url,
+                    width: e.thumbnail.width
+                  }
+                : undefined,
 
-          fields: e.fields,
+              timestamp: e.timestamp,
 
-          video:
-            {
-              height: e.video?.height,
+              title: e.title,
 
-              proxy_url: e.video?.proxyUrl,
+              url: e.url,
 
-              url: e.video?.url,
+              fields: e.fields,
 
-              width: e.video?.width
-            } ?? undefined
-        })) as APIEmbed[])
+              video: e.video
+                ? {
+                    height: e.video.height,
+
+                    proxy_url: e.video.proxyUrl,
+
+                    url: e.video.url,
+
+                    width: e.video.width
+                  }
+                : undefined
+            } as APIEmbed)
+        )
       : [],
 
   mentions: (messageMentions: Mention[]): APIUser[] =>
     messageMentions
       ? (messageMentions.map(m => ({
           id: m.id,
-          guild_id: m.id,
           type: m.type,
           name: m.name,
           global_name: m.name,
