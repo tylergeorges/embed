@@ -139,6 +139,21 @@ const MessageFragment = graphql(/* GraphQL */ `
   fragment Message on Message {
     __typename
     id
+    isGuest
+
+    author {
+      __typename
+      avatarUrl
+      bot
+      discrim
+      id
+      flags
+      name
+      roles
+      system
+      isWebhook
+    }
+
     ...BaseMessage
 
     referencedMessage {

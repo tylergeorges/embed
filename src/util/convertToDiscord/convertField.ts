@@ -36,6 +36,7 @@ type ConvertedAuthorWorkaround = APIUser & {
     id: string;
     avatar: string | null;
     global_name: string;
+    bot: boolean;
   };
 };
 
@@ -65,45 +66,53 @@ export const convertField = {
         }
       : undefined,
 
-  author: (message: Message): ConvertedAuthorWorkaround => ({
-    id:
-      message.isGuest && message.author.bot
-        ? getIdFromUrl(message.author.avatarUrl)
-        : message.author.id,
+  author: (message: Message): ConvertedAuthorWorkaround => {
+    const avatarId = getAvatarId(message.author.avatarUrl);
 
-    avatar: getAvatarId(message.author.avatarUrl),
-
-    bot: message.author.bot,
-
-    username: message.author.name,
-
-    global_name: message.author.name,
-
-    // Temporary work around for resolving nick color
-    // github issue - https://github.com/widgetbot-io/message-renderer/issues/29
-    user: {
+    return {
       id:
         message.isGuest && message.author.bot
           ? getIdFromUrl(message.author.avatarUrl)
           : message.author.id,
 
-      avatar: getAvatarId(message.author.avatarUrl),
+      // The renderer only resolves default profile pictures when set to null
+      avatar: avatarId === '0' ? null : avatarId,
 
-      global_name: message.author.name
-    },
+      bot: message.author.bot,
 
-    // Temporary work around for resolving nick color
-    // github issue - https://github.com/widgetbot-io/message-renderer/issues/29
-    joined_at: '',
+      username: message.author.name,
 
-    roles: message.author.roles,
+      global_name: message.author.name,
 
-    system: message.author.system,
+      // Temporary work around for resolving nick color
+      // github issue - https://github.com/widgetbot-io/message-renderer/issues/29
+      user: {
+        id:
+          message.isGuest && message.author.bot
+            ? getIdFromUrl(message.author.avatarUrl)
+            : message.author.id,
 
-    flags: message.author.flags ?? 0,
+        // The renderer only resolves default profile pictures when set to null
+        avatar: avatarId === '0' ? null : avatarId,
 
-    discriminator: message.author.discrim
-  }),
+        global_name: message.author.name,
+
+        bot: message.author.bot
+      },
+
+      // Temporary work around for resolving nick color
+      // github issue - https://github.com/widgetbot-io/message-renderer/issues/29
+      joined_at: '',
+
+      roles: message.author.roles,
+
+      system: message.author.system,
+
+      flags: message.author.flags ?? 0,
+
+      discriminator: message.author.discrim
+    };
+  },
 
   interaction: (
     messageInteraction: Maybe<MessageInteraction> | undefined

@@ -43,6 +43,7 @@ export const useMessages = ({ guild, channel, threadId }: UseMessagesProps) => {
 
           return produce(prev, draft => {
             if (!draft || !draft.channel.messageBunch) return;
+
             draft.channel.messageBunch.messages = [
               ...olderMessages,
               ...draft.channel.messageBunch.messages

@@ -1198,6 +1198,19 @@ export type BaseMessageFragment = {
 export type MessageFragment = ({
   __typename: 'Message';
   id: string;
+  isGuest: boolean;
+  author: {
+    __typename: 'User';
+    avatarUrl: string;
+    bot: boolean;
+    discrim: string;
+    id: string;
+    flags?: number | null;
+    name: string;
+    roles?: Array<string> | null;
+    system: boolean;
+    isWebhook: boolean;
+  };
   referencedMessage?:
     | ({ __typename: 'Message'; id: string } & {
         ' $fragmentRefs'?: { BaseMessageFragment: BaseMessageFragment };
@@ -1880,6 +1893,26 @@ export const MessageFragmentDoc = {
         selections: [
           { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
           { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'isGuest' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'author' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'roles' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'system' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'isWebhook' } }
+              ]
+            }
+          },
           { kind: 'FragmentSpread', name: { kind: 'Name', value: 'BaseMessage' } },
           {
             kind: 'Field',

@@ -44,6 +44,7 @@ export const useSendMessage = ({ thread, scrollToBottom }: UseSendMessageProps) 
           editedAt: null,
           unread: true,
           flags: null,
+          bot: true,
           isGuest: true,
 
           author: {
@@ -84,8 +85,6 @@ export const useSendMessage = ({ thread, scrollToBottom }: UseSendMessageProps) 
         if (!messagesCache || !sendMessage || messagesCache.find(m => m.id === sendMessage?.id))
           return;
 
-        scrollToBottom({ forceScroll: true });
-
         cache.writeQuery({
           query: messagesQuery,
           variables: { channel: channelId, guild: guildId, threadId: thread },
@@ -105,6 +104,9 @@ export const useSendMessage = ({ thread, scrollToBottom }: UseSendMessageProps) 
             }
           }
         });
+
+        scrollToBottom({ forceScroll: true });
+        return cache;
       }
     });
   };

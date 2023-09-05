@@ -61,6 +61,7 @@ export const useMessageSubscription = ({
       }
 
       if (messagesCache?.find(m => m.id === message?.id)) return;
+
       updateQuery(
         prev =>
           produce(prev, data => {

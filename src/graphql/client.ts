@@ -60,7 +60,7 @@ const cache = new InMemoryCache({
   dataIdFromObject(res) {
     switch (res.__typename) {
       case 'User': {
-        return `User:${res.id}` as string;
+        return `User:${res.id}-Bot:${res.bot}` as string;
       }
       case 'Mention': {
         return `Mention:${res.id}`;

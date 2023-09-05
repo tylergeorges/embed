@@ -15,6 +15,7 @@ interface MessageContainerProps {
 
 export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => {
   const [atBottom, setAtBottom] = useState(false);
+
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
   const listRef = useRef<VirtuosoHandle>(null);
 
@@ -25,7 +26,7 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
 
   const threadId = channelIsThread ? thread : undefined;
 
-  const { groupedMessages, loadMoreMessages, firstItemIndex, updateQuery } = useMessages({
+  const { loadMoreMessages, firstItemIndex, updateQuery, groupedMessages } = useMessages({
     guild,
     channel,
     threadId: channelIsThread ? threadId : undefined

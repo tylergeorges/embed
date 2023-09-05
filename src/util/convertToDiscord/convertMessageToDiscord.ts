@@ -2,7 +2,7 @@ import { APIMessage, MessageType } from 'discord-api-types/v10';
 import { Message } from '@graphql/graphql';
 import { convertField } from '@util/convertToDiscord/convertField';
 
-export const convertMessageToDiscord = (message: Message): APIMessage & { isGuest: boolean } => ({
+export const convertMessageToDiscord = (message: Message): APIMessage => ({
   id: message.id,
   type: message.type ? convertField.messageType(message.type) : MessageType.Default,
 
@@ -15,8 +15,6 @@ export const convertMessageToDiscord = (message: Message): APIMessage & { isGues
   edited_timestamp: message.editedAt,
 
   flags: message.flags ?? 0,
-
-  isGuest: message.isGuest,
 
   author: convertField.author(message),
 
