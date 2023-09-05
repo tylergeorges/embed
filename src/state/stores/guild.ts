@@ -4,11 +4,6 @@ import { Category, Channel, Guild, GuildSettings, Role } from '@graphql/graphql'
 import { positionChannel } from '@util/positionChannel';
 import { APIChannel } from 'discord-api-types/v10';
 
-export interface IGuild {
-  id: string;
-  name: string;
-}
-
 export interface IThread extends Channel {
   id: string;
   name: string;

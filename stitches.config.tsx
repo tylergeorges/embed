@@ -92,6 +92,7 @@ const stitches = createStitches({
       systemMessageDark: '#999999',
       interactiveNormal: '#dcddde',
       accent: '#5865f2',
+      accentAlt: 'rgba(88, 101, 242, 0.4)',
       accentOpacity60: '#5865f299',
 
       backgroundOpacity10: '#36393f1a',
