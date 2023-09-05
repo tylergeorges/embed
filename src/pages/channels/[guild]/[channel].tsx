@@ -7,7 +7,6 @@ import { APIChannel } from 'discord-api-types/v10';
 import { svgUrls } from '@svg-assets';
 import dynamic from 'next/dynamic';
 import { TextChannelContainer } from '@components/Core/TextChannelContainer';
-import GuildProvider from '@components/Providers/GuildProvider';
 
 const MessageRendererRoot = styled('div', {
   height: '100%',
@@ -33,40 +32,38 @@ function GuildChannel() {
   const guildChannels = useStoreState(state => state.guild.guildChannels);
 
   return (
-    <GuildProvider>
-      <MessageRendererProvider
-        messageButtons={() => []}
-        currentUser={() => null}
-        // @ts-ignore
-        resolveChannel={id => (guildChannels[id] as APIChannel) ?? null}
-        resolveGuild={() => null}
-        resolveMember={() => null}
-        resolveRole={() => null}
-        resolveUser={() => null}
-        svgUrls={svgUrls}
-        seeThreadOnClick={(messageId, thread) =>
-          alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
-        }
-        userMentionOnClick={user =>
-          alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
-        }
-        roleMentionOnClick={role => alert(`Role "${role.name}" mention clicked!`)}
-        channelMentionOnClick={channel => alert(`Channel "${channel.name}" mention clicked!`)}
-        messageComponentButtonOnClick={(message, customId) => {
-          alert(`Button by custom id "${customId}" pressed on message ${message.id}!`);
-        }}
-      >
-        {({ themeClass }) => (
-          <MessageRendererRoot className={themeClass}>
-            {showTopicModal && <ChannelTopicModal />}
+    <MessageRendererProvider
+      messageButtons={() => []}
+      currentUser={() => null}
+      // @ts-ignore
+      resolveChannel={id => (guildChannels[id] as APIChannel) ?? null}
+      resolveGuild={() => null}
+      resolveMember={() => null}
+      resolveRole={() => null}
+      resolveUser={() => null}
+      svgUrls={svgUrls}
+      seeThreadOnClick={(messageId, thread) =>
+        alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
+      }
+      userMentionOnClick={user =>
+        alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
+      }
+      roleMentionOnClick={role => alert(`Role "${role.name}" mention clicked!`)}
+      channelMentionOnClick={channel => alert(`Channel "${channel.name}" mention clicked!`)}
+      messageComponentButtonOnClick={(message, customId) => {
+        alert(`Button by custom id "${customId}" pressed on message ${message.id}!`);
+      }}
+    >
+      {({ themeClass }) => (
+        <MessageRendererRoot className={themeClass}>
+          {showTopicModal && <ChannelTopicModal />}
 
-            <TextChannelContainer />
+          <TextChannelContainer />
 
-            {isDomThreadsPanelOpen && <ThreadPanel />}
-          </MessageRendererRoot>
-        )}
-      </MessageRendererProvider>
-    </GuildProvider>
+          {isDomThreadsPanelOpen && <ThreadPanel />}
+        </MessageRendererRoot>
+      )}
+    </MessageRendererProvider>
   );
 }
 

@@ -1,3 +1,4 @@
+import { Header } from '@components/Header';
 import * as Styles from '@components/Header/styles';
 import { PinnedMessagesPopout } from '@components/Overlays/Modal/Popout/PinnedMessagesPopout';
 import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
@@ -14,7 +15,7 @@ interface ChannelHeaderProps {
   topic?: string;
 }
 
-export const ChannelHeader = ({ channelName, topic }: ChannelHeaderProps) => {
+export const TextChannelHeader = ({ channelName, topic }: ChannelHeaderProps) => {
   const setShowTopicModal = useStoreActions(state => state.ui.setShowTopicModal);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
 
@@ -23,10 +24,9 @@ export const ChannelHeader = ({ channelName, topic }: ChannelHeaderProps) => {
   };
 
   return (
-    <Styles.ChannelHeaderRoot>
+    <Header>
+      <Hamburger />
       <Styles.ChannelHeaderNameWrapper role="dialog" aria-modal="true">
-        <Hamburger />
-
         <Styles.ChannelNameTopicWrapper>
           {currentChannel || channelName ? (
             <>
@@ -50,7 +50,7 @@ export const ChannelHeader = ({ channelName, topic }: ChannelHeaderProps) => {
         </Styles.ChannelNameTopicWrapper>
       </Styles.ChannelHeaderNameWrapper>
 
-      {!topic && (
+      {!topic && !channelName && (
         <>
           <ThreadsPopout>
             <ThreadsButton />
@@ -63,6 +63,6 @@ export const ChannelHeader = ({ channelName, topic }: ChannelHeaderProps) => {
           <MembersButton />
         </>
       )}
-    </Styles.ChannelHeaderRoot>
+    </Header>
   );
 };

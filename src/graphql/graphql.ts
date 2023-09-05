@@ -908,6 +908,8 @@ export type GuildQuery = {
     __typename?: 'Guild';
     id: string;
     name: string;
+    icon?: string | null;
+    memberCount: number;
     settings: { __typename?: 'GuildSettings'; readonly: boolean };
     channels: Array<
       | {
@@ -1892,6 +1894,8 @@ export const GuildDocument = {
               selections: [
                 { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'memberCount' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'settings' },
