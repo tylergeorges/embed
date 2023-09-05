@@ -66,7 +66,7 @@ export const CategoryContainer = styled.withConfig({
 })('div', {
   width: '100%',
   boxSizing: 'border-box',
-  paddingTop: theme.space.xl,
+  paddingTop: theme.space.md,
   zIndex: theme.zIndices.channelsSidebar,
 
   fontWeight: theme.fontWeights.medium,
@@ -79,7 +79,10 @@ export const ChannelNameWrapper = styled.withConfig({
   height: 'auto',
   maxHeight: theme.sizes.channelNameHeight,
   overflow: 'hidden',
-  marginY: theme.space.xxs,
+
+  // @ts-expect-error
+  // Message renderer tokens override this without .value
+  marginY: theme.space.xxs.value,
   transition: 'max-height ease',
   transitionDuration: theme.transitions.defaultDuration,
 
@@ -204,12 +207,7 @@ export const ThreadNameInner = styled.withConfig({
 export const ChannelsWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'channels-wrapper'
-})('div', {
-  display: 'flex',
-  flexDirection: 'column',
-  width: '100%',
-  boxSizing: 'border-box'
-});
+})('div', {});
 
 export const ThreadsWrapper = styled.withConfig({
   componentId: commonComponentId,

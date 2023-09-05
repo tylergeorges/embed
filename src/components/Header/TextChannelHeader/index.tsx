@@ -1,3 +1,4 @@
+import { Header } from '@components/Header';
 import * as Styles from '@components/Header/styles';
 import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
 import { ModalContextState } from '@components/Providers/ModalProvider';
@@ -10,7 +11,12 @@ import * as SkeletonStyles from '@components/Shared/SkeletonLoaders';
 import { useStoreState } from '@state';
 import { useContext } from 'react';
 
-export const ChannelHeader = () => {
+interface ChannelHeaderProps {
+  channelName?: string;
+  topic?: string;
+}
+
+export const TextChannelHeader = ({ channelName, topic }: ChannelHeaderProps) => {
   const currentChannel = useStoreState(state => state.guild.currentChannel);
   const { show } = useContext(ModalContextState);
 
@@ -20,17 +26,20 @@ export const ChannelHeader = () => {
   };
 
   return (
-    <Styles.ChannelHeaderRoot>
+    <Header>
+      <Hamburger />
       <Styles.ChannelHeaderNameWrapper role="dialog" aria-modal="true">
-        <Hamburger />
-
         <Styles.ChannelNameTopicWrapper>
-          {currentChannel ? (
+          {currentChannel || channelName ? (
             <>
               <Icons icon="TextChannelHash" size="regular" color="channel" />
-              <Styles.ChannelHeaderName>{currentChannel.name}</Styles.ChannelHeaderName>
+
+              <Styles.ChannelHeaderName>
+                {channelName ?? currentChannel?.name}
+              </Styles.ChannelHeaderName>
+
               <Styles.ChannelHeaderTopic onClick={openTopicModal}>
-                {currentChannel.topic}
+                {topic ?? currentChannel?.topic}
               </Styles.ChannelHeaderTopic>
             </>
           ) : (
@@ -43,12 +52,16 @@ export const ChannelHeader = () => {
         </Styles.ChannelNameTopicWrapper>
       </Styles.ChannelHeaderNameWrapper>
 
-      <ThreadsPopout>
-        <ThreadsButton />
-      </ThreadsPopout>
+      {!topic && !channelName && (
+        <>
+          <ThreadsPopout>
+            <ThreadsButton />
+          </ThreadsPopout>
 
-      <PinButton />
-      <MembersButton />
-    </Styles.ChannelHeaderRoot>
+          <PinButton />
+          <MembersButton />
+        </>
+      )}
+    </Header>
   );
 };

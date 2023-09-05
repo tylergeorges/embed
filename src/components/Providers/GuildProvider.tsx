@@ -4,6 +4,11 @@ import { useStoreActions, useStoreState } from '@state';
 import { Loading } from '@components/Overlays/Loading';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useQuery } from '@apollo/client';
+import { useContextMenu } from '@hooks/useContextMenu';
+import dynamic from 'next/dynamic';
+import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
+import { Channel, GuildSettings } from '@graphql/graphql';
+import * as Styles from '../Core/styles';
 
 interface GuildProviderProps {
   children: React.ReactNode;
@@ -14,9 +19,13 @@ const guildDocument = graphql(/* GraphQL */ `
     guild(id: $id) {
       id
       name
+      icon
+      memberCount
+
       settings {
         readonly
       }
+
       channels {
         id
         name
@@ -54,12 +63,19 @@ const guildDocument = graphql(/* GraphQL */ `
   }
 `);
 
+const ContextMenu = dynamic(() =>
+  import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
+);
+
 export default function GuildProvider({ children }: GuildProviderProps) {
   const { guildId, router, isRouteLoaded } = useAppRouter();
 
   const { data, loading } = useQuery(guildDocument, {
     variables: { id: guildId }
   });
+
+  const { disableBrowserMenu } = useContextMenu();
+  const showContextMenu = useStoreState(state => state.ui.showContextMenu);
 
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
@@ -74,14 +90,22 @@ export default function GuildProvider({ children }: GuildProviderProps) {
 
     if (data && !loading) {
       setGuildData(data.guild);
-      // @ts-expect-error
-      setSettings(data.guild.settings);
-      // @ts-expect-error
-      setChannels(data.guild.channels);
+      setSettings(data.guild.settings as GuildSettings);
+      setChannels(data.guild.channels as Channel[]);
     }
   }, [data, loading, setChannels, setGuildData, setSettings, guildId, router, isRouteLoaded]);
 
   if (loading || !data || channels === undefined) return <Loading />;
 
-  return <>{children}</>;
+  return (
+    <Styles.Main onContextMenu={disableBrowserMenu}>
+      <Styles.InnerMain>
+        <ChannelsSidebar />
+
+        {showContextMenu && <ContextMenu />}
+
+        {children}
+      </Styles.InnerMain>
+    </Styles.Main>
+  );
 }

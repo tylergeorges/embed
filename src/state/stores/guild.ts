@@ -1,12 +1,9 @@
 /* eslint-disable prefer-object-spread */
 import { Action, Computed, action, computed } from 'easy-peasy';
-import { Category, Channel, GuildSettings } from '@graphql/graphql';
+import { Category, Channel, GuildQuery, GuildSettings } from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
 
-export interface IGuild {
-  id: string;
-  name: string;
-}
+export type GuildData = GuildQuery['guild'];
 
 export interface IThread extends Channel {
   id: string;
@@ -20,14 +17,14 @@ export type GuildChannels = {
 
 export interface GuildStore {
   guildChannels: Computed<GuildStore, GuildChannels>;
-  data?: IGuild;
+  data?: GuildData;
   settings?: GuildSettings;
   channels?: Channel[];
   categories?: Category[];
   currentThread: Channel | undefined;
   currentChannel: { name: string; topic: string } | undefined;
 
-  setData: Action<GuildStore, IGuild>;
+  setData: Action<GuildStore, GuildData>;
   setSettings: Action<GuildStore, GuildSettings>;
   setChannels: Action<GuildStore, Channel[]>;
   setCurrentThread: Action<GuildStore, Channel>;

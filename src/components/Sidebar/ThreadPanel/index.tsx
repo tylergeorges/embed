@@ -3,18 +3,16 @@ import * as Styles from '@components/Sidebar/styles';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { MessageContainer } from '@components/Core/TextChannelContainer/MessageContainer';
 import { ThreadPanelHeader } from '@components/Header/ThreadPanelHeader';
+import { useModal } from '@hooks/useModal';
 
-interface ThreadPanelProps {
-  isOpen: boolean;
-  hideModal: () => void;
-}
-
-export const ThreadPanel = ({ isOpen, hideModal }: ThreadPanelProps) => {
+export const ThreadPanel = () => {
   const { guildId, channelId, router } = useAppRouter();
-
+  const { waitForElementRef, closeModal, isOpen, removeAfterTransitionEnd } = useModal({
+    modalId: 'thread-panel'
+  });
   // Remove panel entirely from DOM after it's been transitioned off screen
   const closePanel = () => {
-    hideModal();
+    closeModal();
     router.push(`/channels/${guildId}/${channelId}`);
   };
 
@@ -24,6 +22,8 @@ export const ThreadPanel = ({ isOpen, hideModal }: ThreadPanelProps) => {
         '@initial': false,
         '@small': true
       }}
+      onTransitionEnd={removeAfterTransitionEnd}
+      ref={waitForElementRef}
       isOpen={isOpen}
     >
       <Styles.ThreadsPanelSeperator

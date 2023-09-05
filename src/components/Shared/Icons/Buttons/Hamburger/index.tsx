@@ -1,6 +1,5 @@
-import ModalProvider from '@components/Providers/ModalProvider';
-import { SyntheticEvent, useContext } from 'react';
-import { useIsModalOpen } from '@hooks/useIsModalOpen';
+import { SyntheticEvent } from 'react';
+import { useStoreActions, useStoreState } from '@state';
 import * as Styles from './styles';
 
 interface Props {
@@ -8,22 +7,18 @@ interface Props {
 }
 
 export const Hamburger = ({ thread = false }: Props) => {
-  const isChannelsListOpen = useIsModalOpen('sidebar-channels-list');
-  const { hide, show } = useContext(ModalProvider.context);
+  const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
+  const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
 
   const handleClick = (e: SyntheticEvent) => {
     e.preventDefault();
 
-    if (isChannelsListOpen) {
-      hide('sidebar-channels-list');
-    } else {
-      show('sidebar-channels-list');
-    }
+    setIsChannelsListOpen(!isChannelsListOpen);
   };
 
   return (
     <Styles.Ham
-      // open={isChannelsListOpen}
+      open={isChannelsListOpen}
       thread={thread}
       // @ts-ignore
       // eslint-disable-next-line react/jsx-no-bind

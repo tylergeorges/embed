@@ -5,21 +5,21 @@ import { MembersSidebar } from '@components/Sidebar/MembersSidebar';
 import { useCallback, useEffect } from 'react';
 
 import { Backdrop } from '@components/Overlays/Modal/styles';
-import ModalProvider from '@components/Providers/ModalProvider';
+import { TextChannelHeader } from '@components/Header/TextChannelHeader';
 import { useIsModalOpen } from '@hooks/useIsModalOpen';
 import * as Styles from './styles';
 import { MessageContainer } from './MessageContainer';
-import { TextChannelHeader } from './TextChannelHeader';
 
 export const TextChannelContainer = () => {
   const windowIsMobile = useMediaQuery('screen and (max-width: 768px)');
   const { channelId } = useAppRouter();
 
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
-  const isChannelsListOpen = useIsModalOpen('sidebar-channels-list');
-  const isThreadsPanelOpen = useIsModalOpen('sidebar-threads-panel');
+  const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
+  const isThreadsPanelOpen = useIsModalOpen('thread-panel');
 
   const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
+  const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
 
   const setCurrentChannel = useStoreActions(state => state.guild.setCurrentChannel);
 
@@ -34,10 +34,16 @@ export const TextChannelContainer = () => {
 
   const hideSidebar = useCallback(() => {
     if ((windowIsMobile && isChannelsListOpen) || (windowIsMobile && isMembersListOpen)) {
-      ModalProvider.hide('sidebar-channels-list');
       setIsMembersListOpen(false);
+      setIsChannelsListOpen(false);
     }
-  }, [isChannelsListOpen, isMembersListOpen, windowIsMobile, setIsMembersListOpen]);
+  }, [
+    isChannelsListOpen,
+    isMembersListOpen,
+    windowIsMobile,
+    setIsMembersListOpen,
+    setIsChannelsListOpen
+  ]);
 
   return (
     <Styles.TextChannelWrapper

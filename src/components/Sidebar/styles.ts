@@ -1,4 +1,5 @@
 import { theme, styled, commonComponentId } from '@stitches';
+import { TextChannelWrapper } from '@components/Core/TextChannelContainer/styles';
 
 export const SidebarWrapper = styled.withConfig({
   componentId: commonComponentId,
@@ -121,6 +122,7 @@ export const ThreadPanelWrapper = styled.withConfig({
   zIndex: theme.zIndices.modal,
   transition: theme.transitions.defaultTransform,
   backgroundColor: theme.colors.background,
+  transform: 'translateX(0%)',
 
   variants: {
     isOpen: {
@@ -162,4 +164,33 @@ export const ThreadsPanelSeperator = styled.withConfig({
       }
     }
   }
+});
+
+export const GuildRoot = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'guild-root'
+})(TextChannelWrapper, {
+  position: 'relative'
+});
+
+export const WbIconContainer = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'wb-icon_wrapper'
+})('div', {
+  height: '100%',
+  display: 'flex',
+  position: 'relative',
+  alignItems: 'center',
+  justifyContent: 'center',
+  width: `100%`
+});
+
+export const WbIconRoot = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'wb-icon_root'
+})('svg', {
+  width: 'auto',
+  height: '35%',
+  color: theme.colors.textPrimary,
+  opacity: 0.08
 });

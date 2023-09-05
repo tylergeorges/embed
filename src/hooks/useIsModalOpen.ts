@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import ModalProvider from '@components/Providers/ModalProvider';
+import { ModalContextState } from '@components/Providers/ModalProvider';
 
 export function useIsModalOpen(modalId: string) {
-  const modalState = useContext(ModalProvider.context);
+  const modalState = useContext(ModalContextState);
 
-  return modalState.modals.find(m => m.id === modalId) ?? false;
+  return modalState.modals.find(m => m.id === modalId)?.isOpen ?? false;
 }

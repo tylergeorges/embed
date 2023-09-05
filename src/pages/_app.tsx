@@ -4,11 +4,11 @@ import { StoreProvider } from 'easy-peasy';
 import { store } from '@state/store';
 import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
-import GuildProvider from '@components/Providers/GuildProvider';
 import '../i18n';
 import React from 'react';
-import ModalProvider from '@components/Providers/ModalProvider';
+import { ModalProvider } from '@components/Providers/ModalProvider';
 import { ApolloProvider } from '@apollo/client';
+import GuildProvider from '@components/Providers/GuildProvider';
 
 const globalStyles = globalCss({
   '@font-face': [
@@ -43,7 +43,7 @@ const globalStyles = globalCss({
     overflow: 'hidden',
     boxSizing: 'border-box',
 
-    backgroundColor: theme.colors.background
+    backgroundOverlay: theme.colors.background
   },
   body: {
     padding: 0,
@@ -153,9 +153,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       <StoreProvider store={store}>
         <ApolloProvider client={client}>
           <GuildProvider>
-            <ModalProvider.Provider>
+            <ModalProvider>
               <Component {...pageProps} />
-            </ModalProvider.Provider>
+            </ModalProvider>
           </GuildProvider>
         </ApolloProvider>
       </StoreProvider>

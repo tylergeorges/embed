@@ -1,5 +1,5 @@
 import * as Styles from '@components/Overlays/Modal/styles';
-import { useModal } from '@components/Providers/ModalProvider';
+import { useModal } from '@hooks/useModal';
 
 interface ModalProps {
   children: ({ closeModal }: { closeModal: () => void }) => React.ReactNode;

@@ -28,7 +28,7 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     const setContextMenuData = useStoreActions(state => state.ui.setContextMenuData);
     const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
 
-    const { channelId, guildId } = useAppRouter();
+    const { channelId, guildId, router } = useAppRouter();
 
     useEffect(() => {
       if (isActive && ref) {
@@ -43,6 +43,8 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
     const handleChannelClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       setCurrentChannelYPos(e.currentTarget.offsetTop);
       setInitChannelYPos(e.currentTarget.offsetTop);
+
+      router.push(`/channels/${guildId}/${channel.id}`);
     };
 
     const handleContextMenuClick = (e: React.MouseEvent) => {
@@ -59,8 +61,8 @@ export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
       <Styles.ChannelNameWrapper
         key={channel.id}
         draggable={false}
-        onClick={handleChannelClick}
         isActive={isActive}
+        onClick={handleChannelClick}
         isCategoryOpen={isCategoryOpen}
         isThread={isThread}
         onContextMenu={handleContextMenuClick}

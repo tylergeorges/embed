@@ -1,28 +1,20 @@
-import { useStoreState } from '@state';
-import { Header } from '@components/Header';
+import { useStoreActions, useStoreState } from '@state';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { Backdrop } from '@components/Overlays/Modal/styles';
-import { useModal } from '@components/Providers/ModalProvider';
-import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useRef } from 'react';
+import { GuildHeader } from '@components/Header/GuildHeader';
+import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
 import * as Styles from '../styles';
 import { Category } from './Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
 
-interface ChannelsSidebarProps {
-  isOpen: boolean;
-}
-export const ChannelsSidebar = ({ isOpen }: ChannelsSidebarProps) => {
+export const ChannelsSidebar = () => {
   const { channelId, threadId } = useAppRouter();
+  const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
+  const setIsChannelsListOpen = useStoreActions(state => state.ui.setIsChannelsListOpen);
 
-  const { closeModal, waitForElementRef, removeAfterTransitionEnd } = useModal({
-    modalId: 'sidebar-channels-list',
-    openByDefault: isOpen
-  });
-
-  const guildName = useStoreState(state => state.guild.data?.name) as string;
   const categories = useStoreState(state => state.guild.categories);
   const channels = useStoreState(state => state.guild.channels);
 
@@ -33,9 +25,7 @@ export const ChannelsSidebar = ({ isOpen }: ChannelsSidebarProps) => {
   const { hideContextMenu, disableBrowserMenu } = useContextMenu();
 
   const closeChannelsList = () => {
-    // ModalProvider.hide('sidebar-channels-list');
-
-    closeModal();
+    setIsChannelsListOpen(false);
   };
 
   return (
@@ -46,25 +36,21 @@ export const ChannelsSidebar = ({ isOpen }: ChannelsSidebarProps) => {
           '@initial': false,
           '@small': true
         }}
-        isChannelsListOpen={isOpen}
-        isOpen={isOpen && windowIsMobile}
+        isChannelsListOpen={isChannelsListOpen}
+        isOpen={isChannelsListOpen && windowIsMobile}
       />
 
       <Styles.ChannelsSidebarWrapper
         type="channelsList"
-        channelsListOpen={isOpen}
+        channelsListOpen={isChannelsListOpen}
         onClick={hideContextMenu}
-        onTransitionEnd={removeAfterTransitionEnd}
         className="scrollbar-thin"
         onContextMenu={disableBrowserMenu}
-        ref={waitForElementRef}
       >
-        <Styles.GuildHeaderWrapper>
-          <Header name={guildName} isChannelHeader={false} />
-        </Styles.GuildHeaderWrapper>
+        <GuildHeader />
 
         <Styles.ChannelsChildrenWrapper>
-          <ChannelHighlighter />
+          {channelId && <ChannelHighlighter />}
 
           {channels
             ?.filter(channel => channel.category === null)
