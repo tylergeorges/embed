@@ -79,9 +79,7 @@ export const ThreadsPanelContainer = styled.withConfig({
   width: '100%',
   height: '100%',
 
-  transition: theme.transitions.defaultTransform,
-
-  backgroundColor: theme.colors.background
+  transition: theme.transitions.defaultTransform
 });
 
 export const ThreadPanelWrapper = styled.withConfig({
@@ -94,11 +92,20 @@ export const ThreadPanelWrapper = styled.withConfig({
   right: 0,
 
   height: '100%',
-  minWidth: theme.sizes.threadPanelMinWidth,
+  width: theme.sizes.threadPanelMinWidth,
 
-  zIndex: theme.zIndices.modal,
+  zIndex: theme.zIndices.channelsSidebarBackdrop,
   transition: theme.transitions.defaultTransform,
-  backgroundColor: theme.colors.background,
+
+  '&:before': {
+    content: '',
+    position: 'relative',
+    height: '100%',
+    width: theme.sizes.panelSeperatorWidth,
+
+    backgroundColor: theme.colors.borderDark,
+    zIndex: theme.zIndices.channelsSidebarBackdrop
+  },
 
   variants: {
     isOpen: {
@@ -111,32 +118,11 @@ export const ThreadPanelWrapper = styled.withConfig({
       true: {
         width: '100%'
       }
-    }
-  }
-});
-
-export const ThreadsPanelSeperator = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'panel-threads_seperator'
-})('div', {
-  transform: `translateX(-${theme.sizes.panelSeperatorWidth})`,
-
-  height: '100%',
-  width: theme.sizes.panelSeperatorWidth,
-
-  backgroundColor: theme.colors.borderDark,
-  zIndex: theme.zIndices.modal,
-
-  variants: {
-    isOpen: {
-      false: {
-        opacity: 0
-      }
     },
 
-    mobile: {
+    isFullscreen: {
       true: {
-        opacity: 0
+        width: `calc(100% - (${theme.sizes.sideBarWidth} - ${theme.sizes.panelSeperatorWidth}))`
       }
     }
   }

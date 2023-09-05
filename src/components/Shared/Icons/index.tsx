@@ -32,13 +32,23 @@ export interface IconProps extends React.ComponentProps<typeof IconRoot> {
   customViewbox?: string;
 }
 
-export const Icons = ({ icon, color, css, size, type, iconContent, customViewbox }: IconProps) => (
+export const Icons = ({
+  icon,
+  color,
+  css,
+  size,
+  type,
+  iconContent,
+  customViewbox,
+  ...props
+}: IconProps) => (
   <IconRoot
     css={css}
     size={size ?? 'regular'}
     type={type}
     color={color ?? 'light'}
     viewBox={customViewbox ?? '0 0 24 24'}
+    {...props}
   >
     <use href={`${iconData[icon]}#svg`} />
     {iconContent}

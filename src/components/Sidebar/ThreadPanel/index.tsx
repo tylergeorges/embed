@@ -13,6 +13,8 @@ export const ThreadPanel = () => {
   const removeFromDOMTimeout = useRef<NodeJS.Timeout>();
   const transitionDuration = useRef(0);
 
+  const isThreadFullscreen = useStoreState(state => state.ui.isThreadFullscreen);
+
   const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
 
   const setIsTransitionedThreadsPanelOpen = useStoreActions(
@@ -69,16 +71,9 @@ export const ThreadPanel = () => {
         '@small': true
       }}
       isOpen={isTransitionedThreadsPanelOpen}
+      isFullscreen={isThreadFullscreen}
       ref={threadPanelRef}
     >
-      <Styles.ThreadsPanelSeperator
-        mobile={{
-          '@initial': false,
-          '@small': true
-        }}
-        isOpen={isTransitionedThreadsPanelOpen}
-      />
-
       <Styles.ThreadsPanelContainer>
         <ThreadPanelHeader startPanelHideTransition={startPanelHideTransition} />
 

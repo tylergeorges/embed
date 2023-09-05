@@ -22,7 +22,21 @@ export const IconRoot = styled.withConfig({
 
     type: {
       headerIcon: {
+        marginLeft: theme.space.sm
+      }
+    },
+
+    marginX: {
+      sm: {
         marginX: theme.space.sm
+      },
+
+      md: {
+        marginX: theme.space.md
+      },
+
+      lg: {
+        marginX: theme.space.lg
       }
     },
 

@@ -71,21 +71,6 @@ export const Ham = styled.withConfig({
           }
         }
       }
-    },
-
-    thread: {
-      true: {
-        color: 'transparent',
-
-        div: {
-          '&::before, &::after': {
-            color: theme.colors.accent,
-            width: 'inherit',
-            right: -1,
-            top: 0
-          }
-        }
-      }
     }
   }
 });
