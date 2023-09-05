@@ -29,7 +29,7 @@ const ThreadPopoutItem = ({ thread, latestMessage, daysSinceMessage }: ThreadPop
   };
 
   return (
-    <Styles.ThreadsPopoutListItem onClick={handleThreadClick}>
+    <Styles.ThreadsPopoutListItem onClick={handleThreadClick} tabIndex={0} role="button">
       <Styles.ThreadName>{thread.name}</Styles.ThreadName>
 
       <Styles.ThreadContentWrapper>
@@ -75,7 +75,7 @@ export const ChannelThreads = ({ threads }: ChannelThreadsProps) => {
   };
 
   return (
-    <Styles.ThreadsPopoutContent>
+    <Styles.ThreadsPopoutContent onClick={e => e.stopPropagation()}>
       <Styles.ThreadsPopoutList>
         {' '}
         {threads.map(thread => {

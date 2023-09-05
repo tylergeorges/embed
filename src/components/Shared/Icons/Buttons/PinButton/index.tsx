@@ -17,6 +17,7 @@ export const PinButton = () => {
       tooltipLabel={translate.t('pinnedmessages.tooltip') as string}
       tooltipPlacement="bottom"
       onClick={openPinsModal}
+      isActive={showPinsModal}
     />
   );
 };
