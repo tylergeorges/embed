@@ -14,7 +14,12 @@ const ThreadPopoutItem = ({ thread }: { thread: Channel }) => {
 
   const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
 
+  const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
+
   const handleThreadClick = () => {
+    // Adds element to DOM
+    setIsDomThreadsPanelOpen(true);
+
     setCurrentThread(thread);
 
     router.push(`/channels/${guildId}/${channelId}?thread=${thread.id}`);

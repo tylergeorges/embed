@@ -72,7 +72,7 @@ const ThreadPanel = dynamic(() =>
 );
 
 export default function GuildProvider({ children }: GuildProviderProps) {
-  const { guildId, router, isRouteLoaded } = useAppRouter();
+  const { guildId, router, isRouteLoaded, threadId, channelId } = useAppRouter();
 
   const { data, loading } = useQuery(guildDocument, {
     variables: { id: guildId }
@@ -81,9 +81,12 @@ export default function GuildProvider({ children }: GuildProviderProps) {
   const { disableBrowserMenu } = useContextMenu();
   const showContextMenu = useStoreState(state => state.ui.showContextMenu);
 
+  const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
+
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
   const setChannels = useStoreActions(state => state.guild.setChannels);
+  const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
   const channels = useStoreState(state => state.guild.channels);
 
   useEffect(() => {
@@ -96,7 +99,18 @@ export default function GuildProvider({ children }: GuildProviderProps) {
       setGuildData(data.guild);
       setSettings(data.guild.settings as GuildSettings);
       setChannels(data.guild.channels as Channel[]);
+
+      const currentChannel = data.guild.channels.find(ch => ch.id === channelId);
+
+      if (threadId && currentChannel?.threads) {
+        setCurrentThread(currentChannel.threads.find(ch => ch.id === threadId) as Channel);
+
+        // Adds element to DOM
+        setIsDomThreadsPanelOpen(true);
+      }
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, loading, setChannels, setGuildData, setSettings, guildId, router, isRouteLoaded]);
 
   if (loading || !data || channels === undefined) return <Loading />;

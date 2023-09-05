@@ -50,7 +50,7 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
         handleBottomStateChanged={handleBottomStateChanged}
       />
 
-      <TextBox />
+      <TextBox channelIsThread={channelIsThread} />
     </Styles.MessageWrapper>
   );
 };
