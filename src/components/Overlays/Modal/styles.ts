@@ -115,6 +115,22 @@ export const Backdrop = styled.withConfig({
   ]
 });
 
+export const ModalOuterWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-outer_wrapper'
+})('div', {
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  top: 0,
+  right: 0,
+  pointerEvents: 'auto',
+
+  '&:hover': {
+    pointerEvents: 'none'
+  }
+});
+
 export const ModalContainerWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-container_wrapper'
