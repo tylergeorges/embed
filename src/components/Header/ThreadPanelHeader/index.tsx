@@ -18,7 +18,7 @@ export const ThreadPanelHeader = ({ startPanelHideTransition }: ThreadPanelHeade
         <CloseButton onClick={startPanelHideTransition} />
 
         <Styles.ThreadPanelHeaderIconContent>
-          <Icons icon="ThreadHash" color="channel" type="headerIcon" />
+          <Icons icon="ThreadHash" color="channel" />
           {currentThread?.name}
         </Styles.ThreadPanelHeaderIconContent>
 

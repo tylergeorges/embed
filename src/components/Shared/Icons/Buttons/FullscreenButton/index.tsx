@@ -1,7 +1,9 @@
 import { useStoreActions, useStoreState } from '@state';
 import * as Styles from '@icons/Buttons/IconButtonWrapper/styles';
+import { useMediaQuery } from '@hooks/useMediaQuery';
 
 export const FullscreenButton = () => {
+  const isWindowMobile = useMediaQuery();
   const isThreadFullscreen = useStoreState(state => state.ui.isThreadFullscreen);
   const setIsThreadFullscreen = useStoreActions(state => state.ui.setIsThreadFullscreen);
 
@@ -12,6 +14,9 @@ export const FullscreenButton = () => {
 
     setIsThreadFullscreen(!isThreadFullscreen);
   };
+
+  if (isWindowMobile) return <></>;
+
   return (
     <Styles.IconRoot
       onClick={fullscreenThread}

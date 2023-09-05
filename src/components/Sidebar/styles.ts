@@ -94,8 +94,10 @@ export const ThreadPanelWrapper = styled.withConfig({
   height: '100%',
   width: theme.sizes.threadPanelMinWidth,
 
-  zIndex: theme.zIndices.channelsSidebarBackdrop,
+  zIndex: theme.zIndices.channelsSidebar,
+  // zIndex: theme.zIndices.channelsSidebarBackdrop,
   transition: theme.transitions.defaultTransform,
+  backgroundOverlay: theme.colors.background,
 
   '&:before': {
     content: '',
@@ -116,7 +118,7 @@ export const ThreadPanelWrapper = styled.withConfig({
 
     mobile: {
       true: {
-        width: '100%'
+        width: `calc(100% + ${theme.sizes.panelSeperatorWidth})`
       }
     },
 
