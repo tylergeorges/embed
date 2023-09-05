@@ -1,11 +1,10 @@
 import { theme, styled, commonComponentId } from '@stitches';
+import Image from 'next/image';
 
 export const ChannelHeaderContainer = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'text-channel_header_container'
 })('div', {
-  width: '100%',
-  display: 'flex',
   backgroundColor: theme.colors.background
 });
 
@@ -23,9 +22,15 @@ export const HeaderRoot = styled.withConfig({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
+  flexGrow: 1,
+  diplay: 'flex',
+  flexShrink: 1,
+  width: '100%',
+  color: theme.colors.textPrimary,
 
   height: theme.sizes.headerHeight,
-  width: '100%',
+  padding: theme.space.md.value,
+
   boxShadow: theme.shadows.headerBorder,
 
   variants: {
@@ -47,16 +52,29 @@ export const HeaderMainContentRoot = styled.withConfig({
   displayName: 'header-main_content_root'
 })('h1', {
   fontSize: theme.fontSizes.lg,
-  margin: 0,
   fontWeight: theme.fontWeights.semibold,
-  color: theme.colors.headerPrimary,
-  height: 24
+  color: theme.colors.headerPrimary
 });
 
 export const GuildHeaderName = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'guild-header_name'
-})(HeaderMainContentRoot, {});
+})(HeaderMainContentRoot, {
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  flexGrow: 1,
+  margin: 0,
+  marginX: theme.space.lg
+});
+
+export const GuildIcon = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'guild-icon'
+})(Image, {
+  size: theme.sizes.iconSizeMd,
+  borderRadius: theme.radii.round
+});
 
 export const ChannelHeaderName = styled.withConfig({
   componentId: commonComponentId,
@@ -86,22 +104,34 @@ export const Stretch = styled.withConfig({
 export const GuildHeader = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'guild-header'
-})(Stretch, {
+})(HeaderRoot, {
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center'
+  justifyContent: 'space-around',
+  padding: theme.space.lg
+});
+
+export const GuildMemberCount = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'guild-member_count'
+})('span', {
+  fontWeight: theme.fontWeights.semibold,
+  fontSize: theme.fontSizes.sm,
+  backgroundColor: theme.colors.accentAlt,
+
+  padding: theme.space.xxs.value,
+  borderRadius: theme.radii.round
 });
 
 export const ChannelHeaderRoot = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'text-channel_header'
-})(Stretch, {
+})(HeaderRoot, {
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
 
-  width: '100%',
   paddingX: theme.space.sm,
 
   zIndex: theme.zIndices.modal
@@ -145,7 +175,9 @@ export const ChannelHeaderNameWrapper = styled.withConfig({
 })('div', {
   width: '100%',
   display: 'flex',
-  alignItems: 'center'
+  alignItems: 'center',
+  justifyContent: 'center',
+  height: '100%'
 });
 
 export const ChannelNameTopicWrapper = styled.withConfig({

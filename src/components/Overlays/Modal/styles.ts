@@ -224,7 +224,7 @@ export const ModalHeaderContent = styled.withConfig({
   displayName: 'modal-header_content'
 })(HeaderMainContentRoot, {
   display: 'flex',
-
+  marginBottom: 0,
   userSelect: 'none',
   width: '100%',
   cursor: 'default',
@@ -284,9 +284,8 @@ export const ModalSubheaderContent = styled.withConfig({
   fontSize: theme.fontSizes.lg,
   color: theme.colors.textMuted,
   fontWeight: '$medium',
-
   cursor: 'default',
-  marginBottom: theme.space.xl.value
+  marginTop: 0
 });
 
 export const ModalCloseWrapper = styled.withConfig({

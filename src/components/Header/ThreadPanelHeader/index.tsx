@@ -4,6 +4,7 @@ import { Icons } from '@icons/index';
 import { CloseButton } from '@icons/Buttons/CloseButton';
 import { useStoreState } from '@state';
 import { useMediaQuery } from '@hooks/useMediaQuery';
+import { Header } from '@components/Header';
 
 interface ThreadPanelHeaderProps {
   startPanelHideTransition: () => void;
@@ -14,15 +15,16 @@ export const ThreadPanelHeader = ({ startPanelHideTransition }: ThreadPanelHeade
   const currentThread = useStoreState(state => state.guild.currentThread);
 
   return (
-    <Styles.ThreadPanelHeaderRoot>
+    <Header>
       <Styles.ThreadPanelHeaderIconContainer>
         <Styles.ThreadPanelHeaderIconContent>
           {windowIsMobile && <Hamburger />}
           <Icons icon="ThreadHash" color="dark" type="headerIcon" />
           {currentThread?.name}
         </Styles.ThreadPanelHeaderIconContent>
+
         <CloseButton onClick={startPanelHideTransition} />
       </Styles.ThreadPanelHeaderIconContainer>
-    </Styles.ThreadPanelHeaderRoot>
+    </Header>
   );
 };

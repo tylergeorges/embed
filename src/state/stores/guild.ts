@@ -11,7 +11,17 @@ import {
   ThreadChannel
 } from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
-import { GuildChannels } from 'types/guild.types';
+import { APIChannel } from 'discord-api-types/v10';
+
+export interface IThread extends Channel {
+  id: string;
+  name: string;
+  __typename: 'ThreadChannel';
+}
+
+export type GuildChannels = {
+  [channelId: string]: Channel | (APIChannel & { threads?: Channel[] });
+};
 
 export interface GuildStore {
   guildChannels: Computed<GuildStore, GuildChannels>;
