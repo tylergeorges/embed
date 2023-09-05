@@ -78,8 +78,7 @@ export const ChannelNameWrapper = styled.withConfig({
 })('div', {
   height: 'auto',
   maxHeight: theme.sizes.channelNameHeight,
-  overflow: 'hidden',
-
+  // overflow: 'hidden',
   // @ts-expect-error
   // Message renderer tokens override this without .value
   marginY: theme.space.xxs.value,
@@ -131,7 +130,8 @@ export const ChannelNameWrapper = styled.withConfig({
       css: {
         maxHeight: 0,
         margin: 0,
-        padding: 0
+        padding: 0,
+        overflow: 'hidden'
       }
     },
 

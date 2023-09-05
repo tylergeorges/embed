@@ -3,6 +3,8 @@ import { graphql } from '@graphql/gql';
 import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useApolloClient, useQuery } from '@apollo/client';
+import { getToken } from '@graphql/client';
+import { Channel } from '@graphql/graphql';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -190,10 +192,20 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
           variables: { id: guildId },
           updateQuery: (prev, { fetchMoreResult }) => {
             // Weird type error when casting
-            // @ts-expect-error
-            const guild = fetchMoreResult.guild as Guild;
+            const { guild } = fetchMoreResult;
 
-            setChannels(guild.channels);
+            const token = getToken();
+
+            // When user logs out
+            if (!token) {
+              const nonAuthChannel = guild.channels[0];
+
+              router.push(`/channels/${guildId}/${nonAuthChannel.id}`);
+            }
+
+            // @ts-expect-error
+            // Error when casting type to Channel Array
+            setChannels(guild.channels as Channel[]);
             setRefetchGuild(false);
 
             return fetchMoreResult;
