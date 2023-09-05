@@ -17,8 +17,7 @@ const iconData = {
   Pin: svgUrls.IconPin,
   NoPins: svgUrls.IconNoPins,
   AddAttachment: svgUrls.IconAddAttachment,
-  Close: svgUrls.IconCross,
-  Members: svgUrls.IconMembers
+  Close: svgUrls.IconCross
 };
 
 type IconNames = keyof typeof iconData;

@@ -3,7 +3,6 @@ import * as Styles from '@components/Header/styles';
 import { ThreadsPopout } from '@components/Overlays/Modal/Popout/ThreadsPopout';
 import { Icons } from '@components/Shared/Icons';
 import { Hamburger } from '@components/Shared/Icons/Buttons/Hamburger';
-import { MembersButton } from '@components/Shared/Icons/Buttons/MembersButton';
 import { PinButton } from '@components/Shared/Icons/Buttons/PinButton';
 import { ThreadsButton } from '@components/Shared/Icons/Buttons/ThreadsButton';
 import * as SkeletonStyles from '@components/Shared/SkeletonLoaders';
@@ -56,7 +55,6 @@ export const TextChannelHeader = ({ channelName, topic }: ChannelHeaderProps) =>
           </ThreadsPopout>
 
           <PinButton />
-          <MembersButton />
         </>
       )}
     </Header>

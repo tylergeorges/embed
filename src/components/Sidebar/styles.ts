@@ -32,20 +32,7 @@ export const SidebarWrapper = styled.withConfig({
       }
     },
 
-    membersListOpen: {
-      false: {
-        transform: `translateX(150%)`
-      },
-      true: {
-        transform: `translateX(0)`
-      }
-    },
-
     type: {
-      membersList: {
-        zIndex: theme.zIndices.membersSidebar
-      },
-
       channelsList: {
         zIndex: theme.zIndices.channelsSidebar
       }
@@ -79,14 +66,6 @@ export const GuildHeaderWrapper = styled.withConfig({
 })('div', {
   textAlign: 'center',
   position: 'relative'
-});
-
-export const MembersSidebarWrapper = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'members-sidebar_wrapper'
-})(SidebarWrapper, {
-  right: 0,
-  boxSizing: 'border-box'
 });
 
 export const ThreadsPanelContainer = styled.withConfig({

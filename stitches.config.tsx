@@ -211,7 +211,7 @@ const stitches = createStitches({
       threadButton: '34px',
 
       /** width: 240px */
-      sideBarWidth: '240px',
+      sideBarWidth: '200px',
 
       /** width: 8px */
       panelSeperatorWidth: '8px',
@@ -242,11 +242,8 @@ const stitches = createStitches({
       /** 0 */
       none: 0,
 
-      /** 0 */
-      membersSidebarBackdrop: '$none',
-
       /** 1 */
-      membersSidebar: 1,
+      default: 1,
 
       /** 10 */
       tooltip: 10,
