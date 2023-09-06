@@ -218,8 +218,8 @@ const stitches = createStitches({
       /** 34px */
       threadButton: '34px',
 
-      /** width: 240px */
-      sideBarWidth: '240px',
+      /** width: 200px */
+      sideBarWidth: '200px',
 
       /** width: 8px */
       panelSeperatorWidth: '8px',
