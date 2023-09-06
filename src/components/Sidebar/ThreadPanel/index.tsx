@@ -43,7 +43,7 @@ export const ThreadPanel = () => {
       }
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isDomThreadsPanelOpen, isTransitionedThreadsPanelOpen]);
 
   // Remove panel entirely from DOM after it's been transitioned off screen
 
@@ -58,6 +58,8 @@ export const ThreadPanel = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!isDomThreadsPanelOpen) return <></>;
 
   return (
     <Styles.ThreadPanelWrapper

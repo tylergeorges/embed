@@ -16,6 +16,10 @@ const ContextMenu = dynamic(() =>
   import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
 );
 
+const ThreadPanel = dynamic(() =>
+  import('@components/Sidebar/ThreadPanel').then(mod => mod.ThreadPanel)
+);
+
 export default function DataProvider({ children }: DataProviderProps) {
   const [isGuildFetched, setIsGuildFetched] = useState(false);
   const [isUserFetched, setIsUserFetched] = useState(false);
@@ -44,6 +48,7 @@ export default function DataProvider({ children }: DataProviderProps) {
         <Styles.Main onContextMenu={disableBrowserMenu}>
           <Styles.InnerMain>
             <ChannelsSidebar />
+            <ThreadPanel />
 
             <ContextMenu />
             <GuestFormModal />
