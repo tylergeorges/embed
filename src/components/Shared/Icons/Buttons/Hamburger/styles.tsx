@@ -6,11 +6,13 @@ export const Ham = styled.withConfig({
 })('button', {
   position: 'relative',
 
-  width: theme.sizes.iconSizeSm,
-  height: theme.sizes.iconSizeMd,
+  width: 20,
+  height: 28,
+  // height: theme.sizes.iconSizeMd,
   flexShrink: 0,
 
-  marginX: theme.space.sm,
+  marginLeft: theme.space.lg,
+  marginRight: theme.space.sm,
 
   border: 'none',
   background: 'none',
@@ -21,13 +23,14 @@ export const Ham = styled.withConfig({
 
   cursor: 'pointer',
   outline: 'none',
+  display: 'block',
 
   '&::before': {
     position: 'absolute',
     display: 'block',
     content: '',
-    top: -8,
-    left: -10,
+    top: -7,
+    left: -9,
 
     width: 40,
     height: 40,
@@ -49,25 +52,31 @@ export const Ham = styled.withConfig({
     open: {
       true: {
         transform: 'rotate(-180deg)',
+        color: theme.colors.accent,
 
         '&::before': {
-          top: -7,
-          left: -9
+          // left: -9,
+          top: -7
         },
 
         div: {
+          backgroundColor: theme.colors.accent,
+
           '&::before': {
             width: 15,
             transform: 'rotate(45deg)',
-            top: -4.8,
+            // top: -4.8,
+            backgroundColor: theme.colors.accent,
+
             right: -3
           },
 
           '&::after': {
-            top: 4.8,
+            // top: 4.8,
             width: 15,
             transform: 'rotate(-45deg)',
-            right: -3
+            right: -3,
+            backgroundColor: theme.colors.accent
           }
         }
       }
@@ -97,11 +106,12 @@ export const Burger = styled.withConfig({
   '&, &::before, &::after': {
     content: '',
     backgroundColor: theme.colors.accent,
-    color: 'inherit',
+    color: theme.colors.accent,
+    // color: 'inherit',
     position: 'absolute',
     height: 2,
     width: '100%',
-    top: 'calc(50% - 2px)',
+    // top: 'calc(50% - 2px)',
     right: 0,
 
     transitionDuration: theme.transitions.defaultDuration,

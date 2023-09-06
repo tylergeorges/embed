@@ -24,16 +24,18 @@ export const TextChannelHeader = ({ channelName, topic }: ChannelHeaderProps) =>
 
   return (
     <Header>
-      <Hamburger />
-      <Styles.ChannelHeaderNameWrapper role="dialog" aria-modal="true">
+      <Styles.ChannelHeaderWrapper>
+        <Hamburger />
         <Styles.ChannelNameTopicWrapper>
           {currentChannel || channelName ? (
             <>
-              <Icons icon="TextChannelHash" size="sm" color="channel" />
+              <Styles.ChannelNameIconWrapper>
+                <Icons icon="TextChannelHash" size="sm" color="channel" marginX="xs" />
 
-              <Styles.ChannelHeaderName>
-                {channelName ?? currentChannel?.name}
-              </Styles.ChannelHeaderName>
+                <Styles.ChannelHeaderName>
+                  {channelName ?? currentChannel?.name}
+                </Styles.ChannelHeaderName>
+              </Styles.ChannelNameIconWrapper>
 
               <Styles.ChannelHeaderTopic onClick={openTopicModal}>
                 {topic ?? currentChannel?.topic}
@@ -47,18 +49,18 @@ export const TextChannelHeader = ({ channelName, topic }: ChannelHeaderProps) =>
             </>
           )}
         </Styles.ChannelNameTopicWrapper>
-      </Styles.ChannelHeaderNameWrapper>
 
-      {!topic && !channelName && (
-        <>
-          <ThreadsPopout>
-            <ThreadsButton />
-          </ThreadsPopout>
+        {!topic && !channelName && (
+          <>
+            <ThreadsPopout>
+              <ThreadsButton />
+            </ThreadsPopout>
 
-          <PinButton />
-          <MembersButton />
-        </>
-      )}
+            <PinButton />
+            <MembersButton />
+          </>
+        )}
+      </Styles.ChannelHeaderWrapper>
     </Header>
   );
 };

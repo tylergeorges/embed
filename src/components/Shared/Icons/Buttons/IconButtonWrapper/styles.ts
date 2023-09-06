@@ -6,6 +6,34 @@ export const IconRoot = styled.withConfig({
   displayName: 'button-icons'
 })('svg', {
   variants: {
+    marginX: {
+      xxs: {
+        // @ts-expect-error
+        marginX: theme.space.xxs.value
+      },
+
+      xs: {
+        // @ts-expect-error
+        marginX: theme.space.xs.value
+      },
+
+      sm: {
+        marginX: theme.space.sm
+      },
+
+      md: {
+        marginX: theme.space.md
+      },
+
+      lg: {
+        marginX: theme.space.lg
+      },
+
+      xl: {
+        marginX: theme.space.xl
+      }
+    },
+
     size: {
       xxs: {
         size: theme.sizes.iconSizeXxs
@@ -16,11 +44,12 @@ export const IconRoot = styled.withConfig({
       },
 
       sm: {
-        size: theme.sizes.iconSizeSm
+        size: theme.sizes.iconSizeSm,
+        width: 'auto'
       },
 
       md: {
-        width: theme.sizes.iconSizeMd
+        size: theme.sizes.iconSizeMd
       },
 
       lg: {

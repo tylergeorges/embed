@@ -19,16 +19,18 @@ export const HeaderRoot = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'header-root'
 })('header', {
-  display: 'flex',
+  position: 'relative',
   justifyContent: 'center',
   alignItems: 'center',
-  flexGrow: 1,
-  diplay: 'flex',
-  flexShrink: 1,
-  width: '100%',
+  // flexGrow: 1,
+  display: 'flex',
+  // flex: 0,
+  flexShrink: 0,
+  // width: '100%',
+  // boxSizing: 'border-box',
 
   height: theme.sizes.headerHeight,
-  padding: theme.space.md.value,
+  padding: theme.space.sm,
 
   boxShadow: theme.shadows.headerBorder,
 
@@ -79,13 +81,15 @@ export const ChannelHeaderName = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'text-channel_header_name'
 })(HeaderMainContentRoot, {
-  marginRight: theme.space.xl,
   textOverflow: 'ellipsis',
   boxSizing: 'border-box',
   alignSelf: 'center',
   whiteSpace: 'nowrap',
   pointerEvents: 'none',
-  userSelect: 'none'
+  userSelect: 'none',
+  fontSize: theme.fontSizes.lg,
+  margin: 0,
+  lineHeight: '20px'
 });
 
 export const Stretch = styled.withConfig({
@@ -120,27 +124,34 @@ export const GuildMemberCount = styled.withConfig({
   borderRadius: theme.radii.round
 });
 
-export const ChannelHeaderRoot = styled.withConfig({
+export const ChannelHeaderWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'text-channel_header'
-})(HeaderRoot, {
+})('div', {
+  flex: 1,
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
 
-  paddingX: theme.space.sm,
-
   zIndex: theme.zIndices.modal
+});
+
+export const ChannelNameIconWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'text-channel_header_name_icon_wrapper'
+})('div', {
+  display: 'flex',
+  alignItems: 'center'
 });
 
 export const ChannelHeaderTopic = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'text-channel_header_topic'
 })('div', {
-  margin: 0,
   paddingX: theme.space.sm,
-
+  display: 'flex',
+  alignItems: 'center',
   color: theme.colors.textMuted,
   fontSize: theme.fontSizes.md,
 
@@ -148,6 +159,8 @@ export const ChannelHeaderTopic = styled.withConfig({
   borderLeftWidth: 1,
   borderLeftColor: theme.colors.primaryOpacity10,
   fontWeight: theme.fontWeights.medium,
+
+  marginX: theme.space.sm,
 
   wordBreak: 'break-word',
   overflow: 'hidden',
@@ -164,9 +177,9 @@ export const ChannelHeaderNameWrapper = styled.withConfig({
 })('div', {
   width: '100%',
   display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  height: '100%'
+  flex: 1
+  // alignItems: 'center',
+  // justifyContent: 'center',
 });
 
 export const ChannelNameTopicWrapper = styled.withConfig({
@@ -175,16 +188,16 @@ export const ChannelNameTopicWrapper = styled.withConfig({
 })(Stretch, {
   display: 'flex',
   alignItems: 'center',
-
-  height: '100%',
-
+  position: 'relative',
   wordBreak: 'break-word'
+
+  // height: 25
 });
 
 export const ThreadPanelHeaderRoot = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'panel-thread_header_root'
-})(ChannelHeaderRoot, {
+})(ChannelHeaderWrapper, {
   height: theme.sizes.headerHeight,
   width: '100%',
 
