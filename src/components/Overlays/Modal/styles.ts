@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const zoomInBounce = keyframes({
   '0%': { scale: '0.5' },
-  '50%': { scale: '1.05' },
+  '50%': { scale: '1.1' },
   '100%': { scale: '1' }
 });
 
@@ -144,16 +144,16 @@ export const ModalContainerWrapper = styled.withConfig({
   height: '100%',
 
   pointerEvents: 'none',
-  zIndex: theme.zIndices.negative,
 
   variants: {
     isOpen: {
       false: {
         zIndex: theme.zIndices.negative,
 
-        transitionDelay: theme.transitions.longerDuration,
+        transitionDelay: theme.transitions.fasterDuration,
         transitionProperty: 'z-index'
       },
+
       true: {
         zIndex: theme.zIndices.modal
       }
@@ -176,14 +176,13 @@ export const ModalContainer = styled.withConfig({
   flexDirection: 'column',
   justifyContent: 'flex-start',
   textAlign: 'left',
-
-  width: 490,
+  padding: theme.space.lg,
 
   borderRadius: 4,
 
   pointerEvents: 'all',
-  backgroundColor: theme.colors.background,
-  zIndex: theme.zIndices.modal,
+  backgroundOverlay: theme.colors.background,
+  zIndex: theme.zIndices.negative,
 
   variants: {
     isOpen: {
@@ -191,8 +190,19 @@ export const ModalContainer = styled.withConfig({
         // Scaling to 0 is not performant, so we trigger it to render on GPU with translate3d
         transform: 'scale(0) rotate(0deg) translate3d(0,0,0)'
       },
+
       true: {
         animation: `${zoomInBounce} ${theme.transitions.longerDuration}  ease`
+      }
+    },
+
+    containerSize: {
+      sm: {
+        width: 310
+      },
+
+      md: {
+        width: 420
       }
     }
   }
@@ -203,8 +213,27 @@ export const ModalHeader = styled.withConfig({
   displayName: 'modal-header'
 })('div', {
   width: '100%',
-  padding: theme.space.lg,
-  paddingRight: theme.space.sm
+  display: 'flex',
+  alignItems: 'center',
+  position: 'relative',
+
+  variants: {
+    direction: {
+      columm: {
+        flexDirection: 'column'
+      },
+
+      row: {
+        flexDirection: 'row'
+      }
+    },
+
+    justify: {
+      center: {
+        justifyContent: 'center'
+      }
+    }
+  }
 });
 
 export const ModalHeaderContent = styled.withConfig({
@@ -212,12 +241,84 @@ export const ModalHeaderContent = styled.withConfig({
   displayName: 'modal-header_content'
 })(HeaderMainContentRoot, {
   display: 'flex',
+  marginBottom: 0,
+  userSelect: 'none',
+  width: '100%',
+  cursor: 'default',
   justifyContent: 'space-between',
+
+  variants: {
+    titleSize: {
+      sm: {
+        fontSize: theme.fontSizes.sm
+      },
+
+      md: {
+        fontSize: theme.fontSizes.md
+      },
+
+      lg: {
+        fontSize: theme.fontSizes.lg
+      },
+
+      xl: {
+        fontSize: theme.fontSizes.xl
+      },
+
+      xxl: {
+        fontSize: theme.fontSizes.xxl.value
+      }
+    },
+
+    titleAlignment: {
+      left: {
+        textAlign: 'left'
+      },
+
+      center: {
+        textAlign: 'center'
+      }
+    },
+
+    justify: {
+      left: {
+        justifyContent: 'flex-start'
+      },
+
+      center: {
+        justifyContent: 'center'
+      }
+    }
+  }
+});
+
+export const ModalSubheaderContent = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-subheader_content'
+})('h3', {
   userSelect: 'none',
 
-  fontSize: theme.fontSizes.xl,
+  fontSize: theme.fontSizes.lg,
+  color: theme.colors.textMuted,
+  fontWeight: '$medium',
+  cursor: 'default',
+  marginTop: 0
+});
 
-  cursor: 'default'
+export const ModalCloseWrapper = styled.withConfig({
+  componentId: commonComponentId,
+  displayName: 'modal-close_wrapper'
+})('div', {
+  position: 'absolute',
+  right: 0,
+  top: 0,
+  display: 'flex',
+  width: theme.sizes.iconSizeLg,
+  height: 30,
+  alignItems: 'center',
+  justifyContent: 'center',
+  margin: theme.space.xxs,
+  cursor: 'pointer'
 });
 
 export const PopoutHeader = styled.withConfig({
@@ -331,24 +432,22 @@ export const PopoutWrapper = styled.withConfig({
 export const ChannelTopicModalContent = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'modal-channel_topic_content'
-})(HeaderMainContentRoot, {
+})('div', {
   fontSize: theme.fontSizes.lg,
   lineHeight: '20px',
 
-  color: theme.colors.primaryOpacity70,
+  color: theme.colors.textMuted,
 
   height: '100%',
-
   flexGrow: 1,
   flexShrink: 1,
-
-  paddingX: theme.space.lg,
-  paddingBottom: theme.space.xxl,
+  paddingY: theme.space.lg,
 
   textRendering: 'optimizeLegibility',
   whiteSpace: 'pre-wrap',
   overflowWrap: 'break-word',
-  fontWeight: theme.fontWeights.regular
+
+  fontWeight: theme.fontWeights.medium
 });
 
 export const NoThreadsIconOuter = styled.withConfig({
@@ -527,6 +626,7 @@ export const NoThreadsContent = styled.withConfig({
 })('div', {
   position: 'relative',
   display: 'flex',
+  color: theme.colors.textPrimary,
   alignItems: 'center',
   justifyContent: 'center',
   flexDirection: 'column',

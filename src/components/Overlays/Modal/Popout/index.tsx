@@ -54,7 +54,7 @@ export const Popout = ({
             <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
           </Styles.PopoutTitleWrapper>
 
-          <CloseButton onClick={hideModal} />
+          <CloseButton onClick={hideModal} buttonType="headerIcon" />
         </Styles.PopoutHeader>
 
         <Styles.PopoutChildrenWrapper>{children}</Styles.PopoutChildrenWrapper>

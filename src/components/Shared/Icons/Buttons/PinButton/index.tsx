@@ -3,7 +3,7 @@ import { useStoreActions, useStoreState } from '@state';
 import { useTranslation } from 'react-i18next';
 
 export const PinButton = () => {
-  const translate = useTranslation();
+  const { t } = useTranslation();
   const setShowPinsModal = useStoreActions(state => state.ui.setShowPinsModal);
   const showPinsModal = useStoreState(state => state.ui.showPinsModal);
 
@@ -14,7 +14,7 @@ export const PinButton = () => {
   return (
     <IconButton
       icon="Pin"
-      tooltipLabel={translate.t('pinnedmessages.tooltip') as string}
+      tooltipLabel={t('pinnedmessages.tooltip') as string}
       tooltipPlacement="bottom"
       onClick={openPinsModal}
       isActive={showPinsModal}

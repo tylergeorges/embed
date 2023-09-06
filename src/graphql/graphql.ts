@@ -898,105 +898,181 @@ export type VoiceChannelMessagesArgs = {
   threadId?: InputMaybe<Scalars['String']>;
 };
 
+export type TextChannelFragment = {
+  __typename?: 'TextChannel';
+  id: string;
+  name: string;
+  type: ChannelType;
+  position: number;
+  canSend: boolean;
+  topic?: string | null;
+  category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+  threads?: Array<
+    | { __typename?: 'AnnouncementChannel'; id: string; name: string }
+    | { __typename?: 'ForumChannel'; id: string; name: string }
+    | { __typename?: 'TextChannel'; id: string; name: string }
+    | { __typename?: 'ThreadChannel'; id: string; name: string }
+    | { __typename?: 'VoiceChannel'; id: string; name: string }
+  > | null;
+} & { ' $fragmentName'?: 'TextChannelFragment' };
+
+export type AnnouncementChannelFragment = {
+  __typename?: 'AnnouncementChannel';
+  id: string;
+  name: string;
+  type: ChannelType;
+  position: number;
+  canSend: boolean;
+  topic?: string | null;
+  category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+  threads?: Array<
+    | { __typename?: 'AnnouncementChannel'; id: string; name: string }
+    | { __typename?: 'ForumChannel'; id: string; name: string }
+    | { __typename?: 'TextChannel'; id: string; name: string }
+    | { __typename?: 'ThreadChannel'; id: string; name: string }
+    | { __typename?: 'VoiceChannel'; id: string; name: string }
+  > | null;
+} & { ' $fragmentName'?: 'AnnouncementChannelFragment' };
+
 export type GuildQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
 
 export type GuildQuery = {
-  __typename?: 'Query';
+  __typename: 'Query';
   guild: {
-    __typename?: 'Guild';
+    __typename: 'Guild';
     id: string;
     name: string;
     icon?: string | null;
     memberCount: number;
-    settings: { __typename?: 'GuildSettings'; readonly: boolean };
+    rulesChannelId?: string | null;
+    banner?: string | null;
+    splash?: string | null;
+    partnered: string;
+    verified: string;
+    tier: string;
+    settings: { __typename: 'GuildSettings'; readonly: boolean; guestMode: boolean };
+    roles: Array<{
+      __typename: 'Role';
+      id: string;
+      name: string;
+      position: number;
+      color: number;
+      icon?: string | null;
+      unicodeEmoji?: string | null;
+    }>;
+    emojis: Array<{
+      __typename?: 'Emoji';
+      id: string;
+      name: string;
+      animated: boolean;
+      available: boolean;
+    }>;
     channels: Array<
       | {
-          __typename?: 'AnnouncementChannel';
+          __typename: 'AnnouncementChannel';
+          id: string;
+          topic?: string | null;
+          name: string;
+          type: ChannelType;
+          position: number;
+          canSend: boolean;
+          rateLimitPerUser?: number | null;
+          threads?: Array<
+            | { __typename: 'AnnouncementChannel'; id: string }
+            | { __typename: 'ForumChannel'; id: string }
+            | { __typename: 'TextChannel'; id: string }
+            | {
+                __typename: 'ThreadChannel';
+                id: string;
+                type: ChannelType;
+                name: string;
+                parentId: string;
+              }
+            | { __typename: 'VoiceChannel'; id: string }
+          > | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+      | {
+          __typename: 'ForumChannel';
+          id: string;
+          name: string;
+          type: ChannelType;
+          position: number;
+          canSend: boolean;
+          rateLimitPerUser?: number | null;
+          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
+        }
+      | {
+          __typename: 'TextChannel';
           topic?: string | null;
           id: string;
           name: string;
           type: ChannelType;
           position: number;
+          canSend: boolean;
           rateLimitPerUser?: number | null;
           threads?: Array<
-            | { __typename?: 'AnnouncementChannel'; id: string; name: string }
-            | { __typename?: 'ForumChannel'; id: string; name: string }
-            | { __typename?: 'TextChannel'; id: string; name: string }
-            | { __typename?: 'ThreadChannel'; id: string; name: string }
-            | { __typename?: 'VoiceChannel'; id: string; name: string }
+            | { __typename?: 'AnnouncementChannel' }
+            | { __typename?: 'ForumChannel' }
+            | { __typename?: 'TextChannel' }
+            | {
+                __typename: 'ThreadChannel';
+                id: string;
+                type: ChannelType;
+                name: string;
+                parentId: string;
+              }
+            | { __typename?: 'VoiceChannel' }
           > | null;
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
       | {
-          __typename?: 'ForumChannel';
+          __typename: 'ThreadChannel';
           id: string;
-          name: string;
           type: ChannelType;
+          name: string;
+          parentId: string;
           position: number;
+          canSend: boolean;
           rateLimitPerUser?: number | null;
-          threads?: Array<
-            | { __typename?: 'AnnouncementChannel'; id: string; name: string }
-            | { __typename?: 'ForumChannel'; id: string; name: string }
-            | { __typename?: 'TextChannel'; id: string; name: string }
-            | { __typename?: 'ThreadChannel'; id: string; name: string }
-            | { __typename?: 'VoiceChannel'; id: string; name: string }
-          > | null;
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
       | {
-          __typename?: 'TextChannel';
-          topic?: string | null;
+          __typename: 'VoiceChannel';
           id: string;
           name: string;
           type: ChannelType;
           position: number;
+          canSend: boolean;
           rateLimitPerUser?: number | null;
-          threads?: Array<
-            | { __typename?: 'AnnouncementChannel'; id: string; name: string }
-            | { __typename?: 'ForumChannel'; id: string; name: string }
-            | { __typename?: 'TextChannel'; id: string; name: string }
-            | { __typename?: 'ThreadChannel'; id: string; name: string }
-            | { __typename?: 'VoiceChannel'; id: string; name: string }
-          > | null;
-          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
-        }
-      | {
-          __typename?: 'ThreadChannel';
-          id: string;
-          name: string;
-          type: ChannelType;
-          position: number;
-          rateLimitPerUser?: number | null;
-          threads?: Array<
-            | { __typename?: 'AnnouncementChannel'; id: string; name: string }
-            | { __typename?: 'ForumChannel'; id: string; name: string }
-            | { __typename?: 'TextChannel'; id: string; name: string }
-            | { __typename?: 'ThreadChannel'; id: string; name: string }
-            | { __typename?: 'VoiceChannel'; id: string; name: string }
-          > | null;
-          category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
-        }
-      | {
-          __typename?: 'VoiceChannel';
-          id: string;
-          name: string;
-          type: ChannelType;
-          position: number;
-          rateLimitPerUser?: number | null;
-          threads?: Array<
-            | { __typename?: 'AnnouncementChannel'; id: string; name: string }
-            | { __typename?: 'ForumChannel'; id: string; name: string }
-            | { __typename?: 'TextChannel'; id: string; name: string }
-            | { __typename?: 'ThreadChannel'; id: string; name: string }
-            | { __typename?: 'VoiceChannel'; id: string; name: string }
-          > | null;
           category?: { __typename?: 'Category'; id: string; name: string; position: number } | null;
         }
     >;
   };
 };
+
+export type UserFragment = { __typename?: 'User'; id: string; name: string; avatarUrl: string } & {
+  ' $fragmentName'?: 'UserFragment';
+};
+
+export type MentionFragment = { __typename?: 'Mention'; id: string; name: string } & {
+  ' $fragmentName'?: 'MentionFragment';
+};
+
+export type MemberFragment = {
+  __typename?: 'User';
+  id: string;
+  name: string;
+  avatarUrl: string;
+  discrim: string;
+  bot: boolean;
+  isWebhook: boolean;
+  system: boolean;
+  flags?: number | null;
+  roles?: Array<string> | null;
+} & { ' $fragmentName'?: 'MemberFragment' };
 
 export type EmbedFragment = {
   __typename?: 'Embed';
@@ -1455,6 +1531,153 @@ export type MessageDeletedSubscription = {
   messageDeleteV2?: { __typename?: 'DeletedMessage'; id: string } | null;
 };
 
+export const TextChannelFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'TextChannel' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'TextChannel' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'position' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'canSend' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'category' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'position' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'threads' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<TextChannelFragment, unknown>;
+export const AnnouncementChannelFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'AnnouncementChannel' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'AnnouncementChannel' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'position' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'canSend' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'category' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'position' } }
+              ]
+            }
+          },
+          {
+            kind: 'Field',
+            name: { kind: 'Name', value: 'threads' },
+            selectionSet: {
+              kind: 'SelectionSet',
+              selections: [
+                { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<AnnouncementChannelFragment, unknown>;
+export const UserFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'User' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<UserFragment, unknown>;
+export const MentionFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'Mention' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'Mention' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MentionFragment, unknown>;
+export const MemberFragmentDoc = {
+  kind: 'Document',
+  definitions: [
+    {
+      kind: 'FragmentDefinition',
+      name: { kind: 'Name', value: 'Member' },
+      typeCondition: { kind: 'NamedType', name: { kind: 'Name', value: 'User' } },
+      selectionSet: {
+        kind: 'SelectionSet',
+        selections: [
+          { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'avatarUrl' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'discrim' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'bot' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'isWebhook' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'system' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'flags' } },
+          { kind: 'Field', name: { kind: 'Name', value: 'roles' } }
+        ]
+      }
+    }
+  ]
+} as unknown as DocumentNode<MemberFragment, unknown>;
 export const EmbedFragmentDoc = {
   kind: 'Document',
   definitions: [
@@ -1879,6 +2102,7 @@ export const GuildDocument = {
       selectionSet: {
         kind: 'SelectionSet',
         selections: [
+          { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
           {
             kind: 'Field',
             name: { kind: 'Name', value: 'guild' },
@@ -1896,12 +2120,52 @@ export const GuildDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'memberCount' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'rulesChannelId' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'banner' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'splash' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'partnered' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'verified' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'tier' } },
+                { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                 {
                   kind: 'Field',
                   name: { kind: 'Name', value: 'settings' },
                   selectionSet: {
                     kind: 'SelectionSet',
-                    selections: [{ kind: 'Field', name: { kind: 'Name', value: 'readonly' } }]
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'readonly' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'guestMode' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'roles' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'position' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'color' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'icon' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'unicodeEmoji' } }
+                    ]
+                  }
+                },
+                {
+                  kind: 'Field',
+                  name: { kind: 'Name', value: 'emojis' },
+                  selectionSet: {
+                    kind: 'SelectionSet',
+                    selections: [
+                      { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'animated' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'available' } }
+                    ]
                   }
                 },
                 {
@@ -1914,14 +2178,22 @@ export const GuildDocument = {
                       { kind: 'Field', name: { kind: 'Name', value: 'name' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'type' } },
                       { kind: 'Field', name: { kind: 'Name', value: 'position' } },
+                      { kind: 'Field', name: { kind: 'Name', value: 'canSend' } },
+                      { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                       {
-                        kind: 'Field',
-                        name: { kind: 'Name', value: 'threads' },
+                        kind: 'InlineFragment',
+                        typeCondition: {
+                          kind: 'NamedType',
+                          name: { kind: 'Name', value: 'ThreadChannel' }
+                        },
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                            { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                            { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'parentId' } }
                           ]
                         }
                       },
@@ -1946,6 +2218,7 @@ export const GuildDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
                             {
                               kind: 'Field',
@@ -1953,8 +2226,26 @@ export const GuildDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
-                                  { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                                  {
+                                    kind: 'InlineFragment',
+                                    typeCondition: {
+                                      kind: 'NamedType',
+                                      name: { kind: 'Name', value: 'ThreadChannel' }
+                                    },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: '__typename' }
+                                        },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'parentId' } }
+                                      ]
+                                    }
+                                  }
                                 ]
                               }
                             }
@@ -1970,6 +2261,8 @@ export const GuildDocument = {
                         selectionSet: {
                           kind: 'SelectionSet',
                           selections: [
+                            { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
                             {
                               kind: 'Field',
@@ -1977,8 +2270,28 @@ export const GuildDocument = {
                               selectionSet: {
                                 kind: 'SelectionSet',
                                 selections: [
+                                  { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                                   { kind: 'Field', name: { kind: 'Name', value: 'id' } },
-                                  { kind: 'Field', name: { kind: 'Name', value: 'name' } }
+                                  {
+                                    kind: 'InlineFragment',
+                                    typeCondition: {
+                                      kind: 'NamedType',
+                                      name: { kind: 'Name', value: 'ThreadChannel' }
+                                    },
+                                    selectionSet: {
+                                      kind: 'SelectionSet',
+                                      selections: [
+                                        {
+                                          kind: 'Field',
+                                          name: { kind: 'Name', value: '__typename' }
+                                        },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'id' } },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'type' } },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'name' } },
+                                        { kind: 'Field', name: { kind: 'Name', value: 'parentId' } }
+                                      ]
+                                    }
+                                  }
                                 ]
                               }
                             }

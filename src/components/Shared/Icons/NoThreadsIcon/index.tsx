@@ -6,7 +6,7 @@ export const NoThreadsIcon = () => (
   <Styles.NoThreadsIconOuter>
     <Styles.NoThreadsIconInner>
       <Styles.NoThreadsHashWrapper>
-        <Icons icon="ThreadHash" size="large" />
+        <Icons icon="ThreadHash" size="lg" />
       </Styles.NoThreadsHashWrapper>
       <StarsIcon />
     </Styles.NoThreadsIconInner>

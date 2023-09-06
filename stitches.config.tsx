@@ -74,6 +74,8 @@ const stitches = createStitches({
       backgroundOverlayChat:
         'linear-gradient(rgb($backgroundOverlayColor / $backgroundOpacityChat), rgb($backgroundOverlayColor / $backgroundOpacityChat)) fixed 0 0/cover, hsl($backgroundHsl / 1) fixed 0 0/cover',
 
+      chatInputBackground: 'rgba(255, 255, 255, 0.03)',
+
       primaryOpacity10: 'rgba(255, 255, 255, 0.1)',
       primaryOpacity20: 'rgba(255, 255, 255, 0.2)',
       primaryOpacity30: 'rgba(255, 255, 255, 0.3)',
@@ -196,13 +198,19 @@ const stitches = createStitches({
       iconSizeXl: '40px',
 
       /** 32px */
-      iconSizeLarge: '32px',
+      iconSizeLg: '32px',
 
       /** 24px */
-      iconSizeMed: '24px',
+      iconSizeMd: '24px',
 
       /** 20px */
-      iconSizeSmall: '20px',
+      iconSizeSm: '20px',
+
+      /** 16px */
+      iconSizeXs: '16px',
+
+      /** 12px */
+      iconSizeXxs: '12px',
 
       /** 16px */
       messageTypeIcon: '16px',

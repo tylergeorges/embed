@@ -18,15 +18,15 @@ const iconData = {
   NoPins: svgUrls.IconNoPins,
   AddAttachment: svgUrls.IconAddAttachment,
   Close: svgUrls.IconCross,
-  Members: svgUrls.IconMembers
+  Members: svgUrls.IconMembers,
+  Logout: svgUrls.IconLogout,
+  Discord: svgUrls.DiscordIcon
 };
 
 type IconNames = keyof typeof iconData;
 
 export interface IconProps extends React.ComponentProps<typeof IconRoot> {
   icon: IconNames;
-
-  type?: 'headerIcon';
 
   iconContent?: string | null;
 
@@ -36,10 +36,10 @@ export interface IconProps extends React.ComponentProps<typeof IconRoot> {
 export const Icons = ({ icon, color, css, size, type, iconContent, customViewbox }: IconProps) => (
   <IconRoot
     css={css}
-    size={size ?? 'regular'}
+    size={size ?? 'md'}
     type={type}
     color={color ?? 'light'}
-    viewBox={customViewbox ?? '0 0 24 24'}
+    viewBox={customViewbox ?? `0 0 24 24`}
   >
     <use href={`${iconData[icon]}#svg`} />
     {iconContent}

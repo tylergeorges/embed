@@ -3,7 +3,7 @@ import { useStoreActions, useStoreState } from '@state';
 import { useTranslation } from 'react-i18next';
 
 export const MembersButton = () => {
-  const translate = useTranslation();
+  const { t } = useTranslation();
   const setMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
   const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
 
@@ -12,12 +12,13 @@ export const MembersButton = () => {
       tooltipPlacement="bottom"
       tooltipLabel={
         isMembersListOpen
-          ? (translate.t('hidemembers.tooltip') as string)
-          : (translate.t('showmembers.tooltip') as string)
+          ? (t('hidemembers.tooltip') as string)
+          : (t('showmembers.tooltip') as string)
       }
       onClick={() => setMembersListOpen(!isMembersListOpen)}
       icon="Members"
       isActive={isMembersListOpen}
+      buttonType="headerIcon"
     />
   );
 };

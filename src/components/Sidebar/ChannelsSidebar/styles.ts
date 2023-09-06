@@ -33,8 +33,8 @@ export const CategoryNameArrow = styled.withConfig({
   backgroundPosition: '50% 50%',
   backgroundRepeat: 'no-repeat',
 
-  width: theme.sizes.iconSizeSmall,
-  height: theme.sizes.iconSizeSmall,
+  width: theme.sizes.iconSizeSm,
+  height: theme.sizes.iconSizeSm,
 
   cursor: 'pointer',
   transition: 'transform  ase',
@@ -78,15 +78,14 @@ export const ChannelNameWrapper = styled.withConfig({
 })('div', {
   height: 'auto',
   maxHeight: theme.sizes.channelNameHeight,
-  overflow: 'hidden',
-
+  // overflow: 'hidden',
   // @ts-expect-error
   // Message renderer tokens override this without .value
   marginY: theme.space.xxs.value,
   transition: 'max-height ease',
   transitionDuration: theme.transitions.defaultDuration,
 
-  // @ts-ignore
+  // @ts-expect-error
   paddingX: theme.space.sm.value,
   width: '100%',
 
@@ -101,8 +100,8 @@ export const ChannelNameWrapper = styled.withConfig({
         justifyItems: 'center',
         width: '100%',
         marginLeft: theme.space.xxl.value,
-
-        // @ts-ignore
+        // ignoring this error because if we dont access the value property it outputs incorrect values.
+        // @ts-expect-error
         paddingY: theme.space.xs.value
       }
     },
@@ -131,7 +130,8 @@ export const ChannelNameWrapper = styled.withConfig({
       css: {
         maxHeight: 0,
         margin: 0,
-        padding: 0
+        padding: 0,
+        overflow: 'hidden'
       }
     },
 
@@ -182,7 +182,7 @@ export const ChannelNameInner = styled.withConfig({
 export const ChannelNameIconWrapper = styled.withConfig({
   displayName: 'channel-name_icon_wrapper'
 })('div', {
-  size: theme.sizes.iconSizeSmall,
+  size: theme.sizes.iconSizeSm,
   marginRight: theme.space.xs.value
 });
 

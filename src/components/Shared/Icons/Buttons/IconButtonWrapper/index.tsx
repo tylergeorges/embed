@@ -12,15 +12,18 @@ export const IconButtonWrapper = ({
   onClick,
   isActive,
   tooltipDisabledIfActive,
-  iconContent
+  iconContent,
+  backgroundGlowRadii,
+  buttonType
 }: IconButtonWrapperProps) => (
-  <Styles.IconButtonRoot>
+  <Styles.IconButtonRoot buttonType={buttonType}>
     {tooltipDisabled ? (
       <IconButtonInner
         onClick={onClick}
         backgroundGlowSize={backgroundGlowSize}
         isActive={isActive}
         iconContent={iconContent}
+        backgroundGlowRadii={backgroundGlowRadii}
       >
         {children}
       </IconButtonInner>
@@ -34,6 +37,7 @@ export const IconButtonWrapper = ({
           <IconButtonInner
             onClick={onClick}
             backgroundGlowSize={backgroundGlowSize}
+            backgroundGlowRadii={backgroundGlowRadii}
             isActive={isActive}
             iconContent={iconContent}
           >

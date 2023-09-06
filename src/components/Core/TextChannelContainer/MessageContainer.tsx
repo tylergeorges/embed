@@ -1,11 +1,11 @@
 import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
-
 import { useStoreState } from '@state';
 import { useCallback, useState } from 'react';
-import { MessageRenderer } from '@components/Core/VirtualLists/MessageRenderer';
+import { MessageListRenderer } from '@components/Core/VirtualLists/MessageListRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useMessages } from '@hooks/useMessages';
 import { useMessageSubscription } from '@hooks/useMessageSubscription';
+import { MessageRenderer } from '@components/Providers/MessageRenderer';
 import * as Styles from './styles';
 
 interface MessageContainerProps {
@@ -38,23 +38,25 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
   }, [isListRendered]);
 
   return (
-    <Styles.MessageWrapper
-      draggable={false}
-      membersListOpen={isMembersListOpen}
-      mobile={{
-        '@initial': false,
-        '@small': true
-      }}
-    >
-      <MessageRenderer
-        startReached={loadMoreMessages}
-        messages={groupedMessages}
-        isReady={isReady}
-        firstItemIndex={firstItemIndex}
-        handleBottomStateChanged={handleBottomStateChanged}
-      />
+    <MessageRenderer>
+      <Styles.MessageWrapper
+        draggable={false}
+        membersListOpen={isMembersListOpen}
+        mobile={{
+          '@initial': false,
+          '@small': true
+        }}
+      >
+        <MessageListRenderer
+          startReached={loadMoreMessages}
+          messages={groupedMessages}
+          isReady={isReady}
+          firstItemIndex={firstItemIndex}
+          handleBottomStateChanged={handleBottomStateChanged}
+        />
 
-      <TextBox />
-    </Styles.MessageWrapper>
+        <TextBox />
+      </Styles.MessageWrapper>
+    </MessageRenderer>
   );
 };

@@ -1,17 +1,8 @@
 /* eslint-disable no-alert */
 import React, { memo } from 'react';
 import { useStoreState } from '@state';
-import { MessageRendererProvider } from '@widgetbot/message-renderer';
-import { styled } from '@stitches';
-import { APIChannel } from 'discord-api-types/v10';
-import { svgUrls } from '@svg-assets';
-import dynamic from 'next/dynamic';
 import { TextChannelContainer } from '@components/Core/TextChannelContainer';
-
-const MessageRendererRoot = styled('div', {
-  height: '100%',
-  width: '100%'
-});
+import dynamic from 'next/dynamic';
 
 // dynamic imports since they are conditionally rendered, helps with bundle size
 const ChannelTopicModal = dynamic(() =>
@@ -29,41 +20,13 @@ function GuildChannel() {
 
   const showTopicModal = useStoreState(state => state.ui.showTopicModal);
 
-  const guildChannels = useStoreState(state => state.guild.guildChannels);
-
   return (
-    <MessageRendererProvider
-      messageButtons={() => []}
-      currentUser={() => null}
-      // @ts-ignore
-      resolveChannel={id => (guildChannels[id] as APIChannel) ?? null}
-      resolveGuild={() => null}
-      resolveMember={() => null}
-      resolveRole={() => null}
-      resolveUser={() => null}
-      svgUrls={svgUrls}
-      seeThreadOnClick={(messageId, thread) =>
-        alert(`See Thread "${thread.name}" clicked on message ${messageId}`)
-      }
-      userMentionOnClick={user =>
-        alert(`User "${user?.global_name ?? user?.username}" mention clicked!`)
-      }
-      roleMentionOnClick={role => alert(`Role "${role.name}" mention clicked!`)}
-      channelMentionOnClick={channel => alert(`Channel "${channel.name}" mention clicked!`)}
-      messageComponentButtonOnClick={(message, customId) => {
-        alert(`Button by custom id "${customId}" pressed on message ${message.id}!`);
-      }}
-    >
-      {({ themeClass }) => (
-        <MessageRendererRoot className={themeClass}>
-          {showTopicModal && <ChannelTopicModal />}
+    <>
+      {showTopicModal && <ChannelTopicModal />}
 
-          <TextChannelContainer />
-
-          {isDomThreadsPanelOpen && <ThreadPanel />}
-        </MessageRendererRoot>
-      )}
-    </MessageRendererProvider>
+      <TextChannelContainer />
+      {isDomThreadsPanelOpen && <ThreadPanel />}
+    </>
   );
 }
 
