@@ -11,8 +11,6 @@ export const FullscreenButton = () => {
   const fullscreenThread = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    console.log('fullscreenThread');
-
     setIsThreadFullscreen(!isThreadFullscreen);
   };
 
@@ -25,6 +23,6 @@ export const FullscreenButton = () => {
       color="channel"
       size="sm"
       icon="Fullscreen"
-     />
+    />
   );
 };
