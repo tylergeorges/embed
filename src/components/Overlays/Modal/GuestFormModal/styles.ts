@@ -83,7 +83,10 @@ export const GuestFormLoginButtonLabel = styled.withConfig({
   fontSize: theme.fontSizes.lg,
 
   zIndex: theme.zIndices.tooltip,
-  fontWeight: theme.fontWeights.medium
+  fontWeight: theme.fontWeights.medium,
+
+  display: 'flex',
+  gap: '10px'
 });
 
 export const GuestFormInputRoot = styled.withConfig({
@@ -157,30 +160,38 @@ export const GuestFormDiscordAuth = styled.withConfig({
   textAlign: 'center'
 });
 
-export const GuestFormDiscordContent = styled.withConfig({
+export const GuestFormDiscordDivider = styled.withConfig({
   componentId: commonComponentId,
-  displayName: 'modal-guest_form_discord_auth_content'
-})('span', {
+  displayName: 'modal-guest_form_discord_auth_divider'
+})('div', {
   color: theme.colors.textMuted,
-  fontSize: theme.fontSizes.md
+  fontSize: theme.fontSizes.md,
+  position: 'relative',
+  userSelect: 'none',
+  textTransform: 'uppercase',
+
+  '&::before, &::after': {
+    position: 'absolute',
+    top: '50%',
+    overflow: 'hidden',
+    width: '40%',
+    height: '1px',
+    content: ' ',
+    backgroundColor: theme.colors.background
+  },
+
+  '&::before': {
+    marginLeft: '-45%'
+  },
+
+  '&::after': {
+    marginLeft: '5%'
+  }
 });
 
 export const GuestFormDiscordAuthButton = styled.withConfig({
   componentId: commonComponentId,
-  displayName: 'modal-guest_form_discord_link'
-})('span', {
-  color: theme.colors.link,
-  cursor: 'pointer',
-
-  '&:hover': {
-    textDecoration: 'underline'
-  }
-});
-
-export const DiscordIconWrapper = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'icon-discord_wrapper'
-})('svg', {
-  position: 'relative',
-  size: theme.sizes.iconSizeLg
+  displayName: 'modal-guest_form_discord_auth_button'
+})(GuestFormLoginButton, {
+  marginTop: '10px'
 });

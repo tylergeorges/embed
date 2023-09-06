@@ -6,6 +6,7 @@ import { useStoreActions, useStoreState } from '@state';
 import { useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { CloseButton } from '@icons/Buttons/CloseButton';
+import { Icons } from '@icons/index';
 import * as ModalStyles from '../styles';
 
 const GuestFormDiscordAuth = () => {
@@ -14,13 +15,13 @@ const GuestFormDiscordAuth = () => {
 
   return (
     <Styles.GuestFormDiscordAuth>
-      <Styles.GuestFormDiscordContent>
-        {t('auth.discordacc')}
-        <Styles.GuestFormDiscordAuthButton onClick={discordSignIn}>
-          {' '}
-          {t('auth.login2')}
-        </Styles.GuestFormDiscordAuthButton>
-      </Styles.GuestFormDiscordContent>
+      <Styles.GuestFormDiscordDivider>{t('auth.or')}</Styles.GuestFormDiscordDivider>
+      <Styles.GuestFormDiscordAuthButton size="full" disabled={false} onClick={discordSignIn}>
+        <Styles.GuestFormLoginButtonLabel>
+          <Icons icon="Discord" customViewbox="0 0 28 20" css={{ color: 'inherit' }} />
+          {t('auth.discordlogin')}
+        </Styles.GuestFormLoginButtonLabel>
+      </Styles.GuestFormDiscordAuthButton>
     </Styles.GuestFormDiscordAuth>
   );
 };

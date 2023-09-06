@@ -19,7 +19,8 @@ const iconData = {
   AddAttachment: svgUrls.IconAddAttachment,
   Close: svgUrls.IconCross,
   Members: svgUrls.IconMembers,
-  Logout: svgUrls.IconLogout
+  Logout: svgUrls.IconLogout,
+  Discord: svgUrls.DiscordIcon
 };
 
 type IconNames = keyof typeof iconData;
