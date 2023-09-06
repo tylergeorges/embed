@@ -4,6 +4,7 @@ import { Icons } from '@icons/index';
 import { CloseButton } from '@icons/Buttons/CloseButton';
 import { useStoreState } from '@state';
 import { useMediaQuery } from '@hooks/useMediaQuery';
+import { FullscreenButton } from '@icons/Buttons/FullscreenButton';
 
 interface ThreadPanelHeaderProps {
   startPanelHideTransition: () => void;
@@ -23,6 +24,8 @@ export const ThreadPanelHeader = ({ startPanelHideTransition }: ThreadPanelHeade
         </Styles.ThreadPanelHeaderIconContent>
         <CloseButton onClick={startPanelHideTransition} />
       </Styles.ThreadPanelHeaderIconContainer>
+      \
+      <FullscreenButton />
     </Styles.ThreadPanelHeaderRoot>
   );
 };

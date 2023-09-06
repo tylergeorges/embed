@@ -13,9 +13,9 @@ export interface UIStore {
 
   isTransitionedThreadsPanelOpen: boolean | undefined;
   isDomThreadsPanelOpen: boolean | undefined;
-
   isMembersListOpen: boolean;
   isChannelsListOpen: boolean;
+  isThreadFullscreen: boolean;
 
   showTopicModal: boolean;
   showThreadsModal: boolean;
@@ -30,6 +30,7 @@ export interface UIStore {
 
   setIsDomThreadsPanelOpen: Action<UIStore, boolean>;
   setIsTransitionedThreadsPanelOpen: Action<UIStore, boolean>;
+  setIsThreadFullscreen: Action<UIStore, boolean>;
 
   setCurrentChannelYPos: Action<UIStore, number>;
   setInitChannelYPos: Action<UIStore, number>;
@@ -48,7 +49,7 @@ const ui: UIStore = {
   isDomThreadsPanelOpen: false,
   isTransitionedThreadsPanelOpen: false,
   isMembersListOpen: true,
-
+  isThreadFullscreen: false,
   showGuestFormModal: false,
   showTopicModal: false,
   showThreadsModal: false,
@@ -63,6 +64,10 @@ const ui: UIStore = {
   // Actions
   setIsChannelsListOpen: action((state, payload) => {
     state.isChannelsListOpen = payload;
+  }),
+
+  setIsThreadFullscreen: action((state, payload) => {
+    state.isThreadFullscreen = payload;
   }),
 
   setIsMembersListOpen: action((state, payload) => {
@@ -80,6 +85,7 @@ const ui: UIStore = {
       state.isDomThreadsPanelOpen = false;
     }
   }),
+
   setIsTransitionedThreadsPanelOpen: action((state, payload) => {
     if (payload) {
       state.isTransitionedThreadsPanelOpen = true;
