@@ -95,19 +95,17 @@ export const ThreadPanelWrapper = styled.withConfig({
   height: '100%',
   width: theme.sizes.threadPanelMinWidth,
 
-  zIndex: theme.zIndices.channelsSidebar,
-  // zIndex: theme.zIndices.channelsSidebarBackdrop,
   transition: theme.transitions.defaultTransform,
   backgroundOverlay: theme.colors.background,
+  zIndex: 1,
 
   '&:before': {
     content: '',
     position: 'relative',
     height: '100%',
     width: theme.sizes.panelSeperatorWidth,
-
-    backgroundColor: theme.colors.borderDark,
-    zIndex: theme.zIndices.channelsSidebarBackdrop
+    zIndex: theme.zIndices.channelsSidebarBackdrop,
+    backgroundOverlay: theme.colors.borderDark
   },
 
   variants: {
@@ -124,11 +122,31 @@ export const ThreadPanelWrapper = styled.withConfig({
     },
 
     isFullscreen: {
-      true: {
+      true: {}
+    },
+
+    isChannelsListOpen: {
+      true: {}
+    }
+  },
+
+  compoundVariants: [
+    {
+      isChannelsListOpen: false,
+      isFullscreen: true,
+      css: {
+        width: `calc(100% + ${theme.sizes.panelSeperatorWidth})`
+      }
+    },
+
+    {
+      isChannelsListOpen: true,
+      isFullscreen: true,
+      css: {
         width: `calc(100% - (${theme.sizes.sideBarWidth} - ${theme.sizes.panelSeperatorWidth}))`
       }
     }
-  }
+  ]
 });
 
 export const GuildRoot = styled.withConfig({

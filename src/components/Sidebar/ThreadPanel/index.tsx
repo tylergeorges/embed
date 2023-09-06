@@ -14,6 +14,7 @@ export const ThreadPanel = () => {
   const transitionDuration = useRef(0);
 
   const isThreadFullscreen = useStoreState(state => state.ui.isThreadFullscreen);
+  const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
 
   const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
 
@@ -72,6 +73,7 @@ export const ThreadPanel = () => {
       }}
       isOpen={isTransitionedThreadsPanelOpen}
       isFullscreen={isThreadFullscreen}
+      isChannelsListOpen={isChannelsListOpen}
       ref={threadPanelRef}
     >
       <Styles.ThreadsPanelContainer>

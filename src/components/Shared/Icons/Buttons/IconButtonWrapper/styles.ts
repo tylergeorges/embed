@@ -35,6 +35,10 @@ export const IconRoot = styled.withConfig({
     type: {
       headerIcon: {
         marginLeft: theme.space.sm
+      },
+
+      button: {
+        cursor: 'pointer'
       }
     },
 

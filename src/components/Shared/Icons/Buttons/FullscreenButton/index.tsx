@@ -27,7 +27,7 @@ export const FullscreenButton = () => {
       viewBox="0 0 448 512"
       color="channel"
       size="sm"
-      type="headerIcon"
+      type="button"
     >
       <path
         fill="currentColor"
