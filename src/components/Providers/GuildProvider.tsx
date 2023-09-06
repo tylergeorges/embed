@@ -4,7 +4,7 @@ import { useStoreActions, useStoreState } from '@state';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useApolloClient, useQuery } from '@apollo/client';
 import { getToken } from '@graphql/client';
-import { Channel } from '@graphql/graphql';
+import { Channel, Guild } from '@graphql/graphql';
 
 interface GuildProviderProps {
   setIsGuildFetched: () => void;
@@ -70,6 +70,8 @@ export const guildDocument = graphql(/* GraphQL */ `
       splash
       partnered
       verified
+      invite
+      owner
       tier
       __typename
 
@@ -140,6 +142,7 @@ export const guildDocument = graphql(/* GraphQL */ `
           __typename
           id
           topic
+          nsfw
 
           threads {
             __typename
@@ -203,7 +206,6 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
               router.push(`/channels/${guildId}/${nonAuthChannel.id}`);
             }
 
-            // Error when casting type to Channel Array
             setChannels(guild.channels as Channel[]);
             setRefetchGuild(false);
 

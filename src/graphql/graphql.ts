@@ -951,6 +951,8 @@ export type GuildQuery = {
     splash?: string | null;
     partnered: string;
     verified: string;
+    invite: string;
+    owner: string;
     tier: string;
     settings: { __typename: 'GuildSettings'; readonly: boolean; guestMode: boolean };
     roles: Array<{
@@ -974,6 +976,7 @@ export type GuildQuery = {
           __typename: 'AnnouncementChannel';
           id: string;
           topic?: string | null;
+          nsfw: boolean;
           name: string;
           type: ChannelType;
           position: number;
@@ -2125,6 +2128,8 @@ export const GuildDocument = {
                 { kind: 'Field', name: { kind: 'Name', value: 'splash' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'partnered' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'verified' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'invite' } },
+                { kind: 'Field', name: { kind: 'Name', value: 'owner' } },
                 { kind: 'Field', name: { kind: 'Name', value: 'tier' } },
                 { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                 {
@@ -2264,6 +2269,7 @@ export const GuildDocument = {
                             { kind: 'Field', name: { kind: 'Name', value: '__typename' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'id' } },
                             { kind: 'Field', name: { kind: 'Name', value: 'topic' } },
+                            { kind: 'Field', name: { kind: 'Name', value: 'nsfw' } },
                             {
                               kind: 'Field',
                               name: { kind: 'Name', value: 'threads' },
