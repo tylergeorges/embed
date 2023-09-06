@@ -20,7 +20,8 @@ const iconData = {
   Close: svgUrls.IconCross,
   Members: svgUrls.IconMembers,
   Logout: svgUrls.IconLogout,
-  Discord: svgUrls.DiscordIcon
+  Discord: svgUrls.DiscordIcon,
+  Fullscreen: svgUrls.IconFullscreen
 };
 
 type IconNames = keyof typeof iconData;

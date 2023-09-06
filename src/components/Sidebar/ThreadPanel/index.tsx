@@ -1,30 +1,31 @@
-import * as Styles from '@components/Sidebar/styles';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { useStoreActions, useStoreState } from '@state';
-import { useCallback, useEffect, useRef } from 'react';
 import { useAppRouter } from '@hooks/useAppRouter';
+
 import { MessageContainer } from '@components/Core/TextChannelContainer/MessageContainer';
 import { ThreadPanelHeader } from '@components/Header/ThreadPanelHeader';
 
-// TODO: Make a ModalProvider component system to prevent having to do this for every modal
+import * as Styles from '@components/Sidebar/styles';
+
 export const ThreadPanel = () => {
   const { channelId, guildId, router } = useAppRouter();
+
   const threadPanelRef = useRef<HTMLDivElement>(null);
   const removeFromDOMTimeout = useRef<NodeJS.Timeout>();
   const transitionDuration = useRef(0);
 
   const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
-
   const setIsTransitionedThreadsPanelOpen = useStoreActions(
     state => state.ui.setIsTransitionedThreadsPanelOpen
   );
 
   const isThreadFullscreen = useStoreState(state => state.ui.isThreadFullscreen);
-
+  const isChannelsListOpen = useStoreState(state => state.ui.isChannelsListOpen);
+  const isDomThreadsPanelOpen = useStoreState(state => state.ui.isDomThreadsPanelOpen);
   const isTransitionedThreadsPanelOpen = useStoreState(
     state => state.ui.isTransitionedThreadsPanelOpen
   );
-  const isDomThreadsPanelOpen = useStoreState(state => state.ui.isDomThreadsPanelOpen);
 
   useEffect(() => {
     // We set this to true after element is in DOM so the transition is shown
@@ -72,6 +73,7 @@ export const ThreadPanel = () => {
       isFullscreen={isThreadFullscreen}
       isOpen={isTransitionedThreadsPanelOpen}
       ref={threadPanelRef}
+      isChannelsListOpen={isChannelsListOpen}
     >
       <Styles.ThreadsPanelContainer>
         <ThreadPanelHeader startPanelHideTransition={startPanelHideTransition} />

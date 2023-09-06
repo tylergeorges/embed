@@ -116,9 +116,9 @@ export const ThreadPanelWrapper = styled.withConfig({
   right: 0,
 
   height: '100%',
-  minWidth: theme.sizes.threadPanelMinWidth,
+  width: theme.sizes.threadPanelMinWidth,
 
-  zIndex: theme.zIndices.modal,
+  zIndex: 1,
   transition: theme.transitions.defaultTransform,
   backgroundColor: theme.colors.background,
 

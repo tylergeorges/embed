@@ -29,11 +29,11 @@ import SvgIconPlay from './message-renderer-icons/button-icons/icon-play.svg';
 import SvgIconPin from './message-renderer-icons/button-icons/icon-pin.svg';
 import SvgIconPencil from './message-renderer-icons/button-icons/icon-pencil.svg';
 import SvgIconPause from './message-renderer-icons/button-icons/icon-pause.svg';
-import SvgIconFullscreen from './message-renderer-icons/button-icons/icon-fullscreen.svg';
 import SvgIconMembers from './message-renderer-icons/button-icons/icon-members.svg';
 import SvgAddAttachment from './message-renderer-icons/button-icons/icon-add-attachment.svg';
 import SvgThreadPanel from './message-renderer-icons/button-icons/icon-thread-panel.svg';
 import SvgIconLogout from './message-renderer-icons/button-icons/icon-logout.svg';
+import SvgIconFullscreen from './button-icons/icon-fullscreen.svg';
 
 // ! MESSAGE ICONS
 import SvgIconUnknownReply from './message-renderer-icons/message-icons/icon-unknown-reply.svg';
