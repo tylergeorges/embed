@@ -162,7 +162,9 @@ export const guildDocument = graphql(/* GraphQL */ `
 `);
 
 export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps) {
-  const { guildId, router, isRouteLoaded } = useAppRouter();
+  const client = useApolloClient();
+
+  const { guildId, router, isRouteLoaded, channelId } = useAppRouter();
 
   const { data, loading, fetchMore } = useQuery(guildDocument, {
     variables: { id: guildId }
@@ -171,7 +173,6 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
   const shouldRefetchGuild = useStoreState(state => state.guild.refetchGuild);
   const guildData = useStoreState(state => state.guild.data);
   const guildSettings = useStoreState(state => state.guild.settings);
-  const client = useApolloClient();
 
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
@@ -218,11 +219,12 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
       // Weird type error when casting
       // @ts-expect-error
       const guild = data.guild as Guild;
+      const channels = guild.channels as Channel[];
 
       // So guild data/settings only get set once
       setGuildData(guild);
       setSettings(guild.settings);
-      setChannels(guild.channels);
+      setChannels(channels);
 
       setIsGuildFetched();
     }
@@ -231,6 +233,7 @@ export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps)
     loading,
     client,
     setChannels,
+    channelId,
     setGuildData,
     setSettings,
     guildId,

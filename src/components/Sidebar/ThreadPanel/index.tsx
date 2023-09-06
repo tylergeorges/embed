@@ -22,6 +22,7 @@ export const ThreadPanel = () => {
   const isTransitionedThreadsPanelOpen = useStoreState(
     state => state.ui.isTransitionedThreadsPanelOpen
   );
+  const currentThread = useStoreState(state => state.guild.currentThread);
   const isDomThreadsPanelOpen = useStoreState(state => state.ui.isDomThreadsPanelOpen);
 
   useEffect(() => {
@@ -42,8 +43,12 @@ export const ThreadPanel = () => {
         clearTimeout(removeFromDOMTimeout.current);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [
+    isDomThreadsPanelOpen,
+    isTransitionedThreadsPanelOpen,
+    setIsTransitionedThreadsPanelOpen,
+    currentThread
+  ]);
 
   // Remove panel entirely from DOM after it's been transitioned off screen
 
@@ -58,6 +63,8 @@ export const ThreadPanel = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  if (!isDomThreadsPanelOpen || !currentThread) return <></>;
 
   return (
     <Styles.ThreadPanelWrapper
