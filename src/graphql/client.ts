@@ -1,19 +1,45 @@
-import { ApolloClient, InMemoryCache, split, HttpLink } from '@apollo/client';
-import { getEnvVar } from '@util/env';
+/* eslint-disable no-underscore-dangle */
+import {
+  ApolloClient,
+  InMemoryCache,
+  split,
+  HttpLink,
+  defaultDataIdFromObject
+} from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
+import { GRAPHQL_URL, WS_URL } from '@lib/api/url';
+import { setContext } from '@apollo/client/link/context';
 
-const serverEndpoint = getEnvVar('CUSTOM_SERVER_ENDPOINT');
-const isDev = serverEndpoint?.includes('127.0.0.1');
+export const getToken = () => {
+  try {
+    return localStorage.getItem('token') ?? '';
+  } catch (err) {
+    console.error(err);
+    return '';
+  }
+};
 
-const socketScheme = isDev ? 'ws://' : 'wss://';
-const httpScheme = isDev ? 'http://' : 'https://';
+const getHeaders = (): {} | { Authorization: string } => {
+  const token = getToken();
 
-const WS_URL = `${socketScheme}${serverEndpoint}/api/graphql`;
+  if (!token) return {};
+
+  return {
+    Authorization: token
+  };
+};
+
+const authContext = setContext((_, { headers }) => ({
+  headers: {
+    ...headers,
+    ...getHeaders()
+  }
+}));
 
 const httpLink = new HttpLink({
-  uri: `${httpScheme}${serverEndpoint}/api/graphql`
+  uri: GRAPHQL_URL
 });
 
 const wsLink = new WebSocketLink(
@@ -23,6 +49,7 @@ const wsLink = new WebSocketLink(
     reconnectionAttempts: 3
   })
 );
+
 const splitLink = split(
   ({ query }) => {
     const definition = getMainDefinition(query);
@@ -32,9 +59,23 @@ const splitLink = split(
   httpLink
 );
 
-const cache = new InMemoryCache();
+const cache = new InMemoryCache({
+  dataIdFromObject(res) {
+    switch (res.__typename) {
+      case 'User': {
+        return `User:${res.id}` as string;
+      }
+      case 'Mention': {
+        return `Mention:${res.id}`;
+      }
+
+      default:
+        return defaultDataIdFromObject(res);
+    }
+  }
+});
 
 export const client = new ApolloClient({
-  link: splitLink,
+  link: authContext.concat(splitLink),
   cache
 });

@@ -19,6 +19,7 @@ export interface UIStore {
 
   showTopicModal: boolean;
   showThreadsModal: boolean;
+  showGuestFormModal: boolean;
 
   showContextMenu: boolean;
   contextMenuData: ContextMenuData;
@@ -35,6 +36,7 @@ export interface UIStore {
 
   setShowTopicModal: Action<UIStore, boolean>;
   setShowContextMenu: Action<UIStore, boolean>;
+  setShowGuestFormModal: Action<UIStore, boolean>;
   setShowThreadsModal: Action<UIStore, boolean>;
 
   setContextMenuData: Action<UIStore, ContextMenuData>;
@@ -47,6 +49,7 @@ const ui: UIStore = {
   isTransitionedThreadsPanelOpen: false,
   isMembersListOpen: true,
 
+  showGuestFormModal: false,
   showTopicModal: false,
   showThreadsModal: false,
   contextMenuData: { xPos: 0, yPos: 0 },
@@ -89,6 +92,10 @@ const ui: UIStore = {
     state.showTopicModal = payload;
   }),
 
+  setShowGuestFormModal: action((state, payload) => {
+    state.showGuestFormModal = payload;
+  }),
+
   setShowThreadsModal: action((state, payload) => {
     state.showThreadsModal = payload;
   }),
@@ -96,8 +103,9 @@ const ui: UIStore = {
   // Set the current channel's Y position, this is used for the
   // ActiveBackground component
   setCurrentChannelYPos: action((state, payload) => {
-    state.currentChannelYPos = payload;
-    // state.initChannelYPos = payload;
+    if (state.currentChannelYPos !== payload) {
+      state.currentChannelYPos = payload;
+    }
   }),
 
   // Set initial channel Y position used for when we open

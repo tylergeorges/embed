@@ -33,6 +33,7 @@ import SvgIconFullscreen from './message-renderer-icons/button-icons/icon-fullsc
 import SvgIconMembers from './message-renderer-icons/button-icons/icon-members.svg';
 import SvgAddAttachment from './message-renderer-icons/button-icons/icon-add-attachment.svg';
 import SvgThreadPanel from './message-renderer-icons/button-icons/icon-thread-panel.svg';
+import SvgIconLogout from './message-renderer-icons/button-icons/icon-logout.svg';
 
 // ! MESSAGE ICONS
 import SvgIconUnknownReply from './message-renderer-icons/message-icons/icon-unknown-reply.svg';
@@ -53,7 +54,13 @@ import SvgIconNewsChannel from './message-renderer-icons/channel-icons/icon-news
 import SvgIconFourmChannel from './message-renderer-icons/channel-icons/icon-forum-channel.svg';
 import SvgIconRulesChannel from './message-renderer-icons/channel-icons/icon-rules-channel.svg';
 
+// ! DISCORD ICON
+import SvgDiscordIcon from './icon-discord.svg';
+
 export const svgUrls = {
+  // ! DISCORD ICON
+  DiscordIcon: SvgDiscordIcon.src,
+
   // ! FILE ICONS
   FileAudio: SvgFileAudio.src,
   FileSketch: SvgSketch.src,
@@ -97,6 +104,7 @@ export const svgUrls = {
   IconMembers: SvgIconMembers.src,
   IconAddAttachment: SvgAddAttachment.src,
   IconThreadPanel: SvgThreadPanel.src,
+  IconLogout: SvgIconLogout.src,
 
   // ! CHANNEL ICONS
   IconTextChannel: SvgIconTextChannel.src,

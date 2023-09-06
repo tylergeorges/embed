@@ -1,20 +1,21 @@
 import * as Styles from '@icons/Buttons/IconButtonWrapper/styles';
+import { ComponentProps } from 'react';
 
-export interface IconButtonWrapperProps
-  extends React.ComponentProps<typeof Styles.IconButtonChildrenWrapper> {
-  onClick: (args: any) => void;
+export type IconButtonWrapperProps = ComponentProps<typeof Styles.IconButtonChildrenWrapper> &
+  ComponentProps<typeof Styles.IconButtonRoot> & {
+    onClick: (args: any) => void;
 
-  children: React.ReactNode;
+    children: React.ReactNode;
 
-  tooltipLabel?: string;
+    tooltipLabel?: string;
 
-  tooltipPlacement?: 'top' | 'bottom';
+    tooltipPlacement?: 'top' | 'bottom';
 
-  tooltipDisabled?: boolean;
+    tooltipDisabled?: boolean;
 
-  isActive?: boolean;
+    iconContent?: string | null;
 
-  iconContent?: string | null;
+    isActive?: boolean;
 
-  tooltipDisabledIfActive?: boolean;
-}
+    tooltipDisabledIfActive?: boolean;
+  };

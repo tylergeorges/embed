@@ -2,10 +2,11 @@ import { useStoreActions, useStoreState } from '@state';
 import { useContextMenu } from '@hooks/useContextMenu';
 import { useMediaQuery } from '@hooks/useMediaQuery';
 import { Backdrop } from '@components/Overlays/Modal/styles';
+import { ChannelsFooter } from '@components/Sidebar/ChannelsSidebar/ChannelsFooter';
+import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
 import { useAppRouter } from '@hooks/useAppRouter';
 import { useRef } from 'react';
 import { GuildHeader } from '@components/Header/GuildHeader';
-import { Channel } from '@components/Sidebar/ChannelsSidebar/Category/ChannelsContainer/Channel';
 import * as Styles from '../styles';
 import { Category } from './Category';
 import { ChannelHighlighter } from './ChannelHighlighter';
@@ -69,6 +70,8 @@ export const ChannelsSidebar = () => {
               <Category category={category} key={category.id} />
             ))}
         </Styles.ChannelsChildrenWrapper>
+
+        <ChannelsFooter />
       </Styles.ChannelsSidebarWrapper>
     </>
   );

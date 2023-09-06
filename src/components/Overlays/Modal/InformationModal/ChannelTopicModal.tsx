@@ -11,6 +11,8 @@ export const ChannelTopicModal = () => {
     setShowTopicModal(false);
   };
 
+  if (!showTopicModal) return null;
+
   return (
     <InformationModal
       isOpen={showTopicModal}

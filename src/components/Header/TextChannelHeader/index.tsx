@@ -29,7 +29,7 @@ export const TextChannelHeader = ({ channelName, topic }: ChannelHeaderProps) =>
         <Styles.ChannelNameTopicWrapper>
           {currentChannel || channelName ? (
             <>
-              <Icons icon="TextChannelHash" size="regular" color="channel" />
+              <Icons icon="TextChannelHash" size="sm" color="channel" />
 
               <Styles.ChannelHeaderName>
                 {channelName ?? currentChannel?.name}

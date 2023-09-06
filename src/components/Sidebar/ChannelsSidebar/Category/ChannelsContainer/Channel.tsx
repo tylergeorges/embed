@@ -23,12 +23,12 @@ interface ChannelNameProps {
 /** Component that handles rendering of each channel name. */
 export const Channel = forwardRef<HTMLAnchorElement, ChannelNameProps>(
   ({ channel, isActive, isCategoryOpen, isThread, channelHasActiveThread }, ref) => {
+    const { channelId, guildId, router } = useAppRouter();
+
     const setCurrentChannelYPos = useStoreActions(state => state.ui.setCurrentChannelYPos);
     const setInitChannelYPos = useStoreActions(state => state.ui.setInitChannelYPos);
     const setContextMenuData = useStoreActions(state => state.ui.setContextMenuData);
     const setShowContextMenu = useStoreActions(state => state.ui.setShowContextMenu);
-
-    const { channelId, guildId, router } = useAppRouter();
 
     useEffect(() => {
       if (isActive && ref) {

@@ -7,7 +7,7 @@ interface ThreadsPanelButtonProps {
   thread: Channel;
 }
 export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
-  const translate = useTranslation();
+  const { t } = useTranslation();
 
   const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
 
@@ -28,7 +28,7 @@ export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
       icon="ThreadPanel"
       color="light"
       backgroundGlowSize="xl"
-      tooltipLabel={translate.t('openthread.tooltip') as string}
+      tooltipLabel={t('openthread.tooltip') as string}
       tooltipPlacement="top"
       onClick={handlePanelClick}
     />
