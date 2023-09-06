@@ -19,6 +19,8 @@ export const ThreadPanel = () => {
     state => state.ui.setIsTransitionedThreadsPanelOpen
   );
 
+  const isThreadFullscreen = useStoreState(state => state.ui.isThreadFullscreen);
+
   const isTransitionedThreadsPanelOpen = useStoreState(
     state => state.ui.isTransitionedThreadsPanelOpen
   );
@@ -67,17 +69,10 @@ export const ThreadPanel = () => {
         '@initial': false,
         '@small': true
       }}
+      isFullscreen={isThreadFullscreen}
       isOpen={isTransitionedThreadsPanelOpen}
       ref={threadPanelRef}
     >
-      <Styles.ThreadsPanelSeperator
-        mobile={{
-          '@initial': false,
-          '@small': true
-        }}
-        isOpen={isTransitionedThreadsPanelOpen}
-      />
-
       <Styles.ThreadsPanelContainer>
         <ThreadPanelHeader startPanelHideTransition={startPanelHideTransition} />
 

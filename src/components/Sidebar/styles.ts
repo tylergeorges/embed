@@ -122,6 +122,16 @@ export const ThreadPanelWrapper = styled.withConfig({
   transition: theme.transitions.defaultTransform,
   backgroundColor: theme.colors.background,
 
+  // Thread panel seperator
+  '&:before': {
+    content: '',
+    position: 'relative',
+    height: '100%',
+    width: theme.sizes.panelSeperatorWidth,
+    zIndex: theme.zIndices.channelsSidebarBackdrop,
+    backgroundOverlay: theme.colors.borderDark
+  },
+
   variants: {
     isOpen: {
       false: {
@@ -131,37 +141,36 @@ export const ThreadPanelWrapper = styled.withConfig({
 
     mobile: {
       true: {
-        width: '100%'
-      }
-    }
-  }
-});
-
-export const ThreadsPanelSeperator = styled.withConfig({
-  componentId: commonComponentId,
-  displayName: 'panel-threads_seperator'
-})('div', {
-  transform: `translateX(-${theme.sizes.panelSeperatorWidth})`,
-
-  height: '100%',
-  width: theme.sizes.panelSeperatorWidth,
-
-  backgroundColor: theme.colors.borderDark,
-  zIndex: theme.zIndices.modal,
-
-  variants: {
-    isOpen: {
-      false: {
-        opacity: 0
+        width: `calc(100% + ${theme.sizes.panelSeperatorWidth})`
       }
     },
 
-    mobile: {
-      true: {
-        opacity: 0
+    isFullscreen: {
+      true: {}
+    },
+
+    isChannelsListOpen: {
+      true: {}
+    }
+  },
+
+  compoundVariants: [
+    {
+      isChannelsListOpen: false,
+      isFullscreen: true,
+      css: {
+        width: `calc(100% + ${theme.sizes.panelSeperatorWidth})`
+      }
+    },
+
+    {
+      isChannelsListOpen: true,
+      isFullscreen: true,
+      css: {
+        width: `calc(100% - (${theme.sizes.sideBarWidth} - ${theme.sizes.panelSeperatorWidth}))`
       }
     }
-  }
+  ]
 });
 
 export const GuildRoot = styled.withConfig({
