@@ -5,6 +5,8 @@ export const IconRoot = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'button-icons'
 })('svg', {
+  verticalAlign: 'middle',
+
   variants: {
     marginX: {
       xxs: {
@@ -44,8 +46,7 @@ export const IconRoot = styled.withConfig({
       },
 
       sm: {
-        size: theme.sizes.iconSizeSm,
-        width: 'auto'
+        size: theme.sizes.iconSizeSm
       },
 
       md: {

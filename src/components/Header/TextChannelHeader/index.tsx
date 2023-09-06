@@ -26,6 +26,7 @@ export const TextChannelHeader = ({ channelName, topic }: ChannelHeaderProps) =>
     <Header>
       <Styles.ChannelHeaderWrapper>
         <Hamburger />
+
         <Styles.ChannelNameTopicWrapper>
           {currentChannel || channelName ? (
             <>

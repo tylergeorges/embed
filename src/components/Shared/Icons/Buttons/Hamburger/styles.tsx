@@ -7,8 +7,7 @@ export const Ham = styled.withConfig({
   position: 'relative',
 
   width: theme.sizes.iconSizeSm,
-  height: theme.sizes.iconSizeMd,
-  flexShrink: 0,
+  height: 28,
 
   marginLeft: theme.space.lg,
   marginRight: theme.space.sm,
@@ -28,11 +27,11 @@ export const Ham = styled.withConfig({
     position: 'absolute',
     display: 'block',
     content: '',
-    top: -7,
+    top: -6,
     left: -9,
 
-    width: 40,
-    height: 40,
+    width: theme.sizes.iconSizeXl,
+    height: theme.sizes.iconSizeXl,
 
     borderRadius: '50%',
 
@@ -55,7 +54,7 @@ export const Ham = styled.withConfig({
 
         '&::before': {
           left: -9,
-          top: -7
+          top: -5
         },
 
         div: {
@@ -64,18 +63,16 @@ export const Ham = styled.withConfig({
           '&::before': {
             width: 15,
             transform: 'rotate(45deg)',
-            top: -4.8,
-            backgroundColor: theme.colors.accent,
+            top: -5,
 
             right: -3
           },
 
           '&::after': {
-            top: 4.8,
+            top: 5,
             width: 15,
             transform: 'rotate(-45deg)',
-            right: -3,
-            backgroundColor: theme.colors.accent
+            right: -3
           }
         }
       }
@@ -109,7 +106,6 @@ export const Burger = styled.withConfig({
     position: 'absolute',
     height: 2,
     width: '100%',
-    top: 'calc(50% - 2px)',
     right: 0,
 
     transitionDuration: theme.transitions.defaultDuration,
@@ -117,7 +113,7 @@ export const Burger = styled.withConfig({
   },
 
   '&::before': {
-    top: -6
+    top: -5
   },
 
   '&::after': {

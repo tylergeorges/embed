@@ -126,12 +126,11 @@ export const ChannelHeaderWrapper = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'text-channel_header'
 })('div', {
-  flex: 1,
   display: 'flex',
   flexDirection: 'row',
   alignItems: 'center',
   justifyContent: 'center',
-
+  flex: 1,
   zIndex: theme.zIndices.modal
 });
 
@@ -184,8 +183,8 @@ export const ChannelNameTopicWrapper = styled.withConfig({
 })(Stretch, {
   display: 'flex',
   alignItems: 'center',
-  position: 'relative',
-  wordBreak: 'break-word'
+  wordBreak: 'break-word',
+  height: '100%'
 });
 
 export const ThreadPanelHeaderRoot = styled.withConfig({
