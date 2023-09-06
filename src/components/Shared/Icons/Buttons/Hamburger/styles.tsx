@@ -6,9 +6,8 @@ export const Ham = styled.withConfig({
 })('button', {
   position: 'relative',
 
-  width: 20,
-  height: 28,
-  // height: theme.sizes.iconSizeMd,
+  width: theme.sizes.iconSizeSm,
+  height: theme.sizes.iconSizeMd,
   flexShrink: 0,
 
   marginLeft: theme.space.lg,
@@ -55,7 +54,7 @@ export const Ham = styled.withConfig({
         color: theme.colors.accent,
 
         '&::before': {
-          // left: -9,
+          left: -9,
           top: -7
         },
 
@@ -65,14 +64,14 @@ export const Ham = styled.withConfig({
           '&::before': {
             width: 15,
             transform: 'rotate(45deg)',
-            // top: -4.8,
+            top: -4.8,
             backgroundColor: theme.colors.accent,
 
             right: -3
           },
 
           '&::after': {
-            // top: 4.8,
+            top: 4.8,
             width: 15,
             transform: 'rotate(-45deg)',
             right: -3,
@@ -107,11 +106,10 @@ export const Burger = styled.withConfig({
     content: '',
     backgroundColor: theme.colors.accent,
     color: theme.colors.accent,
-    // color: 'inherit',
     position: 'absolute',
     height: 2,
     width: '100%',
-    // top: 'calc(50% - 2px)',
+    top: 'calc(50% - 2px)',
     right: 0,
 
     transitionDuration: theme.transitions.defaultDuration,

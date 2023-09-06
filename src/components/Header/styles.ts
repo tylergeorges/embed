@@ -22,23 +22,21 @@ export const HeaderRoot = styled.withConfig({
   position: 'relative',
   justifyContent: 'center',
   alignItems: 'center',
-  // flexGrow: 1,
   display: 'flex',
-  // flex: 0,
   flexShrink: 0,
-  // width: '100%',
-  // boxSizing: 'border-box',
+  boxSizing: 'border-box',
 
   height: theme.sizes.headerHeight,
   padding: theme.space.sm,
 
   boxShadow: theme.shadows.headerBorder,
+  backgroundOverlay: theme.colors.headerBarBackground,
 
   variants: {
     shadowEnabled: {
       true: {
         boxShadow: theme.shadows.headerDropShadow,
-        backgroundColor: theme.colors.headerBarBackground
+        backgroundOverlay: theme.colors.headerBarBackground
       },
 
       false: {
@@ -178,8 +176,6 @@ export const ChannelHeaderNameWrapper = styled.withConfig({
   width: '100%',
   display: 'flex',
   flex: 1
-  // alignItems: 'center',
-  // justifyContent: 'center',
 });
 
 export const ChannelNameTopicWrapper = styled.withConfig({
@@ -190,8 +186,6 @@ export const ChannelNameTopicWrapper = styled.withConfig({
   alignItems: 'center',
   position: 'relative',
   wordBreak: 'break-word'
-
-  // height: 25
 });
 
 export const ThreadPanelHeaderRoot = styled.withConfig({
