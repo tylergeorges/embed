@@ -1,5 +1,4 @@
 import { TextBox } from '@components/Core/TextChannelContainer/TextBox';
-import { useStoreState } from '@state';
 import { useCallback, useState } from 'react';
 import { MessageListRenderer } from '@components/Core/VirtualLists/MessageListRenderer';
 import { useAppRouter } from '@hooks/useAppRouter';
@@ -29,8 +28,6 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
     updateQuery
   });
 
-  const isMembersListOpen = useStoreState(state => state.ui.isMembersListOpen);
-
   const handleBottomStateChanged = useCallback(() => {
     if (!isListRendered) {
       setIsListRendered(true);
@@ -41,7 +38,6 @@ export const MessageContainer = ({ channelIsThread }: MessageContainerProps) => 
     <MessageRenderer>
       <Styles.MessageWrapper
         draggable={false}
-        membersListOpen={isMembersListOpen}
         mobile={{
           '@initial': false,
           '@small': true

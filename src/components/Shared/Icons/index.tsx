@@ -18,7 +18,6 @@ const iconData = {
   NoPins: svgUrls.IconNoPins,
   AddAttachment: svgUrls.IconAddAttachment,
   Close: svgUrls.IconCross,
-  Members: svgUrls.IconMembers,
   Logout: svgUrls.IconLogout,
   Discord: svgUrls.DiscordIcon
 };

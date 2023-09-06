@@ -250,11 +250,8 @@ const stitches = createStitches({
       /** 0 */
       none: 0,
 
-      /** 0 */
-      membersSidebarBackdrop: '$none',
-
       /** 1 */
-      membersSidebar: 1,
+      default: 1,
 
       /** 10 */
       tooltip: 10,

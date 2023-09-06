@@ -112,7 +112,7 @@ export const TextChannelInnerWrapper = styled.withConfig({
     top: -1,
     height: 1,
 
-    zIndex: theme.zIndices.membersSidebar
+    zIndex: theme.zIndices.default
   }
 });
 
@@ -133,16 +133,6 @@ export const MessageWrapper = styled.withConfig({
   zIndex: theme.zIndices.none,
 
   variants: {
-    membersListOpen: {
-      false: {
-        width: '100%',
-        marginRight: 0
-      },
-      true: {
-        width: `calc(100% - ${theme.sizes.sideBarWidth})`
-      }
-    },
-
     mobile: {
       true: {
         width: '100%',
@@ -152,21 +142,7 @@ export const MessageWrapper = styled.withConfig({
         transform: `translateX(0px)`
       }
     }
-  },
-
-  compoundVariants: [
-    {
-      membersListOpen: true,
-      mobile: true,
-      css: {
-        marginRight: 'none',
-        width: '100%',
-        height: '100%',
-        transition: theme.transitions.defaultTransform,
-        transform: `translateX(0px)`
-      }
-    }
-  ]
+  }
 });
 
 export const TextBoxWrapper = styled.withConfig({

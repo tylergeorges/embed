@@ -11,15 +11,12 @@ export const ThreadsPanelButton = ({ thread }: ThreadsPanelButtonProps) => {
 
   const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
 
-  const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
-
   const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
 
   const handlePanelClick = () => {
     // Adds element to DOM
     setIsDomThreadsPanelOpen(true);
 
-    setIsMembersListOpen(false);
     setCurrentThread(thread);
   };
 

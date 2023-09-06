@@ -33,7 +33,6 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
   const guildChannels = useStoreState(state => state.guild.guildChannels);
 
   const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
-  const setIsMembersListOpen = useStoreActions(state => state.ui.setIsMembersListOpen);
   const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
   const client = useApolloClient();
 
@@ -118,7 +117,6 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
     if (isChannelThread) {
       // Open thread panel
       setIsDomThreadsPanelOpen(true);
-      setIsMembersListOpen(false);
       setCurrentThread(guildChannels[channel.id] as Channel);
 
       router.push(`/channels/${guildId}/${channel.parent_id}?thread=${channel.id}`);

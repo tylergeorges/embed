@@ -55,11 +55,6 @@ export const Backdrop = styled.withConfig({
     isChannelsListOpen: {
       true: {},
       false: {}
-    },
-
-    isMembersListOpen: {
-      true: {},
-      false: {}
     }
   },
 
@@ -72,15 +67,6 @@ export const Backdrop = styled.withConfig({
         opacity: 1
       }
     },
-    {
-      mobile: true,
-      isMembersListOpen: true,
-
-      css: {
-        zIndex: theme.zIndices.none,
-        opacity: 1
-      }
-    },
 
     {
       mobile: true,
@@ -89,16 +75,6 @@ export const Backdrop = styled.withConfig({
       css: {
         zIndex: theme.zIndices.channelsSidebarBackdrop,
         opacity: 1
-      }
-    },
-
-    {
-      mobile: false,
-      isMembersListOpen: true,
-
-      css: {
-        zIndex: theme.zIndices.negative,
-        opacity: 0
       }
     },
 
