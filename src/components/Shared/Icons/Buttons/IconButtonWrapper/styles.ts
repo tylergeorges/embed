@@ -7,15 +7,27 @@ export const IconRoot = styled.withConfig({
 })('svg', {
   variants: {
     size: {
-      small: {
-        size: theme.sizes.iconSizeSmall
+      xxs: {
+        size: theme.sizes.iconSizeXxs
       },
 
-      regular: {
-        width: theme.sizes.iconSizeMed.value
+      xs: {
+        size: theme.sizes.iconSizeXs
       },
 
-      large: {
+      sm: {
+        size: theme.sizes.iconSizeSm
+      },
+
+      md: {
+        width: theme.sizes.iconSizeMd
+      },
+
+      lg: {
+        size: theme.sizes.iconSizeLg
+      },
+
+      xl: {
         size: theme.sizes.iconSizeXl
       }
     },
@@ -66,14 +78,20 @@ export const IconButtonRoot = styled.withConfig({
   justifyContent: 'center',
 
   cursor: 'pointer',
-  size: theme.sizes.iconSizeMed,
-
-  marginX: theme.space.sm,
+  size: theme.sizes.iconSizeMd,
 
   background: 'transparent',
   outline: 'none',
   border: 'none',
-  whiteSpace: 'nowrap'
+  whiteSpace: 'nowrap',
+
+  variants: {
+    buttonType: {
+      headerIcon: {
+        marginX: theme.space.sm
+      }
+    }
+  }
 });
 
 export const EmojisIconRoot = styled.withConfig({
@@ -140,22 +158,52 @@ export const IconButtonChildrenWrapper = styled.withConfig({
   variants: {
     backgroundGlowSize: {
       sm: {
-        size: theme.sizes.iconSizeSmall,
+        size: theme.sizes.iconSizeSm,
         borderRadius: theme.radii.round
       },
 
       md: {
-        size: theme.sizes.iconSizeMed,
+        size: theme.sizes.iconSizeMd,
         borderRadius: theme.radii.round
       },
 
       lg: {
-        size: theme.sizes.iconSizeLarge,
+        size: theme.sizes.iconSizeLg,
         borderRadius: theme.radii.round
       },
 
       xl: {
         size: theme.sizes.iconSizeXl,
+        borderRadius: theme.radii.round
+      }
+    },
+
+    backgroundGlowRadii: {
+      xxs: {
+        borderRadius: theme.radii.xxs
+      },
+
+      xs: {
+        borderRadius: theme.radii.xs
+      },
+
+      sm: {
+        borderRadius: theme.radii.sm
+      },
+
+      md: {
+        borderRadius: theme.radii.md
+      },
+
+      lg: {
+        borderRadius: theme.radii.lg
+      },
+
+      xl: {
+        borderRadius: theme.radii.xl
+      },
+
+      round: {
         borderRadius: theme.radii.round
       }
     },

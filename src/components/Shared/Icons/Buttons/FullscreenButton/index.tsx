@@ -26,7 +26,7 @@ export const FullscreenButton = () => {
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 448 512"
       color="channel"
-      size="regular"
+      size="sm"
       type="headerIcon"
     >
       <path

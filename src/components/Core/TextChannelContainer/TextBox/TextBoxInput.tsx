@@ -17,7 +17,7 @@ interface TextBoxInputProps {
 }
 
 export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
-  const translate = useTranslation();
+  const { t } = useTranslation();
   const currentThread = useStoreState(state => state.guild.currentThread);
   const currentChannel = useStoreState(state => state.guild.currentChannel);
 
@@ -131,7 +131,7 @@ export const TextBoxInput = ({ channelIsThread }: TextBoxInputProps) => {
 
       {showPlaceHolder && (
         <Styles.TextBoxPlaceholder>
-          {translate.t('input.message', {
+          {t('input.message', {
             CHANNEL: channelIsThread ? currentThread?.name : currentChannel?.name
           })}
         </Styles.TextBoxPlaceholder>

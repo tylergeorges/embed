@@ -38,6 +38,7 @@ export const TextBox = ({ channelIsThread }: TextBoxProps) => {
             onClick={attachmentButtonClick}
             isActive={false}
             icon="AddAttachment"
+            buttonType="headerIcon"
           />
         </Styles.TextBoxButtonWrapper>
 

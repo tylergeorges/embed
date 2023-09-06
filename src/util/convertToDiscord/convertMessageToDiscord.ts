@@ -1,5 +1,6 @@
 import { APIMessage, MessageType } from 'discord-api-types/v10';
 import { BaseMessageFragment } from '@graphql/graphql';
+import { getAvatarId } from '@util/convertToDiscord/getAvatarId';
 
 export const convertMessageToDiscord = (message: BaseMessageFragment): APIMessage => ({
   id: message.id,
@@ -13,7 +14,7 @@ export const convertMessageToDiscord = (message: BaseMessageFragment): APIMessag
     id: message.author.id,
     bot: message.author.bot,
     username: message.author.name,
-    avatar: message.author.avatarUrl?.split('/').pop()?.split('.')[0] ?? null,
+    avatar: getAvatarId(message.author.avatarUrl),
     global_name: message.author.name,
     discriminator: message.author.discrim
   },

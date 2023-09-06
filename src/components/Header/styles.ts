@@ -71,7 +71,7 @@ export const GuildIcon = styled.withConfig({
   componentId: commonComponentId,
   displayName: 'guild-icon'
 })(Image, {
-  size: theme.sizes.iconSizeMed,
+  size: theme.sizes.iconSizeMd,
   borderRadius: theme.radii.round
 });
 
@@ -139,9 +139,7 @@ export const ChannelHeaderTopic = styled.withConfig({
   displayName: 'text-channel_header_topic'
 })('div', {
   margin: 0,
-  // ignoring this error because if we dont access the value property it outputs incorrect values.
-  // @ts-ignore
-  paddingX: theme.space.sm.value,
+  paddingX: theme.space.sm,
 
   color: theme.colors.textMuted,
   fontSize: theme.fontSizes.md,

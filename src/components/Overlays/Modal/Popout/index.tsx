@@ -38,7 +38,7 @@ export const Popout = memo(
             <Styles.PopoutTitle>{title}</Styles.PopoutTitle>
           </Styles.PopoutTitleWrapper>
 
-          <CloseButton onClick={hideModal} />
+          <CloseButton onClick={hideModal} buttonType="headerIcon" />
         </Styles.PopoutHeader>
 
         {children}

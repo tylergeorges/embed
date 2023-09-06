@@ -6,8 +6,8 @@ import { theme, globalCss } from '@stitches';
 import { client } from '@graphql/client';
 import '../i18n';
 import React from 'react';
+import DataProvider from '@components/Providers/DataProvider';
 import { ApolloProvider } from '@apollo/client';
-import GuildProvider from '@components/Providers/GuildProvider';
 
 const globalStyles = globalCss({
   '@font-face': [
@@ -150,9 +150,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
       </Head>
       <StoreProvider store={store}>
         <ApolloProvider client={client}>
-          <GuildProvider>
+          <DataProvider>
             <Component {...pageProps} />
-          </GuildProvider>
+          </DataProvider>
         </ApolloProvider>
       </StoreProvider>
     </>

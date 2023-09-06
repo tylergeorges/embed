@@ -6,8 +6,8 @@ export const Ham = styled.withConfig({
 })('button', {
   position: 'relative',
 
-  width: theme.sizes.iconSizeSmall,
-  height: theme.sizes.iconSizeMed,
+  width: theme.sizes.iconSizeSm,
+  height: theme.sizes.iconSizeMd,
   flexShrink: 0,
 
   marginX: theme.space.sm,

@@ -8,12 +8,14 @@ export const IconButtonInner = ({
   iconContent,
   isActive,
   onClick,
-  children
+  children,
+  backgroundGlowRadii
 }: IconButtonInnerProps) => (
   <Styles.IconButtonChildrenWrapper
     onClick={onClick}
     backgroundGlowSize={backgroundGlowSize}
     isActive={isActive}
+    backgroundGlowRadii={backgroundGlowRadii ?? 'round'}
   >
     {children}
     {iconContent && (

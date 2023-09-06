@@ -1,9 +1,8 @@
-/* eslint-disable prefer-object-spread */
+/* eslint-disable no-continue */
 import { Action, Computed, action, computed } from 'easy-peasy';
-import { Category, Channel, GuildQuery, GuildSettings } from '@graphql/graphql';
+import { Category, Channel, Guild, GuildSettings, Role } from '@graphql/graphql';
 import { positionChannel } from '@util/positionChannel';
-
-export type GuildData = GuildQuery['guild'];
+import { APIChannel } from 'discord-api-types/v10';
 
 export interface IThread extends Channel {
   id: string;
@@ -12,24 +11,46 @@ export interface IThread extends Channel {
 }
 
 export type GuildChannels = {
-  [channelId: string]: Channel;
+  [channelId: string]: Channel | (APIChannel & { threads?: Channel[] });
 };
 
 export interface GuildStore {
   guildChannels: Computed<GuildStore, GuildChannels>;
-  data?: GuildData;
+  data?: Guild;
   settings?: GuildSettings;
   channels?: Channel[];
   categories?: Category[];
   currentThread: Channel | undefined;
-  currentChannel: { name: string; topic: string } | undefined;
+  currentChannel: { name: string; topic?: string | null } | undefined;
+  refetchGuild: boolean;
+  roles?: Map<string, Role>;
 
-  setData: Action<GuildStore, GuildData>;
+  setData: Action<GuildStore, Guild>;
   setSettings: Action<GuildStore, GuildSettings>;
   setChannels: Action<GuildStore, Channel[]>;
   setCurrentThread: Action<GuildStore, Channel>;
   setCurrentChannel: Action<GuildStore, string>;
+  setRefetchGuild: Action<GuildStore, boolean>;
 }
+
+const addChannelToMap = (channels: Channel[], guildChannels: GuildChannels) => {
+  for (const channel of channels) {
+    const mapHasChannel = guildChannels[String(channel.id)];
+
+    if (mapHasChannel) continue;
+
+    guildChannels[String(channel.id)] = channel;
+
+    const channelThreads = channel.threads;
+
+    if (!channelThreads?.length) continue;
+
+    // Recusrively add threads to channels map
+    addChannelToMap(channelThreads, guildChannels);
+  }
+
+  return guildChannels;
+};
 
 const guild: GuildStore = {
   // State
@@ -38,27 +59,15 @@ const guild: GuildStore = {
   channels: undefined,
   currentThread: undefined,
   currentChannel: undefined,
+  refetchGuild: false,
+  roles: undefined,
 
   guildChannels: computed(state => {
     if (!state.channels) return {};
 
     const guildChannels: GuildChannels = {};
 
-    // Filter for channels that have threads
-    const channelsLen = state.channels.length;
-    // Iterate over channels that have threads and add them to map
-    for (let i = 0; i < channelsLen; i += 1) {
-      // @ts-ignore
-      const channel = state.channels[i];
-
-      const mapHasChannel = guildChannels[String(channel.id)];
-      if (mapHasChannel) break;
-
-      guildChannels[String(channel.id)] = channel;
-      Object.assign({}, guildChannels[String(channel.id)]?.threads, channel?.threads);
-    }
-
-    return guildChannels;
+    return addChannelToMap(state.channels, guildChannels);
   }),
 
   // Computed
@@ -67,10 +76,18 @@ const guild: GuildStore = {
   // Actions
   setData: action((state, payload) => {
     state.data = payload;
+
+    if (!state.roles) {
+      state.roles = new Map(payload.roles.map(obj => [obj.id, obj]));
+    }
   }),
 
   setSettings: action((state, payload) => {
     state.settings = payload;
+  }),
+
+  setRefetchGuild: action((state, payload) => {
+    state.refetchGuild = payload;
   }),
 
   setChannels: action((state, payload) => {

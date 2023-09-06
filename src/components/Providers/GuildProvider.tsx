@@ -1,29 +1,100 @@
 import { useEffect } from 'react';
 import { graphql } from '@graphql/gql';
 import { useStoreActions, useStoreState } from '@state';
-import { Loading } from '@components/Overlays/Loading';
 import { useAppRouter } from '@hooks/useAppRouter';
-import { useQuery } from '@apollo/client';
-import { useContextMenu } from '@hooks/useContextMenu';
-import dynamic from 'next/dynamic';
-import { ChannelsSidebar } from '@components/Sidebar/ChannelsSidebar';
-import { Channel, GuildSettings } from '@graphql/graphql';
-import * as Styles from '../Core/styles';
+import { useApolloClient, useQuery } from '@apollo/client';
+import { getToken } from '@graphql/client';
+import { Channel } from '@graphql/graphql';
 
 interface GuildProviderProps {
-  children: React.ReactNode;
+  setIsGuildFetched: () => void;
 }
 
-const guildDocument = graphql(/* GraphQL */ `
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const textChannelFragment = graphql(`
+  fragment TextChannel on TextChannel {
+    id
+    name
+    type
+    position
+    canSend
+    topic
+
+    category {
+      id
+      name
+      position
+    }
+
+    threads {
+      id
+      name
+    }
+  }
+`);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const annoucmentChannelFragment = graphql(`
+  fragment AnnouncementChannel on AnnouncementChannel {
+    id
+    name
+    type
+    position
+    canSend
+    topic
+
+    category {
+      id
+      name
+      position
+    }
+
+    threads {
+      id
+      name
+    }
+  }
+`);
+
+export const guildDocument = graphql(/* GraphQL */ `
   query Guild($id: String!) {
+    __typename
+
     guild(id: $id) {
       id
       name
       icon
       memberCount
+      rulesChannelId
+      banner
+      splash
+      partnered
+      verified
+      tier
+      __typename
 
       settings {
+        __typename
         readonly
+        guestMode
+      }
+
+      roles {
+        __typename
+
+        id
+        name
+        position
+        color
+        icon
+        unicodeEmoji
+      }
+
+      emojis {
+        id
+        name
+        animated
+        available
       }
 
       channels {
@@ -31,11 +102,18 @@ const guildDocument = graphql(/* GraphQL */ `
         name
         type
         position
+        canSend
+        __typename
 
-        threads {
+        ... on ThreadChannel {
+          __typename
+
           id
+          type
           name
+          parentId
         }
+
         category {
           id
           name
@@ -43,17 +121,37 @@ const guildDocument = graphql(/* GraphQL */ `
         }
 
         ... on TextChannel {
+          __typename
+
           topic
 
           threads {
-            id
+            ... on ThreadChannel {
+              __typename
+
+              id
+              type
+              name
+              parentId
+            }
           }
         }
         ... on AnnouncementChannel {
+          __typename
+          id
           topic
 
           threads {
+            __typename
             id
+            ... on ThreadChannel {
+              __typename
+
+              id
+              type
+              name
+              parentId
+            }
           }
         }
 
@@ -63,68 +161,88 @@ const guildDocument = graphql(/* GraphQL */ `
   }
 `);
 
-const ContextMenu = dynamic(() =>
-  import('@components/Overlays/ContextMenu').then(mod => mod.ContextMenu)
-);
+export default function GuildProvider({ setIsGuildFetched }: GuildProviderProps) {
+  const { guildId, router, isRouteLoaded } = useAppRouter();
 
-const ThreadPanel = dynamic(() =>
-  import('@components/Sidebar/ThreadPanel').then(mod => mod.ThreadPanel)
-);
-
-export default function GuildProvider({ children }: GuildProviderProps) {
-  const { guildId, router, isRouteLoaded, threadId, channelId } = useAppRouter();
-
-  const { data, loading } = useQuery(guildDocument, {
+  const { data, loading, fetchMore } = useQuery(guildDocument, {
     variables: { id: guildId }
   });
 
-  const { disableBrowserMenu } = useContextMenu();
-  const showContextMenu = useStoreState(state => state.ui.showContextMenu);
-
-  const setIsDomThreadsPanelOpen = useStoreActions(state => state.ui.setIsDomThreadsPanelOpen);
+  const shouldRefetchGuild = useStoreState(state => state.guild.refetchGuild);
+  const guildData = useStoreState(state => state.guild.data);
+  const guildSettings = useStoreState(state => state.guild.settings);
+  const client = useApolloClient();
 
   const setGuildData = useStoreActions(state => state.guild.setData);
   const setSettings = useStoreActions(state => state.guild.setSettings);
+  const setRefetchGuild = useStoreActions(state => state.guild.setRefetchGuild);
   const setChannels = useStoreActions(state => state.guild.setChannels);
-  const setCurrentThread = useStoreActions(state => state.guild.setCurrentThread);
-  const channels = useStoreState(state => state.guild.channels);
 
   useEffect(() => {
     if (!guildId && isRouteLoaded) {
-      // Redirects to WidgetBot #general
-      router.push('/channels/299881420891881473/368427726358446110');
+      router.push('/channels/299881420891881473/1143579521371615243');
     }
+    // If auth state changed, refetch channels
+    else if (shouldRefetchGuild) {
+      client.resetStore();
 
-    if (data && !loading) {
-      setGuildData(data.guild);
-      setSettings(data.guild.settings as GuildSettings);
-      setChannels(data.guild.channels as Channel[]);
+      client.onResetStore(() =>
+        fetchMore({
+          query: guildDocument,
+          variables: { id: guildId },
+          updateQuery: (prev, { fetchMoreResult }) => {
+            // Weird type error when casting
+            const { guild } = fetchMoreResult;
 
-      const currentChannel = data.guild.channels.find(ch => ch.id === channelId);
+            const token = getToken();
 
-      if (threadId && currentChannel?.threads) {
-        setCurrentThread(currentChannel.threads.find(ch => ch.id === threadId) as Channel);
+            // When user logs out
+            if (!token) {
+              const nonAuthChannel = guild.channels[0];
 
-        // Adds element to DOM
-        setIsDomThreadsPanelOpen(true);
-      }
+              router.push(`/channels/${guildId}/${nonAuthChannel.id}`);
+            }
+
+            // @ts-expect-error
+            // Error when casting type to Channel Array
+            setChannels(guild.channels as Channel[]);
+            setRefetchGuild(false);
+
+            return fetchMoreResult;
+          }
+        })
+      );
     }
+    // Set guild data/settings once
+    else if (data && !loading && !guildSettings) {
+      // Weird type error when casting
+      // @ts-expect-error
+      const guild = data.guild as Guild;
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, loading, setChannels, setGuildData, setSettings, guildId, router, isRouteLoaded]);
+      // So guild data/settings only get set once
+      setGuildData(guild);
+      setSettings(guild.settings);
+      setChannels(guild.channels);
 
-  if (loading || !data || channels === undefined) return <Loading />;
+      setIsGuildFetched();
+    }
+  }, [
+    data,
+    loading,
+    client,
+    setChannels,
+    setGuildData,
+    setSettings,
+    guildId,
+    router,
+    setIsGuildFetched,
+    fetchMore,
+    shouldRefetchGuild,
+    setRefetchGuild,
+    guildData,
+    guildSettings,
+    isRouteLoaded
+  ]);
 
-  return (
-    <Styles.Main onContextMenu={disableBrowserMenu}>
-      <Styles.InnerMain>
-        <ChannelsSidebar />
-
-        {showContextMenu && <ContextMenu />}
-
-        <ThreadPanel />
-        {children}
-      </Styles.InnerMain>
-    </Styles.Main>
-  );
+  return <></>;
 }
