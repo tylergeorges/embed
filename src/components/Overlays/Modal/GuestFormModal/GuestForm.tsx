@@ -63,6 +63,7 @@ export const GuestForm = forwardRef<HTMLInputElement, GuestFormProps>(({ hideFor
         color="light"
         ref={ref}
         type="text"
+        autoFocus
       />
 
       <GuestFormButton label="auth.continue" onClick={submitForm} disabled={isButtonDisabled} />
