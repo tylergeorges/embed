@@ -1,6 +1,6 @@
 import { MessageRendererProvider } from '@widgetbot/message-renderer';
 import { styled } from '@stitches';
-import { APIChannel, APIRole, ChannelType } from 'discord-api-types/v10';
+import { APIChannel, APIRole, ChannelType, RoleFlags } from 'discord-api-types/v10';
 import { svgUrls } from '@svg-assets';
 import { convertUserToDiscord } from '@util/convertToDiscord/convertUserToDiscord';
 import { convertUserToMember } from '@util/convertToDiscord/convertUserToMember';
@@ -45,6 +45,7 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
     return {
       color: role.color,
       hoist: false,
+      flags: RoleFlags.InPrompt,
       id: role.id,
       name: role.name,
       managed: false,
@@ -138,7 +139,6 @@ export const MessageRenderer = ({ children }: MessageRendererWrapperProps) => {
       resolveUser={resolveUser}
       svgUrls={svgUrls}
       seeThreadOnClick={() => null}
-      userMentionOnClick={() => null}
       roleMentionOnClick={() => null}
       channelMentionOnClick={channelMentionOnClick}
       messageComponentButtonOnClick={() => null}

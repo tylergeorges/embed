@@ -1,6 +1,6 @@
 import { listComponents } from '@components/Core/VirtualLists/listComponents';
 import * as Styles from '@components/Core/VirtualLists/styles';
-import MessageGroup from '@widgetbot/message-renderer';
+import { MessageGroup } from '@widgetbot/message-renderer';
 import { APIMessage } from 'discord-api-types/v10';
 import { Virtuoso } from 'react-virtuoso';
 

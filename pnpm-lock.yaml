@@ -20,11 +20,11 @@ dependencies:
     specifier: ^4.1.7
     version: 4.1.7
   '@widgetbot/message-renderer':
-    specifier: ^1.2.5
-    version: 1.2.5(@types/react@18.0.21)(react@18.2.0)
+    specifier: ^2.0.0
+    version: 2.0.0(@types/react@18.0.21)(react-dom@18.2.0)(react@18.2.0)
   discord-api-types:
-    specifier: ^0.37.47
-    version: 0.37.47
+    specifier: ^0.37.56
+    version: 0.37.56
   easy-peasy:
     specifier: ^5.2.0
     version: 5.2.0(@types/react-dom@18.0.6)(@types/react@18.0.21)(react-dom@18.2.0)(react@18.2.0)
@@ -2685,31 +2685,37 @@ packages:
       tslib: 2.6.0
     dev: true
 
-  /@widgetbot/message-renderer@1.2.5(@types/react@18.0.21)(react@18.2.0):
+  /@widgetbot/message-renderer@2.0.0(@types/react@18.0.21)(react-dom@18.2.0)(react@18.2.0):
     resolution:
       {
-        integrity: sha512-fC7/vKR6u/zZ+/LuJ+NfoxQxQEOO8CUA209VVO+DyegyaG7zrdEtDuX6gs9EAtCOU1ba4ndo3QLiS1V5+Pb4Vw==
+        integrity: sha512-Hw4/HXtR0bXi0F8E8kLvWrQ5LO5keIMVdQd1Rz3ZIF9OWUDi8KaL2Y/FlCRHiPanQbwPNLsK+nfHpF3qN0b2qQ==
       }
+    peerDependencies:
+      react: ^18.2.0
+      react-dom: ^18.2.0
     dependencies:
       '@stitches/react': 1.3.1-1(react@18.2.0)
       autobind-decorator: 2.4.0
       color: 4.2.3
-      discord-api-types: 0.37.47
+      discord-api-types: 0.37.56
       filesize: 10.0.7
       highlight.js: 11.8.0
+      i18next: 23.4.9
       lodash: 4.17.21
       lottie-web: 5.12.2
       memoizee: 0.4.15
-      moment: 2.29.4
+      moment: 2.24.0
       ramda: 0.28.0
       rc-tooltip: 3.7.3(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       react-easy-emoji: 1.8.1(@types/react@18.0.21)(react@18.2.0)
+      react-i18next: 13.2.2(i18next@23.4.9)(react-dom@18.2.0)(react@18.2.0)
       react-lazy-load-image-component: 1.6.0(react-dom@18.2.0)(react@18.2.0)
       simple-markdown: 0.7.3
     transitivePeerDependencies:
       - '@types/react'
-      - react
+      - react-native
     dev: false
 
   /@wry/context@0.7.3:
@@ -3964,10 +3970,10 @@ packages:
       path-type: 4.0.0
     dev: true
 
-  /discord-api-types@0.37.47:
+  /discord-api-types@0.37.56:
     resolution:
       {
-        integrity: sha512-rNif8IAv6duS2z47BMXq/V9kkrLfkAoiwpFY3sLxxbyKprk065zqf3HLTg4bEoxRSmi+Lhc7yqGDrG8C3j8GFA==
+        integrity: sha512-Ih3wj0ZTaQxaJRqUEXHMIXfXB86bwMGC0wc2nNsyCJqeo3lC4qnxXtFIsC+IGI46+dSIinuayCAZ6sLEEM02Bw==
       }
     dev: false
 
@@ -5576,6 +5582,15 @@ packages:
       '@babel/runtime': 7.22.6
     dev: false
 
+  /i18next@23.4.9:
+    resolution:
+      {
+        integrity: sha512-F8YQ29LD6FvWS/aOYbZ4WqjDEuQZmug8akAM0QOcAtR+EuHHlBYf/JpsjeqUDdYiClmj2zE9rI9ZUWzN7W+trQ==
+      }
+    dependencies:
+      '@babel/runtime': 7.22.6
+    dev: false
+
   /iconv-lite@0.4.24:
     resolution:
       {
@@ -6645,10 +6660,10 @@ packages:
     hasBin: true
     dev: true
 
-  /moment@2.29.4:
+  /moment@2.24.0:
     resolution:
       {
-        integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
+        integrity: sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
       }
     dev: false
 
@@ -7480,6 +7495,29 @@ packages:
       '@babel/runtime': 7.22.6
       html-parse-stringify: 3.0.1
       i18next: 22.5.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-i18next@13.2.2(i18next@23.4.9)(react-dom@18.2.0)(react@18.2.0):
+    resolution:
+      {
+        integrity: sha512-+nFUkbRByFwnrfDcYqvzBuaeZb+nACHx+fAWN/pZMddWOCJH5hoc21+Sa/N/Lqi6ne6/9wC/qRGOoQhJa6IkEQ==
+      }
+    peerDependencies:
+      i18next: '>= 23.2.3'
+      react: '>= 16.8.0'
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      '@babel/runtime': 7.22.6
+      html-parse-stringify: 3.0.1
+      i18next: 23.4.9
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
     dev: false
