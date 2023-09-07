@@ -46,7 +46,7 @@ const globalStyles = globalCss({
   body: {
     padding: 0,
     margin: 0,
-    fontFamily: 'GgSans',
+    fontFamily: 'inherit',
     width: '100%',
     height: '100%',
     color: theme.colors.textPrimary,
@@ -59,7 +59,7 @@ const globalStyles = globalCss({
   },
 
   '*, ::after, ::before': {
-    fontFamily: 'GgSans',
+    fontFamily: 'inherit',
     boxSizing: 'inherit',
     scrollbarWidth: 'thin',
     scrollbarColor: 'rgba(0, 0, 0, 0.4) rgba(0, 0, 0, 0.2)'

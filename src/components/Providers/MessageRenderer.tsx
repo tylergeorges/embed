@@ -14,9 +14,7 @@ import { gql, useApolloClient } from '@apollo/client';
 const MessageRendererRoot = styled('div', {
   height: '100%',
   width: '100%',
-  '*': {
-    fontFamily: 'GgSans'
-  }
+  '--fonts-main': 'GgSans'
 });
 
 interface MessageRendererWrapperProps {
