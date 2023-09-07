@@ -43,18 +43,14 @@ export const ChannelsFooterLoginButton = styled.withConfig({
     opacity: 1
   },
 
-  '&:hover': {
-    '&::before': {
-      content: '',
-      opacity: '75%'
-    }
+  '&:hover::before': {
+    content: '',
+    opacity: '75%'
   },
 
-  '&:active': {
-    '&::before': {
-      content: '',
-      boxShadow: theme.shadows.loginButtonActiveShadow
-    }
+  '&:active::before': {
+    content: '',
+    boxShadow: theme.shadows.loginButtonActiveShadow
   }
 });
 
